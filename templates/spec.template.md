@@ -4,8 +4,8 @@
 Draft | Approved | Superseded
 
 ## Traceability
-- Intent: `intent.md`
-- Rules: `rule.md`
+- Intent: `.docs/01-requirements/intent.md`
+- Rules: `doc/rule.md`
 
 ## Functional requirements
 | ID | Requirement | Acceptance criteria | Priority |

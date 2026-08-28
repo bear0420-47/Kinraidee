@@ -23,7 +23,7 @@ Draft | Approved | Superseded
 
 ## Constraints and risks
 - Product:
-- Legal/compliance: Must follow `rule.md`.
+- Legal/compliance: Must follow `doc/rule.md`.
 - Security/privacy:
 
 ## Assumptions and open questions

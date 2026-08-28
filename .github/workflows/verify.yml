@@ -19,20 +19,30 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          required=(AGENTS.md rule.md intent.md spec.md plan.md REVIEW.md verification.md)
+          required=(
+            AGENTS.md
+            doc/rule.md
+            doc/plan.md
+            doc/REVIEW.md
+            doc/verification.md
+            .docs/01-requirements/intent.md
+            .docs/01-requirements/backlog.md
+          )
           for file in "${required[@]}"; do
             test -f "$file" || { echo "Missing required file: $file"; exit 1; }
           done
           for file in .github/agents/*.agent.md templates/*.template.md; do
             test -f "$file" || { echo "Missing workflow asset: $file"; exit 1; }
           done
+          specs=(.docs/01-requirements/01-spec/*.md)
+          test -f "${specs[0]}" || { echo "Missing current requirement specification"; exit 1; }
           grep -q 'Do not write application code until' AGENTS.md
-          grep -q 'rule.md' AGENTS.md
-          grep -Eqi 'approved|approval' intent.md
-          grep -Eqi 'approved|approval' spec.md
-          grep -Eqi 'approved|approval' plan.md
-          grep -q 'Sign-off' verification.md
-          grep -q 'Decision' REVIEW.md
+          grep -q 'doc/rule.md' AGENTS.md
+          grep -Eqi 'approved|approval' .docs/01-requirements/intent.md
+          grep -Eqi 'approved|approval' "${specs[0]}"
+          grep -Eqi 'approved|approval' doc/plan.md
+          grep -q 'Sign-off' doc/verification.md
+          grep -q 'Decision' doc/REVIEW.md
       - name: Validate custom-agent frontmatter
         shell: bash
         run: |

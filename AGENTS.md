@@ -1,45 +1,48 @@
 # Project Instructions
 
-This repository is a document-first workflow for the Kinraidee food-menu recommendation project. `rule.md` is the single source of truth for legal and compliance rules.
+This repository follows a document-first AI-native SDLC for Kinraidee. `doc/rule.md` is the current single source of truth for legal and compliance rules. Requirements live under `.docs/01-requirements/`.
 
 ## Workflow
 
-1. Read `intent.md`, `spec.md`, `plan.md`, and `rule.md` before editing.
-2. Do not write application code until `plan.md` is approved by a human.
-3. Keep every stage's decision and result in its designated evidence file.
-4. Update `plan.md` when implementation differs from the approved plan.
-5. Run build, test, and lint before reporting completion; record results in `verification.md`.
-6. Do not modify tests only to make them pass.
-7. Review `REVIEW.md` findings before requesting approval.
-8. Do not deploy to production without explicit human approval.
+1. Read `.docs/01-requirements/intent.md`, the current specification under `.docs/01-requirements/01-spec/`, `doc/plan.md`, and `doc/rule.md` before editing.
+2. Do not write application code until the human approves both the requirements and `doc/plan.md`.
+3. Trace every product requirement to survey/interview evidence, a legal requirement, or an explicitly documented assumption.
+4. Keep every stage's decision and result in its designated evidence file.
+5. Update `doc/plan.md` when implementation differs from the approved plan.
+6. Run build, test, and lint before reporting implementation complete; record exact results in `doc/verification.md`.
+7. Do not modify tests only to make them pass.
+8. Review `doc/REVIEW.md` before requesting pull-request approval.
+9. Do not deploy to production without explicit human approval.
 
-## Stage outputs
+## Requirement artifacts
 
-| Stage | Agent | Primary output | Template |
-|---|---|---|---|
-| Planner | `planner` | `intent.md` | `templates/intent.template.md` |
-| Design | `designer` | `spec.md` | `templates/spec.template.md` |
-| Build | `builder` | `plan.md` | `templates/plan.template.md` |
-| CodeTest | `codetest` | `verification.md` | `templates/verification.template.md` |
-| Review | `reviewer` | `REVIEW.md` | `templates/review.template.md` |
-| Maintenance | `maintainer` | approved replacement `intent.md` | `templates/maintenance-intent.template.md` |
+- Intent: `.docs/01-requirements/intent.md`
+- Specification: `.docs/01-requirements/01-spec/`
+- Product backlog: `.docs/01-requirements/backlog.md`
+- Decision log: `.docs/05-log/`
+- Survey summary: `evidence/survey-summary.md`
+- Legal and compliance rules: `doc/rule.md`
 
-Custom Agent definitions live in `.github/agents/`. Evidence that does not belong in a primary document goes in `evidence/`.
+## Requirement conventions
+
+- Functional requirements use user stories, acceptance criteria, MoSCoW priority, and traceability IDs.
+- NFRs must contain a measurable threshold and a reproducible verification method.
+- Must-level rules from `doc/rule.md` must appear as `LR-*` requirements in the specification and as traceable backlog items.
+- Conditional legal requirements must say what condition activates them; an Agent must not make the legal applicability decision silently.
+- Raw survey responses, email addresses, precise GPS coordinates, secrets, and unnecessary personal data must not be committed.
 
 ## Approval gates
 
-- Human approves requirements in `intent.md` and `spec.md`.
-- Human approves the implementation plan in `plan.md`.
-- Human approves the pull request after `verification.md` and `REVIEW.md` are complete.
+- Human approves Intent and Specification.
+- Human approves the implementation plan separately.
+- Human approves the pull request after verification and review.
 - Human approves production deployment separately.
 
 ## Project conventions
 
 - Use TypeScript for application code.
 - Validate all API inputs at the boundary.
-- Never expose secrets or unnecessary personal data.
 - Every protected API must verify user permissions.
-- Read and follow `rule.md` for legal, privacy, retention, and security requirements.
 - Keep personal data out of logs unless strictly necessary and lawful.
-- Use the matching template when starting a new stage and record the stage status.
-- Never silently overwrite approved evidence; preserve the previous version under `evidence/archive/` first.
+- Never silently overwrite approved evidence; archive the previous version under `evidence/archive/` first.
+

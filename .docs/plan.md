@@ -6,23 +6,23 @@ Awaiting human approval. No application code may be written while this status re
 
 ## Proposed sequence
 
-1. Confirm `intent.md` and `spec.md` with the human approver.
+1. Confirm `.docs/01-requirements/intent.md` and the current specification under `.docs/01-requirements/01-spec/` with the human approver.
 2. Define the TypeScript application boundary and input-validation approach.
 3. Define the data model, lawful purpose, access roles, retention, deletion, and consent records.
 4. Implement the smallest general restaurant-discovery flow.
 5. Add optional personalization and location flows with consent and purpose checks.
 6. Add protected data-subject and administrator operations.
-7. Add security, audit, and retention handling required by `rule.md`.
+7. Add security, audit, and retention handling required by `doc/rule.md`.
 8. Add focused tests, then run build, test, and lint.
-9. Complete `REVIEW.md` and resolve findings.
+9. Complete `doc/REVIEW.md` and resolve findings.
 10. Request human approval for the pull request and production separately.
 
 ## Evidence expected
 
-- Requirement decisions: `intent.md`, `spec.md`
+- Requirement decisions: `.docs/01-requirements/intent.md`, `.docs/01-requirements/01-spec/`, and `.docs/01-requirements/backlog.md`
 - Implementation decisions and deviations: this file
-- Verification commands and results: `verification.md`
-- Bug, security, PDPA, and requirement review: `REVIEW.md`
+- Verification commands and results: `doc/verification.md`
+- Bug, security, PDPA, and requirement review: `doc/REVIEW.md`
 
 ## Open decisions
 

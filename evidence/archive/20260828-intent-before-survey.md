@@ -1,4 +1,6 @@
-# Intent
+# Archived Intent
+
+Archived on 2026-08-28 before incorporating the 31-response Kinraidee user survey.
 
 ## Status
 
@@ -46,3 +48,4 @@ Define a restaurant discovery system that is useful, privacy-aware, auditable, a
 - Personalized recommendations use only disclosed and lawfully processed data.
 - Protected actions enforce authorization.
 - Requirements, plan, tests, and review findings are recorded in evidence files.
+

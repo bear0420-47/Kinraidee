@@ -12,8 +12,8 @@ Not started. Complete after verification and before pull-request approval.
 
 ## Review scope
 
-- Functional requirements in `spec.md`
-- Implementation deviations in `plan.md`
+- Functional requirements in `.docs/01-requirements/01-spec/`
+- Implementation deviations in `doc/plan.md`
 - Bugs and edge cases
 - Authentication and authorization
 - Input validation and secrets handling
