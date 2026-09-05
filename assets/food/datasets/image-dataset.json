@@ -1,0 +1,43 @@
+{
+  "format": "3x3 sprite sheets",
+  "generatedFor": "Kinraidee wireframe prototype",
+  "usageNote": "Generated reference imagery only; it does not depict the named restaurant's actual serving.",
+  "positions": ["0% 0%", "50% 0%", "100% 0%", "0% 50%", "50% 50%", "100% 50%", "0% 100%", "50% 100%", "100% 100%"],
+  "categories": [
+    {
+      "type": "Rice dishes",
+      "sheet": "rice-9.jpg",
+      "directory": "rice",
+      "files": ["pad-kra-pao.jpg", "chicken-fried-rice.jpg", "khao-man-gai.jpg", "fried-pork-rice.jpg", "korean-chicken-rice.jpg", "buta-pork-rice.jpg", "braised-pork-leg-rice.jpg", "roast-duck-rice.jpg", "southern-curry-rice.jpg"],
+      "items": ["Pad Kra Pao", "Chicken Fried Rice", "Khao Man Gai", "Fried Pork Rice Bowl", "Korean Chicken Rice", "Buta Pork Rice Bowl", "Braised Pork Leg Rice", "Roast Duck Rice", "Southern Curry Rice"]
+    },
+    {
+      "type": "Noodles or pasta",
+      "sheet": "noodles-9.jpg",
+      "directory": "noodles",
+      "files": ["khao-soi.jpg", "tom-yum-noodles.jpg", "pad-thai.jpg", "spaghetti-kee-mao.jpg", "boat-noodles.jpg", "dry-egg-noodles.jpg", "chashu-ramen.jpg", "roast-duck-egg-noodles.jpg", "je-haeng-noodles.jpg"],
+      "items": ["Khao Soi", "Tom Yum Noodles", "Pad Thai", "Spaghetti Kee Mao", "Boat Noodles", "Dry Egg Noodles", "Chashu Ramen", "Roast Duck Egg Noodles", "Je Haeng Noodles"]
+    },
+    {
+      "type": "Fast food",
+      "sheet": "fast-food-9.jpg",
+      "directory": "fast-food",
+      "files": ["crispy-chicken-burger.jpg", "classic-beef-burger.jpg", "chicken-club-sandwich.jpg", "fish-burger-set.jpg", "korean-fried-chicken.jpg", "chicken-curry-rice.jpg", "chick-set.jpg", "crispy-chicken-special.jpg", "chicken-snack-box.jpg"],
+      "items": ["Crispy Chicken Burger", "Classic Beef Burger", "Chicken Club Sandwich", "Fish Burger Set", "Korean Fried Chicken", "Chicken Curry Rice", "Chick Set", "Crispy Chicken Special", "Chicken Snack Box"]
+    },
+    {
+      "type": "Soup or hot pot",
+      "sheet": "soup-9.jpg",
+      "directory": "soup",
+      "files": ["spicy-suki.jpg", "tom-yum-soup.jpg", "vegetable-hot-pot.jpg", "mini-shabu-set.jpg", "morning-rice-porridge.jpg", "salmon-rice-porridge.jpg", "clear-noodle-soup.jpg", "vegetarian-soup.jpg", "seafood-tom-yum.jpg"],
+      "items": ["Spicy Suki", "Tom Yum Soup", "Vegetable Hot Pot", "Mini Shabu Set", "Morning Rice Porridge", "Salmon Rice Porridge", "Clear Noodle Soup", "Vegetarian Soup", "Seafood Tom Yum"]
+    },
+    {
+      "type": "Light and healthy",
+      "sheet": "healthy-9.jpg",
+      "directory": "healthy",
+      "files": ["garden-salad-bowl.jpg", "grilled-chicken-salad.jpg", "fresh-spring-rolls.jpg", "healthy-grain-bowl.jpg", "crispy-chicken-salad.jpg", "fresh-veg-rice-bowl.jpg", "fruit-yogurt-cup.jpg", "vegetarian-rice-plate.jpg", "teriyaki-mushroom-bowl.jpg"],
+      "items": ["Garden Salad Bowl", "Grilled Chicken Salad", "Fresh Spring Rolls", "Healthy Grain Bowl", "Crispy Chicken Salad", "Fresh Veg Rice Bowl", "Fruit & Yogurt Cup", "Vegetarian Rice Plate", "Teriyaki Mushroom Bowl"]
+    }
+  ]
+}
