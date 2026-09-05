@@ -21,12 +21,18 @@ jobs:
           set -euo pipefail
           required=(
             AGENTS.md
-            doc/rule.md
-            doc/plan.md
-            doc/REVIEW.md
-            doc/verification.md
+            .docs/rule.md
+            .docs/plan.md
+            .docs/REVIEW.md
+            .docs/verification.md
+            .docs/00-charter/charter-constraints.md
             .docs/01-requirements/intent.md
             .docs/01-requirements/backlog.md
+            .docs/02-design/feature-list.md
+            .docs/02-design/user-journey.md
+            .docs/02-design/design-system.md
+            .docs/02-design/prototype.md
+            .docs/02-design/diagrams.md
           )
           for file in "${required[@]}"; do
             test -f "$file" || { echo "Missing required file: $file"; exit 1; }
@@ -37,12 +43,58 @@ jobs:
           specs=(.docs/01-requirements/01-spec/*.md)
           test -f "${specs[0]}" || { echo "Missing current requirement specification"; exit 1; }
           grep -q 'Do not write application code until' AGENTS.md
-          grep -q 'doc/rule.md' AGENTS.md
+          grep -q '.docs/rule.md' AGENTS.md
           grep -Eqi 'approved|approval' .docs/01-requirements/intent.md
           grep -Eqi 'approved|approval' "${specs[0]}"
-          grep -Eqi 'approved|approval' doc/plan.md
-          grep -q 'Sign-off' doc/verification.md
-          grep -q 'Decision' doc/REVIEW.md
+          grep -Eqi 'approved|approval' .docs/plan.md
+          grep -q 'Sign-off' .docs/verification.md
+          grep -q 'Decision' .docs/REVIEW.md
+
+      - name: Validate design pack
+        shell: bash
+        run: |
+          set -euo pipefail
+          for id in D1 D2 D3 D4; do
+            grep -q "## $id" .docs/02-design/diagrams.md               || { echo "Missing diagram $id in .docs/02-design/diagrams.md"; exit 1; }
+          done
+          fences=$(grep -c '^```mermaid' .docs/02-design/diagrams.md || true)
+          test "$fences" -ge 4 || { echo "Expected 4 mermaid diagrams, found $fences"; exit 1; }
+          core=$(grep -c '★' .docs/02-design/feature-list.md || true)
+          test "$core" -eq 1 || { echo "feature-list.md must mark exactly one core feature, found $core"; exit 1; }
+          grep -q 'Traces to' .docs/02-design/diagrams.md
+          d3=$(sed -n '/## D3/,/^## D4/p' .docs/02-design/diagrams.md)
+          for part in "Web app" "REST API" "Recommendation logic"                       "Session state" "PostgreSQL" "Admin interface"; do
+            printf '%s' "$d3" | grep -q "$part"               || { echo "D3 is missing charter 5.2 component: $part"; exit 1; }
+          done
+          grep -q 'Not yet covered' .docs/02-design/prototype.md
+          test -f wireframe.html || { echo "Missing prototype artifact wireframe.html"; exit 1; }
+
+      - name: Validate Claude agent and skill frontmatter
+        shell: bash
+        run: |
+          set -euo pipefail
+          for file in .claude/agents/*.md .claude/skills/*/SKILL.md; do
+            test -f "$file" || { echo "Missing agent or skill file: $file"; exit 1; }
+            head -n 1 "$file" | grep -q '^---$'
+            grep -q '^name:' "$file"
+            grep -q '^description:' "$file"
+          done
+          for required in requirement-writer backlog-auditor feature-journey-writer                           architecture-writer prototype-writer diagram-checker; do
+            test -f ".claude/agents/$required.md"               || { echo "Missing required agent: $required"; exit 1; }
+          done
+          for required in audit-backlog audit-design sync-feature-journey                           sync-architecture build-prototype; do
+            test -f ".claude/skills/$required/SKILL.md"               || { echo "Missing required skill: $required"; exit 1; }
+          done
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run prototype requirement tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --test tests/*.test.cjs
       - name: Validate custom-agent frontmatter
         shell: bash
         run: |

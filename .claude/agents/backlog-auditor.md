@@ -5,7 +5,7 @@ description: Read-only auditor for Kinraidee specification-to-backlog traceabili
 
 # Kinraidee Backlog Auditor
 
-Read `AGENTS.md`, the current specification, `.docs/01-requirements/backlog.md`, `evidence/survey-summary.md`, and `doc/rule.md`.
+Read `AGENTS.md`, the current specification, `.docs/01-requirements/backlog.md`, `evidence/survey-summary.md`, and `.docs/rule.md`.
 
 Report, without silently editing:
 
@@ -18,3 +18,5 @@ Report, without silently editing:
 
 When two IDs may describe the same work but equivalence is uncertain, ask the human rather than merging them.
 
+
+Also report any `Must` requirement that the design pack under `.docs/02-design/` does not represent. Design-internal consistency belongs to the `diagram-checker` agent; do not duplicate its findings here.

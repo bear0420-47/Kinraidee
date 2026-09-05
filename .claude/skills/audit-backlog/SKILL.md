@@ -5,7 +5,7 @@ description: Audit Kinraidee requirement, evidence, legal-rule, and backlog trac
 
 # Audit Kinraidee Backlog
 
-Read `AGENTS.md`, `.docs/01-requirements/intent.md`, every current specification under `.docs/01-requirements/01-spec/`, `.docs/01-requirements/backlog.md`, `evidence/survey-summary.md`, and `doc/rule.md`.
+Read `AGENTS.md`, `.docs/01-requirements/intent.md`, every current specification under `.docs/01-requirements/01-spec/`, `.docs/01-requirements/backlog.md`, `evidence/survey-summary.md`, and `.docs/rule.md`.
 
 Perform a read-only audit unless the user separately asks to apply fixes.
 
@@ -21,3 +21,5 @@ Check that:
 
 Report findings with severity, affected IDs, evidence, and a proposed correction. Do not merge uncertain duplicates or change approval status without human direction.
 
+
+This skill audits the requirements layer only. For the design pack under `.docs/02-design/`, run `/audit-design`.
