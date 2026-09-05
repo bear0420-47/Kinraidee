@@ -1,0 +1,1435 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kinraidee — Food Recommendation Wireframe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Delius+Swash+Caps&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/vendor/paper.min.css">
+  <style>
+    :root {
+      --white: #fff;
+      --muted: rgba(255, 250, 240, 0.72);
+      --glass: rgba(43, 35, 48, 0.46);
+      --glass-strong: rgba(255, 248, 232, 0.14);
+      --shadow: 0 22px 65px rgba(13, 10, 19, 0.32);
+      --saffron: #ffd27a;
+      --green: #b9e49b;
+    }
+
+    html { scroll-behavior: smooth; scroll-snap-type: y mandatory; overflow-y: auto; overscroll-behavior-y: contain; }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    .icon { width: 16px; height: 16px; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .brand-mark .icon { width: 21px; height: 21px; }
+    .chip, .primary, .ghost { display: inline-flex; align-items: center; justify-content: center; gap: 7px; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--white);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #1e1828;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      background:
+        linear-gradient(120deg, rgba(21, 17, 30, .82), rgba(48, 34, 29, .56)),
+        radial-gradient(circle at 77% 17%, rgba(222, 145, 61, .78) 0, transparent 27%),
+        radial-gradient(circle at 14% 78%, rgba(42, 129, 98, .68) 0, transparent 30%),
+        radial-gradient(circle at 86% 80%, rgba(163, 62, 79, .6) 0, transparent 33%),
+        linear-gradient(145deg, #282038, #633d34 54%, #205447);
+    }
+
+    body::after { content: ""; position: fixed; inset: 0; z-index: -2; pointer-events: none; opacity: .12; background-image: linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px); background-size: 72px 72px; mask-image: linear-gradient(to bottom, black, transparent 76%); }
+
+    .blob {
+      position: fixed;
+      z-index: -2;
+      width: 28rem;
+      aspect-ratio: 1;
+      border-radius: 45% 55% 62% 38%;
+      filter: blur(34px);
+      opacity: 0.12;
+      animation: drift 14s ease-in-out infinite alternate;
+    }
+
+    .blob.one { top: -10rem; left: -7rem; background: #ff5f6d; }
+    .blob.two { right: -8rem; bottom: -12rem; background: #ffc371; animation-delay: -6s; }
+
+    @keyframes drift {
+      to { transform: translate3d(55px, 35px, 0) rotate(18deg) scale(1.12); }
+    }
+
+    .shell { width: min(1120px, calc(100% - 36px)); margin: 0 auto; }
+
+    .glass {
+      background: var(--glass);
+      border: 1px solid rgba(255, 248, 232, 0.13);
+      border-top-color: rgba(255, 248, 232, 0.46);
+      border-left-color: rgba(255, 248, 232, 0.38);
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 0;
+    }
+    header.shell { position: fixed; z-index: 20; top: 0; left: 50%; transform: translateX(-50%); }
+
+    .brand { display: flex; align-items: center; gap: 11px; font-weight: 850; letter-spacing: -0.04em; }
+    .brand-mark { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 12px; color: #291f1c; background: linear-gradient(145deg, #ffe2a6, #b9e49b); box-shadow: 0 10px 24px rgba(20,16,25,.22); }
+    nav { display: flex; align-items: center; gap: 22px; color: var(--muted); font-size: 14px; font-weight: 650; }
+
+    button, .button {
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 18px;
+      color: #241934;
+      background: var(--white);
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 9px 24px rgba(15, 23, 42, .18);
+    }
+
+    main > section { position: relative; isolation: isolate; scroll-snap-align: start; scroll-snap-stop: always; scroll-margin-top: 0; }
+    main > section::before { content: ""; position: absolute; z-index: -2; inset: 0 calc((100vw - 100%) / -2); pointer-events: none; opacity: .48; transform: scale(1.055); transition: opacity .9s ease, transform 1.15s cubic-bezier(.2,.75,.25,1); }
+    main > section::after { content: ""; position: absolute; z-index: -1; right: calc((100vw - 100%) / -2); bottom: -1px; left: calc((100vw - 100%) / -2); height: 110px; pointer-events: none; }
+    main > section > * { opacity: .18; transform: translateY(34px) scale(.985); filter: blur(3px); transition: opacity .65s ease, transform .82s cubic-bezier(.2,.75,.25,1), filter .65s ease; }
+    main > section.is-active::before { opacity: 1; transform: scale(1); }
+    main > section.is-active > * { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+    main > section.is-leaving > * { opacity: .34; transform: translateY(-24px) scale(.985); filter: blur(2px); }
+    .hero { position: relative; display: flex; align-items: center; min-height: 100svh; padding: 120px 0 90px; }
+    .hero::before { background: radial-gradient(circle at 76% 30%, rgba(213,142,69,.3), transparent 28%), radial-gradient(circle at 16% 72%, rgba(47,124,98,.25), transparent 30%), linear-gradient(145deg, rgba(28,22,38,.88), rgba(43,28,33,.8)); }
+    .hero::after { background: linear-gradient(to bottom, transparent, rgba(27,47,42,.65)); }
+    .hero-copy { max-width: 720px; }
+    .eyebrow { margin: 0 0 18px; color: var(--saffron); font-size: 12px; font-weight: 850; letter-spacing: .17em; text-transform: uppercase; }
+    h1 { max-width: 620px; margin: 0; font-size: clamp(48px, 6.2vw, 74px); line-height: .98; letter-spacing: -.058em; text-shadow: 0 4px 24px rgba(0, 0, 0, .24); }
+    .intro { max-width: 540px; margin: 22px 0 0; color: var(--muted); font-size: 17px; line-height: 1.62; text-shadow: 0 2px 10px rgba(0,0,0,.32); }
+    .local-note { display: inline-flex; align-items: center; gap: 8px; margin-top: 24px; padding: 9px 12px; border: 1px solid rgba(255,210,122,.24); border-radius: 999px; color: rgba(255,245,223,.82); background: rgba(31,25,37,.26); font-size: 12px; font-weight: 720; }
+    .scroll-cue { position: absolute; left: 0; bottom: 44px; display: inline-flex; align-items: center; gap: 10px; padding: 0; color: var(--muted); background: transparent; box-shadow: none; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+    .scroll-cue .line { width: 42px; height: 1px; background: var(--saffron); }
+
+    .decision-section { display: grid; place-items: center; min-height: 100svh; padding: 118px 0 90px; }
+    .decision-section::before { background: radial-gradient(circle at 18% 25%, rgba(64,151,113,.32), transparent 31%), radial-gradient(circle at 86% 78%, rgba(221,170,78,.22), transparent 28%), linear-gradient(150deg, rgba(21,46,42,.92), rgba(36,31,45,.88) 56%, rgba(65,44,37,.86)); }
+    .decision-section::after { background: linear-gradient(to bottom, transparent, rgba(83,40,44,.58)); }
+    .decision-section .finder::before { content: ""; position: absolute; z-index: -1; inset: -36px; border-radius: 48px; background-image: radial-gradient(rgba(255,226,166,.18) 1px, transparent 1px); background-size: 18px 18px; mask-image: radial-gradient(ellipse, black, transparent 72%); opacity: .55; }
+
+    .finder { position: relative; display: grid; width: min(720px, 100%); gap: 12px; }
+    .finder-intro { padding: 0 5px 7px; }
+    .finder-intro h2 { margin: 0 0 7px; font-size: 25px; letter-spacing: -.035em; }
+    .finder-intro p { margin: 0; color: var(--muted); font-size: 14px; }
+    .step-card { position: relative; padding: 18px 19px 19px; border-radius: 20px; }
+    #area-step { z-index: 3; }
+    .step-card.revealed, .action-card.revealed, .results.revealed { animation: reveal-step .38s ease both; }
+    .step-card:nth-of-type(2), .step-card:nth-of-type(3), .step-card:nth-of-type(4) { transform: none; }
+    .step-head { display: flex; align-items: center; gap: 10px; margin-bottom: 13px; }
+    .step-number { display: grid; place-items: center; flex: 0 0 27px; height: 27px; border-radius: 9px; color: #33261d; background: var(--saffron); font-size: 10px; font-weight: 900; box-shadow: 0 5px 15px rgba(255, 210, 122, .14); }
+    .field-label { display: block; margin: 0; font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .step-hint { margin-left: auto; color: rgba(255,255,255,.62); font-size: 11px; font-weight: 650; }
+    .step-track { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 15px; }
+    .step-track span { height: 3px; border-radius: 999px; background: rgba(255,255,255,.13); transition: background .3s ease, box-shadow .3s ease; }
+    .step-track span.active { background: var(--saffron); box-shadow: 0 0 12px rgba(255,210,122,.3); }
+    .chips { display: flex; flex-wrap: wrap; gap: 9px; }
+    .chip { padding: 10px 13px; border: 1px solid rgba(255,255,255,.2); color: var(--white); background: rgba(255,255,255,.08); box-shadow: none; font-size: 13px; font-weight: 700; }
+    .chip.active { color: #2b261d; background: linear-gradient(135deg, var(--saffron), #f2e8a9); border-color: rgba(255,255,255,.45); }
+    .doodle-select { position: relative; width: 100%; }
+    .select-like { display: flex; align-items: center; width: 100%; min-height: 54px; padding: 14px 64px 14px 16px; color: var(--muted); background: rgba(18, 18, 30, .22); font: inherit; font-weight: 700; text-align: left; cursor: pointer; }
+    .doodle-select-arrow { position: absolute; top: 50%; right: 12px; display: grid; place-items: center; width: 36px; height: 32px; color: #241934; background: var(--saffron); pointer-events: none; transform: translateY(-50%) rotate(1.5deg); }
+    .doodle-select-arrow::before { content: ""; width: 9px; height: 9px; border-right: 3px solid currentColor; border-bottom: 3px solid currentColor; transform: translateY(-2px) rotate(45deg); }
+    .doodle-select.is-open .doodle-select-arrow::before { transform: translateY(3px) rotate(225deg); }
+    .doodle-select.has-value .select-like { color: var(--white); }
+    .doodle-options { position: absolute; z-index: 12; top: calc(100% + 11px); right: 0; left: 0; display: grid; gap: 6px; margin: 0; padding: 10px; color: var(--white); background: #292b31; list-style: none; }
+    .doodle-option { position: relative; padding: 12px 15px; border: 2px solid transparent; cursor: pointer; font-weight: 700; }
+    .doodle-options .doodle-option::before { content: none; }
+    .doodle-option:not(:last-child)::after { content: ""; position: absolute; right: 12px; bottom: -4px; left: 12px; border-bottom: 2px dashed rgba(248, 244, 239, .28); transform: rotate(-.2deg); }
+    .doodle-option:hover, .doodle-option:focus-visible { color: #202126; background: var(--peach); border-color: var(--paper); outline: 0; transform: rotate(-.25deg); }
+    .doodle-option[aria-selected="true"] { color: #202126; background: var(--yellow); border-color: var(--paper); box-shadow: 2px 2px 0 var(--paper); transform: rotate(.25deg); }
+    .action-card { margin-left: 0; padding: 12px; border-radius: 20px; }
+    .finder .primary { width: 100%; padding: 15px; background: linear-gradient(120deg, #ffe0a0, #c2e9a8); }
+    .privacy { margin: 10px 0 1px; color: var(--muted); text-align: center; font-size: 11px; }
+
+    .results { min-height: 100svh; padding: 118px 0 82px; }
+    .results::before { background: radial-gradient(circle at 12% 15%, rgba(193,79,91,.33), transparent 28%), radial-gradient(circle at 88% 24%, rgba(232,158,72,.3), transparent 31%), radial-gradient(circle at 48% 100%, rgba(59,127,102,.27), transparent 32%), linear-gradient(145deg, rgba(59,28,40,.94), rgba(35,27,43,.9) 54%, rgba(74,49,38,.88)); }
+    .results::after { display: none; }
+    .section-index { margin: 0 0 8px; color: var(--saffron); font-size: 11px; font-weight: 850; letter-spacing: .17em; text-transform: uppercase; }
+    .section-nav { position: fixed; z-index: 25; top: 50%; right: 28px; display: grid; gap: 13px; transform: translateY(-50%); }
+    .section-dot { display: flex; align-items: center; justify-content: flex-end; gap: 9px; padding: 0; color: rgba(255,255,255,.48); background: transparent; box-shadow: none; font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    .section-dot span { max-width: 0; opacity: 0; overflow: hidden; white-space: nowrap; transition: max-width .3s ease, opacity .3s ease; }
+    .section-dot::after { content: ""; width: 7px; height: 7px; border: 1px solid rgba(255,255,255,.52); border-radius: 999px; transition: height .3s ease, background .3s ease, border-color .3s ease, box-shadow .3s ease; }
+    .section-dot.active { color: var(--saffron); }
+    .section-dot.active span { max-width: 90px; opacity: 1; }
+    .section-dot.active::after { height: 25px; background: var(--saffron); border-color: var(--saffron); box-shadow: 0 0 18px rgba(255,210,122,.34); }
+    .section-head { display: flex; align-items: end; justify-content: space-between; margin-bottom: 20px; }
+    .section-head h2 { margin: 0 0 5px; font-size: 32px; letter-spacing: -.045em; }
+    .section-head p { margin: 0; color: var(--muted); }
+    .ghost { color: var(--white); background: rgba(255,255,255,.13); border: 1px solid rgba(255,255,255,.22); }
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .card { overflow: hidden; border-radius: 25px; transition: transform .25s ease; }
+    .card:hover { transform: translateY(-5px); }
+    .food-art { height: 210px; position: relative; overflow: hidden; background: #392b48; }
+    .food-art::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(15, 12, 25, .05), rgba(15, 12, 25, .44)); pointer-events: none; }
+    .food-art img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .55s ease; }
+    .card:hover .food-art img { transform: scale(1.045); }
+    .tag { position: absolute; z-index: 1; top: 15px; left: 15px; padding: 7px 10px; border-radius: 999px; background: rgba(22,22,28,.48); border: 1px solid rgba(255,255,255,.4); backdrop-filter: blur(10px); font-size: 11px; font-weight: 800; }
+    .match { display: inline-flex; align-items: center; gap: 7px; margin-bottom: 12px; color: #d9ffbe; font-size: 11px; font-weight: 850; letter-spacing: .08em; text-transform: uppercase; }
+    .match::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #a7ff75; box-shadow: 0 0 14px #a7ff75; }
+    .card-body { padding: 20px; }
+    .card-row { display: flex; justify-content: space-between; gap: 16px; align-items: start; }
+    .card h3 { margin: 0; font-size: 21px; letter-spacing: -.03em; }
+    .price { color: #d9ffbe; font-weight: 850; white-space: nowrap; }
+    .meta { margin: 8px 0 16px; color: var(--muted); font-size: 13px; }
+    .reason { margin: 0; padding-top: 15px; border-top: 1px solid rgba(255,255,255,.13); color: rgba(255,255,255,.9); font-size: 13px; line-height: 1.5; }
+    .card-actions { display: flex; gap: 9px; margin-top: 18px; }
+    .card-actions button { flex: 1; padding: 10px 12px; font-size: 12px; }
+    .card-actions .reject { color: var(--white); background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18); }
+
+    footer { padding: 0 0 28px; text-align: center; color: rgba(255,255,255,.62); font-size: 12px; line-height: 1.7; scroll-snap-align: end; }
+    footer a { color: rgba(255,255,255,.78); }
+    .toast { position: fixed; z-index: 10; right: 24px; bottom: 24px; max-width: min(390px, calc(100% - 32px)); padding: 17px 20px; border-radius: 18px; opacity: 0; transform: translateY(20px); pointer-events: none; transition: opacity .25s ease, transform .25s ease; }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast strong { display: block; margin-bottom: 3px; }
+    .toast span { color: var(--muted); font-size: 13px; }
+    .meal-overlay { position: fixed; z-index: 50; inset: 0; display: grid; place-items: center; padding: 20px; background: rgba(12, 9, 17, .66); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); animation: overlay-in .28s ease both; }
+    .meal-dialog { position: relative; width: min(480px, 100%); padding: 42px 38px 36px; border-radius: 30px; text-align: center; animation: dialog-in .34s ease both; }
+    .dialog-close { position: absolute; top: 15px; right: 15px; display: grid; place-items: center; width: 36px; height: 36px; padding: 0; color: var(--white); background: rgba(255,255,255,.09); border: 1px solid rgba(255,255,255,.14); box-shadow: none; }
+    .dialog-icon { display: grid; place-items: center; width: 64px; height: 64px; margin: 0 auto 22px; border-radius: 20px; color: #30231b; background: linear-gradient(145deg, var(--saffron), var(--green)); box-shadow: 0 18px 40px rgba(255,210,122,.18); }
+    .dialog-icon .icon { width: 30px; height: 30px; stroke-width: 2.5; }
+    .meal-dialog .eyebrow { margin-bottom: 12px; }
+    .meal-dialog h2 { margin: 0; font-size: clamp(42px, 7vw, 62px); line-height: 1; letter-spacing: -.055em; }
+    .meal-dialog .chosen-meal { margin: 17px 0 6px; color: var(--white); font-size: 18px; font-weight: 800; }
+    .meal-dialog .dialog-copy { margin: 0 auto 26px; color: var(--muted); line-height: 1.55; }
+    .dialog-action { min-width: 180px; background: linear-gradient(120deg, #ffe0a0, #c2e9a8); }
+    @keyframes overlay-in { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes dialog-in { from { opacity: 0; transform: translateY(18px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    button:focus-visible, select:focus-visible, [tabindex]:focus-visible { outline: 3px solid #d9ffbe; outline-offset: 3px; }
+
+    @keyframes reveal-step {
+      from { opacity: 0; transform: translateY(14px) scale(.985); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @media (max-width: 850px) {
+      .section-nav { right: 12px; }
+      .section-dot span { display: none; }
+      .cards { grid-template-columns: 1fr 1fr; }
+      .card:last-child { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 580px) {
+      html, body { max-width: 100%; overflow-x: clip; }
+      .shell { width: min(100% - 24px, 1180px); }
+      main > section::before { inset: 0 -12px; }
+      main > section::after { right: -12px; left: -12px; }
+      header { padding: 16px 0; }
+      header.shell { width: calc(100% - 24px); }
+      nav button { min-height: 42px; padding: 10px 14px; font-size: 13px; }
+      .brand { gap: 8px; font-size: 15px; }
+      .brand-mark { width: 36px; height: 36px; }
+      .section-nav { display: none; }
+      h1 { max-width: 100%; font-size: clamp(42px, 12.5vw, 49px); overflow-wrap: anywhere; }
+      .intro { max-width: 100%; font-size: 16px; line-height: 1.55; }
+      .local-note { max-width: 100%; line-height: 1.35; }
+      .hero { padding: 112px 0 90px; }
+      .scroll-cue { bottom: 28px; }
+      .decision-section { padding: 105px 0 70px; }
+      .decision-section .finder::before { inset: -14px; }
+      .results { padding-top: 105px; }
+      .finder { gap: 10px; }
+      .finder-intro { padding: 0 4px 5px; }
+      .step-card, .step-card:nth-of-type(2), .step-card:nth-of-type(3), .step-card:nth-of-type(4) { transform: none; padding: 18px; }
+      .action-card { margin-left: 0; }
+      .step-hint { display: none; }
+      .chip { min-height: 44px; padding: 11px 14px; }
+      select.select-like { min-height: 50px; padding-right: 42px; }
+      .section-head { align-items: start; gap: 18px; }
+      .section-head { flex-direction: column; }
+      .section-head h2 { font-size: 27px; }
+      .section-head .ghost { align-self: flex-start; flex: 0 0 auto; min-height: 42px; padding: 10px 13px; }
+      .cards { grid-template-columns: 1fr; }
+      .card:last-child { grid-column: auto; }
+      .food-art { height: 165px; }
+      .card-actions button { min-height: 44px; }
+      .meal-overlay { padding: 12px; }
+      .meal-dialog { padding: 38px 20px 28px; border-radius: 24px; }
+      .meal-dialog h2 { font-size: 44px; }
+      .dialog-close { width: 42px; height: 42px; }
+      .dialog-action { width: 100%; min-height: 46px; }
+      .toast { right: 12px; bottom: 12px; max-width: calc(100% - 24px); }
+      footer { padding-right: 16px; padding-left: 16px; }
+    }
+
+    @media (max-width: 580px) and (pointer: coarse) {
+      html { scroll-snap-type: y proximity; }
+    }
+
+    @media (hover: none) {
+      .card:hover { transform: none; }
+      .card:hover .food-art img { transform: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) { .blob { animation: none; } }
+    @media (prefers-reduced-motion: reduce) {
+      main > section::before, main > section > * { transition: none; transform: none; filter: none; }
+    }
+
+    /* Doodle visual system */
+    :root {
+      --canvas: #1f2125;
+      --canvas-soft: #26282d;
+      --surface: #222429;
+      --surface-raised: #2a2c31;
+      --paper: #f8f4ef;
+      --muted: #b9bdc7;
+      --peach: #efcfc5;
+      --peach-deep: #4c342f;
+      --blue: #49b6e5;
+      --green: #54c98a;
+      --yellow: #f3b544;
+      --white: var(--paper);
+      --glass: rgba(34, 36, 41, .96);
+      --shadow: 5px 6px 0 rgba(248, 244, 239, .92);
+    }
+
+    html {
+      scroll-snap-type: none;
+      overscroll-behavior-y: auto;
+      background: var(--canvas);
+    }
+
+    body {
+      color: var(--paper);
+      font-family: Nunito, ui-sans-serif, system-ui, sans-serif;
+      background: var(--canvas);
+    }
+
+    body p, body label, body select, body option, body footer {
+      font-family: Nunito, ui-sans-serif, system-ui, sans-serif;
+    }
+
+    body::before {
+      z-index: -3;
+      background:
+        radial-gradient(circle at 16% 18%, rgba(73, 182, 229, .06), transparent 24rem),
+        radial-gradient(circle at 86% 72%, rgba(239, 207, 197, .05), transparent 28rem),
+        var(--canvas);
+    }
+
+    body::after {
+      z-index: -2;
+      opacity: .28;
+      background-image: radial-gradient(rgba(248, 244, 239, .18) .8px, transparent .8px);
+      background-size: 22px 22px;
+      mask-image: none;
+    }
+
+    .blob { display: none; }
+    .shell { width: min(1180px, calc(100% - 48px)); }
+
+    .glass {
+      background: var(--surface);
+      border: 2px solid var(--paper);
+      border-radius: 5px 10px 4px 12px;
+      box-shadow: var(--shadow);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+
+    header.shell {
+      top: 0;
+      width: 100%;
+      max-width: none;
+      padding: 15px max(24px, calc((100vw - 1180px) / 2));
+      background: rgba(31, 33, 37, .94);
+      border-bottom: 2px solid var(--paper);
+      box-shadow: 0 3px 0 rgba(248, 244, 239, .12);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .brand {
+      gap: 12px;
+      font-family: "Delius Swash Caps", cursive;
+      font-size: 21px;
+      letter-spacing: .01em;
+    }
+
+    .brand-mark {
+      width: 39px;
+      height: 39px;
+      color: var(--canvas);
+      background: var(--peach);
+      border: 2px solid var(--paper);
+      border-radius: 9px 5px 10px 4px;
+      box-shadow: 3px 3px 0 var(--paper);
+      transform: rotate(-3deg);
+    }
+
+    header nav { width: auto; margin: 0; padding: 0; background: transparent; border: 0; box-shadow: none; }
+    nav { gap: 25px; color: var(--muted); font-weight: 800; }
+    button, .button {
+      padding: 11px 18px;
+      color: var(--paper);
+      background: var(--surface);
+      border: 2px solid var(--paper);
+      border-radius: 3px 7px 4px 8px;
+      box-shadow: 3px 4px 0 var(--paper);
+      font-weight: 900;
+      transition: transform .16s ease, box-shadow .16s ease, background .16s ease, color .16s ease;
+    }
+
+    button:hover, .button:hover { transform: translate(-1px, -2px) rotate(-.35deg); box-shadow: 5px 6px 0 var(--paper); }
+    button:active, .button:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--paper); }
+    nav button[type="button"] { color: var(--canvas); background: var(--peach); border: 2px solid var(--paper); border-radius: 3px 7px 4px 8px; box-shadow: 3px 4px 0 var(--paper); transform: rotate(-1deg); }
+
+    main > section { scroll-snap-align: none; scroll-snap-stop: normal; scroll-margin-top: 72px; }
+    main > section::before, main > section::after { display: none; }
+    main > section > *, main > section.is-active > *, main > section.is-leaving > * { opacity: 1; transform: none; filter: none; }
+    .section-nav { display: none; }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(360px, .82fr);
+      gap: clamp(48px, 8vw, 104px);
+      align-items: center;
+      min-height: 100svh;
+      padding: 140px 0 92px;
+    }
+
+    .hero-copy { max-width: 660px; }
+    .eyebrow, .section-index {
+      display: inline-flex;
+      width: fit-content;
+      margin: 0 0 20px;
+      padding: 6px 10px;
+      color: var(--paper);
+      background: var(--peach-deep);
+      border: 2px solid var(--paper);
+      border-radius: 2px 5px 3px 6px;
+      font-size: 12px;
+      letter-spacing: .04em;
+      text-transform: none;
+      transform: rotate(-1.5deg);
+    }
+
+    h1, h2, h3, .field-label, .chosen-meal { font-family: "Delius Swash Caps", cursive; }
+    h1 { max-width: 680px; font-size: clamp(54px, 6.6vw, 86px); line-height: 1.03; letter-spacing: -.025em; text-shadow: none; }
+    .hero h1::after { content: ""; display: block; width: min(330px, 70%); height: 13px; margin-top: 6px; border-top: 4px solid var(--peach); border-radius: 50%; transform: rotate(-1deg); }
+    .rough-ready .hero h1::after { display: none; }
+    .rough-annotation { z-index: 2; pointer-events: none; }
+    .intro { max-width: 570px; color: var(--muted); font-size: 18px; line-height: 1.65; text-shadow: none; }
+    .local-note { padding: 10px 13px; color: var(--paper); background: transparent; border: 2px dashed var(--blue); border-radius: 7px 3px 8px 4px; font-size: 13px; transform: rotate(.5deg); }
+
+    .scroll-cue {
+      position: static;
+      margin-top: 34px;
+      padding: 12px 18px;
+      color: var(--canvas);
+      background: var(--peach);
+      border: 2px solid var(--paper);
+      box-shadow: 4px 5px 0 var(--paper);
+      font-size: 13px;
+      letter-spacing: .03em;
+      text-transform: none;
+    }
+    .scroll-cue .line { display: none; }
+
+    .hero-board { position: relative; min-height: 455px; padding: 22px; background: var(--surface); transform: rotate(1deg); }
+    .hero-board::before { content: ""; position: absolute; top: -13px; left: 44%; width: 74px; height: 25px; background: rgba(239, 207, 197, .82); transform: rotate(-3deg); }
+    .board-title { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; font-family: "Delius Swash Caps", cursive; font-size: 22px; }
+    .board-scribble { color: var(--peach); font-size: 16px; transform: rotate(4deg); }
+    .board-photo { position: relative; height: 228px; padding: 9px 9px 32px; background: var(--paper); transform: rotate(-2deg); }
+    .board-photo img { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(.82) contrast(1.05); }
+    .board-photo span { position: absolute; right: 14px; bottom: 7px; color: var(--canvas); font-family: "Delius Swash Caps", cursive; font-size: 14px; }
+    .board-notes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 22px; }
+    .board-note { position: relative; min-height: 78px; display: grid; place-items: end center; overflow: hidden; padding: 11px; color: var(--paper); background: var(--peach); border: 2px solid var(--paper); box-shadow: 3px 3px 0 var(--paper); font-family: "Delius Swash Caps", cursive; font-size: 15px; text-align: center; }
+    .board-note::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 22%, rgba(19, 29, 33, .84) 100%); }
+    .board-note img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(.8) contrast(1.06); }
+    .board-note span { position: relative; z-index: 1; text-shadow: 0 1px 3px rgba(0, 0, 0, .9); }
+    .board-note:nth-child(1) { transform: rotate(2deg); }
+    .board-note:nth-child(2) { color: var(--paper); background: #314551; transform: rotate(-1deg); }
+    .board-note:nth-child(3) { color: var(--paper); background: var(--peach-deep); transform: rotate(1.5deg); }
+
+    .decision-section { display: block; min-height: auto; padding: 110px 0 124px; border-top: 2px solid rgba(248, 244, 239, .9); }
+    .decision-section .finder::before { display: none; }
+    .finder { width: min(920px, 100%); gap: 21px; }
+    .finder-intro { max-width: 660px; margin-bottom: 16px; }
+    .finder-intro h2, .section-head h2 { margin: 0 0 10px; font-size: clamp(36px, 5vw, 54px); letter-spacing: -.015em; line-height: 1.08; }
+    .finder-intro p:not(.section-index), .section-head p { color: var(--muted); font-size: 16px; }
+    .finder-intro .restaurant { margin-top: 12px; color: var(--peach); font-size: 13px; }
+    .step-track { gap: 9px; margin-top: 24px; }
+    .step-track span { height: 7px; background: transparent; border: 2px solid var(--paper); border-radius: 3px 7px 2px 6px; }
+    .step-track span.active { background: var(--peach); box-shadow: none; }
+    .progress-copy { display: flex; justify-content: space-between; gap: 16px; margin-top: 10px; color: var(--muted); font-size: 12px; font-weight: 800; }
+    .progress-copy strong { color: var(--peach); }
+
+    .step-card { padding: 22px 24px 24px; border-radius: 5px 11px 4px 9px; }
+    .step-card:nth-of-type(2) { transform: rotate(.28deg); }
+    .step-card:nth-of-type(3) { transform: rotate(-.2deg); }
+    .step-card:nth-of-type(4) { transform: rotate(.18deg); }
+    .step-head { margin-bottom: 18px; }
+    .step-number { width: 36px; height: 34px; flex-basis: 36px; color: var(--canvas); background: var(--peach); border: 2px solid var(--paper); border-radius: 5px 2px 6px 3px; box-shadow: 2px 2px 0 var(--paper); font-size: 12px; }
+    .step-card.is-complete .step-number { color: var(--canvas); background: var(--green); transform: rotate(-4deg); }
+    .step-card.is-complete .step-number::before { content: "✓"; font-size: 18px; }
+    .step-card.is-complete .step-number { font-size: 0; }
+    .step-card.is-complete .step-hint { color: var(--green); }
+    .field-label { font-size: 18px; letter-spacing: 0; text-transform: none; }
+    .step-hint { color: var(--muted); font-size: 12px; }
+    .chips { gap: 12px; }
+    .chip { min-height: 45px; padding: 10px 15px; color: var(--paper); background: var(--surface-raised); border: 2px solid rgba(248, 244, 239, .7); border-radius: 4px 8px 3px 6px; box-shadow: 2px 2px 0 rgba(248, 244, 239, .65); font-size: 14px; }
+    .chip:nth-child(2n) { transform: rotate(.45deg); }
+    .chip:nth-child(3n) { transform: rotate(-.45deg); }
+    .chip:hover { background: #30333a; }
+    .chip.active { color: var(--canvas); background: var(--peach); border-color: var(--paper); box-shadow: 3px 4px 0 var(--paper); }
+
+    .doodle-select { border-radius: 4px 9px 3px 7px; box-shadow: 3px 4px 0 var(--paper); transform: rotate(-.18deg); transition: transform .16s ease, box-shadow .16s ease; }
+    .doodle-select::before { content: ""; position: absolute; z-index: 1; right: 55px; bottom: -7px; left: 18px; height: 7px; border-top: 2px dashed var(--blue); border-radius: 50%; pointer-events: none; transform: rotate(.4deg); }
+    .doodle-select:hover { transform: translate(-1px, -1px) rotate(.12deg); box-shadow: 4px 5px 0 var(--paper); }
+    .doodle-select:focus-within { outline: 3px solid var(--blue); outline-offset: 5px; transform: rotate(0); }
+    .select-like { min-height: 58px; color: var(--muted); background-color: var(--surface-raised); border: 2px solid var(--paper); border-radius: inherit; }
+    .doodle-select-trigger:hover, .doodle-select-trigger:active { background: var(--surface-raised); box-shadow: none; transform: none; }
+    .doodle-select-arrow { color: var(--canvas); background: var(--peach); border: 2px solid var(--paper); border-radius: 5px 2px 6px 3px; box-shadow: 2px 2px 0 var(--paper); }
+    .doodle-options { border: 2px solid var(--paper); border-radius: 3px 8px 4px 6px; box-shadow: 4px 5px 0 var(--paper); transform: rotate(.12deg); }
+    .action-card { padding: 16px; border-radius: 4px 10px 5px 8px; }
+    .choice-recap { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 13px; padding: 0; list-style: none; }
+    .choice-recap li { padding: 6px 9px; color: var(--paper); background: var(--surface-raised); border: 1px dashed rgba(248,244,239,.55); border-radius: 3px 7px 4px 6px; font-size: 11px; font-weight: 800; }
+    .finder .primary { color: var(--canvas); background: var(--peach); border: 2px solid var(--paper); }
+    .privacy { color: var(--muted); font-size: 12px; }
+
+    .results { min-height: auto; padding: 110px 0 130px; border-top: 2px solid rgba(248, 244, 239, .9); }
+    .section-head { align-items: end; margin-bottom: 38px; }
+    .section-index { margin-bottom: 18px !important; }
+    .ghost { color: var(--paper); background: var(--surface); border: 2px solid var(--paper); }
+    .cards { gap: 24px; }
+    .card { display: flex; flex-direction: column; overflow: visible; border-radius: 4px 10px 5px 12px; }
+    .card.card-deal-in { animation: card-deal-in .42s cubic-bezier(.2,.8,.2,1) both; animation-delay: calc(var(--card-index, 0) * 70ms); }
+    .card.card-leave { pointer-events: none; animation: card-leave .2s ease both; }
+    .card:nth-child(1) { transform: rotate(-.5deg); }
+    .card:nth-child(2) { transform: rotate(.65deg); }
+    .card:nth-child(3) { transform: rotate(-.25deg); }
+    .card:hover { transform: translateY(-7px) rotate(0); }
+    .food-art { flex-shrink: 0; height: 205px; margin: 10px 10px 0; border: 2px solid var(--paper); background: #34363b; overflow: hidden; }
+    .food-art::after { background: linear-gradient(to bottom, transparent 54%, rgba(31,33,37,.54)); }
+    .food-art img { filter: saturate(.83) contrast(1.04); }
+    .tag { top: 12px; left: 12px; color: var(--canvas); background: var(--peach); border: 2px solid var(--paper); border-radius: 3px 7px 2px 5px; backdrop-filter: none; transform: rotate(-2deg); }
+    .pick-number { position: absolute; z-index: 2; top: 12px; right: 12px; padding: 6px 9px; color: var(--paper); background: var(--canvas); border: 2px solid var(--paper); box-shadow: 2px 2px 0 var(--peach); font-size: 11px; font-weight: 900; letter-spacing: .06em; transform: rotate(2deg); }
+    .card-body { display: flex; flex: 1; flex-direction: column; padding: 22px; }
+    .match { color: var(--green); font-size: 12px; letter-spacing: .04em; text-transform: none; }
+    .match::before { background: var(--green); box-shadow: none; }
+    .card h3 { font-size: 27px; letter-spacing: 0; }
+    .restaurant { margin: 7px 0 2px; color: var(--peach); font-size: 13px; font-weight: 900; }
+    .price { color: var(--peach); font-family: "Delius Swash Caps", cursive; font-size: 21px; }
+    .meta { color: var(--muted); line-height: 1.45; }
+    .quick-facts { display: flex; flex-wrap: wrap; gap: 7px; margin: 12px 0 15px; }
+    .quick-fact { padding: 5px 8px; color: var(--paper); border: 1px dashed rgba(248,244,239,.48); font-size: 11px; font-weight: 800; }
+    .reason { border-top: 2px dashed rgba(248,244,239,.34); color: var(--paper); }
+    .card-actions { gap: 12px; margin-top: auto; padding-top: 18px; }
+    .card-actions button { color: var(--canvas); background: var(--peach); }
+    .card-actions .reject { color: var(--paper); background: var(--surface); border: 2px solid var(--paper); }
+    @keyframes card-deal-in { from { opacity: 0; transform: translateY(28px) rotate(2deg) scale(.96); } to { opacity: 1; transform: translateY(0) rotate(0) scale(1); } }
+    @keyframes card-leave { to { opacity: 0; transform: translateX(-34px) rotate(-4deg) scale(.96); } }
+
+    footer { width: 100% !important; max-width: none; padding: 35px max(24px, calc((100vw - 1180px) / 2)) 44px; border-top: 2px solid var(--paper); color: var(--muted); background: var(--surface); text-align: left; }
+    footer a { color: var(--peach); }
+    .toast { color: var(--paper); background: var(--peach-deep); border-radius: 3px 8px 4px 7px; }
+    .toast span { color: #e9ddd9; }
+    .meal-overlay { background: rgba(15, 16, 19, .82); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+    .meal-dialog { width: min(760px, 100%); padding: 34px; border-radius: 7px 13px 5px 11px; text-align: left; transform: rotate(-.25deg); overflow: hidden; }
+    .meal-dialog::before, .meal-dialog::after { content: "✦"; position: absolute; color: var(--blue); font-family: "Delius Swash Caps", cursive; font-size: 34px; line-height: 1; transform: rotate(-14deg); }
+    .meal-dialog::before { top: 22px; left: 26px; }
+    .meal-dialog::after { content: "~ ~ ~"; right: 34px; bottom: 21px; color: var(--green); font-size: 22px; letter-spacing: 5px; transform: rotate(-5deg); }
+    .dialog-close { color: var(--paper); background: var(--surface); border: 2px solid var(--paper); }
+    .meal-celebration { display: grid; grid-template-columns: minmax(220px, .9fr) minmax(280px, 1.1fr); gap: 30px; align-items: center; }
+    .chosen-photo-wrap { position: relative; padding: 9px; background: var(--paper); border: 2px solid var(--paper); box-shadow: 7px 8px 0 var(--peach); transform: rotate(-2deg); }
+    .chosen-photo { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: 2px solid var(--canvas); filter: saturate(.9) contrast(1.04); }
+    .photo-tape { position: absolute; top: -14px; left: 50%; width: 86px; height: 27px; background: rgba(73, 182, 229, .82); transform: translateX(-50%) rotate(3deg); }
+    .meal-copy { position: relative; z-index: 1; }
+    .meal-copy .eyebrow { display: inline-block; margin: 0 0 9px; transform: rotate(-1.5deg); }
+    .meal-dialog h2 { margin: 0; font-size: clamp(46px, 7vw, 68px); letter-spacing: 0; }
+    .meal-dialog .chosen-meal { margin: 12px 0 4px; font-size: clamp(24px, 4vw, 34px); line-height: 1.15; }
+    .meal-dialog .dialog-copy { margin: 16px 0 20px; color: var(--paper); font-size: 14px; }
+    .meal-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; margin: 18px 0 0; }
+    .meal-fact { padding: 9px 11px; border: 2px dashed rgba(248,244,239,.48); border-radius: 4px 7px 3px 6px; }
+    .meal-fact span { display: block; color: var(--muted); font-size: 10px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+    .meal-fact strong { display: block; margin-top: 2px; color: var(--peach); font-size: 13px; overflow-wrap: anywhere; }
+    .dialog-action { display: block; margin: 20px 0 0 auto; color: var(--canvas); background: var(--peach); }
+    .results-controls { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; }
+    .results-controls .ghost { min-height: 44px; }
+    .empty-state { max-width: 720px; padding: 30px; }
+    .empty-state h3 { margin: 0 0 10px; font-size: 28px; }
+    .empty-state p { margin: 0 0 20px; color: var(--muted); line-height: 1.6; }
+    .empty-actions { display: flex; flex-wrap: wrap; gap: 11px; }
+    .source-note { margin: 22px 0 0; color: #aeb3bd; font-size: 12px; line-height: 1.6; }
+    .condition-actions { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 14px; }
+    .condition-actions button { min-height: 44px; padding: 6px 0; color: var(--peach); background: transparent; border: 0; box-shadow: none; font-size: 14px; text-decoration: underline; text-underline-offset: 4px; }
+    .undo-bar { position: sticky; top: 90px; z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 0 0 26px; padding: 12px 16px; background: var(--surface); border: 2px dashed var(--peach); border-radius: 5px; }
+    .undo-bar p { margin: 0; font-size: 14px; }
+    .undo-bar button { flex-shrink: 0; min-height: 44px; color: var(--canvas); background: var(--peach); border: 2px solid var(--paper); }
+    #chosen-details { color: var(--peach); line-height: 1.6; }
+    button:focus-visible, select:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px solid var(--blue); outline-offset: 5px; }
+    .doodle-select .select-like:focus-visible { outline: 0; }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; gap: 54px; padding-top: 135px; }
+      .hero-board { width: min(620px, 100%); min-height: 420px; }
+      .cards { grid-template-columns: 1fr 1fr; }
+      .card:last-child { grid-column: 1 / -1; width: calc(50% - 12px); justify-self: center; }
+    }
+
+    @media (max-width: 580px) {
+      .shell { width: min(100% - 28px, 1180px); }
+      header.shell { width: 100%; padding: 13px 14px; }
+      nav { gap: 8px; }
+      nav button { padding: 9px 11px; font-size: 12px; }
+      .brand { font-size: 18px; }
+      .hero { min-height: auto; padding: 122px 0 84px; }
+      h1 { font-size: clamp(47px, 14.5vw, 64px); overflow-wrap: normal; }
+      .hero h1::after { height: 9px; border-top-width: 3px; }
+      .intro { font-size: 16px; }
+      .hero-board { min-height: 0; padding: 16px; }
+      .board-photo { height: 190px; }
+      .board-notes { gap: 7px; }
+      .board-note { min-height: 70px; padding: 7px; font-size: 12px; }
+      .decision-section, .results { padding: 82px 0 94px; }
+      .finder-intro h2, .section-head h2 { font-size: 38px; }
+      .step-card, .step-card:nth-of-type(2), .step-card:nth-of-type(3), .step-card:nth-of-type(4) { padding: 19px 17px 21px; transform: none; }
+      .field-label { font-size: 16px; }
+      .cards { grid-template-columns: 1fr; }
+      .card, .card:nth-child(1), .card:nth-child(2), .card:nth-child(3), .card:last-child { grid-column: auto; width: 100%; transform: none; }
+      .food-art { height: 190px; }
+      .section-head { align-items: flex-start; margin-bottom: 30px; }
+      .section-head .ghost { align-self: stretch; }
+      .results-controls { width: 100%; justify-content: stretch; }
+      .results-controls .ghost { flex: 1 1 145px; }
+      .section-head { gap: 20px; }
+      .choice-recap { margin-bottom: 12px; }
+      .card-actions { flex-direction: column; }
+      .card-actions button { width: 100%; min-height: 46px; }
+      .card-actions .reject { min-height: 42px; }
+      .empty-actions > * { flex: 1 1 100%; }
+      .meal-dialog { max-height: calc(100vh - 24px); padding: 42px 20px 26px; overflow-y: auto; }
+      .meal-celebration { grid-template-columns: 1fr; gap: 25px; }
+      .chosen-photo-wrap { width: min(270px, calc(100% - 18px)); margin: 0 auto; }
+      .chosen-photo { aspect-ratio: 16 / 10; }
+      .meal-copy { text-align: center; }
+      .meal-facts { text-align: left; }
+      .meal-dialog .dialog-copy { margin-right: auto; margin-left: auto; }
+      .dialog-action { width: auto; min-width: 180px; }
+      .meal-dialog::before { left: 18px; }
+      .meal-dialog::after { display: none; }
+      footer { padding: 30px 18px 38px; text-align: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) { button, .button, .card, .food-art img { transition: none; animation: none !important; } }
+  </style>
+</head>
+<body>
+  <svg aria-hidden="true" width="0" height="0" style="position:absolute;overflow:hidden">
+    <defs>
+      <symbol id="icon-utensils" viewBox="0 0 24 24"><path d="m16 2-2.3 2.3a2.4 2.4 0 0 0 0 3.4l2.6 2.6a2.4 2.4 0 0 0 3.4 0L22 8"/><path d="m15 15-3.3-3.3"/><path d="M4.5 3.5 11 10l-2 2-3-1-4-4z"/><path d="m2 22 6.5-6.5"/><path d="m15.5 15.5 6.5 6.5"/></symbol>
+      <symbol id="icon-flame" viewBox="0 0 24 24"><path d="M12 22c4.4 0 8-3.6 8-8 0-3.7-2-6.5-5-9 .1 2-1 4-2.5 5.2.2-3.4-1.6-6.3-4-8.2.1 3-1.8 5-3.2 7.2A8.4 8.4 0 0 0 4 14c0 4.4 3.6 8 8 8Z"/><path d="M9.5 18.5c-1.2-1.3-1-3.4.3-4.6.8-.7 1.5-1.6 1.7-2.9 1.8 1.4 3 3.1 3 5a3 3 0 0 1-5 2.5Z"/></symbol>
+      <symbol id="icon-leaf" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 18 2 18 2c1 5.5-1 10-5.5 11.5"/><path d="M2 21c0-3 1.9-5.4 5.1-6.9C9.2 13.1 12 13 16 13"/></symbol>
+      <symbol id="icon-soup" viewBox="0 0 24 24"><path d="M4 11h16a1 1 0 0 1 1 1v.5A7.5 7.5 0 0 1 13.5 20h-3A7.5 7.5 0 0 1 3 12.5V12a1 1 0 0 1 1-1Z"/><path d="M8 7c0-1 1-1 1-2s-1-1-1-2"/><path d="M12 7c0-1 1-1 1-2s-1-1-1-2"/><path d="M16 7c0-1 1-1 1-2s-1-1-1-2"/><path d="M5 20h14"/></symbol>
+      <symbol id="icon-sparkles" viewBox="0 0 24 24"><path d="m12 3-1.2 3.2L7.5 7.5l3.3 1.3L12 12l1.2-3.2 3.3-1.3-3.3-1.3Z"/><path d="m19 14-.8 2.2-2.2.8 2.2.8L19 20l.8-2.2 2.2-.8-2.2-.8Z"/><path d="m5 13-.7 1.8-1.8.7 1.8.7L5 18l.7-1.8 1.8-.7-1.8-.7Z"/></symbol>
+      <symbol id="icon-rice" viewBox="0 0 24 24"><path d="M5 11h14a1 1 0 0 1 1 1 8 8 0 0 1-16 0 1 1 0 0 1 1-1Z"/><path d="M7 11a5 5 0 0 1 10 0"/><path d="M8 21h8"/></symbol>
+      <symbol id="icon-noodles" viewBox="0 0 24 24"><path d="M5 11h14a1 1 0 0 1 1 1 8 8 0 0 1-16 0 1 1 0 0 1 1-1Z"/><path d="M9 3v8"/><path d="M13 3v8"/><path d="M17 3v8"/><path d="M8 21h8"/></symbol>
+      <symbol id="icon-sandwich" viewBox="0 0 24 24"><path d="M4 10a8 5 0 0 1 16 0Z"/><path d="M4 10v3h16v-3"/><path d="m5 13 3 3 4-3 4 3 3-3"/><path d="M5 16v2a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2"/></symbol>
+      <symbol id="icon-salad" viewBox="0 0 24 24"><path d="M7 10h10"/><path d="M6 10a6 6 0 0 0 12 0"/><path d="M8 20h8"/><path d="M12 10c-3-1-4-4-2-6 2 1 3 3 2 6Z"/><path d="M12 10c3-1 4-4 2-6-2 1-3 3-2 6Z"/></symbol>
+      <symbol id="icon-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></symbol>
+      <symbol id="icon-refresh" viewBox="0 0 24 24"><path d="M20 7h-5V2"/><path d="M20 7a8 8 0 1 0 1 8"/></symbol>
+      <symbol id="icon-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+      <symbol id="icon-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+    </defs>
+  </svg>
+  <div class="blob one" aria-hidden="true"></div>
+  <div class="blob two" aria-hidden="true"></div>
+
+  <header class="shell">
+    <div class="brand"><span class="brand-mark"><svg class="icon"><use href="#icon-utensils"/></svg></span> Kinraidee</div>
+    <nav aria-label="Main navigation">
+      <button type="button">Start choosing</button>
+    </nav>
+  </header>
+  <aside class="section-nav" aria-label="Page sections">
+    <button class="section-dot active" type="button" data-section="home" aria-label="Go to introduction"><span>Intro</span></button>
+    <button class="section-dot" type="button" data-section="decision" aria-label="Go to meal choices"><span>Choose</span></button>
+    <button class="section-dot" id="results-dot" type="button" data-section="results" aria-label="Go to recommendations" hidden><span>Results</span></button>
+  </aside>
+
+  <main>
+    <section class="hero shell is-active" id="home">
+      <div class="hero-copy">
+        <p class="eyebrow">Can’t decide? Let’s sketch it out.</p>
+        <h1 id="hero-title">What should we eat today?</h1>
+        <p class="intro">Four quick picks. Up to three tasty matches. Zero account required. Tell us the vibe and we’ll turn the blank page into dinner.</p>
+        <div class="local-note"><svg class="icon"><use href="#icon-sparkles"/></svg>Curated for everyday meals around MFU</div>
+        <button class="scroll-cue" id="explore-flow" type="button"><svg class="icon"><use href="#icon-arrow"/></svg>Build my shortlist</button>
+      </div>
+      <div class="hero-board glass paper border border-2 shadow" aria-label="A sample meal mood board">
+        <div class="board-title"><span>Tonight’s rough plan</span><span class="board-scribble">maybe this? ↘</span></div>
+        <div class="board-photo">
+          <img src="assets/food/khao-soi.jpg" alt="A bowl of Northern Thai khao soi noodles">
+          <span>comfort in a bowl</span>
+        </div>
+        <div class="board-notes" aria-hidden="true">
+          <div class="board-note"><img src="assets/food/khao-man-gai.jpg" alt=""><span>under ฿100</span></div>
+          <div class="board-note"><img src="assets/food/boat-noodles.jpg" alt=""><span>near MFU</span></div>
+          <div class="board-note"><img src="assets/food/korean-fried-chicken.jpg" alt=""><span>crispy + cozy</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="decision-section shell" id="decision">
+      <form class="finder" id="finder">
+        <div class="finder-intro">
+          <p class="section-index">Step 02 · Circle what feels right</p>
+          <h2>Sketch out your meal mood</h2>
+          <p>One quick choice at a time. We’ll keep the shortlist tidy.</p>
+          <p class="restaurant" id="dataset-note">45 meal ideas around MFU</p>
+          <div class="step-track" aria-label="Question progress"><span class="active"></span><span></span><span></span><span></span></div>
+          <div class="progress-copy" aria-live="polite"><span id="progress-label">0 of 4 answered</span><strong id="progress-prompt">Choose your budget</strong></div>
+        </div>
+
+        <section class="step-card glass paper border border-2 shadow" aria-labelledby="budget-label">
+          <div class="step-head">
+            <span class="step-number">01</span>
+            <span class="field-label" id="budget-label">Choose your budget</span>
+            <span class="step-hint">Required</span>
+          </div>
+          <div class="chips" aria-label="Budget options" data-choice-group="budget">
+            <button class="chip" type="button" data-value="Under ฿50">Under ฿50</button>
+            <button class="chip" type="button" data-value="฿50–100">฿50–100</button>
+            <button class="chip" type="button" data-value="฿101–200">฿101–200</button>
+          </div>
+        </section>
+
+        <section class="step-card glass paper border border-2 shadow" id="mood-step" aria-labelledby="taste-label" hidden>
+          <div class="step-head">
+            <span class="step-number">02</span>
+            <span class="field-label" id="taste-label">Pick your mood</span>
+            <span class="step-hint">Choose one</span>
+          </div>
+          <div class="chips" aria-label="Taste options" data-choice-group="mood">
+            <button class="chip" type="button" data-value="Spicy"><svg class="icon"><use href="#icon-flame"/></svg>Spicy</button>
+            <button class="chip" type="button" data-value="Fresh"><svg class="icon"><use href="#icon-leaf"/></svg>Fresh</button>
+            <button class="chip" type="button" data-value="Comforting"><svg class="icon"><use href="#icon-soup"/></svg>Comforting</button>
+            <button class="chip" type="button" data-value="Surprise me"><svg class="icon"><use href="#icon-sparkles"/></svg>Surprise me</button>
+          </div>
+        </section>
+
+        <section class="step-card glass paper border border-2 shadow" id="type-step" aria-labelledby="type-label" hidden>
+          <div class="step-head">
+            <span class="step-number">03</span>
+            <span class="field-label" id="type-label">Choose food type</span>
+            <span class="step-hint">Keeps results relevant</span>
+          </div>
+          <div class="chips" aria-label="Food type options" data-choice-group="type">
+            <button class="chip" type="button" data-value="Rice dishes"><svg class="icon"><use href="#icon-rice"/></svg>Rice</button>
+            <button class="chip" type="button" data-value="Noodles or pasta"><svg class="icon"><use href="#icon-noodles"/></svg>Noodles / pasta</button>
+            <button class="chip" type="button" data-value="Fast food"><svg class="icon"><use href="#icon-sandwich"/></svg>Fast food</button>
+            <button class="chip" type="button" data-value="Soup or hot pot"><svg class="icon"><use href="#icon-soup"/></svg>Soup</button>
+            <button class="chip" type="button" data-value="Light and healthy"><svg class="icon"><use href="#icon-salad"/></svg>Light</button>
+            <button class="chip" type="button" data-value="Any food type"><svg class="icon"><use href="#icon-sparkles"/></svg>Anything</button>
+          </div>
+        </section>
+
+        <section class="step-card glass paper border border-2 shadow" id="area-step" aria-labelledby="area-label" hidden>
+          <div class="step-head">
+            <span class="step-number">04</span>
+            <span class="field-label" id="area-label">Select your area</span>
+            <span class="step-hint">Manual location</span>
+          </div>
+          <div class="doodle-select border border-2" id="area-select-shell">
+            <button class="select-like input-block doodle-select-trigger" id="area-select" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="area-options" aria-labelledby="area-label area-select-value">
+              <span id="area-select-value">Choose an area</span>
+            </button>
+            <span class="doodle-select-arrow" aria-hidden="true"></span>
+            <ul class="doodle-options border border-2" id="area-options" role="listbox" aria-labelledby="area-label" hidden>
+              <li class="doodle-option" role="option" data-value="Any area near MFU" aria-selected="false" tabindex="-1">Any area near MFU</li>
+              <li class="doodle-option" role="option" data-value="MFU campus and front gate" aria-selected="false" tabindex="-1">MFU campus and front gate</li>
+              <li class="doodle-option" role="option" data-value="Dormitory area" aria-selected="false" tabindex="-1">Dormitory area</li>
+              <li class="doodle-option" role="option" data-value="Ban Du and Nang Lae" aria-selected="false" tabindex="-1">Ban Du and Nang Lae</li>
+            </ul>
+          </div>
+        </section>
+
+        <div class="action-card glass paper border border-2 shadow" id="action-step" hidden>
+          <ul class="choice-recap" id="choice-recap" aria-label="Your selected conditions"></ul>
+          <button class="primary" id="show-choices" type="submit">Show my choices <svg class="icon"><use href="#icon-arrow"/></svg></button>
+          <p class="privacy">No sign-in. Conditions and rejected choices stay only in this open page session.</p>
+        </div>
+      </form>
+    </section>
+
+    <section class="results shell" id="results" hidden>
+      <div class="section-head">
+        <div><p class="section-index">Step 03 · Your shortlist</p><h2 id="results-title">Ideas for your meal</h2><p id="result-summary">Choose your conditions to begin.</p>
+          <div class="condition-actions" id="result-condition-actions" aria-label="Manage meal choices">
+            <button id="results-edit" type="button">Edit conditions</button>
+            <button id="results-reset" type="button">Start new session</button>
+          </div>
+        </div>
+        <div class="results-controls">
+          <button class="ghost" id="shuffle-results" type="button"><svg class="icon"><use href="#icon-refresh"/></svg>Shuffle shortlist</button>
+        </div>
+      </div>
+
+      <div class="undo-bar" id="undo-bar" hidden>
+        <p id="undo-message" role="status"></p>
+        <button id="undo-rejection" type="button">Undo</button>
+      </div>
+      <div class="cards" id="results-grid" aria-live="polite"></div>
+      <p class="source-note" id="results-note" hidden>Illustrative images, not actual restaurant servings. Taste and area labels are unverified; prices and waits are estimates. Confirm details with the restaurant.</p>
+      <div class="empty-state glass paper border border-2 shadow" id="empty-state" hidden>
+        <h3 id="empty-title">No matches yet</h3>
+        <p id="empty-copy">Try relaxing one condition or changing the area.</p>
+        <div class="empty-actions">
+          <button type="button" id="empty-edit">Edit conditions</button>
+          <button class="ghost" type="button" id="empty-reset">Start new session</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="shell">
+    Wireframe prototype · General recommendations without account registration<br>
+    Restaurant references: <a href="https://www.mfu.ac.th/life-on-campus/lifeoncampus-facility/mfu-foodcenter.html">MFU Food Center</a>,
+    <a href="https://www.mfu.ac.th/quickmenu/parent/parent-faqs.html">MFU campus facilities</a>,
+    <a href="https://www.wongnai.com/businesses?domain=1&amp;nearBusinessId=473252&amp;page.number=1&amp;page.size=10&amp;rerank=false">Wongnai near MFU</a>,
+    <a href="https://www.tripadvisor.com/RestaurantsNear-g297920-d7888566-Mae_Fah_Luang_University-Chiang_Rai_Chiang_Rai_Province.html">Tripadvisor</a>, and
+    <a href="https://www.lemon8-app.com/%40jojajojo_/7490228113733861895?region=us">Lemon8 local roundup</a>.<br>
+    Restaurant availability, travel time, and prices are prototype estimates and should be checked before visiting. The recommendation dataset uses 45 generated reference images (9 per food type); they do not show each restaurant's actual serving.<br>
+    Photos: <a href="https://commons.wikimedia.org/wiki/File:Khao_Soi_01.jpg">Douglas Perkins</a>,
+    <a href="https://commons.wikimedia.org/wiki/File:Kao_Rad_Pad_Kra-pao_-_Unithai_2023-07-08.jpg">Andy Li</a>, and
+    <a href="https://commons.wikimedia.org/wiki/File:Thai_suki,_Thai_hot_pot_preparation,_Dining_in_Bangkok,_Thailand.jpg">Vyacheslav Argenberg</a>,
+    <a href="https://commons.wikimedia.org/wiki/File:Hamburger_and_fries.jpg">Petey21</a>,
+    <a href="https://commons.wikimedia.org/wiki/File:Pasta_dish_with_rice_on_white_ceramic_plate.jpg">Tookapic</a>, and
+    <a href="https://commons.wikimedia.org/wiki/File:Salad_Bowl_(Unsplash).jpg">Henrique Félix</a>,
+    <a href="https://commons.wikimedia.org/wiki/File:Boat_noodles.jpg">Boat noodles</a>,
+    <a href="https://commons.wikimedia.org/wiki/File:Korean_fried_chicken_240206.jpg">Startandstar</a>,
+    <a href="https://commons.wikimedia.org/wiki/File:Chashu_Ramen_with_Egg.jpg">Ceeseven</a>,
+    <a href="https://commons.wikimedia.org/wiki/File:Thai_spring_rolls.jpg">Ruth Hartnup</a>,
+    <a href="https://commons.wikimedia.org/wiki/File:Nong%27s_Khao_Man_Gai%2C_Portland%2C_2026.jpg">Another Believer</a>, and
+    <a href="https://commons.wikimedia.org/wiki/File:Khao_Kha_Muu_-_Nong%27s_Khao_Man_Gai.jpg">Simon Tsu</a> via Wikimedia Commons.<br>
+    Hand-drawn annotations: <a href="https://github.com/rough-stuff/rough-notation">Rough Notation</a> (MIT license). Paper components and utilities: <a href="https://www.getpapercss.com">PaperCSS</a> (ISC license).
+  </footer>
+  <div class="meal-overlay" id="meal-overlay" role="dialog" aria-modal="true" aria-labelledby="meal-dialog-title" hidden>
+    <div class="meal-dialog glass paper border border-2 shadow">
+      <button class="dialog-close" id="dialog-close" type="button" aria-label="Close confirmation"><svg class="icon"><use href="#icon-x"/></svg></button>
+      <div class="meal-celebration">
+        <div class="chosen-photo-wrap">
+          <span class="photo-tape" aria-hidden="true"></span>
+          <img class="chosen-photo" id="chosen-photo" src="" alt="">
+        </div>
+        <div class="meal-copy">
+          <p class="eyebrow">Great choice — your meal is decided!</p>
+          <h2 id="meal-dialog-title">Bon appétit</h2>
+          <p class="chosen-meal" id="chosen-meal"></p>
+          <p class="dialog-copy">No more scrolling. This is what you are eating today.</p>
+          <div class="meal-facts" aria-label="Chosen meal details">
+            <div class="meal-fact"><span>From</span><strong id="chosen-restaurant"></strong></div>
+            <div class="meal-fact"><span>Estimated price</span><strong id="chosen-price"></strong></div>
+            <div class="meal-fact"><span>Area</span><strong id="chosen-area"></strong></div>
+            <div class="meal-fact"><span>Estimated wait</span><strong id="chosen-wait"></strong></div>
+          </div>
+          <button class="dialog-action" id="dialog-done" type="button">Yum, let's eat!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="toast glass" id="toast" role="status" aria-live="polite"><strong id="toast-title"></strong><span id="toast-message"></span></div>
+
+  <script src="assets/vendor/rough-notation.iife.js"></script>
+  <script>
+    const state = {
+      budget: null,
+      mood: null,
+      type: null,
+      area: null,
+      rejected: new Set(),
+      seen: new Set(),
+      undo: null,
+      shown: []
+    };
+    const menuCatalog = [
+      { type: "Rice dishes", name: "Pad Kra Pao", restaurant: "Go Rat Carte Food", price: "≈฿55", area: "300 m from MFU", wait: "5–10 min", moods: ["Spicy", "Comforting"], areaKey: null, image: "assets/food/datasets/rice/pad-kra-pao.jpg" },
+      { type: "Rice dishes", name: "Chicken Fried Rice", restaurant: "MFU Food Center", price: "≈฿45", area: "MFU campus", wait: "5–10 min", moods: ["Comforting"], areaKey: "campus", image: "assets/food/datasets/rice/chicken-fried-rice.jpg" },
+      { type: "Rice dishes", name: "Khao Man Gai", restaurant: "Chakrapad Chicken Rice", price: "≈฿50", area: "In front of MFU", wait: "5–10 min", moods: ["Comforting"], areaKey: "campus", image: "assets/food/datasets/rice/khao-man-gai.jpg" },
+      { type: "Rice dishes", name: "Fried Pork Rice Bowl", restaurant: "Mee Cham Kitchen", price: "≈฿65", area: "In front of MFU", wait: "10–15 min", moods: ["Comforting"], areaKey: "campus", image: "assets/food/datasets/rice/fried-pork-rice.jpg" },
+      { type: "Rice dishes", name: "Korean Chicken Rice", restaurant: "Chick Seoul MFU", price: "≈฿69", area: "Old Kochaphon Road", wait: "10–15 min", moods: ["Comforting"], areaKey: "dorm", image: "assets/food/datasets/rice/korean-chicken-rice.jpg" },
+      { type: "Rice dishes", name: "Buta Pork Rice Bowl", restaurant: "Chick Seoul MFU", price: "≈฿69", area: "Old Kochaphon Road", wait: "10–15 min", moods: ["Comforting"], areaKey: "dorm", image: "assets/food/datasets/rice/buta-pork-rice.jpg" },
+      { type: "Rice dishes", name: "Braised Pork Leg Rice", restaurant: "Mue Ek", price: "≈฿65", area: "Around MFU", wait: "5–10 min", moods: ["Comforting"], areaKey: null, image: "assets/food/datasets/rice/braised-pork-leg-rice.jpg" },
+      { type: "Rice dishes", name: "Roast Duck Rice", restaurant: "Anas Roast Duck", price: "≈฿75", area: "Around MFU", wait: "10–15 min", moods: ["Comforting"], areaKey: null, image: "assets/food/datasets/rice/roast-duck-rice.jpg" },
+      { type: "Rice dishes", name: "Southern Curry Rice", restaurant: "Kin Gaeng", price: "≈฿60", area: "Around MFU", wait: "5–10 min", moods: ["Spicy", "Comforting"], areaKey: null, image: "assets/food/datasets/rice/southern-curry-rice.jpg" },
+
+      { type: "Noodles or pasta", name: "Khao Soi", restaurant: "MFU Food Center", price: "≈฿65", area: "MFU campus", wait: "10–15 min", moods: ["Spicy", "Comforting"], areaKey: "campus", image: "assets/food/datasets/noodles/khao-soi.jpg" },
+      { type: "Noodles or pasta", name: "Tom Yum Noodles", restaurant: "Teaw Tee Lek", price: "≈฿60", area: "Around MFU", wait: "5–10 min", moods: ["Spicy", "Comforting"], areaKey: null, image: "assets/food/datasets/noodles/tom-yum-noodles.jpg" },
+      { type: "Noodles or pasta", name: "Pad Thai", restaurant: "Mue Ek", price: "≈฿60", area: "Around MFU", wait: "10–15 min", moods: ["Comforting"], areaKey: null, image: "assets/food/datasets/noodles/pad-thai.jpg" },
+      { type: "Noodles or pasta", name: "Spaghetti Kee Mao", restaurant: "MFU Hospital Dining", price: "≈฿75", area: "MFU Medical Center", wait: "10–15 min", moods: ["Spicy", "Comforting"], areaKey: "campus", image: "assets/food/datasets/noodles/spaghetti-kee-mao.jpg" },
+      { type: "Noodles or pasta", name: "Boat Noodles", restaurant: "Ko Heng Boat Noodle", price: "≈฿55", area: "Ban Du · about 1.6 km", wait: "10–15 min", moods: ["Comforting"], areaKey: "ban-du", image: "assets/food/datasets/noodles/boat-noodles.jpg" },
+      { type: "Noodles or pasta", name: "Dry Egg Noodles", restaurant: "Teaw Tee Lek", price: "≈฿55", area: "Around MFU", wait: "5–10 min", moods: ["Comforting"], areaKey: null, image: "assets/food/datasets/noodles/dry-egg-noodles.jpg" },
+      { type: "Noodles or pasta", name: "Chashu Ramen", restaurant: "Haji-Q", price: "≈฿89", area: "Around MFU", wait: "10–15 min", moods: ["Comforting"], areaKey: null, image: "assets/food/datasets/noodles/chashu-ramen.jpg" },
+      { type: "Noodles or pasta", name: "Roast Duck Egg Noodles", restaurant: "Anas Roast Duck", price: "≈฿75", area: "Around MFU", wait: "10–15 min", moods: ["Comforting"], areaKey: null, image: "assets/food/datasets/noodles/roast-duck-egg-noodles.jpg" },
+      { type: "Noodles or pasta", name: "Je Haeng Noodles", restaurant: "Je Haeng Noodle Shop", price: "≈฿45", area: "Near the MFU bus terminal", wait: "5–10 min", moods: ["Comforting"], areaKey: "campus", image: "assets/food/datasets/noodles/je-haeng-noodles.jpg" },
+
+      { type: "Fast food", name: "Crispy Chicken Burger", restaurant: "The Little Things", price: "≈฿99", area: "About 1.6 km from MFU", wait: "10–15 min", moods: ["Comforting"], areaKey: null, image: "assets/food/datasets/fast-food/crispy-chicken-burger.jpg" },
+      { type: "Fast food", name: "Classic Beef Burger", restaurant: "The Little Things", price: "≈฿129", area: "About 1.6 km from MFU", wait: "10–15 min", moods: ["Comforting"], areaKey: null, image: "assets/food/datasets/fast-food/classic-beef-burger.jpg" },
+      { type: "Fast food", name: "Chicken Club Sandwich", restaurant: "The Little Things", price: "≈฿85", area: "About 1.6 km from MFU", wait: "10–15 min", moods: ["Comforting"], areaKey: null, image: "assets/food/datasets/fast-food/chicken-club-sandwich.jpg" },
+      { type: "Fast food", name: "Fish Burger Set", restaurant: "The Little Things", price: "≈฿109", area: "About 1.6 km from MFU", wait: "10–15 min", moods: ["Comforting"], areaKey: null, image: "assets/food/datasets/fast-food/fish-burger-set.jpg" },
+      { type: "Fast food", name: "Korean Fried Chicken", restaurant: "Chick Seoul MFU", price: "≈฿89", area: "Old Kochaphon Road", wait: "10–15 min", moods: ["Comforting"], areaKey: "dorm", image: "assets/food/datasets/fast-food/korean-fried-chicken.jpg" },
+      { type: "Fast food", name: "Chicken Curry Rice", restaurant: "Chick Seoul MFU", price: "≈฿109", area: "Old Kochaphon Road", wait: "10–15 min", moods: ["Spicy", "Comforting"], areaKey: "dorm", image: "assets/food/datasets/fast-food/chicken-curry-rice.jpg" },
+      { type: "Fast food", name: "Chick Set", restaurant: "Chick Seoul MFU", price: "≈฿159", area: "Old Kochaphon Road", wait: "15–20 min", moods: ["Comforting"], areaKey: "dorm", image: "assets/food/datasets/fast-food/chick-set.jpg" },
+      { type: "Fast food", name: "Crispy Chicken Special", restaurant: "Kin Gaeng", price: "≈฿69", area: "Around MFU", wait: "10–15 min", moods: ["Comforting"], areaKey: null, image: "assets/food/datasets/fast-food/crispy-chicken-special.jpg" },
+      { type: "Fast food", name: "Chicken Snack Box", restaurant: "Krua Lamduan", price: "≈฿59", area: "Lamduan dormitory zone", wait: "5–10 min", moods: ["Comforting"], areaKey: "dorm", image: "assets/food/datasets/fast-food/chicken-snack-box.jpg" },
+
+      { type: "Soup or hot pot", name: "Spicy Suki", restaurant: "Krua My Mum", price: "≈฿79", area: "Dormitory F zone", wait: "10–15 min", moods: ["Spicy", "Comforting"], areaKey: "dorm", image: "assets/food/datasets/soup/spicy-suki.jpg" },
+      { type: "Soup or hot pot", name: "Tom Yum Soup", restaurant: "MFU Food Center", price: "≈฿75", area: "MFU campus", wait: "10–15 min", moods: ["Spicy", "Comforting"], areaKey: "campus", image: "assets/food/datasets/soup/tom-yum-soup.jpg" },
+      { type: "Soup or hot pot", name: "Vegetable Hot Pot", restaurant: "YaiYai Buffet @ MFU", price: "≈฿99", area: "400 m from MFU", wait: "15–20 min", moods: ["Fresh", "Comforting"], areaKey: null, image: "assets/food/datasets/soup/vegetable-hot-pot.jpg" },
+      { type: "Soup or hot pot", name: "Mini Shabu Set", restaurant: "YaiYai Buffet @ MFU", price: "≈฿149", area: "400 m from MFU", wait: "15–20 min", moods: ["Comforting"], areaKey: null, image: "assets/food/datasets/soup/mini-shabu-set.jpg" },
+      { type: "Soup or hot pot", name: "Morning Rice Porridge", restaurant: "Front-Lotus Rice Porridge", price: "≈฿40", area: "Around MFU", wait: "5–10 min", moods: ["Comforting"], areaKey: null, image: "assets/food/datasets/soup/morning-rice-porridge.jpg" },
+      { type: "Soup or hot pot", name: "Salmon Rice Porridge", restaurant: "Kindon", price: "≈฿119", area: "Around MFU", wait: "10–15 min", moods: ["Comforting"], areaKey: null, image: "assets/food/datasets/soup/salmon-rice-porridge.jpg" },
+      { type: "Soup or hot pot", name: "Clear Noodle Soup", restaurant: "MFU Hospital Dining", price: "≈฿55", area: "MFU Medical Center", wait: "10–15 min", moods: ["Comforting"], areaKey: "campus", image: "assets/food/datasets/soup/clear-noodle-soup.jpg" },
+      { type: "Soup or hot pot", name: "Vegetarian Soup", restaurant: "MFU Hospital Dining", price: "≈฿45", area: "MFU Medical Center", wait: "10–15 min", moods: ["Fresh", "Comforting"], areaKey: "campus", image: "assets/food/datasets/soup/vegetarian-soup.jpg" },
+      { type: "Soup or hot pot", name: "Seafood Tom Yum", restaurant: "Im Aroi Seafood", price: "≈฿159", area: "Nang Lae · about 300 m", wait: "15–20 min", moods: ["Spicy", "Comforting"], areaKey: "ban-du", image: "assets/food/datasets/soup/seafood-tom-yum.jpg" },
+
+      { type: "Light and healthy", name: "Garden Salad Bowl", restaurant: "MFU Hospital Dining", price: "≈฿75", area: "MFU Medical Center", wait: "5–10 min", moods: ["Fresh"], areaKey: "campus", image: "assets/food/datasets/healthy/garden-salad-bowl.jpg" },
+      { type: "Light and healthy", name: "Grilled Chicken Salad", restaurant: "Kin Gaeng", price: "≈฿95", area: "Around MFU", wait: "10–15 min", moods: ["Fresh"], areaKey: null, image: "assets/food/datasets/healthy/grilled-chicken-salad.jpg" },
+      { type: "Light and healthy", name: "Fresh Spring Rolls", restaurant: "MFU Food Center", price: "≈฿65", area: "MFU campus", wait: "5–10 min", moods: ["Fresh"], areaKey: "campus", image: "assets/food/datasets/healthy/fresh-spring-rolls.jpg" },
+      { type: "Light and healthy", name: "Healthy Grain Bowl", restaurant: "MFU Hospital Dining", price: "≈฿110", area: "MFU Medical Center", wait: "10–15 min", moods: ["Fresh"], areaKey: "campus", image: "assets/food/datasets/healthy/healthy-grain-bowl.jpg" },
+      { type: "Light and healthy", name: "Crispy Chicken Salad", restaurant: "Kin Gaeng", price: "≈฿89", area: "Around MFU", wait: "10–15 min", moods: ["Fresh"], areaKey: null, image: "assets/food/datasets/healthy/crispy-chicken-salad.jpg" },
+      { type: "Light and healthy", name: "Fresh Veg Rice Bowl", restaurant: "MFU Hospital Dining", price: "≈฿69", area: "MFU Medical Center", wait: "10–15 min", moods: ["Fresh"], areaKey: "campus", image: "assets/food/datasets/healthy/fresh-veg-rice-bowl.jpg" },
+      { type: "Light and healthy", name: "Fruit & Yogurt Cup", restaurant: "Ice Cream Workshop", price: "≈฿69", area: "200 m from MFU", wait: "5–10 min", moods: ["Fresh"], areaKey: null, image: "assets/food/datasets/healthy/fruit-yogurt-cup.jpg" },
+      { type: "Light and healthy", name: "Vegetarian Rice Plate", restaurant: "MFU Hospital Dining", price: "≈฿55", area: "MFU Medical Center", wait: "10–15 min", moods: ["Fresh"], areaKey: "campus", image: "assets/food/datasets/healthy/vegetarian-rice-plate.jpg" },
+      { type: "Light and healthy", name: "Teriyaki Mushroom Bowl", restaurant: "Kindon", price: "≈฿89", area: "Around MFU", wait: "10–15 min", moods: ["Fresh"], areaKey: null, image: "assets/food/datasets/healthy/teriyaki-mushroom-bowl.jpg" }
+    ];
+    let currentPool = [];
+    let toastTimer;
+    let resultsAnnotation;
+    let mealReturnFocus;
+
+    function setupDoodleAnnotations() {
+      if (!window.RoughNotation) return;
+      const { annotate, annotationGroup } = window.RoughNotation;
+      const animate = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      document.body.classList.add("rough-ready");
+      const heroAnnotation = annotate(document.getElementById("hero-title"), {
+        type: "underline", color: "#efcfc5", strokeWidth: 3, padding: [0, 2, 7, 2], animate, animationDuration: 650
+      });
+      const datasetAnnotation = annotate(document.getElementById("dataset-note"), {
+        type: "box", color: "#49b6e5", strokeWidth: 2, padding: 7, animate, animationDuration: 500
+      });
+      annotationGroup([heroAnnotation, datasetAnnotation]).show();
+    }
+
+    function annotateResults() {
+      if (!window.RoughNotation) return;
+      if (resultsAnnotation) resultsAnnotation.remove();
+      resultsAnnotation = window.RoughNotation.annotate(document.getElementById("results-title"), {
+        type: "bracket", brackets: ["bottom"], color: "#efcfc5", strokeWidth: 3, padding: 5,
+        animate: !window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+        animationDuration: 450
+      });
+      resultsAnnotation.show();
+    }
+
+    function reveal(id) {
+      const element = document.getElementById(id);
+      if (!element) return;
+      if (element.hidden) {
+        element.hidden = false;
+        element.classList.add("revealed");
+      }
+      if (id === "results") document.getElementById("results-dot").hidden = false;
+      const progressIndex = { "mood-step": 1, "type-step": 2, "area-step": 3 }[id];
+      if (progressIndex !== undefined) document.querySelectorAll(".step-track span")[progressIndex].classList.add("active");
+      if (id !== "results") {
+        requestAnimationFrame(() => {
+          // Use layout positions so the reveal animation does not shift the scroll target.
+          let top = element.offsetHeight / 2 - window.innerHeight / 2;
+          for (let parent = element; parent; parent = parent.offsetParent) top += parent.offsetTop;
+          window.scrollTo({ top, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
+        });
+      }
+    }
+
+    function announce(title, message) {
+      const toast = document.getElementById("toast");
+      document.getElementById("toast-title").textContent = title;
+      document.getElementById("toast-message").textContent = message;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove("show"), 3200);
+    }
+
+    function updateChoiceProgress() {
+      const choices = [state.budget, state.mood, state.type, state.area];
+      const answered = choices.filter(Boolean).length;
+      const prompts = ["Choose your budget", "Pick the mood", "Choose a food type", "Select an area", "Ready to find your meal!"];
+      document.getElementById("progress-label").textContent = answered + " of 4 answered";
+      document.getElementById("progress-prompt").textContent = prompts[answered];
+      document.querySelectorAll(".step-card").forEach((step, index) => {
+        const complete = Boolean(choices[index]);
+        step.classList.toggle("is-complete", complete);
+        const hint = step.querySelector(".step-hint");
+        if (!hint) return;
+        if (!hint.dataset.default) hint.dataset.default = hint.textContent;
+        hint.textContent = complete ? "Picked" : hint.dataset.default;
+      });
+      document.querySelectorAll(".step-track span").forEach((segment, index) => segment.classList.toggle("active", index < Math.max(1, answered)));
+      document.getElementById("choice-recap").innerHTML = choices.filter(Boolean).map(choice => "<li>" + choice + "</li>").join("");
+    }
+
+    function openMealOverlay(item) {
+      clearUndo();
+      mealReturnFocus = document.activeElement;
+      document.getElementById("chosen-meal").textContent = item.name;
+      const chosenPhoto = document.getElementById("chosen-photo");
+      chosenPhoto.src = item.image;
+      chosenPhoto.alt = item.name + " selected from " + item.restaurant;
+      document.getElementById("chosen-restaurant").textContent = item.restaurant;
+      document.getElementById("chosen-price").textContent = item.price;
+      document.getElementById("chosen-area").textContent = item.area;
+      document.getElementById("chosen-wait").textContent = item.wait;
+      document.getElementById("meal-overlay").hidden = false;
+      document.body.style.overflow = "hidden";
+      document.getElementById("dialog-done").focus();
+      document.querySelectorAll("header, main, footer, .section-nav").forEach(element => { element.inert = true; });
+    }
+
+    function closeMealOverlay() {
+      document.getElementById("meal-overlay").hidden = true;
+      document.querySelectorAll("header, main, footer, .section-nav").forEach(element => { element.inert = false; });
+      document.body.style.overflow = "";
+      mealReturnFocus?.focus();
+    }
+
+    function itemId(item) {
+      return item.name + "::" + item.restaurant;
+    }
+
+    function priceNumber(item) {
+      return Number(item.price.replace(/[^0-9]/g, ""));
+    }
+
+    function matchesBudget(item) {
+      const price = priceNumber(item);
+      if (state.budget === "Under ฿50") return price < 50;
+      if (state.budget === "฿50–100") return price >= 50 && price <= 100;
+      if (state.budget === "฿101–200") return price >= 101 && price <= 200;
+      return false;
+    }
+
+    function matchesMood(item) {
+      if (state.mood === "Surprise me") return true;
+      return item.moods.includes(state.mood);
+    }
+
+    function matchesArea(item) {
+      if (state.area === "Any area near MFU") return true;
+      if (state.area === "MFU campus and front gate") return item.areaKey === "campus";
+      if (state.area === "Dormitory area") return item.areaKey === "dorm";
+      if (state.area === "Ban Du and Nang Lae") return item.areaKey === "ban-du";
+      return false;
+    }
+
+    function qualifyingItems() {
+      return menuCatalog.filter(item => {
+        const typeMatches = state.type === "Any food type" || item.type === state.type;
+        return typeMatches && matchesBudget(item) && matchesMood(item) && matchesArea(item);
+      });
+    }
+
+    function reasonFor(item) {
+      const taste = state.mood === "Surprise me" ? item.moods.join(" / ").toLowerCase() : state.mood.toLowerCase();
+      return "Why it fits — " + item.type + " with a " + taste + " feel, estimated at " + item.price.replace("≈", "") + " within your budget. " + item.area + ".";
+    }
+
+    function cardMarkup(item, index) {
+      return '<article class="card card-deal-in glass border border-2 shadow shadow-hover" style="--card-index:' + index + '" data-item-id="' + encodeURIComponent(itemId(item)) + '">' +
+        '<div class="food-art"><img src="' + item.image + '" alt="Generated prototype image of ' + item.name + '"><span class="tag">Illustrative image</span><span class="pick-number">PICK 0' + (index + 1) + '</span></div>' +
+        '<div class="card-body">' +
+          '<span class="match">Matches your choices</span>' +
+          '<div class="card-row"><h3>' + item.name + '</h3><span class="price">' + item.price + '</span></div>' +
+          '<p class="restaurant">' + item.restaurant + '</p>' +
+          '<div class="quick-facts"><span class="quick-fact">' + item.area + '</span><span class="quick-fact">About ' + item.wait + '</span></div>' +
+          '<p class="reason">' + reasonFor(item) + '</p>' +
+          '<div class="card-actions"><button type="button">Choose this</button><button class="reject" type="button">Not this one</button></div>' +
+        '</div>' +
+      '</article>';
+    }
+
+    function shuffled(items) {
+      const copy = [...items];
+      for (let index = copy.length - 1; index > 0; index -= 1) {
+        const target = Math.floor(Math.random() * (index + 1));
+        [copy[index], copy[target]] = [copy[target], copy[index]];
+      }
+      return copy;
+    }
+
+    function preferredItems(items) {
+      const visible = new Set(state.shown.map(itemId));
+      const unseen = items.filter(item => !state.seen.has(itemId(item)));
+      const reviewed = items.filter(item => state.seen.has(itemId(item)) && !visible.has(itemId(item)));
+      const current = items.filter(item => state.seen.has(itemId(item)) && visible.has(itemId(item)));
+      return [...shuffled(unseen), ...shuffled(reviewed), ...shuffled(current)];
+    }
+
+    function rejectChoice(id) {
+      const index = state.shown.findIndex(item => itemId(item) === id);
+      if (index < 0) return false;
+      state.undo = { id, index, shown: [...state.shown] };
+      state.rejected.add(id);
+      const others = state.shown.filter(item => itemId(item) !== id);
+      const visible = new Set(others.map(itemId));
+      const replacement = preferredItems(availableItems().filter(item => !visible.has(itemId(item))))[0];
+      state.shown = replacement ? state.shown.map((item, position) => position === index ? replacement : item) : others;
+      return true;
+    }
+
+    function undoRejection() {
+      if (!state.undo) return null;
+      const previous = state.undo;
+      state.rejected.delete(previous.id);
+      state.shown = previous.shown;
+      state.undo = null;
+      return previous.index;
+    }
+
+    function clearUndo() {
+      state.undo = null;
+      document.getElementById("undo-bar").hidden = true;
+      document.getElementById("undo-message").textContent = "";
+      if (!document.getElementById("empty-state").hidden && !state.shown.length) {
+        document.getElementById("empty-copy").textContent = qualifyingItems().length
+          ? "Start a new session to reset rejected choices, or edit your conditions."
+          : "Try a wider budget or area, or another mood or food type.";
+      }
+    }
+
+    function renderCurrentChoices() {
+      if (state.shown.length) {
+        renderItems(state.shown, state.shown.length === 1 ? "One idea for your meal" : state.shown.length + " ideas for your meal");
+      } else {
+        showEmptyState("You reviewed every matching choice", "Undo your last rejection, start a new session, or edit your conditions.");
+        updateSummary();
+      }
+      annotateResults();
+    }
+
+    function updateSummary() {
+      document.getElementById("result-summary").textContent =
+        state.type + " · " + state.mood + " · " + state.budget + " · " + state.area;
+    }
+
+    function showEmptyState(title, copy) {
+      state.shown = [];
+      document.getElementById("result-condition-actions").hidden = true;
+      document.getElementById("results-note").hidden = true;
+      document.getElementById("results-grid").innerHTML = "";
+      document.getElementById("empty-title").textContent = title;
+      document.getElementById("empty-copy").textContent = copy;
+      document.getElementById("empty-state").hidden = false;
+      document.getElementById("results-title").textContent = "No matching choices";
+    }
+
+    function renderItems(items, title) {
+      state.shown = items;
+      document.getElementById("result-condition-actions").hidden = false;
+      items.forEach(item => state.seen.add(itemId(item)));
+      document.getElementById("results-note").hidden = false;
+      document.getElementById("empty-state").hidden = true;
+      document.getElementById("results-grid").innerHTML = items.map(cardMarkup).join("");
+      document.getElementById("results-title").textContent = title;
+      updateSummary();
+    }
+
+    function availableItems() {
+      return qualifyingItems().filter(item => !state.rejected.has(itemId(item)));
+    }
+
+    function renderShortlist() {
+      currentPool = preferredItems(availableItems());
+      if (!currentPool.length) {
+        const exhausted = qualifyingItems().length > 0;
+        showEmptyState(
+          exhausted ? "You reviewed every matching choice" : "No choices match every condition",
+          exhausted
+            ? "Start a new session to reset rejected choices, or edit your conditions to search a different set."
+            : "Try a wider budget or area, or another mood or food type."
+        );
+        updateSummary();
+        return;
+      }
+      const shortlist = currentPool.slice(0, 3);
+      const title = shortlist.length === 1 ? "One idea for your meal" : shortlist.length + " ideas for your meal";
+      renderItems(shortlist, title);
+    }
+
+    document.querySelectorAll("[data-choice-group]").forEach(group => {
+      group.querySelectorAll(".chip").forEach(chip => chip.setAttribute("aria-pressed", "false"));
+      group.addEventListener("click", event => {
+        const button = event.target.closest(".chip");
+        if (!button) return;
+        clearUndo();
+        group.querySelectorAll(".chip").forEach(chip => {
+          chip.classList.remove("active");
+          chip.setAttribute("aria-pressed", String(chip === button));
+        });
+        button.classList.add("active");
+        state[group.dataset.choiceGroup] = button.dataset.value;
+        updateChoiceProgress();
+        if (!document.getElementById("results").hidden) {
+          document.getElementById("results").hidden = true;
+          document.getElementById("results-dot").hidden = true;
+        }
+        if (group.dataset.choiceGroup === "budget") reveal("mood-step");
+        if (group.dataset.choiceGroup === "mood") reveal("type-step");
+        if (group.dataset.choiceGroup === "type") reveal("area-step");
+      });
+    });
+
+    const areaSelect = document.getElementById("area-select");
+    const areaSelectShell = document.getElementById("area-select-shell");
+    const areaOptions = document.getElementById("area-options");
+    const areaOptionItems = [...areaOptions.querySelectorAll('[role="option"]')];
+
+    function closeAreaOptions(returnFocus = false) {
+      areaOptions.hidden = true;
+      areaSelect.setAttribute("aria-expanded", "false");
+      areaSelectShell.classList.remove("is-open");
+      if (returnFocus) areaSelect.focus();
+    }
+
+    function openAreaOptions() {
+      areaOptions.hidden = false;
+      areaSelect.setAttribute("aria-expanded", "true");
+      areaSelectShell.classList.add("is-open");
+      const activeOption = areaOptionItems.find(option => option.getAttribute("aria-selected") === "true") || areaOptionItems[0];
+      requestAnimationFrame(() => activeOption.focus());
+    }
+
+    function chooseArea(option) {
+      clearUndo();
+      state.area = option.dataset.value;
+      document.getElementById("area-select-value").textContent = state.area;
+      areaOptionItems.forEach(item => item.setAttribute("aria-selected", String(item === option)));
+      areaSelectShell.classList.add("has-value");
+      updateChoiceProgress();
+      if (!document.getElementById("results").hidden) {
+        document.getElementById("results").hidden = true;
+        document.getElementById("results-dot").hidden = true;
+      }
+      reveal("action-step");
+      closeAreaOptions(true);
+    }
+
+    areaSelect.addEventListener("click", () => {
+      if (areaOptions.hidden) openAreaOptions();
+      else closeAreaOptions();
+    });
+
+    areaSelect.addEventListener("keydown", event => {
+      if (["ArrowDown", "ArrowUp", "Enter", " "].includes(event.key)) {
+        event.preventDefault();
+        openAreaOptions();
+      }
+    });
+
+    areaOptions.addEventListener("click", event => {
+      const option = event.target.closest('[role="option"]');
+      if (option) chooseArea(option);
+    });
+
+    areaOptions.addEventListener("keydown", event => {
+      const currentIndex = areaOptionItems.indexOf(document.activeElement);
+      if (["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)) {
+        event.preventDefault();
+        let nextIndex = currentIndex;
+        if (event.key === "ArrowDown") nextIndex = (currentIndex + 1) % areaOptionItems.length;
+        if (event.key === "ArrowUp") nextIndex = (currentIndex - 1 + areaOptionItems.length) % areaOptionItems.length;
+        if (event.key === "Home") nextIndex = 0;
+        if (event.key === "End") nextIndex = areaOptionItems.length - 1;
+        areaOptionItems[nextIndex].focus();
+      }
+      if (["Enter", " "].includes(event.key) && currentIndex >= 0) {
+        event.preventDefault();
+        chooseArea(areaOptionItems[currentIndex]);
+      }
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeAreaOptions(true);
+      }
+    });
+
+    document.addEventListener("click", event => {
+      if (!areaSelectShell.contains(event.target)) closeAreaOptions();
+    });
+
+    document.getElementById("finder").addEventListener("submit", event => {
+      event.preventDefault();
+      clearUndo();
+      renderShortlist();
+      reveal("results");
+      setTimeout(() => {
+        document.getElementById("results").scrollIntoView({ behavior: "smooth", block: "start" });
+        annotateResults();
+      }, 80);
+      announce(
+        state.shown.length ? "Your shortlist is ready" : document.getElementById("empty-title").textContent,
+        state.shown.length ? state.shown.length + " choice" + (state.shown.length === 1 ? "" : "s") + " match what you picked." : document.getElementById("empty-copy").textContent
+      );
+    });
+
+    document.getElementById("shuffle-results").addEventListener("click", () => {
+      clearUndo();
+      renderShortlist();
+      announce(
+        state.shown.length ? "Shortlist shuffled" : document.getElementById("empty-title").textContent,
+        state.shown.length ? "Rejected choices stay out of this session." : document.getElementById("empty-copy").textContent
+      );
+    });
+
+    document.getElementById("results-grid").addEventListener("click", async event => {
+      const card = event.target.closest(".card");
+      if (!card) return;
+      if (event.target.closest(".reject")) {
+        event.target.closest(".reject").disabled = true;
+        card.classList.add("card-leave");
+        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          await new Promise(resolve => setTimeout(resolve, 180));
+        }
+        const rejectedId = decodeURIComponent(card.dataset.itemId);
+        const rejectedItem = state.shown.find(item => itemId(item) === rejectedId);
+        const rejectedIndex = state.shown.indexOf(rejectedItem);
+        const previousCount = state.shown.length;
+        if (!rejectChoice(rejectedId)) return;
+        const replaced = state.shown.length === previousCount;
+        renderCurrentChoices();
+        document.getElementById("undo-bar").hidden = false;
+        document.getElementById("undo-message").textContent = rejectedItem.name + " removed.";
+        if (state.shown.length) {
+          document.querySelectorAll("#results-grid .reject")[Math.min(rejectedIndex, state.shown.length - 1)].focus({ preventScroll: true });
+        } else {
+          document.getElementById("undo-rejection").focus({ preventScroll: true });
+        }
+        announce(
+          rejectedItem.name + " removed",
+          replaced ? "Another matching meal took its place. You can undo this change." : "No replacement remains. You can undo this change."
+        );
+      } else if (event.target.closest(".card-actions button")) {
+        const item = state.shown.find(item => itemId(item) === decodeURIComponent(card.dataset.itemId));
+        if (item) openMealOverlay(item);
+      }
+    });
+
+    document.getElementById("dialog-close").addEventListener("click", closeMealOverlay);
+    document.getElementById("dialog-done").addEventListener("click", closeMealOverlay);
+    document.getElementById("meal-overlay").addEventListener("click", event => {
+      if (event.target.id === "meal-overlay") closeMealOverlay();
+    });
+
+    function editConditions() {
+      clearUndo();
+      document.getElementById("decision").scrollIntoView({ behavior: "smooth", block: "start" });
+      setTimeout(() => document.querySelector('[data-choice-group="budget"] .chip.active')?.focus(), 350);
+    }
+
+    function startNewSession() {
+      clearUndo();
+      state.budget = null;
+      state.mood = null;
+      state.type = null;
+      state.area = null;
+      state.rejected.clear();
+      state.seen.clear();
+      state.shown = [];
+      currentPool = [];
+      document.querySelectorAll(".chip.active").forEach(chip => {
+        chip.classList.remove("active");
+        chip.setAttribute("aria-pressed", "false");
+      });
+      document.getElementById("area-select-value").textContent = "Choose an area";
+      areaOptionItems.forEach(option => option.setAttribute("aria-selected", "false"));
+      areaSelectShell.classList.remove("has-value");
+      closeAreaOptions();
+      ["mood-step", "type-step", "area-step", "action-step", "results"].forEach(id => {
+        document.getElementById(id).hidden = true;
+      });
+      document.getElementById("results-dot").hidden = true;
+      document.getElementById("results-grid").innerHTML = "";
+      document.getElementById("empty-state").hidden = true;
+      document.querySelectorAll(".step-track span").forEach((step, index) => step.classList.toggle("active", index === 0));
+      updateChoiceProgress();
+      document.getElementById("decision").scrollIntoView({ behavior: "smooth", block: "start" });
+      setTimeout(() => document.querySelector('[data-choice-group="budget"] .chip')?.focus(), 350);
+      announce("New session ready", "Previous conditions and rejected choices were cleared.");
+    }
+
+    document.getElementById("empty-edit").addEventListener("click", editConditions);
+    document.getElementById("empty-reset").addEventListener("click", startNewSession);
+    document.getElementById("results-edit").addEventListener("click", editConditions);
+    document.getElementById("results-reset").addEventListener("click", startNewSession);
+    document.getElementById("undo-rejection").addEventListener("click", () => {
+      const index = undoRejection();
+      if (index === null) return;
+      clearUndo();
+      renderCurrentChoices();
+      document.querySelectorAll("#results-grid .reject")[index].focus({ preventScroll: true });
+      announce("Choice restored", "Your previous shortlist is back.");
+    });
+
+    document.addEventListener("keydown", event => {
+      if (document.getElementById("meal-overlay").hidden) return;
+      if (event.key === "Escape") closeMealOverlay();
+      if (event.key === "Tab") {
+        const first = document.getElementById("dialog-close");
+        const last = document.getElementById("dialog-done");
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    });
+
+    document.querySelector('nav .button, nav button')?.addEventListener("click", () => document.getElementById("decision").scrollIntoView({ behavior: "smooth" }));
+    document.getElementById("explore-flow").addEventListener("click", () => document.getElementById("decision").scrollIntoView({ behavior: "smooth" }));
+
+    let activeSection = "home";
+    const sectionObserver = new IntersectionObserver(entries => {
+      const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible || visible.intersectionRatio < .42 || visible.target.id === activeSection) return;
+      const previous = document.getElementById(activeSection);
+      previous?.classList.remove("is-active");
+      previous?.classList.add("is-leaving");
+      setTimeout(() => previous?.classList.remove("is-leaving"), 650);
+      activeSection = visible.target.id;
+      visible.target.classList.add("is-active");
+      document.querySelectorAll(".section-dot").forEach(dot => dot.classList.toggle("active", dot.dataset.section === activeSection));
+    }, { threshold: [.42, .55, .7] });
+    document.querySelectorAll("main > section").forEach(section => sectionObserver.observe(section));
+
+    document.querySelectorAll(".section-dot").forEach(dot => dot.addEventListener("click", () => {
+      const target = document.getElementById(dot.dataset.section);
+      if (target && !target.hidden) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }));
+
+    requestAnimationFrame(setupDoodleAnnotations);
+  </script>
+</body>
+</html>
