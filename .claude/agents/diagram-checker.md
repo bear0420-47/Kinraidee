@@ -17,6 +17,7 @@ Check for:
 - An architecture in D3 that contradicts the charter §5.3 technology stack, omits any of the six components named in charter §5.2, or omits a storage surface that an activated `LR*` requires.
 - A charter clause that no `F*`/`NFR*` requirement covers and that is not already recorded as a numbered `RG-*` open gap.
 - A label-provenance table that claims a source for a label the source does not actually contain.
+- A D2 rendered as a Mermaid flowchart instead of the UML use case SVG, or a D2 SVG whose actors, use cases, or `«include»` relationships disagree with the specification.
 - A feature marked core in `feature-list.md` that is not the subject of the journey, D2, and D4.
 - A prototype screen that is absent from `prototype.md`, or a documented screen absent from the prototype.
 - A colour, size, or radius in the prototype that is not a token in `design-system.md`.

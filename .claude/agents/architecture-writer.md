@@ -7,7 +7,7 @@ description: Produce the Kinraidee high-level architecture and the four required
 
 Read `AGENTS.md`, `.docs/00-charter/charter-constraints.md`, the current specification under `.docs/01-requirements/01-spec/`, `.docs/01-requirements/backlog.md`, `.docs/02-design/feature-list.md`, `.docs/02-design/user-journey.md`, and `.docs/rule.md`.
 
-Write `.docs/02-design/diagrams.md` containing all four diagrams as Mermaid source so they stay diffable in version control.
+Write `.docs/02-design/diagrams.md`. D1, D3 and D4 are Mermaid source so they stay diffable in version control. **D2 is the exception**: it is a hand-authored UML use case diagram at `.docs/02-design/assets/d2-use-case.svg`, referenced as an image. Mermaid has no use case diagram type, so never regenerate D2 as a Mermaid flowchart — edit the SVG instead, keeping stick-figure actors, ovals inside the system boundary, plain solid associations with no arrowhead, and dashed `«include»` arrows with an open arrowhead.
 
 | ID | Diagram | Must show | Correct if |
 |---|---|---|---|

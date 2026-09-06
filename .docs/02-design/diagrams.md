@@ -2,7 +2,7 @@
 
 ## Status
 
-Draft — 2026-09-06. Pending human approval. Diagrams are Mermaid source so they stay reviewable in version control.
+Draft — 2026-09-06. Pending human approval. D1, D3 and D4 are Mermaid source so they stay diffable in version control. D2 is a hand-authored SVG under `assets/`, because Mermaid has no UML use case diagram type and the required notation (stick-figure actors, ovals in a system boundary, plain associations, dashed `«include»`) cannot be expressed in a flowchart.
 
 ## Label provenance
 
@@ -47,34 +47,22 @@ flowchart LR
 
 ## D2 — Use Case
 
-```mermaid
-flowchart LR
-  seeker(("Meal<br/>Seeker"))
-  admin(("Data<br/>Administrator"))
+![D2 - Kinraidee UML use case diagram: Meal Seeker and Data Administrator actors, use cases inside the Kinraidee system boundary](assets/d2-use-case.svg)
 
-  subgraph KINRAIDEE["Kinraidee"]
-    uc1["Get a meal shortlist<br/><b>core</b>"]
-    uc2["Reject and replace a choice"]
-    uc3["Edit conditions / start a new session"]
-    uc4["Choose at random from filtered results"]
-    uc5["Administer restaurant and menu records"]
-    uc6["Enter session conditions"]
-    uc7["Authorize the operation"]
-  end
+Source: [`assets/d2-use-case.svg`](assets/d2-use-case.svg) — hand-authored UML, not generated, because Mermaid has no use case diagram type.
 
-  seeker --- uc1
-  seeker --- uc2
-  seeker --- uc3
-  seeker --- uc4
-  admin --- uc5
+**Notation.** Actors are stick figures outside the system boundary. Use cases are ovals inside it. An actor-to-use-case association is a plain solid line with **no arrowhead**. `«include»` is a **dashed line with an open arrowhead** pointing at the included use case. The core use case is highlighted.
 
-  uc1 -.->|"«include»"| uc6
-  uc2 -.->|"«include»"| uc1
-  uc4 -.->|"«include»"| uc1
-  uc5 -.->|"«include»"| uc7
-```
+**Relationships shown**
 
-Associations are plain lines with no arrowhead. `«include»` is a dashed line with an open arrowhead toward the included use case. No use case requires an account.
+| From | Kind | To | Why it is real |
+|---|---|---|---|
+| Get a meal shortlist | «include» | Enter session conditions | A shortlist cannot be produced without conditions (F1 gates F2) |
+| Reject and replace a choice | «include» | Get a meal shortlist | Replacing re-runs the qualifying shortlist (F4, F5) |
+| Choose at random from filtered results | «include» | Get a meal shortlist | Randomisation draws only from an existing filtered set (F12) |
+| Administer restaurant and menu records | «include» | Authorize the operation | Every mutation is authorization-gated (F8, LR8) |
+
+No use case requires an account (F6, LR2).
 
 **Traces to:** F1, F2, F4, F5, F7, F8, F12, LR2, LR8; B1–B8, B14.
 

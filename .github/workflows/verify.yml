@@ -58,7 +58,9 @@ jobs:
             grep -q "## $id" .docs/02-design/diagrams.md               || { echo "Missing diagram $id in .docs/02-design/diagrams.md"; exit 1; }
           done
           fences=$(grep -c '^```mermaid' .docs/02-design/diagrams.md || true)
-          test "$fences" -ge 4 || { echo "Expected 4 mermaid diagrams, found $fences"; exit 1; }
+          test "$fences" -ge 3             || { echo "Expected 3 mermaid diagrams (D1, D3, D4), found $fences"; exit 1; }
+          test -f .docs/02-design/assets/d2-use-case.svg             || { echo "Missing the D2 use case diagram SVG"; exit 1; }
+          grep -q 'assets/d2-use-case.svg' .docs/02-design/diagrams.md             || { echo "diagrams.md does not reference the D2 SVG"; exit 1; }
           core=$(grep -c '★' .docs/02-design/feature-list.md || true)
           test "$core" -eq 1 || { echo "feature-list.md must mark exactly one core feature, found $core"; exit 1; }
           grep -q 'Traces to' .docs/02-design/diagrams.md
