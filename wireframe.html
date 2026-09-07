@@ -151,10 +151,10 @@
     .doodle-select-arrow::before { content: ""; width: 9px; height: 9px; border-right: 3px solid currentColor; border-bottom: 3px solid currentColor; transform: translateY(-2px) rotate(45deg); }
     .doodle-select.is-open .doodle-select-arrow::before { transform: translateY(3px) rotate(225deg); }
     .doodle-select.has-value .select-like { color: var(--white); }
-    .doodle-options { position: absolute; z-index: 12; top: calc(100% + 11px); right: 0; left: 0; display: grid; gap: 6px; margin: 0; padding: 10px; color: var(--white); background: #292b31; list-style: none; }
+    .doodle-options { position: absolute; z-index: 12; top: calc(100% + 11px); right: 0; left: 0; display: grid; gap: 6px; margin: 0; padding: 10px; color: var(--paper); background: var(--surface); list-style: none; }
     .doodle-option { position: relative; padding: 12px 15px; border: 2px solid transparent; cursor: pointer; font-weight: 700; }
     .doodle-options .doodle-option::before { content: none; }
-    .doodle-option:not(:last-child)::after { content: ""; position: absolute; right: 12px; bottom: -4px; left: 12px; border-bottom: 2px dashed rgba(248, 244, 239, .28); transform: rotate(-.2deg); }
+    .doodle-option:not(:last-child)::after { content: ""; position: absolute; right: 12px; bottom: -4px; left: 12px; border-bottom: 2px dashed #d1d8dc; transform: rotate(-.2deg); }
     .doodle-option:hover, .doodle-option:focus-visible { color: #202126; background: var(--peach); border-color: var(--paper); outline: 0; transform: rotate(-.25deg); }
     .doodle-option[aria-selected="true"] { color: #202126; background: var(--yellow); border-color: var(--paper); box-shadow: 2px 2px 0 var(--paper); transform: rotate(.25deg); }
     .action-card { margin-left: 0; padding: 12px; border-radius: 20px; }
@@ -287,20 +287,20 @@
 
     /* Doodle visual system */
     :root {
-      --canvas: #1f2125;
-      --canvas-soft: #26282d;
-      --surface: #222429;
-      --surface-raised: #2a2c31;
-      --paper: #f8f4ef;
-      --muted: #b9bdc7;
+      --canvas: #ffffff;
+      --canvas-soft: #faf8f5;
+      --surface: #ffffff;
+      --surface-raised: #faf8f5;
+      --paper: #263d4b;
+      --muted: #56636c;
       --peach: #efcfc5;
-      --peach-deep: #4c342f;
+      --peach-deep: #fae7df;
       --blue: #49b6e5;
       --green: #54c98a;
       --yellow: #f3b544;
       --white: var(--paper);
-      --glass: rgba(34, 36, 41, .96);
-      --shadow: 5px 6px 0 rgba(248, 244, 239, .92);
+      --glass: rgba(255, 255, 255, .96);
+      --shadow: 5px 6px 0 #263d4b;
     }
 
     html {
@@ -352,7 +352,7 @@
       width: 100%;
       max-width: none;
       padding: 15px max(24px, calc((100vw - 1180px) / 2));
-      background: rgba(31, 33, 37, .94);
+      background: rgba(255, 255, 255, .97);
       border-bottom: 2px solid var(--paper);
       box-shadow: 0 3px 0 rgba(248, 244, 239, .12);
       backdrop-filter: blur(14px);
@@ -369,7 +369,7 @@
     .brand-mark {
       width: 39px;
       height: 39px;
-      color: var(--canvas);
+      color: var(--paper);
       background: var(--peach);
       border: 2px solid var(--paper);
       border-radius: 9px 5px 10px 4px;
@@ -392,7 +392,7 @@
 
     button:hover, .button:hover { transform: translate(-1px, -2px) rotate(-.35deg); box-shadow: 5px 6px 0 var(--paper); }
     button:active, .button:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--paper); }
-    nav button[type="button"] { color: var(--canvas); background: var(--peach); border: 2px solid var(--paper); border-radius: 3px 7px 4px 8px; box-shadow: 3px 4px 0 var(--paper); transform: rotate(-1deg); }
+    nav button[type="button"] { color: var(--paper); background: var(--peach); border: 2px solid var(--paper); border-radius: 3px 7px 4px 8px; box-shadow: 3px 4px 0 var(--paper); transform: rotate(-1deg); }
 
     main > section { scroll-snap-align: none; scroll-snap-stop: normal; scroll-margin-top: 72px; }
     main > section::before, main > section::after { display: none; }
@@ -436,7 +436,7 @@
       position: static;
       margin-top: 34px;
       padding: 12px 18px;
-      color: var(--canvas);
+      color: var(--paper);
       background: var(--peach);
       border: 2px solid var(--paper);
       box-shadow: 4px 5px 0 var(--paper);
@@ -452,7 +452,7 @@
     .board-scribble { color: var(--peach); font-size: 16px; transform: rotate(4deg); }
     .board-photo { position: relative; height: 228px; padding: 9px 9px 32px; background: var(--paper); transform: rotate(-2deg); }
     .board-photo img { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(.82) contrast(1.05); }
-    .board-photo span { position: absolute; right: 14px; bottom: 7px; color: var(--canvas); font-family: "Delius Swash Caps", cursive; font-size: 14px; }
+    .board-photo span { position: absolute; right: 14px; bottom: 7px; color: var(--paper); font-family: "Delius Swash Caps", cursive; font-size: 14px; }
     .board-notes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 22px; }
     .board-note { position: relative; min-height: 78px; display: grid; place-items: end center; overflow: hidden; padding: 11px; color: var(--paper); background: var(--peach); border: 2px solid var(--paper); box-shadow: 3px 3px 0 var(--paper); font-family: "Delius Swash Caps", cursive; font-size: 15px; text-align: center; }
     .board-note::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 22%, rgba(19, 29, 33, .84) 100%); }
@@ -480,19 +480,19 @@
     .step-card:nth-of-type(3) { transform: rotate(-.2deg); }
     .step-card:nth-of-type(4) { transform: rotate(.18deg); }
     .step-head { margin-bottom: 18px; }
-    .step-number { width: 36px; height: 34px; flex-basis: 36px; color: var(--canvas); background: var(--peach); border: 2px solid var(--paper); border-radius: 5px 2px 6px 3px; box-shadow: 2px 2px 0 var(--paper); font-size: 12px; }
-    .step-card.is-complete .step-number { color: var(--canvas); background: var(--green); transform: rotate(-4deg); }
+    .step-number { width: 36px; height: 34px; flex-basis: 36px; color: var(--paper); background: var(--peach); border: 2px solid var(--paper); border-radius: 5px 2px 6px 3px; box-shadow: 2px 2px 0 var(--paper); font-size: 12px; }
+    .step-card.is-complete .step-number { color: var(--paper); background: var(--green); transform: rotate(-4deg); }
     .step-card.is-complete .step-number::before { content: "✓"; font-size: 18px; }
     .step-card.is-complete .step-number { font-size: 0; }
     .step-card.is-complete .step-hint { color: var(--green); }
     .field-label { font-size: 18px; letter-spacing: 0; text-transform: none; }
     .step-hint { color: var(--muted); font-size: 12px; }
     .chips { gap: 12px; }
-    .chip { min-height: 45px; padding: 10px 15px; color: var(--paper); background: var(--surface-raised); border: 2px solid rgba(248, 244, 239, .7); border-radius: 4px 8px 3px 6px; box-shadow: 2px 2px 0 rgba(248, 244, 239, .65); font-size: 14px; }
+    .chip { min-height: 45px; padding: 10px 15px; color: var(--paper); background: var(--surface-raised); border: 2px solid #78858c; border-radius: 4px 8px 3px 6px; box-shadow: 2px 2px 0 #78858c; font-size: 14px; }
     .chip:nth-child(2n) { transform: rotate(.45deg); }
     .chip:nth-child(3n) { transform: rotate(-.45deg); }
-    .chip:hover { background: #30333a; }
-    .chip.active { color: var(--canvas); background: var(--peach); border-color: var(--paper); box-shadow: 3px 4px 0 var(--paper); }
+    .chip:hover { background: #f4e6de; }
+    .chip.active { color: var(--paper); background: var(--peach); border-color: var(--paper); box-shadow: 3px 4px 0 var(--paper); }
 
     .doodle-select { border-radius: 4px 9px 3px 7px; box-shadow: 3px 4px 0 var(--paper); transform: rotate(-.18deg); transition: transform .16s ease, box-shadow .16s ease; }
     .doodle-select::before { content: ""; position: absolute; z-index: 1; right: 55px; bottom: -7px; left: 18px; height: 7px; border-top: 2px dashed var(--blue); border-radius: 50%; pointer-events: none; transform: rotate(.4deg); }
@@ -500,12 +500,12 @@
     .doodle-select:focus-within { outline: 3px solid var(--blue); outline-offset: 5px; transform: rotate(0); }
     .select-like { min-height: 58px; color: var(--muted); background-color: var(--surface-raised); border: 2px solid var(--paper); border-radius: inherit; }
     .doodle-select-trigger:hover, .doodle-select-trigger:active { background: var(--surface-raised); box-shadow: none; transform: none; }
-    .doodle-select-arrow { color: var(--canvas); background: var(--peach); border: 2px solid var(--paper); border-radius: 5px 2px 6px 3px; box-shadow: 2px 2px 0 var(--paper); }
+    .doodle-select-arrow { color: var(--paper); background: var(--peach); border: 2px solid var(--paper); border-radius: 5px 2px 6px 3px; box-shadow: 2px 2px 0 var(--paper); }
     .doodle-options { border: 2px solid var(--paper); border-radius: 3px 8px 4px 6px; box-shadow: 4px 5px 0 var(--paper); transform: rotate(.12deg); }
     .action-card { padding: 16px; border-radius: 4px 10px 5px 8px; }
     .choice-recap { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 13px; padding: 0; list-style: none; }
-    .choice-recap li { padding: 6px 9px; color: var(--paper); background: var(--surface-raised); border: 1px dashed rgba(248,244,239,.55); border-radius: 3px 7px 4px 6px; font-size: 11px; font-weight: 800; }
-    .finder .primary { color: var(--canvas); background: var(--peach); border: 2px solid var(--paper); }
+    .choice-recap li { padding: 6px 9px; color: var(--paper); background: var(--surface-raised); border: 1px dashed #78858c; border-radius: 3px 7px 4px 6px; font-size: 11px; font-weight: 800; }
+    .finder .primary { color: var(--paper); background: var(--peach); border: 2px solid var(--paper); }
     .privacy { color: var(--muted); font-size: 12px; }
 
     .results { min-height: auto; padding: 110px 0 130px; border-top: 2px solid rgba(248, 244, 239, .9); }
@@ -523,7 +523,7 @@
     .food-art { flex-shrink: 0; height: 205px; margin: 10px 10px 0; border: 2px solid var(--paper); background: #34363b; overflow: hidden; }
     .food-art::after { background: linear-gradient(to bottom, transparent 54%, rgba(31,33,37,.54)); }
     .food-art img { filter: saturate(.83) contrast(1.04); }
-    .tag { top: 12px; left: 12px; color: var(--canvas); background: var(--peach); border: 2px solid var(--paper); border-radius: 3px 7px 2px 5px; backdrop-filter: none; transform: rotate(-2deg); }
+    .tag { top: 12px; left: 12px; color: var(--paper); background: var(--peach); border: 2px solid var(--paper); border-radius: 3px 7px 2px 5px; backdrop-filter: none; transform: rotate(-2deg); }
     .pick-number { position: absolute; z-index: 2; top: 12px; right: 12px; padding: 6px 9px; color: var(--paper); background: var(--canvas); border: 2px solid var(--paper); box-shadow: 2px 2px 0 var(--peach); font-size: 11px; font-weight: 900; letter-spacing: .06em; transform: rotate(2deg); }
     .card-body { display: flex; flex: 1; flex-direction: column; padding: 22px; }
     .match { color: var(--green); font-size: 12px; letter-spacing: .04em; text-transform: none; }
@@ -533,10 +533,10 @@
     .price { color: var(--peach); font-family: "Delius Swash Caps", cursive; font-size: 21px; }
     .meta { color: var(--muted); line-height: 1.45; }
     .quick-facts { display: flex; flex-wrap: wrap; gap: 7px; margin: 12px 0 15px; }
-    .quick-fact { padding: 5px 8px; color: var(--paper); border: 1px dashed rgba(248,244,239,.48); font-size: 11px; font-weight: 800; }
-    .reason { border-top: 2px dashed rgba(248,244,239,.34); color: var(--paper); }
+    .quick-fact { padding: 5px 8px; color: var(--paper); border: 1px dashed #78858c; font-size: 11px; font-weight: 800; }
+    .reason { border-top: 2px dashed #a9b1b5; color: var(--paper); }
     .card-actions { gap: 12px; margin-top: auto; padding-top: 18px; }
-    .card-actions button { color: var(--canvas); background: var(--peach); }
+    .card-actions button { color: var(--paper); background: var(--peach); }
     .card-actions .reject { color: var(--paper); background: var(--surface); border: 2px solid var(--paper); }
     @keyframes card-deal-in { from { opacity: 0; transform: translateY(28px) rotate(2deg) scale(.96); } to { opacity: 1; transform: translateY(0) rotate(0) scale(1); } }
     @keyframes card-leave { to { opacity: 0; transform: translateX(-34px) rotate(-4deg) scale(.96); } }
@@ -561,10 +561,10 @@
     .meal-dialog .chosen-meal { margin: 12px 0 4px; font-size: clamp(24px, 4vw, 34px); line-height: 1.15; }
     .meal-dialog .dialog-copy { margin: 16px 0 20px; color: var(--paper); font-size: 14px; }
     .meal-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; margin: 18px 0 0; }
-    .meal-fact { padding: 9px 11px; border: 2px dashed rgba(248,244,239,.48); border-radius: 4px 7px 3px 6px; }
+    .meal-fact { padding: 9px 11px; border: 2px dashed #78858c; border-radius: 4px 7px 3px 6px; }
     .meal-fact span { display: block; color: var(--muted); font-size: 10px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
     .meal-fact strong { display: block; margin-top: 2px; color: var(--peach); font-size: 13px; overflow-wrap: anywhere; }
-    .dialog-action { display: block; margin: 20px 0 0 auto; color: var(--canvas); background: var(--peach); }
+    .dialog-action { display: block; margin: 20px 0 0 auto; color: var(--paper); background: var(--peach); }
     .results-controls { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; }
     .results-controls .ghost { min-height: 44px; }
     .empty-state { max-width: 720px; padding: 30px; }
@@ -574,9 +574,6 @@
     .source-note { margin: 22px 0 0; color: #aeb3bd; font-size: 12px; line-height: 1.6; }
     .condition-actions { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 14px; }
     .condition-actions button { min-height: 44px; padding: 6px 0; color: var(--peach); background: transparent; border: 0; box-shadow: none; font-size: 14px; text-decoration: underline; text-underline-offset: 4px; }
-    .undo-bar { position: sticky; top: 90px; z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 0 0 26px; padding: 12px 16px; background: var(--surface); border: 2px dashed var(--peach); border-radius: 5px; }
-    .undo-bar p { margin: 0; font-size: 14px; }
-    .undo-bar button { flex-shrink: 0; min-height: 44px; color: var(--canvas); background: var(--peach); border: 2px solid var(--paper); }
     #chosen-details { color: var(--peach); line-height: 1.6; }
     button:focus-visible, select:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px solid var(--blue); outline-offset: 5px; }
     .doodle-select .select-like:focus-visible { outline: 0; }
@@ -590,14 +587,17 @@
 
     @media (max-width: 580px) {
       .shell { width: min(100% - 28px, 1180px); }
-      header.shell { width: 100%; padding: 13px 14px; }
+      header.shell { width: 100%; padding: 10px 14px; }
       nav { gap: 8px; }
-      nav button { padding: 9px 11px; font-size: 12px; }
+      nav button { min-height: 44px; padding: 8px 11px; font-size: 12px; }
       .brand { font-size: 18px; }
-      .hero { min-height: auto; padding: 122px 0 84px; }
-      h1 { font-size: clamp(47px, 14.5vw, 64px); overflow-wrap: normal; }
+      .hero { min-height: auto; gap: 38px; padding: 102px 0 64px; }
+      .eyebrow { margin-bottom: 14px; }
+      h1 { font-size: clamp(42px, 11.5vw, 50px); line-height: 1.02; overflow-wrap: normal; }
       .hero h1::after { height: 9px; border-top-width: 3px; }
-      .intro { font-size: 16px; }
+      .intro { margin-top: 16px; font-size: 16px; line-height: 1.5; }
+      .local-note { margin-top: 14px; }
+      .scroll-cue { min-height: 44px; margin-top: 24px; }
       .hero-board { min-height: 0; padding: 16px; }
       .board-photo { height: 190px; }
       .board-notes { gap: 7px; }
@@ -633,6 +633,298 @@
     }
 
     @media (prefers-reduced-motion: reduce) { button, .button, .card, .food-art img { transition: none; animation: none !important; } }
+
+    /* White paper finish and optional, session-only Profile. */
+    [hidden] { display: none !important; }
+    body::before { background: #fff; }
+    body::after { background-image: radial-gradient(#263d4b22 .8px, transparent .8px); }
+    .board-photo, .chosen-photo-wrap { background: #fff; }
+    .board-note { color: #fff; }
+    .finder-intro .restaurant, .condition-actions button { color: #694538; }
+    .price, .meal-fact strong, .restaurant, .board-scribble, .progress-copy strong { color: #694538; }
+    .match, .step-card.is-complete .step-hint { color: #237847; }
+    .toast span, .source-note, .step-hint { color: var(--muted); }
+    footer a { color: #356780; }
+    .meal-overlay { background: rgba(38,61,75,.28); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); }
+    .chip, .quick-fact, .choice-recap li, .reason { border-color: #78858c; }
+    input:focus-visible { outline: 3px solid #1880ae; outline-offset: 4px; }
+    #profile-open[aria-current="page"] { background: #d8eef8; }
+    .profile-page { padding: 130px 0 80px; min-height: 100svh; }
+    .profile-heading { max-width: 680px; margin-bottom: 34px; }
+    .profile-heading h1 { font-size: clamp(40px, 6vw, 64px); margin: 18px 0; }
+    .profile-heading p, .profile-note p { color: var(--muted); line-height: 1.65; }
+    .profile-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: 32px; align-items: start; }
+    .profile-form, .profile-note { padding: 28px; }
+    .profile-form fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+    .profile-form legend { font-family: "Delius Swash Caps", cursive; font-size: 26px; margin-bottom: 12px; }
+    .allergy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 22px 0; }
+    .allergy-option { display: flex; align-items: center; gap: 12px; min-height: 54px; padding: 12px; border: 2px solid var(--paper); border-radius: 5px 9px 3px 7px; cursor: pointer; }
+    .allergy-option:has(input:checked) { background: #d8eef8; box-shadow: 2px 3px 0 var(--paper); }
+    .profile-form input[type="checkbox"] { width: 21px; height: 21px; flex-shrink: 0; accent-color: #263d4b; }
+    .profile-other { display: grid; gap: 8px; font-weight: 800; }
+    .profile-other input { width: 100%; min-height: 48px; padding: 12px; border: 2px solid var(--paper); border-radius: 4px 8px; background: white; color: var(--paper); font: inherit; }
+    .profile-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 24px; }
+    .profile-actions button { min-height: 48px; }
+    .profile-actions button[type="submit"] { background: var(--peach); }
+    .profile-note { background: #fff8df; transform: rotate(1deg); }
+    .profile-note h2 { margin: 0 0 14px; font-size: 25px; }
+    .profile-note p + p { margin-top: 14px; }
+    #profile-status { min-height: 24px; margin-top: 20px; overflow-wrap: anywhere; }
+    .profile-summary { padding: 12px; margin-top: 16px; border: 2px dashed var(--paper); border-radius: 5px; overflow-wrap: anywhere; }
+    .doodle-select { box-shadow: none; transform: none; }
+    .doodle-select::before { display: none; }
+    .doodle-select:hover { transform: none; box-shadow: none; }
+    .select-like { min-height: 56px; padding: 13px 52px 13px 15px; background: #fff; }
+    .doodle-select.has-value .select-like { color: var(--paper); background: #f9fcfd; }
+    .doodle-select-arrow { right: 10px; width: 31px; height: 30px; background: #efcfc5; border-radius: 5px; box-shadow: 1px 2px 0 var(--paper); }
+    .doodle-options { top: calc(100% + 8px); max-height: min(260px, 52vh); overflow-y: auto; background: #fff; }
+    .option-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .option-row .ghost { min-height: 44px; }
+    .feature-page { padding: 130px 0 80px; min-height: 100svh; }
+    .feature-heading { max-width: 760px; margin-bottom: 28px; }
+    .feature-heading h1 { margin: 18px 0; font-size: clamp(40px, 6vw, 64px); }
+    .feature-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+    .feature-panel { padding: 24px; }
+    .feature-panel h2 { margin: 0 0 12px; font-size: 25px; }
+    .feature-panel p, .feature-panel li { color: var(--muted); line-height: 1.55; }
+    .feature-panel ul, .vote-list, .history-list, .admin-list { margin: 14px 0 0; padding: 0; list-style: none; }
+    .vote-list li, .history-list li, .admin-list li { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px dashed #a9b1b5; color: var(--paper); }
+    .feature-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
+    .notice-overlay { position: fixed; z-index: 55; inset: 0; display: grid; place-items: center; padding: 16px; background: rgba(38,61,75,.28); backdrop-filter: blur(2px); }
+    .notice-dialog { width: min(520px, 100%); padding: 28px; }
+    .notice-dialog h2 { margin: 0 0 12px; font-size: 30px; }
+    .notice-dialog p { color: var(--muted); line-height: 1.55; }
+    .admin-access { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 18px; padding: 16px 18px; background: #eef8ee; }
+    .admin-access p, .admin-access strong { margin: 0; }
+    .admin-access p { margin-top: 4px; color: var(--muted); font-size: 13px; }
+    .admin-role { flex: 0 0 auto; padding: 7px 10px; border: 2px solid var(--paper); background: #d8eef8; font-size: 12px; font-weight: 900; }
+    .admin-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 18px; }
+    .admin-stat { padding: 16px; border: 2px solid var(--paper); background: #fffdf8; }
+    .admin-stat span { display: block; color: var(--muted); font-size: 12px; font-weight: 800; }
+    .admin-stat strong { display: block; margin-top: 4px; font-size: 26px; }
+    .admin-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+    .admin-tabs button { min-height: 42px; background: #fff; }
+    .admin-tabs button[aria-selected="true"] { background: var(--peach); box-shadow: 2px 3px 0 var(--paper); }
+    .admin-panel-heading { margin-bottom: 12px; }
+    .admin-panel-heading h2 { margin: 3px 0 2px; font-size: 23px; }
+    .admin-panel-heading p { margin: 0; color: var(--muted); font-size: 13px; }
+    .admin-step-label { color: #694538; font-size: 11px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+    .admin-list-panel { padding: 16px; border: 2px solid var(--paper); border-radius: 5px 10px; background: #fffdf8; box-shadow: 3px 4px 0 var(--paper); }
+    .admin-toolbar { display: flex; gap: 10px; margin-bottom: 14px; }
+    .admin-toolbar input { flex: 1; min-width: 0; min-height: 44px; padding: 10px 12px; border: 2px solid var(--paper); background: #fff; font: inherit; }
+    .admin-toolbar button { flex: 0 0 auto; background: var(--peach); }
+    .admin-workspace { display: grid; grid-template-columns: minmax(260px, .8fr) minmax(0, 1.2fr); gap: 16px; align-items: start; }
+    .admin-records { display: grid; gap: 9px; }
+    .admin-record { width: 100%; padding: 12px; color: var(--paper); background: #fff; border: 2px solid #78858c; border-radius: 4px 8px; box-shadow: 2px 2px 0 #78858c; text-align: left; }
+    .admin-record[aria-current="true"] { border-color: var(--paper); background: #d8eef8; box-shadow: 3px 4px 0 var(--paper); }
+    .admin-record strong, .admin-record span { display: block; }
+    .admin-record-meta { margin-top: 5px; color: var(--muted); font-size: 12px; }
+    .admin-record-status { display: inline-block !important; margin-top: 7px; padding: 3px 7px; border: 1px solid var(--paper); background: #fff; color: var(--paper); font-size: 10px; font-weight: 900; }
+    .admin-record-status.is-active { background: #dff3df; }
+    .admin-record-status.is-review { background: #fff0c2; }
+    .admin-record-status.is-hidden { background: #eceff1; }
+    .admin-form { padding: 18px; background: #fffdf8; }
+    .admin-form h2 { margin: 0 0 4px; font-size: 28px; }
+    .admin-form > p { margin: 0 0 16px; color: var(--muted); font-size: 13px; }
+    .admin-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .admin-field { display: grid; gap: 5px; min-width: 0; color: var(--paper); font-size: 12px; font-weight: 900; }
+    .admin-field.wide { grid-column: 1 / -1; }
+    .admin-field input, .admin-field select { width: 100%; min-width: 0; min-height: 44px; padding: 9px 10px; border: 2px solid var(--paper); border-radius: 3px 6px; color: var(--paper); background: #fff; font: inherit; }
+    .admin-form-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 16px; }
+    .admin-form-actions button { min-height: 42px; }
+    #admin-save { background: var(--peach); }
+    #admin-retire { background: #fff; }
+    .admin-form-status { min-height: 22px; margin: 12px 0 0; color: #694538; font-size: 13px; font-weight: 800; }
+    .audit-event { display: grid !important; grid-template-columns: 1fr auto; align-items: start; }
+    .admin-list .audit-event::before { content: none; }
+    .audit-event small { display: block; margin-top: 3px; color: var(--muted); }
+    .detail-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; }
+    .detail-tag { padding: 5px 8px; color: var(--paper); border: 1px dashed #78858c; font-size: 11px; font-weight: 800; }
+    .card-actions { flex-wrap: wrap; }
+    .card-actions .favorite { flex-basis: 100%; background: #d8eef8; }
+    @media (max-width: 580px) {
+      header.shell { flex-wrap: wrap; gap: 12px; }
+      header nav { gap: 10px; }
+      .brand { font-size: 17px; gap: 7px; }
+      .brand-mark { width: 30px; height: 30px; }
+      header nav button[type="button"] { padding: 8px; font-size: 12px; min-height: 44px; }
+      .profile-page { padding: 112px 0 50px; }
+      .hero { padding-top: 112px; }
+      .profile-layout { grid-template-columns: 1fr; gap: 25px; }
+      .profile-form, .profile-note { padding: 20px 16px; }
+      .profile-actions button { flex: 1 1 100%; }
+      .allergy-grid { gap: 10px; }
+      .allergy-option { padding: 10px 8px; gap: 8px; font-size: 14px; }
+      .profile-note { transform: none; }
+      .doodle-select { border: 0; box-shadow: none; }
+      .select-like { min-height: 54px; border-width: 2px; border-radius: 5px; box-shadow: 2px 3px 0 var(--paper); font-size: 16px; }
+      .doodle-select-arrow { top: 27px; right: 9px; width: 30px; height: 28px; transform: translateY(-50%) rotate(1.5deg); }
+      .doodle-options { position: static; margin-top: 10px; border-radius: 5px; box-shadow: 2px 3px 0 var(--paper); transform: none; }
+      .doodle-option { min-height: 46px; padding: 12px; }
+      .feature-page { padding: 112px 0 50px; }
+      .feature-grid { grid-template-columns: 1fr; gap: 16px; }
+      .feature-panel { padding: 20px 16px; }
+      .feature-actions > *, .option-row > * { flex: 1 1 100%; }
+      .results { padding: 32px 0 64px; scroll-margin-top: 100px; }
+      .results .section-head { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; margin-bottom: 24px; }
+      .results .section-head .section-index { margin-bottom: 14px; color: var(--paper); font-size: 12px; }
+      .results .section-head h2 { font-size: 32px; line-height: 1.15; }
+      .results #result-summary { margin-top: 12px; font-size: 14px; line-height: 1.5; }
+      .results .condition-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+      .results .condition-actions button { font-size: 13px; text-align: left; }
+      .results-controls .ghost[type="button"] { width: 100%; margin: 0; min-height: 48px; padding: 10px 14px; font-size: 15px; }
+      .results .card-row { align-items: start; gap: 10px; }
+      .results .card-row h3 { font-size: 26px; line-height: 1.2; }
+    }
+    @media (max-width: 360px) {
+      .profile-page, .hero { padding-top: 155px; }
+      main > section { scroll-margin-top: 145px; }
+    }
+    @media (max-width: 580px) {
+      html { scroll-snap-type: none; }
+      button, .button { margin: 0; }
+      .shell { width: min(100% - 20px, 1180px); }
+      header.shell { flex-wrap: nowrap; gap: 10px; padding: 6px 10px; }
+      .brand { flex: 0 0 auto; gap: 0; font-size: 0; }
+      .brand-mark { width: 30px; height: 30px; border-radius: 7px; }
+      header nav { display: flex; flex: 1; justify-content: flex-end; width: auto; gap: 6px; }
+      header nav button[type="button"] {
+        flex: 0 1 auto;
+        width: auto;
+        min-width: 0;
+        min-height: 38px;
+        margin: 0;
+        padding: 5px 10px;
+        border-width: 1.5px;
+        font-size: 10px;
+        line-height: 1.1;
+        box-shadow: 1px 2px 0 var(--paper);
+        transform: none;
+      }
+      .hero { gap: 22px; padding: 68px 0 36px; }
+      .eyebrow { margin-bottom: 10px; font-size: 10px; }
+      h1, .profile-heading h1, .feature-page h1 { max-width: 100%; font-size: clamp(34px, 10.5vw, 42px); line-height: 1.05; overflow-wrap: anywhere; }
+      .intro { margin-top: 12px; font-size: 15px; line-height: 1.42; }
+      .local-note { width: 100%; margin-top: 12px; padding: 8px 10px; border-radius: 5px; font-size: 11px; }
+      .scroll-cue { margin-top: 18px; }
+      .hero-board { padding: 12px; }
+      .board-photo { height: 150px; }
+      .board-notes { display: none; }
+      .decision-section { padding: 72px 0 54px; }
+      .finder-intro h2 { font-size: 31px; }
+      .finder-intro > p:not(.section-index):not(.restaurant):not(.profile-summary) { display: none; }
+      .step-card, .step-card:nth-of-type(2), .step-card:nth-of-type(3), .step-card:nth-of-type(4) { padding: 14px; }
+      .step-head { margin-bottom: 10px; }
+      .progress-copy { align-items: flex-start; gap: 8px; font-size: 11px; }
+      .progress-copy > * { min-width: 0; }
+      .progress-copy strong { max-width: 52%; text-align: right; overflow-wrap: anywhere; }
+      .chips { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+      [data-choice-group="budget"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .chip { min-height: 40px; padding: 8px 10px; }
+      [data-choice-group="budget"] .chip { padding: 7px 4px; font-size: 11px; }
+      .chips .chip { width: 100%; min-width: 0; justify-content: center; white-space: normal; }
+      .action-card { padding: 14px; }
+      .profile-page, .feature-page { padding: 76px 0 42px; }
+      .profile-heading { margin-bottom: 18px; }
+      .feature-heading { margin-bottom: 18px; }
+      .profile-heading h1, .feature-page h1 { margin: 14px 0 10px; }
+      .profile-heading > button, .feature-heading > button { min-height: 40px; padding: 8px 12px; font-size: 13px; }
+      .profile-heading p, .profile-note p, .feature-panel p { font-size: 14px; line-height: 1.5; overflow-wrap: anywhere; }
+      .profile-layout { gap: 16px; }
+      .profile-form, .profile-note, .feature-panel { min-width: 0; padding: 16px 14px; }
+      .profile-form legend, .feature-panel h2 { font-size: 23px; }
+      .allergy-grid { gap: 7px; }
+      .allergy-option { min-height: 42px; padding: 8px; font-size: 13px; }
+      .allergy-option:last-child { grid-column: 1 / -1; justify-self: center; width: calc(50% - 4px); }
+      .profile-other input { min-height: 44px; }
+      .profile-actions { gap: 8px; margin-top: 16px; }
+      .profile-actions button { min-height: 42px; padding: 9px 10px; font-size: 12px; }
+      #profile-status { margin-top: 12px; font-size: 13px; }
+      .feature-grid { gap: 12px; }
+      .feature-actions { gap: 8px; }
+      .feature-actions > * { min-height: 42px; padding: 9px 8px; font-size: 12px; }
+      .admin-access { align-items: flex-start; padding: 13px; }
+      .admin-role { font-size: 10px; }
+      .admin-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; }
+      .admin-stat { padding: 10px 7px; }
+      .admin-stat strong { font-size: 21px; }
+      .admin-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+      .admin-tabs button { width: 100%; padding: 8px 6px; font-size: 12px; }
+      .admin-toolbar { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 7px; }
+      .admin-toolbar button { padding: 8px 10px; font-size: 12px; }
+      .admin-workspace { grid-template-columns: 1fr; gap: 14px; }
+      .admin-list-panel { padding: 13px; }
+      .admin-panel-heading h2 { font-size: 21px; }
+      .admin-records { max-height: 270px; overflow-y: auto; overscroll-behavior: contain; padding: 1px 4px 5px 1px; }
+      .admin-form { padding: 14px; }
+      .admin-form h2 { font-size: 25px; line-height: 1.1; }
+      .admin-form-grid { grid-template-columns: 1fr; gap: 9px; }
+      .admin-field.wide { grid-column: auto; }
+      .admin-form-actions { display: grid; grid-template-columns: 1fr 1fr; }
+      .admin-form-actions button { width: 100%; padding: 8px 6px; font-size: 11px; }
+      .vote-list li, .history-list li, .admin-list li { align-items: flex-start; gap: 8px; font-size: 13px; overflow-wrap: anywhere; }
+      .results { padding-top: 16px; }
+      .results .section-head { gap: 10px; margin-bottom: 14px; }
+      .results .section-head .section-index { margin-bottom: 8px !important; padding: 4px 8px; font-size: 11px; }
+      .results .section-head h2 { margin-bottom: 6px; font-size: 28px; }
+      .results #result-summary {
+        display: -webkit-box;
+        margin-top: 4px;
+        overflow: hidden;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        font-size: 13px;
+      }
+      .results .condition-actions { grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+      .results .condition-actions button { min-height: 40px; font-size: 12px; }
+      .results-controls { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; gap: 8px; }
+      .results-controls .ghost[type="button"] { width: 100%; min-height: 44px; padding: 7px 6px; font-size: 11px; line-height: 1.15; }
+      .results-controls .icon { width: 13px; height: 13px; }
+      .cards { display: grid; grid-template-columns: 1fr !important; gap: 16px; }
+      .card, .card:nth-child(1), .card:nth-child(2), .card:nth-child(3), .card:last-child { width: 100%; transform: none; }
+      .food-art { height: 118px; }
+      .card-body { padding: 14px; }
+      .match { margin-bottom: 7px; font-size: 11px; }
+      .results .card-row h3 { font-size: 23px; }
+      .restaurant { margin-top: 5px; }
+      .quick-facts { margin: 8px 0 9px; }
+      .reason { padding-top: 9px; font-size: 12px; line-height: 1.42; }
+      .detail-tags { margin-top: 8px; }
+      .detail-tag { padding: 4px 6px; font-size: 10px; }
+      .card-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+      .card-actions button, .card-actions .favorite { width: 100%; min-height: 42px; height: auto; padding: 8px 6px; font-size: 11px; flex: none; flex-basis: auto; }
+      .card-actions .favorite { grid-column: 1 / -1; }
+      .feature-grid { margin-top: 20px; }
+      .notice-overlay, .meal-overlay { padding: 10px; }
+      .notice-overlay, .meal-overlay { background: rgba(38, 61, 75, .42); backdrop-filter: blur(3px); }
+      .notice-dialog { box-sizing: border-box; width: 100%; max-width: 100%; padding: 20px 16px; overflow: hidden; background: #fffdf8; }
+      .notice-dialog > * { min-width: 0; }
+      .notice-dialog h2 { font-size: 27px; }
+      .notice-dialog .feature-actions { display: grid; grid-template-columns: 1fr 1fr; }
+      .notice-dialog .feature-actions > * { min-width: 0; white-space: normal; }
+      .meal-dialog { box-sizing: border-box; width: 100%; max-width: 100%; padding: 34px 14px 20px; background: #fffdf8; }
+      .meal-dialog h2 { font-size: 38px; }
+      .meal-dialog .chosen-meal { font-size: 23px; }
+      .meal-facts { gap: 6px; }
+    }
+    @media (max-width: 350px) {
+      .brand-mark { width: 32px; height: 32px; }
+      header nav button[type="button"] { font-size: 9px; }
+      .food-art { height: 96px; }
+      .card-body { padding: 11px; }
+      .results .card-row h3 { font-size: 20px; }
+      .quick-facts { gap: 5px; }
+      .quick-fact { padding: 4px 6px; font-size: 9px; }
+      .reason {
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+      }
+      .detail-tags { display: none; }
+      .card-actions { margin-top: 10px; }
+      .notice-dialog .feature-actions { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -659,7 +951,9 @@
   <header class="shell">
     <div class="brand"><span class="brand-mark"><svg class="icon"><use href="#icon-utensils"/></svg></span> Kinraidee</div>
     <nav aria-label="Main navigation">
-      <button type="button">Start choosing</button>
+      <button id="start-choosing" type="button">Start choosing</button>
+      <button id="profile-open" type="button" aria-controls="profile-page">Profile</button>
+      <button id="admin-open" type="button" aria-controls="admin-page">Admin</button>
     </nav>
   </header>
   <aside class="section-nav" aria-label="Page sections">
@@ -668,7 +962,7 @@
     <button class="section-dot" id="results-dot" type="button" data-section="results" aria-label="Go to recommendations" hidden><span>Results</span></button>
   </aside>
 
-  <main>
+  <main id="meal-page">
     <section class="hero shell is-active" id="home">
       <div class="hero-copy">
         <p class="eyebrow">Can’t decide? Let’s sketch it out.</p>
@@ -698,6 +992,7 @@
           <h2>Sketch out your meal mood</h2>
           <p>One quick choice at a time. We’ll keep the shortlist tidy.</p>
           <p class="restaurant" id="dataset-note">45 meal ideas around MFU</p>
+          <p id="allergy-summary" class="profile-summary" hidden></p>
           <div class="step-track" aria-label="Question progress"><span class="active"></span><span></span><span></span><span></span></div>
           <div class="progress-copy" aria-live="polite"><span id="progress-label">0 of 4 answered</span><strong id="progress-prompt">Choose your budget</strong></div>
         </div>
@@ -763,6 +1058,9 @@
               <li class="doodle-option" role="option" data-value="Ban Du and Nang Lae" aria-selected="false" tabindex="-1">Ban Du and Nang Lae</li>
             </ul>
           </div>
+          <div class="option-row">
+            <button class="ghost" id="use-current-area" type="button">Use current area</button>
+          </div>
         </section>
 
         <div class="action-card glass paper border border-2 shadow" id="action-step" hidden>
@@ -783,14 +1081,24 @@
         </div>
         <div class="results-controls">
           <button class="ghost" id="shuffle-results" type="button"><svg class="icon"><use href="#icon-refresh"/></svg>Shuffle shortlist</button>
+          <button class="ghost" id="random-pick" type="button"><svg class="icon"><use href="#icon-sparkles"/></svg>Pick one for me</button>
+          <button class="ghost" id="group-vote" type="button">Group vote</button>
         </div>
       </div>
 
-      <div class="undo-bar" id="undo-bar" hidden>
-        <p id="undo-message" role="status"></p>
-        <button id="undo-rejection" type="button">Undo</button>
-      </div>
       <div class="cards" id="results-grid" aria-live="polite"></div>
+      <div class="feature-grid" id="session-panels" hidden>
+        <section class="feature-panel glass">
+          <h2>Favorites</h2>
+          <p>Saved meals stay only in this open page unless the user signs in later.</p>
+          <ul class="history-list" id="favorites-list"><li><span>No favorites yet</span><strong></strong></li></ul>
+        </section>
+        <section class="feature-panel glass">
+          <h2>History</h2>
+          <p>Recent picks are visible for this session. Reuse for future recommendations requires opt-in.</p>
+          <ul class="history-list" id="history-list"><li><span>No choices yet</span><strong></strong></li></ul>
+        </section>
+      </div>
       <p class="source-note" id="results-note" hidden>Illustrative images, not actual restaurant servings. Taste and area labels are unverified; prices and waits are estimates. Confirm details with the restaurant.</p>
       <div class="empty-state glass paper border border-2 shadow" id="empty-state" hidden>
         <h3 id="empty-title">No matches yet</h3>
@@ -802,6 +1110,109 @@
       </div>
     </section>
   </main>
+
+  <main id="profile-page" class="profile-page shell" hidden>
+    <div class="profile-heading">
+      <button id="profile-back" type="button">&larr; Back to meals</button>
+      <h1 id="profile-title" tabindex="-1">Your food profile</h1>
+      <p>A little note about you. Keep your food allergies together, without creating an account.</p>
+    </div>
+    <div class="profile-layout">
+      <form id="profile-form" class="profile-form glass" aria-describedby="profile-privacy profile-limit">
+        <fieldset>
+          <legend>Food allergies</legend>
+          <p>Select all that apply. You can leave this blank.</p>
+          <p>For this visit only. Saved selections filter meals using the prototype ingredient tags.</p>
+          <div class="allergy-grid">
+                <label class="allergy-option"><input type="checkbox" name="allergy" value="Milk">Milk</label>
+                <label class="allergy-option"><input type="checkbox" name="allergy" value="Eggs">Eggs</label>
+                <label class="allergy-option"><input type="checkbox" name="allergy" value="Peanuts">Peanuts</label>
+                <label class="allergy-option"><input type="checkbox" name="allergy" value="Tree nuts">Tree nuts</label>
+                <label class="allergy-option"><input type="checkbox" name="allergy" value="Soy">Soy</label>
+                <label class="allergy-option"><input type="checkbox" name="allergy" value="Wheat">Wheat</label>
+                <label class="allergy-option"><input type="checkbox" name="allergy" value="Fish">Fish</label>
+                <label class="allergy-option"><input type="checkbox" name="allergy" value="Shellfish">Shellfish</label>
+                <label class="allergy-option"><input type="checkbox" name="allergy" value="Sesame">Sesame</label>
+          </div>
+          <label class="profile-other" for="allergy-other">Other food allergies
+            <input id="allergy-other" type="text" maxlength="160" autocomplete="off" placeholder="Add another ingredient (optional)">
+          </label>
+        </fieldset>
+        <div class="profile-actions">
+          <button type="submit">Save for this visit</button>
+          <button id="profile-clear" type="button">Clear profile</button>
+        </div>
+        <p id="profile-status" role="status" aria-live="polite">No allergies saved for this visit.</p>
+      </form>
+      <aside class="profile-note glass">
+        <h2>Just for this visit &#10035;</h2>
+        <p id="profile-privacy">Optional prototype profile. Selections stay only in this open page and disappear when you reload or close it. Nothing is sent to a server.</p>
+        <p id="profile-limit">Temporary exclusions are applied to this prototype shortlist using simple ingredient tags. The tags are not verified restaurant allergy data, so confirm ingredients with the restaurant.</p>
+        <p>You can edit or clear your profile at any time. Choosing meals is always available without it.</p>
+      </aside>
+    </div>
+  </main>
+
+  <main id="admin-page" class="feature-page shell" hidden>
+    <div class="feature-heading">
+      <button class="back-to-meals" type="button">&larr; Back to meals</button>
+      <h1 id="admin-title" tabindex="-1">Restaurant admin</h1>
+      <p>Keep restaurant and menu information ready for recommendations.</p>
+    </div>
+    <section class="admin-access glass" aria-label="Admin access status">
+      <div><strong>Admin access active</strong><p>You can manage records. Changes stay in this demo session.</p></div>
+      <span class="admin-role">Data administrator</span>
+    </section>
+    <div class="admin-stats" aria-label="Restaurant data summary">
+      <div class="admin-stat"><span>Records</span><strong id="admin-record-count">3</strong></div>
+      <div class="admin-stat"><span>Active</span><strong id="admin-active-count">2</strong></div>
+      <div class="admin-stat"><span>Review due</span><strong id="admin-review-count">1</strong></div>
+    </div>
+    <div class="admin-tabs" role="tablist" aria-label="Admin sections">
+      <button id="admin-records-tab" type="button" role="tab" aria-selected="true" aria-controls="admin-records-panel">Manage records</button>
+      <button id="admin-audit-tab" type="button" role="tab" aria-selected="false" aria-controls="admin-audit-panel">Activity log</button>
+    </div>
+    <section id="admin-records-panel" role="tabpanel" aria-labelledby="admin-records-tab">
+      <div class="admin-workspace">
+        <section class="admin-list-panel" aria-labelledby="admin-list-heading">
+          <div class="admin-panel-heading"><span class="admin-step-label">Step 1</span><h2 id="admin-list-heading">Choose a record</h2><p>Search for an existing item or add a new one.</p></div>
+          <div class="admin-toolbar">
+            <input id="admin-search" type="search" placeholder="Search menu or restaurant" aria-label="Search restaurant or menu records">
+            <button id="admin-new" type="button">+ Add</button>
+          </div>
+          <div class="admin-records" id="admin-records" aria-label="Restaurant and menu records"></div>
+        </section>
+        <form class="admin-form glass" id="admin-record-form" novalidate>
+          <span class="admin-step-label">Step 2</span>
+          <h2 id="admin-form-title">Edit record</h2>
+          <p>Check the details below. Fields marked * are required.</p>
+          <div class="admin-form-grid">
+            <label class="admin-field">Menu name *<input id="admin-menu-name" name="menuName" required maxlength="80"></label>
+            <label class="admin-field">Restaurant *<input id="admin-restaurant" name="restaurant" required maxlength="80"></label>
+            <label class="admin-field">Food type *<select id="admin-food-type" name="foodType" required><option>Rice dishes</option><option>Noodles or pasta</option><option>Fast food</option><option>Soup or hot pot</option><option>Light and healthy</option></select></label>
+            <label class="admin-field">Location shown to users *<input id="admin-area" name="area" required maxlength="80" placeholder="Example: MFU campus"></label>
+            <label class="admin-field">Area filter *<select id="admin-area-key" name="areaKey" required><option value="campus">MFU campus and front gate</option><option value="dorm">Dormitory area</option><option value="ban-du">Ban Du and Nang Lae</option><option value="any">Any area near MFU</option></select></label>
+            <label class="admin-field">Estimated price (baht) *<input id="admin-price" name="price" type="number" min="1" max="5000" required></label>
+            <label class="admin-field">Estimated wait *<input id="admin-wait" name="wait" required maxlength="30" placeholder="Example: 5–10 min"></label>
+            <label class="admin-field wide">Ingredient tags<input id="admin-tags" name="tags" maxlength="160" placeholder="Example: Eggs, Wheat"></label>
+            <label class="admin-field">Last reviewed *<input id="admin-reviewed" name="reviewed" type="date" required></label>
+            <label class="admin-field">Status *<select id="admin-status" name="status" required><option>Active</option><option>Needs review</option><option>Hidden</option></select></label>
+          </div>
+          <div class="admin-form-actions">
+            <button id="admin-save" type="submit">Save changes</button>
+            <button id="admin-retire" type="button">Hide from choices</button>
+          </div>
+          <p class="admin-form-status" id="admin-form-status" role="status" aria-live="polite">Select a record or create a new one.</p>
+        </form>
+      </div>
+    </section>
+    <section class="feature-panel glass" id="admin-audit-panel" role="tabpanel" aria-labelledby="admin-audit-tab" hidden>
+      <h2>Minimized audit events</h2>
+      <p>Only the administrator role, action, record reference, and session time are shown. No password, token, email address, or allergy detail is recorded.</p>
+      <ul class="admin-list" id="admin-audit-list"><li class="audit-event"><span>No changes in this session</span><strong>—</strong></li></ul>
+    </section>
+  </main>
+
 
   <footer class="shell">
     Wireframe prototype · General recommendations without account registration<br>
@@ -849,6 +1260,27 @@
       </div>
     </div>
   </div>
+  <div class="notice-overlay" id="location-overlay" role="dialog" aria-modal="true" aria-labelledby="location-title" hidden>
+    <div class="notice-dialog glass">
+      <h2 id="location-title">Use your current area?</h2>
+      <p>Kinraidee would use your current area only for this meal search. You can decline and keep choosing manually.</p>
+      <div class="feature-actions">
+        <button id="location-allow" type="button">Use current area</button>
+        <button class="ghost" id="location-decline" type="button">Keep manual area</button>
+      </div>
+    </div>
+  </div>
+  <div class="notice-overlay" id="vote-overlay" role="dialog" aria-modal="true" aria-labelledby="vote-title" hidden>
+    <div class="notice-dialog glass">
+      <h2 id="vote-title">Group vote</h2>
+      <p>Share this session's three choices and count votes on the same candidate set.</p>
+      <ul class="vote-list" id="vote-list"></ul>
+      <div class="feature-actions">
+        <button id="vote-demo" type="button">Add sample votes</button>
+        <button class="ghost" id="vote-close" type="button">Close</button>
+      </div>
+    </div>
+  </div>
   <div class="toast glass" id="toast" role="status" aria-live="polite"><strong id="toast-title"></strong><span id="toast-message"></span></div>
 
   <script src="assets/vendor/rough-notation.iife.js"></script>
@@ -860,8 +1292,10 @@
       area: null,
       rejected: new Set(),
       seen: new Set(),
-      undo: null,
-      shown: []
+      shown: [],
+      usingFallback: false,
+      favorites: [],
+      history: []
     };
     const menuCatalog = [
       { type: "Rice dishes", name: "Pad Kra Pao", restaurant: "Go Rat Carte Food", price: "≈฿55", area: "300 m from MFU", wait: "5–10 min", moods: ["Spicy", "Comforting"], areaKey: null, image: "assets/food/datasets/rice/pad-kra-pao.jpg" },
@@ -993,6 +1427,11 @@
 
     function openMealOverlay(item) {
       clearUndo();
+      if (!state.history.some(historyItem => itemId(historyItem) === itemId(item))) {
+        state.history.unshift(item);
+        state.history = state.history.slice(0, 5);
+        renderSessionPanels();
+      }
       mealReturnFocus = document.activeElement;
       document.getElementById("chosen-meal").textContent = item.name;
       const chosenPhoto = document.getElementById("chosen-photo");
@@ -1044,14 +1483,58 @@
       return false;
     }
 
+    function exclusionTags(item) {
+      if (Array.isArray(item.tags)) return item.tags;
+      const tags = [];
+      const text = (item.name + " " + item.type).toLowerCase();
+      if (/chicken|duck|pork|beef|burger|ramen|noodle|pad thai|khao soi/.test(text)) tags.push("Eggs", "Wheat");
+      if (/fish|seafood|salmon/.test(text)) tags.push("Fish");
+      if (/seafood|tom yum/.test(text)) tags.push("Shellfish");
+      if (/yogurt|cheese|burger|pasta|spaghetti/.test(text)) tags.push("Milk");
+      if (/pad thai|suki|salad|spring roll/.test(text)) tags.push("Peanuts", "Soy");
+      if (/vegetable|vegetarian|mushroom|grain|salad/.test(text)) tags.push("Sesame");
+      return [...new Set(tags)];
+    }
+
+    function matchesExclusions(item) {
+      if (!savedAllergies.length) return true;
+      const tags = exclusionTags(item);
+      return savedAllergies.every(allergy => !tags.includes(allergy));
+    }
+
     function qualifyingItems() {
       return menuCatalog.filter(item => {
         const typeMatches = state.type === "Any food type" || item.type === state.type;
-        return typeMatches && matchesBudget(item) && matchesMood(item) && matchesArea(item);
+        return item.status !== "Hidden" && typeMatches && matchesBudget(item) && matchesMood(item) && matchesArea(item) && matchesExclusions(item);
       });
     }
 
+    function conditionMismatches(item) {
+      const mismatches = [];
+      if (!matchesBudget(item)) mismatches.push("budget");
+      if (!matchesMood(item)) mismatches.push("mood");
+      if (!(state.type === "Any food type" || item.type === state.type)) mismatches.push("food type");
+      if (!matchesArea(item)) mismatches.push("area");
+      return mismatches;
+    }
+
+    function closestItems() {
+      const weights = { budget: 4, mood: 2, "food type": 3, area: 1 };
+      return menuCatalog
+        .filter(item => item.status !== "Hidden" && matchesExclusions(item) && !state.rejected.has(itemId(item)))
+        .map(item => ({
+          item,
+          score: conditionMismatches(item).reduce((score, condition) => score - weights[condition], 10)
+        }))
+        .sort((a, b) => b.score - a.score || a.item.name.localeCompare(b.item.name))
+        .map(entry => entry.item);
+    }
+
     function reasonFor(item) {
+      const mismatches = conditionMismatches(item);
+      if (state.usingFallback && mismatches.length) {
+        return "Closest match — it matches " + (4 - mismatches.length) + " of your 4 choices. The difference is " + mismatches.join(" and ") + ".";
+      }
       const taste = state.mood === "Surprise me" ? item.moods.join(" / ").toLowerCase() : state.mood.toLowerCase();
       return "Why it fits — " + item.type + " with a " + taste + " feel, estimated at " + item.price.replace("≈", "") + " within your budget. " + item.area + ".";
     }
@@ -1060,12 +1543,13 @@
       return '<article class="card card-deal-in glass border border-2 shadow shadow-hover" style="--card-index:' + index + '" data-item-id="' + encodeURIComponent(itemId(item)) + '">' +
         '<div class="food-art"><img src="' + item.image + '" alt="Generated prototype image of ' + item.name + '"><span class="tag">Illustrative image</span><span class="pick-number">PICK 0' + (index + 1) + '</span></div>' +
         '<div class="card-body">' +
-          '<span class="match">Matches your choices</span>' +
+          '<span class="match">' + (state.usingFallback ? "Closest available match" : "Matches your choices") + '</span>' +
           '<div class="card-row"><h3>' + item.name + '</h3><span class="price">' + item.price + '</span></div>' +
           '<p class="restaurant">' + item.restaurant + '</p>' +
           '<div class="quick-facts"><span class="quick-fact">' + item.area + '</span><span class="quick-fact">About ' + item.wait + '</span></div>' +
           '<p class="reason">' + reasonFor(item) + '</p>' +
-          '<div class="card-actions"><button type="button">Choose this</button><button class="reject" type="button">Not this one</button></div>' +
+          '<div class="detail-tags"><span class="detail-tag">Freshness: review needed</span><span class="detail-tag">Tags: ' + (exclusionTags(item).join(", ") || "none listed") + '</span></div>' +
+          '<div class="card-actions"><button type="button">Choose this</button><button class="reject" type="button">Not this one</button><button class="favorite" type="button">Save favorite</button></div>' +
         '</div>' +
       '</article>';
     }
@@ -1090,48 +1574,31 @@
     function rejectChoice(id) {
       const index = state.shown.findIndex(item => itemId(item) === id);
       if (index < 0) return false;
-      state.undo = { id, index, shown: [...state.shown] };
       state.rejected.add(id);
       const others = state.shown.filter(item => itemId(item) !== id);
       const visible = new Set(others.map(itemId));
-      const replacement = preferredItems(availableItems().filter(item => !visible.has(itemId(item))))[0];
+      const exactCandidates = availableItems();
+      const replacementCandidates = exactCandidates.length ? exactCandidates : closestItems();
+      const remainingCandidates = replacementCandidates.filter(item => !visible.has(itemId(item)));
+      const replacement = (exactCandidates.length ? preferredItems(remainingCandidates) : remainingCandidates)[0];
       state.shown = replacement ? state.shown.map((item, position) => position === index ? replacement : item) : others;
       return true;
     }
 
-    function undoRejection() {
-      if (!state.undo) return null;
-      const previous = state.undo;
-      state.rejected.delete(previous.id);
-      state.shown = previous.shown;
-      state.undo = null;
-      return previous.index;
-    }
-
-    function clearUndo() {
-      state.undo = null;
-      document.getElementById("undo-bar").hidden = true;
-      document.getElementById("undo-message").textContent = "";
-      if (!document.getElementById("empty-state").hidden && !state.shown.length) {
-        document.getElementById("empty-copy").textContent = qualifyingItems().length
-          ? "Start a new session to reset rejected choices, or edit your conditions."
-          : "Try a wider budget or area, or another mood or food type.";
-      }
-    }
+    function clearUndo() {}
 
     function renderCurrentChoices() {
       if (state.shown.length) {
-        renderItems(state.shown, state.shown.length === 1 ? "One idea for your meal" : state.shown.length + " ideas for your meal");
+        renderItems(state.shown, state.usingFallback ? "Closest ideas for your meal" : (state.shown.length === 1 ? "One idea for your meal" : state.shown.length + " ideas for your meal"), state.usingFallback);
       } else {
-        showEmptyState("You reviewed every matching choice", "Undo your last rejection, start a new session, or edit your conditions.");
-        updateSummary();
+        renderShortlist();
       }
       annotateResults();
     }
 
     function updateSummary() {
       document.getElementById("result-summary").textContent =
-        state.type + " · " + state.mood + " · " + state.budget + " · " + state.area;
+        (state.usingFallback ? "Showing the closest safe alternatives · " : "") + state.type + " · " + state.mood + " · " + state.budget + " · " + state.area;
     }
 
     function showEmptyState(title, copy) {
@@ -1139,43 +1606,77 @@
       document.getElementById("result-condition-actions").hidden = true;
       document.getElementById("results-note").hidden = true;
       document.getElementById("results-grid").innerHTML = "";
+      document.getElementById("session-panels").hidden = true;
       document.getElementById("empty-title").textContent = title;
       document.getElementById("empty-copy").textContent = copy;
       document.getElementById("empty-state").hidden = false;
       document.getElementById("results-title").textContent = "No matching choices";
     }
 
-    function renderItems(items, title) {
+    function renderItems(items, title, usingFallback = false) {
       state.shown = items;
+      state.usingFallback = usingFallback;
       document.getElementById("result-condition-actions").hidden = false;
+      document.getElementById("session-panels").hidden = false;
       items.forEach(item => state.seen.add(itemId(item)));
       document.getElementById("results-note").hidden = false;
       document.getElementById("empty-state").hidden = true;
       document.getElementById("results-grid").innerHTML = items.map(cardMarkup).join("");
       document.getElementById("results-title").textContent = title;
       updateSummary();
+      document.querySelectorAll("#results-grid .favorite").forEach(button => {
+        button.addEventListener("click", event => saveFavoriteFromButton(event.currentTarget));
+      });
+    }
+
+    function listMarkup(items, emptyCopy) {
+      if (!items.length) return "<li><span>" + emptyCopy + "</span><strong></strong></li>";
+      return items.map(item => "<li><span>" + item.name + "</span><strong>" + item.restaurant + "</strong></li>").join("");
+    }
+
+    function renderSessionPanels() {
+      document.getElementById("favorites-list").innerHTML = listMarkup(state.favorites, "No favorites yet");
+      document.getElementById("history-list").innerHTML = listMarkup(state.history, "No choices yet");
+    }
+
+    function saveFavoriteFromButton(button) {
+      const card = button.closest(".card");
+      if (!card) return;
+      const item = state.shown.find(item => itemId(item) === decodeURIComponent(card.dataset.itemId));
+      if (item && !state.favorites.some(favorite => itemId(favorite) === itemId(item))) {
+        state.favorites.unshift(item);
+        renderSessionPanels();
+      }
+      announce("Favorite saved", "This stays in the current page session.");
     }
 
     function availableItems() {
       return qualifyingItems().filter(item => !state.rejected.has(itemId(item)));
     }
 
+    function recommendationSet() {
+      const exact = availableItems();
+      return exact.length
+        ? { items: exact, usingFallback: false }
+        : { items: closestItems(), usingFallback: true };
+    }
+
     function renderShortlist() {
-      currentPool = preferredItems(availableItems());
+      const recommendation = recommendationSet();
+      currentPool = recommendation.usingFallback ? recommendation.items : preferredItems(recommendation.items);
       if (!currentPool.length) {
-        const exhausted = qualifyingItems().length > 0;
         showEmptyState(
-          exhausted ? "You reviewed every matching choice" : "No choices match every condition",
-          exhausted
-            ? "Start a new session to reset rejected choices, or edit your conditions to search a different set."
-            : "Try a wider budget or area, or another mood or food type."
+          "No safe suggestions available",
+          "Edit your allergy profile or start a new session to see more choices."
         );
         updateSummary();
         return;
       }
       const shortlist = currentPool.slice(0, 3);
-      const title = shortlist.length === 1 ? "One idea for your meal" : shortlist.length + " ideas for your meal";
-      renderItems(shortlist, title);
+      const title = recommendation.usingFallback
+        ? "Closest ideas for your meal"
+        : (shortlist.length === 1 ? "One idea for your meal" : shortlist.length + " ideas for your meal");
+      renderItems(shortlist, title, recommendation.usingFallback);
     }
 
     document.querySelectorAll("[data-choice-group]").forEach(group => {
@@ -1278,13 +1779,39 @@
       if (!areaSelectShell.contains(event.target)) closeAreaOptions();
     });
 
+    document.getElementById("use-current-area").addEventListener("click", () => {
+      document.getElementById("location-overlay").hidden = false;
+      document.getElementById("location-allow").focus();
+    });
+    document.getElementById("location-allow").addEventListener("click", () => {
+      chooseArea(areaOptionItems[1]);
+      document.getElementById("location-overlay").hidden = true;
+      announce("Current area applied", "Using MFU campus and front gate for this session.");
+    });
+    document.getElementById("location-decline").addEventListener("click", () => {
+      document.getElementById("location-overlay").hidden = true;
+      areaSelect.focus();
+      announce("Manual area kept", "You can choose an area from the dropdown.");
+    });
+
     document.getElementById("finder").addEventListener("submit", event => {
       event.preventDefault();
       clearUndo();
       renderShortlist();
       reveal("results");
       setTimeout(() => {
-        document.getElementById("results").scrollIntoView({ behavior: "smooth", block: "start" });
+        const mobileResults = window.matchMedia("(max-width: 580px)").matches;
+        const scrollTarget = mobileResults && state.shown.length
+          ? document.querySelector("#results-grid .card")
+          : document.getElementById("results");
+        if (mobileResults && state.shown.length) {
+          const headerHeight = document.querySelector("header.shell").offsetHeight;
+          const mobileOffset = Math.max(headerHeight + 10, 124);
+          const targetTop = scrollTarget.getBoundingClientRect().top + window.scrollY - mobileOffset;
+          window.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
+        } else {
+          scrollTarget.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
         annotateResults();
       }, 80);
       announce(
@@ -1300,6 +1827,35 @@
         state.shown.length ? "Shortlist shuffled" : document.getElementById("empty-title").textContent,
         state.shown.length ? "Rejected choices stay out of this session." : document.getElementById("empty-copy").textContent
       );
+    });
+
+    document.getElementById("random-pick").addEventListener("click", () => {
+      clearUndo();
+      const recommendation = recommendationSet();
+      const pool = recommendation.usingFallback
+        ? recommendation.items.slice(0, 3)
+        : preferredItems(recommendation.items);
+      const pick = pool[Math.floor(Math.random() * pool.length)];
+      if (pick) openMealOverlay(pick);
+      else announce("No random pick available", document.getElementById("empty-copy").textContent || "Try different conditions.");
+    });
+
+    function renderVoteList(sampleVotes = false) {
+      const votes = sampleVotes ? [3, 2, 1] : [0, 0, 0];
+      document.getElementById("vote-list").innerHTML = state.shown.map((item, index) =>
+        "<li><span>" + item.name + "</span><strong>" + votes[index] + " votes</strong></li>"
+      ).join("") || "<li><span>Run the meal search first</span><strong>0 votes</strong></li>";
+    }
+
+    document.getElementById("group-vote").addEventListener("click", () => {
+      renderVoteList();
+      document.getElementById("vote-overlay").hidden = false;
+      document.getElementById("vote-demo").focus();
+    });
+    document.getElementById("vote-demo").addEventListener("click", () => renderVoteList(true));
+    document.getElementById("vote-close").addEventListener("click", () => {
+      document.getElementById("vote-overlay").hidden = true;
+      document.getElementById("group-vote").focus();
     });
 
     document.getElementById("results-grid").addEventListener("click", async event => {
@@ -1318,22 +1874,26 @@
         if (!rejectChoice(rejectedId)) return;
         const replaced = state.shown.length === previousCount;
         renderCurrentChoices();
-        document.getElementById("undo-bar").hidden = false;
-        document.getElementById("undo-message").textContent = rejectedItem.name + " removed.";
         if (state.shown.length) {
           document.querySelectorAll("#results-grid .reject")[Math.min(rejectedIndex, state.shown.length - 1)].focus({ preventScroll: true });
         } else {
-          document.getElementById("undo-rejection").focus({ preventScroll: true });
+          document.getElementById("results-edit").focus({ preventScroll: true });
         }
         announce(
           rejectedItem.name + " removed",
-          replaced ? "Another matching meal took its place. You can undo this change." : "No replacement remains. You can undo this change."
+          replaced ? "Another meal took its place." : "The meal was removed from this session."
         );
+      } else if (event.target.closest(".favorite")) {
+        return;
       } else if (event.target.closest(".card-actions button")) {
         const item = state.shown.find(item => itemId(item) === decodeURIComponent(card.dataset.itemId));
         if (item) openMealOverlay(item);
       }
     });
+    document.addEventListener("pointerup", event => {
+      const button = event.target.closest("#results-grid .favorite");
+      if (button) saveFavoriteFromButton(button);
+    }, true);
 
     document.getElementById("dialog-close").addEventListener("click", closeMealOverlay);
     document.getElementById("dialog-done").addEventListener("click", closeMealOverlay);
@@ -1356,6 +1916,7 @@
       state.rejected.clear();
       state.seen.clear();
       state.shown = [];
+      state.usingFallback = false;
       currentPool = [];
       document.querySelectorAll(".chip.active").forEach(chip => {
         chip.classList.remove("active");
@@ -1382,15 +1943,6 @@
     document.getElementById("empty-reset").addEventListener("click", startNewSession);
     document.getElementById("results-edit").addEventListener("click", editConditions);
     document.getElementById("results-reset").addEventListener("click", startNewSession);
-    document.getElementById("undo-rejection").addEventListener("click", () => {
-      const index = undoRejection();
-      if (index === null) return;
-      clearUndo();
-      renderCurrentChoices();
-      document.querySelectorAll("#results-grid .reject")[index].focus({ preventScroll: true });
-      announce("Choice restored", "Your previous shortlist is back.");
-    });
-
     document.addEventListener("keydown", event => {
       if (document.getElementById("meal-overlay").hidden) return;
       if (event.key === "Escape") closeMealOverlay();
@@ -1407,7 +1959,274 @@
       }
     });
 
-    document.querySelector('nav .button, nav button')?.addEventListener("click", () => document.getElementById("decision").scrollIntoView({ behavior: "smooth" }));
+    const adminRecordsData = menuCatalog.map((item, index) => ({
+      id: "menu-" + String(index + 1).padStart(3, "0"),
+      menuName: item.name,
+      restaurant: item.restaurant,
+      foodType: item.type,
+      area: item.area,
+      areaKey: item.areaKey || "any",
+      price: priceNumber(item),
+      wait: item.wait,
+      tags: exclusionTags(item).join(", "),
+      reviewed: index < 3 ? "2026-07-10" : "2026-09-01",
+      status: index < 3 ? "Needs review" : "Active",
+      catalogItem: item
+    }));
+    let selectedAdminRecordId = adminRecordsData[0].id;
+    let adminAuditCount = 0;
+    const adminForm = document.getElementById("admin-record-form");
+    const adminFields = {
+      menuName: document.getElementById("admin-menu-name"),
+      restaurant: document.getElementById("admin-restaurant"),
+      foodType: document.getElementById("admin-food-type"),
+      area: document.getElementById("admin-area"),
+      areaKey: document.getElementById("admin-area-key"),
+      price: document.getElementById("admin-price"),
+      wait: document.getElementById("admin-wait"),
+      tags: document.getElementById("admin-tags"),
+      reviewed: document.getElementById("admin-reviewed"),
+      status: document.getElementById("admin-status")
+    };
+
+    function updateAdminCounts() {
+      document.getElementById("admin-record-count").textContent = adminRecordsData.length;
+      document.getElementById("admin-active-count").textContent = adminRecordsData.filter(record => record.status === "Active").length;
+      document.getElementById("admin-review-count").textContent = adminRecordsData.filter(record => record.status === "Needs review").length;
+    }
+
+    function syncCatalogFromAdmin(record) {
+      let item = record.catalogItem;
+      if (!item) {
+        const visualTemplate = menuCatalog.find(candidate => candidate.type === record.foodType) || menuCatalog[0];
+        item = { moods: ["Comforting"], image: visualTemplate.image };
+        menuCatalog.unshift(item);
+        record.catalogItem = item;
+      }
+      Object.assign(item, {
+        name: record.menuName,
+        restaurant: record.restaurant,
+        type: record.foodType,
+        area: record.area,
+        areaKey: record.areaKey === "any" ? null : record.areaKey,
+        price: "≈฿" + record.price,
+        wait: record.wait,
+        tags: record.tags.split(",").map(tag => tag.trim()).filter(Boolean),
+        status: record.status
+      });
+    }
+
+    function refreshRecommendationsAfterAdminChange() {
+      if (!document.getElementById("results").hidden) renderShortlist();
+      document.getElementById("dataset-note").textContent = menuCatalog.filter(item => item.status !== "Hidden").length + " active meal ideas around MFU";
+    }
+
+    function renderAdminRecords(query = "") {
+      const list = document.getElementById("admin-records");
+      list.replaceChildren();
+      const normalizedQuery = query.trim().toLowerCase();
+      const records = adminRecordsData.filter(record => (record.menuName + " " + record.restaurant).toLowerCase().includes(normalizedQuery));
+      records.forEach(record => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "admin-record";
+        button.dataset.recordId = record.id;
+        button.setAttribute("aria-current", String(record.id === selectedAdminRecordId));
+        const name = document.createElement("strong");
+        name.textContent = record.menuName;
+        const details = document.createElement("span");
+        details.className = "admin-record-meta";
+        details.textContent = record.restaurant + " · " + record.status + " · reviewed " + record.reviewed;
+        const status = document.createElement("span");
+        status.className = "admin-record-status " + (record.status === "Active" ? "is-active" : record.status === "Needs review" ? "is-review" : "is-hidden");
+        status.textContent = record.status;
+        button.append(name, details, status);
+        list.append(button);
+      });
+      if (!records.length) {
+        const empty = document.createElement("p");
+        empty.textContent = "No records match this search.";
+        list.append(empty);
+      }
+      updateAdminCounts();
+    }
+
+    function moveAdminFormIntoView() {
+      if (!window.matchMedia("(max-width: 580px)").matches) return;
+      const headerOffset = document.querySelector(".topbar")?.offsetHeight || 0;
+      window.scrollTo({ top: window.scrollY + adminForm.getBoundingClientRect().top - headerOffset - 10, behavior: "smooth" });
+    }
+
+    function selectAdminRecord(id, moveToForm = false) {
+      const record = adminRecordsData.find(item => item.id === id);
+      if (!record) return;
+      selectedAdminRecordId = id;
+      Object.entries(adminFields).forEach(([key, field]) => { field.value = record[key]; });
+      document.getElementById("admin-form-title").textContent = "Edit " + record.menuName;
+      document.getElementById("admin-save").textContent = "Save changes";
+      document.getElementById("admin-retire").disabled = record.status === "Hidden";
+      document.getElementById("admin-form-status").textContent = "Editing " + record.restaurant + " · " + record.id;
+      renderAdminRecords(document.getElementById("admin-search").value);
+      if (moveToForm) moveAdminFormIntoView();
+    }
+
+    function addAdminAudit(action, record) {
+      const list = document.getElementById("admin-audit-list");
+      if (adminAuditCount === 0) list.replaceChildren();
+      adminAuditCount += 1;
+      const row = document.createElement("li");
+      row.className = "audit-event";
+      const copy = document.createElement("span");
+      copy.textContent = action + " · " + record.menuName;
+      const detail = document.createElement("small");
+      detail.textContent = "Data administrator · " + record.id;
+      copy.append(detail);
+      const time = document.createElement("strong");
+      time.textContent = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+      row.append(copy, time);
+      list.prepend(row);
+    }
+
+    document.getElementById("admin-records").addEventListener("click", event => {
+      const recordButton = event.target.closest(".admin-record");
+      if (recordButton) selectAdminRecord(recordButton.dataset.recordId, true);
+    });
+    document.getElementById("admin-search").addEventListener("input", event => renderAdminRecords(event.target.value));
+    document.getElementById("admin-new").addEventListener("click", () => {
+      selectedAdminRecordId = null;
+      adminForm.reset();
+      document.getElementById("admin-form-title").textContent = "Create record";
+      document.getElementById("admin-save").textContent = "Create record";
+      document.getElementById("admin-retire").disabled = true;
+      document.getElementById("admin-form-status").textContent = "Enter all required fields before saving.";
+      renderAdminRecords(document.getElementById("admin-search").value);
+      moveAdminFormIntoView();
+      adminFields.menuName.focus();
+    });
+    adminForm.addEventListener("submit", event => {
+      event.preventDefault();
+      const invalidField = Object.values(adminFields).find(field => field.required && (!field.value || !field.checkValidity()));
+      if (invalidField) {
+        document.getElementById("admin-form-status").textContent = "Record not saved. Check the highlighted required field.";
+        invalidField.focus();
+        return;
+      }
+      const values = Object.fromEntries(Object.entries(adminFields).map(([key, field]) => [key, field.type === "number" ? Number(field.value) : field.value.trim()]));
+      let record = adminRecordsData.find(item => item.id === selectedAdminRecordId);
+      const action = record ? "Updated" : "Created";
+      if (record) Object.assign(record, values);
+      else {
+        record = { id: "menu-" + String(Date.now()).slice(-6), ...values };
+        adminRecordsData.unshift(record);
+        selectedAdminRecordId = record.id;
+      }
+      syncCatalogFromAdmin(record);
+      refreshRecommendationsAfterAdminChange();
+      addAdminAudit(action, record);
+      document.getElementById("admin-form-status").textContent = action + " " + record.menuName + ". Audit event recorded.";
+      document.getElementById("admin-form-title").textContent = "Edit " + record.menuName;
+      document.getElementById("admin-save").textContent = "Save changes";
+      document.getElementById("admin-retire").disabled = record.status === "Hidden";
+      renderAdminRecords(document.getElementById("admin-search").value);
+    });
+    document.getElementById("admin-retire").addEventListener("click", () => {
+      const record = adminRecordsData.find(item => item.id === selectedAdminRecordId);
+      if (!record || record.status === "Hidden") return;
+      record.status = "Hidden";
+      syncCatalogFromAdmin(record);
+      refreshRecommendationsAfterAdminChange();
+      adminFields.status.value = "Hidden";
+      document.getElementById("admin-retire").disabled = true;
+      addAdminAudit("Retired", record);
+      document.getElementById("admin-form-status").textContent = "Retired " + record.menuName + ". It is hidden from recommendations.";
+      renderAdminRecords(document.getElementById("admin-search").value);
+    });
+    document.querySelectorAll(".admin-tabs [role=tab]").forEach(tabButton => tabButton.addEventListener("click", () => {
+      const showAudit = tabButton.id === "admin-audit-tab";
+      document.getElementById("admin-records-panel").hidden = showAudit;
+      document.getElementById("admin-audit-panel").hidden = !showAudit;
+      document.querySelectorAll(".admin-tabs [role=tab]").forEach(button => button.setAttribute("aria-selected", String(button === tabButton)));
+    }));
+    renderAdminRecords();
+    selectAdminRecord(selectedAdminRecordId);
+
+    const profilePage = document.getElementById("profile-page");
+    const mealPage = document.getElementById("meal-page");
+    const adminPage = document.getElementById("admin-page");
+    const profileForm = document.getElementById("profile-form");
+    const profileOpen = document.getElementById("profile-open");
+    const adminOpen = document.getElementById("admin-open");
+    const pageFooter = document.querySelector("footer");
+    let savedAllergies = [];
+    let savedOtherAllergy = "";
+    let mealScrollPosition = 0;
+
+    function showMeals() {
+      profilePage.hidden = true;
+      adminPage.hidden = true;
+      mealPage.hidden = false;
+      pageFooter.hidden = false;
+      profileOpen.removeAttribute("aria-current");
+      adminOpen.removeAttribute("aria-current");
+    }
+    profileOpen.addEventListener("click", () => {
+      if (!profilePage.hidden) return;
+      mealScrollPosition = window.scrollY;
+      profileForm.querySelectorAll('[name="allergy"]').forEach(input => {
+        input.checked = savedAllergies.includes(input.value);
+      });
+      document.getElementById("allergy-other").value = savedOtherAllergy;
+      mealPage.hidden = true;
+      profilePage.hidden = false;
+      pageFooter.hidden = true;
+      profileOpen.setAttribute("aria-current", "page");
+      adminOpen.removeAttribute("aria-current");
+      window.scrollTo({ top: 0, behavior: "instant" });
+      document.getElementById("profile-title").focus({ preventScroll: true });
+    });
+    document.querySelectorAll(".back-to-meals, #profile-back").forEach(button => button.addEventListener("click", () => {
+      showMeals();
+      window.scrollTo({ top: mealScrollPosition, behavior: "instant" });
+      document.getElementById("start-choosing").focus({ preventScroll: true });
+    }));
+    adminOpen.addEventListener("click", () => {
+      mealScrollPosition = window.scrollY;
+      profilePage.hidden = true;
+      mealPage.hidden = true;
+      adminPage.hidden = false;
+      pageFooter.hidden = true;
+      profileOpen.removeAttribute("aria-current");
+      adminOpen.setAttribute("aria-current", "page");
+      window.scrollTo({ top: 0, behavior: "instant" });
+      document.getElementById("admin-title").focus({ preventScroll: true });
+    });
+    function updateProfileSummary() {
+      const selections = [...savedAllergies, savedOtherAllergy].filter(Boolean);
+      const summary = document.getElementById("allergy-summary");
+      summary.hidden = selections.length === 0;
+      summary.textContent = "Profile: " + selections.join(", ") + ". Temporary exclusions are applied to this session's shortlist.";
+      document.getElementById("profile-status").textContent = selections.length
+        ? "Saved for this visit: " + selections.join(", ") + "."
+        : "No allergies saved for this visit.";
+      if (!document.getElementById("results").hidden) renderShortlist();
+    }
+    profileForm.addEventListener("submit", event => {
+      event.preventDefault();
+      savedAllergies = Array.from(profileForm.querySelectorAll('[name="allergy"]:checked'), input => input.value);
+      savedOtherAllergy = document.getElementById("allergy-other").value.trim();
+      updateProfileSummary();
+    });
+    document.getElementById("profile-clear").addEventListener("click", () => {
+      savedAllergies = [];
+      savedOtherAllergy = "";
+      profileForm.reset();
+      updateProfileSummary();
+      document.getElementById("profile-status").textContent = "Profile cleared. No allergies saved for this visit.";
+    });
+    document.getElementById("start-choosing").addEventListener("click", () => {
+      showMeals();
+      document.getElementById("decision").scrollIntoView({ behavior: "smooth" });
+    });
     document.getElementById("explore-flow").addEventListener("click", () => document.getElementById("decision").scrollIntoView({ behavior: "smooth" }));
 
     let activeSection = "home";
