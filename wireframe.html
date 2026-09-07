@@ -723,6 +723,10 @@
     .admin-record-status.is-active { background: #dff3df; }
     .admin-record-status.is-review { background: #fff0c2; }
     .admin-record-status.is-hidden { background: #eceff1; }
+    .admin-pagination { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 8px; margin-top: 14px; }
+    .admin-pagination button { min-height: 40px; padding: 8px 11px; background: #fff; }
+    .admin-pagination button:disabled { opacity: .4; box-shadow: none; cursor: default; }
+    .admin-page-info { color: var(--muted); font-size: 12px; font-weight: 800; text-align: center; }
     .admin-form { padding: 18px; background: #fffdf8; }
     .admin-form h2 { margin: 0 0 4px; font-size: 28px; }
     .admin-form > p { margin: 0 0 16px; color: var(--muted); font-size: 13px; }
@@ -856,6 +860,8 @@
       .admin-list-panel { padding: 13px; }
       .admin-panel-heading h2 { font-size: 21px; }
       .admin-records { max-height: 270px; overflow-y: auto; overscroll-behavior: contain; padding: 1px 4px 5px 1px; }
+      .admin-pagination { gap: 6px; }
+      .admin-pagination button { min-height: 42px; padding: 7px 9px; font-size: 11px; }
       .admin-form { padding: 14px; }
       .admin-form h2 { font-size: 25px; line-height: 1.1; }
       .admin-form-grid { grid-template-columns: 1fr; gap: 9px; }
@@ -1181,6 +1187,11 @@
             <button id="admin-new" type="button">+ Add</button>
           </div>
           <div class="admin-records" id="admin-records" aria-label="Restaurant and menu records"></div>
+          <nav class="admin-pagination" aria-label="Restaurant record pages">
+            <button id="admin-page-prev" type="button">← Previous</button>
+            <span class="admin-page-info" id="admin-page-info" aria-live="polite"></span>
+            <button id="admin-page-next" type="button">Next →</button>
+          </nav>
         </section>
         <form class="admin-form glass" id="admin-record-form" novalidate>
           <span class="admin-step-label">Step 2</span>
@@ -1975,6 +1986,8 @@
     }));
     let selectedAdminRecordId = adminRecordsData[0].id;
     let adminAuditCount = 0;
+    const adminPageSize = 6;
+    let adminCurrentPage = 1;
     const adminForm = document.getElementById("admin-record-form");
     const adminFields = {
       menuName: document.getElementById("admin-menu-name"),
@@ -2025,7 +2038,11 @@
       const list = document.getElementById("admin-records");
       list.replaceChildren();
       const normalizedQuery = query.trim().toLowerCase();
-      const records = adminRecordsData.filter(record => (record.menuName + " " + record.restaurant).toLowerCase().includes(normalizedQuery));
+      const filteredRecords = adminRecordsData.filter(record => (record.menuName + " " + record.restaurant).toLowerCase().includes(normalizedQuery));
+      const totalPages = Math.max(1, Math.ceil(filteredRecords.length / adminPageSize));
+      adminCurrentPage = Math.min(adminCurrentPage, totalPages);
+      const firstRecord = (adminCurrentPage - 1) * adminPageSize;
+      const records = filteredRecords.slice(firstRecord, firstRecord + adminPageSize);
       records.forEach(record => {
         const button = document.createElement("button");
         button.type = "button";
@@ -2048,6 +2065,11 @@
         empty.textContent = "No records match this search.";
         list.append(empty);
       }
+      document.getElementById("admin-page-prev").disabled = adminCurrentPage === 1;
+      document.getElementById("admin-page-next").disabled = adminCurrentPage === totalPages || filteredRecords.length === 0;
+      document.getElementById("admin-page-info").textContent = filteredRecords.length
+        ? `Page ${adminCurrentPage} of ${totalPages} · ${filteredRecords.length} records`
+        : "0 records";
       updateAdminCounts();
     }
 
@@ -2091,9 +2113,21 @@
       const recordButton = event.target.closest(".admin-record");
       if (recordButton) selectAdminRecord(recordButton.dataset.recordId, true);
     });
-    document.getElementById("admin-search").addEventListener("input", event => renderAdminRecords(event.target.value));
+    document.getElementById("admin-search").addEventListener("input", event => {
+      adminCurrentPage = 1;
+      renderAdminRecords(event.target.value);
+    });
+    document.getElementById("admin-page-prev").addEventListener("click", () => {
+      if (adminCurrentPage > 1) adminCurrentPage -= 1;
+      renderAdminRecords(document.getElementById("admin-search").value);
+    });
+    document.getElementById("admin-page-next").addEventListener("click", () => {
+      adminCurrentPage += 1;
+      renderAdminRecords(document.getElementById("admin-search").value);
+    });
     document.getElementById("admin-new").addEventListener("click", () => {
       selectedAdminRecordId = null;
+      adminCurrentPage = 1;
       adminForm.reset();
       document.getElementById("admin-form-title").textContent = "Create record";
       document.getElementById("admin-save").textContent = "Create record";

@@ -176,6 +176,15 @@ test("admin records use and update the main recommendation catalog", () => {
   assert.match(appScript, /syncCatalogFromAdmin\(record\);/);
 });
 
+test("admin record list is paginated and search returns to page one", () => {
+  for (const id of ["admin-page-prev", "admin-page-next", "admin-page-info"]) {
+    assert.match(html, new RegExp('id="' + id + '"'));
+  }
+  assert.match(appScript, /const adminPageSize = 6/);
+  assert.match(appScript, /filteredRecords\.slice\(firstRecord, firstRecord \+ adminPageSize\)/);
+  assert.match(appScript, /adminCurrentPage = 1;\s*renderAdminRecords\(event\.target\.value\)/);
+});
+
 test("whole-baht budget boundaries belong to exactly one range", () => {
   const budgets = ["Under ฿50", "฿50–100", "฿101–200"];
   for (const [price, expected] of [[49, 0], [50, 1], [100, 1], [101, 2], [200, 2], [201, -1]]) {
