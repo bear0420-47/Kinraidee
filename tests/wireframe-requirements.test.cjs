@@ -23,7 +23,7 @@ function runFilters(overrides = {}) {
     rejected: new Set(),
     ...overrides
   };
-  const context = { menuCatalog: catalog, state, result: null };
+  const context = { menuCatalog: catalog, state, savedAllergies: [], result: null };
   vm.runInNewContext(filterFunctions + "\n" + availableFunction + "\nresult = availableItems();", context);
   return { result: context.result, state };
 }
@@ -82,7 +82,7 @@ test("rejected choices stay out of the session pool", () => {
   assert.ok(filtered.result.length > 0);
   const rejectedId = filtered.result[0].name + "::" + filtered.result[0].restaurant;
   filtered.state.rejected.add(rejectedId);
-  const context = { menuCatalog: catalog, state: filtered.state, result: null };
+  const context = { menuCatalog: catalog, state: filtered.state, savedAllergies: [], result: null };
   vm.runInNewContext(filterFunctions + "\n" + availableFunction + "\nresult = availableItems();", context);
   assert.ok(context.result.every(item => item.name + "::" + item.restaurant !== rejectedId));
 });
@@ -100,15 +100,19 @@ test("required empty, edit, reset, and shuffle states are represented", () => {
   assert.match(appScript, /state\.rejected\.add/);
 });
 
-test("step three presents only the shuffle action", () => {
+test("results expose shuffle, random pick, and group voting", () => {
   const controls = html.match(/<div class="results-controls">([\s\S]*?)<\/div>/)[1];
-  assert.equal((controls.match(/<button\b/g) || []).length, 1);
   assert.match(controls, /id="shuffle-results"/);
-  assert.doesNotMatch(controls, /Pick one for me|Edit conditions|Start new session/);
+  assert.match(controls, /id="random-pick"/);
+  assert.match(controls, /id="group-vote"/);
 });
 
-test("current-area shortcut and its hidden location flow are absent", () => {
-  assert.doesNotMatch(html, /Use current area|location-notice-button|location-overlay/);
+test("current-area shortcut has a purpose notice and decline path", () => {
+  assert.match(html, /id="use-current-area"/);
+  assert.match(html, /id="location-overlay" role="dialog"/);
+  assert.match(html, /id="location-allow"/);
+  assert.match(html, /id="location-decline"/);
+  assert.match(appScript, /chooseArea\(areaOptionItems\[1\]\)/);
 });
 
 test("area filter uses an accessible doodle-styled dropdown menu", () => {
@@ -121,11 +125,55 @@ test("area filter uses an accessible doodle-styled dropdown menu", () => {
   assert.match(appScript, /event\.key === "Escape"/);
 });
 
-test("header presents one clear action", () => {
+test("header offers meal selection, Profile, and Admin pages", () => {
   const nav = html.match(/<nav aria-label="Main navigation">([\s\S]*?)<\/nav>/)[1];
-  assert.equal((nav.match(/<button\b/g) || []).length, 1);
+  assert.equal((nav.match(/<button\b/g) || []).length, 3);
   assert.equal((nav.match(/<a\b/g) || []).length, 0);
   assert.match(nav, />Start choosing<\/button>/);
+  assert.match(nav, /id="profile-open"[^>]+aria-controls="profile-page"[^>]*>Profile<\/button>/);
+  assert.match(nav, /id="admin-open"[^>]+aria-controls="admin-page"[^>]*>Admin<\/button>/);
+  assert.match(html, /<main id="profile-page"[^>]+hidden>/);
+  assert.match(html, /<main id="admin-page"[^>]+hidden>/);
+});
+
+test("profile exclusions are session filters", () => {
+  const context = { menuCatalog: catalog, savedAllergies: ["Fish"], state: { budget: "฿101–200", mood: "Surprise me", type: "Soup or hot pot", area: "Any area near MFU", rejected: new Set() }, result: null };
+  vm.runInNewContext(filterFunctions + "\n" + availableFunction + "\nresult = availableItems();", context);
+  assert.ok(context.result.length > 0);
+  assert.ok(context.result.every(item => !/Fish|Seafood|Salmon/i.test(item.name)));
+});
+
+test("optional backlog panels are represented", () => {
+  for (const id of ["favorites-list", "history-list", "vote-overlay", "admin-page"]) {
+    assert.match(html, new RegExp('id="' + id + '"'));
+  }
+  assert.match(appScript, /state\.favorites/);
+  assert.match(appScript, /state\.history/);
+  assert.match(appScript, /renderVoteList/);
+});
+
+test("admin page supports protected create, update, retire, validation, and audit states", () => {
+  for (const id of [
+    "admin-record-form",
+    "admin-new",
+    "admin-save",
+    "admin-retire",
+    "admin-audit-tab",
+    "admin-audit-list"
+  ]) {
+    assert.match(html, new RegExp('id="' + id + '"'));
+  }
+  assert.match(html, /Data administrator/);
+  assert.match(appScript, /Record not saved\. Check the highlighted required field\./);
+  assert.match(appScript, /addAdminAudit\("Retired", record\)/);
+});
+
+test("admin records use and update the main recommendation catalog", () => {
+  assert.match(appScript, /const adminRecordsData = menuCatalog\.map/);
+  assert.match(appScript, /function syncCatalogFromAdmin\(record\)/);
+  assert.match(appScript, /menuCatalog\.unshift\(item\)/);
+  assert.match(appScript, /item\.status !== "Hidden"/);
+  assert.match(appScript, /syncCatalogFromAdmin\(record\);/);
 });
 
 test("whole-baht budget boundaries belong to exactly one range", () => {
@@ -139,23 +187,22 @@ test("whole-baht budget boundaries belong to exactly one range", () => {
   }
 });
 
-test("empty results distinguish changed conditions from exhausted matching choices", () => {
+test("no exact match renders the closest alternatives instead of an empty state", () => {
   const renderSource = appScript.match(/function renderShortlist\(\) \{[\s\S]*?\n    \}/)[0];
-  const rejected = new Set(["earlier choice"]);
-  for (const matchingCount of [0, 2]) {
-    let message;
-    const context = {
-      state: { rejected },
-      availableItems: () => [],
-      qualifyingItems: () => Array(matchingCount).fill({}),
-      preferredItems: items => items,
-      showEmptyState: (title, copy) => { message = { title, copy }; },
-      updateSummary: () => {}
-    };
-    vm.runInNewContext(renderSource + "\nrenderShortlist();", context);
-    assert.equal(message.title, matchingCount ? "You reviewed every matching choice" : "No choices match every condition");
-    assert.match(message.copy, matchingCount ? /Start a new session/ : /wider budget or area/);
-  }
+  let rendered;
+  const closest = [{ name: "Closest A" }, { name: "Closest B" }];
+  const context = {
+    currentPool: [],
+    recommendationSet: () => ({ items: closest, usingFallback: true }),
+    preferredItems: items => items,
+    showEmptyState: () => assert.fail("closest alternatives should replace the empty state"),
+    updateSummary: () => {},
+    renderItems: (items, title, usingFallback) => { rendered = { items, title, usingFallback }; }
+  };
+  vm.runInNewContext(renderSource + "\nrenderShortlist();", context);
+  assert.equal(rendered.title, "Closest ideas for your meal");
+  assert.equal(rendered.usingFallback, true);
+  assert.equal(rendered.items.length, 2);
 });
 
 test("every meal has explicit taste and area labels", () => {
@@ -192,7 +239,7 @@ function sessionContext(overrides = {}) {
     budget: "฿50–100", mood: "Surprise me", type: "Any food type", area: "Any area near MFU",
     rejected: new Set(), seen: new Set(), shown: [], undo: null, ...overrides
   };
-  const context = vm.createContext({ state, menuCatalog: catalog });
+  const context = vm.createContext({ state, menuCatalog: catalog, savedAllergies: [] });
   const shuffleSource = appScript.match(/function shuffled\(items\) \{[\s\S]*?\n    \}/)[0];
   const sessionSource = appScript.match(/function preferredItems[\s\S]*?(?=\n    function clearUndo)/)[0];
   vm.runInContext(filterFunctions + "\n" + availableFunction + "\n" + shuffleSource + "\n" + sessionSource, context);
@@ -212,7 +259,7 @@ test("shuffle prefers unseen meals, then reviewed meals outside the current shor
   assert.ok(next.every(item => !context.state.shown.includes(item)));
 });
 
-test("rejection replaces in place with an unseen choice and Undo restores the exact shortlist", () => {
+test("rejection permanently removes a choice and replaces it in place", () => {
   const context = sessionContext();
   const candidates = vm.runInContext("availableItems()", context);
   const initial = candidates.slice(0, 3);
@@ -227,29 +274,26 @@ test("rejection replaces in place with an unseen choice and Undo restores the ex
   assert.ok(!context.state.seen.has(next[1].name + "::" + next[1].restaurant));
   assert.equal(new Set(next.map(item => item.name + "::" + item.restaurant)).size, 3);
   assert.ok(!vm.runInContext("availableItems()", context).includes(initial[1]));
-  assert.equal(vm.runInContext("undoRejection()", context), 1);
-  assert.deepEqual(Array.from(context.state.shown), Array.from(initial));
-  assert.equal(context.state.rejected.has(context.id), false);
-  assert.equal(vm.runInContext("undoRejection()", context), null);
+  assert.equal(context.state.rejected.has(context.id), true);
 });
 
-test("Undo recovers an exhausted shortlist and only reverses the latest rejection", () => {
+test("rejection uses a closest-match replacement and keeps all rejections excluded", () => {
   const context = sessionContext({ budget: "Under ฿50", type: "Rice dishes" });
   const initial = vm.runInContext("availableItems()", context);
   assert.equal(initial.length, 1);
   context.state.shown = initial;
   context.id = initial[0].name + "::" + initial[0].restaurant;
   vm.runInContext("rejectChoice(id)", context);
-  assert.equal(context.state.shown.length, 0);
-  vm.runInContext("undoRejection()", context);
-  assert.deepEqual(Array.from(context.state.shown), Array.from(initial));
+  assert.equal(context.state.shown.length, 1);
+  assert.notEqual(context.state.shown[0], initial[0]);
+  assert.equal(context.state.rejected.has(context.id), true);
 
   const broad = sessionContext();
   broad.state.shown = vm.runInContext("availableItems().slice(0,3)", broad);
   broad.firstId = broad.state.shown[0].name + "::" + broad.state.shown[0].restaurant;
   vm.runInContext("rejectChoice(firstId)", broad);
   broad.secondId = broad.state.shown[1].name + "::" + broad.state.shown[1].restaurant;
-  vm.runInContext("rejectChoice(secondId); undoRejection();", broad);
+  vm.runInContext("rejectChoice(secondId)", broad);
   assert.equal(broad.state.rejected.has(broad.firstId), true);
-  assert.equal(broad.state.rejected.has(broad.secondId), false);
+  assert.equal(broad.state.rejected.has(broad.secondId), true);
 });
