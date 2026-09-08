@@ -931,6 +931,68 @@
       .card-actions { margin-top: 10px; }
       .notice-dialog .feature-actions { grid-template-columns: 1fr; }
     }
+    /* Phone composition: compact introduction, roomy choices, readable shortlist. */
+    @media (max-width: 580px) {
+      .shell { width: calc(100% - 32px); }
+      .chips button[type="button"], .card-actions button[type="button"], .results-controls button[type="button"], .condition-actions button[type="button"] { margin: 0; transform: none; }
+      header.shell { width: 100%; padding: 8px 16px; gap: 8px; }
+      header nav { gap: 8px; }
+      header nav button[type="button"] { min-height: 44px; padding: 8px; font-size: 12px; }
+      main > section { scroll-margin-top: 80px; }
+      .hero { gap: 24px; padding: 96px 0 48px; }
+      h1 { font-size: 36px; line-height: 1.08; }
+      .intro { font-size: 14px; line-height: 1.5; }
+      .local-note { width: auto; padding: 0; border: 0; background: transparent; font-size: 12px; }
+      .scroll-cue { width: 100%; min-height: 48px; margin-top: 24px; }
+      .hero-board { display: grid; grid-template-columns: 96px minmax(0, 1fr); align-items: center; gap: 16px; padding: 12px; transform: none; }
+      .hero-board::before { display: none; }
+      .board-title { grid-column: 2; grid-row: 1; display: grid; gap: 8px; margin: 0; font-size: 18px; }
+      .board-scribble { font-size: 14px; }
+      .board-photo { grid-column: 1; grid-row: 1; height: 96px; margin: 0; padding: 0; transform: none; }
+      .board-photo img { height: 100%; }
+      .board-photo span { display: none; }
+      .decision-section, .results { padding: 48px 0; }
+      .finder { gap: 16px; }
+      .finder-intro { padding: 0 0 8px; }
+      .finder-intro h2, .results .section-head h2 { font-size: 28px; line-height: 1.15; }
+      .section-index { font-size: 11px; }
+      .step-card, .step-card:nth-of-type(2), .step-card:nth-of-type(3), .step-card:nth-of-type(4) { padding: 16px; }
+      .step-head { gap: 8px; margin-bottom: 16px; }
+      .field-label { font-size: 14px; letter-spacing: 0; text-transform: none; }
+      .progress-copy { font-size: 12px; }
+      [data-choice-group="budget"] { grid-template-columns: 1fr; }
+      .chips .chip, [data-choice-group="budget"] .chip { min-height: 52px; padding: 12px 8px; font-size: 14px; }
+      .doodle-options { position: relative; top: auto; margin-top: 12px; }
+      .doodle-option { min-height: 48px; font-size: 14px; }
+      .action-card { padding: 16px; }
+      .privacy { font-size: 12px; line-height: 1.5; }
+      .results .section-head { gap: 24px; margin-bottom: 24px; }
+      .results #result-summary { display: block; overflow: visible; font-size: 14px; line-height: 1.5; }
+      .results-controls { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .results-controls .ghost[type="button"] { font-size: 14px; }
+      .results-controls > :first-child { grid-column: 1 / -1; }
+      .results .condition-actions button { min-height: 44px; }
+      .cards { gap: 24px; }
+      .food-art { height: auto; aspect-ratio: 16 / 9; }
+      .food-art img { position: absolute; inset: 0; }
+      .card-body { padding: 16px; }
+      .results .card-row h3 { font-size: 23px; }
+      .quick-fact { font-size: 12px; }
+      .reason { display: block; overflow: visible; font-size: 14px; line-height: 1.5; }
+      .detail-tags { display: flex; }
+      .detail-tag { font-size: 12px; }
+      .card-actions { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .card-actions button, .card-actions .favorite { min-height: 44px; padding: 12px 8px; font-size: 13px; }
+      .card-actions > :first-child { grid-column: 1 / -1; }
+      .card-actions .favorite { grid-column: auto; }
+      .profile-page, .feature-page { padding: 96px 0 48px; }
+      .profile-actions, .feature-actions { flex-wrap: wrap; }
+      .profile-actions button, .feature-actions > *, .allergy-option, .admin-tabs button, .admin-pagination button { min-height: 44px; font-size: 14px; }
+      .notice-overlay, .meal-overlay { align-items: end; padding: 16px; }
+      .notice-dialog, .meal-dialog { max-height: 90dvh; overflow-y: auto; overscroll-behavior: contain; padding: 48px 16px 24px; }
+      .dialog-close { width: 44px; height: 44px; }
+      footer { padding: 24px 0; text-align: left; font-size: 12px; }
+    }
   </style>
 </head>
 <body>
