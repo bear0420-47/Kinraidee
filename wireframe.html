@@ -104,13 +104,13 @@
       box-shadow: 0 9px 24px rgba(15, 23, 42, .18);
     }
 
-    main > section { position: relative; isolation: isolate; scroll-snap-align: start; scroll-snap-stop: always; scroll-margin-top: 0; }
-    main > section::before { content: ""; position: absolute; z-index: -2; inset: 0 calc((100vw - 100%) / -2); pointer-events: none; opacity: .48; transform: scale(1.055); transition: opacity .9s ease, transform 1.15s cubic-bezier(.2,.75,.25,1); }
-    main > section::after { content: ""; position: absolute; z-index: -1; right: calc((100vw - 100%) / -2); bottom: -1px; left: calc((100vw - 100%) / -2); height: 110px; pointer-events: none; }
-    main > section > * { opacity: .18; transform: translateY(34px) scale(.985); filter: blur(3px); transition: opacity .65s ease, transform .82s cubic-bezier(.2,.75,.25,1), filter .65s ease; }
-    main > section.is-active::before { opacity: 1; transform: scale(1); }
-    main > section.is-active > * { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
-    main > section.is-leaving > * { opacity: .34; transform: translateY(-24px) scale(.985); filter: blur(2px); }
+    .page-section { position: relative; isolation: isolate; scroll-snap-align: start; scroll-snap-stop: always; scroll-margin-top: 0; }
+    .page-section::before { content: ""; position: absolute; z-index: -2; inset: 0 calc((100vw - 100%) / -2); pointer-events: none; opacity: .48; transform: scale(1.055); transition: opacity .9s ease, transform 1.15s cubic-bezier(.2,.75,.25,1); }
+    .page-section::after { content: ""; position: absolute; z-index: -1; right: calc((100vw - 100%) / -2); bottom: -1px; left: calc((100vw - 100%) / -2); height: 110px; pointer-events: none; }
+    .page-section > * { opacity: .18; transform: translateY(34px) scale(.985); filter: blur(3px); transition: opacity .65s ease, transform .82s cubic-bezier(.2,.75,.25,1), filter .65s ease; }
+    .page-section.is-active::before { opacity: 1; transform: scale(1); }
+    .page-section.is-active > * { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+    .page-section.is-leaving > * { opacity: .34; transform: translateY(-24px) scale(.985); filter: blur(2px); }
     .hero { position: relative; display: flex; align-items: center; min-height: 100svh; padding: 120px 0 90px; }
     .hero::before { background: radial-gradient(circle at 76% 30%, rgba(213,142,69,.3), transparent 28%), radial-gradient(circle at 16% 72%, rgba(47,124,98,.25), transparent 30%), linear-gradient(145deg, rgba(28,22,38,.88), rgba(43,28,33,.8)); }
     .hero::after { background: linear-gradient(to bottom, transparent, rgba(27,47,42,.65)); }
@@ -127,7 +127,17 @@
     .decision-section::after { background: linear-gradient(to bottom, transparent, rgba(83,40,44,.58)); }
     .decision-section .finder::before { content: ""; position: absolute; z-index: -1; inset: -36px; border-radius: 48px; background-image: radial-gradient(rgba(255,226,166,.18) 1px, transparent 1px); background-size: 18px 18px; mask-image: radial-gradient(ellipse, black, transparent 72%); opacity: .55; }
 
-    .finder { position: relative; display: grid; width: min(720px, 100%); gap: 12px; }
+    .finder { position: relative; display: grid; width: min(720px, 100%); min-width: 0; gap: 12px; }
+    .choice-viewport { width: 100%; min-width: 0; overflow: clip; }
+    .choice-track { display: flex; align-items: stretch; width: 100%; min-width: 0; transition: transform .52s cubic-bezier(.22,.8,.28,1); will-change: transform; }
+    .choice-panel { display: flex; flex: 0 0 100%; width: 100%; min-width: 0; min-height: 248px; padding: 8px 3px 16px; }
+    .choice-panel > .step-card, .choice-panel > .action-card { display: flex; flex-direction: column; width: 100%; min-width: 0; }
+    .choice-panel[aria-hidden="true"] { visibility: hidden; }
+    .panel-back { align-self: flex-start; margin-top: auto; padding: 9px 12px; color: var(--white); background: transparent; border: 0; box-shadow: none; font-size: 12px; text-decoration: underline; text-underline-offset: 4px; }
+    .panel-back:hover { transform: none; color: var(--saffron); }
+    .journey-viewport { width: 100%; overflow: visible; }
+    .journey-track { display: block; width: 100%; }
+    .journey-panel { width: min(1120px, calc(100% - 36px)); }
     .finder-intro { padding: 0 5px 7px; }
     .finder-intro h2 { margin: 0 0 7px; font-size: 25px; letter-spacing: -.035em; }
     .finder-intro p { margin: 0; color: var(--muted); font-size: 14px; }
@@ -145,7 +155,7 @@
     .chips { display: flex; flex-wrap: wrap; gap: 9px; }
     .chip { padding: 10px 13px; border: 1px solid rgba(255,255,255,.2); color: var(--white); background: rgba(255,255,255,.08); box-shadow: none; font-size: 13px; font-weight: 700; }
     .chip.active { color: #2b261d; background: linear-gradient(135deg, var(--saffron), #f2e8a9); border-color: rgba(255,255,255,.45); }
-    .doodle-select { position: relative; width: 100%; }
+    .doodle-select { position: relative; width: 100%; min-width: 0; max-width: 100%; }
     .select-like { display: flex; align-items: center; width: 100%; min-height: 54px; padding: 14px 64px 14px 16px; color: var(--muted); background: rgba(18, 18, 30, .22); font: inherit; font-weight: 700; text-align: left; cursor: pointer; }
     .doodle-select-arrow { position: absolute; top: 50%; right: 12px; display: grid; place-items: center; width: 36px; height: 32px; color: #241934; background: var(--saffron); pointer-events: none; transform: translateY(-50%) rotate(1.5deg); }
     .doodle-select-arrow::before { content: ""; width: 9px; height: 9px; border-right: 3px solid currentColor; border-bottom: 3px solid currentColor; transform: translateY(-2px) rotate(45deg); }
@@ -231,8 +241,8 @@
     @media (max-width: 580px) {
       html, body { max-width: 100%; overflow-x: clip; }
       .shell { width: min(100% - 24px, 1180px); }
-      main > section::before { inset: 0 -12px; }
-      main > section::after { right: -12px; left: -12px; }
+      .page-section::before { inset: 0 -12px; }
+      .page-section::after { right: -12px; left: -12px; }
       header { padding: 16px 0; }
       header.shell { width: calc(100% - 24px); }
       nav button { min-height: 42px; padding: 10px 14px; font-size: 13px; }
@@ -282,7 +292,7 @@
 
     @media (prefers-reduced-motion: reduce) { .blob { animation: none; } }
     @media (prefers-reduced-motion: reduce) {
-      main > section::before, main > section > * { transition: none; transform: none; filter: none; }
+      .page-section::before, .page-section > * { transition: none; transform: none; filter: none; }
     }
 
     /* Doodle visual system */
@@ -394,9 +404,9 @@
     button:active, .button:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--paper); }
     nav button[type="button"] { color: var(--paper); background: var(--peach); border: 2px solid var(--paper); border-radius: 3px 7px 4px 8px; box-shadow: 3px 4px 0 var(--paper); transform: rotate(-1deg); }
 
-    main > section { scroll-snap-align: none; scroll-snap-stop: normal; scroll-margin-top: 72px; }
-    main > section::before, main > section::after { display: none; }
-    main > section > *, main > section.is-active > *, main > section.is-leaving > * { opacity: 1; transform: none; filter: none; }
+    .page-section { scroll-snap-align: none; scroll-snap-stop: normal; scroll-margin-top: 72px; }
+    .page-section::before, .page-section::after { display: none; }
+    .page-section > *, .page-section.is-active > *, .page-section.is-leaving > * { opacity: 1; transform: none; filter: none; }
     .section-nav { display: none; }
 
     .hero {
@@ -782,7 +792,7 @@
     }
     @media (max-width: 360px) {
       .profile-page, .hero { padding-top: 155px; }
-      main > section { scroll-margin-top: 145px; }
+      .page-section { scroll-margin-top: 145px; }
     }
     @media (max-width: 580px) {
       html { scroll-snap-type: none; }
@@ -938,7 +948,7 @@
       header.shell { width: 100%; padding: 8px 16px; gap: 8px; }
       header nav { gap: 8px; }
       header nav button[type="button"] { min-height: 44px; padding: 8px; font-size: 12px; }
-      main > section { scroll-margin-top: 80px; }
+      .page-section { scroll-margin-top: 80px; }
       .hero { gap: 24px; padding: 96px 0 48px; }
       h1 { font-size: 36px; line-height: 1.08; }
       .intro { font-size: 14px; line-height: 1.5; }
@@ -993,6 +1003,64 @@
       .dialog-close { width: 44px; height: 44px; }
       footer { padding: 24px 0; text-align: left; font-size: 12px; }
     }
+    /* Keep Step 3 choices in one horizontal, swipeable row. */
+    #results-grid {
+      display: flex;
+      gap: 24px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: 8px;
+      padding: 12px 8px 16px;
+    }
+    #results-grid > .card {
+      flex: 0 0 calc((100% - 48px) / 3);
+      min-width: 0;
+      scroll-snap-align: start;
+    }
+    .results-carousel-shell { position: relative; }
+    .results-swipe-overlay { display: none; }
+    @media (max-width: 980px) {
+      #results-grid > .card { flex-basis: calc((100% - 24px) / 2); }
+    }
+    @media (max-width: 580px) {
+      #results-grid {
+        gap: 16px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        overscroll-behavior-x: contain;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        touch-action: pan-x;
+      }
+      #results-grid::-webkit-scrollbar { display: none; }
+      #results-grid > .card {
+        flex-basis: 100%;
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+      }
+      .results-swipe-overlay { position: absolute; z-index: 4; top: 8px; left: 50%; display: block; width: max-content; max-width: calc(100% - 28px); padding: 7px 12px 12px; color: #ffe06f; background: transparent; pointer-events: none; transform: translateX(-50%) rotate(-2deg); animation: swipe-hint 4.4s cubic-bezier(.2,.8,.3,1) forwards; filter: drop-shadow(0 5px 5px rgba(20,24,29,.28)); font-family: "Delius Swash Caps", cursive; font-size: 21px; font-weight: 800; letter-spacing: .025em; text-align: center; text-shadow: -2px -2px 0 var(--paper), 2px -2px 0 var(--paper), -2px 2px 0 var(--paper), 2px 2px 0 var(--paper), 0 3px 0 var(--paper); }
+      .results-swipe-overlay::before { content: "✦"; display: inline-block; margin-right: 7px; color: var(--peach); font-family: system-ui, sans-serif; font-size: 16px; text-shadow: 1px 1px 0 var(--paper); animation: swipe-spark 1s ease-in-out infinite alternate; }
+      .results-swipe-overlay::after { content: ""; position: absolute; right: 14px; bottom: 2px; left: 14px; height: 8px; border-top: 4px solid var(--blue); border-radius: 50%; transform: rotate(1.5deg); opacity: .95; }
+      .results-swipe-overlay.dismissed { display: none; }
+      .choice-panel { min-height: 300px; padding-top: 6px; }
+      .panel-back { min-height: 44px; padding: 11px 8px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .choice-track { transition: none; }
+      .results-swipe-overlay { animation: none; opacity: .72; }
+    }
+    @keyframes swipe-hint {
+      0% { opacity: 0; transform: translate(-50%, 18px) rotate(-3deg) scale(.86); }
+      12%, 24% { opacity: 1; transform: translate(-50%, 0) rotate(-2deg) scale(1.06); }
+      34% { opacity: 1; transform: translate(-54%, -3px) rotate(-3deg) scale(1); }
+      46% { opacity: 1; transform: translate(-46%, -1px) rotate(1deg) scale(1); }
+      62% { opacity: .95; transform: translate(-50%, -4px) rotate(-2deg) scale(1); }
+      100% { opacity: 0; transform: translate(-50%, -11px) rotate(-1deg); visibility: hidden; }
+    }
+    @keyframes swipe-spark {
+      from { opacity: .55; transform: rotate(-12deg) scale(.82); }
+      to { opacity: 1; transform: rotate(10deg) scale(1.18); }
+    }
   </style>
 </head>
 <body>
@@ -1031,7 +1099,7 @@
   </aside>
 
   <main id="meal-page">
-    <section class="hero shell is-active" id="home">
+    <section class="hero shell page-section is-active" id="home">
       <div class="hero-copy">
         <p class="eyebrow">Can’t decide? Let’s sketch it out.</p>
         <h1 id="hero-title">What should we eat today?</h1>
@@ -1053,7 +1121,9 @@
       </div>
     </section>
 
-    <section class="decision-section shell" id="decision">
+    <div class="journey-viewport" id="journey-viewport">
+      <div class="journey-track" id="journey-track">
+    <section class="decision-section shell journey-panel page-section" id="decision">
       <form class="finder" id="finder">
         <div class="finder-intro">
           <p class="section-index">Step 02 · Circle what feels right</p>
@@ -1065,7 +1135,9 @@
           <div class="progress-copy" aria-live="polite"><span id="progress-label">0 of 4 answered</span><strong id="progress-prompt">Choose your budget</strong></div>
         </div>
 
-        <section class="step-card glass paper border border-2 shadow" aria-labelledby="budget-label">
+        <div class="choice-viewport" id="choice-viewport">
+          <div class="choice-track" id="choice-track">
+        <div class="choice-panel" data-choice-panel="budget"><section class="step-card glass paper border border-2 shadow" aria-labelledby="budget-label">
           <div class="step-head">
             <span class="step-number">01</span>
             <span class="field-label" id="budget-label">Choose your budget</span>
@@ -1076,9 +1148,9 @@
             <button class="chip" type="button" data-value="฿50–100">฿50–100</button>
             <button class="chip" type="button" data-value="฿101–200">฿101–200</button>
           </div>
-        </section>
+        </section></div>
 
-        <section class="step-card glass paper border border-2 shadow" id="mood-step" aria-labelledby="taste-label" hidden>
+        <div class="choice-panel" data-choice-panel="mood"><section class="step-card glass paper border border-2 shadow" id="mood-step" aria-labelledby="taste-label" hidden>
           <div class="step-head">
             <span class="step-number">02</span>
             <span class="field-label" id="taste-label">Pick your mood</span>
@@ -1090,9 +1162,10 @@
             <button class="chip" type="button" data-value="Comforting"><svg class="icon"><use href="#icon-soup"/></svg>Comforting</button>
             <button class="chip" type="button" data-value="Surprise me"><svg class="icon"><use href="#icon-sparkles"/></svg>Surprise me</button>
           </div>
-        </section>
+          <button class="panel-back" type="button" data-choice-back="0">← Back to budget</button>
+        </section></div>
 
-        <section class="step-card glass paper border border-2 shadow" id="type-step" aria-labelledby="type-label" hidden>
+        <div class="choice-panel" data-choice-panel="type"><section class="step-card glass paper border border-2 shadow" id="type-step" aria-labelledby="type-label" hidden>
           <div class="step-head">
             <span class="step-number">03</span>
             <span class="field-label" id="type-label">Choose food type</span>
@@ -1106,9 +1179,10 @@
             <button class="chip" type="button" data-value="Light and healthy"><svg class="icon"><use href="#icon-salad"/></svg>Light</button>
             <button class="chip" type="button" data-value="Any food type"><svg class="icon"><use href="#icon-sparkles"/></svg>Anything</button>
           </div>
-        </section>
+          <button class="panel-back" type="button" data-choice-back="1">← Back to mood</button>
+        </section></div>
 
-        <section class="step-card glass paper border border-2 shadow" id="area-step" aria-labelledby="area-label" hidden>
+        <div class="choice-panel" data-choice-panel="area"><section class="step-card glass paper border border-2 shadow" id="area-step" aria-labelledby="area-label" hidden>
           <div class="step-head">
             <span class="step-number">04</span>
             <span class="field-label" id="area-label">Select your area</span>
@@ -1129,17 +1203,21 @@
           <div class="option-row">
             <button class="ghost" id="use-current-area" type="button">Use current area</button>
           </div>
-        </section>
+          <button class="panel-back" type="button" data-choice-back="2">← Back to food type</button>
+        </section></div>
 
-        <div class="action-card glass paper border border-2 shadow" id="action-step" hidden>
+        <div class="choice-panel" data-choice-panel="action"><div class="action-card glass paper border border-2 shadow" id="action-step" hidden>
           <ul class="choice-recap" id="choice-recap" aria-label="Your selected conditions"></ul>
           <button class="primary" id="show-choices" type="submit">Show my choices <svg class="icon"><use href="#icon-arrow"/></svg></button>
           <p class="privacy">No sign-in. Conditions and rejected choices stay only in this open page session.</p>
+          <button class="panel-back" type="button" data-choice-back="3">← Back to area</button>
+        </div></div>
+          </div>
         </div>
       </form>
     </section>
 
-    <section class="results shell" id="results" hidden>
+    <section class="results shell journey-panel page-section" id="results" hidden>
       <div class="section-head">
         <div><p class="section-index">Step 03 · Your shortlist</p><h2 id="results-title">Ideas for your meal</h2><p id="result-summary">Choose your conditions to begin.</p>
           <div class="condition-actions" id="result-condition-actions" aria-label="Manage meal choices">
@@ -1154,7 +1232,10 @@
         </div>
       </div>
 
-      <div class="cards" id="results-grid" aria-live="polite"></div>
+      <div class="results-carousel-shell">
+        <div class="results-swipe-overlay" id="results-swipe-overlay" aria-hidden="true">← Swipe to see more →</div>
+        <div class="cards" id="results-grid" aria-live="polite"></div>
+      </div>
       <div class="feature-grid" id="session-panels" hidden>
         <section class="feature-panel glass">
           <h2>Favorites</h2>
@@ -1177,6 +1258,8 @@
         </div>
       </div>
     </section>
+      </div>
+    </div>
   </main>
 
   <main id="profile-page" class="profile-page shell" hidden>
@@ -1451,6 +1534,22 @@
       resultsAnnotation.show();
     }
 
+    function goToChoicePanel(index, focusTarget = true) {
+      const panels = [...document.querySelectorAll(".choice-panel")];
+      const safeIndex = Math.max(0, Math.min(index, panels.length - 1));
+      document.getElementById("choice-track").style.transform = "translateX(-" + (safeIndex * 100) + "%)";
+      panels.forEach((panel, panelIndex) => {
+        const isCurrent = panelIndex === safeIndex;
+        panel.inert = !isCurrent;
+        panel.setAttribute("aria-hidden", String(!isCurrent));
+      });
+      if (!focusTarget) return;
+      const delay = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 540;
+      setTimeout(() => {
+        panels[safeIndex].querySelector(".chip, #area-select, #show-choices")?.focus({ preventScroll: true });
+      }, delay);
+    }
+
     function reveal(id) {
       const element = document.getElementById(id);
       if (!element) return;
@@ -1461,13 +1560,9 @@
       if (id === "results") document.getElementById("results-dot").hidden = false;
       const progressIndex = { "mood-step": 1, "type-step": 2, "area-step": 3 }[id];
       if (progressIndex !== undefined) document.querySelectorAll(".step-track span")[progressIndex].classList.add("active");
-      if (id !== "results") {
-        requestAnimationFrame(() => {
-          // Use layout positions so the reveal animation does not shift the scroll target.
-          let top = element.offsetHeight / 2 - window.innerHeight / 2;
-          for (let parent = element; parent; parent = parent.offsetParent) top += parent.offsetTop;
-          window.scrollTo({ top, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
-        });
+      const panelIndexes = { "mood-step": 1, "type-step": 2, "area-step": 3, "action-step": 4 };
+      if (panelIndexes[id] !== undefined) {
+        goToChoicePanel(panelIndexes[id]);
       }
     }
 
@@ -1695,8 +1790,14 @@
       document.getElementById("results-note").hidden = false;
       document.getElementById("empty-state").hidden = true;
       document.getElementById("results-grid").innerHTML = items.map(cardMarkup).join("");
+      document.getElementById("results-grid").scrollTo({ left: 0, behavior: "instant" });
       document.getElementById("results-title").textContent = title;
       updateSummary();
+      const swipeOverlay = document.getElementById("results-swipe-overlay");
+      swipeOverlay.classList.remove("dismissed");
+      swipeOverlay.style.animation = "none";
+      swipeOverlay.offsetWidth;
+      swipeOverlay.style.animation = "";
       document.querySelectorAll("#results-grid .favorite").forEach(button => {
         button.addEventListener("click", event => saveFavoriteFromButton(event.currentTarget));
       });
@@ -1773,6 +1874,10 @@
         if (group.dataset.choiceGroup === "mood") reveal("type-step");
         if (group.dataset.choiceGroup === "type") reveal("area-step");
       });
+    });
+
+    document.querySelectorAll("[data-choice-back]").forEach(button => {
+      button.addEventListener("click", () => goToChoicePanel(Number(button.dataset.choiceBack)));
     });
 
     const areaSelect = document.getElementById("area-select");
@@ -1873,18 +1978,7 @@
       renderShortlist();
       reveal("results");
       setTimeout(() => {
-        const mobileResults = window.matchMedia("(max-width: 580px)").matches;
-        const scrollTarget = mobileResults && state.shown.length
-          ? document.querySelector("#results-grid .card")
-          : document.getElementById("results");
-        if (mobileResults && state.shown.length) {
-          const headerHeight = document.querySelector("header.shell").offsetHeight;
-          const mobileOffset = Math.max(headerHeight + 10, 124);
-          const targetTop = scrollTarget.getBoundingClientRect().top + window.scrollY - mobileOffset;
-          window.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
-        } else {
-          scrollTarget.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
+        document.getElementById("results").scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth", block: "start" });
         annotateResults();
       }, 80);
       announce(
@@ -1963,6 +2057,9 @@
         if (item) openMealOverlay(item);
       }
     });
+    document.getElementById("results-grid").addEventListener("scroll", () => {
+      document.getElementById("results-swipe-overlay").classList.add("dismissed");
+    }, { passive: true });
     document.addEventListener("pointerup", event => {
       const button = event.target.closest("#results-grid .favorite");
       if (button) saveFavoriteFromButton(button);
@@ -1976,8 +2073,9 @@
 
     function editConditions() {
       clearUndo();
+      document.getElementById("journey-track").classList.remove("show-results");
+      goToChoicePanel(4);
       document.getElementById("decision").scrollIntoView({ behavior: "smooth", block: "start" });
-      setTimeout(() => document.querySelector('[data-choice-group="budget"] .chip.active')?.focus(), 350);
     }
 
     function startNewSession() {
@@ -2006,6 +2104,8 @@
       document.getElementById("results-grid").innerHTML = "";
       document.getElementById("empty-state").hidden = true;
       document.querySelectorAll(".step-track span").forEach((step, index) => step.classList.toggle("active", index === 0));
+      goToChoicePanel(0);
+      document.getElementById("journey-track").classList.remove("show-results");
       updateChoiceProgress();
       document.getElementById("decision").scrollIntoView({ behavior: "smooth", block: "start" });
       setTimeout(() => document.querySelector('[data-choice-group="budget"] .chip')?.focus(), 350);
@@ -2337,13 +2437,16 @@
       visible.target.classList.add("is-active");
       document.querySelectorAll(".section-dot").forEach(dot => dot.classList.toggle("active", dot.dataset.section === activeSection));
     }, { threshold: [.42, .55, .7] });
-    document.querySelectorAll("main > section").forEach(section => sectionObserver.observe(section));
+    document.querySelectorAll(".page-section").forEach(section => sectionObserver.observe(section));
 
     document.querySelectorAll(".section-dot").forEach(dot => dot.addEventListener("click", () => {
       const target = document.getElementById(dot.dataset.section);
+      if (dot.dataset.section === "results") document.getElementById("journey-track").classList.add("show-results");
+      if (dot.dataset.section === "decision") document.getElementById("journey-track").classList.remove("show-results");
       if (target && !target.hidden) target.scrollIntoView({ behavior: "smooth", block: "start" });
     }));
 
+    goToChoicePanel(0, false);
     requestAnimationFrame(setupDoodleAnnotations);
   </script>
 </body>
