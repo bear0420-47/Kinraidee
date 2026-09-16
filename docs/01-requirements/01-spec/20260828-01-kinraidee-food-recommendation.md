@@ -6,10 +6,10 @@ Draft — pending human approval.
 
 ## Traceability
 
-- Intent: `.docs/01-requirements/intent.md`
+- Intent: `docs/01-requirements/intent.md`
 - Research evidence: `evidence/survey-summary.md`
-- Legal source of truth: `doc/rule.md`
-- Product backlog: `.docs/01-requirements/backlog.md`
+- Legal source of truth: `rule.md`
+- Product backlog: `docs/01-requirements/backlog.md`
 
 ## Functional requirements
 
@@ -34,7 +34,7 @@ Draft — pending human approval.
 
 `OA1` is an operational assumption that an authorized actor must maintain the recommendation dataset; it requires human confirmation because it was not established by the user survey.
 
-## Legal requirements incorporated from `doc/rule.md`
+## Legal requirements incorporated from `rule.md`
 
 | ID | Requirement | Activation / acceptance criteria | Priority |
 |---|---|---|---|
@@ -69,7 +69,7 @@ Draft — pending human approval.
 | NFR7 | Raw GPS coordinates are not stored in the database by default and expire from session processing at session end or within 30 minutes, whichever occurs first. | Storage inspection and expiry integration test. |
 | NFR8 | 100% of returned results satisfy every mandatory budget, food-type, exclusion, and area constraint supplied for the session. | Property/table-driven recommendation tests across the approved dataset. |
 | NFR9 | A rejected choice is not repeated in the same session while another qualifying choice exists. | State-transition integration tests. |
-| NFR10 | Build, test, and lint commands all exit with code 0 before implementation is reported complete. | Exact commands and results recorded in `doc/verification.md`. |
+| NFR10 | Build, test, and lint commands all exit with code 0 before implementation is reported complete. | Exact commands and results recorded in `docs/verification.md`. |
 | NFR11 | 100% of consent/agreement records contain subject identifier, purpose/type, content version, decision, and timestamp. | Schema constraints and integration tests. |
 | NFR12 | The complete F1–F7 workflow is operable using a keyboard without a blocking step. | Manual keyboard-only acceptance test recorded in verification evidence. |
 

@@ -4,10 +4,10 @@ This project uses document-first Custom Agents for a food-menu recommendation sy
 
 | Order | Agent | Reads | Writes |
 |---|---|---|---|
-| 1 | Planner | `doc/rule.md`, current evidence | `.docs/01-requirements/intent.md` |
-| 2 | Designer | approved Intent, `doc/rule.md` | dated specification + backlog under `.docs/01-requirements/` |
-| 3 | Builder | approved requirements | `doc/plan.md` |
-| 4 | CodeTest | approved `doc/plan.md`, source, tests | `doc/verification.md` |
+| 1 | Planner | `rule.md`, current evidence | `docs/01-requirements/intent.md` |
+| 2 | Designer | approved Intent, `rule.md` | dated specification + backlog under `docs/01-requirements/` |
+| 3 | Builder | approved requirements | `docs/plan.md` |
+| 4 | CodeTest | approved `docs/plan.md`, source, tests | `docs/verification.md` |
 | 5 | Reviewer | all primary documents and verification | `doc/REVIEW.md` |
 | 6 | Maintainer | incident evidence and all relevant rules | archived Intent plus replacement Intent |
 

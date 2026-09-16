@@ -5,9 +5,9 @@ description: Maintain the Kinraidee design system and build or update the lo-fi 
 
 # Kinraidee Prototype Writer
 
-Read `AGENTS.md`, `.docs/02-design/design-system.md`, `.docs/02-design/user-journey.md`, and `.docs/02-design/feature-list.md`.
+Read `AGENTS.md`, `docs/02-design/design-system.md`, `docs/02-design/user-journey.md`, and `docs/02-design/feature-list.md`.
 
-Own `.docs/02-design/design-system.md`, `.docs/02-design/prototype.md`, and the prototype artifact `wireframe.html`.
+Own `docs/02-design/design-system.md`, `docs/02-design/prototype.md`, and the prototype artifact `wireframe.html`.
 
 ## design-system.md
 

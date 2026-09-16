@@ -1,0 +1,25 @@
+# Kinraidee
+
+Kinraidee is a document-first food decision assistant project. The first release focuses on one workflow: collect short meal conditions and return up to three suitable restaurant or menu choices.
+
+## Repository Layout
+
+- `AGENTS.md` — canonical agent workflow and repository rules for Codex-first collaboration.
+- `CLAUDE.md` — Claude entry point that delegates to `AGENTS.md`.
+- `rule.md` — legal, PDPA, consent, retention, and compliance rules.
+- `docs/` — intent, specification, backlog, design pack, plan, verification, and review evidence.
+- `evidence/` — survey summary and archived evidence.
+- `src/` — application code for the one approved workflow; currently intentionally empty.
+- `tests/` — runnable checks for committed prototype/workflow artifacts.
+- `assets/` — static food and vendor assets used by the prototype.
+- `templates/` — document templates for SDLC artifacts.
+
+## Current Status
+
+Requirements and implementation plan are still draft/pending approval. Do not add application code until the human approves both the specification and `docs/plan.md`.
+
+## Run Checks
+
+```sh
+node tests/wireframe-requirements.test.cjs
+```

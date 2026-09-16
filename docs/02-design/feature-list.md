@@ -2,7 +2,7 @@
 
 ## Status
 
-Draft — derived from `.docs/01-requirements/backlog.md` on 2026-09-06 for the W5 DISCOVER Phase Gate. Pending human approval.
+Draft — derived from `docs/01-requirements/backlog.md` on 2026-09-06 for the W5 DISCOVER Phase Gate. Pending human approval.
 
 ## Core release features
 

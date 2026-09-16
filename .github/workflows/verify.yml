@@ -21,18 +21,18 @@ jobs:
           set -euo pipefail
           required=(
             AGENTS.md
-            .docs/rule.md
-            .docs/plan.md
-            .docs/REVIEW.md
-            .docs/verification.md
-            .docs/00-charter/charter-constraints.md
-            .docs/01-requirements/intent.md
-            .docs/01-requirements/backlog.md
-            .docs/02-design/feature-list.md
-            .docs/02-design/user-journey.md
-            .docs/02-design/design-system.md
-            .docs/02-design/prototype.md
-            .docs/02-design/diagrams.md
+            rule.md
+            docs/plan.md
+            docs/REVIEW.md
+            docs/verification.md
+            docs/00-charter/charter-constraints.md
+            docs/01-requirements/intent.md
+            docs/01-requirements/backlog.md
+            docs/02-design/feature-list.md
+            docs/02-design/user-journey.md
+            docs/02-design/design-system.md
+            docs/02-design/prototype.md
+            docs/02-design/diagrams.md
           )
           for file in "${required[@]}"; do
             test -f "$file" || { echo "Missing required file: $file"; exit 1; }
@@ -40,35 +40,35 @@ jobs:
           for file in .github/agents/*.agent.md templates/*.template.md; do
             test -f "$file" || { echo "Missing workflow asset: $file"; exit 1; }
           done
-          specs=(.docs/01-requirements/01-spec/*.md)
+          specs=(docs/01-requirements/01-spec/*.md)
           test -f "${specs[0]}" || { echo "Missing current requirement specification"; exit 1; }
           grep -q 'Do not write application code until' AGENTS.md
-          grep -q '.docs/rule.md' AGENTS.md
-          grep -Eqi 'approved|approval' .docs/01-requirements/intent.md
+          grep -q 'rule.md' AGENTS.md
+          grep -Eqi 'approved|approval' docs/01-requirements/intent.md
           grep -Eqi 'approved|approval' "${specs[0]}"
-          grep -Eqi 'approved|approval' .docs/plan.md
-          grep -q 'Sign-off' .docs/verification.md
-          grep -q 'Decision' .docs/REVIEW.md
+          grep -Eqi 'approved|approval' docs/plan.md
+          grep -q 'Sign-off' docs/verification.md
+          grep -q 'Decision' docs/REVIEW.md
 
       - name: Validate design pack
         shell: bash
         run: |
           set -euo pipefail
           for id in D1 D2 D3 D4; do
-            grep -q "## $id" .docs/02-design/diagrams.md               || { echo "Missing diagram $id in .docs/02-design/diagrams.md"; exit 1; }
+            grep -q "## $id" docs/02-design/diagrams.md               || { echo "Missing diagram $id in docs/02-design/diagrams.md"; exit 1; }
           done
-          fences=$(grep -c '^```mermaid' .docs/02-design/diagrams.md || true)
+          fences=$(grep -c '^```mermaid' docs/02-design/diagrams.md || true)
           test "$fences" -ge 3             || { echo "Expected 3 mermaid diagrams (D1, D3, D4), found $fences"; exit 1; }
-          test -f .docs/02-design/assets/d2-use-case.svg             || { echo "Missing the D2 use case diagram SVG"; exit 1; }
-          grep -q 'assets/d2-use-case.svg' .docs/02-design/diagrams.md             || { echo "diagrams.md does not reference the D2 SVG"; exit 1; }
-          core=$(grep -c '★' .docs/02-design/feature-list.md || true)
+          test -f docs/02-design/assets/d2-use-case.svg             || { echo "Missing the D2 use case diagram SVG"; exit 1; }
+          grep -q 'assets/d2-use-case.svg' docs/02-design/diagrams.md             || { echo "diagrams.md does not reference the D2 SVG"; exit 1; }
+          core=$(grep -c '★' docs/02-design/feature-list.md || true)
           test "$core" -eq 1 || { echo "feature-list.md must mark exactly one core feature, found $core"; exit 1; }
-          grep -q 'Traces to' .docs/02-design/diagrams.md
-          d3=$(sed -n '/## D3/,/^## D4/p' .docs/02-design/diagrams.md)
+          grep -q 'Traces to' docs/02-design/diagrams.md
+          d3=$(sed -n '/## D3/,/^## D4/p' docs/02-design/diagrams.md)
           for part in "Web app" "REST API" "Recommendation logic"                       "Session state" "PostgreSQL" "Admin interface"; do
             printf '%s' "$d3" | grep -q "$part"               || { echo "D3 is missing charter 5.2 component: $part"; exit 1; }
           done
-          grep -q 'Not yet covered' .docs/02-design/prototype.md
+          grep -q 'Not yet covered' docs/02-design/prototype.md
           test -f wireframe.html || { echo "Missing prototype artifact wireframe.html"; exit 1; }
 
       - name: Validate Claude agent and skill frontmatter

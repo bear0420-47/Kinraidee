@@ -5,9 +5,9 @@ description: Build or update the Kinraidee lo-fi prototype and its design system
 
 # Build the Kinraidee Prototype
 
-Read `AGENTS.md`, `.docs/02-design/design-system.md`, `.docs/02-design/user-journey.md`, and `.docs/02-design/feature-list.md`.
+Read `AGENTS.md`, `docs/02-design/design-system.md`, `docs/02-design/user-journey.md`, and `docs/02-design/feature-list.md`.
 
-Update `.docs/02-design/design-system.md`, `.docs/02-design/prototype.md`, and `wireframe.html`.
+Update `docs/02-design/design-system.md`, `docs/02-design/prototype.md`, and `wireframe.html`.
 
 Rules:
 

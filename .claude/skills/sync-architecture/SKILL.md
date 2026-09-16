@@ -5,9 +5,9 @@ description: Regenerate the Kinraidee four required diagrams (D1 Context, D2 Use
 
 # Sync Architecture and the Four Diagrams
 
-Read `AGENTS.md`, `.docs/00-charter/charter-constraints.md`, the current specification under `.docs/01-requirements/01-spec/`, `.docs/01-requirements/backlog.md`, `.docs/02-design/feature-list.md`, `.docs/02-design/user-journey.md`, and `.docs/rule.md`.
+Read `AGENTS.md`, `docs/00-charter/charter-constraints.md`, the current specification under `docs/01-requirements/01-spec/`, `docs/01-requirements/backlog.md`, `docs/02-design/feature-list.md`, `docs/02-design/user-journey.md`, and `rule.md`.
 
-Write `.docs/02-design/diagrams.md`. D1, D3 and D4 are Mermaid source, each followed by its traceability line. D2 is a hand-authored SVG at `.docs/02-design/assets/d2-use-case.svg` referenced as an image — edit that file, never replace D2 with a Mermaid flowchart.
+Write `docs/02-design/diagrams.md`. D1, D3 and D4 are Mermaid source, each followed by its traceability line. D2 is a hand-authored SVG at `docs/02-design/assets/d2-use-case.svg` referenced as an image — edit that file, never replace D2 with a Mermaid flowchart.
 
 Constraints:
 

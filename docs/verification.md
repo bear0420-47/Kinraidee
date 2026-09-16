@@ -2,14 +2,14 @@
 
 ## Status
 
-Not run. Complete after implementation and record the exact commands and results.
+Partial structural verification run after repository layout cleanup on 2026-09-16. Full build, lint, security, and implementation verification remain pending because application code is not approved yet.
 
 ## Required checks
 
 | Check | Command | Result | Evidence |
 |---|---|---|---|
 | Build | TBD | Not run | TBD |
-| Test | TBD | Not run | TBD |
+| Test | `node tests/wireframe-requirements.test.cjs` | Pass: 24 tests, 0 fail, duration 21.210709ms | Local run on 2026-09-16 after moving the hidden docs directory to `docs/` and legal rules to `rule.md`. |
 | Lint | TBD | Not run | TBD |
 | Security/compliance checks | TBD | Not run | TBD |
 

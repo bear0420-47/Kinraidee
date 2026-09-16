@@ -4,10 +4,10 @@
 Awaiting approval | Approved | In progress | Complete
 
 ## Inputs
-- `.docs/01-requirements/intent.md`
-- Current specification under `.docs/01-requirements/01-spec/`
-- `.docs/01-requirements/backlog.md`
-- `doc/rule.md`
+- `docs/01-requirements/intent.md`
+- Current specification under `docs/01-requirements/01-spec/`
+- `docs/01-requirements/backlog.md`
+- `rule.md`
 
 ## Repository impact
 - Files/modules to add:

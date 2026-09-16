@@ -5,9 +5,9 @@ description: Derive the Kinraidee feature list and the single core user journey 
 
 # Kinraidee Feature and Journey Writer
 
-Read `AGENTS.md`, `.docs/01-requirements/intent.md`, the current specification under `.docs/01-requirements/01-spec/`, `.docs/01-requirements/backlog.md`, and `evidence/survey-summary.md`.
+Read `AGENTS.md`, `docs/01-requirements/intent.md`, the current specification under `docs/01-requirements/01-spec/`, `docs/01-requirements/backlog.md`, and `evidence/survey-summary.md`.
 
-Write `.docs/02-design/feature-list.md` and `.docs/02-design/user-journey.md`.
+Write `docs/02-design/feature-list.md` and `docs/02-design/user-journey.md`.
 
 ## feature-list.md
 

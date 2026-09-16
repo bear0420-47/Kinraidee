@@ -64,7 +64,7 @@ The numeric thresholds above are proposed acceptance thresholds and remain subje
 - General use without an account.
 - Authorized restaurant/menu data management.
 - Optional session-only location use after notice.
-- Privacy, authorization, consent evidence, retention, and audit handling required by `doc/rule.md`.
+- Privacy, authorization, consent evidence, retention, and audit handling required by `rule.md`.
 
 ### Out of scope for the first release
 
@@ -79,7 +79,7 @@ The numeric thresholds above are proposed acceptance thresholds and remain subje
 
 - Product: the first release must optimize the one core decision workflow rather than become a complete food-delivery marketplace.
 - Evidence: the sample has 31 responses and does not prove demand in every population.
-- Legal/compliance: follow `doc/rule.md`; conditional legal applicability must be confirmed by an accountable human.
+- Legal/compliance: follow `rule.md`; conditional legal applicability must be confirmed by an accountable human.
 - Privacy: food restrictions may reveal sensitive characteristics and must be assessed before storage or personalization.
 - Data quality: price, location, availability, and menu details can become stale and require an explicit ownership process.
 - External data: promotions, delivery cost, rating, and wait time depend on reliable sources and are not assumed available.

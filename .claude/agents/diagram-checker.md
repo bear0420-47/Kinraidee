@@ -5,7 +5,7 @@ description: Read-only consistency check that the Kinraidee design pack, require
 
 # Kinraidee Diagram and Design Checker
 
-Read `.docs/00-charter/charter-constraints.md`, the current specification under `.docs/01-requirements/01-spec/`, `.docs/01-requirements/backlog.md`, every file under `.docs/02-design/`, `.docs/rule.md`, and `wireframe.html`.
+Read `docs/00-charter/charter-constraints.md`, the current specification under `docs/01-requirements/01-spec/`, `docs/01-requirements/backlog.md`, every file under `docs/02-design/`, `rule.md`, and `wireframe.html`.
 
 Report **only** mismatches. Do not edit, and do not fix.
 

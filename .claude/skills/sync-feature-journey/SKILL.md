@@ -5,9 +5,9 @@ description: Regenerate the Kinraidee feature list and core user journey from th
 
 # Sync Feature List and User Journey
 
-Read `AGENTS.md`, `.docs/01-requirements/intent.md`, the current specification under `.docs/01-requirements/01-spec/`, and `.docs/01-requirements/backlog.md`.
+Read `AGENTS.md`, `docs/01-requirements/intent.md`, the current specification under `docs/01-requirements/01-spec/`, and `docs/01-requirements/backlog.md`.
 
-Write or update `.docs/02-design/feature-list.md` and `.docs/02-design/user-journey.md`.
+Write or update `docs/02-design/feature-list.md` and `docs/02-design/user-journey.md`.
 
 Produce:
 

@@ -4,10 +4,10 @@
 Not started | Findings open | Approved
 
 ## Scope
-- Requirements: `.docs/01-requirements/intent.md`, current specification, and backlog
-- Plan: `doc/plan.md`
-- Verification: `doc/verification.md`
-- Rules: `doc/rule.md`
+- Requirements: `docs/01-requirements/intent.md`, current specification, and backlog
+- Plan: `docs/plan.md`
+- Verification: `docs/verification.md`
+- Rules: `rule.md`
 
 ## Findings
 | ID | Severity | Category | Location | Finding | Recommendation | Status |

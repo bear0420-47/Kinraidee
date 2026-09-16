@@ -5,7 +5,7 @@ description: Read-only consistency audit of the Kinraidee design pack against re
 
 # Audit the Kinraidee Design Pack
 
-Read the current specification under `.docs/01-requirements/01-spec/`, `.docs/01-requirements/backlog.md`, every file under `.docs/02-design/`, `.docs/rule.md`, and `wireframe.html`.
+Read the current specification under `docs/01-requirements/01-spec/`, `docs/01-requirements/backlog.md`, every file under `docs/02-design/`, `rule.md`, and `wireframe.html`.
 
 Perform a read-only audit unless the user separately asks to apply fixes. Delegate to the `diagram-checker` agent when a deeper pass is useful.
 

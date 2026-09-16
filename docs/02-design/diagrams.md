@@ -10,10 +10,10 @@ Every label below traces to one of these approved sources:
 
 | Source | Supplies |
 |---|---|
-| `.docs/01-requirements/01-spec/20260828-01-kinraidee-food-recommendation.md` | `F*`, `LR*`, `NFR*` behaviour and actors |
-| `.docs/01-requirements/backlog.md` | `B*` scope items |
-| `.docs/02-design/user-journey.md` | D4 step names and their order |
-| `.docs/01-requirements/intent.md` | governance stakeholders — "the human project approver", drawn in D1 as `Human Project Approver` |
+| `docs/01-requirements/01-spec/20260828-01-kinraidee-food-recommendation.md` | `F*`, `LR*`, `NFR*` behaviour and actors |
+| `docs/01-requirements/backlog.md` | `B*` scope items |
+| `docs/02-design/user-journey.md` | D4 step names and their order |
+| `docs/01-requirements/intent.md` | governance stakeholders — "the human project approver", drawn in D1 as `Human Project Approver` |
 | Project charter §5.2 / §5.3 | the six architecture components and the technology stack in D3 |
 
 **One exception.** The `diversify` step in D3 comes from charter §5.2 ("restaurant diversity to avoid recommending all options from the same restaurant") but has no requirement ID. It is tracked as open gap **RG-1** below and must be resolved at the W5 gate. No other label is unbacked.
