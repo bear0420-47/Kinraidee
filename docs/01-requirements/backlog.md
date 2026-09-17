@@ -4,7 +4,16 @@
 
 Draft — synchronized with specification `20260828-01-kinraidee-food-recommendation.md` on 2026-08-28. Pending human approval.
 
-## Core release backlog
+## MoSCoW prioritization
+
+The priorities below use the MoSCoW method:
+
+- **Must have**: required for the approved first-release core workflow, or required whenever its stated legal condition applies.
+- **Should have**: important, but the first release can still operate without it.
+- **Could have**: valuable enhancement that is deferred unless separately approved.
+- **Won't have (this release)**: intentionally outside the first-release scope.
+
+### Must have — core release
 
 | ID | Backlog item | Priority | Traces to | Acceptance reference | Status |
 |---|---|---|---|---|---|
@@ -18,19 +27,36 @@ Draft — synchronized with specification `20260828-01-kinraidee-food-recommenda
 | B8 | Authorize restaurant/menu administration | Must | F8; OA1; LR8 | F8, NFR4, NFR5 | Needs OA1 confirmation |
 | B9 | Apply purpose notice, minimization, and purpose limitation | Must | LR1, LR3, LR7, LR9 | LR1, LR3, LR7, LR9; NFR6 | Ready for review |
 | B10 | Define and verify quality thresholds | Must | NFR1, NFR2, NFR3, NFR4, NFR5, NFR6, NFR7, NFR8, NFR9, NFR10, NFR11, NFR12 | NFR1, NFR2, NFR3, NFR4, NFR5, NFR6, NFR7, NFR8, NFR9, NFR10, NFR11, NFR12 | Thresholds need approval |
+
+### Must have — when activated
+
+These are Must items only when the stated design or legal condition applies. Their activation must be approved by the accountable human; they are not optional once activated.
+
+| ID | Backlog item | Priority | Traces to | Acceptance reference | Status |
+|---|---|---|---|---|---|
+| B15 | Record separate consent and electronic-agreement evidence | Must when activated | LR14, LR15, LR16 | LR14, LR15, LR16, NFR11 | Activation depends on design |
+| B16 | Provide personal-data access, correction, and deletion handling | Must when activated | LR6, LR9 | LR6, LR9 | Activation depends on stored data |
+| B17 | Retain and protect required traffic data | Conditional Must | LR10, LR11, LR12, LR13 | LR10, LR11, LR12, LR13 | Legal applicability pending |
+
+### Should have
+
+| ID | Backlog item | Priority | Traces to | Acceptance reference | Status |
+|---|---|---|---|---|---|
 | B11 | Handle session-only location with a decline path | Should | F9; P7; LR5 | F9, LR5, NFR7 | Ready for review |
 | B12 | Provide temporary food exclusions | Should | F10; P6; LR3, LR4 | F10, LR3, LR4 | Sensitive-data assessment needed |
 | B13 | Surface non-repetitive alternatives | Should | F11; P3 | F11 | Ready for review |
 | B14 | Randomly choose from already-filtered results | Should | F12; P8 | F12, NFR8 | Ready for review |
-| B15 | Record separate consent and electronic-agreement evidence | Must when activated | LR14, LR15, LR16 | LR14, LR15, LR16, NFR11 | Activation depends on design |
-| B16 | Provide personal-data access, correction, and deletion handling | Must when activated | LR6, LR9 | LR6, LR9 | Activation depends on stored data |
-| B17 | Retain and protect required traffic data | Conditional Must | LR10, LR11, LR12, LR13 | LR10, LR11, LR12, LR13 | Legal applicability pending |
+
+### Could have
+
+| ID | Backlog item | Priority | Traces to | Acceptance reference | Status |
+|---|---|---|---|---|---|
 | B18 | Create a shared voting room | Could | F13; P9 | F13 | Deferred |
 | B19 | Save favorites | Could | F14; P6; LR1, LR6 | F14 | Deferred |
 | B20 | Use opted-in recommendation history | Could | F15; P3; LR1, LR3, LR6 | F15 | Deferred |
 | B21 | Show reliable promotions, fees, ratings, and wait times | Could | F16; P5, P7 | F16 | External data source needed |
 
-## Won't in the first release
+### Won't have — first release
 
 - Ordering, payment, or delivery fulfillment.
 - Public review publishing.
