@@ -2,6 +2,8 @@
 
 This file is the implementation guardrail for Kinraidee. It records approved stack decisions and coding rules so AI agents implement planned work consistently instead of inventing structure or dependencies.
 
+Before adding or changing any feature module, follow `docs/03-implementation/module-implementation-checklist.md`. That checklist is the required module gate; this file defines the general engineering rules only.
+
 ## Technology Stack
 
 ### Web

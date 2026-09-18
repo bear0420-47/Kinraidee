@@ -4,7 +4,7 @@ This repository follows a document-first AI-native SDLC for Kinraidee. `rule.md`
 
 ## Workflow
 
-1. Read `docs/01-requirements/intent.md`, the current specification under `docs/01-requirements/01-spec/`, `docs/plan.md`, `rule.md`, and `docs/03-implementation/engineering-guidelines.md` before editing implementation files.
+1. Read `docs/01-requirements/intent.md`, the current specification under `docs/01-requirements/01-spec/`, `docs/plan.md`, `rule.md`, and `docs/03-implementation/engineering-guidelines.md` before editing implementation files. Before adding or changing any feature module, read and complete `docs/03-implementation/module-implementation-checklist.md`; stop if any checklist item is missing.
 2. Do not write application code until the human approves both the requirements and `docs/plan.md`.
 3. Trace every product requirement to survey/interview evidence, a legal requirement, or an explicitly documented assumption.
 4. Keep the design pack under `docs/02-design/` consistent with the specification and backlog. All five artifacts describe the same one core workflow.
@@ -23,6 +23,7 @@ This repository follows a document-first AI-native SDLC for Kinraidee. `rule.md`
 - Product backlog: `docs/01-requirements/backlog.md`
 - Design pack: `docs/02-design/` (`feature-list.md`, `user-journey.md`, `design-system.md`, `prototype.md`, `diagrams.md`)
 - Implementation guidelines: `docs/03-implementation/engineering-guidelines.md`
+- Module implementation checklist: `docs/03-implementation/module-implementation-checklist.md`
 - Decision log: `docs/05-log/`
 - Survey summary: `evidence/survey-summary.md`
 - Legal and compliance rules: `rule.md`
