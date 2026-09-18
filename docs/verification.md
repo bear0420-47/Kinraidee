@@ -9,7 +9,7 @@ Partial structural verification run after repository layout cleanup on 2026-09-1
 | Check | Command | Result | Evidence |
 |---|---|---|---|
 | Build | TBD | Not run | TBD |
-| Test | `node tests/wireframe-requirements.test.cjs` | Pass: 24 tests, 0 fail, duration 21.210709ms | Local run on 2026-09-16 after moving the hidden docs directory to `docs/` and legal rules to `rule.md`. |
+| Test | `node tests/wireframe-requirements.test.cjs` | Pass: 24 tests, 0 fail, duration 21.312375ms | Local run on 2026-09-18 after adding implementation guidelines and web/API boundary README files. |
 | Lint | TBD | Not run | TBD |
 | Security/compliance checks | TBD | Not run | TBD |
 

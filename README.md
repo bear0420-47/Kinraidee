@@ -8,8 +8,11 @@ Kinraidee is a document-first food decision assistant project. The first release
 - `CLAUDE.md` — Claude entry point that delegates to `AGENTS.md`.
 - `rule.md` — legal, PDPA, consent, retention, and compliance rules.
 - `docs/` — intent, specification, backlog, design pack, plan, verification, and review evidence.
+- `docs/03-implementation/engineering-guidelines.md` — approved stack decisions, project structure, and implementation rules.
 - `evidence/` — survey summary and archived evidence.
 - `src/` — application code for the one approved workflow; currently intentionally empty.
+- `src/web/` — mobile-first React + TypeScript web client boundary.
+- `src/api/` — Express 5 + TypeScript REST API boundary.
 - `tests/` — runnable checks for committed prototype/workflow artifacts.
 - `assets/` — static food and vendor assets used by the prototype.
 - `templates/` — document templates for SDLC artifacts.
