@@ -164,6 +164,7 @@ src/api/
   src/
     app.ts
     server.ts
+    routes.ts
     config/
       env.ts
     lib/
@@ -218,6 +219,8 @@ modules/admin-menu/admin-menu.controller.ts
 ### API Layer Rules
 
 - `routes` connects endpoint paths and middleware only.
+- `app.ts` wires global middleware, `/health`, the single `routes` composition router, and `errorHandler` only. It must not import feature modules directly.
+- `routes.ts` is the API route composition file. It may grow with `routes.use(...)` registrations, but must not contain route handlers or business logic.
 - `controller` parses request data through `dto`, calls `service`, and returns via response helpers.
 - `dto` owns Zod request schemas, response schemas, parsing helpers, and response mapping.
 - `service` owns business flow and use-case decisions.
@@ -225,6 +228,8 @@ modules/admin-menu/admin-menu.controller.ts
 - `helpers` contains module-local pure functions when they make the service easier to read.
 - Controllers and services throw `HttpError` for expected errors.
 - Controllers never handwrite success or error envelopes.
+- Module OpenAPI definitions live in `<module>.openapi.ts`; `openapi/registry.ts` only creates the registry and calls module registration functions.
+- `openapi/registry.ts` may grow with registration calls, but must not contain endpoint schemas or route definitions inline.
 
 ### Helper Rules
 
@@ -406,6 +411,7 @@ Rules:
 - Prefer existing platform features and installed tools before adding dependencies.
 - Add dependencies when they reduce meaningful code, improve correctness, or provide a clear safety guardrail.
 - New dependencies must have a clear owner and purpose.
+- Use verified lower-bound ranges such as `^9.39.5` instead of broad ranges such as `^9.0.0`; upgrade deliberately after checking peers and running verification.
 - Do not add framework-level abstractions for one use case.
 - Do not add shared packages or helper libraries for future reuse.
 

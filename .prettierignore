@@ -1,0 +1,10 @@
+node_modules/
+dist/
+build/
+coverage/
+.pnpm-store/
+
+src/web/dist/
+src/api/dist/
+docs/03-implementation/openapi.json
+src/web/src/api/openapiTypes.ts

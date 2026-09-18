@@ -26,3 +26,9 @@ Requirements and implementation plan are still draft/pending approval. Do not ad
 ```sh
 node tests/wireframe-requirements.test.cjs
 ```
+
+## First Local Setup
+
+Follow `docs/03-implementation/first-setup.md` before running the web or API packages on a new machine.
+
+Local PostgreSQL runs through `docker-compose.yml` with the same defaults as `src/api/.env.example`.
