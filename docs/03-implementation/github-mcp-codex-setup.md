@@ -1,4 +1,4 @@
-# Install GitHub MCP Server in OpenAI Codex
+# GitHub MCP Setup For Codex
 
 ## Prerequisites
 
@@ -30,17 +30,23 @@ The `--bearer-token-env-var` option is required for PAT-authenticated access to 
 <summary><b>Storing Your PAT Securely</b></summary>
 <br>
 
-For security, avoid hardcoding your token. One common approach:
+For security, avoid hardcoding your token in `~/.codex/config.toml`. Export it in the shell that launches Codex:
 
-1. Store your token in `.env` file
-```
-GITHUB_PAT_TOKEN=ghp_your_token_here
+```sh
+export GITHUB_PAT_TOKEN="ghp_your_token_here"
 ```
 
-2. Add to .gitignore
-```bash
-echo -e ".env" >> .gitignore
+Or store it in a local uncommitted environment file and source it before starting Codex:
+
+```sh
+echo 'GITHUB_PAT_TOKEN=ghp_your_token_here' >> .env.local
+set -a
+source .env.local
+set +a
+codex
 ```
+
+Do not commit `.env.local` or any token-bearing file.
 </details>
 
 ## Local Docker Configuration
@@ -56,7 +62,7 @@ args = ["run", "-i", "--rm", "-p", "127.0.0.1:8085:8085", "-e", "GITHUB_OAUTH_CA
 env = { GITHUB_OAUTH_CALLBACK_PORT = "8085" }
 ```
 
-See **[Local Server OAuth Login](../oauth-login.md)** for the native-binary flow (no fixed port), headless/device-code fallback, GitHub Enterprise, and bringing your own OAuth or GitHub App.
+Use the remote configuration unless the team explicitly chooses to self-host the MCP server.
 
 To authenticate with a Personal Access Token instead (it takes precedence over OAuth):
 
@@ -78,7 +84,7 @@ After starting Codex (CLI or IDE):
 
 ## Usage
 
-After setup, Codex can interact with GitHub directly. It will use the default tool set automatically but can be [configured](../../README.md#default-toolset). Try these example prompts:
+After setup, Codex can interact with GitHub directly. Try these example prompts:
 
 **Repository Operations:**
 - "List my GitHub repositories"
@@ -131,4 +137,4 @@ Use the principle of least privilege: add scopes only when a tool request fails 
 - Remote server URL: `https://api.githubcopilot.com/mcp/`
 - Release binaries: [GitHub Releases](https://github.com/github/github-mcp-server/releases)
 - OpenAI Codex MCP docs: https://developers.openai.com/codex/mcp
-- Main project README: [Advanced configuration options](../../README.md)
+- Project README: `README.md`
