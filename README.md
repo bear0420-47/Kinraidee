@@ -9,10 +9,11 @@ Kinraidee is a document-first food decision assistant project. The first release
 - `rule.md` — legal, PDPA, consent, retention, and compliance rules.
 - `docs/` — intent, specification, backlog, design pack, plan, verification, and review evidence.
 - `docs/03-implementation/engineering-guidelines.md` — approved stack decisions, project structure, and implementation rules.
+- `docs/03-implementation/data-model.md` — locked Prisma models, relations, and API data shapes.
 - `docs/03-implementation/github-mcp-codex-setup.md` — Codex setup guide for GitHub MCP access.
 - `docs/03-implementation/module-implementation-checklist.md` — required checklist before adding or changing feature modules.
 - `evidence/` — survey summary and archived evidence.
-- `src/` — application code for the one approved workflow; currently intentionally empty.
+- `src/` — pnpm workspace packages for the web and API application boundaries.
 - `src/web/` — mobile-first React + TypeScript web client boundary.
 - `src/api/` — Express 5 + TypeScript REST API boundary.
 - `tests/` — runnable checks for committed prototype/workflow artifacts.
@@ -21,7 +22,7 @@ Kinraidee is a document-first food decision assistant project. The first release
 
 ## Current Status
 
-Requirements and implementation plan are still draft/pending approval. Do not add application code until the human approves both the specification and `docs/plan.md`.
+Requirements, data model, and `docs/plan.md` are approved for implementation. API/data work and non-visual web foundations may start; final visual web screens wait for explicit approval of the draft design pack. Public production deployment requires separate human approval.
 
 ## Run Checks
 

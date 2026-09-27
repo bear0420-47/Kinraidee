@@ -101,7 +101,7 @@ Use the API origin from `src/api/src/config/env.ts`. The scaffold default API po
 
 ```txt
 DATABASE_URL=postgresql://postgres:postgres@localhost:5432/kinraidee
-SESSION_SECRET=<generate-local-secret>
+JWT_SECRET=<generate-local-secret>
 ARGON2_MEMORY_COST=19456
 ARGON2_TIME_COST=2
 ARGON2_PARALLELISM=1
@@ -111,11 +111,11 @@ CORS_ALLOWED_ORIGINS=http://localhost:5173
 Set these values for the local machine:
 
 - `DATABASE_URL`: local PostgreSQL connection string. Use the existing local PostgreSQL URL if verified. Otherwise use the committed Docker Compose default.
-- `SESSION_SECRET`: random local secret with at least 32 characters. Generate it locally; do not ask the human to invent one.
+- `JWT_SECRET`: random local secret with at least 32 characters. Generate it locally; do not ask the human to invent one.
 - `ARGON2_MEMORY_COST`, `ARGON2_TIME_COST`, `ARGON2_PARALLELISM`: Argon2id password-hashing cost settings. Use the defaults; they match the OWASP Password Storage Cheat Sheet minimum for Argon2id.
 - `CORS_ALLOWED_ORIGINS`: comma-separated web origins allowed to call the API with credentials. The scaffold default web port is `5173`, so the default local value is `http://localhost:5173`.
 
-Generate a local `SESSION_SECRET` with Node.js:
+Generate a local `JWT_SECRET` with Node.js:
 
 ```sh
 node -e "console.log(require('node:crypto').randomBytes(32).toString('base64url'))"

@@ -2,7 +2,7 @@
 
 ## Status
 
-Draft — recorded from the approved survey summary on 2026-08-28. Requirements still require explicit human approval before Design or Build treats them as final.
+Approved — recorded from the approved survey summary on 2026-08-28 and approved as the implementation baseline on 2026-09-27.
 
 ## Problem
 
@@ -48,7 +48,7 @@ The numeric thresholds above are proposed acceptance thresholds and remain subje
 ## Core workflow
 
 1. User opens Kinraidee without signing in.
-2. User enters short meal conditions such as budget, food type, desired taste, and area.
+2. User enters short meal conditions such as budget, food type, desired taste, and zone.
 3. System returns up to three matching restaurants or menu choices with useful decision information.
 4. User selects a choice or rejects it.
 5. System supplies a non-duplicate replacement when another matching choice exists.
@@ -59,11 +59,12 @@ The numeric thresholds above are proposed acceptance thresholds and remain subje
 
 - Session-based meal conditions and recommendation.
 - A shortlist of about three results.
-- Price, food type, area/distance, and recommendation rationale.
+- Price, food type, manually selected zone, and recommendation rationale.
 - Reject-and-replace behavior without repetition in the same session.
 - General use without an account.
+- Optional registered accounts for menu-item favorites, selected-menu history, and saved default recommendation settings.
 - Authorized restaurant/menu data management.
-- Optional session-only location use after notice.
+- Manual zone-based discovery; GPS/location storage remains out of scope unless separately approved.
 - Privacy, authorization, consent evidence, retention, and audit handling required by `rule.md`.
 
 ### Out of scope for the first release
@@ -71,7 +72,7 @@ The numeric thresholds above are proposed acceptance thresholds and remain subje
 - Ordering, payment, or delivery fulfillment.
 - Public user reviews.
 - Health diagnosis or medical dietary advice.
-- Automatically retaining precise GPS or preference history.
+- Automatically retaining precise GPS, rejected items, displayed shortlists, full recommendation-session conditions, or food exclusions.
 - Operating a certification authority or issuing digital certificates.
 - Production deployment without separate human approval.
 
@@ -81,20 +82,19 @@ The numeric thresholds above are proposed acceptance thresholds and remain subje
 - Evidence: the sample has 31 responses and does not prove demand in every population.
 - Legal/compliance: follow `rule.md`; conditional legal applicability must be confirmed by an accountable human.
 - Privacy: food restrictions may reveal sensitive characteristics and must be assessed before storage or personalization.
-- Data quality: price, location, availability, and menu details can become stale and require an explicit ownership process.
-- External data: promotions, delivery cost, rating, and wait time depend on reliable sources and are not assumed available.
+- Data quality: price, zone assignment, availability, and menu details can become stale and require an explicit ownership process.
+- External data: promotions, delivery cost, and rating depend on reliable sources and are not assumed available. Wait-time data is outside the product direction.
 
-## Assumptions and open questions
+## Assumptions and remaining decisions
 
-- Should the first dataset cover only Mae Fah Luang University and nearby restaurants?
-- Will area be selected manually in the MVP, or will GPS be included?
-- Who owns and verifies restaurant/menu records?
+- Initial seed data may focus on Mae Fah Luang University area samples for demo, but the product must not hardcode MFU as the only supported area.
+- Manual `Zone` records are used for the first full-app pass; GPS is Won't have in the first release unless separately approved in a later scope.
+- Real restaurant/menu seed data must be team-collected or otherwise authorized, with source and verification date recorded in seed evidence. Ongoing catalog maintenance is owned by authorized administrators.
 - Does the deployed service fall within Computer Crime Act Section 26 traffic-data obligations? This requires accountable legal confirmation.
-- Are THB 50–100 and the 60-second usability threshold appropriate final acceptance values?
+- THB 50–100 is a quick-select budget option because it appears frequently in survey evidence; it is not preselected by default.
 
 ## Approval
 
-- Decision: Pending
-- Approved by:
-- Date:
-
+- Decision: Approved for implementation planning
+- Approved by: Human project owner
+- Date: 2026-09-27

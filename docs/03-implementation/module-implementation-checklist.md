@@ -14,6 +14,7 @@ Read these files before editing module code:
 - Current specification under `docs/01-requirements/01-spec/`
 - `docs/01-requirements/backlog.md`
 - `docs/03-implementation/engineering-guidelines.md`
+- `docs/03-implementation/data-model.md`
 - This checklist
 
 Do not implement a module unless its scope maps to an approved requirement, backlog item, legal requirement, or approved design artifact.

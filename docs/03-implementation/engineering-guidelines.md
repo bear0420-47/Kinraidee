@@ -2,7 +2,7 @@
 
 This file is the implementation guardrail for Kinraidee. It records approved stack decisions and coding rules so AI agents implement planned work consistently instead of inventing structure or dependencies.
 
-Before adding or changing any feature module, follow `docs/03-implementation/module-implementation-checklist.md`. That checklist is the required module gate; this file defines the general engineering rules only.
+Before adding or changing any feature module, follow `docs/03-implementation/module-implementation-checklist.md`. Before adding or changing Prisma models, read `docs/03-implementation/data-model.md`. That checklist is the required module gate; this file defines the general engineering rules only.
 
 ## Technology Stack
 
@@ -177,6 +177,48 @@ src/api/
       requestId.ts
       requireAuth.ts
     modules/
+      auth/
+        auth.routes.ts
+        auth.controller.ts
+        auth.dto.ts
+        auth.service.ts
+        auth.repository.ts
+      users/
+        users.routes.ts
+        users.controller.ts
+        users.dto.ts
+        users.service.ts
+        users.repository.ts
+      zones/
+        zones.routes.ts
+        zones.controller.ts
+        zones.dto.ts
+        zones.service.ts
+        zones.repository.ts
+      food-types/
+        food-types.routes.ts
+        food-types.controller.ts
+        food-types.dto.ts
+        food-types.service.ts
+        food-types.repository.ts
+      tastes/
+        tastes.routes.ts
+        tastes.controller.ts
+        tastes.dto.ts
+        tastes.service.ts
+        tastes.repository.ts
+      restaurants/
+        restaurants.routes.ts
+        restaurants.controller.ts
+        restaurants.dto.ts
+        restaurants.service.ts
+        restaurants.repository.ts
+      menu-items/
+        menu-items.routes.ts
+        menu-items.controller.ts
+        menu-items.dto.ts
+        menu-items.service.ts
+        menu-items.repository.ts
       recommendations/
         recommendations.routes.ts
         recommendations.controller.ts
@@ -184,16 +226,30 @@ src/api/
         recommendations.service.ts
         recommendations.repository.ts
         recommendations.helpers.ts
-      sessions/
-        sessions.dto.ts
-        sessions.service.ts
-        sessions.repository.ts
-      admin-menu/
-        admin-menu.routes.ts
-        admin-menu.controller.ts
-        admin-menu.dto.ts
-        admin-menu.service.ts
-        admin-menu.repository.ts
+      favorites/
+        favorites.routes.ts
+        favorites.controller.ts
+        favorites.dto.ts
+        favorites.service.ts
+        favorites.repository.ts
+      preferences/
+        preferences.routes.ts
+        preferences.controller.ts
+        preferences.dto.ts
+        preferences.service.ts
+        preferences.repository.ts
+      recommendation-history/
+        recommendation-history.routes.ts
+        recommendation-history.controller.ts
+        recommendation-history.dto.ts
+        recommendation-history.service.ts
+        recommendation-history.repository.ts
+      audit-logs/
+        audit-logs.routes.ts
+        audit-logs.controller.ts
+        audit-logs.dto.ts
+        audit-logs.service.ts
+        audit-logs.repository.ts
     openapi/
       registry.ts
       generateOpenapi.ts
@@ -214,8 +270,8 @@ Examples:
 
 ```txt
 modules/recommendations/recommendations.routes.ts
-modules/sessions/sessions.repository.ts
-modules/admin-menu/admin-menu.controller.ts
+modules/menu-items/menu-items.repository.ts
+modules/audit-logs/audit-logs.controller.ts
 ```
 
 ### API Layer Rules
@@ -242,7 +298,7 @@ modules/admin-menu/admin-menu.controller.ts
 - Shared helpers must not contain module-specific business rules.
 - Shared helpers must have specific names such as `httpResponse.ts`, `httpError.ts`, or `validation.ts`.
 - Do not create generic `utils.ts`, `helpers.ts`, `common.ts`, or `misc.ts`.
-- Code that touches DB, sessions, or auth must not live in generic shared helpers.
+- Code that touches DB, recommendation session state, or auth must not live in generic shared helpers.
 
 ### API Response Rules
 
@@ -303,9 +359,9 @@ Rules:
 
 - Use `helmet` for HTTP security headers.
 - Use `cors` with an environment-driven origin allowlist.
-- Use `credentials: true` for cookie sessions.
+- Use `credentials: true` for JWT auth cookies.
 - Never use wildcard CORS origin with credentials.
-- Use `cookie-parser` for session cookies.
+- Use `cookie-parser` for auth cookies.
 - Use `express.json({ limit: '100kb' })` for JSON request bodies.
 
 ### Async Error Rules
@@ -338,17 +394,40 @@ API Zod schemas
 
 ## Auth And Session Rules
 
-- Public meal workflow uses anonymous session cookies.
-- Admin authentication uses email/password.
-- Sessions are server-side sessions.
-- Session data is stored in PostgreSQL through Prisma.
-- Cookie flags: `HttpOnly`, `SameSite=Lax`, and `Secure` in production.
+- Public meal workflow does not use anonymous server-side sessions.
+- Web stores current recommendation conditions and rejected menu-item IDs in `sessionStorage`.
+- Recommendation API is stateless; each request sends conditions and rejected menu-item IDs.
+- Do not persist anonymous recommendation session state in PostgreSQL.
+- Authentication uses email/password.
+- Email is the login identifier; the first full-app pass does not verify email ownership or implement verification tokens/emails.
+- Self-service password reset is deferred. Do not add email delivery, reset tokens, reset endpoints, or reset screens in the first full-app pass.
+- Registered-user password change is deferred. Do not add change-password endpoints or screens in the first full-app pass.
+- Registered-account data is processed only for optional account features: login, authentication, saved menu-item favorites, saved default recommendation preferences, and selected-menu history.
+- Anonymous F1–F7 recommendation remains available without an account.
+- Do not use registered-account data for advertising, unrelated profiling, or unrelated third-party disclosure.
+- Logged-in users record selected-menu history when they explicitly select a menu item; anonymous users do not write history to PostgreSQL.
+- Users must be able to clear selected-menu history. Do not add a separate history opt-in toggle in the first full-app pass.
+- Favorites and selected-menu history keep soft-deleted menu items visible with an unavailable status, but public catalog and recommendation flows must exclude `deletedAt != null` records.
+- Budget ranges such as THB 50–100 may be offered as quick-select options, but the system must not preselect a budget by default.
+- Browser authentication uses JWT stored in an HTTP-only cookie.
+- JWT lifetime is 7 days.
+- Auth cookie flags: `HttpOnly`, `SameSite=Lax`, and `Secure` in production.
 - Password hashing uses Argon2id.
-- JWT is not used for browser authentication.
-- Authorization roles and permissions are TBA by business rules.
+- Authorization uses `USER` and `ADMIN` roles.
+- The only `ADMIN` account in the first full-app pass is created by the approved environment-backed seed process.
+- Public registration always creates `USER`; role input from clients must be rejected or ignored at the validation boundary.
+- Do not implement admin creation, invitation, role promotion/demotion, or admin user-management APIs/screens.
+- Do not implement administrator password-change or password-reset APIs/screens; administrator credentials are provisioned by the initial environment-backed seed only.
 - Protected API routes must include authorization checks.
-- Do not assume or hardcode a role model before the business rules are approved.
 - Auth tokens must not be stored in `localStorage`.
+- Email is visible to the account owner and authentication flow only.
+- Catalog administrators must not receive user email lists in the first full-app pass.
+- Do not implement admin user-management APIs or screens until a separate support role, permission rule, endpoint spec, and audit rule are approved.
+- Application audit logs for protected catalog mutations are retained for 180 days and are separate from Computer Crime Act traffic logs.
+- Only `ADMIN` users can view application audit logs. Audit-log responses may include `actorId`, but must not include actor email in the first full-app pass. Viewing audit logs does not create another audit-log event.
+- Do not implement Computer Crime Act traffic-log storage until an accountable human/legal reviewer confirms Section 26 applicability.
+- `AuditLog` must never be treated as a substitute for legal traffic logs.
+- If Section 26 applies, require a separately approved traffic-log schema, field inventory, access rule, security review, and retention configuration before public production deployment.
 
 ## Database Rules
 
@@ -359,7 +438,14 @@ API Zod schemas
 - Schema changes must trace to requirement, backlog, or legal IDs.
 - Do not store raw GPS coordinates by default.
 - Retention behavior must match `rule.md`.
+- Provide seed support for the initial administrator, minimum master data, and local/demo sample restaurant/menu data.
+- Seed data may focus on MFU-area samples for demo, but product code and schema must not hardcode MFU as the only supported area.
+- Real catalog maintenance is done through protected admin APIs/UI after initial setup.
 - Seed data must not contain real personal data.
+- Real restaurant/menu seed data must come from team-collected or otherwise authorized sources and record the source plus verification date in seed evidence.
+- Do not scrape or commit unnecessary personal data for seed content.
+- Seed images must be owned by the team, explicitly authorized, or generated placeholders. Do not commit restaurant photos with identifiable people unless a lawful basis is approved.
+- Unverified catalog seed rows must be marked as synthetic/sample data.
 
 ## Environment Rules
 
@@ -374,7 +460,7 @@ Likely API env:
 
 ```txt
 DATABASE_URL=
-SESSION_SECRET=
+JWT_SECRET=
 ARGON2_MEMORY_COST=
 ARGON2_TIME_COST=
 ARGON2_PARALLELISM=

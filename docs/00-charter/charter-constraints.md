@@ -17,7 +17,7 @@ This file exists so that a citation like "charter §5.2" resolves inside the rep
 3. Show estimated price, food type, area or distance, and a recommendation rationale when available (F3).
 4. Reject a result and receive a non-duplicate replacement during the same session (F4, F5, NFR9).
 5. Edit conditions or start a new session (F7).
-6. p95 recommendation response time ≤ 2 seconds against up to 500 active restaurant records (NFR1).
+6. Warm p95 recommendation response time ≤ 2 seconds against up to 500 non-deleted restaurant records; free-tier hosting cold-start latency is measured separately (NFR1).
 7. ≥ 80% of a usability-test group of ≥ 5 target users complete the core workflow within 60 seconds unaided (NFR2).
 8. Protect users through data minimization, purpose limitation, authorization, retention controls, and privacy-aware logging (LR1–LR17).
 
@@ -25,15 +25,17 @@ This file exists so that a citation like "charter §5.2" resolves inside the rep
 
 ## §4.1 — In scope
 
-**Meal Seeker:** F1 budget/food type/taste/manual area · F2 up to three choices · F3 price, food type, area/distance, rationale · F4 reject · F5 no rejected-choice repetition in session · F6 no registration or personalization consent · F7 edit conditions and new session · F9 current location after notice, *Should*, manual-area path must remain · F10 temporary food exclusions, *Should* · F12 random choice from already-filtered results, *Should*.
+**Meal Seeker:** F1 budget/food type/taste/manual zone · F2 up to three choices · F3 price, food type, zone, rationale · F4 reject · F5 no rejected-choice repetition in session · F6 no registration or personalization consent · F7 edit conditions and new session · F9 current location after notice, *Won't have in the first release* · F10 temporary food exclusions, *Should* · F12 random choice from already-filtered results, *Should*.
 
-**Authorized Restaurant-Data Administrator:** F8 create, update, retire restaurant/menu records with boundary validation, role authorization, minimized audit records. The charter states this role "require[s] human confirmation because they are operational assumptions rather than survey findings" (tracked as `OA1`).
+**Authorized Restaurant-Data Administrator:** F8 create, update, and soft-delete restaurant/menu records with boundary validation, role authorization, and minimized audit records. Soft deletion sets `deletedAt`; records remain available only while `deletedAt = null`. The charter states this role "require[s] human confirmation because they are operational assumptions rather than survey findings" (tracked as `OA1`).
 
 **Core system capabilities:** session-based recommendation and non-duplicate replacement · fast filtering over an approved dataset · input validation at every API boundary · authorization for every protected API · keyboard-operable core workflow · privacy, consent, retention, audit, and traffic-log controls when their activating conditions apply.
 
 ## §4.2 — Out of scope for the first release
 
-Ordering, payment, or delivery fulfillment · public user reviews · health diagnosis or medical dietary advice · automatic persistent storage of precise GPS or preference history · operating as a certification authority · group voting, saved favorites, personalized history unless separately approved · production deployment without separate human approval.
+Ordering, payment, or delivery fulfillment · public user reviews · health diagnosis or medical dietary advice · automatic persistent storage of precise GPS, food exclusions, rejected items, displayed shortlists, or full recommendation-session conditions · operating as a certification authority · group voting unless separately approved · production deployment without separate human approval.
+
+The human approver activated optional registered accounts, menu-item favorites, selected-menu history, and saved default recommendation settings for the full-app build on 2026-09-26. Anonymous access to the core workflow remains mandatory.
 
 ## §5.2 — Proposed system architecture
 
@@ -62,15 +64,13 @@ The charter names **six** components. D3 must contain all six.
 | W5 | 2026-09-09 | DISCOVER | **Phase Gate** — user validation, updated proposal and backlog, design package, compliance review |
 | W6 | 2026-09-16 | BUILD | Scope lock, project foundation, F1, F2, F3, F6 |
 | W7 | 2026-09-23 | BUILD | Architecture baseline, F4, F5, F7, F8 if approved |
-| W8 | 2026-10-07 | BUILD | **Alpha Demo Day** — feature-complete against approved BUILD scope, F9, F10, F11, F12 when approved |
+| W8 | 2026-10-07 | BUILD | **Alpha Demo Day** — feature-complete against approved BUILD scope; F10, F11, F12 when approved; F9 is outside the first release |
 | W9 | 2026-10-14 | TEST | Unit and integration tests, first-round UAT |
 | W10 | 2026-10-21 | TEST | Governance and legal review applied |
-| W11 | 2026-10-28 | TEST | **Beta Review Day** — regression, performance, accessibility, usability; measure the 2 s p95 and 60 s targets |
+| W11 | 2026-10-28 | TEST | **Beta Review Day** — regression, performance, accessibility, usability; measure the warm 2 s p95, report free-tier cold start separately, and measure the 60 s target |
 
-Deferred Could features F13–F16 are excluded unless a formally approved scope change activates them.
+F13 and F16 remain deferred. F14 and F15 were activated by the human approver for the full-app build on 2026-09-26, and F17 covers saved default recommendation settings.
 
-## Known gaps between charter and requirements
+## Resolved charter traceability
 
-| ID | Gap | Status |
-|---|---|---|
-| RG-1 | Charter §5.2 requires restaurant diversity in the recommendation logic. No `F*` or `NFR*` requirement covers it. Measured on the prototype dataset: 2 of 25 full shortlists return all three items from one restaurant. | Open — resolve at the W5 gate by adding a requirement or recording the clause as out of first release |
+- Charter §5.2 restaurant diversity is implemented by F19 and backlog item B24.

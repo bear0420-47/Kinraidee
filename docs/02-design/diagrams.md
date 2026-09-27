@@ -16,7 +16,7 @@ Every label below traces to one of these approved sources:
 | `docs/01-requirements/intent.md` | governance stakeholders — "the human project approver", drawn in D1 as `Human Project Approver` |
 | Project charter §5.2 / §5.3 | the six architecture components and the technology stack in D3 |
 
-**One exception.** The `diversify` step in D3 comes from charter §5.2 ("restaurant diversity to avoid recommending all options from the same restaurant") but has no requirement ID. It is tracked as open gap **RG-1** below and must be resolved at the W5 gate. No other label is unbacked.
+The `diversify` step in D3 traces to F19 and B24. No diagram label is intentionally unbacked.
 
 ---
 
@@ -25,7 +25,7 @@ Every label below traces to one of these approved sources:
 ```mermaid
 flowchart LR
   seeker["Meal Seeker<br/><i>actor</i>"]
-  admin["Authorized Restaurant-Data Administrator<br/><i>actor — pending OA1 confirmation</i>"]
+  admin["Authorized Restaurant-Data Administrator<br/><i>actor — approved OA1 assumption</i>"]
   approver["Human Project Approver<br/><i>governance actor</i>"]
 
   kinraidee(["<b>Kinraidee</b><br/>Food Decision Assistant"])
@@ -34,7 +34,7 @@ flowchart LR
 
   seeker -->|"enters conditions, rejects, restarts"| kinraidee
   kinraidee -->|"returns up to three choices with rationale"| seeker
-  admin -->|"creates, updates, retires records"| kinraidee
+  admin -->|"creates, updates, soft-deletes records"| kinraidee
   kinraidee -->|"reads and writes"| data
   approver -.->|"approves scope, thresholds, legal applicability"| kinraidee
 ```
@@ -75,18 +75,18 @@ flowchart LR
   subgraph CLIENT["Client"]
     ui["Web app<br/>React + TypeScript"]
     sess["Session state<br/>browser session storage<br/><i>shown and rejected IDs</i>"]
-    adminui["Admin interface<br/>React + TypeScript<br/><i>create, view, update, retire records</i>"]
+    adminui["Admin interface<br/>React + TypeScript<br/><i>create, view, update, soft-delete records</i>"]
   end
 
   subgraph SERVER["Server"]
     api["REST API<br/>Express.js + TypeScript"]
     valid["Input validation<br/><i>every API boundary</i>"]
     rec["Recommendation logic<br/><i>rule-based filter, rank, diversify</i>"]
-    authz["Authentication and authorization<br/><i>protected operations only</i>"]
+    authz["Authentication and authorization<br/><i>protected user and admin operations</i>"]
   end
 
   subgraph DATA["Data"]
-    db[("PostgreSQL<br/>restaurants · menus · areas")]
+    db[("PostgreSQL<br/>users · favorites · history · preferences<br/>restaurants · menus · zones")]
     audit[("Audit record<br/><i>minimized admin mutations</i>")]
     consent[("Consent / agreement record<br/><i>conditional — LR14, LR15, LR16</i>")]
     traffic[("Traffic log<br/><i>conditional — LR10, LR11, LR12, LR13; separate from audit</i>")]
@@ -99,7 +99,7 @@ flowchart LR
   api --> rec
   api --> authz
   rec -->|"filtered query"| db
-  authz -->|"admin mutations"| db
+  authz -->|"account data, favorites, preferences, history, admin mutations"| db
   authz --> audit
   api -.-> consent
   api -.-> traffic
@@ -109,11 +109,11 @@ flowchart LR
 
 **Components.** All six components named in charter §5.2 are present: User Interface (`Web app`), Backend API (`REST API`), Recommendation Logic, Session Management (`Session state`), Database (`PostgreSQL`), and Admin Interface.
 
-**Open gap RG-1.** Charter §5.2 requires the recommendation logic to "consider restaurant diversity to avoid recommending all options from the same restaurant". No `F*` or `NFR*` requirement covers this. The `diversify` step is drawn here because the charter mandates it, but it is currently untraceable. The W5 gate must either add a requirement for it or record that the charter clause is not in the first release. Do not implement it until that decision is recorded. Measured against the current prototype dataset: of the 25 condition combinations that fill a three-item shortlist, 2 return all three items from a single restaurant.
+**Restaurant diversity.** F19/B24 require the recommendation logic to fill distinct restaurant slots first when enough qualifying restaurants exist, then allow repeated restaurants only when needed to complete the shortlist without violating filters or exclusions.
 
 **Conditional elements.** The consent record and the traffic log are drawn dashed because their activating conditions are unresolved: consent evidence applies only if consent or Terms are used (LR14, LR15, LR16), and the traffic log applies only if an accountable human confirms Computer Crime Act §26 applicability (LR10, LR11, LR12, LR13). Traffic logs are a separate store from application audit logs (LR13). No raw GPS coordinate is stored (NFR7) — no GPS store appears in this diagram.
 
-**Traces to:** F1, F2, F3, F4, F5, F6, F7, F8; LR1, LR7, LR8, LR10, LR11, LR12, LR13, LR14, LR15, LR16; NFR1, NFR4, NFR5, NFR6, NFR7; B9, B15, B16, B17.
+**Traces to:** F1, F2, F3, F4, F5, F6, F7, F8, F14, F15, F17, F18, F19; LR1, LR2, LR3, LR6, LR7, LR8, LR10, LR11, LR12, LR13, LR14, LR15, LR16; NFR1, NFR4, NFR5, NFR6, NFR7; B9, B15, B16, B17, B19, B20, B22, B23, B24.
 
 ---
 
@@ -124,7 +124,7 @@ Steps and order are exactly `user-journey.md` steps 1–5. The `Conditions valid
 ```mermaid
 flowchart TD
   start((" ")) --> s1["Open Kinraidee — no sign-in"]
-  s1 --> s2["Choose budget, taste, food type, area"]
+  s1 --> s2["Choose budget, taste, food type, zone"]
   s2 --> v{"Conditions valid?"}
   v -->|"[no]"| e1["Show the field-level error<br/><i>journey step 2</i>"]
   e1 --> s2
@@ -134,7 +134,7 @@ flowchart TD
   none --> edit["Edit conditions or start a new session"]
   edit --> s2
 
-  q -->|"[yes]"| s3["Show up to three choices with price, area, wait, reason"]
+  q -->|"[yes]"| s3["Show up to three choices with price, zone, available details, reason"]
   s3 --> d{"User rejects a choice?"}
   d -->|"[yes]"| s4["Exclude it for this session, offer a replacement"]
   s4 --> q
@@ -153,15 +153,18 @@ Filled circle = initial node. Bullseye = final node. Diamonds are decisions; gua
 
 | Requirement group | Covered by |
 |---|---|
-| F1, F2, F3, F4, F5, F6, F7 core workflow | D1, D2, D3, D4 |
+| F1, F2, F3, F4, F5, F6, F7, F19 core workflow | D1, D2, D3, D4 |
 | F8 administration | D1, D2, D3 |
 | F12 random from filtered | D2 |
-| F9, F10, F11, F13, F14, F15, F16 | Not covered — deferred, see `feature-list.md` |
+| F10, F11, F13, F16 | Not covered — deferred, see `feature-list.md` |
+| F9 | Not covered — Won't have in the first release; manual `Zone` selection is used instead |
+| F14, F15, F17 registered-user library | D3 covers the persistent data store and authentication seam; detailed account screens are outside D4's no-login core journey |
 | LR2, LR8 | D2, D3 |
 | LR1, LR3, LR7 | D3 (data stores and log hygiene) |
 | LR10, LR11, LR12, LR13, LR14, LR15, LR16 | D3, drawn conditional |
-| LR4, LR5 | Not covered — both attach to deferred features (F10 exclusions, F9 location); see `prototype.md` |
-| LR6, LR9 | Not covered — no persistent personal data exists yet; see `prototype.md` |
+| LR4 | Not covered — attaches to deferred F10 exclusions; see `prototype.md` |
+| LR5 | Not covered — attaches to F9 GPS, which is Won't have in the first release |
+| LR6, LR9 | Covered structurally by registered account data in D3; exact account deletion and retention behavior remains an implementation-plan and issue-level concern |
 | LR17 | Not a diagram concern — no certificate issuance appears anywhere |
 | NFR1, NFR3–NFR9, NFR12 | D3, D4 |
 | NFR2, NFR10, NFR11 | Verification concerns, not structural — see the specification |

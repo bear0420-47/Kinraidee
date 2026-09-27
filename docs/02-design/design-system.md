@@ -61,7 +61,7 @@ Every screen an agent or a person draws must use only the values below. If a nee
 2. Never hardcode a hex value, radius, or shadow in a screen — reference a token.
 3. Every screen has exactly one primary action. Secondary actions use the ghost style.
 4. A step card reveals one decision at a time; do not show all conditions at once.
-5. Every result card shows price, area, wait, and a one-line reason. If a value is unavailable, say so — never invent it (F3).
+5. Every result card shows price, zone, available decision details, and a one-line reason. If a value is unavailable, say so — never invent it (F3). Wait-time data is not displayed.
 6. The focus ring is never removed. `outline: none` without a visible replacement is a defect (NFR12).
 7. State changes that matter to the user are announced in a live region, not by colour alone.
 8. A destructive or irreversible action (rejecting a choice) offers an undo path.
