@@ -58,3 +58,39 @@ Structural and scaffold verification run after adding the pnpm web/API workspace
 ### Known unrelated verification gap
 
 The five wireframe failures are in unmodified prototype areas and do not overlap the files or acceptance criteria for issue #27. They remain visible here instead of being hidden or addressed by changing tests outside this issue's scope.
+
+## Issue #28 — Prisma schema and first migration
+
+### Scope
+
+- Verification date/time: 2026-09-29 00:27 ICT (`UTC+07:00`)
+- Environment: local macOS workspace, PostgreSQL 17.11 installed through Homebrew, Prisma 6.19.3
+- Databases: isolated local databases `kinraidee_issue28_20260929` and `kinraidee_issue28_verify_20260929`
+- Cleanup: both temporary databases were removed and the local PostgreSQL server was stopped after verification
+- Seed data: none
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `DATABASE_URL=postgresql://aboutblank@localhost:5432/kinraidee_issue28_verify_20260929 pnpm --filter api prisma validate` | 0 | Pass: Prisma schema is valid. |
+| `DATABASE_URL=postgresql://aboutblank@localhost:5432/kinraidee_issue28_verify_20260929 pnpm --filter api prisma generate` | 0 | Pass: Prisma Client 6.19.3 generated successfully. |
+| `DATABASE_URL=postgresql://aboutblank@localhost:5432/kinraidee_issue28_20260929 pnpm --filter api prisma migrate dev --name init` | 0 | Pass: created and applied migration `20260928172507_init`. |
+| `DATABASE_URL=postgresql://aboutblank@localhost:5432/kinraidee_issue28_verify_20260929 pnpm --filter api prisma migrate deploy` | 0 | Pass: the committed migration applied to a separate empty database. |
+| `DATABASE_URL=postgresql://aboutblank@localhost:5432/kinraidee_issue28_verify_20260929 pnpm --filter api prisma migrate status` | 0 | Pass: database schema is up to date. |
+| `DATABASE_URL=postgresql://aboutblank@localhost:5432/kinraidee_issue28_verify_20260929 pnpm --filter api prisma migrate diff --from-url postgresql://aboutblank@localhost:5432/kinraidee_issue28_verify_20260929 --to-schema-datamodel prisma/schema.prisma --exit-code` | 0 | Pass: no difference detected between the migrated database and Prisma schema. |
+| `pnpm --filter api typecheck` | 0 | Pass after Prisma Client generation. |
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests, and builds completed. API: 4 files/24 tests; web: 1 file/1 test. |
+| `pnpm format` | 0 | Pass: API and web files matched Prettier formatting. |
+| `node tests/wireframe-requirements.test.cjs` | 1 | Existing design-prototype gap outside issue #28: 19 passed and 5 failed for missing Profile/Admin prototype states. No prototype or wireframe test was modified. |
+
+### Schema checks
+
+- The migration creates all four approved enums and all eleven approved models.
+- Only `Restaurant` and `MenuItem` contain `deletedAt`.
+- `Restaurant` physical deletion cascades to `MenuItem`; normal application deletion remains soft deletion through `deletedAt`.
+- User deletion cascades favorites, preferences, and recommendation history while setting `AuditLog.actorId` to `null`.
+- Preference references use `SetNull`; protected catalog references use the approved `Restrict` rules.
+- PostgreSQL metadata inspection confirmed eleven application tables, all four enum definitions, and the expected Cascade/Restrict/SetNull foreign-key actions.
+- Forbidden session models and unapproved lifecycle/password/budget fields are absent.
+- `AuditLog.before` and `AuditLog.after` use nullable PostgreSQL `JSONB`; no password, JWT, cookie, IP, or user-agent columns were added.
