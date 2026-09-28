@@ -94,3 +94,38 @@ The five wireframe failures are in unmodified prototype areas and do not overlap
 - PostgreSQL metadata inspection confirmed eleven application tables, all four enum definitions, and the expected Cascade/Restrict/SetNull foreign-key actions.
 - Forbidden session models and unapproved lifecycle/password/budget fields are absent.
 - `AuditLog.before` and `AuditLog.after` use nullable PostgreSQL `JSONB`; no password, JWT, cookie, IP, or user-agent columns were added.
+
+## Issue #29 — Initial administrator seed
+
+### Scope
+
+- Verification date/time: 2026-09-29 02:50 ICT (`UTC+07:00`)
+- Environment: local macOS workspace, PostgreSQL 17.11, Prisma 6.19.3, pnpm 12.4.2
+- Database: isolated local database `kinraidee_issue29_20260929`
+- Cleanup: the temporary database was removed and the local PostgreSQL server was stopped after verification
+- Seed data: one test-only administrator; no catalog or regular-user fixture data
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm --filter api exec vitest run prisma/seed.test.ts` | 0 | Pass: 1 file/6 tests covering seed validation, normalization, Argon2id hashing, ADMIN assignment, idempotent upsert key, and safe output. |
+| `DATABASE_URL=<test-db> pnpm --filter api prisma migrate deploy` | 0 | Pass: committed initial migration applied to an empty isolated database. |
+| `DATABASE_URL=<test-db> SEED_ADMIN_EMAIL=<test-email> SEED_ADMIN_PASSWORD=<test-password> pnpm --filter api prisma db seed` run twice | 0 | Pass: both runs completed and emitted only `Seeded 1 administrator account.` |
+| Database inspection after repeated seed | 0 | Pass: one normalized user remained with role `ADMIN`; stored value used the Argon2id format and `argon2.verify` succeeded with the trimmed password. Zone, FoodType, Taste, Restaurant, and MenuItem counts remained zero. |
+| `DATABASE_URL=<test-db> pnpm --filter api prisma db seed` without seed credentials | 1 | Expected failure: output identified `SEED_ADMIN_EMAIL` and `SEED_ADMIN_PASSWORD` without printing credential values. |
+| `DATABASE_URL=<test-db> pnpm --filter api prisma validate` | 0 | Pass: schema valid using `prisma.config.ts`. |
+| `DATABASE_URL=<test-db> pnpm --filter api prisma generate` | 0 | Pass: Prisma Client 6.19.3 generated successfully. |
+| `DATABASE_URL=<test-db> pnpm --filter api prisma migrate status` | 0 | Pass: database schema up to date. |
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests, and builds completed. API: 5 files/30 tests; web: 1 file/1 test. |
+| `pnpm format` | 0 | Pass: API and web files matched Prettier formatting. |
+| `git diff --check` | 0 | Pass. |
+| `node tests/wireframe-requirements.test.cjs` | 1 | Existing design-prototype gap outside issue #29: 19 passed and 5 failed for missing Profile/Admin prototype states. No prototype or wireframe test was modified. |
+
+### Security and scope checks
+
+- The committed environment example contains empty placeholders only; no administrator credential is committed.
+- Password input is trimmed, validated at a minimum of 8 characters, and stored only as an Argon2id hash using the approved environment-backed costs.
+- Seed errors and success output omit email, plaintext password, and password hash values.
+- Repeated seed execution updates the configured administrator password hash and enforces role `ADMIN` without creating another account.
+- No public administrator-creation endpoint, password reset/change flow, regular user, or catalog record was added.

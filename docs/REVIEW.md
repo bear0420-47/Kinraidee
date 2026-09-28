@@ -31,6 +31,34 @@ Human reviewer: Pending pull-request review
 Decision: Pending
 Date: TBD
 
+## Issue #29 — Initial administrator seed
+
+### Status
+
+Automated two-axis review complete on 2026-09-29. Human pull-request approval remains pending.
+
+### Standards review
+
+No documented-standard violations remain. Review identified a possible duplicated-code risk because the seed and API environment parser separately defined Argon2 cost defaults. The defaults now live in `src/api/src/config/argon2.ts` and are consumed by both paths.
+
+### Specification review
+
+No findings. The environment-backed seed validates and normalizes credentials, trims passwords according to the approved policy, writes only an Argon2id hash, enforces `ADMIN`, updates the configured account idempotently, emits safe output, and creates no regular-user or catalog fixture data. `prisma.config.ts` provides the supported Prisma seed hook and was verified through `prisma db seed`.
+
+### Review scope
+
+- Diff: `git diff origin/main...HEAD`
+- Commit: `6a8787c feat(api): add initial admin seed (#29)`
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/03-implementation/engineering-guidelines.md`, `docs/03-implementation/data-model.md`, and `docs/03-implementation/module-implementation-checklist.md`
+- Specification source: GitHub issue #29 and the human-approved password policy
+- Credential validation, normalization, hashing, idempotency, role enforcement, safe output, and fixture scope
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD
+
 ## Issue #28 — Prisma schema and first migration
 
 ### Status
