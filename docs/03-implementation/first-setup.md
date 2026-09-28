@@ -105,6 +105,8 @@ JWT_SECRET=<generate-local-secret>
 ARGON2_MEMORY_COST=19456
 ARGON2_TIME_COST=2
 ARGON2_PARALLELISM=1
+SEED_ADMIN_EMAIL=<initial-admin-email>
+SEED_ADMIN_PASSWORD=<initial-admin-password>
 CORS_ALLOWED_ORIGINS=http://localhost:5173
 ```
 
@@ -113,6 +115,8 @@ Set these values for the local machine:
 - `DATABASE_URL`: local PostgreSQL connection string. Use the existing local PostgreSQL URL if verified. Otherwise use the committed Docker Compose default.
 - `JWT_SECRET`: random local secret with at least 32 characters. Generate it locally; do not ask the human to invent one.
 - `ARGON2_MEMORY_COST`, `ARGON2_TIME_COST`, `ARGON2_PARALLELISM`: Argon2id password-hashing cost settings. Use the defaults; they match the OWASP Password Storage Cheat Sheet minimum for Argon2id.
+- `SEED_ADMIN_EMAIL`: email for the one initial administrator. The seed trims and lowercases this value before storage.
+- `SEED_ADMIN_PASSWORD`: password for the initial administrator. The seed trims leading and trailing whitespace, then requires at least 8 characters. No character-composition rule applies.
 - `CORS_ALLOWED_ORIGINS`: comma-separated web origins allowed to call the API with credentials. The scaffold default web port is `5173`, so the default local value is `http://localhost:5173`.
 
 Generate a local `JWT_SECRET` with Node.js:
@@ -143,7 +147,20 @@ pnpm --filter api prisma generate --schema=prisma/schema.prisma
 
 Do not create a migration until there is a real approved database schema.
 
-## 6. Run Verification
+## 6. Apply Migrations And Seed The Initial Administrator
+
+Apply committed migrations, then run the environment-backed seed:
+
+```sh
+pnpm --filter api prisma migrate deploy
+pnpm --filter api prisma db seed
+```
+
+The seed creates or updates exactly one administrator identified by the normalized `SEED_ADMIN_EMAIL`. Repeated runs update its Argon2id password hash and keep its role as `ADMIN` without creating duplicates. It does not create users, zones, food types, tastes, restaurants, or menu items.
+
+Never commit real administrator credentials. Supply production values through the approved secret-management process only after production deployment is separately approved.
+
+## 7. Run Verification
 
 ```sh
 pnpm verify
@@ -153,7 +170,7 @@ node tests/wireframe-requirements.test.cjs
 
 Record exact command results in `docs/verification.md` when implementation work is reported complete.
 
-## 7. Run The Apps
+## 8. Run The Apps
 
 Use separate terminals:
 
