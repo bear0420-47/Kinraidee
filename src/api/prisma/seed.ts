@@ -5,11 +5,11 @@ import { PrismaClient, UserRole, type Prisma } from '@prisma/client'
 import argon2 from 'argon2'
 import { z } from 'zod'
 
+import { argon2EnvSchema } from '../src/config/argon2'
+
 const seedEnvSchema = z.object({
   DATABASE_URL: z.string().min(1, 'DATABASE_URL is required.'),
-  ARGON2_MEMORY_COST: z.coerce.number().int().positive().default(19456),
-  ARGON2_TIME_COST: z.coerce.number().int().positive().default(2),
-  ARGON2_PARALLELISM: z.coerce.number().int().positive().default(1),
+  ...argon2EnvSchema.shape,
   SEED_ADMIN_EMAIL: z
     .string()
     .trim()

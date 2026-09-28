@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { argon2EnvSchema } from './argon2'
+
 const corsAllowedOriginsSchema = z.preprocess(
   (value) => value ?? 'http://localhost:5173',
   z.string().transform((value, context) => {
@@ -47,9 +49,7 @@ const envSchema = z.object({
   PORT: z.coerce.number().int().positive().default(3000),
   DATABASE_URL: z.string().min(1),
   JWT_SECRET: z.string().min(32),
-  ARGON2_MEMORY_COST: z.coerce.number().int().positive().default(19456),
-  ARGON2_TIME_COST: z.coerce.number().int().positive().default(2),
-  ARGON2_PARALLELISM: z.coerce.number().int().positive().default(1),
+  ...argon2EnvSchema.shape,
   CORS_ALLOWED_ORIGINS: corsAllowedOriginsSchema,
 })
 
