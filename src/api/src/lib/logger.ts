@@ -19,6 +19,69 @@ type SerializedError = {
   type?: unknown
 }
 
+const sensitiveLogKeyParts = [
+  'apikey',
+  'credential',
+  'email',
+  'encryptionkey',
+  'jwt',
+  'password',
+  'privatekey',
+  'rawgps',
+  'secret',
+  'sessionid',
+  'signingkey',
+  'token',
+]
+
+function isSensitiveLogKey(key: string) {
+  const normalizedKey = key.replaceAll(/[-_]/g, '').toLowerCase()
+
+  return (
+    sensitiveLogKeyParts.some((part) => normalizedKey.includes(part)) ||
+    ['authorization', 'body', 'cookie', 'query'].includes(normalizedKey)
+  )
+}
+
+function sanitizeLogValue(value: unknown, seen: WeakSet<object>): unknown {
+  if (value instanceof Error) {
+    return { type: value.name }
+  }
+
+  if (!value || typeof value !== 'object' || value instanceof Date) {
+    return value
+  }
+
+  if (seen.has(value)) return '[Circular]'
+  seen.add(value)
+
+  if (Array.isArray(value)) {
+    return value.map((item) => sanitizeLogValue(item, seen))
+  }
+
+  const sanitized: Record<string, unknown> = {}
+  for (const [key, nestedValue] of Object.entries(value)) {
+    if (!isSensitiveLogKey(key)) {
+      sanitized[key] = sanitizeLogValue(nestedValue, seen)
+    }
+  }
+
+  return sanitized
+}
+
+export function sanitizeLogObject(log: Record<string, unknown>) {
+  const sanitized: Record<string, unknown> = {}
+  const seen = new WeakSet<object>()
+
+  for (const [key, value] of Object.entries(log)) {
+    sanitized[key] = ['req', 'res', 'err'].includes(key)
+      ? value
+      : sanitizeLogValue(value, seen)
+  }
+
+  return sanitized
+}
+
 export function serializeRequest(request: SerializedRequest) {
   return {
     id: request.id,
@@ -45,13 +108,18 @@ export function serializeError(error: SerializedError) {
   }
 }
 
+export const httpSerializers = {
+  req: serializeRequest,
+  res: serializeResponse,
+  err: serializeError,
+}
+
 export const loggerOptions: LoggerOptions = {
   level: env.NODE_ENV === 'test' ? 'silent' : 'info',
-  serializers: {
-    req: serializeRequest,
-    res: serializeResponse,
-    err: serializeError,
+  formatters: {
+    log: sanitizeLogObject,
   },
+  serializers: httpSerializers,
   redact: {
     paths: [
       'req.headers.authorization',

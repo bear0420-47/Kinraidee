@@ -31,7 +31,7 @@ Structural and scaffold verification run after adding the pnpm web/API workspace
 
 ### Scope
 
-- Verification date/time: 2026-09-28 23:35 ICT (`UTC+07:00`)
+- Verification date/time: 2026-09-29 00:02 ICT (`UTC+07:00`)
 - Environment: local macOS workspace, Node.js and pnpm versions locked by the repository
 - Route under test: `GET /health`
 - Database: not used; database health checks are outside issue #27
@@ -40,10 +40,10 @@ Structural and scaffold verification run after adding the pnpm web/API workspace
 
 | Command | Exit code | Result |
 |---|---:|---|
-| `pnpm --filter api test` | 0 | Pass: 4 test files, 23 tests passed. Supertest drives the HTTP integration cases without custom server lifecycle helpers. Covers environment parsing, CORS allowlisting, health response, request-ID validation and boundaries, response helpers, error envelopes, and log sanitization. |
+| `pnpm --filter api test` | 0 | Pass: 4 test files, 24 tests passed. Supertest drives the HTTP integration cases without custom server lifecycle helpers. Covers environment parsing and startup failure, CORS allowlisting, health response, request-ID validation and boundaries, response helpers, error envelopes, and recursive log sanitization. |
 | `pnpm --filter api typecheck` | 0 | Pass. |
 | `pnpm --filter api lint` | 0 | Pass. |
-| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests, and builds completed. API: 4 files/23 tests; web: 1 file/1 test. API OpenAPI generation and web production build completed. |
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests, and builds completed. API: 4 files/24 tests; web: 1 file/1 test. API OpenAPI generation and web production build completed. |
 | `pnpm format` | 0 | Pass: API and web files matched Prettier formatting. |
 | `node tests/wireframe-requirements.test.cjs` | 1 | Design-prototype gap outside issue #27: 19 passed and 5 failed. Failures require missing Profile/Admin wireframe navigation and admin CRUD/pagination prototype states. No test or prototype file was changed for this API-foundation issue. |
 

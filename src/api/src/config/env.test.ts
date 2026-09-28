@@ -1,3 +1,4 @@
+import { spawnSync } from 'node:child_process'
 import { beforeAll, describe, expect, it, vi } from 'vitest'
 
 const validEnv = {
@@ -52,5 +53,25 @@ describe('parseEnv', () => {
     ],
   ])('rejects %s', (_name, input) => {
     expect(() => parseEnv(input)).toThrow()
+  })
+
+  it('fails process startup when required configuration is invalid', () => {
+    const { JWT_SECRET: _ignored, ...invalidProcessEnv } = {
+      ...process.env,
+      ...validEnv,
+    }
+    const result = spawnSync(
+      process.execPath,
+      ['--import', 'tsx', 'src/server.ts'],
+      {
+        cwd: process.cwd(),
+        encoding: 'utf8',
+        env: invalidProcessEnv,
+        timeout: 5_000,
+      },
+    )
+
+    expect(result.status).not.toBe(0)
+    expect(result.stderr).toContain('JWT_SECRET')
   })
 })

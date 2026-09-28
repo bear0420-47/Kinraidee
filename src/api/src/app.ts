@@ -5,12 +5,7 @@ import express, { type Express } from 'express'
 import helmet from 'helmet'
 import pinoHttp from 'pino-http'
 import { corsAllowedOrigins } from '@/config/env'
-import {
-  logger,
-  serializeError,
-  serializeRequest,
-  serializeResponse,
-} from '@/lib/logger'
+import { httpSerializers, logger } from '@/lib/logger'
 import { errorHandler } from '@/middleware/errorHandler'
 import { requestIdMiddleware } from '@/middleware/requestId'
 import { routes } from '@/routes'
@@ -25,11 +20,7 @@ export function createApp(): Express {
       logger,
       genReqId: (request) => request.requestId,
       customProps: (request) => ({ requestId: request.requestId }),
-      serializers: {
-        req: serializeRequest,
-        res: serializeResponse,
-        err: serializeError,
-      },
+      serializers: httpSerializers,
     }),
   )
   app.use(helmet())

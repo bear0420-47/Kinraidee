@@ -56,8 +56,11 @@ describe('safe HTTP log serializers', () => {
       },
     })
     const testLogger = pino({ ...loggerOptions, level: 'info' }, destination)
+    const cyclic: unknown[] = []
+    cyclic.push(cyclic)
 
     testLogger.info({
+      cyclic,
       req: {
         method: 'POST',
         url: '/login?email=user@example.com&token=query-secret',
@@ -68,12 +71,28 @@ describe('safe HTTP log serializers', () => {
       password: 'password-secret',
       token: 'token-secret',
       rawGps: '19.123,99.123',
-      user: { email: 'nested@example.com', token: 'nested-token' },
+      user: {
+        profile: {
+          email: 'deep@example.com',
+          apiKey: 'deep-api-key',
+          clientSecret: 'deep-client-secret',
+          jwt: 'deep-jwt',
+        },
+        sessions: [
+          { accessToken: 'array-token', sessionId: 'private-session' },
+        ],
+      },
     })
 
     expect(output).toContain('"path":"/login"')
+    expect(output).toContain('[Circular]')
     expect(output).not.toContain('user@example.com')
-    expect(output).not.toContain('nested@example.com')
+    expect(output).not.toContain('deep@example.com')
+    expect(output).not.toContain('deep-api-key')
+    expect(output).not.toContain('deep-client-secret')
+    expect(output).not.toContain('deep-jwt')
+    expect(output).not.toContain('array-token')
+    expect(output).not.toContain('private-session')
     expect(output).not.toContain('password-secret')
     expect(output).not.toContain('token-secret')
     expect(output).not.toContain('query-secret')
