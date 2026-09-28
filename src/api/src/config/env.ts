@@ -1,5 +1,45 @@
 import { z } from 'zod'
 
+const corsAllowedOriginsSchema = z.preprocess(
+  (value) => value ?? 'http://localhost:5173',
+  z.string().transform((value, context) => {
+    const origins = new Set<string>()
+
+    for (const candidate of value.split(',')) {
+      const origin = candidate.trim()
+      if (!origin) continue
+
+      try {
+        const url = new URL(origin)
+        const isOriginOnly =
+          (url.protocol === 'http:' || url.protocol === 'https:') &&
+          !url.username &&
+          !url.password &&
+          url.pathname === '/' &&
+          !url.search &&
+          !url.hash
+
+        if (!isOriginOnly) throw new Error('Invalid origin')
+        origins.add(url.origin)
+      } catch {
+        context.addIssue({
+          code: 'custom',
+          message: 'CORS_ALLOWED_ORIGINS contains an invalid origin.',
+        })
+      }
+    }
+
+    if (origins.size === 0) {
+      context.addIssue({
+        code: 'custom',
+        message: 'CORS_ALLOWED_ORIGINS must contain at least one origin.',
+      })
+    }
+
+    return [...origins]
+  }),
+)
+
 const envSchema = z.object({
   NODE_ENV: z
     .enum(['development', 'test', 'production'])
@@ -10,11 +50,13 @@ const envSchema = z.object({
   ARGON2_MEMORY_COST: z.coerce.number().int().positive().default(19456),
   ARGON2_TIME_COST: z.coerce.number().int().positive().default(2),
   ARGON2_PARALLELISM: z.coerce.number().int().positive().default(1),
-  CORS_ALLOWED_ORIGINS: z.string().default('http://localhost:5173'),
+  CORS_ALLOWED_ORIGINS: corsAllowedOriginsSchema,
 })
 
-export const env = envSchema.parse(process.env)
+export function parseEnv(input: NodeJS.ProcessEnv) {
+  return envSchema.parse(input)
+}
 
-export const corsAllowedOrigins = env.CORS_ALLOWED_ORIGINS.split(',')
-  .map((origin) => origin.trim())
-  .filter((origin) => origin.length > 0)
+export const env = parseEnv(process.env)
+
+export const corsAllowedOrigins = env.CORS_ALLOWED_ORIGINS

@@ -58,6 +58,10 @@ Approved — full-app build plan updated through 2026-09-28 decisions. Implement
 - Registered-user password-change flow.
 - Cloudflare R2 or another durable production object-storage integration. Until then, production accepts approved external image URLs and does not enable internal uploads.
 
+## Implementation Decisions
+
+- Issue #27 uses `supertest` as an API test-only development dependency. The human approver accepted this deviation from the initial preference to use existing packages because it removes custom HTTP server lifecycle helpers while leaving production code and runtime dependencies unchanged.
+
 ## Evidence Expected
 
 - Requirement decisions: `docs/01-requirements/intent.md`, the current specification under `docs/01-requirements/01-spec/`, and `docs/01-requirements/backlog.md`.
