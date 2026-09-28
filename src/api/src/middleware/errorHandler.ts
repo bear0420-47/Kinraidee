@@ -24,7 +24,10 @@ export const errorHandler: ErrorRequestHandler = (
   }
 
   request.log.error(
-    { error, requestId: request.requestId },
+    {
+      errorType: error instanceof Error ? error.name : 'UnknownError',
+      requestId: request.requestId,
+    },
     'Unhandled request error',
   )
 

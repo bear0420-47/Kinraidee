@@ -26,3 +26,35 @@ Structural and scaffold verification run after adding the pnpm web/API workspace
 
 - CodeTest Agent: Pending
 - Date: TBD
+
+## Issue #27 — Shared API foundation
+
+### Scope
+
+- Verification date/time: 2026-09-28 23:35 ICT (`UTC+07:00`)
+- Environment: local macOS workspace, Node.js and pnpm versions locked by the repository
+- Route under test: `GET /health`
+- Database: not used; database health checks are outside issue #27
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm --filter api test` | 0 | Pass: 4 test files, 23 tests passed. Supertest drives the HTTP integration cases without custom server lifecycle helpers. Covers environment parsing, CORS allowlisting, health response, request-ID validation and boundaries, response helpers, error envelopes, and log sanitization. |
+| `pnpm --filter api typecheck` | 0 | Pass. |
+| `pnpm --filter api lint` | 0 | Pass. |
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests, and builds completed. API: 4 files/23 tests; web: 1 file/1 test. API OpenAPI generation and web production build completed. |
+| `pnpm format` | 0 | Pass: API and web files matched Prettier formatting. |
+| `node tests/wireframe-requirements.test.cjs` | 1 | Design-prototype gap outside issue #27: 19 passed and 5 failed. Failures require missing Profile/Admin wireframe navigation and admin CRUD/pagination prototype states. No test or prototype file was changed for this API-foundation issue. |
+
+### Security and privacy checks
+
+- HTTP request logs retain request ID, method, and path while omitting query strings, request bodies, cookies, and authorization headers.
+- Logger redaction tests cover password, token, email, raw GPS, and nested email/token fields.
+- Unknown errors return `INTERNAL_ERROR` without exposing the thrown message or stack trace.
+- `CORS_ALLOWED_ORIGINS` rejects wildcard, empty, path-bearing, and malformed origins; configured origins are normalized and deduplicated.
+- Generated `dist/` output remains ignored and no `dist/` file is tracked.
+
+### Known unrelated verification gap
+
+The five wireframe failures are in unmodified prototype areas and do not overlap the files or acceptance criteria for issue #27. They remain visible here instead of being hidden or addressed by changing tests outside this issue's scope.
