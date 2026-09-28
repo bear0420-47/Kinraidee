@@ -2,11 +2,24 @@
 
 ## Status
 
-Approved — schema decisions locked through 2026-09-27. This file is the source of truth for Prisma model shape until the actual `src/api/prisma/schema.prisma` is implemented.
+Approved — schema decisions locked through 2026-09-28. This file is the source of truth for Prisma model shape until the actual `src/api/prisma/schema.prisma` is implemented.
 
 Business workflows, endpoint behavior, permissions, and deletion flows are intentionally not defined here. Capture those in implementation issues and module specs.
 
 ## Shared API Types
+
+### BudgetRange
+
+The first release uses fixed recommendation budget ranges. The same enum is stored for a registered user's saved default preference.
+
+```prisma
+enum BudgetRange {
+  UNDER_50
+  BETWEEN_50_100
+  BETWEEN_101_200
+  OVER_200
+}
+```
 
 ### Localization
 
@@ -119,8 +132,8 @@ Fields:
 - `descriptionTh` — optional Thai restaurant description.
 - `descriptionEn` — optional English restaurant description.
 - `phone` — optional public contact phone number.
-- `imageKey` — optional Cloudflare R2 object key for an uploaded image; `null` when an approved external image URL is used instead.
-- `imageUrl` — optional delivered or approved external image URL. When `imageKey` is present, this URL is derived from the R2 object delivery configuration.
+- `imageKey` — optional application-owned image key; `null` when an approved external image URL is used instead. Development/test keys reference the internal upload directory; a future production object store may reuse the same contract.
+- `imageUrl` — optional delivered URL or approved external image URL. Internal development/test uploads use `/uploads/<generated-file>`; production uses approved external URLs until durable object storage is implemented.
 - `zoneId` — foreign key to `Zone`.
 - `deletedAt` — soft-delete timestamp; `null` means the restaurant is available for catalog queries and recommendations.
 - `createdAt` — creation timestamp.
@@ -275,8 +288,8 @@ Fields:
 - `descriptionTh` — optional Thai menu item description.
 - `descriptionEn` — optional English menu item description.
 - `price` — integer price in Thai baht.
-- `imageKey` — optional Cloudflare R2 object key for an uploaded image; `null` when an approved external image URL is used instead.
-- `imageUrl` — optional delivered or approved external image URL. When `imageKey` is present, this URL is derived from the R2 object delivery configuration.
+- `imageKey` — optional application-owned image key; `null` when an approved external image URL is used instead. Development/test keys reference the internal upload directory; a future production object store may reuse the same contract.
+- `imageUrl` — optional delivered URL or approved external image URL. Internal development/test uploads use `/uploads/<generated-file>`; production uses approved external URLs until durable object storage is implemented.
 - `deletedAt` — soft-delete timestamp; `null` means the menu item is available for catalog queries and recommendations.
 - `createdAt` — creation timestamp.
 - `updatedAt` — last update timestamp.
@@ -441,8 +454,7 @@ model UserPreference {
   zoneId     String?
   foodTypeId String?
   tasteId    String?
-  minPrice   Int?
-  maxPrice   Int?
+  budget     BudgetRange?
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
@@ -454,6 +466,28 @@ model UserPreference {
   @@index([zoneId])
   @@index([foodTypeId])
   @@index([tasteId])
+}
+```
+
+Fields:
+
+- `id` — primary key.
+- `userId` — unique foreign key; each registered user has at most one preference set.
+- `zoneId` — optional default zone.
+- `foodTypeId` — optional default food type.
+- `tasteId` — optional default taste; the current recommendation flow selects one taste.
+- `budget` — optional default using the same fixed `BudgetRange` values as the recommendation request.
+- `createdAt` — creation timestamp.
+- `updatedAt` — last update timestamp.
+
+API/web contract:
+
+```ts
+type UserPreference = {
+  zoneId: string | null
+  foodTypeId: string | null
+  tasteId: string | null
+  budget: BudgetRange | null
 }
 ```
 
@@ -503,30 +537,6 @@ type RecommendationHistory = {
   id: string
   menuItemId: string
   selectedAt: string
-}
-```
-
-Fields:
-
-- `id` — primary key.
-- `userId` — unique foreign key; each registered user has at most one preference set.
-- `zoneId` — optional default zone.
-- `foodTypeId` — optional default food type.
-- `tasteId` — optional default taste; the current recommendation flow selects one taste.
-- `minPrice` — optional default minimum price in Thai baht.
-- `maxPrice` — optional default maximum price in Thai baht.
-- `createdAt` — creation timestamp.
-- `updatedAt` — last update timestamp.
-
-API/web contract:
-
-```ts
-type UserPreference = {
-  zoneId: string | null
-  foodTypeId: string | null
-  tasteId: string | null
-  minPrice: number | null
-  maxPrice: number | null
 }
 ```
 
@@ -634,11 +644,12 @@ Do not add these fields to locked catalog schemas unless a later approved issue 
 - Delivery fee, rating, opening hours, calories, or external provider data.
 - Image binary/blob columns.
 
-Images are stored in Cloudflare R2. Models store the resulting object key and delivered URL, never binary image data.
+Models store an application-owned image key and delivered URL, or an approved external URL, never binary image data.
 
 - Admin input may use an approved external image URL instead of uploading; in that case `imageKey` is `null`.
-- Soft-deleting a restaurant or menu item does not delete its R2 object because the catalog record remains stored and may still appear as unavailable in account history/favorites.
-- Replacing an uploaded image must update the database reference safely before removing the superseded R2 object.
+- Development/test may store generated files in the ignored internal upload directory and serve them from `/uploads`; production internal upload is disabled until durable object storage is implemented.
+- Soft-deleting a restaurant or menu item does not delete its owned image because the catalog record remains stored and may still appear as unavailable in account history/favorites.
+- Replacing an internally owned image must update the database reference safely before removing the superseded object.
 
 ## Soft Deletion
 

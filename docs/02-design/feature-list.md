@@ -2,7 +2,7 @@
 
 ## Status
 
-Draft — derived from `docs/01-requirements/backlog.md` on 2026-09-06 for the W5 DISCOVER Phase Gate. Pending human approval.
+Approved — synchronized with the approved backlog and human-confirmed full-app scope on 2026-09-28. Exactly one core feature is marked with `★`.
 
 ## Core release features
 

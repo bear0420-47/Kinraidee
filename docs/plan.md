@@ -2,7 +2,7 @@
 
 ## Status
 
-Approved — full-app build plan updated through 2026-09-27 decisions. API, data-model, and non-visual web foundation work may begin from this plan; production deployment still requires separate approval.
+Approved — full-app build plan updated through 2026-09-28 decisions. Implementation work may begin from this plan; production deployment still requires separate approval.
 
 ## Build Boundary
 
@@ -15,7 +15,7 @@ Approved — full-app build plan updated through 2026-09-27 decisions. API, data
 - The web application deploys to Cloudflare Pages as a static Vite React SPA.
 - The Express API deploys to Koyeb as a stateless web service.
 - The approved production PostgreSQL provider is Koyeb Serverless Postgres once production deployment is explicitly approved; Prisma migrations remain provider-neutral so the database can move to Neon or another PostgreSQL provider if production quota or reliability requires it.
-- Restaurant and menu-item images are stored in Cloudflare R2; PostgreSQL stores only object keys and public/delivered URLs, never image blobs.
+- Restaurant and menu-item images accept approved external URLs in every environment. Development/test may also use the internal `/uploads` directory; PostgreSQL stores only image keys and delivered URLs, never image blobs. Production internal uploads remain disabled until durable object storage is implemented.
 - Recommendation conditions and rejected menu-item IDs remain in web `sessionStorage`; they are not persisted in PostgreSQL.
 - The recommendation API is stateless and receives current conditions and rejected menu-item IDs with each request.
 - Registered users can save menu-item favorites, one set of default zone, food type, taste, and budget preferences, and selected-menu history.
@@ -37,13 +37,13 @@ Approved — full-app build plan updated through 2026-09-27 decisions. API, data
 8. Implement the stateless recommendation API for conditions, shortlist, reject/no-repeat, edit, and new-session flows.
    - Apply F19 restaurant diversity after mandatory filters and rejected-item exclusions: fill distinct restaurant slots first, then allow repeated restaurants only when necessary.
 9. Implement the public React meal flow using the approved user journey, design system, typed OpenAPI client, and `sessionStorage` state.
-   - Do not implement final visual screens until the design pack under `docs/02-design/` is redesigned as needed and explicitly approved.
+   - Implement against the human-approved user journey and visual baseline in `docs/02-design/`; do not treat exploratory behavior in `wireframe.html` as requirements.
 10. Implement registered-user favorites, saved default recommendation preferences, and selected-menu history.
 11. Implement React admin screens for catalog CRUD and audit-log review.
 12. Add focused unit, integration, authorization, validation, recommendation, accessibility, and verification checks.
 13. Run build, test, lint, typecheck, format, and required design/requirement audits; record exact results in `docs/verification.md`.
 14. Complete `docs/REVIEW.md`, resolve findings, and request human approval for the pull request.
-15. Request production deployment approval separately before creating or exposing public Cloudflare Pages, Koyeb API, Koyeb Postgres, or Cloudflare R2 resources.
+15. Request production deployment approval separately before creating or exposing public Cloudflare Pages, Koyeb API, Koyeb Postgres, or future production object-storage resources.
 
 ## Deferred Work
 
@@ -56,6 +56,7 @@ Approved — full-app build plan updated through 2026-09-27 decisions. API, data
 - Computer Crime Act traffic-retention schemas unless accountable legal review confirms applicability.
 - Self-service password reset, email delivery, and password-reset token flows.
 - Registered-user password-change flow.
+- Cloudflare R2 or another durable production object-storage integration. Until then, production accepts approved external image URLs and does not enable internal uploads.
 
 ## Evidence Expected
 
@@ -69,20 +70,20 @@ Approved — full-app build plan updated through 2026-09-27 decisions. API, data
 ## Deployment Decisions
 
 - Web hosting: Cloudflare Pages.
-- Reason: the web app is a static Vite React SPA, Cloudflare Pages has no runtime cold start for static assets, its free tier is generous for static requests and bandwidth, it supports team Git workflows, and it fits the approved Cloudflare R2 image-storage direction.
+- Reason: the web app is a static Vite React SPA, Cloudflare Pages has no runtime cold start for static assets, its free tier is generous for static requests and bandwidth, and it supports team Git workflows.
 - Web conditions: configure SPA fallback for React Router, set `VITE_API_BASE_URL` per environment, and do not use Pages Functions in the first full-app pass.
 - API hosting: Koyeb.
 - API conditions: deploy the Express API from Git or a reproducible container, keep it stateless, expose `/health`, store configuration in environment variables, do not depend on local disk persistence, and accept free-tier sleep/cold-start and resource limits until production requirements justify a paid deployment.
 - Database hosting: Koyeb Serverless Postgres for the approved production environment.
 - Database conditions: use the standard PostgreSQL connection string through Prisma, do not use Koyeb-specific database features in application code, commit all Prisma migrations, and reassess Neon or another PostgreSQL provider only if production quota, latency, capacity, or reliability becomes insufficient.
-- Object storage: Cloudflare R2 Standard for restaurant and menu-item images.
-- Object-storage conditions: uploads require an authenticated administrator, the API validates MIME type and file size, generated object keys replace user filenames, database records store only the object key and delivered URL, and replace/delete flows keep R2 objects and database references consistent.
-- Soft-deleting a restaurant or menu item keeps its R2 object; image replacement removes the superseded object only after the new database reference is safely stored.
+- Development/test image storage: internal ignored directory served from `/uploads`; uploads require an authenticated administrator, validate actual image type and size, and use generated filenames.
+- Production image storage before the deferred R2 issue: approved external image URLs only. The local upload route and `/uploads` static serving remain disabled because Koyeb local disk is not durable application storage.
+- Future durable object-storage integration must preserve the `imageKey`/`imageUrl` contract. Soft deletion keeps the referenced image; replacement removes a superseded internally owned object only after the database safely points to the new object.
 
 ## Deployment Boundary
 
 - Development and verification run locally by default.
-- Creating or exposing Cloudflare Pages, Koyeb API, Koyeb Postgres, or Cloudflare R2 resources is treated as public production deployment.
+- Creating or exposing Cloudflare Pages, Koyeb API, Koyeb Postgres, or future production object-storage resources is treated as public production deployment.
 - Do not deploy publicly until the human explicitly approves production deployment after verification, privacy review, and deployment review.
 - Production deployment is blocked until an accountable human/legal reviewer confirms whether Computer Crime Act Section 26 traffic-log duties apply.
 - Do not implement traffic-log storage before that confirmation. `AuditLog` is not a substitute for legal traffic logs.

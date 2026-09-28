@@ -2,7 +2,7 @@
 
 ## Status
 
-Draft — 2026-09-06. Pending human approval. D1, D3 and D4 are Mermaid source so they stay diffable in version control. D2 is a hand-authored SVG under `assets/`, because Mermaid has no UML use case diagram type and the required notation (stick-figure actors, ovals in a system boundary, plain associations, dashed `«include»`) cannot be expressed in a flowchart.
+Approved — synchronized with the approved feature list, user journey, data model, and full-app scope on 2026-09-28. D1, D3 and D4 are Mermaid source so they stay diffable in version control. D2 is a hand-authored SVG under `assets/`, because Mermaid has no UML use case diagram type and the required notation (stick-figure actors, ovals in a system boundary, plain associations, dashed `«include»`) cannot be expressed in a flowchart.
 
 ## Label provenance
 
@@ -60,9 +60,9 @@ Source: [`assets/d2-use-case.svg`](assets/d2-use-case.svg) — hand-authored UML
 | Get a meal shortlist | «include» | Enter session conditions | A shortlist cannot be produced without conditions (F1 gates F2) |
 | Reject and replace a choice | «include» | Get a meal shortlist | Replacing re-runs the qualifying shortlist (F4, F5) |
 | Choose at random from filtered results | «include» | Get a meal shortlist | Randomisation draws only from an existing filtered set (F12) |
-| Administer restaurant and menu records | «include» | Authorize the operation | Every mutation is authorization-gated (F8, LR8) |
+| Administer catalog records | «include» | Authorize the operation | Zone, food-type, taste, restaurant, and menu-item mutations are authorization-gated (F8, LR8) |
 
-No use case requires an account (F6, LR2).
+The core meal-shortlist use case does not require an account (F6, LR2). Registered-user library and administrator use cases require authentication but do not block anonymous recommendation use.
 
 **Traces to:** F1, F2, F4, F5, F7, F8, F12, LR2, LR8; B1–B8, B14.
 
@@ -128,24 +128,44 @@ flowchart TD
   s2 --> v{"Conditions valid?"}
   v -->|"[no]"| e1["Show the field-level error<br/><i>journey step 2</i>"]
   e1 --> s2
-  v -->|"[yes]"| q{"Any qualifying choice left?"}
+  v -->|"[yes]"| cta["Submit with สับการ์ดเมนู"]
+  cta --> q{"Any qualifying choice left?"}
 
-  q -->|"[no]"| none["Name the one constraint to relax"]
-  none --> edit["Edit conditions or start a new session"]
-  edit --> s2
+  q -->|"[no]"| relax{"Approved relaxation available?"}
+  relax -->|"[yes]"| none["Suggest the first relaxation that has results"]
+  none --> noMatchAction{"User action?"}
+  noMatchAction -->|"Use suggested conditions"| useRelax["Apply one relaxation and shuffle again"]
+  useRelax --> cta
+  noMatchAction -->|"Edit conditions manually"| s2
+  relax -->|"[no]"| manual["Show no-match state with manual edit only"]
+  manual --> s2
 
-  q -->|"[yes]"| s3["Show up to three choices with price, zone, available details, reason"]
-  s3 --> d{"User rejects a choice?"}
-  d -->|"[yes]"| s4["Exclude it for this session, offer a replacement"]
-  s4 --> q
-  d -->|"[no]"| s5["User picks a meal"]
-  s5 --> conf["Show confirmation"]
-  conf --> done(((" ")))
+  q -->|"[yes]"| diversify["Fill distinct restaurant slots first<br/><i>repeat a restaurant only when necessary</i>"]
+  diversify --> s3["Show up to three face-down cards"]
+  s3 --> reveal["Reveal one card or เปิดทั้งหมด"]
+  reveal --> d{"Reject revealed card?"}
+  d -->|"[yes]"| s4["Exclude it and request one replacement"]
+  s4 --> replacement{"Replacement found?"}
+  replacement -->|"[yes]"| slot["Put replacement in same slot face-down"]
+  slot --> undo{"Undo rejection?"}
+  undo -->|"[yes] เลิกทำ"| restore["Restore original card, slot, reveal state, and rejected IDs"]
+  restore --> reveal
+  undo -->|"[no]"| reveal
+  replacement -->|"[no]"| emptySlot["Mark slot as no more choices"]
+  emptySlot --> reveal
+  d -->|"[no]"| pick{"Select revealed menu?"}
+  pick -->|"[no]"| reveal
+  pick -->|"[yes]"| conf["Show confirmation details"]
+  conf --> final{"เอาเมนูนี้แหละ?"}
+  final -->|"[no] ขอคิดอีกที"| reveal
+  final -->|"[yes]"| history["Write history only if logged in"]
+  history --> home["กลับหน้าหลัก clears flow state"]
+  home --> done(((" ")))
 ```
 
-Filled circle = initial node. Bullseye = final node. Diamonds are decisions; guards are in square brackets. The reject branch re-enters the qualifying check, which is what enforces non-repetition (F5, NFR9).
+Filled circle = initial node. Bullseye = final node. Diamonds are decisions; guards are in square brackets. Reject replacement sends rejected and displayed menu-item IDs to the stateless recommendation API, which is what enforces non-repetition (F5, NFR9).
 
-**Traces to:** F1, F2, F3, F4, F5, F6, F7; NFR3, NFR8, NFR9, NFR12; B1–B7; journey steps 1–5.
+**Traces to:** F1, F2, F3, F4, F5, F6, F7, F19; NFR3, NFR8, NFR9, NFR12; B1–B7, B24; journey steps 1–5.
 
 ---
 
@@ -158,7 +178,7 @@ Filled circle = initial node. Bullseye = final node. Diamonds are decisions; gua
 | F12 random from filtered | D2 |
 | F10, F11, F13, F16 | Not covered — deferred, see `feature-list.md` |
 | F9 | Not covered — Won't have in the first release; manual `Zone` selection is used instead |
-| F14, F15, F17 registered-user library | D3 covers the persistent data store and authentication seam; detailed account screens are outside D4's no-login core journey |
+| F14, F15, F17 registered-user library | D3 covers the persistent data store and authentication seam; detailed account screens are outside D4's anonymous-first core journey |
 | LR2, LR8 | D2, D3 |
 | LR1, LR3, LR7 | D3 (data stores and log hygiene) |
 | LR10, LR11, LR12, LR13, LR14, LR15, LR16 | D3, drawn conditional |

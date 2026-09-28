@@ -35,7 +35,7 @@ Approved — implementation baseline approved by the human project owner on 2026
 | F19 | As a meal seeker, I want a shortlist diversified across restaurants, so that one restaurant does not dominate the available choices. | When qualifying menu items from enough distinct restaurants exist, fill the shortlist with at most one menu item per restaurant before adding another item from a restaurant already represented. Mandatory filters and rejected-item exclusions always take precedence. | Must | Charter §5.2, P3, P8 |
 | F16 | As a meal seeker, I want promotions, delivery costs, and ratings when reliable data exists, so that I can compare total value. | Each field identifies its source and freshness; missing or stale values are not presented as current facts. Wait-time data is not part of Kinraidee. | Could | P5, P7 |
 
-`OA1` is an operational assumption that an authorized actor must maintain the recommendation dataset; it requires human confirmation because it was not established by the user survey.
+`OA1` is an approved operational assumption that an authorized actor must maintain the recommendation dataset; it was approved by the human project owner because it was not established by the user survey.
 
 ## Legal requirements incorporated from `rule.md`
 

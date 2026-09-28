@@ -1,59 +1,111 @@
-# Kinraidee Prototype
+# Kinraidee Visual Prototype Reference
 
 ## Status
 
-Draft — 2026-09-06. Pending human approval.
+Visual style approved — 2026-09-28. Product flow and feature behavior shown inside `wireframe.html` are exploratory and are not approved by this status.
 
-## Artifact
+## Artifact Role
 
-`wireframe.html` at the repository root — a single self-contained lo-fi HTML prototype. Open it directly in a browser; there is no build step and no server.
+`wireframe.html` at the repository root is the visual reference for the first React/Tailwind implementation.
 
-Automated checks: `node --test "tests/**/*.test.cjs"` runs `tests/wireframe-requirements.test.cjs`, which asserts the prototype's filter and session behaviour against the requirements.
+Use it to understand:
 
-Lo-fi is deliberate. The prototype tests the **flow**, not the polish.
+- Colour, typography, spacing, borders, radii, shadows, and doodle styling.
+- Mobile-first layout density and responsive composition.
+- The visual treatment of buttons, chips, step cards, result cards, dialogs, toasts, and imagery.
+- Accessibility patterns such as visible focus, focus return, live-region feedback, and reduced motion.
 
-## Screens
+Do not use it as a source of product requirements, API contracts, persistence rules, or approved user-flow steps. Those come from the specification, backlog, `user-journey.md`, data model, and implementation issues.
 
-| # | Screen | Anchor in `wireframe.html` | Journey steps | Realizes |
-|---|---|---|---|---|
-| 1 | **Home** — value statement and a single start action, no sign-in anywhere. | `#home` | 1 | F6, LR2 |
-| 2 | **Conditions** — four step cards revealed one at a time: budget → taste → food type → zone, with a progress track and a recap before submitting. | `#decision` | 2 | F1, NFR4 |
-| 3 | **Shortlist** — up to three result cards, each with price, zone, available decision details, and a one-line reason; per-card reject with an undo bar; shuffle; edit-conditions and new-session actions; an empty state that names the constraint to relax. | `#results` | 3, 4, 5 | F2, F3, F4, F5, F7, F12, NFR3, NFR8, NFR9 |
-| 4 | **Confirmation** — a focused dialog naming the chosen meal, restaurant, and price. | `#meal-overlay` | 5 | F7 |
+## Approved Visual Language
 
-## Behaviour the prototype demonstrates
+The approved visual direction is:
 
-- Budget, taste, food type, and zone are **mandatory filters**; every displayed result satisfies all of them (NFR8).
-- A round renders `pool.slice(0, 3)` — at most three choices, fewer when fewer records match (F2, NFR3).
-- Rejecting adds the item to a session-only `rejected` set, so it cannot reappear while another qualifying record exists (F4, F5, NFR9). Rejection is undoable.
-- "Start a new session" clears conditions and the rejected set (F7).
-- Shuffle draws only from the already-filtered pool — never from the whole catalog (F12).
-- No sign-in, no account, no personalization consent anywhere in the flow (F6, LR2). The conditions screen states that conditions and rejected choices stay only in the open page session.
-- Registered-user favorites, selected-menu history, and saved default settings are full-app supporting features; they are not part of this no-login prototype flow.
-- Every result card carries a rationale line; imagery is labelled as generated reference photography and is not presented as the restaurant's actual serving (F3).
-- Keyboard operability: `:focus-visible` rings on every control, focus is moved deliberately after a rejection, and state changes are announced in a live region (NFR12).
+- Bright paper canvas with dark ink outlines.
+- Friendly rounded body typography and decorative handwritten headings.
+- Slightly irregular corners and offset shadows that resemble a notebook sketch.
+- Food imagery framed as paper cards or mood-board material.
+- Clear selected states using warm accent fills and dark outlined shadows.
+- One strong primary action per screen.
+- Mobile-first tap targets and layouts that remain usable at narrow widths.
 
-## Dataset
+Exact tokens and component rules live in `docs/02-design/design-system.md`.
 
-45 synthetic menu items across five balanced food types (9 each), described in `assets/food/datasets/image-dataset.json`. Synthetic and non-personal — no real restaurant's personal data is committed.
+## Reusable Visual Patterns
 
-## Not yet covered by the prototype
-
-| Gap | Requirement | Reason |
+| Pattern | Wireframe reference | Intended implementation use |
 |---|---|---|
-| Authorized data administration screens | F8, LR8; B8 | Approved for the full-app build but not represented in this no-login prototype |
-| Registered user library screens | F14, F15, F17, F18; B19, B20, B22, B23 | Approved for the full-app build but outside this no-login prototype |
-| Session-only GPS location | F9, LR5 | Won't have in the first release; manual `Zone` selection is used instead |
-| Temporary food exclusions | F10, LR4; B12 | Sensitive-data assessment required first |
-| Non-repetitive alternative slot | F11; B13 | Ranking evidence not yet gathered |
-| Consent and agreement evidence records | LR14, LR15, LR16; B15 | Activation depends on whether consent or Terms are used |
-| Data-subject access, correction, deletion | LR6, LR9; B16 | No persistent personal data exists in the prototype |
-| Traffic-log retention | LR10, LR11, LR12, LR13; B17 | Section 26 applicability needs accountable confirmation |
-| Restaurant diversity in a shortlist | F19, B24, charter §5.2 | The existing prototype predates F19 and does not enforce it. Measured: 2 of 25 full shortlists return three items from one restaurant. The full app must fill distinct restaurant slots first when enough qualifying restaurants exist. |
-| Measured p95 response time | NFR1 | Requires the real API and the defined test environment, not a static page |
+| Header and brand | Main header / Kinraidee brand | Shared public navigation shell |
+| Hero mood board | `#home` | Landing-page visual treatment |
+| Step card | `#decision` panels | Condition-entry presentation after flow approval |
+| Choice chip/card | Budget, mood, and type controls | Selectable filter controls |
+| Doodle select | Area selector styling | Manual `Zone` selector; no current-location action |
+| Result card | `#results-grid` | Menu recommendation results |
+| Toast and undo | `#toast` | Rejection feedback and undo |
+| Confirmation dialog | `#meal-overlay` | Selected-menu confirmation without wait-time fields |
+| Empty state | `#empty-state` | No-match guidance |
 
-These are gaps by design, not oversights. They are listed so the W5 gate can see them.
+The React implementation may reorganize markup and component boundaries. It must preserve the approved visual language and accessibility behavior, not the prototype's DOM structure.
 
-## Design-system conformance
+Public header decision: anonymous public pages place `เข้าสู่ระบบ` at the top-right as a secondary/ghost action. It must not compete visually with the primary recommendation CTA. After authentication, the same position becomes the account/admin entry point.
 
-Every colour, radius, and size in the prototype resolves to a token in `design-system.md`. That file was written **from** this prototype; if either changes, both are corrected in the same change.
+Authenticated header decision: show `บัญชีของฉัน` for `USER` and `จัดการระบบ` for `ADMIN`. `จัดการระบบ` navigates to `/admin`; do not expose it to anonymous users or `USER` accounts. Authentication uses the shared `/login` page rather than a separate administrator login screen.
+
+Authentication navigation decision: use dedicated `/login` and `/register` pages, not modal forms. Preserve recommendation state in `sessionStorage` while navigating to authentication. Successful login returns to the safe internal page/step that initiated login; login started from Home returns Home.
+
+Budget visual options: show `ไม่เกิน ฿50`, `฿50–100`, `฿101–200`, and `มากกว่า ฿200` as quick-select chips/cards. No option is selected by default.
+
+Taste visual options: render admin-managed `Taste` records ordered by `sortOrder`, plus a special `อะไรก็ได้` option. `อะไรก็ได้` is a UI filter choice, not a persisted `Taste` row.
+
+Food-type visual options: render admin-managed `FoodType` records ordered by `sortOrder`, showing icons when available, plus a special `อะไรก็ได้` option. `อะไรก็ได้` is a UI filter choice, not a persisted `FoodType` row.
+
+Zone visual options: render admin-managed `Zone` records ordered by `sortOrder`, plus a special `ที่ไหนก็ได้` option. `ที่ไหนก็ได้` is a UI filter choice, not a persisted `Zone` row. Do not show GPS/current-location controls in the first release.
+
+Recommendation reveal pattern: use a shuffle-card metaphor. The condition summary primary CTA is `สับการ์ดเมนู`; loading copy is `กำลังสับการ์ดเมนู...`; the result view shows up to three face-down cards. Users can reveal cards one by one, use `เปิดทั้งหมด`, or select an already revealed menu without revealing the rest. Revealing is a UI presentation state only; the API returns the complete filtered shortlist before any card is revealed.
+
+Reject/undo pattern: rejecting a revealed card replaces that slot with one new face-down card and shows a `เลิกทำ` toast. Undo restores the original card in the same slot and reveal state, removes the replacement, and removes the original menu ID from the session rejected IDs.
+
+Confirmation pattern: selecting a revealed card opens a two-stage dialog with menu name, restaurant, price, zone, image, and recommendation rationale. Stage 1 actions are `เอาเมนูนี้แหละ` and `ขอคิดอีกที`. `เอาเมนูนี้แหละ` confirms the decision and moves to a success state; `ขอคิดอีกที` returns to the same revealed-card state. The success state has one action, `กลับหน้าหลัก`, which clears the current flow and returns Home. Only confirmation by a logged-in user writes selected-menu history; revealing or opening a card does not.
+
+No-match pattern: when no menu satisfies all selected conditions, suggest exactly one relaxation that is proven to produce at least one result. Relax in this order: zone to `ที่ไหนก็ได้`, budget up one range, taste to `อะไรก็ได้`, then food type to `อะไรก็ได้`. The panel has two actions only: `ใช้เงื่อนไขนี้แล้วสับใหม่` and `แก้เงื่อนไขเอง`. If no relaxation works, explain that the current catalog has no matching menu and show only `แก้เงื่อนไขเอง`; Home remains reachable through the header.
+
+## Mock Elements That Are Not Requirements
+
+The following elements currently appear in `wireframe.html` but must not be implemented merely because they are visible there:
+
+- Current-location/GPS actions or location-permission overlays.
+- Allergy/profile exclusions or sensitive preference capture.
+- Group voting controls and voting dialogs.
+- Wait-time fields.
+- Session-only favorites/history as a replacement for the approved registered-user persistence rules.
+- Any account, password, or admin behavior not present in the approved specification and plan.
+
+These elements may remain in the HTML as exploratory mock content until the reference artifact is cleaned up. They do not override Won't-have or deferred decisions.
+
+## Core Visual Screens
+
+The first public visual implementation is expected to need these screen categories, subject to the separately approved journey:
+
+1. Landing/home.
+2. Condition entry.
+3. Recommendation shortlist.
+4. Selected-menu confirmation.
+5. Empty/no-match state.
+
+Registered-user and admin screens use the same tokens and component language, but require their own implementation issues and screen specifications.
+
+## Conformance Rules
+
+- Implement with React and Tailwind; do not copy the HTML wholesale.
+- Translate design tokens into Tailwind theme values or shared CSS variables.
+- Do not hardcode raw colours, radii, or shadows in individual screens.
+- Do not copy prototype mock data or client-side business logic into production code.
+- Do not call the recommendation API per card reveal; reveal state is client-side presentation for the already returned shortlist.
+- If the implementation needs a visual value or component state missing from `design-system.md`, add and approve it there first.
+- When `wireframe.html` conflicts with requirements or the data model, requirements and the data model win.
+
+## Prototype Verification Boundary
+
+The existing `tests/wireframe-requirements.test.cjs` verifies the historical interactive prototype. It is not sufficient verification for the React application and may cover exploratory behavior that is outside the first-release scope.
+
+React implementation verification must be defined separately by QA and recorded in `docs/verification.md`.
