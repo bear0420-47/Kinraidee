@@ -6,3 +6,193 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum BudgetRange {
+  UNDER_50
+  BETWEEN_50_100
+  BETWEEN_101_200
+  OVER_200
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum AuditAction {
+  CREATE
+  UPDATE
+  DELETE
+}
+
+enum AuditEntityType {
+  ZONE
+  RESTAURANT
+  FOOD_TYPE
+  TASTE
+  MENU_ITEM
+}
+
+model Zone {
+  id              String           @id @default(cuid())
+  nameTh          String           @unique
+  nameEn          String           @unique
+  descriptionTh   String?
+  descriptionEn   String?
+  sortOrder       Int              @default(0)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  restaurants     Restaurant[]
+  userPreferences UserPreference[]
+}
+
+model Restaurant {
+  id            String     @id @default(cuid())
+  nameTh        String
+  nameEn        String
+  descriptionTh String?
+  descriptionEn String?
+  phone         String?
+  imageKey      String?
+  imageUrl      String?
+  zoneId        String
+  deletedAt     DateTime?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  zone          Zone       @relation(fields: [zoneId], references: [id], onDelete: Restrict)
+  menuItems     MenuItem[]
+
+  @@index([zoneId])
+}
+
+model FoodType {
+  id              String           @id @default(cuid())
+  nameTh          String           @unique
+  nameEn          String           @unique
+  icon            String?
+  sortOrder       Int              @default(0)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  menuItems       MenuItem[]
+  userPreferences UserPreference[]
+}
+
+model Taste {
+  id              String           @id @default(cuid())
+  nameTh          String           @unique
+  nameEn          String           @unique
+  icon            String?
+  sortOrder       Int              @default(0)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  menuItems       MenuItemTaste[]
+  userPreferences UserPreference[]
+}
+
+model MenuItem {
+  id                  String                  @id @default(cuid())
+  restaurantId        String
+  foodTypeId          String
+  nameTh              String
+  nameEn              String
+  descriptionTh       String?
+  descriptionEn       String?
+  price               Int
+  imageKey            String?
+  imageUrl            String?
+  deletedAt           DateTime?
+  createdAt           DateTime                @default(now())
+  updatedAt           DateTime                @updatedAt
+  restaurant          Restaurant              @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  foodType            FoodType                @relation(fields: [foodTypeId], references: [id], onDelete: Restrict)
+  tastes              MenuItemTaste[]
+  favoritedBy         FavoriteMenuItem[]
+  selectedInHistories RecommendationHistory[]
+
+  @@index([restaurantId])
+  @@index([foodTypeId])
+  @@index([price])
+}
+
+model MenuItemTaste {
+  menuItemId String
+  tasteId    String
+  menuItem   MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+  taste      Taste    @relation(fields: [tasteId], references: [id], onDelete: Restrict)
+
+  @@id([menuItemId, tasteId])
+  @@index([tasteId])
+}
+
+model User {
+  id                      String                  @id @default(cuid())
+  email                   String                  @unique
+  password                String
+  role                    UserRole                @default(USER)
+  createdAt               DateTime                @default(now())
+  updatedAt               DateTime                @updatedAt
+  auditLogs               AuditLog[]
+  favoriteMenuItems       FavoriteMenuItem[]
+  preference              UserPreference?
+  recommendationHistories RecommendationHistory[]
+}
+
+model FavoriteMenuItem {
+  userId     String
+  menuItemId String
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  menuItem   MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+
+  @@id([userId, menuItemId])
+  @@index([menuItemId])
+}
+
+model UserPreference {
+  id         String       @id @default(cuid())
+  userId     String       @unique
+  zoneId     String?
+  foodTypeId String?
+  tasteId    String?
+  budget     BudgetRange?
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  zone       Zone?        @relation(fields: [zoneId], references: [id], onDelete: SetNull)
+  foodType   FoodType?    @relation(fields: [foodTypeId], references: [id], onDelete: SetNull)
+  taste      Taste?       @relation(fields: [tasteId], references: [id], onDelete: SetNull)
+
+  @@index([zoneId])
+  @@index([foodTypeId])
+  @@index([tasteId])
+}
+
+model RecommendationHistory {
+  id         String   @id @default(cuid())
+  userId     String
+  menuItemId String
+  selectedAt DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  menuItem   MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+
+  @@index([userId, selectedAt])
+  @@index([menuItemId])
+}
+
+model AuditLog {
+  id         String          @id @default(cuid())
+  actorId    String?
+  action     AuditAction
+  entityType AuditEntityType
+  entityId   String
+  before     Json?
+  after      Json?
+  requestId  String
+  createdAt  DateTime        @default(now())
+  actor      User?           @relation(fields: [actorId], references: [id], onDelete: SetNull)
+
+  @@index([actorId])
+  @@index([entityType, entityId])
+  @@index([requestId])
+  @@index([createdAt])
+}

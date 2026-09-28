@@ -10,6 +10,7 @@
     "lint": "eslint .",
     "format": "prettier --check .",
     "typecheck": "tsc -p tsconfig.json --noEmit --pretty false",
+    "prisma": "prisma",
     "openapi:generate": "node --import tsx src/openapi/generateOpenapi.ts"
   },
   "dependencies": {
