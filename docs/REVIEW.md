@@ -30,3 +30,32 @@ Issue #27 review complete on 2026-09-29. Human pull-request approval remains pen
 Human reviewer: Pending pull-request review
 Decision: Pending
 Date: TBD
+
+## Issue #28 — Prisma schema and first migration
+
+### Status
+
+Automated two-axis review complete on 2026-09-29. Human pull-request approval remains pending.
+
+### Standards review
+
+No findings. The schema, generated migration, package script, and verification evidence follow `AGENTS.md`, `rule.md`, the engineering guidelines, the locked data model, and the module implementation checklist. No applicable baseline code smells were found.
+
+### Specification review
+
+No findings. The schema and migration implement the enums, models, relations, delete actions, indexes, constraints, and scope required by issue #28. `src/api/src/lib/prisma.ts` already exists unchanged from `main`, so it is present in the resulting branch without appearing in this issue's diff.
+
+### Review scope
+
+- Diff: `git diff main...HEAD`
+- Commit: `c07cef3 feat(api): add Prisma schema and initial migration (#28)`
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/03-implementation/engineering-guidelines.md`, `docs/03-implementation/data-model.md`, and `docs/03-implementation/module-implementation-checklist.md`
+- Specification source: GitHub issue #28
+- Personal-data schema, deletion behavior, audit snapshots, credentials, and forbidden fields
+- Migration parity with the approved Prisma schema
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD
