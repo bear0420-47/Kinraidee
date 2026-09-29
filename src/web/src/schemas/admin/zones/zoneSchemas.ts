@@ -1,8 +1,11 @@
 import { z } from 'zod'
 
 import type { components } from '@/api/openapiTypes'
-
-type Localization = components['schemas']['Localization']
+import {
+  isSameLocalization,
+  localizedNameFields,
+  sortOrderField,
+} from '@/schemas/shared/masterDataFields'
 
 export type Zone =
   components['schemas']['ZoneListEnvelope']['data']['items'][number]
@@ -12,20 +15,13 @@ export type UpdateZoneBody = components['schemas']['UpdateZoneRequest']
 const DESCRIPTION_PAIR_MESSAGE =
   'กรุณากรอกคำอธิบายทั้งภาษาไทยและภาษาอังกฤษ หรือเว้นว่างทั้งสองช่อง'
 
-// Mirrors the API rules: both names required, description is all-or-nothing, int32 sortOrder.
+// Description is all-or-nothing, matching the API's localized description.
 export const zoneFormSchema = z
   .object({
-    nameTh: z.string().trim().min(1, 'กรุณากรอกชื่อภาษาไทย'),
-    nameEn: z.string().trim().min(1, 'กรุณากรอกชื่อภาษาอังกฤษ'),
+    ...localizedNameFields,
     descriptionTh: z.string().trim(),
     descriptionEn: z.string().trim(),
-    sortOrder: z
-      .string()
-      .trim()
-      .min(1, 'กรุณากรอกลำดับการแสดงผล')
-      .regex(/^-?\d+$/, 'ลำดับการแสดงผลต้องเป็นจำนวนเต็ม')
-      .transform(Number)
-      .pipe(z.int32('ลำดับการแสดงผลต้องอยู่ในช่วงที่ระบบรองรับ')),
+    sortOrder: sortOrderField,
   })
   .superRefine(({ descriptionTh, descriptionEn }, context) => {
     if (Boolean(descriptionTh) === Boolean(descriptionEn)) return
@@ -53,10 +49,6 @@ export function toZoneFormValues(zone?: Zone): ZoneFormInput {
     descriptionEn: zone?.description?.en ?? '',
     sortOrder: zone ? String(zone.sortOrder) : '',
   }
-}
-
-function isSameLocalization(a: Localization | null, b: Localization | null) {
-  return a?.th === b?.th && a?.en === b?.en
 }
 
 // PATCH only what the admin changed; null means there is nothing to send.

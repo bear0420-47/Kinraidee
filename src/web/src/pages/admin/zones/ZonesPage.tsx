@@ -1,10 +1,8 @@
-import { ArrowLeft, Plus } from '@phosphor-icons/react'
 import { useRef, useState } from 'react'
-import { Link } from 'react-router'
 
-import { Button } from '@/components/Button'
 import { Dialog } from '@/components/Dialog'
-import { PageShell } from '@/components/PageShell'
+import { MasterDataPageShell } from '@/components/MasterDataPageShell'
+import { QueryListState } from '@/components/QueryListState'
 import {
   useCreateZone,
   useDeleteZone,
@@ -67,53 +65,28 @@ export function ZonesPage() {
   const closeDialog = () => setDialog(null)
 
   return (
-    <PageShell title="จัดการโซน" width="wide">
-      <Link
-        to="/admin"
-        className="inline-flex items-center gap-2 self-start rounded-xs font-bold underline"
+    <MasterDataPageShell
+      title="จัดการโซน"
+      note="ตัวเลือก “ที่ไหนก็ได้” เป็นตัวเลือกพิเศษในหน้าสุ่มเมนู ไม่ต้องสร้างเป็นโซน"
+      createLabel="เพิ่มโซน"
+      onCreate={() => openDialog({ mode: 'create' })}
+      createButtonRef={createButtonRef}
+      notice={notice}
+    >
+      <QueryListState
+        query={zones}
+        loadingMessage="กำลังโหลดโซน…"
+        errorMessage="โหลดรายการโซนไม่สำเร็จ กรุณาลองใหม่อีกครั้ง"
+        emptyMessage="ยังไม่มีโซน"
       >
-        <ArrowLeft aria-hidden weight="bold" />
-        กลับไปหน้าจัดการระบบ
-      </Link>
-      <p className="rounded-sm border-2 border-dashed border-line-soft bg-cream p-3 text-small">
-        ตัวเลือก “ที่ไหนก็ได้” เป็นตัวเลือกพิเศษในหน้าสุ่มเมนู
-        ไม่ต้องสร้างเป็นโซน
-      </p>
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p role="status" className="font-bold">
-          {notice}
-        </p>
-        <Button
-          ref={createButtonRef}
-          onClick={() => openDialog({ mode: 'create' })}
-        >
-          <Plus aria-hidden weight="bold" />
-          เพิ่มโซน
-        </Button>
-      </div>
-
-      {zones.isPending ? (
-        <p role="status">กำลังโหลดโซน…</p>
-      ) : zones.isError ? (
-        <div role="alert" className="flex flex-col items-start gap-3">
-          <p className="font-bold text-rust">
-            โหลดรายการโซนไม่สำเร็จ กรุณาลองใหม่อีกครั้ง
-          </p>
-          <Button variant="secondary" onClick={() => void zones.refetch()}>
-            ลองใหม่
-          </Button>
-        </div>
-      ) : zones.data.length === 0 ? (
-        <p className="rounded-sm border-2 border-line-soft p-6 text-center font-bold text-muted">
-          ยังไม่มีโซน
-        </p>
-      ) : (
-        <ZoneTable
-          zones={zones.data}
-          onEdit={(zone) => openDialog({ mode: 'edit', zone })}
-          onDelete={(zone) => openDialog({ mode: 'delete', zone })}
-        />
-      )}
+        {(items) => (
+          <ZoneTable
+            zones={items}
+            onEdit={(zone) => openDialog({ mode: 'edit', zone })}
+            onDelete={(zone) => openDialog({ mode: 'delete', zone })}
+          />
+        )}
+      </QueryListState>
 
       {dialog?.mode === 'create' ? (
         <Dialog title="เพิ่มโซน" onClose={closeDialog}>
@@ -142,6 +115,6 @@ export function ZonesPage() {
           fallbackFocusRef={createButtonRef}
         />
       ) : null}
-    </PageShell>
+    </MasterDataPageShell>
   )
 }

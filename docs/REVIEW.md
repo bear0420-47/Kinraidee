@@ -317,3 +317,36 @@ No blocking findings. All #34 fields, copy, behaviors, accessibility items, and 
 Human reviewer: Pending pull-request review
 Decision: Pending
 Date: TBD
+
+## Issue #36 — FoodType management screen
+
+### Status
+
+Automated two-axis review complete on 2026-09-30. Human pull-request approval remains pending.
+
+### Standards review
+
+No documented-standard violations remain. Icons come only from `@phosphor-icons/react`, imported by name, and a test enforces no handwritten SVG and no namespace import. Stored icon keys resolve through a controlled registry with a fallback, never by dynamic import, and every icon sits next to a text label. Shared components moved to root `components/`, and shared schema fields to `schemas/shared/`, only now that the zones and food-types pages both use them, as `engineering-guidelines.md` requires. Judgement calls accepted:
+- `lib/foodTypeIcons.tsx` exports both the registry and a `FoodTypeIcon` component, so later recommendation screens reuse the same map.
+- The icon select is a native `<select>` with a decorative preview icon, not a custom listbox, so keyboard behavior is the browser's own.
+
+### Specification review
+
+No blocking findings. All #36 fields, copy, icon rules, behaviors, accessibility items, and required tests are implemented. Manual browser checks ran against the real API; `FOOD_TYPE_IN_USE` was triggered with a menu item inserted directly in the verify database, because the MenuItem API does not exist yet. Notes:
+- `sandwich` uses Phosphor's `Hamburger`, the closest available icon (recorded in `docs/plan.md`).
+- A stored key outside the registry is shown as the fallback with its raw key and is left unchanged when other fields are edited, so opening and saving a record never erases data silently.
+- Option labels include the key, for example `ข้าว (rice)`, so admins can match what the API stores.
+
+### Review scope
+
+- Diff: `git diff feat/34-zone-admin...feat/36-food-type-admin`
+- Commit: `feat(web): add food type management screen (#36)`
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/02-design/design-system.md`, `docs/03-implementation/engineering-guidelines.md`, and `docs/03-implementation/module-implementation-checklist.md`
+- Specification source: GitHub issue #36
+- Icon registry safety, SVG and namespace-import policy, admin-only access versus server-side authorization, shared-component extraction, and out-of-scope boundaries
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD

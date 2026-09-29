@@ -397,3 +397,40 @@ Run against the real API and database at desktop and 375px widths:
 - The guard is UX only; every mutation is still authorized by the API's `requireAdmin`.
 - Endpoint strings exist only in `hooks/admin/zones/useZones.ts`; components never call the API client.
 - No bulk reorder, `ที่ไหนก็ได้` record, GPS/coordinate field, restaurant reassignment UI, or API change was added. Zone data contains no personal data.
+
+## Issue #36 — FoodType management screen
+
+### Scope
+
+- Verification date: 2026-09-30 (ICT, `UTC+07:00`)
+- Environment and database: same as issue #34 (`kinraidee_verify`, removed after verification). A test menu item was inserted directly in that database to check `FOOD_TYPE_IN_USE`, because MenuItem CRUD (#42) does not exist yet
+- Route: `/admin/food-types` under the `/admin/*` guard from #32, using `GET`, `POST`, `PATCH`, and `DELETE` on `/api/food-types` through the typed client
+- Icons: `src/web/src/lib/foodTypeIcons.tsx` registry on the shared `lib/iconRegistry.ts` (key mapping recorded in `docs/plan.md`)
+- Shared refactor: the zones page now uses the extracted shared components, schema fields, and test helpers; its behavior and tests are unchanged
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm --filter web test` | 0 | Pass: 12 files/122 tests (37 new). Schema tests cover trimming, the empty icon choice becoming `null`, rejection of keys outside the registry (including SVG markup), the shared name and `sortOrder` rules, pre-fill of known, null, and unknown icon keys, and changed-field detection that leaves an untouched unknown key alone. Icon tests check the exact registry keys, the Phosphor component for each key, and the `ForkKnife` fallback for null, unknown, prototype-property, and SVG keys. A source scan finds no handwritten `<svg>`, `<path>`, `<symbol>`, or `<use>` markup and no namespace import from Phosphor in application code. Page tests cover the ADMIN list with icon labels, the fallback icon and label for null and unknown keys, the `อะไรก็ได้` note absent from the table, the empty state, no description field, a select offering only the registry keys with text labels and the helper connected by `aria-describedby`, create validation and focus, creating without an icon as `null` and with a chosen key, duplicate-name errors, edit pre-fill sending only the changed icon, an unknown key kept on edit, delete confirmation with list refresh and focus fallback, `FOOD_TYPE_IN_USE` with the approved message, and Tab/Escape behavior. |
+| Deliberate regression checks | — | Replacing the registry's own-key check with `in`, and comparing the edited icon with the raw stored key, failed 3 tests; both were restored. |
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests (API 34 files/274 tests; web 12 files/122 tests), API build with OpenAPI generation, and web production build. |
+| `prettier --check --end-of-line auto .` in `src/api` and `src/web` | 0 | Pass. |
+| `git diff --check` | 0 | Pass. |
+
+### Manual browser checks
+
+Run against the real API and database at desktop and 375px widths:
+
+- Keyboard-only create: Tab reaches the icon select, ArrowDown changes it, and the preview icon beside the select updates. Saving shows `เส้น` with the steaming-bowl icon in the table.
+- Creating without an icon stores `icon: null` (confirmed through `GET /api/food-types`), and the table shows `ไอคอนเริ่มต้น` with the fork-and-knife icon.
+- Deleting a food type used by a menu item shows the approved `FOOD_TYPE_IN_USE` message inside the dialog and moves focus to it.
+- A key set directly in the database outside the registry (`dumpling`) shows as `ไอคอนเริ่มต้น (ไม่รู้จัก dumpling)`. Editing only `sortOrder` saves `sortOrder: 5`, and the stored `icon` stays `dumpling`.
+- Deleting an unused food type removes the row, announces the result, and moves focus to `เพิ่มประเภทอาหาร`.
+- At 375px the page does not scroll horizontally.
+- After the shared refactor, `/admin/zones` still loads and lists zones.
+
+### Security and scope checks
+
+- Database icon values resolve only through the fixed registry map, and unknown values fall back. No component is imported dynamically from a stored string.
+- Endpoint strings exist only in `hooks/admin/food-types/useFoodTypes.ts`. There is no description field, bulk reorder, `อะไรก็ได้` record, MenuItem reassignment UI, icon asset picker, or API change.

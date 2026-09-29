@@ -1,6 +1,8 @@
+import type { UseFormSetError } from 'react-hook-form'
+
 import { ApiError } from '@/api/apiError'
 
-export type NameField = 'nameTh' | 'nameEn'
+type NameField = 'nameTh' | 'nameEn'
 
 const NAME_FIELDS: Record<string, NameField> = {
   'name.th': 'nameTh',
@@ -15,4 +17,19 @@ export function getDuplicateNameFields(error: unknown): NameField[] | null {
     (field) => NAME_FIELDS[field] ?? [],
   )
   return fields.length > 0 ? fields : ['nameTh', 'nameEn']
+}
+
+// Marks the duplicated name fields and focuses the first; returns false for other errors.
+export function showDuplicateNameErrors(
+  error: unknown,
+  setError: UseFormSetError<Record<NameField, string>>,
+  message: string,
+) {
+  const fields = getDuplicateNameFields(error)
+  if (!fields) return false
+
+  fields.forEach((field, index) =>
+    setError(field, { message }, { shouldFocus: index === 0 }),
+  )
+  return true
 }

@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { Button } from '@/components/Button'
 import { FormAlert } from '@/components/FormAlert'
 import { TextField } from '@/components/TextField'
-import { getDuplicateNameFields } from '@/lib/duplicateNameFields'
+import { showDuplicateNameErrors } from '@/lib/duplicateNameFields'
 import { zodFormResolver } from '@/lib/zodFormResolver'
 import {
   toZoneFormValues,
@@ -43,18 +43,12 @@ export function ZoneForm({
     try {
       await onSubmit(body)
     } catch (error) {
-      const duplicateFields = getDuplicateNameFields(error)
-      if (!duplicateFields) {
-        setSubmitFailed(true)
-        return
-      }
-      duplicateFields.forEach((field, index) =>
-        setError(
-          field,
-          { message: 'มีโซนอื่นใช้ชื่อนี้แล้ว กรุณาใช้ชื่ออื่น' },
-          { shouldFocus: index === 0 },
-        ),
+      const isDuplicate = showDuplicateNameErrors(
+        error,
+        setError,
+        'มีโซนอื่นใช้ชื่อนี้แล้ว กรุณาใช้ชื่ออื่น',
       )
+      setSubmitFailed(!isDuplicate)
     }
   })
 

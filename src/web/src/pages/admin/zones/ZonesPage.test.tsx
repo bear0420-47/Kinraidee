@@ -2,13 +2,9 @@ import { screen, waitFor, within } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
 import type { Zone } from '@/schemas/admin/zones/zoneSchemas'
-import {
-  errorResponse,
-  fakeAuthApi,
-  jsonResponse,
-  renderApp,
-  testAdmin,
-} from '@/test/renderApp'
+import { fakeCollectionApi } from '@/test/fakeCollectionApi'
+import { dialog, errorFor } from '@/test/formQueries'
+import { errorResponse, jsonResponse, renderApp } from '@/test/renderApp'
 
 const frontGate: Zone = {
   id: 'zone_1',
@@ -24,63 +20,26 @@ const backGate: Zone = {
   sortOrder: 2,
 }
 
-type ZoneBody = {
-  name: Zone['name']
-  description?: Zone['description']
-  sortOrder: number
-}
-
-// Stateful zone API on top of the auth fake; overrides replace individual routes.
 function fakeZonesApi(
-  initialZones: Zone[] = [frontGate, backGate],
+  items: Zone[] = [frontGate, backGate],
   overrides: Record<string, (body: unknown) => Response> = {},
 ) {
-  let zones = [...initialZones]
-
-  return fakeAuthApi({
-    currentUser: testAdmin,
-    responses: {
-      'GET /api/zones': () => jsonResponse(200, { data: { items: zones } }),
-      'POST /api/zones': (body) => {
-        const { description = null, ...fields } = body as ZoneBody
-        const zone = { id: 'zone_new', description, ...fields }
-        zones = [...zones, zone]
-        return jsonResponse(201, { data: { zone } })
-      },
-      [`PATCH /api/zones/${frontGate.id}`]: (body) => {
-        const zone = { ...frontGate, ...(body as Partial<ZoneBody>) }
-        zones = zones.map((item) => (item.id === zone.id ? zone : item))
-        return jsonResponse(200, { data: { zone } })
-      },
-      [`DELETE /api/zones/${frontGate.id}`]: () => {
-        zones = zones.filter((item) => item.id !== frontGate.id)
-        return new Response(null, { status: 204 })
-      },
-      ...overrides,
+  return fakeCollectionApi({
+    path: '/api/zones',
+    itemKey: 'zone',
+    items,
+    create: (body) => {
+      const { description = null, ...fields } = body as Omit<Zone, 'id'>
+      return { id: 'zone_new', description, ...fields }
     },
+    overrides,
   })
-}
-
-function zoneRequests(api: ReturnType<typeof fakeZonesApi>, method: string) {
-  return api.requests.filter(
-    (request) =>
-      request.method === method && request.path.startsWith('/api/zones'),
-  )
 }
 
 async function openZonesPage() {
   const app = renderApp('/admin/zones')
   await screen.findByRole('table', { name: 'รายการโซน' })
   return app
-}
-
-function dialog() {
-  return within(screen.getByRole('dialog'))
-}
-
-function errorFor(field: HTMLElement) {
-  return document.getElementById(field.getAttribute('aria-describedby') ?? '')
-    ?.textContent
 }
 
 describe('ZonesPage list', () => {
@@ -125,7 +84,7 @@ describe('ZonesPage list', () => {
     await user.click(await screen.findByRole('button', { name: 'ลองใหม่' }))
 
     expect(await screen.findByRole('table')).toBeTruthy()
-    expect(zoneRequests(api, 'GET')).toHaveLength(2)
+    expect(api.requestsFor('GET')).toHaveLength(2)
   })
 
   it('has no GPS or coordinate fields', async () => {
@@ -167,7 +126,7 @@ describe('ZonesPage create', () => {
     expect(errorFor(dialog().getByLabelText('ลำดับการแสดงผล'))).toBe(
       'ลำดับการแสดงผลต้องเป็นจำนวนเต็ม',
     )
-    expect(zoneRequests(api, 'POST')).toEqual([])
+    expect(api.requestsFor('POST')).toEqual([])
   })
 
   it('creates a zone with trimmed values and refreshes the list', async () => {
@@ -185,7 +144,7 @@ describe('ZonesPage create', () => {
     ).toBeTruthy()
     expect(screen.queryByRole('dialog')).toBeNull()
     expect(screen.getByText('เพิ่มโซน โรงอาหาร แล้ว')).toBeTruthy()
-    expect(zoneRequests(api, 'POST')).toEqual([
+    expect(api.requestsFor('POST')).toEqual([
       {
         method: 'POST',
         path: '/api/zones',
@@ -197,7 +156,7 @@ describe('ZonesPage create', () => {
         },
       },
     ])
-    expect(zoneRequests(api, 'GET')).toHaveLength(2)
+    expect(api.requestsFor('GET')).toHaveLength(2)
   })
 
   it('marks both name fields when the API reports a duplicate name', async () => {
@@ -262,7 +221,7 @@ describe('ZonesPage edit', () => {
     await user.click(dialog().getByRole('button', { name: 'บันทึกการแก้ไข' }))
 
     await screen.findByText('บันทึกการแก้ไขโซน หน้ามอ แล้ว')
-    expect(zoneRequests(api, 'PATCH').map((request) => request.body)).toEqual([
+    expect(api.requestsFor('PATCH').map((request) => request.body)).toEqual([
       { sortOrder: 5 },
     ])
     const row = screen.getByRole('rowheader', { name: 'หน้ามอ' }).closest('tr')
@@ -278,7 +237,7 @@ describe('ZonesPage edit', () => {
 
     expect(await screen.findByText('ไม่มีข้อมูลที่เปลี่ยนแปลง')).toBeTruthy()
     expect(screen.queryByRole('dialog')).toBeNull()
-    expect(zoneRequests(api, 'PATCH')).toEqual([])
+    expect(api.requestsFor('PATCH')).toEqual([])
   })
 })
 
@@ -289,13 +248,13 @@ describe('ZonesPage delete', () => {
 
     await user.click(screen.getByRole('button', { name: 'ลบโซน หน้ามอ' }))
     expect(dialog().getByRole('heading', { name: 'ลบโซนนี้?' })).toBeTruthy()
-    expect(zoneRequests(api, 'DELETE')).toEqual([])
+    expect(api.requestsFor('DELETE')).toEqual([])
 
     await user.click(dialog().getByRole('button', { name: 'ลบโซน' }))
 
     await screen.findByText('ลบโซน หน้ามอ แล้ว')
     expect(screen.queryByRole('rowheader', { name: 'หน้ามอ' })).toBeNull()
-    expect(zoneRequests(api, 'DELETE').map((request) => request.path)).toEqual([
+    expect(api.requestsFor('DELETE').map((request) => request.path)).toEqual([
       '/api/zones/zone_1',
     ])
     // The deleted row's button is gone, so focus falls back to the create button.
@@ -314,7 +273,7 @@ describe('ZonesPage delete', () => {
 
     expect(screen.queryByRole('dialog')).toBeNull()
     expect(document.activeElement).toBe(deleteButton)
-    expect(zoneRequests(api, 'DELETE')).toEqual([])
+    expect(api.requestsFor('DELETE')).toEqual([])
   })
 
   it('shows the approved message when the zone is still used by restaurants', async () => {

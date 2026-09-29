@@ -19,7 +19,7 @@ export const testAdmin: CurrentUser = {
   role: 'ADMIN',
 }
 
-type RecordedRequest = {
+export type RecordedRequest = {
   method: string
   path: string
   credentials: RequestCredentials
