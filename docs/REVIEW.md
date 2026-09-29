@@ -199,3 +199,31 @@ No findings. Routes, public/admin response shapes, sorting, validation, 404/409 
 Human reviewer: Pending pull-request review
 Decision: Pending
 Date: TBD
+
+## Issue #35 — FoodType CRUD endpoints
+
+### Status
+
+Automated two-axis review complete on 2026-09-29. Human pull-request approval remains pending.
+
+### Standards review
+
+No documented-standard violations remain. The `food-types` module mirrors the zones layering and reuses the shared validation, localization, audit, role, and Prisma-error helpers. Two new shared files have real reuse: `shared/iconKey.ts` (food types and tastes) and `shared/duplicateNameError.ts` (zones, food types, and tastes); zones moved onto the shared duplicate-name error with unchanged behavior, confirmed by its existing tests. The same repository-mapper and shared-auth-import judgement calls recorded for #33 apply.
+
+### Specification review
+
+No findings. Routes, public/admin shapes, sorting, validation, 404/409 behavior, hard delete blocked while menu items reference the food type, `UserPreference.foodTypeId` set-null, transactional audit snapshots, and all required tests are implemented and were verified against a real database. The icon is stored only as a validated lowercase key; empty input normalizes to `null` as the issue requires, and SVG, HTML, URL, and other non-key input returns 400. As with zones, the in-use count includes soft-deleted menu items because they still reference the food type; the admin screen (#36) should explain this. The duplicate-name code is `FOOD_TYPE_NAME_ALREADY_EXISTS`.
+
+### Review scope
+
+- Diff: `git diff feat/33-zone-crud...feat/35-food-type-crud`
+- Commit: `feat(api): implement FoodType CRUD endpoints (#35)`
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/03-implementation/engineering-guidelines.md`, `docs/03-implementation/data-model.md`, and `docs/03-implementation/module-implementation-checklist.md`
+- Specification source: GitHub issue #35
+- Server-side authorization, input and icon-key validation, audit transaction and snapshot content, delete restrictions, error envelopes, OpenAPI, and out-of-scope boundaries
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD
