@@ -227,3 +227,31 @@ No findings. Routes, public/admin shapes, sorting, validation, 404/409 behavior,
 Human reviewer: Pending pull-request review
 Decision: Pending
 Date: TBD
+
+## Issue #37 — Taste CRUD endpoints
+
+### Status
+
+Automated two-axis review complete on 2026-09-29. Human pull-request approval remains pending.
+
+### Standards review
+
+No documented-standard violations remain. The `tastes` module has the same structure as `food-types` (the two models share a shape) and reuses the same shared helpers; only the in-use query (`MenuItemTaste` links), error codes, and messages differ. The same repository-mapper and shared-auth-import judgement calls recorded for #33 apply.
+
+### Specification review
+
+One accepted deviation. Issue #37 says the API rejects empty icon keys; the human approver chose #35's rule for both modules, so an empty or whitespace-only key normalizes to `null` (recorded in `docs/plan.md`). Every other requirement is implemented and was verified against a real database: routes, public/admin shapes, sorting, validation including SVG/HTML/URL icon rejection, 404/409 behavior, hard delete blocked while any `MenuItemTaste` link exists with the approved "remove or change this taste" message, links never removed automatically, `UserPreference.tasteId` set-null, transactional audit snapshots, and all required tests. The duplicate-name code is `TASTE_NAME_ALREADY_EXISTS`.
+
+### Review scope
+
+- Diff: `git diff feat/35-food-type-crud...feat/37-taste-crud`
+- Commit: `feat(api): implement Taste CRUD endpoints (#37)`
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/03-implementation/engineering-guidelines.md`, `docs/03-implementation/data-model.md`, and `docs/03-implementation/module-implementation-checklist.md`
+- Specification source: GitHub issue #37
+- Server-side authorization, input and icon-key validation, audit transaction and snapshot content, delete restrictions including join-table links, error envelopes, OpenAPI, and out-of-scope boundaries
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD
