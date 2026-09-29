@@ -295,3 +295,32 @@ Run against the real API and database at 375px and desktop widths:
 - FoodType stays a hard-delete model without `description`, `isActive`, `retiredAt`, or `deletedAt`; menu items are never reassigned automatically; `อะไรก็ได้` is not stored.
 - `icon` stores only a validated key; no icon assets or components were added to the API.
 - Duplicate-name errors use code `FOOD_TYPE_NAME_ALREADY_EXISTS`.
+
+## Issue #37 — Taste CRUD endpoints
+
+### Scope
+
+- Verification date: 2026-09-29 (ICT, `UTC+07:00`)
+- Environment and database: same as issue #33 (`kinraidee_verify`, removed after verification)
+- Routes: `GET /api/tastes` (public), `POST /api/tastes`, `PATCH /api/tastes/:id`, `DELETE /api/tastes/:id` (`ADMIN`)
+- Icon rule: shared with #35; an empty icon key normalizes to `null` instead of being rejected (approved deviation recorded in `docs/plan.md`)
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm --filter api test` | 0 | Pass: 29 files/222 tests (39 new; re-run after rebasing onto issue #40). Covers taste DTO trimming, empty/missing names, SVG/HTML/URL icon rejection, empty icon to `null`, `sortOrder` boundaries, unknown fields, empty update, and empty id; service ordering, timestamp-free public list, duplicate 409, unknown 404, unchanged update skipping the write, clearing the icon, delete blocked by `MenuItemTaste` links, raced delete (P2003 → `TASTE_IN_USE`), and audit context; HTTP routes for public list, anonymous 401 and `USER` 403 without reaching the service, and `ADMIN` create/update/delete; OpenAPI paths and security. |
+| `NODE_ENV=test DATABASE_URL=<verify-db> … pnpm exec tsx .tmp-issue37-integration.mts` | 0 | Pass: temporary script drove the real app and Prisma repository. Verified ordering by `sortOrder` then Thai name; empty icon stored as SQL `NULL`; `CREATE`/`UPDATE`/`DELETE` audit snapshots equal to the API responses; SVG, HTML, and URL icons return 400 on `icon`; duplicate English name 409 with no audit row; deleting a taste linked through `MenuItemTaste` returns 409 `TASTE_IN_USE` with the approved message and leaves the taste, both links, and the audit log unchanged; a successful delete returns 204 and sets `UserPreference.tasteId` to `null`; anonymous 401 and `USER` 403 on every mutation; `/api/zones`, `/api/food-types`, and `/api/tastes` all respond through `createApp()`. The script was removed after the run. |
+| Deliberate regression checks | — | Removing the admin guard from `DELETE /api/tastes/:id` and removing the in-use check each failed the suite (3 failures), then both were restored. |
+| `pnpm verify` | 0 | Pass: API 29 files/222 tests; web 6 files/55 tests; OpenAPI generation and web build completed with `/api/tastes` and `/api/tastes/{id}`. |
+| `pnpm --filter web openapi:generate` | 0 | Pass. |
+| `prettier --check --end-of-line auto .` in `src/api` and `src/web` | 0 | Pass. |
+| `git diff --check` | 0 | Pass. |
+| `node tests/wireframe-requirements.test.cjs` | 1 | Existing design-prototype gap outside issue #37: 19 passed and 5 failed. |
+
+### Security and scope checks
+
+- Mutations require `ADMIN` server-side; one resource path `/api/tastes`.
+- Taste stays a hard-delete model; `MenuItemTaste` links are never removed automatically; `อะไรก็ได้` is not stored.
+- The API stores only validated icon keys and has no knowledge of React or Phosphor components.
+- Duplicate-name errors use code `TASTE_NAME_ALREADY_EXISTS`.
