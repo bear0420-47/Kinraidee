@@ -29,19 +29,23 @@ type RecordedRequest = {
 type FakeApiOptions = {
   currentUser?: CurrentUser | null
   loginAs?: CurrentUser
-  responses?: Record<string, () => Response>
+  responses?: Record<string, (body: unknown) => Response>
 }
 
-function json(status: number, body: unknown) {
+export function jsonResponse(status: number, body: unknown) {
   return new Response(JSON.stringify(body), {
     status,
     headers: { 'Content-Type': 'application/json' },
   })
 }
 
-export function errorResponse(status: number, code: string) {
-  return json(status, {
-    error: { code, message: 'Request failed.', requestId: 'req_test' },
+export function errorResponse(
+  status: number,
+  code: string,
+  fields?: Record<string, string>,
+) {
+  return jsonResponse(status, {
+    error: { code, message: 'Request failed.', requestId: 'req_test', fields },
   })
 }
 
@@ -58,29 +62,30 @@ export function fakeAuthApi({
     const request = input as Request
     const path = new URL(request.url).pathname
     const text = await request.text()
+    const body: unknown = text ? JSON.parse(text) : undefined
     requests.push({
       method: request.method,
       path,
       credentials: request.credentials,
-      body: text ? JSON.parse(text) : undefined,
+      body,
     })
 
     const key = `${request.method} ${path}`
     const override = responses[key]
-    if (override) return override()
+    if (override) return override(body)
 
     switch (key) {
       case 'GET /api/auth/me':
         return sessionUser
-          ? json(200, { data: { user: sessionUser } })
+          ? jsonResponse(200, { data: { user: sessionUser } })
           : errorResponse(401, 'UNAUTHENTICATED')
       case 'POST /api/auth/login':
         sessionUser = loginAs
-        return json(200, { data: { user: sessionUser } })
+        return jsonResponse(200, { data: { user: sessionUser } })
       case 'POST /api/auth/register': {
         const { email } = JSON.parse(text) as { email: string }
         sessionUser = { id: 'user_new', email, role: 'USER' }
-        return json(201, { data: { user: sessionUser } })
+        return jsonResponse(201, { data: { user: sessionUser } })
       }
       case 'POST /api/auth/logout':
         sessionUser = null

@@ -356,3 +356,44 @@ Run against the real API and database at 375px and desktop widths:
 - Taste stays a hard-delete model; `MenuItemTaste` links are never removed automatically; `อะไรก็ได้` is not stored.
 - The API stores only validated icon keys and has no knowledge of React or Phosphor components.
 - Duplicate-name errors use code `TASTE_NAME_ALREADY_EXISTS`.
+
+## Issue #34 — Zone management screen
+
+### Scope
+
+- Verification date: 2026-09-30 (ICT, `UTC+07:00`)
+- Environment: local Windows 11 workspace, Node.js 24.12.0, pnpm 12.4.2, PostgreSQL 17 through the committed Docker Compose service
+- Database: isolated local database `kinraidee_verify` with the committed migrations and the #29 administrator seed; removed after verification
+- Route: `/admin/zones` under the `/admin/*` guard from #32, using `GET`, `POST`, `PATCH`, and `DELETE` on `/api/zones` through the typed client
+- Shared additions reused by #36 and #38: `components/Dialog.tsx` (modal focus rules), `lib/duplicateNameFields.ts`, a `wide` width for `PageShell`, a `ref` prop on `Button`, and `@phosphor-icons/react` (decisions recorded in `docs/plan.md`)
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm --filter web test` | 0 | Pass: 8 files/85 tests (30 new). Schema tests cover trimming, the flat-to-API body transform, required Thai/English names, empty/decimal/text/out-of-range `sortOrder`, negative and int32 boundary values, the all-or-nothing description pair, form pre-fill, and changed-field detection (including clearing a description to `null`). Page tests cover the ADMIN list with every field, the `ที่ไหนก็ได้` note absent from the table, the empty state, load error with retry, no GPS/coordinate fields, create validation with focus on the first invalid field and `aria-describedby` errors, create through the typed client with list refresh, duplicate-name field errors with focus, a generic save alert, edit pre-fill sending only the changed fields, unchanged edit sending no request, delete confirmation before the request, cancel returning focus to the row action, `ZONE_IN_USE` showing the approved message, and dialog focus, Tab trapping, inert background, and Escape. Anonymous and `USER` access reuse the existing #32 guard tests for `/admin/zones`. |
+| Deliberate regression checks | — | Removing list invalidation after mutations failed 3 tests, and removing the Shift+Tab wrap in the dialog failed the keyboard test. Both were restored. |
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests (API 34 files/274 tests; web 8 files/85 tests), API build with OpenAPI generation, and web production build. |
+| `prettier --check --end-of-line auto .` in `src/api` and `src/web` | 0 | Pass. |
+| `git diff --check` | 0 | Pass. |
+| `node tests/wireframe-requirements.test.cjs` | 1 | Existing design-prototype gap outside issue #34: 19 passed and 5 failed. |
+
+### Manual browser checks
+
+Run against the real API and database at desktop and 375px widths:
+
+- Anonymous `/admin/zones` redirects to login with `returnTo`; the seeded `ADMIN` returns to `/admin/zones` after login and sees the empty state and the `ที่ไหนก็ได้` note.
+- Pressing Enter on an empty create form shows errors under both names and `sortOrder` and focuses the Thai name.
+- Creating a zone with both descriptions adds the row to the table.
+- Creating a second zone with the same Thai name shows the duplicate-name error from the real API's 409 on the Thai name field.
+- Escape closes the dialog, returns focus to `เพิ่มโซน`, and removes `inert` from the page.
+- Clearing only one description shows the pair error. Clearing both saves `description: null`, and the table shows `ไม่มี`.
+- Deleting a zone used by a restaurant shows the approved `ZONE_IN_USE` message inside the dialog and keeps the row.
+- Deleting an unused zone at 375px removes the row, announces the result, and moves focus to `เพิ่มโซน`.
+- At 375px the page does not scroll horizontally; only the table scrolls inside its frame, and the dialog opens as a bottom sheet.
+
+### Security and scope checks
+
+- The guard is UX only; every mutation is still authorized by the API's `requireAdmin`.
+- Endpoint strings exist only in `hooks/admin/zones/useZones.ts`; components never call the API client.
+- No bulk reorder, `ที่ไหนก็ได้` record, GPS/coordinate field, restaurant reassignment UI, or API change was added. Zone data contains no personal data.

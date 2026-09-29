@@ -283,3 +283,37 @@ No findings remain. The initial review found that concurrent delete or restore r
 Human reviewer: Pending pull-request review
 Decision: Pending
 Date: TBD
+
+## Issue #34 — Zone management screen
+
+### Status
+
+Automated two-axis review complete on 2026-09-30. Human pull-request approval remains pending.
+
+### Standards review
+
+No documented-standard violations remain. The page uses design-system tokens and Phosphor icons only, with no custom SVG. Each icon is imported by name and paired with visible text. API calls go through the generated OpenAPI types in TanStack Query hooks, and mutations invalidate the shared `['zones']` list. Forms use React Hook Form with Zod through the local resolver, and nothing is written to browser storage. Judgement calls accepted:
+- `components/Dialog.tsx` lives in root `components/` although only the zones page uses it in this change, because #36 and #38 reuse it next.
+- Arbitrary Tailwind sizes (`min-w-[48rem]` for the scrollable table, `max-h-[90vh]` for the dialog) are layout values, not colours.
+
+### Specification review
+
+No blocking findings. All #34 fields, copy, behaviors, accessibility items, and required tests are implemented. Manual browser checks ran against the real API. Notes:
+- Editing sends only the changed fields, and an unchanged form closes without a request (recorded in `docs/plan.md`).
+- Duplicate-name errors mark whichever name fields the API reports, or both when it does not say.
+- The in-use message is shown inside the delete dialog so the admin keeps context.
+- After a server failure, the form alert stays visible until the next successful submit attempt, even if a later attempt fails client validation (low impact, accepted).
+
+### Review scope
+
+- Diff: `git diff origin/main...feat/34-zone-admin`
+- Commit: `feat(web): add zone management screen (#34)`
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/02-design/design-system.md`, `docs/03-implementation/engineering-guidelines.md`, and `docs/03-implementation/module-implementation-checklist.md`
+- Specification source: GitHub issue #34
+- Admin-only access versus server-side authorization, typed-client use, dialog focus and inert behavior, error-message mapping, mobile layout, and out-of-scope boundaries
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD
