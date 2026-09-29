@@ -6,23 +6,16 @@ import argon2 from 'argon2'
 import { z } from 'zod'
 
 import { argon2EnvSchema } from '../src/config/argon2'
+import {
+  createPasswordSchema,
+  normalizedEmailSchema,
+} from '../src/config/credentials'
 
 const seedEnvSchema = z.object({
   DATABASE_URL: z.string().min(1, 'DATABASE_URL is required.'),
   ...argon2EnvSchema.shape,
-  SEED_ADMIN_EMAIL: z
-    .string()
-    .trim()
-    .toLowerCase()
-    .email('SEED_ADMIN_EMAIL must be a valid email address.'),
-  SEED_ADMIN_PASSWORD: z
-    .string()
-    .transform((value) => value.trim())
-    .pipe(
-      z
-        .string()
-        .min(8, 'SEED_ADMIN_PASSWORD must contain at least 8 characters.'),
-    ),
+  SEED_ADMIN_EMAIL: normalizedEmailSchema,
+  SEED_ADMIN_PASSWORD: createPasswordSchema('SEED_ADMIN_PASSWORD'),
 })
 
 export type SeedEnv = z.infer<typeof seedEnvSchema>

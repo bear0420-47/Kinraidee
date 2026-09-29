@@ -1,14 +1,23 @@
 import type { NextFunction, Request, Response } from 'express'
-import { HttpError } from '@/shared/httpError'
+import { AUTH_COOKIE_NAME } from '@/config/auth'
+import { verifyAuthToken } from '@/lib/authSecurity'
+import { unauthenticatedError } from '@/modules/auth/auth.helpers'
 
-export function requireAuth(
-  _request: Request,
+export async function requireAuth(
+  request: Request,
   _response: Response,
-  _next: NextFunction,
-): never {
-  throw new HttpError({
-    status: 501,
-    code: 'AUTH_NOT_IMPLEMENTED',
-    message: 'Authentication is not implemented yet.',
-  })
+  next: NextFunction,
+) {
+  const token = request.cookies?.[AUTH_COOKIE_NAME]
+  if (typeof token !== 'string' || !token) throw unauthenticatedError()
+
+  let claims
+  try {
+    claims = await verifyAuthToken(token)
+  } catch {
+    throw unauthenticatedError()
+  }
+
+  request.user = { id: claims.sub, role: claims.role }
+  return next()
 }
