@@ -1,6 +1,10 @@
-import { PencilSimple, Trash } from '@phosphor-icons/react'
-
-import { Button } from '@/components/Button'
+import { RowActions } from '@/components/RowActions'
+import {
+  actionsColumnClassName,
+  bodyCellClassName,
+  headerCellClassName,
+  numberColumnClassName,
+} from '@/components/tableStyles'
 import type { Zone } from '@/schemas/admin/zones/zoneSchemas'
 
 type ZoneTableProps = {
@@ -8,8 +12,6 @@ type ZoneTableProps = {
   onEdit: (zone: Zone) => void
   onDelete: (zone: Zone) => void
 }
-
-const cellClassName = 'border-t-2 border-line-soft px-4 py-3 align-top'
 
 function OptionalText({ value }: { value: string | undefined }) {
   return value ? value : <span className="text-muted">ไม่มี</span>
@@ -22,22 +24,28 @@ export function ZoneTable({ zones, onEdit, onDelete }: ZoneTableProps) {
         <caption className="sr-only">รายการโซน</caption>
         <thead className="bg-peach-deep text-small">
           <tr>
-            <th scope="col" className="px-4 py-3">
+            <th scope="col" className={headerCellClassName}>
               ชื่อภาษาไทย
             </th>
-            <th scope="col" className="px-4 py-3">
+            <th scope="col" className={headerCellClassName}>
               ชื่อภาษาอังกฤษ
             </th>
-            <th scope="col" className="px-4 py-3">
+            <th scope="col" className={headerCellClassName}>
               คำอธิบายภาษาไทย
             </th>
-            <th scope="col" className="px-4 py-3">
+            <th scope="col" className={headerCellClassName}>
               คำอธิบายภาษาอังกฤษ
             </th>
-            <th scope="col" className="px-4 py-3">
+            <th
+              scope="col"
+              className={`${headerCellClassName} ${numberColumnClassName}`}
+            >
               ลำดับ
             </th>
-            <th scope="col" className="px-4 py-3">
+            <th
+              scope="col"
+              className={`${headerCellClassName} ${actionsColumnClassName}`}
+            >
               การจัดการ
             </th>
           </tr>
@@ -45,36 +53,26 @@ export function ZoneTable({ zones, onEdit, onDelete }: ZoneTableProps) {
         <tbody>
           {zones.map((zone) => (
             <tr key={zone.id}>
-              <th scope="row" className={`${cellClassName} font-bold`}>
+              <th scope="row" className={`${bodyCellClassName} font-bold`}>
                 {zone.name.th}
               </th>
-              <td className={cellClassName}>{zone.name.en}</td>
-              <td className={cellClassName}>
+              <td className={bodyCellClassName}>{zone.name.en}</td>
+              <td className={bodyCellClassName}>
                 <OptionalText value={zone.description?.th} />
               </td>
-              <td className={cellClassName}>
+              <td className={bodyCellClassName}>
                 <OptionalText value={zone.description?.en} />
               </td>
-              <td className={cellClassName}>{zone.sortOrder}</td>
-              <td className={cellClassName}>
-                <div className="flex gap-2">
-                  <Button
-                    variant="secondary"
-                    aria-label={`แก้ไขโซน ${zone.name.th}`}
-                    onClick={() => onEdit(zone)}
-                  >
-                    <PencilSimple aria-hidden weight="bold" />
-                    แก้ไข
-                  </Button>
-                  <Button
-                    variant="secondary"
-                    aria-label={`ลบโซน ${zone.name.th}`}
-                    onClick={() => onDelete(zone)}
-                  >
-                    <Trash aria-hidden weight="bold" />
-                    ลบ
-                  </Button>
-                </div>
+              <td className={`${bodyCellClassName} ${numberColumnClassName}`}>
+                {zone.sortOrder}
+              </td>
+              <td className={`${bodyCellClassName} ${actionsColumnClassName}`}>
+                <RowActions
+                  entityLabel="โซน"
+                  name={zone.name.th}
+                  onEdit={() => onEdit(zone)}
+                  onDelete={() => onDelete(zone)}
+                />
               </td>
             </tr>
           ))}
