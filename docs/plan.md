@@ -67,6 +67,7 @@ Approved — full-app build plan updated through 2026-09-28 decisions. Implement
 - Issue #32 connects React Hook Form to Zod with a small local resolver (`src/web/src/lib/zodFormResolver.ts`) instead of adding `@hookform/resolvers`.
 - Issue #32 redirects an authenticated visitor away from both `/login` and `/register`, honoring a validated `returnTo` before the role default. Login and registration complete through the same redirect, so there is one navigation path after authentication.
 - Until their own issues add routes, unbuilt `/account/*` and `/admin/*` child paths render their guarded landing page. Anonymous access to those paths still redirects to `/login` with `returnTo`.
+- Issues #35 and #37 share one icon-key rule (`src/api/src/shared/iconKey.ts`): a trimmed lowercase kebab-case key of at most 50 characters, and an empty or whitespace-only value normalizes to `null`. The human approver chose #35's empty-to-`null` behavior for both, so #37 deviates from its "reject empty keys" wording; SVG, HTML, URL, JSON, and other non-key input is still rejected.
 
 ## Evidence Expected
 
