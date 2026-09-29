@@ -350,3 +350,34 @@ No blocking findings. All #36 fields, copy, icon rules, behaviors, accessibility
 Human reviewer: Pending pull-request review
 Decision: Pending
 Date: TBD
+
+## Issue #38 — Taste management screen
+
+### Status
+
+Automated two-axis review complete on 2026-09-30. Human pull-request approval remains pending.
+
+### Standards review
+
+No documented-standard violations remain. The page uses the same shared frame, list states, dialogs, and icon-registry rules as #34 and #36, with Phosphor icons imported by name and no handwritten SVG, which the icon-policy test enforces. Typed hooks own the endpoint strings. Judgement call accepted: FoodType and Taste share one form, table, and schema implementation (`IconMasterData*`) because the two records have identical fields and rules. The per-issue files the issue lists remain as thin wrappers, so each screen can still diverge later without touching the other.
+
+### Specification review
+
+No blocking findings. All #38 fields, copy, icon rules, behaviors, accessibility items, and required tests are implemented. Manual browser checks ran against the real API; `TASTE_IN_USE` was triggered with a `MenuItemTaste` link inserted directly in the verify database. Notes:
+- `bowl` uses Phosphor's `BowlFood`, because there is no plain bowl icon (recorded in `docs/plan.md`).
+- The in-use message follows the issue: remove or change the taste on those menu items first.
+- As on the other screens, an unchanged edit closes without a request.
+
+### Review scope
+
+- Diff: `git diff feat/36-food-type-admin...feat/38-taste-admin`
+- Commit: `feat(web): add taste management screen (#38)`
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/02-design/design-system.md`, `docs/03-implementation/engineering-guidelines.md`, and `docs/03-implementation/module-implementation-checklist.md`
+- Specification source: GitHub issue #38
+- Icon registry safety, shared-form refactor regressions for FoodType, admin-only access versus server-side authorization, and out-of-scope boundaries
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD

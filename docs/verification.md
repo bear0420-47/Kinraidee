@@ -434,3 +434,40 @@ Run against the real API and database at desktop and 375px widths:
 
 - Database icon values resolve only through the fixed registry map, and unknown values fall back. No component is imported dynamically from a stored string.
 - Endpoint strings exist only in `hooks/admin/food-types/useFoodTypes.ts`. There is no description field, bulk reorder, `อะไรก็ได้` record, MenuItem reassignment UI, icon asset picker, or API change.
+
+## Issue #38 — Taste management screen
+
+### Scope
+
+- Verification date: 2026-09-30 (ICT, `UTC+07:00`)
+- Environment and database: same as issue #34 (`kinraidee_verify`, removed after verification). A `MenuItemTaste` link to the test menu item was inserted directly in that database to check `TASTE_IN_USE`, because MenuItem CRUD (#42) does not exist yet
+- Route: `/admin/tastes` under the `/admin/*` guard from #32, using `GET`, `POST`, `PATCH`, and `DELETE` on `/api/tastes` through the typed client
+- Icons: `src/web/src/lib/tasteIcons.tsx` registry (key mapping recorded in `docs/plan.md`)
+- Shared refactor: FoodType and Taste now use the shared icon master-data form, table, and schema; the FoodType tests pass unchanged
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm --filter web test` | 0 | Pass: 15 files/149 tests (27 new). Taste icon tests check the exact registry keys, the Phosphor component for each key, and the `ForkKnife` fallback for null, a food-type key, a prototype property, and SVG markup. Schema tests cover the body transform, the empty icon choice becoming `null`, rejection of keys from another registry, changed-field detection, and an untouched unknown key. Page tests cover the ADMIN list with icon labels, the fallback icon and label for null and unknown keys, the `อะไรก็ได้` note absent from the table, the empty state, no description field, only the taste registry keys offered with the helper connected by `aria-describedby`, create validation and focus, create with a chosen icon and with `null`, list refresh, duplicate-name errors on both names when the API names no field, edit pre-fill sending only the changed icon, delete confirmation with list refresh, `TASTE_IN_USE` with the approved message, and Tab/Escape behavior. The #32 guard tests cover anonymous and `USER` access to `/admin/*`, and the icon-policy scan now includes `tasteIcons.tsx`. |
+| Deliberate regression checks | — | Mapping `TASTE_IN_USE` to the wrong code and giving `bowl` the wrong icon each failed a test (2 failures), then both were restored. |
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests (API 34 files/274 tests; web 15 files/149 tests), API build with OpenAPI generation, and web production build. |
+| `prettier --check --end-of-line auto .` in `src/api` and `src/web` | 0 | Pass. |
+| `git diff --check` | 0 | Pass. |
+| `node tests/wireframe-requirements.test.cjs` | 1 | Existing design-prototype gap outside issues #34, #36, and #38: 19 passed and 5 failed. |
+
+### Manual browser checks
+
+Run against the real API and database at desktop and 375px widths:
+
+- Keyboard-only create: ArrowDown on the icon select picks `flame`, and the table shows `เปลวไฟ` with the flame icon.
+- A second taste with the same Thai name shows the duplicate-name error from the real API's 409, with focus on the Thai name.
+- Deleting a taste linked to a menu item shows the approved `TASTE_IN_USE` message inside the dialog and moves focus to it.
+- Changing the icon to `heart` by keyboard sends only the icon, and `GET /api/tastes` returns `icon: "heart"` with the other fields unchanged.
+- Deleting an unlinked taste removes the row, announces the result, and moves focus to `เพิ่มรสชาติ`.
+- At 375px neither `/admin/tastes` nor `/admin/food-types` scrolls horizontally, and the food-types page still lists its records after the shared refactor.
+
+### Security and scope checks
+
+- Stored icon values resolve only through the fixed registry map, and unknown values fall back.
+- Endpoint strings exist only in `hooks/admin/tastes/useTastes.ts`. There is no description field, bulk reorder, `อะไรก็ได้` record, MenuItem taste-assignment UI, icon asset picker, or API change.
