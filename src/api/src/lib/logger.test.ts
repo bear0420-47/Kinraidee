@@ -71,6 +71,9 @@ describe('safe HTTP log serializers', () => {
       password: 'password-secret',
       token: 'token-secret',
       rawGps: '19.123,99.123',
+      originalname: 'identifiable-person.jpg',
+      buffer: 'private-image-buffer',
+      imageContent: 'private-image-content',
       user: {
         profile: {
           email: 'deep@example.com',
@@ -99,5 +102,8 @@ describe('safe HTTP log serializers', () => {
     expect(output).not.toContain('Bearer secret')
     expect(output).not.toContain('jwt=secret')
     expect(output).not.toContain('19.123,99.123')
+    expect(output).not.toContain('identifiable-person.jpg')
+    expect(output).not.toContain('private-image-buffer')
+    expect(output).not.toContain('private-image-content')
   })
 })

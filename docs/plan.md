@@ -62,6 +62,7 @@ Approved — full-app build plan updated through 2026-09-28 decisions. Implement
 
 - Issue #27 uses `supertest` as an API test-only development dependency. The human approver accepted this deviation from the initial preference to use existing packages because it removes custom HTTP server lifecycle helpers while leaving production code and runtime dependencies unchanged.
 - Issues #29 and #31 use a minimum password length of 8 characters after trimming leading and trailing whitespace. Passwords have no uppercase, lowercase, number, or symbol composition requirement. Seed provisioning, registration, and login must apply the same normalization before hashing or verification.
+- Issue #40 uses route-scoped Multer 2 memory storage and `file-type` magic-byte detection for development/test-only JPEG, PNG, and WebP uploads. Production keeps the upload/delete contract registered but returns `503 UPLOAD_STORAGE_UNAVAILABLE` before multipart processing; `/uploads/*` is not served in production.
 
 ## Evidence Expected
 

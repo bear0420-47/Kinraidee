@@ -42,16 +42,39 @@ const corsAllowedOriginsSchema = z.preprocess(
   }),
 )
 
-const envSchema = z.object({
-  NODE_ENV: z
-    .enum(['development', 'test', 'production'])
-    .default('development'),
-  PORT: z.coerce.number().int().positive().default(3000),
-  DATABASE_URL: z.string().min(1),
-  JWT_SECRET: z.string().min(32),
-  ...argon2EnvSchema.shape,
-  CORS_ALLOWED_ORIGINS: corsAllowedOriginsSchema,
-})
+const booleanEnvSchema = z.preprocess((value) => {
+  if (value === undefined || value === false || value === 'false') return false
+  if (value === true || value === 'true') return true
+  return value
+}, z.boolean())
+
+const envSchema = z
+  .object({
+    NODE_ENV: z
+      .enum(['development', 'test', 'production'])
+      .default('development'),
+    PORT: z.coerce.number().int().positive().default(3000),
+    DATABASE_URL: z.string().min(1),
+    JWT_SECRET: z.string().min(32),
+    ...argon2EnvSchema.shape,
+    CORS_ALLOWED_ORIGINS: corsAllowedOriginsSchema,
+    LOCAL_UPLOADS_ENABLED: booleanEnvSchema.default(false),
+    LOCAL_UPLOADS_DIRECTORY: z.string().trim().min(1).default('.local/uploads'),
+    LOCAL_UPLOAD_MAX_BYTES: z.coerce
+      .number()
+      .int()
+      .positive()
+      .default(2_097_152),
+  })
+  .superRefine((value, context) => {
+    if (value.NODE_ENV === 'production' && value.LOCAL_UPLOADS_ENABLED) {
+      context.addIssue({
+        code: 'custom',
+        path: ['LOCAL_UPLOADS_ENABLED'],
+        message: 'LOCAL_UPLOADS_ENABLED must be false in production.',
+      })
+    }
+  })
 
 export function parseEnv(input: NodeJS.ProcessEnv) {
   return envSchema.parse(input)

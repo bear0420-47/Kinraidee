@@ -21,10 +21,14 @@ type SerializedError = {
 
 const sensitiveLogKeyParts = [
   'apikey',
+  'buffer',
   'credential',
   'email',
   'encryptionkey',
+  'filename',
+  'imagecontent',
   'jwt',
+  'originalname',
   'password',
   'privatekey',
   'rawgps',
@@ -74,6 +78,8 @@ export function sanitizeLogObject(log: Record<string, unknown>) {
   const seen = new WeakSet<object>()
 
   for (const [key, value] of Object.entries(log)) {
+    if (isSensitiveLogKey(key)) continue
+
     sanitized[key] = ['req', 'res', 'err'].includes(key)
       ? value
       : sanitizeLogValue(value, seen)

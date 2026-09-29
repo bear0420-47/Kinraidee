@@ -12,3 +12,4 @@ coverage/
 **/coverage/
 .tmp/
 *.log
+**/.local/uploads/
