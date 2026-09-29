@@ -1,7 +1,11 @@
-import { PencilSimple, Trash } from '@phosphor-icons/react'
-
-import { Button } from '@/components/Button'
 import { IconKeyLabel } from '@/components/IconKeyLabel'
+import { RowActions } from '@/components/RowActions'
+import {
+  actionsColumnClassName,
+  bodyCellClassName,
+  headerCellClassName,
+  numberColumnClassName,
+} from '@/components/tableStyles'
 import type { IconRegistry } from '@/lib/iconRegistry'
 import type { IconMasterData } from '@/schemas/shared/iconMasterDataSchemas'
 
@@ -15,8 +19,6 @@ type IconMasterDataTableProps<Item extends Row> = {
   onEdit: (item: Item) => void
   onDelete: (item: Item) => void
 }
-
-const cellClassName = 'border-t-2 border-line-soft px-4 py-3 align-top'
 
 // Shared list table for FoodType and Taste.
 export function IconMasterDataTable<Item extends Row>({
@@ -32,19 +34,25 @@ export function IconMasterDataTable<Item extends Row>({
         <caption className="sr-only">รายการ{entityLabel}</caption>
         <thead className="bg-peach-deep text-small">
           <tr>
-            <th scope="col" className="px-4 py-3">
+            <th scope="col" className={headerCellClassName}>
               ชื่อภาษาไทย
             </th>
-            <th scope="col" className="px-4 py-3">
+            <th scope="col" className={headerCellClassName}>
               ชื่อภาษาอังกฤษ
             </th>
-            <th scope="col" className="px-4 py-3">
+            <th scope="col" className={headerCellClassName}>
               ไอคอน
             </th>
-            <th scope="col" className="px-4 py-3">
+            <th
+              scope="col"
+              className={`${headerCellClassName} ${numberColumnClassName}`}
+            >
               ลำดับ
             </th>
-            <th scope="col" className="px-4 py-3">
+            <th
+              scope="col"
+              className={`${headerCellClassName} ${actionsColumnClassName}`}
+            >
               การจัดการ
             </th>
           </tr>
@@ -52,33 +60,23 @@ export function IconMasterDataTable<Item extends Row>({
         <tbody>
           {items.map((item) => (
             <tr key={item.id}>
-              <th scope="row" className={`${cellClassName} font-bold`}>
+              <th scope="row" className={`${bodyCellClassName} font-bold`}>
                 {item.name.th}
               </th>
-              <td className={cellClassName}>{item.name.en}</td>
-              <td className={cellClassName}>
+              <td className={bodyCellClassName}>{item.name.en}</td>
+              <td className={bodyCellClassName}>
                 <IconKeyLabel registry={registry} icon={item.icon} />
               </td>
-              <td className={cellClassName}>{item.sortOrder}</td>
-              <td className={cellClassName}>
-                <div className="flex gap-2">
-                  <Button
-                    variant="secondary"
-                    aria-label={`แก้ไข${entityLabel} ${item.name.th}`}
-                    onClick={() => onEdit(item)}
-                  >
-                    <PencilSimple aria-hidden weight="bold" />
-                    แก้ไข
-                  </Button>
-                  <Button
-                    variant="secondary"
-                    aria-label={`ลบ${entityLabel} ${item.name.th}`}
-                    onClick={() => onDelete(item)}
-                  >
-                    <Trash aria-hidden weight="bold" />
-                    ลบ
-                  </Button>
-                </div>
+              <td className={`${bodyCellClassName} ${numberColumnClassName}`}>
+                {item.sortOrder}
+              </td>
+              <td className={`${bodyCellClassName} ${actionsColumnClassName}`}>
+                <RowActions
+                  entityLabel={entityLabel}
+                  name={item.name.th}
+                  onEdit={() => onEdit(item)}
+                  onDelete={() => onDelete(item)}
+                />
               </td>
             </tr>
           ))}
