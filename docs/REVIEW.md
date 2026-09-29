@@ -87,3 +87,31 @@ No findings. The schema and migration implement the enums, models, relations, de
 Human reviewer: Pending pull-request review
 Decision: Pending
 Date: TBD
+
+## Issue #31 — Email/password authentication
+
+### Status
+
+Automated two-axis review complete on 2026-09-29. Human pull-request approval remains pending.
+
+### Standards review
+
+No documented-standard violations remain. Review initially found that non-pure Argon2/JWT operations lived in `auth.helpers.ts` and that `auth.openapi.ts` owned a response schema. Security operations now live in `src/api/src/lib/authSecurity.ts`, pure cookie/error helpers remain module-local, and the error response schema is owned by `auth.dto.ts`. Security tests were separated from cookie-helper tests. Repeated local environment fixtures remain an accepted judgement call because extracting them now would add a test-only abstraction without meaningful reuse beyond this module.
+
+### Specification review
+
+No findings remain. Review initially identified an account-enumeration timing signal for unknown emails and missing HTTP-level coverage for successful login cookies and expired `/me` cookies. Unknown-email login now performs a dummy Argon2id verification, and the route tests cover both cases. All issue #31 routes, cookie/JWT requirements, validation, role restrictions, response shapes, OpenAPI definitions, and scope exclusions are implemented.
+
+### Review scope
+
+- Diff: `git diff origin/main...HEAD`
+- Commits: `26c2164 feat(api): implement email password authentication`; `d0b74bb fix(api): address authentication review findings`
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/03-implementation/engineering-guidelines.md`, `docs/03-implementation/data-model.md`, and `docs/03-implementation/module-implementation-checklist.md`
+- Specification source: GitHub issue #31 and its approved implementation note
+- Credential normalization, password hashing, account-enumeration resistance, JWT verification, cookie security, authorization, response/log secret exclusion, OpenAPI, database behavior, and out-of-scope boundaries
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD

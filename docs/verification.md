@@ -144,10 +144,10 @@ The five wireframe failures are in unmodified prototype areas and do not overlap
 
 | Command | Exit code | Result |
 |---|---:|---|
-| `pnpm --filter api exec vitest run src/modules/auth` | 0 | Pass: 5 files/26 tests covering credential validation, Argon2id, JWT claims/expiry/algorithm allowlist, cookie flags, service behavior, HTTP routes, and OpenAPI registration. |
+| `pnpm --filter api exec vitest run src/modules/auth src/lib/authSecurity.test.ts` | 0 | Pass: 6 files/26 tests covering credential validation, Argon2id, JWT claims/expiry/algorithm allowlist, cookie flags, service behavior, HTTP routes, and OpenAPI registration. |
 | `DATABASE_URL=<test-db> pnpm --filter api prisma migrate deploy` | 0 | Pass: the committed migration applied to an empty isolated database. |
 | `NODE_ENV=test DATABASE_URL=<test-db> JWT_SECRET=<test-secret> CORS_ALLOWED_ORIGINS=http://localhost:5173 pnpm --filter api exec tsx .tmp-issue31-integration.mts` | 0 | Pass: temporary verification script exercised the real Prisma repository and HTTP app. Registration normalized credentials, created one `USER`, stored only an Argon2id hash, omitted password data, and set the approved cookie. Duplicate registration returned 409; unknown-email and wrong-password login returned the same generic 401; login, `/me`, invalid-cookie rejection, and logout passed. The temporary script was removed after the run. |
-| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests, and builds completed. API: 10 files/56 tests; web: 1 file/1 test. API OpenAPI generation and web production build completed. |
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests, and builds completed. API: 11 files/56 tests; web: 1 file/1 test. API OpenAPI generation and web production build completed. |
 | `pnpm format` | 0 | Pass: API and web files matched Prettier formatting. |
 | `git diff --check` | 0 | Pass. |
 | `node tests/wireframe-requirements.test.cjs` | 1 | Existing design-prototype gap outside issue #31: 19 passed and 5 failed for missing Profile/Admin prototype states. No prototype or wireframe test was modified. |
