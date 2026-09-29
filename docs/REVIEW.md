@@ -143,3 +143,31 @@ No findings remain. The initial review found that key-name redaction alone could
 Human reviewer: Pending pull-request review
 Decision: Pending
 Date: TBD
+
+## Issue #32 — Authentication pages and protected route guards
+
+### Status
+
+Automated two-axis review complete on 2026-09-29. Human pull-request approval remains pending.
+
+### Standards review
+
+No documented-standard violations remain. Screens use only design-system tokens (Tailwind colours are restricted to the token palette), no raw colours, custom SVG, or icon imports; API calls go through generated OpenAPI types and TanStack Query hooks only; components never call `fetch` or the API client; nothing is written to browser storage; forms use React Hook Form with Zod. Judgement calls accepted: `SiteHeader`, `RequireAuth`, `RedirectIfAuthenticated`, and `RouteStatus` live in root `components/` although each is mounted once, because they wrap every page rather than belonging to one; `lib/authRedirects.ts` takes a type-only import of `UserRole` from `hooks/auth`; the scaffold Home placeholder moved to `pages/home/HomePage.tsx` because `App.tsx` became the layout. The web test dependencies and the local Zod resolver are recorded deviations in `docs/plan.md`.
+
+### Specification review
+
+No blocking findings. All #32 routes, header labels, guard redirects, safe `returnTo` rules, login/register/logout behavior, cookie-only authentication, accessibility requirements, and listed tests are implemented; manual browser checks ran against the real API. Notes: authenticated visitors are also redirected away from `/register`, and unbuilt `/account/*` and `/admin/*` children fall back to their landing pages (both recorded in `docs/plan.md`); logout was also placed on the admin landing so administrators can sign out; the `บัญชีนี้ไม่มีสิทธิ์จัดการระบบ` notice is carried in router history state, so it reappears if that history entry is reloaded (low impact, accepted); the keyboard test covers the login form, and the register form uses the same field component. The Thai purpose notice on `/register` is adapted from the specification's account-email data-inventory row and needs human confirmation of the wording (LR1).
+
+### Review scope
+
+- Diff: `git diff origin/main...feat/32-auth-pages`
+- Commit: `feat(web): add authentication pages and route guards (#32)`
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/02-design/design-system.md`, `docs/03-implementation/engineering-guidelines.md`, and `docs/03-implementation/module-implementation-checklist.md`
+- Specification source: GitHub issue #32, `docs/02-design/user-journey.md`, and `docs/02-design/prototype.md`
+- Token handling, `returnTo` open-redirect resistance, route guards versus server-side authorization, browser-storage use, personal-data display, accessibility, and out-of-scope boundaries
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD
