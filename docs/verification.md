@@ -162,3 +162,35 @@ The five wireframe failures are in unmodified prototype areas and do not overlap
 - Missing, invalid, and expired authentication tokens return the same generic 401 response. Login does not expose whether an email exists and performs a dummy Argon2id verification for unknown emails to reduce timing differences.
 - Generated OpenAPI contains all four auth routes, the cookie security scheme, strict credentials, and the 8-character password minimum.
 - No session table, refresh token, password reset/change, email verification, OAuth, admin-management flow, or authentication UI was added.
+
+## Issue #40 — Development-only internal image uploads
+
+### Scope
+
+- Verification date/time: 2026-09-29 22:01 ICT (`UTC+07:00`)
+- Environment: local macOS workspace, Node.js and pnpm versions locked by the repository
+- Routes: `POST /api/uploads/images`, `DELETE /api/uploads/images/:fileName`, and `GET /uploads/:fileName`
+- Storage: isolated temporary directories in tests; no uploaded file was committed
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `cd src/api && node_modules/.bin/vitest run src/config/env.test.ts src/lib/logger.test.ts src/modules/uploads` | 0 | Pass: 6 files/35 tests covering configuration, startup rejection, log sanitization, DTOs, filesystem storage, MIME detection, route authorization, multipart limits and boundaries, deletion, static serving, and OpenAPI. |
+| `src/api/node_modules/.bin/tsc -p src/api/tsconfig.json --noEmit --pretty false` | 0 | Pass. |
+| `node_modules/.bin/eslint src/api` | 0 | Pass. |
+| `pnpm --filter api openapi:generate` | 0 | Pass: generated OpenAPI contains upload, delete, and static image routes with the multipart binary schema. |
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests, and builds completed. API: 15 files/79 tests; web: 1 file/1 test. API OpenAPI generation and web production build completed. |
+| `pnpm format` | 0 | Pass: API and web files matched Prettier formatting. |
+| `git diff --check` | 0 | Pass. |
+| `node tests/wireframe-requirements.test.cjs` | 1 | Existing design-prototype gap outside issue #40: 19 passed and 5 failed for missing Profile/Admin prototype states. No prototype or wireframe test was modified. |
+
+### Security and scope checks
+
+- Upload and delete require authenticated `ADMIN` access before multipart parsing or filesystem work.
+- Multer is route-scoped, uses memory storage, accepts exactly one `image` field, and enforces the configured byte limit before service processing.
+- JPEG, PNG, and WebP are accepted only when `file-type` detects matching magic bytes; SVG, arbitrary content, empty files, and spoofed MIME declarations are rejected.
+- Stored names use `crypto.randomUUID()` plus the detected extension. Original filenames and client path data are never used for storage.
+- Delete and static routes accept only generated UUID image names. Traversal, encoded traversal, unknown formats, and manually named files are rejected.
+- Local upload startup is rejected in production, upload/delete return `503 UPLOAD_STORAGE_UNAVAILABLE` when disabled, and production does not register static serving.
+- Logger sanitization removes filename, file-buffer, and image-content fields recursively. No image-processing or durable-storage dependency was added.

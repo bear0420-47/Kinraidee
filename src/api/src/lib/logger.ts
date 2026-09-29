@@ -21,10 +21,14 @@ type SerializedError = {
 
 const sensitiveLogKeyParts = [
   'apikey',
+  'buffer',
   'credential',
   'email',
   'encryptionkey',
+  'filename',
+  'imagecontent',
   'jwt',
+  'originalname',
   'password',
   'privatekey',
   'rawgps',
@@ -46,6 +50,10 @@ function isSensitiveLogKey(key: string) {
 function sanitizeLogValue(value: unknown, seen: WeakSet<object>): unknown {
   if (value instanceof Error) {
     return { type: value.name }
+  }
+
+  if (value instanceof ArrayBuffer || ArrayBuffer.isView(value)) {
+    return '[Redacted binary data]'
   }
 
   if (!value || typeof value !== 'object' || value instanceof Date) {
@@ -74,6 +82,8 @@ export function sanitizeLogObject(log: Record<string, unknown>) {
   const seen = new WeakSet<object>()
 
   for (const [key, value] of Object.entries(log)) {
+    if (isSensitiveLogKey(key)) continue
+
     sanitized[key] = ['req', 'res', 'err'].includes(key)
       ? value
       : sanitizeLogValue(value, seen)

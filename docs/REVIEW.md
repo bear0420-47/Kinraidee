@@ -115,3 +115,31 @@ No findings remain. Review initially identified an account-enumeration timing si
 Human reviewer: Pending pull-request review
 Decision: Pending
 Date: TBD
+
+## Issue #40 — Development-only internal image uploads
+
+### Status
+
+Automated two-axis review complete on 2026-09-29. No unresolved findings remain. Human pull-request approval remains pending.
+
+### Standards review
+
+No findings remain. The initial review found missing anonymous/`USER` authorization coverage for the protected delete route and no HTTP boundary test for an image exactly at the configured byte limit. Both are now covered. The duplicated `UPLOAD_TOO_LARGE` mapping now uses a module-local helper. Error-envelope schemas remain module-owned by their DTO files, consistent with the module checklist and the prior authentication review.
+
+### Specification review
+
+No findings remain. The initial review found that key-name redaction alone could expose a `Buffer` stored under a generic log key. Binary values are now redacted by type, including `Buffer`, `ArrayBuffer`, and typed-array views, with emitted-log coverage. Upload environment controls, ADMIN authorization, multipart limits, magic-byte validation, generated names, traversal protection, deletion, static serving, production behavior, OpenAPI, and scope exclusions match issue #40.
+
+### Review scope
+
+- Diff: `git diff origin/main...HEAD`
+- Commits: `3b617ed feat(api): add development-only image uploads`; `a5c7b4d fix(api): address upload review findings`
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/03-implementation/engineering-guidelines.md`, `docs/03-implementation/data-model.md`, and `docs/03-implementation/module-implementation-checklist.md`
+- Specification source: GitHub issue #40 and its approved implementation note
+- Environment safety, authorization, multipart boundaries, file signatures, MIME matching, filename generation, path traversal, filesystem behavior, production disablement, logging, OpenAPI, and out-of-scope boundaries
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD
