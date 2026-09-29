@@ -113,17 +113,26 @@ async function authCookie(role: UserRole) {
 }
 
 describe('upload routes', () => {
-  it('rejects anonymous and USER uploads before multipart processing', async () => {
+  it('rejects anonymous and USER writes before upload or delete processing', async () => {
     const multipart = vi.fn((_request, _response, next) => next())
     const app = createTestApp({ multipart })
+    const fileName = '123e4567-e89b-42d3-a456-426614174000.jpg'
 
     const anonymous = await request(app).post('/api/uploads/images')
     const user = await request(app)
       .post('/api/uploads/images')
       .set('Cookie', await authCookie(UserRole.USER))
+    const anonymousDelete = await request(app).delete(
+      `/api/uploads/images/${fileName}`,
+    )
+    const userDelete = await request(app)
+      .delete(`/api/uploads/images/${fileName}`)
+      .set('Cookie', await authCookie(UserRole.USER))
 
     expect(anonymous.status).toBe(401)
     expect(user.status).toBe(403)
+    expect(anonymousDelete.status).toBe(401)
+    expect(userDelete.status).toBe(403)
     expect(multipart).not.toHaveBeenCalled()
   })
 
@@ -147,6 +156,22 @@ describe('upload routes', () => {
     expect(served.status).toBe(200)
     expect(served.headers['content-type']).toMatch(/^image\/jpeg/)
     expect(served.body).toEqual(jpeg)
+  })
+
+  it('accepts an image exactly at the configured byte limit', async () => {
+    const imageAtLimit = Buffer.concat([jpeg, Buffer.alloc(128 - jpeg.length)])
+    const response = await request(createTestApp())
+      .post('/api/uploads/images')
+      .set('Cookie', await authCookie(UserRole.ADMIN))
+      .attach('image', imageAtLimit, {
+        filename: 'boundary.jpg',
+        contentType: 'image/jpeg',
+      })
+
+    expect(response.status).toBe(201)
+    await expect(
+      readFile(path.join(rootDirectory, response.body.data.image.key)),
+    ).resolves.toEqual(imageAtLimit)
   })
 
   it('rejects missing, multiple, oversized, unsupported, and spoofed files', async () => {

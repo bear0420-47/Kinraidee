@@ -176,11 +176,11 @@ The five wireframe failures are in unmodified prototype areas and do not overlap
 
 | Command | Exit code | Result |
 |---|---:|---|
-| `cd src/api && node_modules/.bin/vitest run src/config/env.test.ts src/lib/logger.test.ts src/modules/uploads` | 0 | Pass: 6 files/34 tests covering configuration, startup rejection, log sanitization, DTOs, filesystem storage, MIME detection, route authorization, multipart limits, deletion, static serving, and OpenAPI. |
+| `cd src/api && node_modules/.bin/vitest run src/config/env.test.ts src/lib/logger.test.ts src/modules/uploads` | 0 | Pass: 6 files/35 tests covering configuration, startup rejection, log sanitization, DTOs, filesystem storage, MIME detection, route authorization, multipart limits and boundaries, deletion, static serving, and OpenAPI. |
 | `src/api/node_modules/.bin/tsc -p src/api/tsconfig.json --noEmit --pretty false` | 0 | Pass. |
 | `node_modules/.bin/eslint src/api` | 0 | Pass. |
 | `pnpm --filter api openapi:generate` | 0 | Pass: generated OpenAPI contains upload, delete, and static image routes with the multipart binary schema. |
-| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests, and builds completed. API: 15 files/78 tests; web: 1 file/1 test. API OpenAPI generation and web production build completed. |
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests, and builds completed. API: 15 files/79 tests; web: 1 file/1 test. API OpenAPI generation and web production build completed. |
 | `pnpm format` | 0 | Pass: API and web files matched Prettier formatting. |
 | `git diff --check` | 0 | Pass. |
 | `node tests/wireframe-requirements.test.cjs` | 1 | Existing design-prototype gap outside issue #40: 19 passed and 5 failed for missing Profile/Admin prototype states. No prototype or wireframe test was modified. |

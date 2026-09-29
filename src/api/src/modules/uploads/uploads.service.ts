@@ -6,6 +6,7 @@ import { fileTypeFromBuffer } from 'file-type'
 import { env } from '@/config/env'
 import { HttpError } from '@/shared/httpError'
 import type { UploadedImage, UploadedImageInput } from './uploads.dto'
+import { uploadTooLargeError } from './uploads.helpers'
 
 const supportedImageTypes = new Map([
   ['image/jpeg', 'jpg'],
@@ -92,15 +93,6 @@ function resolveInsideRoot(rootDirectory: string, fileName: string) {
   }
 
   return targetPath
-}
-
-function uploadTooLargeError() {
-  return new HttpError({
-    status: 413,
-    code: 'UPLOAD_TOO_LARGE',
-    message: 'Image exceeds the configured size limit.',
-    fields: { image: 'Image is too large.' },
-  })
 }
 
 function unsupportedImageError() {

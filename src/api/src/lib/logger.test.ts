@@ -74,6 +74,7 @@ describe('safe HTTP log serializers', () => {
       originalname: 'identifiable-person.jpg',
       buffer: 'private-image-buffer',
       imageContent: 'private-image-content',
+      payload: Buffer.from('private-binary-data'),
       user: {
         profile: {
           email: 'deep@example.com',
@@ -105,5 +106,7 @@ describe('safe HTTP log serializers', () => {
     expect(output).not.toContain('identifiable-person.jpg')
     expect(output).not.toContain('private-image-buffer')
     expect(output).not.toContain('private-image-content')
+    expect(output).not.toContain('private-binary-data')
+    expect(output).toContain('[Redacted binary data]')
   })
 })

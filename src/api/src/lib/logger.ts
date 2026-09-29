@@ -52,6 +52,10 @@ function sanitizeLogValue(value: unknown, seen: WeakSet<object>): unknown {
     return { type: value.name }
   }
 
+  if (value instanceof ArrayBuffer || ArrayBuffer.isView(value)) {
+    return '[Redacted binary data]'
+  }
+
   if (!value || typeof value !== 'object' || value instanceof Date) {
     return value
   }

@@ -4,6 +4,7 @@ import multer from 'multer'
 import { env } from '@/config/env'
 import { HttpError } from '@/shared/httpError'
 import { uploadFileNameSchema } from './uploads.dto'
+import { uploadTooLargeError } from './uploads.helpers'
 
 export function createRequireLocalUploadsEnabled(
   enabled = env.LOCAL_UPLOADS_ENABLED,
@@ -35,14 +36,7 @@ export function createUploadImageMiddleware(
       if (!(error instanceof multer.MulterError)) return next(error)
 
       if (error.code === 'LIMIT_FILE_SIZE') {
-        return next(
-          new HttpError({
-            status: 413,
-            code: 'UPLOAD_TOO_LARGE',
-            message: 'Image exceeds the configured size limit.',
-            fields: { image: 'Image is too large.' },
-          }),
-        )
+        return next(uploadTooLargeError())
       }
 
       return next(
