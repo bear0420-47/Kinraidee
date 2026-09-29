@@ -194,3 +194,46 @@ The five wireframe failures are in unmodified prototype areas and do not overlap
 - Delete and static routes accept only generated UUID image names. Traversal, encoded traversal, unknown formats, and manually named files are rejected.
 - Local upload startup is rejected in production, upload/delete return `503 UPLOAD_STORAGE_UNAVAILABLE` when disabled, and production does not register static serving.
 - Logger sanitization removes filename, file-buffer, and image-content fields recursively. No image-processing or durable-storage dependency was added.
+
+## Issue #32 — Authentication pages and protected route guards
+
+### Scope
+
+- Verification date: 2026-09-29 (ICT, `UTC+07:00`)
+- Environment: local Windows 11 workspace, Node.js 24.12.0, pnpm 12.4.2 through Corepack, PostgreSQL 17 through the committed Docker Compose service
+- Database: isolated local database `kinraidee_verify` with the committed migration and the #29 administrator seed; removed after verification
+- Pages: `/login`, `/register`, `/account`, `/admin`; guarded `/account/*` and `/admin/*`; header navigation
+- Test tooling: `@testing-library/react`, `@testing-library/dom`, `@testing-library/user-event`, and `jsdom` (approved deviation recorded in `docs/plan.md`)
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm --filter web openapi:generate` | 0 | Pass: `src/web/src/api/openapiTypes.ts` generated from `docs/03-implementation/openapi.json`; all four auth paths are typed. |
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests, and builds completed. API: 15 files/79 tests (re-run after rebasing onto issue #40); web: 6 files/55 tests. API OpenAPI generation and web production build completed. |
+| `prettier --check --end-of-line auto .` in `src/api` and `src/web` | 0 | Pass. `--end-of-line auto` was needed only because this Windows checkout uses `core.autocrlf=true`; committed files keep LF endings. |
+| `git diff --check` | 0 | Pass. |
+| `node tests/wireframe-requirements.test.cjs` | 1 | Existing design-prototype gap outside issue #32: 19 passed and 5 failed for missing Profile/Admin prototype states. No prototype or wireframe test was modified. |
+
+Web test coverage (55 tests): safe `returnTo` accepts internal paths and rejects absolute, `javascript:`, protocol-relative, backslash, control-character, and auth-page targets; form schemas trim and mirror the API's 8-character password rule; header shows `เข้าสู่ระบบ`, `บัญชีของฉัน`, or `จัดการระบบ` by role; anonymous `/account/*` and `/admin/*` redirect to `/login?returnTo=…`; `USER` on `/admin/*` lands on `/account` with `บัญชีนี้ไม่มีสิทธิ์จัดการระบบ`; `ADMIN` opens admin routes; authenticated visitors to `/login` go to `/admin` or `/account`; login/register submit through the typed client with `credentials: 'include'`; registration sends no `confirmPassword` or role; duplicate email focuses the email field; invalid credentials show one generic message; logout clears the current user and returns Home; empty submit focuses the first invalid field with `aria-describedby`; the login form works by keyboard; passwords and tokens never reach browser storage; recommendation `sessionStorage` survives the login/register round trip and logout. Two deliberate breakages (removing the admin role check, removing the `//` check) were tried: the first failed the suite; the second was still blocked by the same-origin check, confirming the second safeguard.
+
+### Manual browser checks
+
+Run against the real API and database at 375px and desktop widths:
+
+- Anonymous Home header shows `เข้าสู่ระบบ` linking to `/login?returnTo=%2F`; anonymous `/admin/zones` lands on `/login?returnTo=%2Fadmin%2Fzones`.
+- Empty registration shows an error under every field, focuses email, and shows the design-system focus ring.
+- Registering a new account creates a `USER` and lands on `/account`; `document.cookie` is empty (the auth cookie is `HttpOnly`) and local/session storage stay empty.
+- The new `USER` visiting `/admin` lands on `/account` with the approved message.
+- Logout returns Home, the header switches to `เข้าสู่ระบบ`, and `GET /api/auth/me` returns 401.
+- Re-registering the same email with different capitalisation shows the duplicate-email field error with focus on email.
+- Seeded `ADMIN` login with a wrong password shows the generic focused alert; the correct password honors `returnTo=/admin/zones` and falls back to `/admin` until that page exists. An authenticated `ADMIN` opening `/login` is redirected to `/admin`.
+
+### Security, privacy, and scope checks
+
+- No JWT is read, stored, or handled in JavaScript; the query cache holds only `id`, `email`, and `role`.
+- Route guards are UX only; protected API routes still enforce roles server-side.
+- `returnTo` accepts only same-origin internal paths and falls back by role.
+- The registration page states the approved account-email purpose from the specification's data inventory (LR1): optional account features only, not used for advertising or unrelated disclosure, and anonymous recommendations need no account.
+- No auth modal, `/admin/login`, role selector, email-verification wording, password reset/change, profile fields, or user-management links were added.
+- Known limitation: the design-system fonts (Nunito, Delius Swash Caps) are declared as Tailwind font tokens but not loaded, so browsers use the declared fallbacks. Loading them from Google Fonts would send visitor IP addresses to a third party and needs a separate decision.

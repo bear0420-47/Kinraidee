@@ -63,6 +63,10 @@ Approved — full-app build plan updated through 2026-09-28 decisions. Implement
 - Issue #27 uses `supertest` as an API test-only development dependency. The human approver accepted this deviation from the initial preference to use existing packages because it removes custom HTTP server lifecycle helpers while leaving production code and runtime dependencies unchanged.
 - Issues #29 and #31 use a minimum password length of 8 characters after trimming leading and trailing whitespace. Passwords have no uppercase, lowercase, number, or symbol composition requirement. Seed provisioning, registration, and login must apply the same normalization before hashing or verification.
 - Issue #40 uses route-scoped Multer 2 memory storage and `file-type` magic-byte detection for development/test-only JPEG, PNG, and WebP uploads. Production keeps the upload/delete contract registered but returns `503 UPLOAD_STORAGE_UNAVAILABLE` before multipart processing; `/uploads/*` is not served in production.
+- Issue #32 adds `@testing-library/react`, `@testing-library/dom`, `@testing-library/user-event`, and `jsdom` as web test-only development dependencies. The human approver accepted this before QA selects the wider component/E2E approach because the issue's required header, route-guard, focus, and keyboard tests need rendered components. Production code and runtime dependencies are unchanged.
+- Issue #32 connects React Hook Form to Zod with a small local resolver (`src/web/src/lib/zodFormResolver.ts`) instead of adding `@hookform/resolvers`.
+- Issue #32 redirects an authenticated visitor away from both `/login` and `/register`, honoring a validated `returnTo` before the role default. Login and registration complete through the same redirect, so there is one navigation path after authentication.
+- Until their own issues add routes, unbuilt `/account/*` and `/admin/*` child paths render their guarded landing page. Anonymous access to those paths still redirects to `/login` with `returnTo`.
 
 ## Evidence Expected
 

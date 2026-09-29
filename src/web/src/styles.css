@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-canvas font-body text-body leading-relaxed text-paper;
+  }
+
+  :focus-visible {
+    @apply outline outline-2 outline-offset-2 outline-paper ring-4 ring-focus;
+  }
+}
