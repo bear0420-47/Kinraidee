@@ -171,3 +171,31 @@ No blocking findings. All #32 routes, header labels, guard redirects, safe `retu
 Human reviewer: Pending pull-request review
 Decision: Pending
 Date: TBD
+
+## Issue #33 — Zone CRUD endpoints
+
+### Status
+
+Automated two-axis review complete on 2026-09-29. Human pull-request approval remains pending.
+
+### Standards review
+
+No documented-standard violations remain. The module follows the routes/controller/dto/service/repository/helpers/openapi layering; controllers only parse, call the service, and use response helpers; Prisma access stays in the repository; routes register in `routes.ts` and OpenAPI through `registerZonesOpenApi`. Code reused by the next catalog modules was placed in specifically named shared files (`shared/validation.ts`, `shared/localization.ts`, `shared/errorEnvelope.ts`, `shared/auditContext.ts`, `shared/recordChanges.ts`, `lib/prismaErrors.ts`, `modules/audit-logs/audit-logs.repository.ts`). Mutations reuse issue #40's `requireAdmin` middleware instead of adding a second role guard, and auth OpenAPI now uses the shared error-envelope schema with byte-identical generated output. Judgement calls accepted: the repository calls the pure `toAdminZone` mapper because audit snapshots must be built inside the mutation transaction; `shared/auditContext.ts` imports the auth module's `unauthenticatedError`, following the existing `requireAuth` precedent.
+
+### Specification review
+
+No findings. Routes, public/admin response shapes, sorting, validation, 404/409 behavior, hard delete with in-use protection, `UserPreference.zoneId` set-null, transactional audit snapshots, and all required tests are implemented and were verified against a real database. Notes: `sortOrder` is limited to the PostgreSQL 32-bit integer range so out-of-range values return 400 instead of a database error; the duplicate-name code is `ZONE_NAME_ALREADY_EXISTS` because the issue fixes only the status. The in-use check counts soft-deleted restaurants too, which is correct because they still reference the zone; the future zone admin screen (#34) should explain that soft-deleted restaurants also block deletion.
+
+### Review scope
+
+- Diff: `git diff feat/32-auth-pages...feat/33-zone-crud`
+- Commit: `feat(api): implement Zone CRUD endpoints (#33)`
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/03-implementation/engineering-guidelines.md`, `docs/03-implementation/data-model.md`, and `docs/03-implementation/module-implementation-checklist.md`
+- Specification source: GitHub issue #33
+- Server-side authorization, input validation, audit transaction and snapshot content, delete restrictions, error envelopes, log content, OpenAPI, and out-of-scope boundaries
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD
