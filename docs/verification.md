@@ -237,3 +237,33 @@ Run against the real API and database at 375px and desktop widths:
 - The registration page states the approved account-email purpose from the specification's data inventory (LR1): optional account features only, not used for advertising or unrelated disclosure, and anonymous recommendations need no account.
 - No auth modal, `/admin/login`, role selector, email-verification wording, password reset/change, profile fields, or user-management links were added.
 - Known limitation: the design-system fonts (Nunito, Delius Swash Caps) are declared as Tailwind font tokens but not loaded, so browsers use the declared fallbacks. Loading them from Google Fonts would send visitor IP addresses to a third party and needs a separate decision.
+
+## Issue #33 — Zone CRUD endpoints
+
+### Scope
+
+- Verification date: 2026-09-29 (ICT, `UTC+07:00`)
+- Environment: local Windows 11 workspace, Node.js 24.12.0, pnpm 12.4.2, PostgreSQL 17 through the committed Docker Compose service
+- Database: isolated local database `kinraidee_verify` with the committed migration and #29 administrator seed; removed after verification
+- Routes: `GET /api/zones` (public), `POST /api/zones`, `PATCH /api/zones/:id`, `DELETE /api/zones/:id` (`ADMIN`)
+- Shared additions reused by later catalog modules: `shared/validation.ts` (field-level `VALIDATION_ERROR`), `shared/localization.ts`, `shared/errorEnvelope.ts` (now also used by auth OpenAPI), `shared/auditContext.ts`, `shared/recordChanges.ts`, `lib/prismaErrors.ts`, and `modules/audit-logs/audit-logs.repository.ts` (transactional audit writer). Mutations reuse the `requireAdmin` middleware added by issue #40
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm --filter api test` | 0 | Pass: 19 files/126 tests (47 new; re-run after rebasing onto issue #40). Covers DTO trimming, empty/missing localized names, description optional/null/partial, `sortOrder` int32 boundaries, non-integer and string rejection, unknown-field rejection, empty update, empty id; service ordering passthrough, timestamp-free public list, duplicate Thai/English/unknown-column mapping to 409, unknown id 404, unchanged update skipping the write, concurrent delete/update races (P2003 → `ZONE_IN_USE`, P2025 → `ZONE_NOT_FOUND`), blocked delete never calling the repository, unexpected errors rethrown; HTTP routes for public list, anonymous 401 and `USER` 403 on every mutation without reaching the service, `ADMIN` create/update/delete with audit context, field-level 400, and error envelopes; OpenAPI paths, security, and components. |
+| `NODE_ENV=test DATABASE_URL=<verify-db> … pnpm exec tsx .tmp-issue33-integration.mts` | 0 | Pass: temporary script drove the real app and Prisma repository. Verified ordering by `sortOrder` then Thai name; `CREATE`/`UPDATE`/`DELETE` audit rows with actor ID, the response `x-request-id`, and before/after snapshots equal to the API responses; duplicate Thai and English names return 409 with the offending field and no audit row; an unchanged update writes no audit row; unknown id returns 404; deleting a zone referenced by a restaurant returns 409 `ZONE_IN_USE` and leaves the zone and audit log unchanged; a successful delete returns 204, sets `UserPreference.zoneId` to `null`, and repeats as 404; anonymous 401 and `USER` 403 on every mutation write no audit row. The script was removed after the run. |
+| Deliberate regression checks | — | Removing the admin guard from `POST /api/zones` and removing the in-use check each failed the suite (3 failures), then both were restored. |
+| `pnpm verify` | 0 | Pass: API 19 files/126 tests; web 6 files/55 tests; OpenAPI generation and web build completed. Generated OpenAPI adds `/api/zones` and `/api/zones/{id}`; the auth section is unchanged after moving to the shared error-envelope schema. |
+| `pnpm --filter web openapi:generate` | 0 | Pass: web types regenerated from the updated contract. |
+| `prettier --check --end-of-line auto .` in `src/api` and `src/web` | 0 | Pass. |
+| `node tests/wireframe-requirements.test.cjs` | 1 | Existing design-prototype gap outside issue #33: 19 passed and 5 failed. |
+
+### Security and scope checks
+
+- Authorization is server-side: `requireAuth` then `requireAdmin` on every mutation; the audit context also refuses a request without an authenticated user.
+- One resource path `/api/zones`; no `/api/admin/zones`.
+- Zone stays a hard-delete model without `isActive`, `retiredAt`, or `deletedAt`; restaurants are never reassigned automatically; `ที่ไหนก็ได้` is not stored.
+- The mutation and its audit row commit in one transaction; failed mutations and reads write no audit row. Zone snapshots contain no personal data.
+- Duplicate-name errors use code `ZONE_NAME_ALREADY_EXISTS` (the issue fixes only the 409 status).

@@ -24,15 +24,6 @@ export const authUserEnvelopeSchema = z.object({
   data: z.object({ user: authUserSchema }),
 })
 
-export const authErrorEnvelopeSchema = z.object({
-  error: z.object({
-    code: z.string(),
-    message: z.string(),
-    requestId: z.string(),
-    fields: z.record(z.string(), z.string()).optional(),
-  }),
-})
-
 export type AuthCredentials = z.infer<typeof authCredentialsSchema>
 export type AuthUser = z.infer<typeof authUserSchema>
 

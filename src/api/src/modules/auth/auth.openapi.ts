@@ -1,11 +1,8 @@
 import type { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi'
 
 import { AUTH_COOKIE_NAME } from '@/config/auth'
-import {
-  authCredentialsSchema,
-  authErrorEnvelopeSchema,
-  authUserEnvelopeSchema,
-} from './auth.dto'
+import { errorEnvelopeSchema } from '@/shared/errorEnvelope'
+import { authCredentialsSchema, authUserEnvelopeSchema } from './auth.dto'
 
 export function registerAuthOpenApi(registry: OpenAPIRegistry) {
   registry.registerComponent('securitySchemes', 'cookieAuth', {
@@ -22,10 +19,7 @@ export function registerAuthOpenApi(registry: OpenAPIRegistry) {
     'AuthUserEnvelope',
     authUserEnvelopeSchema,
   )
-  const errorEnvelope = registry.register(
-    'ErrorEnvelope',
-    authErrorEnvelopeSchema,
-  )
+  const errorEnvelope = registry.register('ErrorEnvelope', errorEnvelopeSchema)
 
   registry.registerPath({
     method: 'post',
