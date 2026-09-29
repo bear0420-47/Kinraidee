@@ -267,3 +267,31 @@ Run against the real API and database at 375px and desktop widths:
 - Zone stays a hard-delete model without `isActive`, `retiredAt`, or `deletedAt`; restaurants are never reassigned automatically; `ที่ไหนก็ได้` is not stored.
 - The mutation and its audit row commit in one transaction; failed mutations and reads write no audit row. Zone snapshots contain no personal data.
 - Duplicate-name errors use code `ZONE_NAME_ALREADY_EXISTS` (the issue fixes only the 409 status).
+
+## Issue #35 — FoodType CRUD endpoints
+
+### Scope
+
+- Verification date: 2026-09-29 (ICT, `UTC+07:00`)
+- Environment and database: same as issue #33 (`kinraidee_verify`, removed after verification)
+- Routes: `GET /api/food-types` (public), `POST /api/food-types`, `PATCH /api/food-types/:id`, `DELETE /api/food-types/:id` (`ADMIN`)
+- Shared additions: `shared/iconKey.ts` (icon-key rule shared with #37; decision recorded in `docs/plan.md`) and `shared/duplicateNameError.ts` (now also used by zones, with identical output)
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm --filter api test` | 0 | Pass: 25 files/183 tests (57 new; re-run after rebasing onto issue #40). Covers the icon-key rule (valid keys, trimming, 50-character boundary, empty/whitespace/null to `null`, and rejection of SVG, HTML, URL, data URI, JSON, uppercase, underscore, and malformed keys); duplicate-name field mapping; food-type DTO trimming, empty/missing names, icon validation, `sortOrder` boundaries, unknown fields (including `description`), empty update, and empty id; service ordering, timestamp-free public list, duplicate 409, unknown 404, unchanged update skipping the write, clearing the icon, blocked and raced deletes, and audit context; HTTP routes for public list, anonymous 401 and `USER` 403 without reaching the service, `ADMIN` create/update/delete, blank icon stored as `null`, and SVG icon 400; OpenAPI paths and security. |
+| `NODE_ENV=test DATABASE_URL=<verify-db> … pnpm exec tsx .tmp-issue35-integration.mts` | 0 | Pass: temporary script drove the real app and Prisma repository. Verified ordering by `sortOrder` then Thai name; a whitespace icon stored as SQL `NULL`; `CREATE`/`UPDATE`/`DELETE` audit snapshots equal to the API responses; SVG icon 400 and duplicate Thai name 409 with no audit row; clearing the icon with `""`; deleting a food type referenced by a menu item returns 409 `FOOD_TYPE_IN_USE` and changes nothing; a successful delete returns 204 and sets `UserPreference.foodTypeId` to `null`; anonymous 401 and `USER` 403 on every mutation. The script was removed after the run. |
+| Deliberate regression checks | — | Removing the admin guard from `PATCH /api/food-types/:id` and removing the in-use check each failed the suite (3 failures), then both were restored. |
+| `pnpm verify` | 0 | Pass: API 25 files/183 tests; web 6 files/55 tests; OpenAPI generation and web build completed with `/api/food-types` and `/api/food-types/{id}`. |
+| `pnpm --filter web openapi:generate` | 0 | Pass. |
+| `prettier --check --end-of-line auto .` in `src/api` and `src/web` | 0 | Pass. |
+| `node tests/wireframe-requirements.test.cjs` | 1 | Existing design-prototype gap outside issue #35: 19 passed and 5 failed. |
+
+### Security and scope checks
+
+- Mutations require `ADMIN` server-side; one resource path `/api/food-types`.
+- FoodType stays a hard-delete model without `description`, `isActive`, `retiredAt`, or `deletedAt`; menu items are never reassigned automatically; `อะไรก็ได้` is not stored.
+- `icon` stores only a validated key; no icon assets or components were added to the API.
+- Duplicate-name errors use code `FOOD_TYPE_NAME_ALREADY_EXISTS`.

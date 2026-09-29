@@ -4,12 +4,8 @@ import {
   isRecordNotFoundError,
   isUniqueConstraintError,
 } from '@/lib/prismaErrors'
+import { duplicateNameError } from '@/shared/duplicateNameError'
 import { HttpError } from '@/shared/httpError'
-
-const NAME_FIELDS: Record<string, string> = {
-  nameTh: 'name.th',
-  nameEn: 'name.en',
-}
 
 export function zoneNotFoundError() {
   return new HttpError({
@@ -27,27 +23,13 @@ export function zoneInUseError() {
   })
 }
 
-export function zoneNameTakenError(columns: string[]) {
-  const fields = columns.flatMap((column) =>
-    NAME_FIELDS[column] ? [NAME_FIELDS[column]] : [],
-  )
-
-  return new HttpError({
-    status: 409,
-    code: 'ZONE_NAME_ALREADY_EXISTS',
-    message: 'Another zone already uses this name.',
-    fields: Object.fromEntries(
-      (fields.length > 0 ? fields : ['name']).map((field) => [
-        field,
-        'Already used by another zone.',
-      ]),
-    ),
-  })
-}
-
 export function toZoneWriteError(error: unknown) {
   if (isUniqueConstraintError(error)) {
-    return zoneNameTakenError(getUniqueConstraintFields(error))
+    return duplicateNameError(
+      'ZONE_NAME_ALREADY_EXISTS',
+      'zone',
+      getUniqueConstraintFields(error),
+    )
   }
   if (isForeignKeyConstraintError(error)) return zoneInUseError()
   if (isRecordNotFoundError(error)) return zoneNotFoundError()
