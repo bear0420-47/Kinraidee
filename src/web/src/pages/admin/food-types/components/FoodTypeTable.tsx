@@ -1,7 +1,11 @@
-import { PencilSimple, Trash } from '@phosphor-icons/react'
-
-import { Button } from '@/components/Button'
 import { IconKeyLabel } from '@/components/IconKeyLabel'
+import { RowActions } from '@/components/RowActions'
+import {
+  actionsColumnClassName,
+  bodyCellClassName,
+  headerCellClassName,
+  numberColumnClassName,
+} from '@/components/tableStyles'
 import { foodTypeIcons } from '@/lib/foodTypeIcons'
 import type { FoodType } from '@/schemas/admin/food-types/foodTypeSchemas'
 
@@ -10,8 +14,6 @@ type FoodTypeTableProps = {
   onEdit: (foodType: FoodType) => void
   onDelete: (foodType: FoodType) => void
 }
-
-const cellClassName = 'border-t-2 border-line-soft px-4 py-3 align-top'
 
 export function FoodTypeTable({
   foodTypes,
@@ -24,19 +26,25 @@ export function FoodTypeTable({
         <caption className="sr-only">รายการประเภทอาหาร</caption>
         <thead className="bg-peach-deep text-small">
           <tr>
-            <th scope="col" className="px-4 py-3">
+            <th scope="col" className={headerCellClassName}>
               ชื่อภาษาไทย
             </th>
-            <th scope="col" className="px-4 py-3">
+            <th scope="col" className={headerCellClassName}>
               ชื่อภาษาอังกฤษ
             </th>
-            <th scope="col" className="px-4 py-3">
+            <th scope="col" className={headerCellClassName}>
               ไอคอน
             </th>
-            <th scope="col" className="px-4 py-3">
+            <th
+              scope="col"
+              className={`${headerCellClassName} ${numberColumnClassName}`}
+            >
               ลำดับ
             </th>
-            <th scope="col" className="px-4 py-3">
+            <th
+              scope="col"
+              className={`${headerCellClassName} ${actionsColumnClassName}`}
+            >
               การจัดการ
             </th>
           </tr>
@@ -44,33 +52,23 @@ export function FoodTypeTable({
         <tbody>
           {foodTypes.map((foodType) => (
             <tr key={foodType.id}>
-              <th scope="row" className={`${cellClassName} font-bold`}>
+              <th scope="row" className={`${bodyCellClassName} font-bold`}>
                 {foodType.name.th}
               </th>
-              <td className={cellClassName}>{foodType.name.en}</td>
-              <td className={cellClassName}>
+              <td className={bodyCellClassName}>{foodType.name.en}</td>
+              <td className={bodyCellClassName}>
                 <IconKeyLabel registry={foodTypeIcons} icon={foodType.icon} />
               </td>
-              <td className={cellClassName}>{foodType.sortOrder}</td>
-              <td className={cellClassName}>
-                <div className="flex gap-2">
-                  <Button
-                    variant="secondary"
-                    aria-label={`แก้ไขประเภทอาหาร ${foodType.name.th}`}
-                    onClick={() => onEdit(foodType)}
-                  >
-                    <PencilSimple aria-hidden weight="bold" />
-                    แก้ไข
-                  </Button>
-                  <Button
-                    variant="secondary"
-                    aria-label={`ลบประเภทอาหาร ${foodType.name.th}`}
-                    onClick={() => onDelete(foodType)}
-                  >
-                    <Trash aria-hidden weight="bold" />
-                    ลบ
-                  </Button>
-                </div>
+              <td className={`${bodyCellClassName} ${numberColumnClassName}`}>
+                {foodType.sortOrder}
+              </td>
+              <td className={`${bodyCellClassName} ${actionsColumnClassName}`}>
+                <RowActions
+                  entityLabel="ประเภทอาหาร"
+                  name={foodType.name.th}
+                  onEdit={() => onEdit(foodType)}
+                  onDelete={() => onDelete(foodType)}
+                />
               </td>
             </tr>
           ))}
