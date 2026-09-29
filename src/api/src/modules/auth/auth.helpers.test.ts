@@ -2,7 +2,7 @@ import { UserRole } from '@prisma/client'
 import { decodeJwt, SignJWT } from 'jose'
 import { beforeAll, describe, expect, it, vi } from 'vitest'
 
-import { AUTH_TOKEN_LIFETIME_SECONDS } from './auth.constants'
+import { AUTH_TOKEN_LIFETIME_SECONDS } from '@/config/auth'
 
 const testEnv = {
   NODE_ENV: 'test',
@@ -16,23 +16,27 @@ const testEnv = {
 }
 
 let helpers: typeof import('./auth.helpers')
+let security: typeof import('@/lib/authSecurity')
 
 beforeAll(async () => {
   for (const [name, value] of Object.entries(testEnv)) vi.stubEnv(name, value)
   helpers = await import('./auth.helpers')
+  security = await import('@/lib/authSecurity')
 })
 
 describe('auth security helpers', () => {
   it('hashes and verifies passwords with Argon2id', async () => {
-    const hash = await helpers.hashPassword('password8')
+    const hash = await security.hashPassword('password8')
 
     expect(hash).toMatch(/^\$argon2id\$/)
-    await expect(helpers.verifyPassword(hash, 'password8')).resolves.toBe(true)
-    await expect(helpers.verifyPassword(hash, 'incorrect')).resolves.toBe(false)
+    await expect(security.verifyPassword(hash, 'password8')).resolves.toBe(true)
+    await expect(security.verifyPassword(hash, 'incorrect')).resolves.toBe(
+      false,
+    )
   })
 
   it('signs the required JWT claims with a 7-day lifetime', async () => {
-    const token = await helpers.signAuthToken({
+    const token = await security.signAuthToken({
       id: 'user_1',
       role: UserRole.ADMIN,
     })
@@ -42,7 +46,7 @@ describe('auth security helpers', () => {
     expect(claims.role).toBe(UserRole.ADMIN)
     expect(claims.iat).toEqual(expect.any(Number))
     expect(claims.exp! - claims.iat!).toBe(AUTH_TOKEN_LIFETIME_SECONDS)
-    await expect(helpers.verifyAuthToken(token)).resolves.toMatchObject({
+    await expect(security.verifyAuthToken(token)).resolves.toMatchObject({
       sub: 'user_1',
       role: UserRole.ADMIN,
     })
@@ -63,8 +67,8 @@ describe('auth security helpers', () => {
       .setExpirationTime('7d')
       .sign(secret)
 
-    await expect(helpers.verifyAuthToken(expired)).rejects.toThrow()
-    await expect(helpers.verifyAuthToken(wrongAlgorithm)).rejects.toThrow()
+    await expect(security.verifyAuthToken(expired)).rejects.toThrow()
+    await expect(security.verifyAuthToken(wrongAlgorithm)).rejects.toThrow()
   })
 
   it('uses the approved cookie settings and production Secure flag', () => {

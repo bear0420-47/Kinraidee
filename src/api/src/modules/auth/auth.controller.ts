@@ -1,12 +1,10 @@
 import type { RequestHandler } from 'express'
 
+import { AUTH_COOKIE_NAME } from '@/config/auth'
+import { env } from '@/config/env'
 import { created, noContent, ok } from '@/shared/httpResponse'
 import { parseAuthCredentials } from './auth.dto'
-import {
-  AUTH_COOKIE_NAME,
-  getAuthCookieClearOptions,
-  getAuthCookieOptions,
-} from './auth.helpers'
+import { getAuthCookieClearOptions, getAuthCookieOptions } from './auth.helpers'
 import { authService, type AuthService } from './auth.service'
 
 export type AuthController = {
@@ -21,18 +19,29 @@ export function createAuthController(
 ): AuthController {
   const register: RequestHandler = async (request, response) => {
     const result = await service.register(parseAuthCredentials(request.body))
-    response.cookie(AUTH_COOKIE_NAME, result.token, getAuthCookieOptions())
+    response.cookie(
+      AUTH_COOKIE_NAME,
+      result.token,
+      getAuthCookieOptions(env.NODE_ENV),
+    )
     return created(response, { user: result.user })
   }
 
   const login: RequestHandler = async (request, response) => {
     const result = await service.login(parseAuthCredentials(request.body))
-    response.cookie(AUTH_COOKIE_NAME, result.token, getAuthCookieOptions())
+    response.cookie(
+      AUTH_COOKIE_NAME,
+      result.token,
+      getAuthCookieOptions(env.NODE_ENV),
+    )
     return ok(response, { user: result.user })
   }
 
   const logout: RequestHandler = (_request, response) => {
-    response.clearCookie(AUTH_COOKIE_NAME, getAuthCookieClearOptions())
+    response.clearCookie(
+      AUTH_COOKIE_NAME,
+      getAuthCookieClearOptions(env.NODE_ENV),
+    )
     return noContent(response)
   }
 

@@ -140,6 +140,7 @@ describe('auth service', () => {
       code: 'UNAUTHENTICATED',
       message: 'Authentication required.',
     })
+    expect(verifyPassword).toHaveBeenCalledOnce()
   })
 
   it('loads the current user and rejects a deleted account', async () => {

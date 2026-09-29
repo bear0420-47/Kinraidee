@@ -1,9 +1,7 @@
 import type { NextFunction, Request, Response } from 'express'
-import {
-  AUTH_COOKIE_NAME,
-  unauthenticatedError,
-  verifyAuthToken,
-} from '@/modules/auth/auth.helpers'
+import { AUTH_COOKIE_NAME } from '@/config/auth'
+import { verifyAuthToken } from '@/lib/authSecurity'
+import { unauthenticatedError } from '@/modules/auth/auth.helpers'
 
 export async function requireAuth(
   request: Request,
@@ -13,11 +11,13 @@ export async function requireAuth(
   const token = request.cookies?.[AUTH_COOKIE_NAME]
   if (typeof token !== 'string' || !token) throw unauthenticatedError()
 
+  let claims
   try {
-    const claims = await verifyAuthToken(token)
-    request.user = { id: claims.sub, role: claims.role }
-    next()
+    claims = await verifyAuthToken(token)
   } catch {
     throw unauthenticatedError()
   }
+
+  request.user = { id: claims.sub, role: claims.role }
+  return next()
 }

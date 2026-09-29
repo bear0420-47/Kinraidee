@@ -1,5 +1,6 @@
 import cookieParser from 'cookie-parser'
 import express, { type Express, type RequestHandler } from 'express'
+import { SignJWT } from 'jose'
 import request from 'supertest'
 import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -13,7 +14,7 @@ const testEnv = {
 
 let createAuthController: typeof import('./auth.controller').createAuthController
 let createAuthRoutes: typeof import('./auth.routes').createAuthRoutes
-let signAuthToken: typeof import('./auth.helpers').signAuthToken
+let signAuthToken: typeof import('@/lib/authSecurity').signAuthToken
 let unauthenticatedError: typeof import('./auth.helpers').unauthenticatedError
 let errorHandler: typeof import('@/middleware/errorHandler').errorHandler
 let logger: typeof import('@/lib/logger').logger
@@ -24,7 +25,8 @@ beforeAll(async () => {
   for (const [name, value] of Object.entries(testEnv)) vi.stubEnv(name, value)
   ;({ createAuthController } = await import('./auth.controller'))
   ;({ createAuthRoutes } = await import('./auth.routes'))
-  ;({ signAuthToken, unauthenticatedError } = await import('./auth.helpers'))
+  ;({ signAuthToken } = await import('@/lib/authSecurity'))
+  ;({ unauthenticatedError } = await import('./auth.helpers'))
   ;({ errorHandler } = await import('@/middleware/errorHandler'))
   ;({ logger } = await import('@/lib/logger'))
   ;({ requestIdMiddleware } = await import('@/middleware/requestId'))
@@ -119,6 +121,23 @@ describe('auth routes', () => {
     expect(response.text).not.toContain('password8')
   })
 
+  it('logs in and sets the auth cookie', async () => {
+    service.login.mockResolvedValue({ user: safeUser, token: 'signed-token' })
+
+    const response = await request(createTestApp())
+      .post('/api/auth/login')
+      .send({ email: safeUser.email, password: 'password8' })
+
+    expect(response.status).toBe(200)
+    expect(response.body).toEqual({ data: { user: safeUser } })
+    expect(response.headers['set-cookie']?.[0]).toContain(
+      'kinraidee_auth=signed-token',
+    )
+    expect(response.headers['set-cookie']?.[0]).toContain('HttpOnly')
+    expect(response.headers['set-cookie']?.[0]).toContain('SameSite=Lax')
+    expect(response.headers['set-cookie']?.[0]).toContain('Max-Age=604800')
+  })
+
   it('clears the cookie idempotently', async () => {
     const response = await request(createTestApp()).post('/api/auth/logout')
 
@@ -148,6 +167,23 @@ describe('auth routes', () => {
     const requestBuilder = request(createTestApp()).get('/api/auth/me')
     if (cookie) requestBuilder.set('Cookie', cookie)
     const response = await requestBuilder
+
+    expect(response.status).toBe(401)
+    expect(response.body.error.code).toBe('UNAUTHENTICATED')
+    expect(service.getCurrentUser).not.toHaveBeenCalled()
+  })
+
+  it('returns 401 for an expired cookie', async () => {
+    const expiredToken = await new SignJWT({ role: safeUser.role })
+      .setProtectedHeader({ alg: 'HS256' })
+      .setSubject(safeUser.id)
+      .setIssuedAt(1)
+      .setExpirationTime(2)
+      .sign(new TextEncoder().encode(testEnv.JWT_SECRET))
+
+    const response = await request(createTestApp())
+      .get('/api/auth/me')
+      .set('Cookie', `kinraidee_auth=${expiredToken}`)
 
     expect(response.status).toBe(401)
     expect(response.body.error.code).toBe('UNAUTHENTICATED')

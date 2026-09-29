@@ -1,12 +1,13 @@
 import { HttpError } from '@/shared/httpError'
-import type { AuthCredentials, AuthUser } from './auth.dto'
-import { toAuthUser } from './auth.dto'
 import {
+  AUTH_TIMING_SAFE_PASSWORD_HASH,
   hashPassword,
   signAuthToken,
-  unauthenticatedError,
   verifyPassword,
-} from './auth.helpers'
+} from '@/lib/authSecurity'
+import type { AuthCredentials, AuthUser } from './auth.dto'
+import { toAuthUser } from './auth.dto'
+import { unauthenticatedError } from './auth.helpers'
 import {
   authRepository,
   DuplicateEmailError,
@@ -59,9 +60,10 @@ export function createAuthService(
 
     async login(credentials: AuthCredentials): Promise<AuthResult> {
       const user = await dependencies.repository.findByEmail(credentials.email)
-      const passwordMatches = user
-        ? await dependencies.verifyPassword(user.password, credentials.password)
-        : false
+      const passwordMatches = await dependencies.verifyPassword(
+        user?.password ?? AUTH_TIMING_SAFE_PASSWORD_HASH,
+        credentials.password,
+      )
 
       if (!user || !passwordMatches) throw unauthenticatedError()
 

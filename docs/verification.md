@@ -144,10 +144,10 @@ The five wireframe failures are in unmodified prototype areas and do not overlap
 
 | Command | Exit code | Result |
 |---|---:|---|
-| `pnpm --filter api exec vitest run src/modules/auth` | 0 | Pass: 5 files/24 tests covering credential validation, Argon2id, JWT claims/expiry/algorithm allowlist, cookie flags, service behavior, HTTP routes, and OpenAPI registration. |
+| `pnpm --filter api exec vitest run src/modules/auth` | 0 | Pass: 5 files/26 tests covering credential validation, Argon2id, JWT claims/expiry/algorithm allowlist, cookie flags, service behavior, HTTP routes, and OpenAPI registration. |
 | `DATABASE_URL=<test-db> pnpm --filter api prisma migrate deploy` | 0 | Pass: the committed migration applied to an empty isolated database. |
 | `NODE_ENV=test DATABASE_URL=<test-db> JWT_SECRET=<test-secret> CORS_ALLOWED_ORIGINS=http://localhost:5173 pnpm --filter api exec tsx .tmp-issue31-integration.mts` | 0 | Pass: temporary verification script exercised the real Prisma repository and HTTP app. Registration normalized credentials, created one `USER`, stored only an Argon2id hash, omitted password data, and set the approved cookie. Duplicate registration returned 409; unknown-email and wrong-password login returned the same generic 401; login, `/me`, invalid-cookie rejection, and logout passed. The temporary script was removed after the run. |
-| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests, and builds completed. API: 10 files/54 tests; web: 1 file/1 test. API OpenAPI generation and web production build completed. |
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests, and builds completed. API: 10 files/56 tests; web: 1 file/1 test. API OpenAPI generation and web production build completed. |
 | `pnpm format` | 0 | Pass: API and web files matched Prettier formatting. |
 | `git diff --check` | 0 | Pass. |
 | `node tests/wireframe-requirements.test.cjs` | 1 | Existing design-prototype gap outside issue #31: 19 passed and 5 failed for missing Profile/Admin prototype states. No prototype or wireframe test was modified. |
@@ -159,6 +159,6 @@ The five wireframe failures are in unmodified prototype areas and do not overlap
 - Passwords use the approved environment-backed Argon2id parameters and never appear in API responses.
 - JWTs use `HS256` with an explicit verification allowlist and contain `sub`, `role`, `iat`, and `exp` claims with a 7-day lifetime.
 - The `kinraidee_auth` cookie is `HttpOnly`, `SameSite=Lax`, `Path=/`, and `Secure` in production. Logout clears the same cookie scope.
-- Missing, invalid, and expired authentication tokens return the same generic 401 response. Login does not expose whether an email exists.
+- Missing, invalid, and expired authentication tokens return the same generic 401 response. Login does not expose whether an email exists and performs a dummy Argon2id verification for unknown emails to reduce timing differences.
 - Generated OpenAPI contains all four auth routes, the cookie security scheme, strict credentials, and the 8-character password minimum.
 - No session table, refresh token, password reset/change, email verification, OAuth, admin-management flow, or authentication UI was added.
