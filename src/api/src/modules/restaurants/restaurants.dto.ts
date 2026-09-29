@@ -20,7 +20,13 @@ const nullablePhoneSchema = z.preprocess(
 )
 const nullableImageUrlSchema = z.preprocess(
   emptyStringToNull,
-  z.string().url().nullable(),
+  z
+    .string()
+    .url()
+    .refine((value) => /^https?:\/\//i.test(value), {
+      message: 'Must use HTTP or HTTPS.',
+    })
+    .nullable(),
 )
 
 const restaurantFieldsSchema = z
@@ -72,10 +78,12 @@ export const restaurantZoneSchema = z.object({
 
 export const adminRestaurantSchema = z.object({
   id: z.string(),
+  zoneId: z.string(),
   zone: restaurantZoneSchema,
   name: localizationSchema,
   description: localizationSchema.nullable(),
   phone: z.string().nullable(),
+  imageKey: z.string().nullable(),
   imageUrl: z.string().nullable(),
   deletedAt: z.iso.datetime().nullable(),
   createdAt: z.iso.datetime(),
@@ -175,6 +183,7 @@ export function toAdminRestaurant(
 ): AdminRestaurant {
   return {
     id: restaurant.id,
+    zoneId: restaurant.zoneId,
     zone: {
       id: restaurant.zone.id,
       name: toLocalization(restaurant.zone.nameTh, restaurant.zone.nameEn),
@@ -185,6 +194,7 @@ export function toAdminRestaurant(
       restaurant.descriptionEn,
     ),
     phone: restaurant.phone,
+    imageKey: restaurant.imageKey,
     imageUrl: restaurant.imageUrl,
     deletedAt: restaurant.deletedAt?.toISOString() ?? null,
     createdAt: restaurant.createdAt.toISOString(),

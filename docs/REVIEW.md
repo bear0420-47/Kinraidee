@@ -255,3 +255,31 @@ One accepted deviation. Issue #37 says the API rejects empty icon keys; the huma
 Human reviewer: Pending pull-request review
 Decision: Pending
 Date: TBD
+
+## Issue #39 — Restaurant CRUD endpoints
+
+### Status
+
+Automated two-axis review complete on 2026-09-29. No unresolved findings remain. Human pull-request approval remains pending.
+
+### Standards review
+
+The review found that the initial response omitted `zoneId` and `imageKey` from the locked data-model API contract; both are now included while retaining the issue-required localized `zone` object. It also found that `z.string().url()` accepted non-web schemes; Restaurant write inputs now accept only HTTP(S) external image URLs, with regression coverage. Transactional mutation and audit composition remains in the repository, matching the already reviewed Zone/FoodType/Taste module convention: Prisma access and the transaction boundary stay together while the service owns validation, not-found decisions, unchanged-write handling, and error mapping. The possible duplicated transaction/audit shape remains a judgement call; extracting a Restaurant-specific abstraction would add indirection without reuse beyond this module.
+
+### Specification review
+
+No findings remain. The initial review found that concurrent delete or restore requests could both observe the old state and create duplicate timestamp/audit changes. Both operations now use a conditional `updateMany` claim inside the transaction; only the request that changes state updates child records or writes the audit event, and race-loser tests cover both paths. ADMIN authorization, pagination/filtering/search/sort, Zone validation, localized input, phone trimming, HTTP(S) image replacement, duplicate names, transactional child soft deletion, Restaurant-only restore, minimized audit snapshots, OpenAPI, and scope exclusions match issue #39.
+
+### Review scope
+
+- Diff: `git diff origin/main...HEAD`
+- Commits: `ebe7584 feat(api): implement Restaurant CRUD endpoints (#39)` plus the review-fix commit
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/03-implementation/engineering-guidelines.md`, `docs/03-implementation/data-model.md`, and `docs/03-implementation/module-implementation-checklist.md`
+- Specification source: GitHub issue #39 and its approved implementation note
+- Authorization, validation, response contract, transaction boundaries, concurrent idempotency, child soft deletion, restore behavior, audit minimization, OpenAPI, and out-of-scope boundaries
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD

@@ -1718,6 +1718,7 @@ export interface components {
             data: {
                 restaurant: {
                     id: string;
+                    zoneId: string;
                     zone: {
                         id: string;
                         name: {
@@ -1734,6 +1735,7 @@ export interface components {
                         en: string;
                     } | null;
                     phone: string | null;
+                    imageKey: string | null;
                     imageUrl: string | null;
                     /** Format: date-time */
                     deletedAt: string | null;
@@ -1748,6 +1750,7 @@ export interface components {
             data: {
                 items: {
                     id: string;
+                    zoneId: string;
                     zone: {
                         id: string;
                         name: {
@@ -1764,6 +1767,7 @@ export interface components {
                         en: string;
                     } | null;
                     phone: string | null;
+                    imageKey: string | null;
                     imageUrl: string | null;
                     /** Format: date-time */
                     deletedAt: string | null;

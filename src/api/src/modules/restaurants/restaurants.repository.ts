@@ -106,9 +106,23 @@ export const restaurantsRepository = {
       }
 
       const deletedAt = new Date()
-      const restaurant = await tx.restaurant.update({
-        where: { id },
+      const claimed = await tx.restaurant.updateMany({
+        where: { id, deletedAt: null },
         data: { deletedAt },
+      })
+      if (claimed.count === 0) {
+        return {
+          restaurant: await tx.restaurant.findUniqueOrThrow({
+            where: { id },
+            include: withZone,
+          }),
+          affectedMenuItemCount: 0,
+          changed: false,
+        }
+      }
+
+      const restaurant = await tx.restaurant.findUniqueOrThrow({
+        where: { id },
         include: withZone,
       })
       const affected = await tx.menuItem.updateMany({
@@ -142,9 +156,22 @@ export const restaurantsRepository = {
       })
       if (!before.deletedAt) return { restaurant: before, changed: false }
 
-      const restaurant = await tx.restaurant.update({
-        where: { id },
+      const claimed = await tx.restaurant.updateMany({
+        where: { id, deletedAt: { not: null } },
         data: { deletedAt: null },
+      })
+      if (claimed.count === 0) {
+        return {
+          restaurant: await tx.restaurant.findUniqueOrThrow({
+            where: { id },
+            include: withZone,
+          }),
+          changed: false,
+        }
+      }
+
+      const restaurant = await tx.restaurant.findUniqueOrThrow({
+        where: { id },
         include: withZone,
       })
       await createAuditLog(tx, {

@@ -74,6 +74,7 @@ describe('Restaurant DTOs', () => {
   it.each([
     ['empty Thai name', { ...validBody, name: { th: ' ', en: 'Valid' } }],
     ['invalid URL', { ...validBody, imageUrl: 'not-a-url' }],
+    ['non-HTTP URL', { ...validBody, imageUrl: 'javascript:alert(1)' }],
     ['empty zone', { ...validBody, zoneId: ' ' }],
     ['unknown field', { ...validBody, imageKey: 'local.jpg' }],
   ])('rejects %s', (_name, input) => {
@@ -130,6 +131,12 @@ describe('Restaurant DTOs', () => {
   })
 
   it('omits contact phone from audit snapshots', () => {
-    expect(toRestaurantAuditSnapshot(restaurant)).not.toHaveProperty('phone')
+    const snapshot = toRestaurantAuditSnapshot(restaurant)
+
+    expect(snapshot).not.toHaveProperty('phone')
+    expect(snapshot).toMatchObject({
+      zoneId: restaurant.zoneId,
+      imageKey: restaurant.imageKey,
+    })
   })
 })

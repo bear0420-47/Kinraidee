@@ -7,6 +7,7 @@ const mocks = vi.hoisted(() => {
       create: vi.fn(),
       findUniqueOrThrow: vi.fn(),
       update: vi.fn(),
+      updateMany: vi.fn(),
     },
     menuItem: { updateMany: vi.fn() },
     auditLog: { create: vi.fn() },
@@ -178,14 +179,16 @@ describe('restaurants repository transactions', () => {
 
   it('soft-deletes Restaurant and active child MenuItems with one audit summary', async () => {
     const deleted = { ...restaurant, deletedAt: new Date() }
-    mocks.tx.restaurant.findUniqueOrThrow.mockResolvedValue(restaurant)
-    mocks.tx.restaurant.update.mockResolvedValue(deleted)
+    mocks.tx.restaurant.findUniqueOrThrow
+      .mockResolvedValueOnce(restaurant)
+      .mockResolvedValueOnce(deleted)
+    mocks.tx.restaurant.updateMany.mockResolvedValue({ count: 1 })
     mocks.tx.menuItem.updateMany.mockResolvedValue({ count: 2 })
 
     const result = await restaurantsRepository.softDelete(restaurant.id, audit)
 
     const deletedAt =
-      mocks.tx.restaurant.update.mock.calls[0]?.[0].data.deletedAt
+      mocks.tx.restaurant.updateMany.mock.calls[0]?.[0].data.deletedAt
     expect(mocks.tx.menuItem.updateMany).toHaveBeenCalledWith({
       where: { restaurantId: restaurant.id, deletedAt: null },
       data: { deletedAt },
@@ -197,6 +200,20 @@ describe('restaurants repository transactions', () => {
     expect(result).toMatchObject({ affectedMenuItemCount: 2, changed: true })
   })
 
+  it('does not audit when another transaction wins the delete race', async () => {
+    const deleted = { ...restaurant, deletedAt: new Date() }
+    mocks.tx.restaurant.findUniqueOrThrow
+      .mockResolvedValueOnce(restaurant)
+      .mockResolvedValueOnce(deleted)
+    mocks.tx.restaurant.updateMany.mockResolvedValue({ count: 0 })
+
+    const result = await restaurantsRepository.softDelete(restaurant.id, audit)
+
+    expect(result.changed).toBe(false)
+    expect(mocks.tx.menuItem.updateMany).not.toHaveBeenCalled()
+    expect(mocks.tx.auditLog.create).not.toHaveBeenCalled()
+  })
+
   it('does not change timestamps or audit an already deleted Restaurant', async () => {
     mocks.tx.restaurant.findUniqueOrThrow.mockResolvedValue({
       ...restaurant,
@@ -206,24 +223,25 @@ describe('restaurants repository transactions', () => {
     const result = await restaurantsRepository.softDelete(restaurant.id, audit)
 
     expect(result.changed).toBe(false)
-    expect(mocks.tx.restaurant.update).not.toHaveBeenCalled()
+    expect(mocks.tx.restaurant.updateMany).not.toHaveBeenCalled()
     expect(mocks.tx.menuItem.updateMany).not.toHaveBeenCalled()
     expect(mocks.tx.auditLog.create).not.toHaveBeenCalled()
   })
 
   it('restores only Restaurant and writes one UPDATE audit row', async () => {
-    mocks.tx.restaurant.findUniqueOrThrow.mockResolvedValue({
-      ...restaurant,
-      deletedAt: new Date('2026-09-29T01:00:00.000Z'),
-    })
-    mocks.tx.restaurant.update.mockResolvedValue(restaurant)
+    mocks.tx.restaurant.findUniqueOrThrow
+      .mockResolvedValueOnce({
+        ...restaurant,
+        deletedAt: new Date('2026-09-29T01:00:00.000Z'),
+      })
+      .mockResolvedValueOnce(restaurant)
+    mocks.tx.restaurant.updateMany.mockResolvedValue({ count: 1 })
 
     await restaurantsRepository.restore(restaurant.id, audit)
 
-    expect(mocks.tx.restaurant.update).toHaveBeenCalledWith({
-      where: { id: restaurant.id },
+    expect(mocks.tx.restaurant.updateMany).toHaveBeenCalledWith({
+      where: { id: restaurant.id, deletedAt: { not: null } },
       data: { deletedAt: null },
-      include: { zone: true },
     })
     expect(mocks.tx.menuItem.updateMany).not.toHaveBeenCalled()
     expect(mocks.tx.auditLog.create).toHaveBeenCalledWith({
@@ -234,13 +252,28 @@ describe('restaurants repository transactions', () => {
     })
   })
 
+  it('does not audit when another transaction wins the restore race', async () => {
+    mocks.tx.restaurant.findUniqueOrThrow
+      .mockResolvedValueOnce({
+        ...restaurant,
+        deletedAt: new Date('2026-09-29T01:00:00.000Z'),
+      })
+      .mockResolvedValueOnce(restaurant)
+    mocks.tx.restaurant.updateMany.mockResolvedValue({ count: 0 })
+
+    const result = await restaurantsRepository.restore(restaurant.id, audit)
+
+    expect(result.changed).toBe(false)
+    expect(mocks.tx.auditLog.create).not.toHaveBeenCalled()
+  })
+
   it('does not update MenuItems or audit an already active restore', async () => {
     mocks.tx.restaurant.findUniqueOrThrow.mockResolvedValue(restaurant)
 
     const result = await restaurantsRepository.restore(restaurant.id, audit)
 
     expect(result.changed).toBe(false)
-    expect(mocks.tx.restaurant.update).not.toHaveBeenCalled()
+    expect(mocks.tx.restaurant.updateMany).not.toHaveBeenCalled()
     expect(mocks.tx.menuItem.updateMany).not.toHaveBeenCalled()
     expect(mocks.tx.auditLog.create).not.toHaveBeenCalled()
   })

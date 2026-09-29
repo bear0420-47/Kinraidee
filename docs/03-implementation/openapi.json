@@ -946,6 +946,9 @@
                   "id": {
                     "type": "string"
                   },
+                  "zoneId": {
+                    "type": "string"
+                  },
                   "zone": {
                     "type": "object",
                     "properties": {
@@ -1017,6 +1020,10 @@
                     "type": "string",
                     "nullable": true
                   },
+                  "imageKey": {
+                    "type": "string",
+                    "nullable": true
+                  },
                   "imageUrl": {
                     "type": "string",
                     "nullable": true
@@ -1037,10 +1044,12 @@
                 },
                 "required": [
                   "id",
+                  "zoneId",
                   "zone",
                   "name",
                   "description",
                   "phone",
+                  "imageKey",
                   "imageUrl",
                   "deletedAt",
                   "createdAt",
@@ -1069,6 +1078,9 @@
                   "type": "object",
                   "properties": {
                     "id": {
+                      "type": "string"
+                    },
+                    "zoneId": {
                       "type": "string"
                     },
                     "zone": {
@@ -1142,6 +1154,10 @@
                       "type": "string",
                       "nullable": true
                     },
+                    "imageKey": {
+                      "type": "string",
+                      "nullable": true
+                    },
                     "imageUrl": {
                       "type": "string",
                       "nullable": true
@@ -1162,10 +1178,12 @@
                   },
                   "required": [
                     "id",
+                    "zoneId",
                     "zone",
                     "name",
                     "description",
                     "phone",
+                    "imageKey",
                     "imageUrl",
                     "deletedAt",
                     "createdAt",

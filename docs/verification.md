@@ -209,9 +209,9 @@ The five wireframe failures are in unmodified prototype areas and do not overlap
 
 | Command | Exit code | Result |
 |---|---:|---|
-| `cd src/api && node_modules/.bin/vitest run src/modules/restaurants` | 0 | Pass: 5 files/49 tests covering DTO validation, service behavior, repository transactions, ADMIN authorization, HTTP responses, and OpenAPI registration. |
+| `cd src/api && node_modules/.bin/vitest run src/modules/restaurants` | 0 | Pass: 5 files/52 tests covering DTO validation, HTTP(S)-only image URLs, service behavior, repository transactions and concurrent idempotency claims, ADMIN authorization, HTTP responses, and OpenAPI registration. |
 | `NODE_ENV=test DATABASE_URL=<test-db> JWT_SECRET=<test-secret> CORS_ALLOWED_ORIGINS=http://localhost:5173 node_modules/.bin/tsx .tmp-issue39-integration.mts` | 0 | Pass: temporary script exercised the real app and Prisma repository. Verified unknown-Zone rejection, duplicate names, search/Zone filtering/pagination, phone trimming, external-image replacement, transactional Restaurant/MenuItem soft deletion, idempotent delete/restore, minimized audit snapshots, and restore without child restoration. The script was removed after the run. |
-| `NODE_OPTIONS=--localstorage-file=/tmp/kinraidee-vitest-localstorage pnpm verify` | 0 | Pass: workspace typecheck, lint, tests, and builds completed. API: 34 files/271 tests; web: 6 files/55 tests. API OpenAPI generation and web production build completed. |
+| `NODE_OPTIONS=--localstorage-file=/tmp/kinraidee-vitest-localstorage pnpm verify` | 0 | Pass: workspace typecheck, lint, tests, and builds completed. API: 34 files/274 tests; web: 6 files/55 tests. API OpenAPI generation and web production build completed. |
 | `pnpm verify` without `NODE_OPTIONS` on Node.js 26.4.0 | 1 | Environment-only failure: all 55 web tests failed during cleanup because Node exposed `localStorage` as unavailable without `--localstorage-file`. API tests still passed 34 files/271 tests. The same command passed after supplying the Node storage file above. |
 | `pnpm format` | 0 | Pass: API and web files matched Prettier formatting after formatting the five reported Restaurant files. |
 | `git diff --check` | 0 | Pass. |
@@ -220,9 +220,9 @@ The five wireframe failures are in unmodified prototype areas and do not overlap
 ### Security and scope checks
 
 - Every route requires authenticated `ADMIN` access; anonymous and `USER` requests are rejected before repository mutation.
-- API inputs are strict and boundary-validated. Localized names require Thai and English values, phone input is trimmed, external images require HTTP(S) URLs, and referenced Zones must exist.
+- API inputs are strict and boundary-validated. Localized names require Thai and English values, phone input is trimmed, external images require HTTP(S) URLs, non-web schemes are rejected, and referenced Zones must exist.
 - Mutations and their audit records share one Prisma transaction. Delete uses one timestamp for the Restaurant and currently active child MenuItems; already deleted children retain their original timestamp.
-- Repeated delete and restore operations are no-ops that do not change timestamps or create audit records. Restore affects only the Restaurant and never restores child MenuItems.
+- Repeated and concurrent delete/restore operations use conditional database claims so only the request that changes state updates timestamps or creates an audit record. Restore affects only the Restaurant and never restores child MenuItems.
 - Audit snapshots omit phone contact data. Delete audit metadata records only the number of MenuItems newly soft-deleted.
 - Manual external `imageUrl` updates clear `imageKey`, preventing an external URL from retaining ownership metadata for a prior internal upload.
 - Duplicate Restaurant names remain allowed. Physical deletion, image upload/deletion, MenuItem CRUD, public Restaurant access, and admin UI remain outside issue #39.
