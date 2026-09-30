@@ -66,3 +66,19 @@ export type AuditLogRecord = {
 export function parseAuditLogListQuery(input: unknown) {
   return parseWithSchema(auditLogListQuerySchema, input)
 }
+
+export function toAuditLog(
+  record: AuditLogRecord,
+  snapshots: { before: unknown; after: unknown },
+) {
+  return {
+    id: record.id,
+    actorId: record.actorId,
+    action: record.action,
+    entityType: record.entityType,
+    entityId: record.entityId,
+    ...snapshots,
+    requestId: record.requestId,
+    createdAt: record.createdAt.toISOString(),
+  }
+}

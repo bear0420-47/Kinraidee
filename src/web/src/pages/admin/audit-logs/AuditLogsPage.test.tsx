@@ -1,4 +1,4 @@
-import { screen, within } from '@testing-library/react'
+import { fireEvent, screen, within } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
 import {
@@ -36,7 +36,7 @@ function fakeAuditLogsApi(
 describe('AuditLogsPage', () => {
   it('shows the approved notices and read-only expandable snapshots', async () => {
     fakeAuditLogsApi()
-    renderApp('/admin/audit-logs')
+    const { user } = renderApp('/admin/audit-logs')
 
     expect(
       await screen.findByRole('heading', { name: 'บันทึกการแก้ไขระบบ' }),
@@ -60,6 +60,15 @@ describe('AuditLogsPage', () => {
     const before = within(table).getByText('ก่อนแก้ไข')
     expect(before.closest('details')?.hasAttribute('open')).toBe(false)
     expect(within(table).queryByRole('textbox')).toBeNull()
+
+    const keydown = vi.fn()
+    before.addEventListener('keydown', keydown)
+    before.focus()
+    await user.keyboard('{Enter}')
+    expect(document.activeElement).toBe(before)
+    expect(keydown).toHaveBeenCalled()
+    await user.click(before)
+    expect(before.closest('details')?.hasAttribute('open')).toBe(true)
   })
 
   it('shows the approved empty state', async () => {
@@ -77,6 +86,15 @@ describe('AuditLogsPage', () => {
     await user.selectOptions(screen.getByLabelText('ประเภทข้อมูล'), 'MENU_ITEM')
     await user.selectOptions(screen.getByLabelText('การทำงาน'), 'UPDATE')
     await user.type(screen.getByLabelText('Actor ID'), 'admin_1')
+    await user.type(screen.getByLabelText('Entity ID'), 'menu_1')
+    await user.type(screen.getByLabelText('Request ID'), 'req_1')
+    await user.selectOptions(screen.getByLabelText('จำนวนต่อหน้า'), '50')
+    fireEvent.change(screen.getByLabelText('ตั้งแต่เวลา'), {
+      target: { value: '2026-09-01T00:00' },
+    })
+    fireEvent.change(screen.getByLabelText('ถึงเวลา'), {
+      target: { value: '2026-09-30T23:59' },
+    })
     await user.click(screen.getByRole('button', { name: 'กรองรายการ' }))
     await user.click(screen.getByRole('button', { name: 'ถัดไป' }))
 
@@ -89,6 +107,15 @@ describe('AuditLogsPage', () => {
     expect(filterUrl.searchParams.get('entityType')).toBe('MENU_ITEM')
     expect(filterUrl.searchParams.get('action')).toBe('UPDATE')
     expect(filterUrl.searchParams.get('actorId')).toBe('admin_1')
+    expect(filterUrl.searchParams.get('entityId')).toBe('menu_1')
+    expect(filterUrl.searchParams.get('requestId')).toBe('req_1')
+    expect(filterUrl.searchParams.get('pageSize')).toBe('50')
+    expect(filterUrl.searchParams.get('createdFrom')).toBe(
+      new Date('2026-09-01T00:00').toISOString(),
+    )
+    expect(filterUrl.searchParams.get('createdTo')).toBe(
+      new Date('2026-09-30T23:59').toISOString(),
+    )
     expect(pageUrl.searchParams.get('page')).toBe('2')
   })
 

@@ -154,7 +154,7 @@ export function AuditLogsPage() {
           aria-label="หน้ารายการบันทึก"
           className="flex flex-wrap items-center justify-between gap-3"
         >
-          <p className="text-small text-muted">
+          <p className="text-small text-muted" role="status" aria-live="polite">
             หน้า {meta.page} จาก {lastPage} · ทั้งหมด {meta.total} รายการ
           </p>
           <div className="flex gap-3">

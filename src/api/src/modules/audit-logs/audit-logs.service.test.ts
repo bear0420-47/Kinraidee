@@ -28,6 +28,8 @@ describe('AuditLogs service', () => {
                 authorization: 'unsafe',
                 userAgent: 'unsafe',
                 ipAddress: 'unsafe',
+                remoteIp: 'unsafe',
+                xForwardedFor: 'unsafe',
                 safe: true,
               },
               values: [{ refresh_token: 'unsafe', id: 'safe' }],
@@ -54,8 +56,6 @@ describe('AuditLogs service', () => {
         passwordHash: '[REDACTED]',
         nested: {
           authorization: '[REDACTED]',
-          userAgent: '[REDACTED]',
-          ipAddress: '[REDACTED]',
           safe: true,
         },
         values: [{ refresh_token: '[REDACTED]', id: 'safe' }],

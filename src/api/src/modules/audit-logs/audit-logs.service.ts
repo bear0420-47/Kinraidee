@@ -4,26 +4,47 @@ import {
   auditLogsRepository,
   type AuditLogsRepository,
 } from './audit-logs.repository'
-import type { AuditLogListQuery, AuditLogRecord } from './audit-logs.dto'
+import {
+  toAuditLog,
+  type AuditLogListQuery,
+  type AuditLogRecord,
+} from './audit-logs.dto'
 
 const unsafeKeyParts = [
-  'ipaddress',
   'password',
   'token',
   'jwt',
   'cookie',
   'secret',
   'authorization',
-  'useragent',
 ]
 
-const unsafeExactKeys = ['ip', 'clientip']
+const privateMetadataKeyParts = ['ipaddress', 'useragent']
+const privateMetadataExactKeys = [
+  'ip',
+  'cfconnectingip',
+  'clientip',
+  'forwardedfor',
+  'remoteip',
+  'sourceip',
+  'xforwardedfor',
+  'xrealip',
+]
+
+function normalizedKey(key: string) {
+  return key.replaceAll(/[-_]/g, '').toLowerCase()
+}
 
 function isUnsafeKey(key: string) {
-  const normalized = key.replaceAll(/[-_]/g, '').toLowerCase()
+  const normalized = normalizedKey(key)
+  return unsafeKeyParts.some((part) => normalized.includes(part))
+}
+
+function isPrivateMetadataKey(key: string) {
+  const normalized = normalizedKey(key)
   return (
-    unsafeExactKeys.includes(normalized) ||
-    unsafeKeyParts.some((part) => normalized.includes(part))
+    privateMetadataExactKeys.includes(normalized) ||
+    privateMetadataKeyParts.some((part) => normalized.includes(part))
   )
 }
 
@@ -32,27 +53,22 @@ export function redactAuditSnapshot(value: Prisma.JsonValue | null): unknown {
   if (Array.isArray(value)) return value.map(redactAuditSnapshot)
 
   return Object.fromEntries(
-    Object.entries(value).map(([key, nested]) => [
-      key,
-      isUnsafeKey(key)
-        ? '[REDACTED]'
-        : redactAuditSnapshot(nested as Prisma.JsonValue),
-    ]),
+    Object.entries(value)
+      .filter(([key]) => !isPrivateMetadataKey(key))
+      .map(([key, nested]) => [
+        key,
+        isUnsafeKey(key)
+          ? '[REDACTED]'
+          : redactAuditSnapshot(nested as Prisma.JsonValue),
+      ]),
   )
 }
 
-function toAuditLog(record: AuditLogRecord) {
-  return {
-    id: record.id,
-    actorId: record.actorId,
-    action: record.action,
-    entityType: record.entityType,
-    entityId: record.entityId,
+function toRedactedAuditLog(record: AuditLogRecord) {
+  return toAuditLog(record, {
     before: redactAuditSnapshot(record.before),
     after: redactAuditSnapshot(record.after),
-    requestId: record.requestId,
-    createdAt: record.createdAt.toISOString(),
-  }
+  })
 }
 
 export function createAuditLogsService(
@@ -62,7 +78,7 @@ export function createAuditLogsService(
     async list(query: AuditLogListQuery) {
       const { items, total } = await repository.list(query)
       return {
-        items: items.map(toAuditLog),
+        items: items.map(toRedactedAuditLog),
         meta: { page: query.page, pageSize: query.pageSize, total },
       }
     },
