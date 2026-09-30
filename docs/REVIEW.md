@@ -318,6 +318,36 @@ Human reviewer: `aboutblank0000000`
 Decision: Approved
 Date: 2026-09-30
 
+## Issue #49 — AuditLog review API, admin screen, and retention command
+
+### Status
+
+Automated two-axis review complete on 2026-10-01. No unresolved findings remain. Human pull-request approval remains pending.
+
+### Standards review
+
+No findings remain. The initial review found that response mapping lived in the service instead of the DTO layer and that completed filter/page changes had no persistent live-region announcement. Response mapping now lives in `audit-logs.dto.ts`; the service owns only defensive sanitization and use-case flow. The page-count summary is a polite status region. Module composition, ADMIN middleware, typed-client hook, Prisma-only repository, native `<details>`, and design tokens follow the documented repository rules.
+
+### Specification review
+
+No findings remain. The initial review found incomplete coverage for alternate IP field names and for the complete web filter/keyboard contract. Recursive sanitization now removes IP address and user-agent fields, including common proxy/source key variants, while secret-bearing keys retain their names with `[REDACTED]` values. Tests cover every filter, page size, pagination, keyboard focus, expansion, actor-email absence, no audit-on-read, exact retention boundary, idempotency, safe command logging, and Prisma disconnect.
+
+The API is ADMIN-only, sorts by `createdAt DESC` then `id DESC`, returns pagination metadata, and never joins actor email. Audit reads do not write audit events. The verified prune command deletes only rows strictly older than 180 days. Production retention remains blocked until an approved scheduler runs the command; application audit logs remain separate from Computer Crime Act traffic logs.
+
+### Review scope
+
+- Diff: `git diff origin/main...HEAD`
+- Commits: `d8cfc07`, `165a0e9`, `c1b49e2`, and `b7fc129`
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/02-design/design-system.md`, `docs/03-implementation/engineering-guidelines.md`, `docs/03-implementation/data-model.md`, and `docs/03-implementation/module-implementation-checklist.md`
+- Specification source: GitHub issue #49 and its approved implementation note
+- Authorization, filtering, stable sorting, pagination, response sanitization, read-only UI, accessibility, retention boundary, command lifecycle, scheduler blocker, OpenAPI, and scope exclusions
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD
+
 ## Issue #36 — FoodType management screen
 
 ### Status
