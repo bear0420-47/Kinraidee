@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 const mocks = vi.hoisted(() => {
   const tx = {
+    $queryRaw: vi.fn(),
     menuItem: {
       create: vi.fn(),
       findMany: vi.fn(),
@@ -86,6 +87,7 @@ const menuItem = {
 
 beforeEach(() => {
   vi.clearAllMocks()
+  mocks.tx.$queryRaw.mockResolvedValue([{ id: restaurant.id, deletedAt: null }])
 })
 
 describe('MenuItems repository', () => {
@@ -180,6 +182,32 @@ describe('MenuItems repository', () => {
     ).not.toHaveProperty('restaurant.phone')
   })
 
+  it('locks and rejects an inactive Restaurant inside the create transaction', async () => {
+    mocks.tx.$queryRaw.mockResolvedValueOnce([
+      { id: restaurant.id, deletedAt: now },
+    ])
+
+    await expect(
+      menuItemsRepository.create(
+        {
+          restaurantId: restaurant.id,
+          foodTypeId: foodType.id,
+          nameTh: menuItem.nameTh,
+          nameEn: menuItem.nameEn,
+          descriptionTh: null,
+          descriptionEn: null,
+          price: 65,
+          imageKey: null,
+          imageUrl: null,
+        },
+        ['taste_1'],
+        audit,
+      ),
+    ).resolves.toEqual({ kind: 'deleted' })
+    expect(mocks.tx.menuItem.create).not.toHaveBeenCalled()
+    expect(mocks.tx.auditLog.create).not.toHaveBeenCalled()
+  })
+
   it('replaces the full taste assignment during update', async () => {
     mocks.tx.menuItem.findUniqueOrThrow.mockResolvedValue(menuItem)
     mocks.tx.menuItem.update.mockResolvedValue(menuItem)
@@ -203,6 +231,19 @@ describe('MenuItems repository', () => {
       }),
     )
     expect(mocks.tx.auditLog.create).toHaveBeenCalledTimes(1)
+  })
+
+  it('rejects updates under a deleted Restaurant inside the transaction', async () => {
+    mocks.tx.menuItem.findUniqueOrThrow.mockResolvedValue(menuItem)
+    mocks.tx.$queryRaw.mockResolvedValueOnce([
+      { id: restaurant.id, deletedAt: now },
+    ])
+
+    await expect(
+      menuItemsRepository.update(menuItem.id, { price: 70 }, undefined, audit),
+    ).resolves.toEqual({ kind: 'deleted' })
+    expect(mocks.tx.menuItem.update).not.toHaveBeenCalled()
+    expect(mocks.tx.auditLog.create).not.toHaveBeenCalled()
   })
 
   it('soft-deletes once and does not remove tastes', async () => {

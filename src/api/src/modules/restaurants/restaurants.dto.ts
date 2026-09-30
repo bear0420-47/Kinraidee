@@ -6,20 +6,18 @@ import {
   toLocalization,
   toOptionalLocalization,
 } from '@/shared/localization'
-import { parseWithSchema } from '@/shared/validation'
-
-const emptyStringToNull = (value: unknown) => {
-  if (typeof value !== 'string') return value
-  const trimmed = value.trim()
-  return trimmed || null
-}
+import {
+  emptyTrimmedStringToNull,
+  optionalTrimmedStringSchema,
+  parseWithSchema,
+} from '@/shared/validation'
 
 const nullablePhoneSchema = z.preprocess(
-  emptyStringToNull,
+  emptyTrimmedStringToNull,
   z.string().nullable(),
 )
 const nullableImageUrlSchema = z.preprocess(
-  emptyStringToNull,
+  emptyTrimmedStringToNull,
   z
     .string()
     .url()
@@ -52,12 +50,6 @@ export const restaurantIdParamsSchema = z.object({
   id: z.string().trim().min(1),
 })
 
-const optionalSearchSchema = z.preprocess((value) => {
-  if (typeof value !== 'string') return value
-  const trimmed = value.trim()
-  return trimmed || undefined
-}, z.string().optional())
-
 export const restaurantListQuerySchema = z
   .object({
     includeDeleted: z
@@ -65,7 +57,7 @@ export const restaurantListQuerySchema = z
       .default('false')
       .transform((value) => value === 'true'),
     zoneId: z.string().trim().min(1).optional(),
-    search: optionalSearchSchema,
+    search: optionalTrimmedStringSchema,
     page: z.coerce.number().int().min(1).default(1),
     pageSize: z.coerce.number().int().min(1).max(100).default(20),
   })

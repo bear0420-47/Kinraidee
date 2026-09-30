@@ -44,6 +44,20 @@ function bulkSnapshot(ids: string[], countField: string) {
   } satisfies Prisma.InputJsonObject
 }
 
+async function lockRestaurant(tx: Prisma.TransactionClient, id: string) {
+  const restaurants = await tx.$queryRaw<
+    Array<{ id: string; deletedAt: Date | null }>
+  >(Prisma.sql`
+    SELECT "id", "deletedAt"
+    FROM "Restaurant"
+    WHERE "id" = ${id}
+    FOR UPDATE
+  `)
+  const restaurant = restaurants[0]
+  if (!restaurant) return 'not-found' as const
+  return restaurant.deletedAt ? ('deleted' as const) : ('active' as const)
+}
+
 export const menuItemsRepository = {
   async list(query: MenuItemListQuery) {
     const where = menuItemWhere(query)
@@ -67,13 +81,6 @@ export const menuItemsRepository = {
     })
   },
 
-  findRestaurant(id: string) {
-    return prisma.restaurant.findUnique({
-      where: { id },
-      select: { id: true, deletedAt: true },
-    })
-  },
-
   async foodTypeExists(id: string) {
     return (await prisma.foodType.count({ where: { id } })) > 0
   },
@@ -93,6 +100,10 @@ export const menuItemsRepository = {
     audit: AuditContext,
   ) {
     return prisma.$transaction(async (tx) => {
+      const restaurantState = await lockRestaurant(tx, data.restaurantId)
+      if (restaurantState === 'not-found') return { kind: 'not-found' as const }
+      if (restaurantState === 'deleted') return { kind: 'deleted' as const }
+
       const menuItem = await tx.menuItem.create({
         data: {
           ...data,
@@ -108,7 +119,7 @@ export const menuItemsRepository = {
         before: null,
         after: toMenuItemAuditSnapshot(menuItem),
       })
-      return menuItem
+      return { kind: 'ok' as const, menuItem }
     })
   },
 
@@ -123,6 +134,16 @@ export const menuItemsRepository = {
         where: { id },
         include: withRelations,
       })
+      const restaurantState = await lockRestaurant(
+        tx,
+        data.restaurantId ?? before.restaurantId,
+      )
+      if (restaurantState === 'not-found') return { kind: 'not-found' as const }
+      if (restaurantState === 'deleted') return { kind: 'deleted' as const }
+      if (Object.keys(data).length === 0 && tasteIds === undefined) {
+        return { kind: 'ok' as const, menuItem: before }
+      }
+
       const menuItem = await tx.menuItem.update({
         where: { id },
         data: {
@@ -146,7 +167,7 @@ export const menuItemsRepository = {
         before: toMenuItemAuditSnapshot(before),
         after: toMenuItemAuditSnapshot(menuItem),
       })
-      return menuItem
+      return { kind: 'ok' as const, menuItem }
     })
   },
 

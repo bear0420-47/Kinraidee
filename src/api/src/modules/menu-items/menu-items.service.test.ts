@@ -63,7 +63,6 @@ const menuItem: MenuItemWithRelations = {
 const repository = {
   list: vi.fn(),
   findById: vi.fn(),
-  findRestaurant: vi.fn(),
   foodTypeExists: vi.fn(),
   findTasteIds: vi.fn(),
   create: vi.fn(),
@@ -79,12 +78,16 @@ const service = createMenuItemsService(repository)
 beforeEach(() => {
   vi.clearAllMocks()
   vi.mocked(repository.findById).mockResolvedValue(menuItem)
-  vi.mocked(repository.findRestaurant).mockResolvedValue({
-    id: 'restaurant_1',
-    deletedAt: null,
-  })
   vi.mocked(repository.foodTypeExists).mockResolvedValue(true)
   vi.mocked(repository.findTasteIds).mockImplementation(async (ids) => ids)
+  vi.mocked(repository.create).mockResolvedValue({
+    kind: 'ok',
+    menuItem,
+  })
+  vi.mocked(repository.update).mockResolvedValue({
+    kind: 'ok',
+    menuItem,
+  })
 })
 
 describe('MenuItems service', () => {
@@ -106,8 +109,8 @@ describe('MenuItems service', () => {
     ])
   })
 
-  it('rejects an unknown or deleted Restaurant before create', async () => {
-    vi.mocked(repository.findRestaurant).mockResolvedValueOnce(null)
+  it('maps an unknown or deleted Restaurant returned by create', async () => {
+    vi.mocked(repository.create).mockResolvedValueOnce({ kind: 'not-found' })
 
     await expect(
       service.create(
@@ -122,10 +125,7 @@ describe('MenuItems service', () => {
       ),
     ).rejects.toMatchObject({ status: 404, code: 'RESTAURANT_NOT_FOUND' })
 
-    vi.mocked(repository.findRestaurant).mockResolvedValueOnce({
-      id: 'restaurant_1',
-      deletedAt: now,
-    })
+    vi.mocked(repository.create).mockResolvedValueOnce({ kind: 'deleted' })
     await expect(
       service.create(
         {
@@ -138,7 +138,7 @@ describe('MenuItems service', () => {
         audit,
       ),
     ).rejects.toMatchObject({ status: 409, code: 'RESTAURANT_DELETED' })
-    expect(repository.create).not.toHaveBeenCalled()
+    expect(repository.create).toHaveBeenCalledTimes(2)
   })
 
   it('rejects unknown FoodType or Taste references', async () => {
@@ -173,8 +173,6 @@ describe('MenuItems service', () => {
   })
 
   it('creates duplicate names when relations are valid', async () => {
-    vi.mocked(repository.create).mockResolvedValue(menuItem)
-
     const result = await service.create(
       {
         restaurantId: 'restaurant_1',
@@ -206,7 +204,10 @@ describe('MenuItems service', () => {
         },
       ],
     }
-    vi.mocked(repository.update).mockResolvedValue(updated)
+    vi.mocked(repository.update).mockResolvedValue({
+      kind: 'ok',
+      menuItem: updated,
+    })
 
     await service.update(
       menuItem.id,
@@ -228,7 +229,7 @@ describe('MenuItems service', () => {
     )
   })
 
-  it('skips an unchanged update and does not write audit noise', async () => {
+  it('checks the Restaurant transactionally on an unchanged update', async () => {
     const result = await service.update(
       menuItem.id,
       {
@@ -239,7 +240,20 @@ describe('MenuItems service', () => {
     )
 
     expect(result.id).toBe(menuItem.id)
-    expect(repository.update).not.toHaveBeenCalled()
+    expect(repository.update).toHaveBeenCalledWith(
+      menuItem.id,
+      {},
+      undefined,
+      audit,
+    )
+  })
+
+  it('rejects an update when its effective Restaurant is deleted', async () => {
+    vi.mocked(repository.update).mockResolvedValueOnce({ kind: 'deleted' })
+
+    await expect(
+      service.update(menuItem.id, { price: 70 }, audit),
+    ).rejects.toMatchObject({ status: 409, code: 'RESTAURANT_DELETED' })
   })
 
   it('blocks restore when the owning Restaurant is deleted', async () => {

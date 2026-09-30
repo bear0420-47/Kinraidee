@@ -485,9 +485,9 @@ Run against the real API and database at desktop and 375px widths:
 
 | Command | Exit code | Result |
 |---|---:|---|
-| `cd src/api && node_modules/.bin/vitest run src/modules/menu-items` | 0 | Pass: 5 files/62 tests covering DTO boundaries, image key/URL pairing, taste deduplication, service relation rules, repository transactions, concurrent idempotency claims, authorization on all eight routes, bulk limits, and OpenAPI. |
+| `pnpm --filter api exec vitest run src/modules/menu-items` | 0 | Pass: 5 files/65 tests covering DTO boundaries, image key/URL pairing, taste deduplication, service relation rules, transactional Restaurant row locking for create/update, concurrent idempotency claims, authorization on all eight routes, bulk limits, and OpenAPI. |
 | `NODE_ENV=test DATABASE_URL=<test-db> JWT_SECRET=<test-secret> CORS_ALLOWED_ORIGINS=http://localhost:5173 node_modules/.bin/tsx .tmp-issue42-integration.mts` | 0 | Pass: temporary script drove the real app and Prisma repository. Verified deleted-Restaurant rejection, create with deduplicated tastes, full taste replacement, filtered pagination, concurrent delete with one audit, repeated restore without duplicate audit, unknown bulk-ID rollback, bulk delete, deleted-Restaurant bulk-restore rejection, successful bulk restore, and one summary audit per bulk mutation. The script was removed after the run. |
-| `NODE_OPTIONS=--localstorage-file=/tmp/kinraidee-vitest-localstorage pnpm verify` | 0 | Pass after merging current `main`: workspace typecheck, lint, tests, and builds completed. API: 39 files/336 tests; web: 15 files/149 tests. OpenAPI generation and the web production build completed. |
+| `NODE_OPTIONS=--localstorage-file=/tmp/kinraidee-vitest-localstorage pnpm verify` | 0 | Pass after merging current `main` and resolving review findings: workspace typecheck, lint, tests, and builds completed. API: 39 files/339 tests; web: 15 files/149 tests. OpenAPI generation and the web production build completed. |
 | `pnpm format` | 0 | Pass: API and web files matched Prettier formatting. |
 | `git diff --check` | 0 | Pass. |
 | `node tests/wireframe-requirements.test.cjs` | 1 | Existing design-prototype gap outside issue #42: 19 passed and 5 failed for missing Profile/Admin prototype states. No prototype or wireframe test was modified. |

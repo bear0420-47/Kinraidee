@@ -37,12 +37,6 @@ export function createMenuItemsService(
     return menuItem
   }
 
-  async function requireActiveRestaurant(id: string) {
-    const restaurant = await repository.findRestaurant(id)
-    if (!restaurant) throw menuItemRestaurantNotFoundError()
-    if (restaurant.deletedAt) throw menuItemRestaurantDeletedError()
-  }
-
   async function requireFoodType(id: string) {
     if (!(await repository.foodTypeExists(id))) {
       throw menuItemFoodTypeNotFoundError()
@@ -69,14 +63,20 @@ export function createMenuItemsService(
 
     async create(input: CreateMenuItemInput, audit: AuditContext) {
       await Promise.all([
-        requireActiveRestaurant(input.restaurantId),
         requireFoodType(input.foodTypeId),
         requireTastes(input.tasteIds),
       ])
       const { data, tasteIds } = toMenuItemCreateData(input)
 
       try {
-        return toAdminMenuItem(await repository.create(data, tasteIds, audit))
+        const result = await repository.create(data, tasteIds, audit)
+        if (result.kind === 'not-found') {
+          throw menuItemRestaurantNotFoundError()
+        }
+        if (result.kind === 'deleted') {
+          throw menuItemRestaurantDeletedError()
+        }
+        return toAdminMenuItem(result.menuItem)
       } catch (error) {
         throw toMenuItemWriteError(error)
       }
@@ -87,10 +87,6 @@ export function createMenuItemsService(
       const currentTasteIds = current.tastes.map(({ tasteId }) => tasteId)
 
       await Promise.all([
-        input.restaurantId !== undefined &&
-        input.restaurantId !== current.restaurantId
-          ? requireActiveRestaurant(input.restaurantId)
-          : undefined,
         input.foodTypeId !== undefined &&
         input.foodTypeId !== current.foodTypeId
           ? requireFoodType(input.foodTypeId)
@@ -103,19 +99,22 @@ export function createMenuItemsService(
       const { data, tasteIds } = toMenuItemUpdateData(input)
       const tastesChanged =
         tasteIds !== undefined && !sameIds(tasteIds, currentTasteIds)
-      if (!hasFieldChanges(current, data) && !tastesChanged) {
-        return toAdminMenuItem(current)
-      }
+      const changedData = hasFieldChanges(current, data) ? data : {}
 
       try {
-        return toAdminMenuItem(
-          await repository.update(
-            id,
-            data,
-            tastesChanged ? tasteIds : undefined,
-            audit,
-          ),
+        const result = await repository.update(
+          id,
+          changedData,
+          tastesChanged ? tasteIds : undefined,
+          audit,
         )
+        if (result.kind === 'not-found') {
+          throw menuItemRestaurantNotFoundError()
+        }
+        if (result.kind === 'deleted') {
+          throw menuItemRestaurantDeletedError()
+        }
+        return toAdminMenuItem(result.menuItem)
       } catch (error) {
         throw toMenuItemWriteError(error)
       }

@@ -7,13 +7,11 @@ import {
   toLocalization,
   toOptionalLocalization,
 } from '@/shared/localization'
-import { parseWithSchema } from '@/shared/validation'
-
-const emptyStringToNull = (value: unknown) => {
-  if (typeof value !== 'string') return value
-  const trimmed = value.trim()
-  return trimmed || null
-}
+import {
+  emptyTrimmedStringToNull,
+  optionalTrimmedStringSchema,
+  parseWithSchema,
+} from '@/shared/validation'
 
 const externalImageUrlSchema = z
   .string()
@@ -23,14 +21,14 @@ const externalImageUrlSchema = z
   })
 
 const imageUrlSchema = z.preprocess(
-  emptyStringToNull,
+  emptyTrimmedStringToNull,
   z
     .union([externalImageUrlSchema, z.string().startsWith('/uploads/')])
     .nullable(),
 )
 
 const imageKeySchema = z.preprocess(
-  emptyStringToNull,
+  emptyTrimmedStringToNull,
   uploadFileNameSchema.nullable(),
 )
 
@@ -104,12 +102,6 @@ export const menuItemIdParamsSchema = z.object({
   id: z.string().trim().min(1),
 })
 
-const optionalSearchSchema = z.preprocess((value) => {
-  if (typeof value !== 'string') return value
-  const trimmed = value.trim()
-  return trimmed || undefined
-}, z.string().optional())
-
 export const menuItemListQuerySchema = z
   .object({
     includeDeleted: z
@@ -119,7 +111,7 @@ export const menuItemListQuerySchema = z
     restaurantId: z.string().trim().min(1).optional(),
     foodTypeId: z.string().trim().min(1).optional(),
     tasteId: z.string().trim().min(1).optional(),
-    search: optionalSearchSchema,
+    search: optionalTrimmedStringSchema,
     page: z.coerce.number().int().min(1).default(1),
     pageSize: z.coerce.number().int().min(1).max(100).default(20),
   })
