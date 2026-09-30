@@ -24,7 +24,12 @@ describe('AuditLogs service', () => {
             before: {
               name: 'old',
               passwordHash: 'unsafe',
-              nested: { authorization: 'unsafe', safe: true },
+              nested: {
+                authorization: 'unsafe',
+                userAgent: 'unsafe',
+                ipAddress: 'unsafe',
+                safe: true,
+              },
               values: [{ refresh_token: 'unsafe', id: 'safe' }],
             },
             after: null,
@@ -46,8 +51,14 @@ describe('AuditLogs service', () => {
       createdAt: '2026-09-30T00:00:00.000Z',
       before: {
         name: 'old',
-        nested: { safe: true },
-        values: [{ id: 'safe' }],
+        passwordHash: '[REDACTED]',
+        nested: {
+          authorization: '[REDACTED]',
+          userAgent: '[REDACTED]',
+          ipAddress: '[REDACTED]',
+          safe: true,
+        },
+        values: [{ refresh_token: '[REDACTED]', id: 'safe' }],
       },
     })
   })
@@ -57,6 +68,6 @@ describe('AuditLogs service', () => {
     expect(redactAuditSnapshot('safe')).toBe('safe')
     expect(
       redactAuditSnapshot({ cookie: 'bad', count: 1 } as Prisma.JsonObject),
-    ).toEqual({ count: 1 })
+    ).toEqual({ cookie: '[REDACTED]', count: 1 })
   })
 })

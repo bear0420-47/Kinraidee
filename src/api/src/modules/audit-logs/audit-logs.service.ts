@@ -7,17 +7,24 @@ import {
 import type { AuditLogListQuery, AuditLogRecord } from './audit-logs.dto'
 
 const unsafeKeyParts = [
+  'ipaddress',
   'password',
   'token',
   'jwt',
   'cookie',
   'secret',
   'authorization',
+  'useragent',
 ]
+
+const unsafeExactKeys = ['ip', 'clientip']
 
 function isUnsafeKey(key: string) {
   const normalized = key.replaceAll(/[-_]/g, '').toLowerCase()
-  return unsafeKeyParts.some((part) => normalized.includes(part))
+  return (
+    unsafeExactKeys.includes(normalized) ||
+    unsafeKeyParts.some((part) => normalized.includes(part))
+  )
 }
 
 export function redactAuditSnapshot(value: Prisma.JsonValue | null): unknown {
@@ -25,12 +32,12 @@ export function redactAuditSnapshot(value: Prisma.JsonValue | null): unknown {
   if (Array.isArray(value)) return value.map(redactAuditSnapshot)
 
   return Object.fromEntries(
-    Object.entries(value)
-      .filter(([key]) => !isUnsafeKey(key))
-      .map(([key, nested]) => [
-        key,
-        redactAuditSnapshot(nested as Prisma.JsonValue),
-      ]),
+    Object.entries(value).map(([key, nested]) => [
+      key,
+      isUnsafeKey(key)
+        ? '[REDACTED]'
+        : redactAuditSnapshot(nested as Prisma.JsonValue),
+    ]),
   )
 }
 

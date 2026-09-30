@@ -526,7 +526,7 @@ Run against the real API and database at desktop and 375px widths:
 ### Security and scope checks
 
 - The endpoint requires authenticated `ADMIN` access. Anonymous and `USER` requests are rejected before the service reads AuditLog rows.
-- The response selects no User relation or actor email and exposes no IP address or user agent. Recursive case-insensitive redaction removes keys containing `password`, `token`, `jwt`, `cookie`, `secret`, or `authorization` before snapshots leave the service.
+- The response selects no User relation or actor email. Recursive case-insensitive redaction replaces values under IP address, user-agent, `password`, `token`, `jwt`, `cookie`, `secret`, or `authorization` keys with `[REDACTED]` before snapshots leave the service.
 - Reads do not create audit events. Results sort by `createdAt DESC`, then `id DESC`, and support every approved filter plus pagination metadata.
 - The page is read-only, uses the typed OpenAPI client through a TanStack Query hook, and renders snapshots as native keyboard-operable `<details>` elements.
 - The prune command deletes only rows strictly older than 180 days, logs only the deleted count as application data, is idempotent, and disconnects Prisma.

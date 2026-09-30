@@ -6,6 +6,7 @@ const mocks = vi.hoisted(() => ({
     auditLog: {
       findMany: vi.fn().mockResolvedValue([]),
       count: vi.fn().mockResolvedValue(0),
+      create: vi.fn(),
       deleteMany: vi.fn().mockResolvedValue({ count: 2 }),
     },
   },
@@ -46,6 +47,7 @@ describe('AuditLogs repository', () => {
       skip: 10,
       take: 10,
     })
+    expect(mocks.prisma.auditLog.create).not.toHaveBeenCalled()
   })
 
   it('deletes only rows strictly older than the threshold', async () => {

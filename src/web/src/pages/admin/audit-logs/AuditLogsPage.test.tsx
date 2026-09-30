@@ -16,7 +16,7 @@ const auditLog = {
   entityType: 'MENU_ITEM',
   entityId: 'menu_1',
   before: { name: 'เมนูเดิม' },
-  after: { name: 'เมนูใหม่' },
+  after: { name: 'เมนูใหม่', password: '[REDACTED]' },
   requestId: 'req_1',
   createdAt: '2026-09-30T00:00:00.000Z',
 }
@@ -55,6 +55,8 @@ describe('AuditLogsPage', () => {
     })
     expect(table.textContent).toContain('MENU_ITEM')
     expect(table.textContent).toContain('admin_1')
+    expect(table.textContent).toContain('[REDACTED]')
+    expect(table.textContent).not.toContain('admin@example.com')
     const before = within(table).getByText('ก่อนแก้ไข')
     expect(before.closest('details')?.hasAttribute('open')).toBe(false)
     expect(within(table).queryByRole('textbox')).toBeNull()
