@@ -288,7 +288,7 @@ Date: TBD
 
 ### Status
 
-Automated two-axis review complete on 2026-09-30. Human pull-request approval remains pending.
+Automated two-axis review complete on 2026-09-30. Human approval recorded after PR #67 merged into `main`.
 
 ### Standards review
 
@@ -314,15 +314,15 @@ No blocking findings. All #34 fields, copy, behaviors, accessibility items, and 
 
 ### Approval
 
-Human reviewer: Pending pull-request review
-Decision: Pending
-Date: TBD
+Human reviewer: `aboutblank0000000`
+Decision: Approved
+Date: 2026-09-30
 
 ## Issue #36 — FoodType management screen
 
 ### Status
 
-Automated two-axis review complete on 2026-09-30. Human pull-request approval remains pending.
+Automated two-axis review complete on 2026-09-30. Human approval recorded after the stacked PR #68 changes reached `main` through PR #69.
 
 ### Standards review
 
@@ -347,15 +347,15 @@ No blocking findings. All #36 fields, copy, icon rules, behaviors, accessibility
 
 ### Approval
 
-Human reviewer: Pending pull-request review
-Decision: Pending
-Date: TBD
+Human reviewer: `aboutblank0000000`
+Decision: Approved
+Date: 2026-09-30
 
 ## Issue #38 — Taste management screen
 
 ### Status
 
-Automated two-axis review complete on 2026-09-30. Human pull-request approval remains pending.
+Automated two-axis review complete on 2026-09-30. Human approval recorded after PR #69 merged into `main`.
 
 ### Standards review
 
@@ -378,15 +378,15 @@ No blocking findings. All #38 fields, copy, icon rules, behaviors, accessibility
 
 ### Approval
 
-Human reviewer: Pending pull-request review
-Decision: Pending
-Date: TBD
+Human reviewer: `aboutblank0000000`
+Decision: Approved
+Date: 2026-09-30
 
 ## Issue #42 — MenuItem admin CRUD and bulk actions
 
 ### Status
 
-Automated two-axis review complete on 2026-09-30. No unresolved findings remain. Human pull-request approval remains pending.
+Automated two-axis review complete on 2026-09-30. No unresolved findings remain. Human approval recorded after PR #71 merged into `main`.
 
 ### Standards review
 
@@ -408,6 +408,6 @@ All eight routes, filtering and pagination, localized response mapping, Restaura
 
 ### Approval
 
-Human reviewer: Pending pull-request review
-Decision: Pending
-Date: TBD
+Human reviewer: `aboutblank0000000`
+Decision: Approved
+Date: 2026-09-30
