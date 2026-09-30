@@ -501,3 +501,36 @@ Run against the real API and database at desktop and 375px widths:
 - Single and bulk soft-delete/restore operations keep image references and `MenuItemTaste` rows. Conditional database claims prevent repeated or concurrent requests from changing timestamps or writing duplicate audit events.
 - Bulk requests accept at most 50 explicit IDs, reject the whole request when any ID is unknown, and reject bulk restore when any owning Restaurant is deleted. One minimized IDs/count audit summary is written per changed bulk operation.
 - MenuItem responses and audit snapshots exclude Restaurant phone and image binary data. No public MenuItem endpoint, UI, upload processing, R2 integration, recommendation behavior, price history, or availability model was added.
+
+## Issue #49 — AuditLog review API, admin screen, and retention command
+
+### Scope
+
+- Verification date: 2026-10-01 (ICT, `UTC+07:00`)
+- Environment: local macOS workspace, Node.js 26.4.0, pnpm 12.4.2, PostgreSQL 17
+- Database: isolated local database `kinraidee_issue49_20260930` with the committed migration
+- Route: ADMIN-only `GET /api/audit-logs` and `/admin/audit-logs`
+- Retention command: `pnpm --filter api audit-logs:prune`
+
+### Results
+
+| Command                                                                           | Exit code | Result                                                                                                                                                                                                                                                                                                            |
+| --------------------------------------------------------------------------------- | --------: | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Focused AuditLog API and web tests                                                |         0 | Pass: 23 tests cover DTO boundaries, recursive unsafe-key redaction, repository filters/order/pagination, authorization, OpenAPI, exact 180-day threshold, idempotency, command logging/disconnect, admin guard, approved copy, empty/list states, filters, pagination, and keyboard-native expandable snapshots. |
+| `NODE_OPTIONS=--localstorage-file=/tmp/kinraidee-vitest-localstorage pnpm verify` |         0 | Pass: typecheck, lint, tests, and builds completed. API: 46 files/358 tests; web: 16 files/153 tests. OpenAPI generation and the web production build completed.                                                                                                                                                  |
+| `pnpm format`                                                                     |         0 | Pass: API and web files matched Prettier formatting.                                                                                                                                                                                                                                                              |
+| `git diff --check`                                                                |         0 | Pass.                                                                                                                                                                                                                                                                                                             |
+| `node tests/wireframe-requirements.test.cjs`                                      |         1 | Existing design-prototype gap outside issue #49: 19 passed and 5 failed for missing Profile/Admin prototype states. No prototype or wireframe test was modified.                                                                                                                                                  |
+| Real PostgreSQL prune verification                                                |         0 | Pass: a 181-day row was deleted; rows newer than the 180-day cutoff were retained; a second run logged `deletedCount: 0`. The repository uses strict `createdAt < threshold`, with the exact-threshold boundary covered by unit tests.                                                                            |
+
+### Security and scope checks
+
+- The endpoint requires authenticated `ADMIN` access. Anonymous and `USER` requests are rejected before the service reads AuditLog rows.
+- The response selects no User relation or actor email. Recursive case-insensitive sanitization removes IP address and user-agent fields, and replaces values under `password`, `token`, `jwt`, `cookie`, `secret`, or `authorization` keys with `[REDACTED]` before snapshots leave the service.
+- Reads do not create audit events. Results sort by `createdAt DESC`, then `id DESC`, and support every approved filter plus pagination metadata.
+- The page is read-only, uses the typed OpenAPI client through a TanStack Query hook, and renders snapshots as native keyboard-operable `<details>` elements.
+- The prune command deletes only rows strictly older than 180 days, logs only the deleted count as application data, is idempotent, and disconnects Prisma.
+
+### Production deployment blocker
+
+The repository provides the retention command but no production scheduler. Production deployment remains blocked until an approved deployment environment configures and verifies a recurring job that runs `pnpm --filter api audit-logs:prune`. The application audit log is not a Computer Crime Act traffic log and does not satisfy any future LR10 traffic-log duty.
