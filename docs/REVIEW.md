@@ -381,3 +381,33 @@ No blocking findings. All #38 fields, copy, icon rules, behaviors, accessibility
 Human reviewer: Pending pull-request review
 Decision: Pending
 Date: TBD
+
+## Issue #42 — MenuItem admin CRUD and bulk actions
+
+### Status
+
+Automated two-axis review complete on 2026-09-30. No unresolved findings remain. Human pull-request approval remains pending.
+
+### Standards review
+
+No documented-standard violations remain. The module follows the existing controller/service/repository composition, validates every boundary with Zod, protects every route with `ADMIN`, and keeps MenuItem, taste-assignment, and audit writes in one transaction. The review's duplicated-code judgement call was resolved by moving the reused empty-string and optional-search normalization into `shared/validation.ts`. Raw SQL is limited to a parameterized `SELECT ... FOR UPDATE` because Prisma cannot express the Restaurant row lock needed to prevent create/update races with Restaurant soft deletion.
+
+### Specification review
+
+No findings remain. The initial review found that `PATCH` could update a MenuItem under an already deleted Restaurant and that create/update validated the Restaurant outside the write transaction. Create and update now lock and validate the effective Restaurant within the same transaction as the MenuItem and audit writes; unchanged updates also perform this check without writing audit noise. Repository and service regressions cover deleted effective Restaurants and transactional rejection. The remaining low test risk is that the row-lock tests mock `$queryRaw` rather than orchestrating a real concurrent Restaurant deletion; the parameterized `FOR UPDATE` lock closes the identified time-of-check/time-of-use path.
+
+All eight routes, filtering and pagination, localized response mapping, Restaurant phone redaction, taste replacement, image key/URL rules, idempotent single and bulk actions, minimized audit summaries, OpenAPI registration, and scope exclusions match issue #42.
+
+### Review scope
+
+- Diff: `git diff origin/main...HEAD` plus the review-fix working-tree diff
+- Commits: `9a07de4 feat(api): implement MenuItem admin CRUD (#42)` and the merge from current `origin/main`; review fixes are committed separately
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/03-implementation/engineering-guidelines.md`, `docs/03-implementation/data-model.md`, and `docs/03-implementation/module-implementation-checklist.md`
+- Specification source: GitHub issue #42 and its approved implementation note
+- Authorization, validation, response redaction, relation integrity, transaction boundaries, concurrent Restaurant deletion, idempotency, audit minimization, OpenAPI, and out-of-scope boundaries
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD

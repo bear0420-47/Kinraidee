@@ -471,3 +471,33 @@ Run against the real API and database at desktop and 375px widths:
 
 - Stored icon values resolve only through the fixed registry map, and unknown values fall back.
 - Endpoint strings exist only in `hooks/admin/tastes/useTastes.ts`. There is no description field, bulk reorder, `อะไรก็ได้` record, MenuItem taste-assignment UI, icon asset picker, or API change.
+
+## Issue #42 — MenuItem admin CRUD and bulk actions
+
+### Scope
+
+- Verification date/time: 2026-09-30 17:32 ICT (`UTC+07:00`)
+- Environment: local macOS workspace, Node.js 26.4.0, pnpm 12.4.2, PostgreSQL 17
+- Database: isolated local database `kinraidee_issue42_20260930`; removed after verification and PostgreSQL stopped
+- Routes: administrator list/detail/create/update/soft-delete/restore plus explicit-ID bulk delete/restore under `/api/menu-items`
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm --filter api exec vitest run src/modules/menu-items` | 0 | Pass: 5 files/65 tests covering DTO boundaries, image key/URL pairing, taste deduplication, service relation rules, transactional Restaurant row locking for create/update, concurrent idempotency claims, authorization on all eight routes, bulk limits, and OpenAPI. |
+| `NODE_ENV=test DATABASE_URL=<test-db> JWT_SECRET=<test-secret> CORS_ALLOWED_ORIGINS=http://localhost:5173 node_modules/.bin/tsx .tmp-issue42-integration.mts` | 0 | Pass: temporary script drove the real app and Prisma repository. Verified deleted-Restaurant rejection, create with deduplicated tastes, full taste replacement, filtered pagination, concurrent delete with one audit, repeated restore without duplicate audit, unknown bulk-ID rollback, bulk delete, deleted-Restaurant bulk-restore rejection, successful bulk restore, and one summary audit per bulk mutation. The script was removed after the run. |
+| `NODE_OPTIONS=--localstorage-file=/tmp/kinraidee-vitest-localstorage pnpm verify` | 0 | Pass after merging current `main` and resolving review findings: workspace typecheck, lint, tests, and builds completed. API: 39 files/339 tests; web: 15 files/149 tests. OpenAPI generation and the web production build completed. |
+| `pnpm format` | 0 | Pass: API and web files matched Prettier formatting. |
+| `git diff --check` | 0 | Pass. |
+| `node tests/wireframe-requirements.test.cjs` | 1 | Existing design-prototype gap outside issue #42: 19 passed and 5 failed for missing Profile/Admin prototype states. No prototype or wireframe test was modified. |
+
+### Security and scope checks
+
+- All eight endpoints require authenticated `ADMIN` access; anonymous and `USER` requests are rejected before service execution.
+- Default listing excludes deleted MenuItems and items under deleted Restaurants. `includeDeleted=true` intentionally includes both.
+- Create/update validates an active Restaurant, existing FoodType and Tastes, positive integer price, localized fields, and matching generated local-upload key/URL pairs. External images accept HTTP(S) only and persist `imageKey = null`.
+- MenuItem and taste-assignment writes share one transaction with the audit row. Taste updates replace the complete assignment; duplicate taste IDs are normalized before persistence.
+- Single and bulk soft-delete/restore operations keep image references and `MenuItemTaste` rows. Conditional database claims prevent repeated or concurrent requests from changing timestamps or writing duplicate audit events.
+- Bulk requests accept at most 50 explicit IDs, reject the whole request when any ID is unknown, and reject bulk restore when any owning Restaurant is deleted. One minimized IDs/count audit summary is written per changed bulk operation.
+- MenuItem responses and audit snapshots exclude Restaurant phone and image binary data. No public MenuItem endpoint, UI, upload processing, R2 integration, recommendation behavior, price history, or availability model was added.

@@ -1,6 +1,18 @@
-import type { z } from 'zod'
+import { z } from 'zod'
 
 import { HttpError } from '@/shared/httpError'
+
+export function emptyTrimmedStringToNull(value: unknown) {
+  if (typeof value !== 'string') return value
+  const trimmed = value.trim()
+  return trimmed || null
+}
+
+export const optionalTrimmedStringSchema = z.preprocess((value) => {
+  if (typeof value !== 'string') return value
+  const trimmed = value.trim()
+  return trimmed || undefined
+}, z.string().optional())
 
 export function parseWithSchema<Schema extends z.ZodType>(
   schema: Schema,
