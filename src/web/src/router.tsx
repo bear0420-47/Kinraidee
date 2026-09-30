@@ -5,6 +5,9 @@ import { RedirectIfAuthenticated } from '@/components/RedirectIfAuthenticated'
 import { RequireAuth } from '@/components/RequireAuth'
 import { AccountPage } from '@/pages/account/AccountPage'
 import { AdminPage } from '@/pages/admin/AdminPage'
+import { FoodTypesPage } from '@/pages/admin/food-types/FoodTypesPage'
+import { TastesPage } from '@/pages/admin/tastes/TastesPage'
+import { ZonesPage } from '@/pages/admin/zones/ZonesPage'
 import { LoginPage } from '@/pages/auth/LoginPage'
 import { RegisterPage } from '@/pages/auth/RegisterPage'
 import { HomePage } from '@/pages/home/HomePage'
@@ -37,6 +40,9 @@ export const routes: RouteObject[] = [
         element: <RequireAuth role="ADMIN" />,
         children: [
           { index: true, element: <AdminPage /> },
+          { path: 'zones', element: <ZonesPage /> },
+          { path: 'food-types', element: <FoodTypesPage /> },
+          { path: 'tastes', element: <TastesPage /> },
           { path: '*', element: <Navigate replace to="/admin" /> },
         ],
       },

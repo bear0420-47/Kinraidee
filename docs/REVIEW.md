@@ -283,3 +283,101 @@ No findings remain. The initial review found that concurrent delete or restore r
 Human reviewer: Pending pull-request review
 Decision: Pending
 Date: TBD
+
+## Issue #34 — Zone management screen
+
+### Status
+
+Automated two-axis review complete on 2026-09-30. Human pull-request approval remains pending.
+
+### Standards review
+
+No documented-standard violations remain. The page uses design-system tokens and Phosphor icons only, with no custom SVG. Each icon is imported by name and paired with visible text. API calls go through the generated OpenAPI types in TanStack Query hooks, and mutations invalidate the shared `['zones']` list. Forms use React Hook Form with Zod through the local resolver, and nothing is written to browser storage. Judgement calls accepted:
+- `components/Dialog.tsx` lives in root `components/` although only the zones page uses it in this change, because #36 and #38 reuse it next.
+- Arbitrary Tailwind sizes (`min-w-[48rem]` for the scrollable table, `max-h-[90vh]` for the dialog) are layout values, not colours.
+
+### Specification review
+
+No blocking findings. All #34 fields, copy, behaviors, accessibility items, and required tests are implemented. Manual browser checks ran against the real API. Notes:
+- Editing sends only the changed fields, and an unchanged form closes without a request (recorded in `docs/plan.md`).
+- Duplicate-name errors mark whichever name fields the API reports, or both when it does not say.
+- The in-use message is shown inside the delete dialog so the admin keeps context.
+- After a server failure, the form alert stays visible until the next successful submit attempt, even if a later attempt fails client validation (low impact, accepted).
+
+### Review scope
+
+- Diff: `git diff origin/main...feat/34-zone-admin`
+- Commit: `feat(web): add zone management screen (#34)`
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/02-design/design-system.md`, `docs/03-implementation/engineering-guidelines.md`, and `docs/03-implementation/module-implementation-checklist.md`
+- Specification source: GitHub issue #34
+- Admin-only access versus server-side authorization, typed-client use, dialog focus and inert behavior, error-message mapping, mobile layout, and out-of-scope boundaries
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD
+
+## Issue #36 — FoodType management screen
+
+### Status
+
+Automated two-axis review complete on 2026-09-30. Human pull-request approval remains pending.
+
+### Standards review
+
+No documented-standard violations remain. Icons come only from `@phosphor-icons/react`, imported by name, and a test enforces no handwritten SVG and no namespace import. Stored icon keys resolve through a controlled registry with a fallback, never by dynamic import, and every icon sits next to a text label. Shared components moved to root `components/`, and shared schema fields to `schemas/shared/`, only now that the zones and food-types pages both use them, as `engineering-guidelines.md` requires. Judgement calls accepted:
+- `lib/foodTypeIcons.tsx` exports both the registry and a `FoodTypeIcon` component, so later recommendation screens reuse the same map.
+- The icon select is a native `<select>` with a decorative preview icon, not a custom listbox, so keyboard behavior is the browser's own.
+
+### Specification review
+
+No blocking findings. All #36 fields, copy, icon rules, behaviors, accessibility items, and required tests are implemented. Manual browser checks ran against the real API; `FOOD_TYPE_IN_USE` was triggered with a menu item inserted directly in the verify database, because the MenuItem API does not exist yet. Notes:
+- `sandwich` uses Phosphor's `Hamburger`, the closest available icon (recorded in `docs/plan.md`).
+- A stored key outside the registry is shown as the fallback with its raw key and is left unchanged when other fields are edited, so opening and saving a record never erases data silently.
+- Option labels include the key, for example `ข้าว (rice)`, so admins can match what the API stores.
+
+### Review scope
+
+- Diff: `git diff feat/34-zone-admin...feat/36-food-type-admin`
+- Commit: `feat(web): add food type management screen (#36)`
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/02-design/design-system.md`, `docs/03-implementation/engineering-guidelines.md`, and `docs/03-implementation/module-implementation-checklist.md`
+- Specification source: GitHub issue #36
+- Icon registry safety, SVG and namespace-import policy, admin-only access versus server-side authorization, shared-component extraction, and out-of-scope boundaries
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD
+
+## Issue #38 — Taste management screen
+
+### Status
+
+Automated two-axis review complete on 2026-09-30. Human pull-request approval remains pending.
+
+### Standards review
+
+No documented-standard violations remain. The page uses the same shared frame, list states, dialogs, and icon-registry rules as #34 and #36, with Phosphor icons imported by name and no handwritten SVG, which the icon-policy test enforces. Typed hooks own the endpoint strings. Judgement call accepted: FoodType and Taste share one form, table, and schema implementation (`IconMasterData*`) because the two records have identical fields and rules. The per-issue files the issue lists remain as thin wrappers, so each screen can still diverge later without touching the other.
+
+### Specification review
+
+No blocking findings. All #38 fields, copy, icon rules, behaviors, accessibility items, and required tests are implemented. Manual browser checks ran against the real API; `TASTE_IN_USE` was triggered with a `MenuItemTaste` link inserted directly in the verify database. Notes:
+- `bowl` uses Phosphor's `BowlFood`, because there is no plain bowl icon (recorded in `docs/plan.md`).
+- The in-use message follows the issue: remove or change the taste on those menu items first.
+- As on the other screens, an unchanged edit closes without a request.
+
+### Review scope
+
+- Diff: `git diff feat/36-food-type-admin...feat/38-taste-admin`
+- Commit: `feat(web): add taste management screen (#38)`
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/02-design/design-system.md`, `docs/03-implementation/engineering-guidelines.md`, and `docs/03-implementation/module-implementation-checklist.md`
+- Specification source: GitHub issue #38
+- Icon registry safety, shared-form refactor regressions for FoodType, admin-only access versus server-side authorization, and out-of-scope boundaries
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD

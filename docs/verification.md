@@ -356,3 +356,118 @@ Run against the real API and database at 375px and desktop widths:
 - Taste stays a hard-delete model; `MenuItemTaste` links are never removed automatically; `อะไรก็ได้` is not stored.
 - The API stores only validated icon keys and has no knowledge of React or Phosphor components.
 - Duplicate-name errors use code `TASTE_NAME_ALREADY_EXISTS`.
+
+## Issue #34 — Zone management screen
+
+### Scope
+
+- Verification date: 2026-09-30 (ICT, `UTC+07:00`)
+- Environment: local Windows 11 workspace, Node.js 24.12.0, pnpm 12.4.2, PostgreSQL 17 through the committed Docker Compose service
+- Database: isolated local database `kinraidee_verify` with the committed migrations and the #29 administrator seed; removed after verification
+- Route: `/admin/zones` under the `/admin/*` guard from #32, using `GET`, `POST`, `PATCH`, and `DELETE` on `/api/zones` through the typed client
+- Shared additions reused by #36 and #38: `components/Dialog.tsx` (modal focus rules), `lib/duplicateNameFields.ts`, a `wide` width for `PageShell`, a `ref` prop on `Button`, and `@phosphor-icons/react` (decisions recorded in `docs/plan.md`)
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm --filter web test` | 0 | Pass: 8 files/85 tests (30 new). Schema tests cover trimming, the flat-to-API body transform, required Thai/English names, empty/decimal/text/out-of-range `sortOrder`, negative and int32 boundary values, the all-or-nothing description pair, form pre-fill, and changed-field detection (including clearing a description to `null`). Page tests cover the ADMIN list with every field, the `ที่ไหนก็ได้` note absent from the table, the empty state, load error with retry, no GPS/coordinate fields, create validation with focus on the first invalid field and `aria-describedby` errors, create through the typed client with list refresh, duplicate-name field errors with focus, a generic save alert, edit pre-fill sending only the changed fields, unchanged edit sending no request, delete confirmation before the request, cancel returning focus to the row action, `ZONE_IN_USE` showing the approved message, and dialog focus, Tab trapping, inert background, and Escape. Anonymous and `USER` access reuse the existing #32 guard tests for `/admin/zones`. |
+| Deliberate regression checks | — | Removing list invalidation after mutations failed 3 tests, and removing the Shift+Tab wrap in the dialog failed the keyboard test. Both were restored. |
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests (API 34 files/274 tests; web 8 files/85 tests), API build with OpenAPI generation, and web production build. |
+| `prettier --check --end-of-line auto .` in `src/api` and `src/web` | 0 | Pass. |
+| `git diff --check` | 0 | Pass. |
+| `node tests/wireframe-requirements.test.cjs` | 1 | Existing design-prototype gap outside issue #34: 19 passed and 5 failed. |
+
+### Manual browser checks
+
+Run against the real API and database at desktop and 375px widths:
+
+- Anonymous `/admin/zones` redirects to login with `returnTo`; the seeded `ADMIN` returns to `/admin/zones` after login and sees the empty state and the `ที่ไหนก็ได้` note.
+- Pressing Enter on an empty create form shows errors under both names and `sortOrder` and focuses the Thai name.
+- Creating a zone with both descriptions adds the row to the table.
+- Creating a second zone with the same Thai name shows the duplicate-name error from the real API's 409 on the Thai name field.
+- Escape closes the dialog, returns focus to `เพิ่มโซน`, and removes `inert` from the page.
+- Clearing only one description shows the pair error. Clearing both saves `description: null`, and the table shows `ไม่มี`.
+- Deleting a zone used by a restaurant shows the approved `ZONE_IN_USE` message inside the dialog and keeps the row.
+- Deleting an unused zone at 375px removes the row, announces the result, and moves focus to `เพิ่มโซน`.
+- At 375px the page does not scroll horizontally; only the table scrolls inside its frame, and the dialog opens as a bottom sheet.
+
+### Security and scope checks
+
+- The guard is UX only; every mutation is still authorized by the API's `requireAdmin`.
+- Endpoint strings exist only in `hooks/admin/zones/useZones.ts`; components never call the API client.
+- No bulk reorder, `ที่ไหนก็ได้` record, GPS/coordinate field, restaurant reassignment UI, or API change was added. Zone data contains no personal data.
+
+## Issue #36 — FoodType management screen
+
+### Scope
+
+- Verification date: 2026-09-30 (ICT, `UTC+07:00`)
+- Environment and database: same as issue #34 (`kinraidee_verify`, removed after verification). A test menu item was inserted directly in that database to check `FOOD_TYPE_IN_USE`, because MenuItem CRUD (#42) does not exist yet
+- Route: `/admin/food-types` under the `/admin/*` guard from #32, using `GET`, `POST`, `PATCH`, and `DELETE` on `/api/food-types` through the typed client
+- Icons: `src/web/src/lib/foodTypeIcons.tsx` registry on the shared `lib/iconRegistry.ts` (key mapping recorded in `docs/plan.md`)
+- Shared refactor: the zones page now uses the extracted shared components, schema fields, and test helpers; its behavior and tests are unchanged
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm --filter web test` | 0 | Pass: 12 files/122 tests (37 new). Schema tests cover trimming, the empty icon choice becoming `null`, rejection of keys outside the registry (including SVG markup), the shared name and `sortOrder` rules, pre-fill of known, null, and unknown icon keys, and changed-field detection that leaves an untouched unknown key alone. Icon tests check the exact registry keys, the Phosphor component for each key, and the `ForkKnife` fallback for null, unknown, prototype-property, and SVG keys. A source scan finds no handwritten `<svg>`, `<path>`, `<symbol>`, or `<use>` markup and no namespace import from Phosphor in application code. Page tests cover the ADMIN list with icon labels, the fallback icon and label for null and unknown keys, the `อะไรก็ได้` note absent from the table, the empty state, no description field, a select offering only the registry keys with text labels and the helper connected by `aria-describedby`, create validation and focus, creating without an icon as `null` and with a chosen key, duplicate-name errors, edit pre-fill sending only the changed icon, an unknown key kept on edit, delete confirmation with list refresh and focus fallback, `FOOD_TYPE_IN_USE` with the approved message, and Tab/Escape behavior. |
+| Deliberate regression checks | — | Replacing the registry's own-key check with `in`, and comparing the edited icon with the raw stored key, failed 3 tests; both were restored. |
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests (API 34 files/274 tests; web 12 files/122 tests), API build with OpenAPI generation, and web production build. |
+| `prettier --check --end-of-line auto .` in `src/api` and `src/web` | 0 | Pass. |
+| `git diff --check` | 0 | Pass. |
+
+### Manual browser checks
+
+Run against the real API and database at desktop and 375px widths:
+
+- Keyboard-only create: Tab reaches the icon select, ArrowDown changes it, and the preview icon beside the select updates. Saving shows `เส้น` with the steaming-bowl icon in the table.
+- Creating without an icon stores `icon: null` (confirmed through `GET /api/food-types`), and the table shows `ไอคอนเริ่มต้น` with the fork-and-knife icon.
+- Deleting a food type used by a menu item shows the approved `FOOD_TYPE_IN_USE` message inside the dialog and moves focus to it.
+- A key set directly in the database outside the registry (`dumpling`) shows as `ไอคอนเริ่มต้น (ไม่รู้จัก dumpling)`. Editing only `sortOrder` saves `sortOrder: 5`, and the stored `icon` stays `dumpling`.
+- Deleting an unused food type removes the row, announces the result, and moves focus to `เพิ่มประเภทอาหาร`.
+- At 375px the page does not scroll horizontally.
+- After the shared refactor, `/admin/zones` still loads and lists zones.
+
+### Security and scope checks
+
+- Database icon values resolve only through the fixed registry map, and unknown values fall back. No component is imported dynamically from a stored string.
+- Endpoint strings exist only in `hooks/admin/food-types/useFoodTypes.ts`. There is no description field, bulk reorder, `อะไรก็ได้` record, MenuItem reassignment UI, icon asset picker, or API change.
+
+## Issue #38 — Taste management screen
+
+### Scope
+
+- Verification date: 2026-09-30 (ICT, `UTC+07:00`)
+- Environment and database: same as issue #34 (`kinraidee_verify`, removed after verification). A `MenuItemTaste` link to the test menu item was inserted directly in that database to check `TASTE_IN_USE`, because MenuItem CRUD (#42) does not exist yet
+- Route: `/admin/tastes` under the `/admin/*` guard from #32, using `GET`, `POST`, `PATCH`, and `DELETE` on `/api/tastes` through the typed client
+- Icons: `src/web/src/lib/tasteIcons.tsx` registry (key mapping recorded in `docs/plan.md`)
+- Shared refactor: FoodType and Taste now use the shared icon master-data form, table, and schema; the FoodType tests pass unchanged
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm --filter web test` | 0 | Pass: 15 files/149 tests (27 new). Taste icon tests check the exact registry keys, the Phosphor component for each key, and the `ForkKnife` fallback for null, a food-type key, a prototype property, and SVG markup. Schema tests cover the body transform, the empty icon choice becoming `null`, rejection of keys from another registry, changed-field detection, and an untouched unknown key. Page tests cover the ADMIN list with icon labels, the fallback icon and label for null and unknown keys, the `อะไรก็ได้` note absent from the table, the empty state, no description field, only the taste registry keys offered with the helper connected by `aria-describedby`, create validation and focus, create with a chosen icon and with `null`, list refresh, duplicate-name errors on both names when the API names no field, edit pre-fill sending only the changed icon, delete confirmation with list refresh, `TASTE_IN_USE` with the approved message, and Tab/Escape behavior. The #32 guard tests cover anonymous and `USER` access to `/admin/*`, and the icon-policy scan now includes `tasteIcons.tsx`. |
+| Deliberate regression checks | — | Mapping `TASTE_IN_USE` to the wrong code and giving `bowl` the wrong icon each failed a test (2 failures), then both were restored. |
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests (API 34 files/274 tests; web 15 files/149 tests), API build with OpenAPI generation, and web production build. |
+| `prettier --check --end-of-line auto .` in `src/api` and `src/web` | 0 | Pass. |
+| `git diff --check` | 0 | Pass. |
+| `node tests/wireframe-requirements.test.cjs` | 1 | Existing design-prototype gap outside issues #34, #36, and #38: 19 passed and 5 failed. |
+
+### Manual browser checks
+
+Run against the real API and database at desktop and 375px widths:
+
+- Keyboard-only create: ArrowDown on the icon select picks `flame`, and the table shows `เปลวไฟ` with the flame icon.
+- A second taste with the same Thai name shows the duplicate-name error from the real API's 409, with focus on the Thai name.
+- Deleting a taste linked to a menu item shows the approved `TASTE_IN_USE` message inside the dialog and moves focus to it.
+- Changing the icon to `heart` by keyboard sends only the icon, and `GET /api/tastes` returns `icon: "heart"` with the other fields unchanged.
+- Deleting an unlinked taste removes the row, announces the result, and moves focus to `เพิ่มรสชาติ`.
+- At 375px neither `/admin/tastes` nor `/admin/food-types` scrolls horizontally, and the food-types page still lists its records after the shared refactor.
+
+### Security and scope checks
+
+- Stored icon values resolve only through the fixed registry map, and unknown values fall back.
+- Endpoint strings exist only in `hooks/admin/tastes/useTastes.ts`. There is no description field, bulk reorder, `อะไรก็ได้` record, MenuItem taste-assignment UI, icon asset picker, or API change.
