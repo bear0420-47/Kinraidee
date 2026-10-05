@@ -450,7 +450,7 @@ Automated two-axis review complete on 2026-10-05. Human pull-request approval re
 
 ### Standards review
 
-No documented-standard violations remain. Instead of copying MenuItem's image validation into Restaurant, the rule moves to the uploads module, which already owns the upload key and `/uploads` URL contract. Both DTOs now spread `imageReferenceFields` and use the same refinement and column mapping. The change stays inside the DTO layer: controllers, services, repositories, and audit snapshots are untouched. Judgement call accepted: `imageUrl` is written as one refined nullable string instead of a union, so the generated OpenAPI type is `string | null` rather than `string | unknown`. Validation behavior is the same, and only the error message for an invalid URL is more general.
+No documented-standard violations remain. Instead of copying MenuItem's image validation into Restaurant, the rule moves to the uploads module, which already owns the upload key and `/uploads` URL contract. Both DTOs now spread `imageReferenceFields` and use the same refinement and column mapping. The change stays inside the DTO layer: controllers, services, repositories, and audit snapshots are untouched. Judgement call accepted: `imageUrl` is written as one refined nullable string instead of a union, so the generated OpenAPI type is `string | null` rather than `string | unknown`. Validation behavior is the same, and only the error message for an invalid URL is more general. The `/uploads` static route overrides helmet's `Cross-Origin-Resource-Policy` to `cross-origin`. Without this, the web app (another origin) cannot display uploaded images at all, a gap #40's tests could not show because they fetch files directly. The override is scoped to that route and does not grant cross-origin reads.
 
 ### Specification review
 
@@ -459,10 +459,10 @@ No blocking findings. #41 requires saving an uploaded `imageKey`/`imageUrl` on a
 ### Review scope
 
 - Diff: `git diff origin/main...fix/39-restaurant-local-images`
-- Commit: `fix(api): accept uploaded images on restaurants`
+- Commits: `fix(api): accept uploaded images on restaurants`, `fix(api): let the web app display uploaded images`
 - Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/03-implementation/data-model.md`, and `docs/03-implementation/engineering-guidelines.md`
 - Specification sources: GitHub issues #39, #40, and #41
-- Image key/URL integrity, external URL scheme validation, MenuItem regression risk, and the OpenAPI contract
+- Image key/URL integrity, external URL scheme validation, MenuItem regression risk, the OpenAPI contract, and the scope of the relaxed resource policy
 
 ### Approval
 

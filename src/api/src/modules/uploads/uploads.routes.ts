@@ -59,6 +59,12 @@ export function createUploadsStaticRoutes(
 
   if (enabled) {
     router.use(requireGeneratedUploadPath)
+    // Catalog images are embedded by the web app on another origin; helmet's default
+    // `same-origin` would block them. Only this static route relaxes the policy.
+    router.use((_request, response, next) => {
+      response.setHeader('Cross-Origin-Resource-Policy', 'cross-origin')
+      next()
+    })
     router.use(
       express.static(path.resolve(rootDirectory), {
         dotfiles: 'deny',
