@@ -7,11 +7,13 @@ type ImagePreviewProps = {
   url: string
   // Empty when the image is decorative next to the record's name.
   alt: string
-  size: 'thumbnail' | 'preview'
+  size: 'thumbnail' | 'cell' | 'preview'
 }
 
 const sizeClassNames = {
   thumbnail: 'h-12 w-12',
+  // A table's leading image column.
+  cell: 'h-20 w-20',
   preview: 'h-40 w-full max-w-xs',
 }
 

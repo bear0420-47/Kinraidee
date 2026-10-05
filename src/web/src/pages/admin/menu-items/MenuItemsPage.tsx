@@ -172,6 +172,7 @@ export function MenuItemsPage() {
   return (
     <MasterDataPageShell
       title="จัดการเมนูอาหาร"
+      width="extra-wide"
       note="เมนูที่ลบแล้วจะถูกซ่อนจากการสุ่มเมนู และกู้คืนได้เมื่อร้านอาหารของเมนูยังใช้งานอยู่"
       createLabel="เพิ่มเมนูอาหาร"
       onCreate={() => openDialog({ mode: 'create' })}

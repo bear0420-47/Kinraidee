@@ -120,6 +120,9 @@ export function MenuItemTable({
         <thead className="bg-peach-deep text-small">
           <tr>
             <th scope="col" className={`${headerCellClassName} w-px`}>
+              รูป
+            </th>
+            <th scope="col" className={`${headerCellClassName} w-px`}>
               <SelectAllCheckbox
                 menuItems={menuItems}
                 selectedIds={selectedIds}
@@ -136,9 +139,6 @@ export function MenuItemTable({
               className={`${headerCellClassName} ${numberColumnClassName}`}
             >
               ราคา
-            </th>
-            <th scope="col" className={headerCellClassName}>
-              รูป
             </th>
             <th scope="col" className={headerCellClassName}>
               สถานะ
@@ -163,6 +163,15 @@ export function MenuItemTable({
                 key={menuItem.id}
                 className={deleted || restaurantDeleted ? 'bg-canvas-soft' : ''}
               >
+                <td className={bodyCellClassName}>
+                  {menuItem.imageUrl ? (
+                    <ImagePreview url={menuItem.imageUrl} alt="" size="cell" />
+                  ) : (
+                    <span className="flex h-20 w-20 items-center justify-center rounded-sm border-2 border-dashed border-line-soft text-center text-small text-muted">
+                      ไม่มีรูป
+                    </span>
+                  )}
+                </td>
                 <td className={bodyCellClassName}>
                   <input
                     type="checkbox"
@@ -216,19 +225,6 @@ export function MenuItemTable({
                   className={`${bodyCellClassName} ${numberColumnClassName} whitespace-nowrap`}
                 >
                   {formatPrice(menuItem.price)}
-                </td>
-                <td className={bodyCellClassName}>
-                  {menuItem.imageUrl ? (
-                    <ImagePreview
-                      url={menuItem.imageUrl}
-                      alt=""
-                      size="thumbnail"
-                    />
-                  ) : (
-                    <span className="whitespace-nowrap text-muted">
-                      ไม่มีรูป
-                    </span>
-                  )}
                 </td>
                 <td className={bodyCellClassName}>
                   <MenuItemStatus menuItem={menuItem} id={statusId} />

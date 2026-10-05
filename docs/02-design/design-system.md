@@ -169,6 +169,8 @@ Use slight asymmetric radii for doodle surfaces when practical, e.g. `6px 12px 5
 ### Admin Tables And Bulk Selection
 
 - Admin tables share one cell style; the actions column sits at the right edge with its header centred over the buttons.
+- Admin pages use the `1120px` shell. A data-dense table page, such as MenuItems, may use the `1240px` extra-wide card so the table fits without horizontal scrolling on desktop.
+- When a table shows images, the image is the first column at `80px` square; a record without an image shows a dashed `ไม่มีรูป` placeholder of the same size so rows stay aligned.
 - A selectable table puts a labelled checkbox first in each row and a labelled "select all on this page" checkbox in the header.
 - The bulk-action bar sits above the table. It always shows the selected count in a live region and the per-action limit, and each bulk button's accessible name includes the count.
 - A blocked bulk action stays visible but disabled, with the reason as text next to it.
