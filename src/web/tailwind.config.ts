@@ -61,6 +61,7 @@ export default {
       },
       maxWidth: {
         shell: '1120px',
+        'shell-wide': '1240px',
       },
     },
   },

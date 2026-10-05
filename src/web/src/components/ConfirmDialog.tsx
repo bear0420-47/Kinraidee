@@ -15,6 +15,8 @@ type ConfirmDialogProps = {
   onConfirm: () => Promise<unknown>
   onClose: () => void
   fallbackFocusRef?: RefObject<HTMLElement | null>
+  // The action is currently not allowed; the dialog body explains why.
+  confirmDisabled?: boolean
 }
 
 // Confirmation for an irreversible or significant action; failures stay in the dialog.
@@ -28,6 +30,7 @@ export function ConfirmDialog({
   onConfirm,
   onClose,
   fallbackFocusRef,
+  confirmDisabled = false,
 }: ConfirmDialogProps) {
   const [attempts, setAttempts] = useState(0)
   const [isPending, setIsPending] = useState(false)
@@ -59,7 +62,11 @@ export function ConfirmDialog({
         <Button variant="secondary" onClick={onClose}>
           ยกเลิก
         </Button>
-        <Button disabled={isPending} aria-busy={isPending} onClick={confirm}>
+        <Button
+          disabled={isPending || confirmDisabled}
+          aria-busy={isPending}
+          onClick={confirm}
+        >
           {icon}
           {isPending ? pendingLabel : confirmLabel}
         </Button>

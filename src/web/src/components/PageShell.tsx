@@ -3,13 +3,15 @@ import type { ReactNode } from 'react'
 type PageShellProps = {
   title: string
   description?: string
-  width?: 'narrow' | 'wide'
+  // `extra-wide` is for data-dense tables, such as the MenuItem list.
+  width?: 'narrow' | 'wide' | 'extra-wide'
   children: ReactNode
 }
 
 const widthClassNames = {
   narrow: 'max-w-md',
   wide: 'max-w-shell',
+  'extra-wide': 'max-w-shell-wide',
 }
 
 export function PageShell({

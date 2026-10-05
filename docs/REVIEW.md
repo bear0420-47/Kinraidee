@@ -567,3 +567,37 @@ A second review against issues #39, #40, #41, and #42 found the change in scope.
 Human reviewer: Pending pull-request review
 Decision: Pending
 Date: TBD
+
+## Issue #43 — MenuItem management screen
+
+### Status
+
+Automated two-axis review complete on 2026-10-05. Human pull-request approval remains pending.
+
+### Standards review
+
+No documented-standard violations remain. The page follows the Restaurant screen's structure (shell, filters, `QueryListState`, table with `RowActions`, shared dialogs, `Pagination`). Typed hooks own every endpoint; React Hook Form and Zod validate input; icons are Phosphor components next to text; nothing is persisted in browser storage. The #41 image flow was moved to shared modules instead of being copied, and the Restaurant suite passing unchanged shows its behavior is preserved. Judgement calls accepted:
+- `useMenuItemImage.ts` and `MenuItemImageField.tsx`, listed in the issue's expected files, are not added because they would only re-export the shared image modules.
+- Restaurant, FoodType, and Taste mutations also refresh the MenuItem list, because MenuItem rows embed their names and Restaurant deletion cascades to MenuItems.
+- `RowActions` gained an optional blocked-edit reason and `ConfirmDialog` an optional disabled confirm; existing callers are unchanged.
+
+### Specification review
+
+No blocking findings. All #43 list, filter, form, image, bulk-selection, delete/restore, copy, accessibility, and required-test items are implemented. Notes:
+- The price accepts whole baht from 1 to 2,147,483,647, the `Int` column's limit, so an oversized value is a field error rather than a server error.
+- The 50-item limit is enforced in the selection helpers and unit-tested; a 20-row page cannot reach it today.
+- Bulk counts come from the API's `updatedCount`, so already-deleted or already-active items are reported honestly.
+- An active item under a deleted Restaurant (possible only if the Restaurant is deleted mid-session) keeps delete but has edit disabled with visible guidance.
+
+### Review scope
+
+- Diff: `git diff main...feat/43-menu-item-admin`
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/02-design/design-system.md`, `docs/03-implementation/engineering-guidelines.md`, and `docs/03-implementation/module-implementation-checklist.md`
+- Specification source: GitHub issue #43
+- Upload ordering and orphan cleanup, development-only upload gating, bulk ID handling, Restaurant-deleted blocking, admin-only access versus server-side authorization, mobile layout, and out-of-scope boundaries (no API, recommendation, R2, or public detail changes)
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD

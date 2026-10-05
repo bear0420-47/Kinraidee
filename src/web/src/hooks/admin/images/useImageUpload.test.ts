@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { getImageFileError, MAX_IMAGE_BYTES } from './useRestaurantImage'
+import { getImageFileError, MAX_IMAGE_BYTES } from './useImageUpload'
 
 function file(type: string, size = 10) {
   return new File([new Uint8Array(size)], 'image', { type })

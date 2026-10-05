@@ -1,13 +1,11 @@
-import { SignOut } from '@phosphor-icons/react'
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { useBlocker } from 'react-router'
+import { useEffect, useRef, useState } from 'react'
 
-import { ConfirmDialog } from '@/components/ConfirmDialog'
 import { Dialog } from '@/components/Dialog'
+import { LeavePageDialog } from '@/components/LeavePageDialog'
 import { MasterDataPageShell } from '@/components/MasterDataPageShell'
 import { getLastPage, Pagination } from '@/components/Pagination'
 import { QueryListState } from '@/components/QueryListState'
-import { discardUploadedImage } from '@/hooks/admin/restaurants/useRestaurantImage'
+import { useImageFormGuard } from '@/hooks/admin/images/useImageFormGuard'
 import {
   useDeleteRestaurant,
   useRestaurants,
@@ -22,10 +20,7 @@ import {
   type RestaurantFilters as Filters,
 } from '@/schemas/admin/restaurants/restaurantSchemas'
 import { DeleteRestaurantDialog } from './components/DeleteRestaurantDialog'
-import {
-  RestaurantForm,
-  type RestaurantFormState,
-} from './components/RestaurantForm'
+import { RestaurantForm } from './components/RestaurantForm'
 import { RestaurantFilters } from './components/RestaurantFilters'
 import { RestaurantTable } from './components/RestaurantTable'
 import { RestoreRestaurantDialog } from './components/RestoreRestaurantDialog'
@@ -35,13 +30,6 @@ type DialogState =
   | { mode: 'edit'; restaurant: Restaurant }
   | { mode: 'delete'; restaurant: Restaurant }
   | { mode: 'restore'; restaurant: Restaurant }
-
-const idleForm: RestaurantFormState = {
-  dirty: false,
-  pendingUploadKey: null,
-  saving: false,
-  busy: false,
-}
 
 const CLEANUP_WARNING = 'ระบบลบรูปที่ไม่ได้ใช้แล้วไม่สำเร็จ'
 
@@ -53,31 +41,12 @@ export function RestaurantsPage() {
   const deleteRestaurant = useDeleteRestaurant()
   const restoreRestaurant = useRestoreRestaurant()
   const [dialog, setDialog] = useState<DialogState | null>(null)
-  const [formState, setFormState] = useState(idleForm)
   const [notice, setNotice] = useState('')
   const createButtonRef = useRef<HTMLButtonElement>(null)
 
   const isFormOpen = dialog?.mode === 'create' || dialog?.mode === 'edit'
-  const hasUnsavedChanges = isFormOpen && formState.dirty
-
-  // Prompt only when an open form has unsaved input or an unsaved upload.
-  const blocker = useBlocker(
-    ({ currentLocation, nextLocation }) =>
-      hasUnsavedChanges && currentLocation.pathname !== nextLocation.pathname,
-  )
-
-  useEffect(() => {
-    if (!hasUnsavedChanges) return
-    const warnBeforeUnload = (event: BeforeUnloadEvent) =>
-      event.preventDefault()
-    window.addEventListener('beforeunload', warnBeforeUnload)
-    return () => window.removeEventListener('beforeunload', warnBeforeUnload)
-  }, [hasUnsavedChanges])
-
-  const trackFormState = useCallback(
-    (state: RestaurantFormState) => setFormState(state),
-    [],
-  )
+  const guard = useImageFormGuard(isFormOpen)
+  const { blocker } = guard
 
   const meta = restaurants.data?.meta
   const lastPage = meta ? getLastPage(meta.total, meta.pageSize) : 1
@@ -96,28 +65,25 @@ export function RestaurantsPage() {
 
   function openDialog(next: DialogState) {
     setNotice('')
-    setFormState(idleForm)
+    guard.resetFormState()
     setDialog(next)
   }
 
   function finish(message: string) {
     setDialog(null)
-    setFormState(idleForm)
+    guard.resetFormState()
     setNotice(message)
   }
 
   async function discardPendingUpload() {
-    // An in-flight save cleans up its own upload if it fails; deleting it here could
-    // remove a file the saved restaurant now points at.
-    const key = formState.saving ? null : formState.pendingUploadKey
-    if (key && !(await discardUploadedImage(key))) setNotice(CLEANUP_WARNING)
+    if (!(await guard.discardPendingUpload())) setNotice(CLEANUP_WARNING)
   }
 
   function closeForm() {
-    if (formState.busy) return
+    if (guard.isBusy) return
     void discardPendingUpload()
     setDialog(null)
-    setFormState(idleForm)
+    guard.resetFormState()
   }
 
   async function save(
@@ -209,7 +175,7 @@ export function RestaurantsPage() {
             submitLabel="เพิ่มร้านอาหาร"
             onSave={(body, pendingUploadKey) => save(body, pendingUploadKey)}
             onCancel={closeForm}
-            onStateChange={trackFormState}
+            onStateChange={guard.trackFormState}
           />
         </Dialog>
       ) : null}
@@ -224,7 +190,7 @@ export function RestaurantsPage() {
               save(body, pendingUploadKey, dialog.restaurant)
             }
             onCancel={closeForm}
-            onStateChange={trackFormState}
+            onStateChange={guard.trackFormState}
           />
         </Dialog>
       ) : null}
@@ -245,20 +211,14 @@ export function RestaurantsPage() {
         />
       ) : null}
       {blocker.state === 'blocked' ? (
-        <ConfirmDialog
-          title="ออกจากหน้านี้?"
-          confirmLabel="ออกจากหน้านี้"
-          pendingLabel="กำลังออก…"
-          icon={<SignOut aria-hidden weight="bold" />}
-          getErrorMessage={() => 'ออกจากหน้านี้ไม่สำเร็จ กรุณาลองใหม่อีกครั้ง'}
-          onConfirm={async () => {
+        <LeavePageDialog
+          message="ข้อมูลร้านที่ยังไม่บันทึกจะหายไป"
+          onLeave={async () => {
             await discardPendingUpload()
             blocker.proceed()
           }}
-          onClose={() => blocker.reset()}
-        >
-          <p>ข้อมูลร้านที่ยังไม่บันทึกจะหายไป</p>
-        </ConfirmDialog>
+          onStay={() => blocker.reset()}
+        />
       ) : null}
     </MasterDataPageShell>
   )

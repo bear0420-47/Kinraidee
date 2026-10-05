@@ -1,21 +1,14 @@
-import { useEffect, useRef, useState } from 'react'
-import {
-  useForm,
-  type FieldErrors,
-  type UseFormSetError,
-} from 'react-hook-form'
+import { useEffect, useState } from 'react'
+import { useForm, type UseFormSetError } from 'react-hook-form'
 
 import { ApiError } from '@/api/apiError'
 import { Button } from '@/components/Button'
 import { FormAlert } from '@/components/FormAlert'
+import { ImageSourceField } from '@/components/ImageSourceField'
 import { SelectField } from '@/components/SelectField'
 import { TextField } from '@/components/TextField'
-import {
-  discardUploadedImage,
-  ImageUploadError,
-  useUploadRestaurantImage,
-} from '@/hooks/admin/restaurants/useRestaurantImage'
-import { RestaurantSaveError } from '@/hooks/admin/restaurants/useRestaurants'
+import { useFormImageUpload } from '@/hooks/admin/images/useFormImageUpload'
+import type { ImageFormState } from '@/hooks/admin/images/useImageFormGuard'
 import { zodFormResolver } from '@/lib/zodFormResolver'
 import {
   restaurantFormSchema,
@@ -25,18 +18,6 @@ import {
   type RestaurantFormInput,
 } from '@/schemas/admin/restaurants/restaurantSchemas'
 import type { Zone } from '@/schemas/admin/zones/zoneSchemas'
-import { RestaurantImageField } from './RestaurantImageField'
-
-export type RestaurantFormState = {
-  // Unsaved input or an unsaved upload; leaving should be confirmed.
-  dirty: boolean
-  // An upload made in this form that the database does not reference yet.
-  pendingUploadKey: string | null
-  // A save is in flight; its own success or failure handling owns the upload.
-  saving: boolean
-  // A save or upload is in flight; the form must not be closed.
-  busy: boolean
-}
 
 type RestaurantFormProps = {
   restaurant?: Restaurant
@@ -48,7 +29,7 @@ type RestaurantFormProps = {
     pendingUploadKey: string | null,
   ) => Promise<unknown>
   onCancel: () => void
-  onStateChange: (state: RestaurantFormState) => void
+  onStateChange: (state: ImageFormState) => void
 }
 
 const API_FIELDS: Record<string, keyof RestaurantFormInput> = {
@@ -105,33 +86,29 @@ export function RestaurantForm({
 }: RestaurantFormProps) {
   const [defaults] = useState(() => toRestaurantFormValues(restaurant))
   const [formAlert, setFormAlert] = useState<string | null>(null)
-  const [uploadError, setUploadError] = useState<string | null>(null)
-  const fileInputRef = useRef<HTMLInputElement>(null)
-  const isMounted = useRef(true)
-  const upload = useUploadRestaurantImage()
+  const form = useForm<RestaurantFormInput, unknown, CreateRestaurantBody>({
+    resolver: zodFormResolver(restaurantFormSchema),
+    defaultValues: defaults,
+  })
   const {
     register,
     handleSubmit,
     setError,
-    setValue,
-    clearErrors,
     watch,
     formState: { errors, isSubmitting, isDirty, submitCount },
-  } = useForm<RestaurantFormInput, unknown, CreateRestaurantBody>({
-    resolver: zodFormResolver(restaurantFormSchema),
-    defaultValues: defaults,
-  })
+  } = form
 
   const imageMode = watch('imageMode')
   const externalUrl = watch('imageUrl')
   const uploadedImage = watch('uploadedImage')
-  const savedImageKey = restaurant?.imageKey ?? null
-  const pendingUploadKey =
-    uploadedImage && uploadedImage.key !== savedImageKey
-      ? uploadedImage.key
-      : null
+  const image = useFormImageUpload({
+    form,
+    savedImage: defaults.uploadedImage,
+    uploadedImage,
+  })
+  const { pendingUploadKey } = image
 
-  const busy = isSubmitting || upload.isPending
+  const busy = isSubmitting || image.isUploading
 
   useEffect(() => {
     onStateChange({
@@ -142,66 +119,17 @@ export function RestaurantForm({
     })
   }, [isDirty, pendingUploadKey, isSubmitting, busy, onStateChange])
 
-  useEffect(() => {
-    isMounted.current = true
-    return () => {
-      isMounted.current = false
-    }
-  }, [])
-
-  async function uploadFile(file: File) {
-    setUploadError(null)
-    try {
-      const image = await upload.mutateAsync(file)
-      // The form closed while uploading, so nothing will ever reference this file.
-      if (!isMounted.current) {
-        void discardUploadedImage(image.key)
-        return
-      }
-      // A replaced, never-saved upload would otherwise be orphaned.
-      if (pendingUploadKey) void discardUploadedImage(pendingUploadKey)
-      setValue('uploadedImage', image, { shouldDirty: true })
-      clearErrors('uploadedImage')
-    } catch (error) {
-      setUploadError(
-        error instanceof ImageUploadError
-          ? error.message
-          : 'อัปโหลดรูปไม่สำเร็จ กรุณาลองใหม่อีกครั้ง',
-      )
-    }
-  }
-
-  function focusMissingUpload(fieldErrors: FieldErrors<RestaurantFormInput>) {
-    // The file input is not a registered field, so focus it when it is the only problem.
-    const fields = Object.keys(fieldErrors)
-    if (fields.length === 1 && fields[0] === 'uploadedImage') {
-      fileInputRef.current?.focus()
-    }
-  }
-
   const submit = handleSubmit(async (body) => {
     setFormAlert(null)
     try {
       await onSave(body, pendingUploadKey)
     } catch (error) {
-      const saveError = error instanceof RestaurantSaveError ? error : null
-      if (saveError?.uploadDiscarded) {
-        // The new upload was removed with the failed save; fall back to the saved image.
-        setValue('uploadedImage', defaults.uploadedImage)
-        if (!defaults.uploadedImage) {
-          setUploadError(
-            'รูปที่อัปโหลดถูกยกเลิกเพราะบันทึกไม่สำเร็จ กรุณาเลือกรูปอีกครั้ง',
-          )
-        }
-      }
-      const message = showSaveError(saveError?.reason ?? error, setError)
-      const cleanupWarning = saveError?.cleanupFailed
-        ? 'ระบบลบรูปที่อัปโหลดไว้ไม่สำเร็จ'
-        : null
+      const { reason, cleanupWarning } = image.handleSaveError(error)
+      const message = showSaveError(reason, setError)
       const alert = [message, cleanupWarning].filter(Boolean).join(' · ')
       setFormAlert(alert || null)
     }
-  }, focusMissingUpload)
+  }, image.focusMissingUpload)
 
   return (
     <form noValidate className="flex flex-col gap-4" onSubmit={submit}>
@@ -254,16 +182,18 @@ export function RestaurantForm({
         error={errors.phone?.message}
         {...register('phone')}
       />
-      <RestaurantImageField
+      <ImageSourceField
+        idPrefix="restaurant"
+        subject="ร้าน"
         register={register}
         mode={imageMode}
         externalUrl={externalUrl}
         urlError={errors.imageUrl?.message}
         uploadedImage={uploadedImage}
-        uploadError={uploadError ?? errors.uploadedImage?.message}
-        isUploading={upload.isPending}
-        fileInputRef={fileInputRef}
-        onFileSelected={(file) => void uploadFile(file)}
+        uploadError={image.uploadError ?? errors.uploadedImage?.message}
+        isUploading={image.isUploading}
+        fileInputRef={image.fileInputRef}
+        onFileSelected={(file) => void image.uploadFile(file)}
       />
       <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
         <Button variant="secondary" disabled={busy} onClick={onCancel}>

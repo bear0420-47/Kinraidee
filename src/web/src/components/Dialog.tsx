@@ -27,6 +27,13 @@ type DialogProps = {
   children: ReactNode
   // Receives focus on close when the opener no longer exists, e.g. a deleted row's button.
   fallbackFocusRef?: RefObject<HTMLElement | null>
+  // `wide` fits content larger than a form, such as a full-size image.
+  size?: 'default' | 'wide'
+}
+
+const sizeClassNames = {
+  default: 'max-w-md',
+  wide: 'max-w-3xl',
 }
 
 // Modal dialog: makes the page inert, traps Tab, closes on Escape, and returns focus.
@@ -35,6 +42,7 @@ export function Dialog({
   onClose,
   children,
   fallbackFocusRef,
+  size = 'default',
 }: DialogProps) {
   const dialogRef = useRef<HTMLDivElement>(null)
   const titleId = useId()
@@ -95,7 +103,7 @@ export function Dialog({
         aria-labelledby={titleId}
         tabIndex={-1}
         onKeyDown={handleKeyDown}
-        className="flex max-h-[90vh] w-full max-w-md flex-col gap-4 overflow-y-auto rounded-dialog border-2 border-paper bg-glass p-6 shadow-lg"
+        className={`flex max-h-[90vh] w-full ${sizeClassNames[size]} flex-col gap-4 overflow-y-auto rounded-dialog border-2 border-paper bg-glass p-6 shadow-lg`}
       >
         <h2 id={titleId} className="font-display text-card-title leading-tight">
           {title}

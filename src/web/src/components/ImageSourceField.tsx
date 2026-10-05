@@ -1,18 +1,22 @@
 import type { Ref } from 'react'
-import type { UseFormRegister } from 'react-hook-form'
+import type { FieldValues, Path, UseFormRegister } from 'react-hook-form'
 
+import { ImagePreview } from '@/components/ImagePreview'
 import { TextField } from '@/components/TextField'
-import { ACCEPTED_IMAGE_TYPES } from '@/hooks/admin/restaurants/useRestaurantImage'
+import { ACCEPTED_IMAGE_TYPES } from '@/hooks/admin/images/useImageUpload'
 import {
   isHttpImageUrl,
+  type ImageFormValues,
   type ImageMode,
-  type RestaurantFormInput,
   type UploadedImage,
-} from '@/schemas/admin/restaurants/restaurantSchemas'
-import { ImagePreview } from './ImagePreview'
+} from '@/schemas/shared/imageFields'
 
-type RestaurantImageFieldProps = {
-  register: UseFormRegister<RestaurantFormInput>
+type ImageSourceFieldProps<Values extends FieldValues & ImageFormValues> = {
+  // Prefix for element ids, such as `restaurant` or `menu-item`.
+  idPrefix: string
+  // What the image shows, such as `ร้าน` or `เมนู`, for the legend and preview text.
+  subject: string
+  register: UseFormRegister<Values>
   mode: ImageMode
   externalUrl: string
   urlError: string | undefined
@@ -31,7 +35,9 @@ const modeLabels: Record<ImageMode, string> = {
 }
 
 // Local uploads exist only in development/test; production builds never render the control.
-export function RestaurantImageField({
+export function ImageSourceField<Values extends FieldValues & ImageFormValues>({
+  idPrefix,
+  subject,
   register,
   mode,
   externalUrl,
@@ -41,15 +47,19 @@ export function RestaurantImageField({
   isUploading,
   fileInputRef,
   onFileSelected,
-}: RestaurantImageFieldProps) {
+}: ImageSourceFieldProps<Values>) {
   const modes: ImageMode[] = import.meta.env.DEV
     ? ['none', 'url', 'upload']
     : ['none', 'url']
-  const uploadErrorId = 'restaurant-image-file-error'
+  const fileInputId = `${idPrefix}-image-file`
+  const uploadErrorId = `${fileInputId}-error`
+  // The image fields are typed by `ImageFormValues`, so these paths always exist.
+  const imageModeField = 'imageMode' as Path<Values>
+  const imageUrlField = 'imageUrl' as Path<Values>
 
   return (
     <fieldset className="flex flex-col gap-3 rounded-sm border-2 border-line-soft p-3">
-      <legend className="px-1 font-bold">รูปร้าน (ไม่บังคับ)</legend>
+      <legend className="px-1 font-bold">รูป{subject} (ไม่บังคับ)</legend>
       <div className="flex flex-wrap gap-x-5 gap-y-2">
         {modes.map((value) => (
           <label key={value} className="flex items-center gap-2">
@@ -57,7 +67,7 @@ export function RestaurantImageField({
               type="radio"
               value={value}
               className="h-5 w-5 accent-paper"
-              {...register('imageMode')}
+              {...register(imageModeField)}
             />
             {modeLabels[value]}
           </label>
@@ -67,19 +77,19 @@ export function RestaurantImageField({
       {mode === 'url' ? (
         <>
           <TextField
-            id="restaurant-image-url"
+            id={`${idPrefix}-image-url`}
             type="url"
             inputMode="url"
             label="URL รูปภาพ"
             placeholder="https://"
             error={urlError}
-            {...register('imageUrl')}
+            {...register(imageUrlField)}
           />
           {/* Preview only a URL that passes validation; the image is never proxied. */}
           {isHttpImageUrl(externalUrl) ? (
             <ImagePreview
               url={externalUrl}
-              alt="ตัวอย่างรูปร้านจาก URL"
+              alt={`ตัวอย่างรูป${subject}จาก URL`}
               size="preview"
             />
           ) : null}
@@ -89,12 +99,12 @@ export function RestaurantImageField({
       {/* The build flag is inlined, so production bundles drop this block entirely. */}
       {import.meta.env.DEV && mode === 'upload' ? (
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="restaurant-image-file" className="font-bold">
+          <label htmlFor={fileInputId} className="font-bold">
             เลือกไฟล์รูป (JPEG, PNG หรือ WebP ไม่เกิน 2 MB)
           </label>
           <input
             ref={fileInputRef}
-            id="restaurant-image-file"
+            id={fileInputId}
             type="file"
             accept={ACCEPTED_IMAGE_TYPES.join(',')}
             disabled={isUploading}
@@ -127,7 +137,7 @@ export function RestaurantImageField({
           {uploadedImage ? (
             <ImagePreview
               url={uploadedImage.url}
-              alt="ตัวอย่างรูปร้านที่อัปโหลด"
+              alt={`ตัวอย่างรูป${subject}ที่อัปโหลด`}
               size="preview"
             />
           ) : null}
