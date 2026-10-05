@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="en">
+<html lang="th">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Kinraidee — Food Recommendation Wireframe</title>
+  <title>Kinraidee — ตัวช่วยเลือกมื้ออาหาร</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Delius+Swash+Caps&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Delius+Swash+Caps&family=Mali:wght@500;600;700&family=Noto+Sans+Thai:wght@400;600;700;800;900&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/vendor/paper.min.css">
   <style>
     :root {
@@ -322,12 +322,12 @@
 
     body {
       color: var(--paper);
-      font-family: Nunito, ui-sans-serif, system-ui, sans-serif;
+      font-family: "Noto Sans Thai", Nunito, ui-sans-serif, system-ui, sans-serif;
       background: var(--canvas);
     }
 
     body p, body label, body select, body option, body footer {
-      font-family: Nunito, ui-sans-serif, system-ui, sans-serif;
+      font-family: "Noto Sans Thai", Nunito, ui-sans-serif, system-ui, sans-serif;
     }
 
     body::before {
@@ -437,7 +437,7 @@
       transform: rotate(-1.5deg);
     }
 
-    h1, h2, h3, .field-label, .chosen-meal { font-family: "Delius Swash Caps", cursive; }
+    h1, h2, h3, .field-label, .chosen-meal { font-family: Mali, "Delius Swash Caps", cursive; }
     h1 { max-width: 680px; font-size: clamp(54px, 6.6vw, 86px); line-height: 1.03; letter-spacing: -.025em; text-shadow: none; }
     .hero h1::after { content: ""; display: block; width: min(330px, 70%); height: 13px; margin-top: 6px; border-top: 4px solid var(--peach); border-radius: 50%; transform: rotate(-1deg); }
     .rough-ready .hero h1::after { display: none; }
@@ -1907,6 +1907,76 @@
       .meal-fact:first-child { grid-column: auto; }
     }
 
+    /* Step 03 session history: a distinct level below the shortlist hero. */
+    .session-history {
+      margin-top: clamp(36px, 6vw, 72px);
+      padding-top: clamp(24px, 4vw, 40px);
+      border-top: 3px solid var(--paper);
+    }
+    .session-history-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 420px);
+      gap: 28px;
+      align-items: end;
+      margin-bottom: 20px;
+    }
+    .session-history-head h2 {
+      margin: 0;
+      color: var(--paper);
+      font-size: clamp(25px, 3vw, 36px);
+      line-height: 1.12;
+    }
+    .session-history-intro {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .session-history-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .session-history-panel {
+      min-width: 0;
+      padding: 22px;
+      color: var(--paper);
+      background: rgba(255,255,255,.74);
+      border: 2px solid var(--paper);
+      border-radius: 8px 14px 7px 12px;
+      box-shadow: 4px 5px 0 rgba(38,61,75,.18);
+    }
+    .session-history-panel:nth-child(2) { transform: rotate(.35deg); }
+    .session-history-label { display: flex; align-items: center; gap: 10px; }
+    .session-history-label > span {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      flex: 0 0 auto;
+      border: 2px solid var(--paper);
+      border-radius: 50%;
+      background: var(--peach);
+      font-size: 20px;
+      font-weight: 900;
+    }
+    .session-history-panel h3 { margin: 0; font-size: 20px; }
+    .session-history-panel > p { margin: 9px 0 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
+    .session-history-panel .history-list { margin-top: 16px; }
+    .session-history-panel .history-list li { align-items: baseline; }
+    .session-history-panel .history-list strong { color: #694538; text-align: right; font-size: 12px; }
+
+    @media (max-width: 580px) {
+      .session-history { margin-top: 34px; padding-top: 24px; }
+      .session-history-head { grid-template-columns: 1fr; gap: 10px; margin-bottom: 16px; }
+      .session-history-head h2 { font-size: 26px; }
+      .session-history-intro { font-size: 13px; }
+      .session-history-grid { grid-template-columns: 1fr; gap: 14px; }
+      .session-history-panel { padding: 18px 16px; }
+      .session-history-panel:nth-child(2) { transform: none; }
+      .session-history-panel .history-list li { flex-direction: column; gap: 3px; }
+      .session-history-panel .history-list strong { text-align: left; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .choice-track { transition: none; }
       .results-swipe-overlay { animation: none; opacity: .72; }
@@ -1927,6 +1997,899 @@
     @media (max-height: 600px) and (min-width: 581px) {
       .hero, .decision-section { padding-top: 88px; }
       .results { padding-top: 96px; }
+    }
+
+    /* Presentation polish: one calm, consistent Doodle language. */
+    :root {
+      --ink: #263d4b;
+      --line: #78858c;
+      --accent-soft: #efcfc5;
+      --info-soft: #d8eef8;
+      --paper-shadow: 4px 5px 0 var(--ink);
+      --radius-card: 8px 12px 7px 11px;
+    }
+
+    .glass,
+    .step-card,
+    .action-card,
+    .card,
+    .session-history-panel,
+    .profile-form,
+    .profile-note,
+    .notice-dialog,
+    .meal-dialog {
+      border-color: var(--ink);
+      border-radius: var(--radius-card);
+      box-shadow: var(--paper-shadow);
+    }
+
+    .step-card:nth-of-type(n),
+    .card:nth-child(n),
+    .session-history-panel:nth-child(n),
+    .profile-note,
+    .meal-dialog {
+      transform: none;
+    }
+
+    .eyebrow,
+    .section-index,
+    .tag,
+    .pick-number {
+      transform: rotate(-.5deg);
+    }
+
+    .results { padding-top: 104px; }
+    .section-head { align-items: flex-start; margin-bottom: 22px; }
+    .section-head h2 { font-size: clamp(28px, 3vw, 38px); }
+    .section-head p { max-width: 680px; font-size: 14px; line-height: 1.55; }
+    .condition-actions { gap: 10px 18px; margin-top: 10px; }
+    .condition-actions button { min-height: 44px; font-size: 13px; }
+
+    .results-controls { max-width: 320px; justify-content: flex-end; }
+    .results-controls .ghost {
+      min-height: 44px;
+      color: var(--ink);
+      background: var(--surface-raised);
+      box-shadow: none;
+      font-size: 13px;
+    }
+    #group-vote { display: none; }
+
+    .cards { gap: clamp(18px, 2vw, 26px); }
+    .card { overflow: hidden; }
+    .card:hover { transform: translateY(-3px); }
+    .food-art { height: clamp(168px, 19vw, 220px); margin: 0; border: 0; border-bottom: 2px solid var(--ink); border-radius: 0; }
+    .card-body { padding: 18px 18px 16px; }
+    .match { margin-bottom: 7px; font-size: 12px; font-weight: 900; }
+    .card-row { gap: 14px; align-items: flex-start; }
+    .card h3 { font-size: clamp(21px, 2vw, 27px); line-height: 1.18; }
+    .restaurant { margin: 5px 0 8px; font-size: 13px; }
+    .price { font-size: 19px; }
+    .quick-facts { margin: 4px 0 10px; }
+    .quick-fact { padding: 5px 9px; font-size: 12px; line-height: 1.35; }
+    .reason { margin-top: 9px; padding-top: 10px; font-size: 13px; line-height: 1.55; -webkit-line-clamp: 3; }
+    .detail-tags { display: none; }
+    .source-note { margin-top: 16px; font-size: 12px; line-height: 1.55; }
+
+    .card-actions { grid-template-columns: 1fr auto auto; gap: 8px; padding-top: 16px; }
+    .card-actions button { min-height: 44px; padding: 8px 12px; font-size: 13px; }
+    .card-actions button:first-child {
+      grid-column: auto;
+      color: var(--ink);
+      background: var(--accent-soft);
+      border-color: var(--ink);
+      box-shadow: 3px 4px 0 var(--ink);
+    }
+    .card-actions .reject,
+    .card-actions .favorite {
+      width: 46px;
+      padding-inline: 0;
+      color: var(--ink);
+      background: var(--surface);
+      box-shadow: none;
+      font-size: 0;
+    }
+    .card-actions .reject::after { content: "ไม่ใช่"; font-size: 11px; }
+    .card-actions .favorite { background: var(--info-soft); }
+    .card-actions .favorite::after { content: "เก็บ"; font-size: 11px; }
+
+    #profile-open {
+      color: var(--muted);
+      background: transparent;
+      border-color: transparent;
+      box-shadow: none;
+      font-size: 0;
+    }
+    #profile-open::after { content: "ข้อจำกัดอาหาร"; font-size: 13px; }
+    #start-choosing { font-size: 0; }
+    #start-choosing::after { content: "เริ่มเลือกมื้อ"; font-size: 14px; }
+
+    /* Button sizing and spacing rhythm. */
+    button { min-height: 44px; }
+    header nav { gap: 12px; }
+    header nav button,
+    .scroll-cue,
+    .panel-back,
+    .option-row .ghost,
+    .condition-actions button,
+    .results-controls .ghost,
+    .empty-actions button,
+    .profile-actions button,
+    .feature-actions button,
+    .dialog-action {
+      min-height: 46px;
+    }
+
+    #start-choosing,
+    #profile-open { padding: 10px 16px; }
+    .panel-back { display: inline-flex; align-items: center; padding: 10px 4px; }
+    .option-row { margin-top: 16px; }
+    .option-row .ghost { padding: 10px 16px; }
+    .dialog-close { width: 46px; height: 46px; }
+
+    .finder-intro { margin-bottom: 16px; }
+    .step-head { gap: 12px; margin-bottom: 20px; }
+    .chips { gap: 12px; }
+    .chip { min-height: 48px; padding: 11px 17px; }
+    .choice-recap { gap: 12px; margin-bottom: 22px; }
+    .action-card .primary { min-height: 50px; }
+    .privacy { margin-top: 14px; line-height: 1.55; }
+
+    .section-head { gap: 24px; }
+    .results-controls { gap: 10px; }
+    .condition-actions { margin-top: 12px; }
+    .cards { margin-top: 4px; }
+
+    .card-actions { grid-template-columns: 1fr 1fr; gap: 10px; padding-top: 18px; }
+    .card-actions button:first-child { grid-column: 1 / -1; min-height: 50px; }
+    .card-actions .reject,
+    .card-actions .favorite {
+      width: auto;
+      min-height: 44px;
+      font-size: 12px;
+    }
+    .card-actions .reject::after,
+    .card-actions .favorite::after { content: none; }
+
+    .session-history { margin-top: 48px; padding-top: 32px; }
+    .session-history-head { gap: 32px; margin-bottom: 24px; }
+    .session-history-grid { gap: 20px; }
+    .session-history-panel { padding: 24px; }
+
+    .profile-heading { margin-bottom: 28px; }
+    .profile-layout { gap: 28px; }
+    .profile-form,
+    .profile-note { padding: 30px; }
+    .allergy-grid { gap: 12px; }
+    .profile-actions,
+    .feature-actions { gap: 12px; margin-top: 24px; }
+
+    .meal-facts { gap: 12px; }
+    .dialog-action { padding-inline: 22px; }
+
+    /* Professional alignment: character comes from linework, not tilted layout. */
+    .brand-mark,
+    .eyebrow,
+    .section-index,
+    .hero-board,
+    .hero-board::before,
+    .board-photo,
+    .board-note:nth-child(n),
+    .step-card:nth-of-type(n),
+    .chip:nth-child(n),
+    .doodle-select,
+    .doodle-options,
+    .card:nth-child(n),
+    .tag,
+    .pick-number,
+    .meal-dialog,
+    .chosen-photo-wrap,
+    .photo-tape,
+    .profile-note,
+    .session-history-panel:nth-child(n),
+    nav button[type="button"] {
+      transform: none;
+    }
+
+    button:hover,
+    .button:hover,
+    .chip:hover,
+    .doodle-select:hover,
+    .card:hover {
+      transform: translateY(-2px);
+    }
+
+    button:active,
+    .button:active,
+    .chip:active {
+      transform: translateY(1px);
+    }
+
+    .hero-board,
+    .step-card,
+    .action-card,
+    .card,
+    .session-history-panel,
+    .profile-form,
+    .profile-note,
+    .notice-dialog,
+    .meal-dialog {
+      border-radius: 10px;
+    }
+
+    .card-body { padding: 18px; }
+    .quick-facts { margin-bottom: 8px; }
+    .card-actions {
+      grid-template-columns: minmax(0, 1.7fr) minmax(88px, 1fr) minmax(88px, 1fr);
+      gap: 8px;
+      margin-top: auto;
+      padding-top: 14px;
+    }
+    .card-actions button,
+    .card-actions button:first-child {
+      grid-column: auto;
+      width: 100%;
+      min-height: 46px;
+      padding: 8px 10px;
+      white-space: nowrap;
+    }
+
+    .session-history-head { align-items: end; }
+    .session-history-panel .history-list { margin-top: 12px; }
+    .session-history-panel > p { margin-top: 8px; }
+    #profile-open:hover,
+    #profile-open:focus-visible { color: var(--ink); background: var(--info-soft); border-color: var(--ink); }
+
+    @media (max-width: 980px) {
+      .section-head { display: grid; grid-template-columns: 1fr; }
+      .results-controls { max-width: none; justify-content: flex-start; }
+      .cards { gap: 18px; }
+    }
+
+    @media (max-width: 580px) {
+      .results { padding-top: 86px; }
+      .section-head h2 { font-size: 29px; }
+      .results-controls { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+      .results-controls .ghost { width: 100%; }
+      .food-art { height: 210px; }
+      .card-body { padding: 18px 16px 16px; }
+      .card h3 { font-size: 23px; }
+      header nav { gap: 6px; }
+      #start-choosing,
+      #profile-open { min-height: 44px; padding: 8px 10px; }
+      #start-choosing::after { font-size: 12px; }
+      #profile-open::after { font-size: 11px; }
+      .finder-intro { margin-bottom: 12px; }
+      .step-head { margin-bottom: 16px; }
+      .chips { gap: 10px; }
+      .chip { width: 100%; justify-content: flex-start; }
+      .section-head { gap: 18px; margin-bottom: 20px; }
+      .card-actions { grid-template-columns: minmax(0, 1.5fr) minmax(76px, 1fr) minmax(76px, 1fr); gap: 7px; }
+      .card-actions button { min-height: 48px; }
+      .card-actions .reject,
+      .card-actions .favorite { width: auto; }
+      .session-history { margin-top: 36px; padding-top: 28px; }
+      .session-history-panel { padding: 20px 18px; }
+      .profile-form,
+      .profile-note { padding: 22px 18px; }
+    }
+
+    @media (max-width: 380px) {
+      .card-actions { grid-template-columns: 1fr 1fr; }
+      .card-actions button:first-child { grid-column: 1 / -1; }
+    }
+
+    /* Final presentation structure: simple summary, stable result grid. */
+    .action-card {
+      display: flex;
+      min-height: 0;
+      flex-direction: column;
+    }
+    .action-card > .panel-back {
+      margin: 0 0 18px;
+      padding: 4px 0;
+      min-height: 36px;
+    }
+    .recap-heading {
+      display: block;
+      margin-bottom: 20px;
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+    .recap-heading h3 { margin-bottom: 7px; font-size: 28px; }
+    .recap-heading p {
+      max-width: 580px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+      text-align: left;
+    }
+    .choice-recap {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      width: 100%;
+      margin: 0 0 24px;
+      padding: 0;
+      gap: 0;
+      overflow: hidden;
+      background: var(--surface);
+      border: 2px solid var(--paper);
+      border-radius: 10px;
+    }
+    .choice-recap .recap-item {
+      width: 100%;
+      max-width: none;
+      padding: 0;
+      border-right: 1px solid #cbd5e1;
+      border-bottom: 1px solid #cbd5e1;
+    }
+    .choice-recap .recap-item:nth-child(2n) { border-right: 0; }
+    .choice-recap .recap-item:nth-last-child(-n + 2) { border-bottom: 0; }
+    .recap-detail.card,
+    .choice-recap .recap-item:nth-child(n) .recap-detail {
+      min-height: 76px;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+    }
+    .recap-detail .card-header {
+      padding: 9px 14px 3px;
+      background: transparent;
+      border-bottom: 0;
+      font-size: 11px;
+      letter-spacing: .04em;
+    }
+    .recap-detail .card-body { padding: 3px 14px 11px; }
+    .recap-value { font-size: 16px; }
+    #show-choices { max-width: none; }
+    .action-card .privacy { max-width: none; text-align: center; }
+    #random-pick { display: none; }
+    .results-controls { align-self: flex-end; }
+    .results-controls #shuffle-results { min-width: 164px; }
+
+    #results-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+      overflow: visible;
+      padding: 4px 4px 10px;
+      scroll-snap-type: none;
+    }
+    #results-grid > .card {
+      width: 100%;
+      min-width: 0;
+      height: 100%;
+      flex: none;
+    }
+    #results-grid .card-body {
+      display: grid;
+      grid-template-rows: auto auto auto auto minmax(64px, 1fr) auto;
+    }
+    #results-grid .card-row h3 {
+      display: -webkit-box;
+      min-height: 2.36em;
+      overflow: hidden;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+    #results-grid .restaurant { min-height: 1.5em; }
+    #results-grid .reason {
+      min-height: 64px;
+      margin-bottom: 0;
+    }
+    #results-grid .card-actions {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 14px;
+      padding-top: 0;
+    }
+    #results-grid .card-actions button:first-child {
+      grid-column: 1 / -1;
+      min-height: 50px;
+    }
+    #results-grid .card-actions .reject,
+    #results-grid .card-actions .favorite {
+      min-height: 44px;
+      background: var(--surface);
+      box-shadow: none;
+    }
+    #results-grid .card-actions .favorite { background: var(--info-soft); }
+    .results-swipe-overlay { display: none; }
+
+    @media (max-width: 980px) {
+      .results-controls { align-self: flex-start; }
+      #results-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+    }
+
+    @media (max-width: 580px) {
+      .recap-heading h3 { font-size: 25px; }
+      .choice-recap { grid-template-columns: 1fr; }
+      .choice-recap .recap-item { border-right: 0; border-bottom: 1px solid #cbd5e1; }
+      .choice-recap .recap-item:nth-last-child(-n + 2) { border-bottom: 1px solid #cbd5e1; }
+      .choice-recap .recap-item:last-child { border-bottom: 0; }
+      .recap-detail.card,
+      .choice-recap .recap-item:nth-child(n) .recap-detail { min-height: 68px; }
+      .action-card > .panel-back { margin-bottom: 14px; }
+      .results-controls { width: 100%; }
+      .results-controls #shuffle-results { width: 100%; min-width: 0; }
+      #results-grid {
+        display: flex;
+        gap: 14px;
+        overflow-x: auto;
+        padding: 4px 2px 14px;
+        scroll-snap-type: x mandatory;
+      }
+      #results-grid > .card {
+        flex: 0 0 min(88%, 360px);
+        height: auto;
+        scroll-snap-align: center;
+      }
+      .results-swipe-overlay { display: block; }
+    }
+
+    /* Step headers: reserve space instead of squeezing Thai labels. */
+    .step-head {
+      display: grid;
+      grid-template-columns: 36px minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+    }
+    .step-number {
+      width: 36px;
+      min-width: 36px;
+      height: 36px;
+      margin: 0;
+    }
+    .field-label {
+      min-width: 0;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+    .step-hint {
+      max-width: 170px;
+      margin-left: 0;
+      color: var(--muted);
+      line-height: 1.35;
+      text-align: right;
+      white-space: normal;
+    }
+    .progress-copy {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
+    }
+    .progress-copy strong {
+      min-width: 0;
+      line-height: 1.35;
+      text-align: right;
+      overflow-wrap: anywhere;
+    }
+
+    @media (max-width: 580px) {
+      .step-head {
+        grid-template-columns: 36px minmax(0, 1fr);
+        gap: 8px 12px;
+        align-items: start;
+      }
+      .step-number { grid-row: 1 / span 2; }
+      .step-hint {
+        grid-column: 2;
+        max-width: none;
+        font-size: 11.5px;
+        text-align: left;
+      }
+      .progress-copy {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+      .progress-copy strong { text-align: left; }
+    }
+
+    /* Thai type needs extra breathing room for marks above and below glyphs. */
+    .hero .eyebrow {
+      margin-bottom: clamp(26px, 2.6vw, 36px);
+      line-height: 1.55;
+    }
+    .hero h1 {
+      margin: 0;
+      padding-block: .08em .12em;
+      line-height: 1.22;
+      letter-spacing: 0;
+      overflow: visible;
+    }
+    .finder-intro h2,
+    .section-head h2,
+    .recap-heading h3,
+    .card h3,
+    .meal-dialog h2,
+    .meal-dialog .chosen-meal {
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+    .field-label {
+      padding-block: 2px 3px;
+      line-height: 1.5;
+    }
+    .step-hint,
+    .progress-copy,
+    .progress-copy strong {
+      line-height: 1.5;
+    }
+
+    @media (max-width: 580px) {
+      .hero .eyebrow { margin-bottom: 22px; }
+      .hero h1 {
+        padding-block: .1em .16em;
+        line-height: 1.28;
+      }
+    }
+
+    /* Step 2: keep four equal choices balanced at every viewport. */
+    [data-choice-group="mood"] {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      width: 100%;
+    }
+    [data-choice-group="mood"] .chip {
+      width: 100%;
+      min-width: 0;
+      min-height: 72px;
+      padding: 12px 10px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      line-height: 1.4;
+      text-align: center;
+      white-space: normal;
+    }
+    [data-choice-group="mood"] .icon {
+      width: 20px;
+      height: 20px;
+      flex: 0 0 20px;
+    }
+    #mood-step .panel-back {
+      margin-top: 18px;
+    }
+
+    @media (max-width: 760px) {
+      [data-choice-group="mood"] {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+      [data-choice-group="mood"] .chip {
+        min-height: 56px;
+        padding: 10px 12px;
+        flex-direction: row;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 380px) {
+      [data-choice-group="mood"] .chip {
+        min-height: 58px;
+        padding-inline: 9px;
+        font-size: 13px;
+        gap: 6px;
+      }
+    }
+
+    /* Final workflow rules: one predictable rhythm for Steps 1-4. */
+    #start-choosing,
+    #profile-open {
+      font-size: 14px;
+    }
+    #start-choosing::after,
+    #profile-open::after {
+      content: none;
+    }
+    .step-card {
+      padding: 28px 30px;
+    }
+    .step-head {
+      margin-bottom: 20px;
+    }
+    .step-hint,
+    .section-index,
+    .tag,
+    .pick-number,
+    .match,
+    .privacy {
+      font-size: 12px;
+    }
+    .section-dot {
+      font-size: 11px;
+    }
+
+    [data-choice-group="type"] {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      width: 100%;
+    }
+    [data-choice-group="type"] .chip {
+      width: 100%;
+      min-width: 0;
+      min-height: 60px;
+      padding: 11px 12px;
+      justify-content: center;
+      gap: 8px;
+      line-height: 1.4;
+      text-align: center;
+      white-space: normal;
+    }
+    [data-choice-group="type"] .icon {
+      width: 19px;
+      height: 19px;
+      flex: 0 0 19px;
+    }
+    #type-step .panel-back,
+    #area-step .panel-back {
+      margin-top: 18px;
+    }
+
+    .doodle-option,
+    .doodle-option:hover,
+    .doodle-option:focus-visible,
+    .doodle-option[aria-selected="true"],
+    .step-card.is-complete .step-number,
+    .meal-copy .eyebrow {
+      transform: none;
+    }
+
+    @media (max-width: 760px) {
+      .step-card {
+        padding: 22px 18px;
+      }
+      [data-choice-group="type"] {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+      [data-choice-group="type"] .chip {
+        min-height: 56px;
+        padding: 10px;
+      }
+    }
+
+    @media (max-width: 580px) {
+      #start-choosing,
+      #profile-open {
+        font-size: 12px;
+      }
+      .step-card {
+        padding: 20px 16px;
+      }
+      .step-head {
+        margin-bottom: 16px;
+      }
+      [data-choice-group="type"] .chip {
+        justify-content: center;
+      }
+    }
+
+    /* Presentation-safe finishing rules. */
+    .meal-fact span,
+    .board-note,
+    .detail-tag,
+    .card-actions .reject,
+    .card-actions .favorite {
+      font-size: 12px;
+    }
+    footer details {
+      margin-top: 10px;
+    }
+    footer summary {
+      width: fit-content;
+      color: var(--ink);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    footer details[open] summary {
+      margin-bottom: 8px;
+    }
+
+    @media (max-width: 420px) {
+      header.shell {
+        gap: 6px;
+      }
+      .brand {
+        width: 32px;
+        min-width: 32px;
+        overflow: hidden;
+        gap: 0;
+        white-space: nowrap;
+      }
+      .brand-mark {
+        flex: 0 0 32px;
+      }
+      header nav {
+        min-width: 0;
+        gap: 5px;
+      }
+      #start-choosing,
+      #profile-open {
+        min-width: 0;
+        min-height: 42px;
+        padding: 7px 9px;
+        font-size: 11.5px;
+        white-space: nowrap;
+      }
+    }
+
+    /* Steps 2-3: give long Thai headings and helper wording distinct space. */
+    #mood-step .step-head,
+    #type-step .step-head {
+      column-gap: 16px;
+      row-gap: 7px;
+      margin-bottom: 26px;
+      align-items: center;
+    }
+    #mood-step .field-label,
+    #type-step .field-label {
+      padding-block: 3px 5px;
+      line-height: 1.55;
+    }
+    #mood-step .step-hint,
+    #type-step .step-hint {
+      min-width: max-content;
+      padding-left: 8px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 760px) {
+      #mood-step .step-head,
+      #type-step .step-head {
+        grid-template-columns: 36px minmax(0, 1fr);
+        column-gap: 14px;
+        margin-bottom: 22px;
+        align-items: start;
+      }
+      #mood-step .step-number,
+      #type-step .step-number {
+        grid-row: 1 / span 2;
+      }
+      #mood-step .step-hint,
+      #type-step .step-hint {
+        display: block;
+        grid-column: 2;
+        min-width: 0;
+        max-width: none;
+        padding-left: 0;
+        text-align: left;
+      }
+    }
+    /* Admin prototype: scoped styles keep the meal-selection screens intact. */
+    #admin-open { color: var(--ink); background: var(--surface); box-shadow: none; font-size: 13px; padding: 8px 12px; }
+    #admin-open[aria-current="page"] { background: var(--info-soft); }
+    .admin-page { padding-top: 100px; padding-bottom: 48px; color: var(--ink); }
+    .admin-layout { display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 24px; align-items: start; }
+    .admin-sidebar { position: sticky; top: 94px; border: 2px solid var(--ink); border-radius: var(--radius-card); padding: 16px; background: var(--surface); }
+    .admin-sidebar summary { display: none; }
+    .admin-nav { display: grid; gap: 6px; }
+    .admin-nav button { justify-content: flex-start; text-align: left; padding: 10px 12px; font-size: 14px; }
+    .admin-nav button[aria-current="page"] { background: var(--info-soft) !important; }
+    .admin-nav button:hover { background: var(--info-soft); transform: none; }
+    .admin-sidebar-label { font-size: 12px; font-weight: 800; color: var(--muted); padding: 10px 12px; margin: 0; }
+    .admin-workspace { min-width: 0; }
+    .admin-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
+    .admin-heading h1 { font-size: 32px; line-height: 1.3; letter-spacing: 0; text-shadow: none; }
+    .admin-heading p { margin: 7px 0 0; color: var(--muted); font-size: 14px; }
+    .admin-primary, .admin-secondary { font-size: 14px; padding: 10px 16px; min-height: 44px; color: var(--ink); }
+    .admin-prototype-note { border: 1px dashed var(--line); border-radius: 8px; padding: 12px 16px; background: var(--surface-raised); font-size: 13px; line-height: 1.7; margin-bottom: 24px; }
+    .admin-overview { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .admin-overview button { display: grid; width: 100%; margin: 0; text-align: left; gap: 8px; border: 2px solid var(--ink); border-radius: var(--radius-card); padding: 20px; background: var(--surface); box-shadow: none; }
+    .admin-overview button:nth-child(-n+2) { background: var(--info-soft); }
+    .admin-overview strong { font-size: 21px; }
+    .admin-overview span { font-size: 13px; font-weight: 500; color: var(--muted); }
+    .admin-toolbar { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; background: var(--surface-raised); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+    .admin-toolbar > label:first-child { grid-column: 1 / -1; }
+    .admin-toolbar:has(#admin-type-filter-field:not([hidden])) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .admin-field { display: grid; align-content: start; gap: 7px; min-width: 0; font-size: 13px; font-weight: 800; }
+    .admin-field input, .admin-field select, .admin-field textarea { width: 100%; min-width: 0; min-height: 46px; border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; background: var(--surface); color: var(--ink); font-family: inherit; font-size: 15px; box-shadow: none; }
+    .admin-field textarea { min-height: 80px; resize: vertical; }
+    .admin-required { color: var(--rust); font-size: 12px; }
+    .admin-help { color: var(--muted); font-size: 12px; font-weight: 500; margin: 0; }
+    .admin-filter-reset { justify-self: end; grid-column: 1 / -1; }
+    .admin-empty p { color: var(--muted); margin: 12px 0 20px; }
+    #admin-form-error:not([hidden]), #admin-remove-error:not([hidden]) { padding: 12px 16px; border-left: 3px solid var(--danger); background: var(--cream); color: var(--danger); border-radius: 8px; font-size: 14px; }
+    .admin-icon-preview { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+    .admin-change-list { padding-left: 20px; font-size: 13px; line-height: 1.8; overflow-wrap: anywhere; }
+    .admin-audit .admin-technical { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 12px; }
+    .admin-list { display: grid; gap: 12px; }
+    .admin-row { display: grid; grid-template-columns: 72px minmax(0, 1fr) auto; align-items: center; gap: 16px; padding: 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+    .admin-row.no-image { grid-template-columns: minmax(0, 1fr) auto; }
+    .admin-row img, .admin-image-placeholder { width: 72px; height: 72px; object-fit: cover; border-radius: 8px; background: var(--surface-raised); }
+    .admin-image-placeholder { display: grid; place-items: center; font-size: 12px; }
+    .admin-row h2 { font-family: inherit; font-size: 17px; line-height: 1.5; margin: 0 0 4px; overflow-wrap: anywhere; }
+    .admin-row p { margin: 4px 0; font-size: 13px; color: var(--muted); overflow-wrap: anywhere; }
+    .admin-row .admin-price { font-size: 16px; color: var(--ink); font-weight: 800; }
+    .admin-badge { display: inline-block; padding: 3px 8px; border-radius: 4px; background: var(--green); color: var(--ink); font-size: 11px; font-weight: 800; }
+    .admin-badge.removed { background: var(--cream); color: var(--muted); }
+    .admin-row-actions { display: flex; flex-wrap: nowrap; align-items: center; justify-content: flex-end; gap: 8px; }
+    .admin-row-actions button { font-size: 12px; padding: 8px 12px; }
+    .admin-status { font-size: 13px; margin: 0 0 14px; color: var(--ink); }
+    .admin-status:empty { display: none; }
+    .admin-status:not(:empty) { padding: 12px 16px; background: var(--info-soft); border-left: 3px solid var(--ink); border-radius: 8px; }
+    .admin-pagination { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: 20px; font-size: 13px; }
+    .admin-pagination div { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .admin-page-picker { display: flex; align-items: center; gap: 8px; margin: 0; white-space: nowrap; }
+    .admin-page-picker select { width: auto; min-width: 64px; min-height: 44px; margin: 0; }
+    #admin-record-list { scroll-margin-top: 100px; }
+    .admin-page button:disabled { opacity: .5; cursor: not-allowed; }
+    .admin-empty { text-align: center; padding: 40px 16px; border: 1px dashed var(--line); border-radius: 12px; }
+    .admin-audit { padding: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+    .admin-audit summary { cursor: pointer; font-weight: 700; line-height: 1.7; }
+    .admin-audit p { font-size: 13px; line-height: 1.7; overflow-wrap: anywhere; }
+    .admin-audit pre { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 12px; }
+    #prototype-access-controls { margin-top: 84px; margin-bottom: 0; }
+    #prototype-access-controls summary { cursor: pointer; font-weight: 700; }
+    #prototype-access-controls .admin-field { max-width: 420px; margin-bottom: 12px; }
+    #access-page { padding-top: 32px; }
+    #access-page .admin-workspace { max-width: 560px; margin: auto; }
+    .admin-modal { width: min(720px, calc(100% - 32px)); max-height: calc(100dvh - 32px); margin: auto; overflow: auto; padding: 24px; border: 2px solid var(--ink); border-radius: 20px; background: var(--surface); color: var(--ink); box-shadow: var(--paper-shadow); }
+    .admin-modal::backdrop { background: rgba(38, 61, 75, .4); }
+    .admin-modal h2 { font-size: 25px; margin: 0; }
+    .admin-modal-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
+    .admin-modal-head button { padding: 8px 12px; }
+    .admin-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .admin-span { grid-column: 1 / -1; }
+    .admin-form-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 12px; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--line); }
+    .admin-tastes { display: flex; flex-wrap: wrap; gap: 12px; }
+    .admin-tastes label { display: flex; align-items: center; gap: 8px; min-height: 44px; font-size: 14px; }
+    .admin-tastes input { width: 18px; height: 18px; margin: 0; }
+    /* Preserve PaperCSS's button shape and interaction values from assets/vendor/paper.min.css.
+       This scoped bridge only counters the older global button overrides; no new framework. */
+    button.paper-btn.doodle-framework-button {
+      border: 2px solid var(--ink);
+      border-bottom-left-radius: 15px 255px;
+      border-bottom-right-radius: 225px 15px;
+      border-top-left-radius: 255px 15px;
+      border-top-right-radius: 15px 225px;
+      box-shadow: 15px 28px 25px -18px rgba(0,0,0,.2);
+      transition: transform 235ms ease-in-out, box-shadow 235ms ease-in-out, background-color 235ms ease-in-out;
+      background: var(--surface); color: var(--ink);
+      margin: 0; min-height: 44px; line-height: 1.5; transform: none;
+    }
+    button.paper-btn.doodle-framework-button.btn-primary { background: var(--accent-soft); font-weight: 800; }
+    button.paper-btn.doodle-framework-button.btn-danger,
+    button.paper-btn.doodle-framework-button.btn-danger-outline { border-color: var(--danger); color: var(--danger); }
+    button.paper-btn.doodle-framework-button.btn-danger { background: var(--danger); color: var(--surface); }
+    button.paper-btn.doodle-framework-button:hover:not(:disabled) { transform: translate3d(0,2px,0); box-shadow: 2px 8px 8px -5px rgba(0,0,0,.3); }
+    button.paper-btn.doodle-framework-button:active:not(:disabled) { transform: translate3d(0,2px,0); box-shadow: 2px 8px 4px -6px rgba(0,0,0,.3); }
+    button.paper-btn.doodle-framework-button:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+    button.paper-btn.doodle-framework-button:disabled { transform: none; box-shadow: none; opacity: .5; cursor: not-allowed; }
+    .admin-nav button.paper-btn.doodle-framework-button { width: 100%; border-color: transparent; box-shadow: none; background: transparent; }
+    .admin-nav button.paper-btn.doodle-framework-button:hover { border-color: var(--ink); background: var(--info-soft); }
+    .admin-nav button.paper-btn.doodle-framework-button[aria-current="page"] { border-color: var(--ink); }
+    .admin-overview button.paper-btn.doodle-framework-button:nth-child(-n+2) { background: var(--accent-soft); }
+    #admin-open.paper-btn.doodle-framework-button[aria-current="page"] { background: var(--info-soft); }
+    @media (prefers-reduced-motion: reduce) {
+      button.paper-btn.doodle-framework-button { transition: none; }
+      button.paper-btn.doodle-framework-button:hover:not(:disabled), button.paper-btn.doodle-framework-button:active:not(:disabled) { transform: none; }
+    }
+    @media (max-width: 980px) {
+      .admin-layout { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+      .admin-sidebar { position: static; }
+      .admin-sidebar summary { display: block; cursor: pointer; font-weight: 800; min-height: 44px; padding: 10px; }
+      .admin-sidebar-label { display: none; }
+      .admin-heading h1 { font-size: 27px; }
+      .admin-row-actions { grid-column: 1 / -1; justify-content: flex-start; }
+      .admin-row { grid-template-columns: 72px minmax(0, 1fr); }
+      .admin-row.no-image { grid-template-columns: minmax(0, 1fr); }
+    }
+    @media (max-width: 580px) {
+      #admin-open { font-size: 11px; padding: 7px 9px; min-height: 44px; }
+      .admin-page { padding-top: 96px; }
+      .admin-toolbar, .admin-toolbar:has(#admin-type-filter-field:not([hidden])), .admin-overview, .admin-form-grid { grid-template-columns: minmax(0, 1fr); }
+      .admin-row { grid-template-columns: 64px minmax(0, 1fr); gap: 12px; }
+      .admin-row img, .admin-image-placeholder { width: 64px; height: 64px; }
+      .admin-row.no-image { grid-template-columns: minmax(0, 1fr); }
+      .admin-row-actions { grid-column: 1 / -1; max-width: none; }
+      .admin-row-actions button { flex: 1; }
+      .admin-modal { padding: 16px; }
+      .admin-form-actions { display: grid; grid-template-columns: minmax(0, 1fr); }
+      .admin-heading > button { width: 100%; }
     }
   </style>
 </head>
@@ -1952,39 +2915,40 @@
   <div class="blob two" aria-hidden="true"></div>
 
   <header class="shell">
-    <div class="brand" id="brand-home" role="button" tabindex="0" aria-label="Kinraidee home"><span class="brand-mark"><svg class="icon"><use href="#icon-utensils"/></svg></span> Kinraidee</div>
+    <div class="brand" id="brand-home" role="button" tabindex="0" aria-label="กลับหน้าหลัก Kinraidee"><span class="brand-mark"><svg class="icon"><use href="#icon-utensils"/></svg></span> Kinraidee</div>
     <nav aria-label="Main navigation">
-      <button id="start-choosing" type="button">Start choosing</button>
-      <button id="profile-open" type="button" aria-controls="profile-page">Profile</button>
+      <button id="start-choosing" type="button">เลือกมื้อ</button>
+      <button id="profile-open" type="button" aria-controls="profile-page">แพ้อาหาร</button>
+      <button id="admin-open" type="button" aria-controls="access-page">เข้าสู่ระบบ</button>
     </nav>
   </header>
-  <aside class="section-nav" aria-label="Page sections">
-    <button class="section-dot active" type="button" data-section="home" aria-label="Go to introduction"><span>Intro</span></button>
-    <button class="section-dot" type="button" data-section="decision" aria-label="Go to meal choices"><span>Choose</span></button>
-    <button class="section-dot" id="results-dot" type="button" data-section="results" aria-label="Go to recommendations" hidden><span>Results</span></button>
+  <aside class="section-nav" aria-label="ส่วนต่าง ๆ ของหน้า">
+    <button class="section-dot active" type="button" data-section="home" aria-label="ไปยังหน้าแนะนำ"><span>แนะนำ</span></button>
+    <button class="section-dot" type="button" data-section="decision" aria-label="ไปยังส่วนเลือกมื้อ"><span>เลือกมื้อ</span></button>
+    <button class="section-dot" id="results-dot" type="button" data-section="results" aria-label="ไปยังเมนูแนะนำ" hidden><span>ผลลัพธ์</span></button>
   </aside>
 
   <main id="meal-page">
     <section class="hero shell page-section is-active" id="home">
       <div class="hero-copy">
-        <p class="eyebrow">Can’t decide? Let’s sketch it out.</p>
-        <h1 id="hero-title">What should we eat today?</h1>
-        <p class="intro">Four quick picks. Up to three tasty matches. Zero account required. Tell us the vibe and we’ll turn the blank page into dinner.</p>
+        <p class="eyebrow">คิดไม่ออกใช่ไหม? มาลองเลือกไปด้วยกัน</p>
+        <h1 id="hero-title">วันนี้กินอะไรดี?</h1>
+        <p class="intro">ตอบสั้น ๆ 4 ข้อ แล้วรับเมนูที่เข้ากันสูงสุด 3 ตัวเลือก ไม่ต้องสมัครสมาชิก บอกบรรยากาศที่อยากได้ แล้วเราเปลี่ยนหน้าว่างให้เป็นมื้ออร่อย</p>
         <div class="hero-actions">
-          <div class="local-note"><svg class="icon"><use href="#icon-sparkles"/></svg>Curated for everyday meals around MFU</div>
-          <button class="scroll-cue" id="explore-flow" type="button"><svg class="icon"><use href="#icon-arrow"/></svg>Build my shortlist</button>
+          <div class="local-note"><svg class="icon"><use href="#icon-sparkles"/></svg>คัดสรรสำหรับมื้อประจำวันรอบมหาวิทยาลัยแม่ฟ้าหลวง</div>
+          <button class="scroll-cue" id="explore-flow" type="button"><svg class="icon"><use href="#icon-arrow"/></svg>ช่วยเลือกมื้อให้ฉัน</button>
         </div>
       </div>
-      <div class="hero-board glass paper border border-2 shadow" aria-label="A sample meal mood board">
-        <div class="board-title"><span>Tonight’s rough plan</span><span class="board-scribble">maybe this? ↘</span></div>
+      <div class="hero-board glass paper border border-2 shadow" aria-label="ตัวอย่างไอเดียสำหรับเลือกมื้ออาหาร">
+        <div class="board-title"><span>ไอเดียคร่าว ๆ สำหรับมื้อนี้</span><span class="board-scribble">อาจจะเมนูนี้? ↘</span></div>
         <div class="board-photo">
-          <img src="assets/food/khao-soi.jpg" alt="A bowl of Northern Thai khao soi noodles">
-          <span>comfort in a bowl</span>
+          <img src="assets/food/khao-soi.jpg" alt="ข้าวซอยแบบภาคเหนือหนึ่งชาม">
+          <span>อุ่นใจในชามเดียว</span>
         </div>
         <div class="board-notes" aria-hidden="true">
-          <div class="board-note"><img src="assets/food/khao-man-gai.jpg" alt=""><span>under ฿100</span></div>
-          <div class="board-note"><img src="assets/food/boat-noodles.jpg" alt=""><span>near MFU</span></div>
-          <div class="board-note"><img src="assets/food/korean-fried-chicken.jpg" alt=""><span>crispy + cozy</span></div>
+          <div class="board-note"><img src="assets/food/khao-man-gai.jpg" alt=""><span>ไม่เกิน ฿100</span></div>
+          <div class="board-note"><img src="assets/food/boat-noodles.jpg" alt=""><span>ใกล้ มฟล.</span></div>
+          <div class="board-note"><img src="assets/food/korean-fried-chicken.jpg" alt=""><span>กรอบ + อิ่มใจ</span></div>
         </div>
       </div>
     </section>
@@ -1994,14 +2958,14 @@
     <section class="decision-section shell journey-panel page-section" id="decision" hidden>
       <form class="finder" id="finder">
         <div class="finder-intro">
-          <button class="panel-back" type="button" id="back-home">&larr; Home</button>
-          <p class="section-index">Step 02 · Circle what feels right</p>
-          <h2>Sketch out your meal mood</h2>
-          <p>One quick choice at a time. We’ll keep the shortlist tidy.</p>
-          <p class="restaurant" id="dataset-note">45 meal ideas around MFU</p>
+          <button class="panel-back" type="button" id="back-home">&larr; หน้าหลัก</button>
+          <p class="section-index">ช่วงเลือกมื้อ · 4 คำถามสั้น ๆ</p>
+          <h2>บอกมื้อที่อยากได้แบบคร่าว ๆ</h2>
+          <p>เลือกทีละข้ออย่างรวดเร็ว แล้วเราจะคัดเฉพาะตัวเลือกที่น่าสนใจ</p>
+          <p class="restaurant" id="dataset-note">45 ไอเดียอาหารรอบ มฟล.</p>
           <p id="allergy-summary" class="profile-summary" hidden></p>
-          <div class="step-track" aria-label="Question progress"><span class="active"></span><span></span><span></span><span></span></div>
-          <div class="progress-copy" aria-live="polite"><span id="progress-label">0 of 4 answered</span><strong id="progress-prompt">Choose your budget</strong></div>
+          <div class="step-track" aria-label="ความคืบหน้าของคำถาม"><span class="active"></span><span></span><span></span><span></span></div>
+          <div class="progress-copy" aria-live="polite"><span id="progress-label">ตอบแล้ว 0 จาก 4 ข้อ</span><strong id="progress-prompt">เลือกงบประมาณ</strong></div>
         </div>
 
         <div class="choice-viewport" id="choice-viewport">
@@ -2009,11 +2973,11 @@
         <div class="choice-panel" data-choice-panel="budget"><section class="step-card glass paper border border-2 shadow" aria-labelledby="budget-label">
           <div class="step-head">
             <span class="step-number">01</span>
-            <span class="field-label" id="budget-label">Choose your budget</span>
-            <span class="step-hint">Required</span>
+            <span class="field-label" id="budget-label">เลือกงบประมาณ</span>
+            <span class="step-hint">จำเป็น</span>
           </div>
-          <div class="chips" aria-label="Budget options" data-choice-group="budget">
-            <button class="chip" type="button" data-value="Under ฿50">Under ฿50</button>
+          <div class="chips" aria-label="ตัวเลือกงบประมาณ" data-choice-group="budget">
+            <button class="chip" type="button" data-value="Under ฿50">ต่ำกว่า ฿50</button>
             <button class="chip" type="button" data-value="฿50–100">฿50–100</button>
             <button class="chip" type="button" data-value="฿101–200">฿101–200</button>
           </div>
@@ -2022,68 +2986,68 @@
         <div class="choice-panel" data-choice-panel="mood"><section class="step-card glass paper border border-2 shadow" id="mood-step" aria-labelledby="taste-label" hidden>
           <div class="step-head">
             <span class="step-number">02</span>
-            <span class="field-label" id="taste-label">Pick your mood</span>
-            <span class="step-hint">Choose one</span>
+            <span class="field-label" id="taste-label">วันนี้อยากได้มื้อแบบไหน</span>
+            <span class="step-hint">เลือก 1 ข้อ</span>
           </div>
-          <div class="chips" aria-label="Taste options" data-choice-group="mood">
-            <button class="chip" type="button" data-value="Spicy"><svg class="icon"><use href="#icon-flame"/></svg>Spicy</button>
-            <button class="chip" type="button" data-value="Fresh"><svg class="icon"><use href="#icon-leaf"/></svg>Fresh</button>
-            <button class="chip" type="button" data-value="Comforting"><svg class="icon"><use href="#icon-soup"/></svg>Comforting</button>
-            <button class="chip" type="button" data-value="Surprise me"><svg class="icon"><use href="#icon-sparkles"/></svg>Surprise me</button>
+          <div class="chips" aria-label="ตัวเลือกรูปแบบมื้อ" data-choice-group="mood">
+            <button class="chip" type="button" data-value="Spicy"><svg class="icon"><use href="#icon-flame"/></svg>เผ็ดจัดจ้าน</button>
+            <button class="chip" type="button" data-value="Fresh"><svg class="icon"><use href="#icon-leaf"/></svg>สดชื่นเบา ๆ</button>
+            <button class="chip" type="button" data-value="Comforting"><svg class="icon"><use href="#icon-soup"/></svg>อิ่มอุ่นใจ</button>
+            <button class="chip" type="button" data-value="Surprise me"><svg class="icon"><use href="#icon-sparkles"/></svg>สุ่มให้หน่อย</button>
           </div>
-          <button class="panel-back" type="button" data-choice-back="0">← Back to budget</button>
+          <button class="panel-back" type="button" data-choice-back="0">← กลับไปเลือกงบ</button>
         </section></div>
 
         <div class="choice-panel" data-choice-panel="type"><section class="step-card glass paper border border-2 shadow" id="type-step" aria-labelledby="type-label" hidden>
           <div class="step-head">
             <span class="step-number">03</span>
-            <span class="field-label" id="type-label">Choose food type</span>
-            <span class="step-hint">Keeps results relevant</span>
+            <span class="field-label" id="type-label">เลือกประเภทอาหาร</span>
+            <span class="step-hint">ช่วยให้ผลลัพธ์ตรงใจ</span>
           </div>
-          <div class="chips" aria-label="Food type options" data-choice-group="type">
-            <button class="chip" type="button" data-value="Rice dishes"><svg class="icon"><use href="#icon-rice"/></svg>Rice</button>
-            <button class="chip" type="button" data-value="Noodles or pasta"><svg class="icon"><use href="#icon-noodles"/></svg>Noodles / pasta</button>
-            <button class="chip" type="button" data-value="Fast food"><svg class="icon"><use href="#icon-sandwich"/></svg>Fast food</button>
-            <button class="chip" type="button" data-value="Soup or hot pot"><svg class="icon"><use href="#icon-soup"/></svg>Soup</button>
-            <button class="chip" type="button" data-value="Light and healthy"><svg class="icon"><use href="#icon-salad"/></svg>Light</button>
-            <button class="chip" type="button" data-value="Any food type"><svg class="icon"><use href="#icon-sparkles"/></svg>Anything</button>
+          <div class="chips" aria-label="ตัวเลือกประเภทอาหาร" data-choice-group="type">
+            <button class="chip" type="button" data-value="Rice dishes"><svg class="icon"><use href="#icon-rice"/></svg>เมนูข้าว</button>
+            <button class="chip" type="button" data-value="Noodles or pasta"><svg class="icon"><use href="#icon-noodles"/></svg>เส้น / พาสต้า</button>
+            <button class="chip" type="button" data-value="Fast food"><svg class="icon"><use href="#icon-sandwich"/></svg>อาหารจานด่วน</button>
+            <button class="chip" type="button" data-value="Soup or hot pot"><svg class="icon"><use href="#icon-soup"/></svg>ซุป / หม้อไฟ</button>
+            <button class="chip" type="button" data-value="Light and healthy"><svg class="icon"><use href="#icon-salad"/></svg>เบาและสุขภาพดี</button>
+            <button class="chip" type="button" data-value="Any food type"><svg class="icon"><use href="#icon-sparkles"/></svg>อะไรก็ได้</button>
           </div>
-          <button class="panel-back" type="button" data-choice-back="1">← Back to mood</button>
+          <button class="panel-back" type="button" data-choice-back="1">← กลับไปเลือกรูปแบบมื้อ</button>
         </section></div>
 
         <div class="choice-panel" data-choice-panel="area"><section class="step-card glass paper border border-2 shadow" id="area-step" aria-labelledby="area-label" hidden>
           <div class="step-head">
             <span class="step-number">04</span>
-            <span class="field-label" id="area-label">Select your area</span>
-            <span class="step-hint">Manual location</span>
+            <span class="field-label" id="area-label">เลือกพื้นที่</span>
+            <span class="step-hint">เลือกด้วยตัวเอง</span>
           </div>
           <div class="doodle-select border border-2" id="area-select-shell">
             <button class="select-like input-block doodle-select-trigger" id="area-select" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="area-options" aria-labelledby="area-label area-select-value">
-              <span id="area-select-value">Choose an area</span>
+              <span id="area-select-value">เลือกพื้นที่</span>
             </button>
             <span class="doodle-select-arrow" aria-hidden="true"></span>
             <ul class="doodle-options border border-2" id="area-options" role="listbox" aria-labelledby="area-label" hidden>
-              <li class="doodle-option" role="option" data-value="Any area near MFU" aria-selected="false" tabindex="-1">Any area near MFU</li>
-              <li class="doodle-option" role="option" data-value="MFU campus and front gate" aria-selected="false" tabindex="-1">MFU campus and front gate</li>
-              <li class="doodle-option" role="option" data-value="Dormitory area" aria-selected="false" tabindex="-1">Dormitory area</li>
-              <li class="doodle-option" role="option" data-value="Ban Du and Nang Lae" aria-selected="false" tabindex="-1">Ban Du and Nang Lae</li>
+              <li class="doodle-option" role="option" data-value="Any area near MFU" aria-selected="false" tabindex="-1">พื้นที่ใดก็ได้ใกล้ มฟล.</li>
+              <li class="doodle-option" role="option" data-value="MFU campus and front gate" aria-selected="false" tabindex="-1">ในมหาวิทยาลัยและหน้าประตู มฟล.</li>
+              <li class="doodle-option" role="option" data-value="Dormitory area" aria-selected="false" tabindex="-1">บริเวณหอพัก</li>
+              <li class="doodle-option" role="option" data-value="Ban Du and Nang Lae" aria-selected="false" tabindex="-1">บ้านดู่และนางแล</li>
             </ul>
           </div>
           <div class="option-row">
-            <button class="ghost" id="use-current-area" type="button">Use current area</button>
+            <button class="ghost" id="use-current-area" type="button">ใช้พื้นที่ปัจจุบัน</button>
           </div>
-          <button class="panel-back" type="button" data-choice-back="2">← Back to food type</button>
+          <button class="panel-back" type="button" data-choice-back="2">← กลับไปเลือกประเภทอาหาร</button>
         </section></div>
 
         <div class="choice-panel" data-choice-panel="action"><div class="action-card glass paper border border-2 shadow" id="action-step" hidden>
+          <button class="panel-back" type="button" data-choice-back="3">← กลับไปเลือกพื้นที่</button>
           <div class="recap-heading row flex-edges flex-bottom">
-            <h3>Your meal brief</h3>
-            <p>Review the four choices shaping this shortlist.</p>
+            <h3>สรุปมื้อที่ต้องการ</h3>
+            <p>ตรวจคำตอบทั้ง 4 ข้อก่อนดูเมนูที่คัดให้</p>
           </div>
-          <ul class="choice-recap row" id="choice-recap" aria-label="Your selected conditions"></ul>
-          <button class="primary paper-btn" id="show-choices" type="submit">Show my choices <svg class="icon"><use href="#icon-arrow"/></svg></button>
-          <p class="privacy">No sign-in. Conditions and rejected choices stay only in this open page session.</p>
-          <button class="panel-back" type="button" data-choice-back="3">← Back to area</button>
+          <ul class="choice-recap row" id="choice-recap" aria-label="เงื่อนไขที่เลือก"></ul>
+          <button class="primary paper-btn" id="show-choices" type="submit">ดูเมนูที่คัดให้ <svg class="icon"><use href="#icon-arrow"/></svg></button>
+          <p class="privacy">ไม่ต้องเข้าสู่ระบบ คำตอบและเมนูที่ปฏิเสธจะอยู่เฉพาะในหน้าที่เปิดอยู่นี้</p>
         </div></div>
           </div>
         </div>
@@ -2092,42 +3056,51 @@
 
     <section class="results shell journey-panel page-section" id="results" hidden>
       <div class="section-head">
-        <div><p class="section-index">Step 03 · Your shortlist</p><h2 id="results-title">Ideas for your meal</h2><p id="result-summary">Choose your conditions to begin.</p>
-          <div class="condition-actions" id="result-condition-actions" aria-label="Manage meal choices">
-            <button id="results-edit" type="button">Edit conditions</button>
-            <button id="results-reset" type="button">Start new session</button>
+        <div><p class="section-index">ขั้นที่ 3 · ตัวเลือกสำหรับคุณ</p><h2 id="results-title">เมนูที่น่าจะตรงใจ</h2><p id="result-summary">เลือกเงื่อนไขเพื่อเริ่มต้น</p>
+          <div class="condition-actions" id="result-condition-actions" aria-label="จัดการเงื่อนไขการเลือกมื้อ">
+            <button id="results-edit" type="button">แก้ไขเงื่อนไข</button>
+            <button id="results-reset" type="button">เริ่มเลือกใหม่</button>
           </div>
         </div>
         <div class="results-controls">
-          <button class="ghost" id="shuffle-results" type="button"><svg class="icon"><use href="#icon-refresh"/></svg>Shuffle shortlist</button>
-          <button class="ghost" id="random-pick" type="button"><svg class="icon"><use href="#icon-sparkles"/></svg>Pick one for me</button>
-          <button class="ghost" id="group-vote" type="button">Group vote</button>
+          <button class="ghost" id="shuffle-results" type="button"><svg class="icon"><use href="#icon-refresh"/></svg>เปลี่ยนชุดเมนู</button>
+          <button class="ghost" id="random-pick" type="button"><svg class="icon"><use href="#icon-sparkles"/></svg>เลือกให้ฉันหนึ่งเมนู</button>
+          <button class="ghost" id="group-vote" type="button">โหวตเป็นกลุ่ม</button>
         </div>
       </div>
 
       <div class="results-carousel-shell">
-        <div class="results-swipe-overlay" id="results-swipe-overlay" aria-hidden="true">← Swipe to see more →</div>
+        <div class="results-swipe-overlay" id="results-swipe-overlay" aria-hidden="true">← ปัดเพื่อดูเมนูถัดไป →</div>
         <div class="cards" id="results-grid" aria-live="polite"></div>
       </div>
-      <div class="feature-grid" id="session-panels" hidden>
-        <section class="feature-panel glass">
-          <h2>Favorites</h2>
-          <p>Saved meals stay only in this open page unless the user signs in later.</p>
-          <ul class="history-list" id="favorites-list"><li><span>No favorites yet</span><strong></strong></li></ul>
-        </section>
-        <section class="feature-panel glass">
-          <h2>History</h2>
-          <p>Recent picks are visible for this session. Reuse for future recommendations requires opt-in.</p>
-          <ul class="history-list" id="history-list"><li><span>No choices yet</span><strong></strong></li></ul>
-        </section>
-      </div>
-      <p class="source-note" id="results-note" hidden>Illustrative images, not actual restaurant servings. Taste and area labels are unverified; prices and waits are estimates. Confirm details with the restaurant.</p>
+      <p class="source-note" id="results-note" hidden>ภาพใช้เพื่อประกอบต้นแบบ ไม่ใช่อาหารจริงจากร้าน ราคา ระยะทาง และเวลารอเป็นค่าประมาณ กรุณาตรวจสอบกับร้านก่อนเดินทาง</p>
+      <aside class="session-history" id="session-panels" aria-labelledby="session-history-title" hidden>
+        <div class="session-history-head">
+          <div>
+            <p class="section-index">มื้อนี้ของคุณ</p>
+            <h2 id="session-history-title">สิ่งที่เก็บไว้ระหว่างเลือก</h2>
+          </div>
+          <p class="session-history-intro">บันทึกสั้น ๆ สำหรับการเลือกครั้งนี้ ทุกอย่างจะหายไปเมื่อปิดหน้านี้</p>
+        </div>
+        <div class="session-history-grid">
+          <section class="session-history-panel">
+            <div class="session-history-label"><span aria-hidden="true">&#9825;</span><h3>เมนูที่ชอบ</h3></div>
+            <p>เมนูที่บันทึกไว้เพื่อกลับมาดูอีกครั้ง</p>
+            <ul class="history-list" id="favorites-list"><li><span>ยังไม่มีเมนูที่บันทึก</span><strong></strong></li></ul>
+          </section>
+          <section class="session-history-panel">
+            <div class="session-history-label"><span aria-hidden="true">&#8634;</span><h3>เมนูที่เลือกล่าสุด</h3></div>
+            <p>เมนูที่ตัดสินใจเลือกล่าสุด เรียงจากใหม่ไปเก่า</p>
+            <ul class="history-list" id="history-list"><li><span>ยังไม่ได้เลือกเมนู</span><strong></strong></li></ul>
+          </section>
+        </div>
+      </aside>
       <div class="empty-state glass paper border border-2 shadow" id="empty-state" hidden>
-        <h3 id="empty-title">No matches yet</h3>
-        <p id="empty-copy">Try relaxing one condition or changing the area.</p>
+        <h3 id="empty-title">ยังไม่พบเมนูที่ตรงกัน</h3>
+        <p id="empty-copy">ลองผ่อนเงื่อนไขหนึ่งข้อหรือเปลี่ยนพื้นที่</p>
         <div class="empty-actions">
-          <button type="button" id="empty-edit">Edit conditions</button>
-          <button class="ghost" type="button" id="empty-reset">Start new session</button>
+          <button type="button" id="empty-edit">แก้ไขเงื่อนไข</button>
+          <button class="ghost" type="button" id="empty-reset">เริ่มเลือกใหม่</button>
         </div>
       </div>
     </section>
@@ -2135,44 +3108,107 @@
     </div>
   </main>
 
+  <details class="admin-prototype-note shell" id="prototype-access-controls" hidden>
+    <summary>เครื่องมือทดสอบ wireframe · ไม่ใช่การจัดการบัญชีจริง</summary>
+    <p>จำลองสถานะเพื่อดูหน้าจอเท่านั้น ไม่มีการสร้างบัญชี ตรวจรหัสผ่าน หรือบันทึกข้อมูลเข้าสู่ระบบ</p>
+    <label class="admin-field">สถานะตัวอย่าง<select id="prototype-role"><option value="anonymous">ยังไม่เข้าสู่ระบบ</option><option value="USER">ผู้ใช้ทั่วไป · USER</option><option value="ADMIN">ผู้ดูแลตัวอย่าง · ADMIN</option></select></label>
+    <button class="admin-secondary" id="prototype-admin-route" type="button">ทดสอบเปิด /admin/restaurants</button>
+  </details>
+  <main id="access-page" class="admin-page shell" hidden>
+    <section class="admin-workspace" aria-labelledby="access-title">
+      <h1 id="access-title" tabindex="-1">เข้าสู่ระบบ</h1><p id="access-message" role="status"></p>
+      <form id="prototype-login" class="admin-form-grid">
+        <p class="admin-span">หน้าจอจำลอง /login · ใช้ข้อมูลตัวอย่างเท่านั้น ไม่ส่งหรือเก็บรหัสผ่านจริง</p>
+        <label class="admin-field admin-span">อีเมลตัวอย่าง<input name="email" type="email" value="admin@example.test" autocomplete="off" required></label>
+        <label class="admin-field admin-span">รหัสผ่านตัวอย่าง<input name="password" type="password" value="demo-only" autocomplete="off" minlength="8" required></label>
+        <p class="admin-span">ผู้ดูแล: admin@example.test · ผู้ใช้: user@example.test · รหัสผ่านตัวอย่าง: demo-only</p>
+        <p class="admin-span" id="prototype-login-error" role="alert" hidden></p>
+        <button class="admin-primary admin-span" type="submit">เข้าสู่ระบบตัวอย่าง</button>
+      </form>
+      <button class="admin-secondary" id="prototype-logout" type="button" hidden>ออกจากระบบตัวอย่าง</button>
+      <button class="admin-secondary" id="access-home" type="button">กลับหน้าหลัก</button>
+    </section>
+  </main>
+  <main id="admin-page" class="admin-page shell" hidden>
+    <div class="admin-prototype-note"><strong>พื้นที่ผู้ดูแล · ล็อกเป็น Admin ตัวอย่าง</strong> เปิดใช้งานได้ทันทีโดยไม่ต้องล็อกอิน ทดลองเพิ่ม แก้ไข และนำข้อมูลออกได้ การเปลี่ยนแปลงจะหายเมื่อโหลดใหม่ ไม่มีการเชื่อมต่อหรือเปลี่ยนสิทธิ์ในระบบจริง</div>
+    <div class="admin-layout">
+      <details class="admin-sidebar" id="admin-navigation" open>
+        <summary id="admin-navigation-label">เมนูจัดการ · ภาพรวม</summary>
+        <p class="admin-sidebar-label">จัดการข้อมูลอาหาร</p>
+        <nav class="admin-nav" aria-label="เมนูผู้ดูแล">
+          <button type="button" data-admin-section="overview" aria-current="page">ภาพรวม</button>
+          <button type="button" data-admin-section="restaurants">ร้านอาหาร</button>
+          <button type="button" data-admin-section="menus">เมนูอาหาร</button>
+          <p class="admin-sidebar-label">ข้อมูลพื้นฐาน</p>
+          <button type="button" data-admin-section="zones">โซน</button>
+          <button type="button" data-admin-section="types">ประเภทอาหาร</button>
+          <button type="button" data-admin-section="tastes">รสชาติ</button>
+          <p class="admin-sidebar-label">ตรวจสอบ</p>
+          <button type="button" id="admin-audit-tab" data-admin-section="audit">บันทึกการแก้ไข</button>
+          <button type="button" id="admin-session-logout" hidden>ออกจากระบบตัวอย่าง</button>
+        </nav>
+      </details>
+      <section class="admin-workspace" aria-labelledby="admin-title">
+        <div class="admin-heading"><div><h1 id="admin-title" tabindex="-1">จัดการระบบ</h1><p id="admin-description">เริ่มจากข้อมูลร้าน แล้วเพิ่มเมนูของร้าน</p></div><button class="admin-primary" id="admin-new" type="button" hidden>เพิ่มรายการ</button></div>
+        <p class="admin-status" id="admin-status" role="status" aria-live="polite"></p>
+        <div class="admin-overview" id="admin-overview"></div>
+        <form class="admin-toolbar" id="admin-filters" hidden>
+          <label class="admin-field">ค้นหา<input id="admin-search" type="search" placeholder="ค้นหาชื่อไทยหรืออังกฤษ"></label>
+          <label class="admin-field"><span id="admin-filter-label">โซน</span><select id="admin-filter"><option value="">ทั้งหมด</option></select></label>
+          <label class="admin-field" id="admin-type-filter-field" hidden>ประเภทอาหาร<select id="admin-type-filter"><option value="">ทั้งหมด</option></select></label>
+          <label class="admin-field">สถานะ<select id="admin-state-filter"><option value="active">ใช้งานอยู่</option><option value="all">รวมรายการที่นำออก</option><option value="removed">นำออกแล้ว</option></select></label>
+          <button class="admin-secondary admin-filter-reset" id="admin-clear-filters" type="button" hidden>ล้างตัวกรอง</button>
+        </form>
+        <div class="admin-list" id="admin-record-list"></div>
+        <div class="admin-list" id="admin-audit-list" hidden></div>
+        <nav class="admin-pagination" id="admin-pagination" aria-label="หน้ารายการผู้ดูแล" hidden><span id="admin-page-info" role="status" aria-live="polite" aria-atomic="true"></span><div id="admin-page-controls"><button class="admin-secondary" id="admin-page-prev" type="button" aria-controls="admin-record-list">ก่อนหน้า</button><label class="admin-page-picker">ไปหน้า<select id="admin-page-select" aria-controls="admin-record-list"></select></label><button class="admin-secondary" id="admin-page-next" type="button" aria-controls="admin-record-list">ถัดไป</button></div></nav>
+      </section>
+    </div>
+  </main>
+  <dialog class="admin-modal" id="admin-dialog" aria-labelledby="admin-dialog-title">
+    <div class="admin-modal-head"><h2 id="admin-dialog-title">เพิ่มรายการ</h2><button id="admin-dialog-close" type="button" aria-label="ปิดหน้าต่างจัดการ">ปิด</button></div>
+    <form id="admin-record-form"><div class="admin-form-grid" id="admin-form-fields"></div><p id="admin-form-error" role="alert" hidden></p><div class="admin-form-actions"><button class="admin-secondary" id="admin-cancel" type="button">ยกเลิก</button><button class="admin-primary" id="admin-save" type="submit">บันทึกข้อมูล</button></div></form>
+    <div id="admin-remove-panel" hidden><p id="admin-remove-copy"></p><p role="alert" id="admin-remove-error" hidden></p><div class="admin-form-actions"><button class="admin-secondary" id="admin-remove-cancel" type="button">ยกเลิก</button><button class="admin-primary" id="admin-retire" type="button">ยืนยันนำออก</button></div></div>
+  </dialog>
+
   <main id="profile-page" class="profile-page shell" hidden>
     <div class="profile-heading">
-      <button id="profile-back" type="button">&larr; Back to meals</button>
-      <h1 id="profile-title" tabindex="-1">Your food profile</h1>
-      <p>A little note about you. Keep your food allergies together, without creating an account.</p>
+      <button id="profile-back" type="button">&larr; กลับไปเลือกอาหาร</button>
+      <h1 id="profile-title" tabindex="-1">ข้อจำกัดด้านอาหาร</h1>
+      <p>ข้อมูลเสริมสำหรับกรองวัตถุดิบที่คุณต้องการหลีกเลี่ยง โดยไม่ต้องสร้างบัญชี</p>
     </div>
     <div class="profile-layout">
       <form id="profile-form" class="profile-form glass" aria-describedby="profile-privacy profile-limit">
         <fieldset>
-          <legend>Food allergies</legend>
-          <p>Select all that apply. You can leave this blank.</p>
-          <p>For this visit only. Saved selections filter meals using the prototype ingredient tags.</p>
+          <legend>การแพ้อาหาร</legend>
+          <p>เลือกได้มากกว่าหนึ่งข้อ หรือเว้นว่างไว้ได้</p>
+          <p>ใช้เฉพาะครั้งนี้ ตัวเลือกจะกรองเมนูจากป้ายวัตถุดิบของต้นแบบ</p>
           <div class="allergy-grid">
-                <label class="allergy-option"><input type="checkbox" name="allergy" value="Milk">Milk</label>
-                <label class="allergy-option"><input type="checkbox" name="allergy" value="Eggs">Eggs</label>
-                <label class="allergy-option"><input type="checkbox" name="allergy" value="Peanuts">Peanuts</label>
-                <label class="allergy-option"><input type="checkbox" name="allergy" value="Tree nuts">Tree nuts</label>
-                <label class="allergy-option"><input type="checkbox" name="allergy" value="Soy">Soy</label>
-                <label class="allergy-option"><input type="checkbox" name="allergy" value="Wheat">Wheat</label>
-                <label class="allergy-option"><input type="checkbox" name="allergy" value="Fish">Fish</label>
-                <label class="allergy-option"><input type="checkbox" name="allergy" value="Shellfish">Shellfish</label>
-                <label class="allergy-option"><input type="checkbox" name="allergy" value="Sesame">Sesame</label>
+                <label class="allergy-option"><input type="checkbox" name="allergy" value="Milk">นม</label>
+                <label class="allergy-option"><input type="checkbox" name="allergy" value="Eggs">ไข่</label>
+                <label class="allergy-option"><input type="checkbox" name="allergy" value="Peanuts">ถั่วลิสง</label>
+                <label class="allergy-option"><input type="checkbox" name="allergy" value="Tree nuts">ถั่วเปลือกแข็ง</label>
+                <label class="allergy-option"><input type="checkbox" name="allergy" value="Soy">ถั่วเหลือง</label>
+                <label class="allergy-option"><input type="checkbox" name="allergy" value="Wheat">ข้าวสาลี</label>
+                <label class="allergy-option"><input type="checkbox" name="allergy" value="Fish">ปลา</label>
+                <label class="allergy-option"><input type="checkbox" name="allergy" value="Shellfish">สัตว์น้ำเปลือกแข็ง</label>
+                <label class="allergy-option"><input type="checkbox" name="allergy" value="Sesame">งา</label>
           </div>
-          <label class="profile-other" for="allergy-other">Other food allergies
-            <input id="allergy-other" type="text" maxlength="160" autocomplete="off" placeholder="Add another ingredient (optional)">
+          <label class="profile-other" for="allergy-other">วัตถุดิบอื่นที่ต้องการหลีกเลี่ยง
+            <input id="allergy-other" type="text" maxlength="160" autocomplete="off" placeholder="เพิ่มวัตถุดิบอื่น (ไม่บังคับ)">
           </label>
         </fieldset>
         <div class="profile-actions">
-          <button type="submit">Save for this visit</button>
-          <button id="profile-clear" type="button">Clear profile</button>
+          <button type="submit">บันทึกสำหรับครั้งนี้</button>
+          <button id="profile-clear" type="button">ล้างข้อมูล</button>
         </div>
-        <p id="profile-status" role="status" aria-live="polite">No allergies saved for this visit.</p>
+        <p id="profile-status" role="status" aria-live="polite">ยังไม่ได้บันทึกการแพ้อาหาร</p>
       </form>
       <aside class="profile-note glass">
-        <h2>Just for this visit &#10035;</h2>
-        <p id="profile-privacy">Optional prototype profile. Selections stay only in this open page and disappear when you reload or close it. Nothing is sent to a server.</p>
-        <p id="profile-limit">Temporary exclusions are applied to this prototype shortlist using simple ingredient tags. The tags are not verified restaurant allergy data, so confirm ingredients with the restaurant.</p>
-        <p>You can edit or clear your profile at any time. Choosing meals is always available without it.</p>
+        <h2>ใช้เฉพาะครั้งนี้ &#10035;</h2>
+        <p id="profile-privacy">ข้อมูลนี้ไม่บังคับและอยู่เฉพาะในหน้าที่เปิดอยู่ เมื่อโหลดใหม่หรือปิดหน้า ข้อมูลจะหายไปและไม่มีการส่งไปยังเซิร์ฟเวอร์</p>
+        <p id="profile-limit">ต้นแบบกรองจากป้ายวัตถุดิบอย่างง่าย ซึ่งยังไม่ใช่ข้อมูลยืนยันจากร้าน โปรดตรวจสอบวัตถุดิบกับร้านอาหารอีกครั้ง</p>
+        <p>แก้ไขหรือล้างข้อมูลได้ทุกเมื่อ และยังเลือกอาหารได้โดยไม่ต้องกรอกส่วนนี้</p>
       </aside>
     </div>
   </main>
@@ -2180,14 +3216,16 @@
 
 
   <footer class="shell">
-    Wireframe prototype · General recommendations without account registration<br>
-    Restaurant references: <a href="https://www.mfu.ac.th/life-on-campus/lifeoncampus-facility/mfu-foodcenter.html">MFU Food Center</a>,
+    <strong>ต้นแบบ Kinraidee</strong> · คำแนะนำทั่วไปโดยไม่ต้องสมัครสมาชิก
+    <details>
+      <summary>แหล่งข้อมูลและเครดิต</summary>
+      แหล่งอ้างอิงร้านอาหาร: <a href="https://www.mfu.ac.th/life-on-campus/lifeoncampus-facility/mfu-foodcenter.html">MFU Food Center</a>,
     <a href="https://www.mfu.ac.th/quickmenu/parent/parent-faqs.html">MFU campus facilities</a>,
     <a href="https://www.wongnai.com/businesses?domain=1&amp;nearBusinessId=473252&amp;page.number=1&amp;page.size=10&amp;rerank=false">Wongnai near MFU</a>,
     <a href="https://www.tripadvisor.com/RestaurantsNear-g297920-d7888566-Mae_Fah_Luang_University-Chiang_Rai_Chiang_Rai_Province.html">Tripadvisor</a>, and
-    <a href="https://www.lemon8-app.com/%40jojajojo_/7490228113733861895?region=us">Lemon8 local roundup</a>.<br>
-    Restaurant availability, travel time, and prices are prototype estimates and should be checked before visiting. The recommendation dataset uses 45 generated reference images (9 per food type); they do not show each restaurant's actual serving.<br>
-    Photos: <a href="https://commons.wikimedia.org/wiki/File:Khao_Soi_01.jpg">Douglas Perkins</a>,
+    <a href="https://www.lemon8-app.com/%40jojajojo_/7490228113733861895?region=us">Lemon8</a><br>
+    สถานะร้าน เวลาเดินทาง และราคาเป็นค่าประมาณสำหรับต้นแบบ ชุดคำแนะนำใช้ภาพอ้างอิง 45 ภาพและไม่ได้แสดงอาหารจริงของแต่ละร้าน<br>
+    เครดิตภาพ: <a href="https://commons.wikimedia.org/wiki/File:Khao_Soi_01.jpg">Douglas Perkins</a>,
     <a href="https://commons.wikimedia.org/wiki/File:Kao_Rad_Pad_Kra-pao_-_Unithai_2023-07-08.jpg">Andy Li</a>, and
     <a href="https://commons.wikimedia.org/wiki/File:Thai_suki,_Thai_hot_pot_preparation,_Dining_in_Bangkok,_Thailand.jpg">Vyacheslav Argenberg</a>,
     <a href="https://commons.wikimedia.org/wiki/File:Hamburger_and_fries.jpg">Petey21</a>,
@@ -2199,50 +3237,52 @@
     <a href="https://commons.wikimedia.org/wiki/File:Thai_spring_rolls.jpg">Ruth Hartnup</a>,
     <a href="https://commons.wikimedia.org/wiki/File:Nong%27s_Khao_Man_Gai%2C_Portland%2C_2026.jpg">Another Believer</a>, and
     <a href="https://commons.wikimedia.org/wiki/File:Khao_Kha_Muu_-_Nong%27s_Khao_Man_Gai.jpg">Simon Tsu</a> via Wikimedia Commons.<br>
-    Hand-drawn annotations: <a href="https://github.com/rough-stuff/rough-notation">Rough Notation</a> (MIT license). Paper components and utilities: <a href="https://www.getpapercss.com">PaperCSS</a> (ISC license).
+      รายละเอียดร้าน เวลาเดินทาง และราคาเป็นค่าประมาณสำหรับต้นแบบ กรุณาตรวจสอบก่อนเดินทาง ภาพทั้งหมดเป็นภาพอ้างอิงและไม่ใช่อาหารจริงจากแต่ละร้าน<br>
+      เครื่องมือตกแต่ง: <a href="https://github.com/rough-stuff/rough-notation">Rough Notation</a> และ <a href="https://www.getpapercss.com">PaperCSS</a>
+    </details>
   </footer>
   <div class="meal-overlay" id="meal-overlay" role="dialog" aria-modal="true" aria-labelledby="meal-dialog-title" hidden>
     <div class="meal-dialog glass paper border border-2 shadow">
-      <button class="dialog-close" id="dialog-close" type="button" aria-label="Close confirmation"><svg class="icon"><use href="#icon-x"/></svg></button>
+      <button class="dialog-close" id="dialog-close" type="button" aria-label="ปิดหน้าต่างยืนยัน"><svg class="icon"><use href="#icon-x"/></svg></button>
       <div class="meal-celebration">
         <div class="chosen-photo-wrap">
           <span class="photo-tape" aria-hidden="true"></span>
           <img class="chosen-photo" id="chosen-photo" src="" alt="">
         </div>
         <div class="meal-copy">
-          <p class="eyebrow">Great choice — your meal is decided!</p>
-          <h2 id="meal-dialog-title">Bon appétit</h2>
+          <p class="eyebrow">เลือกได้แล้ว — มื้อนี้ลงตัว!</p>
+          <h2 id="meal-dialog-title">อร่อยกับมื้อนี้</h2>
           <p class="chosen-meal" id="chosen-meal"></p>
-          <p class="dialog-copy">No more scrolling. This is what you are eating today.</p>
-          <div class="meal-facts" aria-label="Chosen meal details">
-            <div class="meal-fact"><span>From</span><strong id="chosen-restaurant"></strong></div>
-            <div class="meal-fact"><span>Estimated price</span><strong id="chosen-price"></strong></div>
-            <div class="meal-fact"><span>Area</span><strong id="chosen-area"></strong></div>
+          <p class="dialog-copy">ไม่ต้องเลื่อนหาอีกแล้ว วันนี้คุณได้เมนูนี้</p>
+          <div class="meal-facts" aria-label="รายละเอียดมื้อที่เลือก">
+            <div class="meal-fact"><span>ร้าน</span><strong id="chosen-restaurant"></strong></div>
+            <div class="meal-fact"><span>ราคาประมาณ</span><strong id="chosen-price"></strong></div>
+            <div class="meal-fact"><span>พื้นที่</span><strong id="chosen-area"></strong></div>
             <strong id="chosen-wait" hidden></strong>
           </div>
-          <button class="dialog-action" id="dialog-done" type="button">Yum, let's eat!</button>
+          <button class="dialog-action" id="dialog-done" type="button">ตกลง ไปกินกัน!</button>
         </div>
       </div>
     </div>
   </div>
   <div class="notice-overlay" id="location-overlay" role="dialog" aria-modal="true" aria-labelledby="location-title" hidden>
     <div class="notice-dialog glass">
-      <h2 id="location-title">Use your current area?</h2>
-      <p>Kinraidee would use your current area only for this meal search. You can decline and keep choosing manually.</p>
+      <h2 id="location-title">ใช้พื้นที่ปัจจุบันไหม?</h2>
+      <p>Kinraidee จะใช้พื้นที่ปัจจุบันเฉพาะการเลือกอาหารครั้งนี้ คุณปฏิเสธและเลือกพื้นที่เองได้</p>
       <div class="feature-actions">
-        <button id="location-allow" type="button">Use current area</button>
-        <button class="ghost" id="location-decline" type="button">Keep manual area</button>
+        <button id="location-allow" type="button">ใช้พื้นที่ปัจจุบัน</button>
+        <button class="ghost" id="location-decline" type="button">เลือกพื้นที่เอง</button>
       </div>
     </div>
   </div>
   <div class="notice-overlay" id="vote-overlay" role="dialog" aria-modal="true" aria-labelledby="vote-title" hidden>
     <div class="notice-dialog glass">
-      <h2 id="vote-title">Group vote</h2>
-      <p>Share this session's three choices and count votes on the same candidate set.</p>
+      <h2 id="vote-title">โหวตเป็นกลุ่ม</h2>
+      <p>แชร์ตัวเลือกทั้งสามเมนูจากครั้งนี้ แล้วนับคะแนนจากชุดเมนูเดียวกัน</p>
       <ul class="vote-list" id="vote-list"></ul>
       <div class="feature-actions">
-        <button id="vote-demo" type="button">Add sample votes</button>
-        <button class="ghost" id="vote-close" type="button">Close</button>
+        <button id="vote-demo" type="button">เพิ่มคะแนนตัวอย่าง</button>
+        <button class="ghost" id="vote-close" type="button">ปิด</button>
       </div>
     </div>
   </div>
@@ -2313,6 +3353,24 @@
       { type: "Light and healthy", name: "Vegetarian Rice Plate", restaurant: "MFU Hospital Dining", price: "≈฿55", area: "MFU Medical Center", wait: "10–15 min", moods: ["Fresh"], areaKey: "campus", image: "assets/food/datasets/healthy/vegetarian-rice-plate.jpg" },
       { type: "Light and healthy", name: "Teriyaki Mushroom Bowl", restaurant: "Kindon", price: "≈฿89", area: "Around MFU", wait: "10–15 min", moods: ["Fresh"], areaKey: null, image: "assets/food/datasets/healthy/teriyaki-mushroom-bowl.jpg" }
     ];
+    const thaiMealNames = {
+      "Pad Kra Pao":"ข้าวกะเพรา", "Chicken Fried Rice":"ข้าวผัดไก่", "Khao Man Gai":"ข้าวมันไก่", "Fried Pork Rice Bowl":"ข้าวหมูทอด", "Korean Chicken Rice":"ข้าวไก่เกาหลี", "Buta Pork Rice Bowl":"ข้าวหน้าหมูบูตะ", "Braised Pork Leg Rice":"ข้าวขาหมู", "Roast Duck Rice":"ข้าวหน้าเป็ดย่าง", "Southern Curry Rice":"ข้าวแกงใต้",
+      "Khao Soi":"ข้าวซอย", "Tom Yum Noodles":"ก๋วยเตี๋ยวต้มยำ", "Pad Thai":"ผัดไทย", "Spaghetti Kee Mao":"สปาเกตตีผัดขี้เมา", "Boat Noodles":"ก๋วยเตี๋ยวเรือ", "Dry Egg Noodles":"บะหมี่ไข่แห้ง", "Chashu Ramen":"ราเมงหมูชาชู", "Roast Duck Egg Noodles":"บะหมี่ไข่เป็ดย่าง", "Je Haeng Noodles":"ก๋วยเตี๋ยวเจ๊แห้ง",
+      "Crispy Chicken Burger":"เบอร์เกอร์ไก่กรอบ", "Classic Beef Burger":"เบอร์เกอร์เนื้อคลาสสิก", "Chicken Club Sandwich":"คลับแซนด์วิชไก่", "Fish Burger Set":"ชุดเบอร์เกอร์ปลา", "Korean Fried Chicken":"ไก่ทอดเกาหลี", "Chicken Curry Rice":"ข้าวแกงกะหรี่ไก่", "Chick Set":"ชุดไก่รวม", "Crispy Chicken Special":"ไก่กรอบชุดพิเศษ", "Chicken Snack Box":"กล่องของว่างไก่",
+      "Spicy Suki":"สุกี้รสจัด", "Tom Yum Soup":"ต้มยำ", "Vegetable Hot Pot":"หม้อไฟผัก", "Mini Shabu Set":"ชุดชาบูเล็ก", "Morning Rice Porridge":"โจ๊กมื้อเช้า", "Salmon Rice Porridge":"ข้าวต้มแซลมอน", "Clear Noodle Soup":"ก๋วยเตี๋ยวน้ำใส", "Vegetarian Soup":"ซุปมังสวิรัติ", "Seafood Tom Yum":"ต้มยำทะเล",
+      "Garden Salad Bowl":"สลัดผักรวม", "Grilled Chicken Salad":"สลัดไก่ย่าง", "Fresh Spring Rolls":"ปอเปี๊ยะสด", "Healthy Grain Bowl":"ธัญพืชเพื่อสุขภาพ", "Crispy Chicken Salad":"สลัดไก่กรอบ", "Fresh Veg Rice Bowl":"ข้าวหน้าผักสด", "Fruit & Yogurt Cup":"ผลไม้และโยเกิร์ต", "Vegetarian Rice Plate":"ข้าวมังสวิรัติ", "Teriyaki Mushroom Bowl":"ข้าวหน้าเห็ดเทอริยากิ"
+    };
+    const thaiRestaurants = {
+      "Go Rat Carte Food":"ร้านอาหารตามสั่งโก๋รัตน์", "MFU Food Center":"ศูนย์อาหาร มฟล.", "Chakrapad Chicken Rice":"ข้าวมันไก่จักรพรรดิ", "Mee Cham Kitchen":"ครัวหมีแชมป์", "Chick Seoul MFU":"ชิคโซล มฟล.", "Mue Ek":"มือเอก", "Anas Roast Duck":"อนัสเป็ดย่าง", "Kin Gaeng":"กินแกง", "Teaw Tee Lek":"เตี๋ยวตี๋เล็ก", "MFU Hospital Dining":"ศูนย์อาหารโรงพยาบาล มฟล.", "Ko Heng Boat Noodle":"ก๋วยเตี๋ยวเรือโกเฮง", "Haji-Q":"ฮาจิคิว", "Je Haeng Noodle Shop":"ร้านก๋วยเตี๋ยวเจ๊แห้ง", "The Little Things":"เดอะลิตเติลธิงส์", "Krua Lamduan":"ครัวลำดวน", "Krua My Mum":"ครัวมายมัม", "YaiYai Buffet @ MFU":"ยายยายบุฟเฟต์ มฟล.", "Front-Lotus Rice Porridge":"โจ๊กหน้าโลตัส", "Kindon":"กินดอน", "Im Aroi Seafood":"อิ่มอร่อยซีฟู้ด", "Ice Cream Workshop":"ไอศกรีมเวิร์กช็อป"
+    };
+    const thaiAreas = {
+      "300 m from MFU":"ห่างจาก มฟล. 300 ม.", "MFU campus":"ภายใน มฟล.", "In front of MFU":"หน้าประตู มฟล.", "Old Kochaphon Road":"ถนนกกชพลเดิม", "Around MFU":"รอบ มฟล.", "MFU Medical Center":"ศูนย์การแพทย์ มฟล.", "Ban Du · about 1.6 km":"บ้านดู่ · ประมาณ 1.6 กม.", "Near the MFU bus terminal":"ใกล้สถานีรถโดยสาร มฟล.", "About 1.6 km from MFU":"ห่างจาก มฟล. ประมาณ 1.6 กม.", "Lamduan dormitory zone":"บริเวณหอพักลำดวน", "Dormitory F zone":"บริเวณหอพักโซน F", "400 m from MFU":"ห่างจาก มฟล. 400 ม.", "Nang Lae · about 300 m":"นางแล · ประมาณ 300 ม.", "200 m from MFU":"ห่างจาก มฟล. 200 ม."
+    };
+    const thaiTypes = { "Rice dishes":"เมนูข้าว", "Noodles or pasta":"เมนูเส้นหรือพาสต้า", "Fast food":"อาหารจานด่วน", "Soup or hot pot":"ซุปหรือหม้อไฟ", "Light and healthy":"เมนูเบาและสุขภาพดี" };
+    const mealName = item => thaiMealNames[item.name] || item.name;
+    const restaurantName = item => thaiRestaurants[item.restaurant] || item.restaurant;
+    const areaText = item => thaiAreas[item.area] || item.area;
+    const waitText = item => item.wait.replace("min", "นาที");
     let currentPool = [];
     let toastTimer;
     let resultsAnnotation;
@@ -2347,7 +3405,7 @@
     function goToChoicePanel(index, focusTarget = true) {
       const panels = [...document.querySelectorAll(".choice-panel")];
       const safeIndex = Math.max(0, Math.min(index, panels.length - 1));
-      document.getElementById("progress-prompt").textContent = ["Choose your budget", "Pick the mood", "Choose a food type", "Select an area", "Ready to find your meal!"][safeIndex];
+      document.getElementById("progress-prompt").textContent = ["เลือกงบประมาณ", "เลือกมื้อที่อยากได้", "เลือกประเภทอาหาร", "เลือกพื้นที่", "พร้อมค้นหามื้อของคุณแล้ว!"][safeIndex];
       document.getElementById("choice-track").style.transform = "translateX(-" + (safeIndex * 100) + "%)";
       panels.forEach((panel, panelIndex) => {
         const isCurrent = panelIndex === safeIndex;
@@ -2393,10 +3451,10 @@
 
     function updateChoiceProgress() {
       const choices = [state.budget, state.mood, state.type, state.area];
-      const choiceLabels = ["Budget", "Mood", "Food type", "Area"];
+      const choiceLabels = ["งบประมาณ", "รูปแบบมื้อ", "ประเภทอาหาร", "พื้นที่"];
       const answered = choices.filter(Boolean).length;
-      const prompts = ["Choose your budget", "Pick the mood", "Choose a food type", "Select an area", "Ready to find your meal!"];
-      document.getElementById("progress-label").textContent = answered + " of 4 answered";
+      const prompts = ["เลือกงบประมาณ", "เลือกมื้อที่อยากได้", "เลือกประเภทอาหาร", "เลือกพื้นที่", "พร้อมค้นหามื้อของคุณแล้ว!"];
+      document.getElementById("progress-label").textContent = "ตอบแล้ว " + answered + " จาก 4 ข้อ";
       document.getElementById("progress-prompt").textContent = prompts[answered];
       document.querySelectorAll(".step-card").forEach((step, index) => {
         const complete = Boolean(choices[index]);
@@ -2404,11 +3462,11 @@
         const hint = step.querySelector(".step-hint");
         if (!hint) return;
         if (!hint.dataset.default) hint.dataset.default = hint.textContent;
-        hint.textContent = complete ? "Picked" : hint.dataset.default;
+        hint.textContent = complete ? "เลือกแล้ว" : hint.dataset.default;
       });
       document.querySelectorAll(".step-track span").forEach((segment, index) => segment.classList.toggle("active", index < Math.max(1, answered)));
       document.getElementById("choice-recap").innerHTML = choices.map((choice, index) => choice
-        ? '<li class="recap-item col-6"><article class="recap-detail card"><div class="card-header recap-label">' + choiceLabels[index] + '</div><div class="card-body"><strong class="recap-value">' + choice + '</strong></div></article></li>'
+        ? '<li class="recap-item col-6"><article class="recap-detail card"><div class="card-header recap-label">' + choiceLabels[index] + '</div><div class="card-body"><strong class="recap-value">' + adminEscape(prototypeChoiceLabel(choice, index)) + '</strong></div></article></li>'
         : ""
       ).join("");
     }
@@ -2421,14 +3479,14 @@
         renderSessionPanels();
       }
       mealReturnFocus = document.activeElement;
-      document.getElementById("chosen-meal").textContent = item.name;
+      document.getElementById("chosen-meal").textContent = mealName(item);
       const chosenPhoto = document.getElementById("chosen-photo");
       chosenPhoto.src = item.image;
-      chosenPhoto.alt = item.name + " selected from " + item.restaurant;
-      document.getElementById("chosen-restaurant").textContent = item.restaurant;
+      chosenPhoto.alt = "เมนู" + mealName(item) + " จาก" + restaurantName(item);
+      document.getElementById("chosen-restaurant").textContent = restaurantName(item);
       document.getElementById("chosen-price").textContent = item.price;
-      document.getElementById("chosen-area").textContent = item.area;
-      document.getElementById("chosen-wait").textContent = item.wait;
+      document.getElementById("chosen-area").textContent = areaText(item);
+      document.getElementById("chosen-wait").textContent = waitText(item);
       document.getElementById("meal-overlay").hidden = false;
       document.body.style.overflow = "hidden";
       document.querySelectorAll("header, main, footer, .section-nav").forEach(element => { element.inert = true; });
@@ -2445,7 +3503,7 @@
     }
 
     function itemId(item) {
-      return item.name + "::" + item.restaurant;
+      return item.id || item.name + "::" + item.restaurant;
     }
 
     function priceNumber(item) {
@@ -2467,6 +3525,7 @@
 
     function matchesArea(item) {
       if (state.area === "Any area near MFU") return true;
+      if (item.areaKey === state.area) return true;
       if (state.area === "MFU campus and front gate") return item.areaKey === "campus";
       if (state.area === "Dormitory area") return item.areaKey === "dorm";
       if (state.area === "Ban Du and Nang Lae") return item.areaKey === "ban-du";
@@ -2521,25 +3580,28 @@
     }
 
     function reasonFor(item) {
+      const escapeText = value => String(value ?? "").replace(/[&<>"']/g, character => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" })[character]);
       const mismatches = conditionMismatches(item);
       if (state.usingFallback && mismatches.length) {
-        return "Closest match — it matches " + (4 - mismatches.length) + " of your 4 choices. The difference is " + mismatches.join(" and ") + ".";
+        return "ตัวเลือกใกล้เคียงที่สุด ตรงกับ " + (4 - mismatches.length) + " จาก 4 เงื่อนไข";
       }
       const taste = state.mood === "Surprise me" ? item.moods.join(" / ").toLowerCase() : state.mood.toLowerCase();
-      return "Why it fits — " + item.type + " with a " + taste + " feel, estimated at " + item.price.replace("≈", "") + " within your budget. " + item.area + ".";
+      const typeLabel = { "Rice dishes":"เมนูข้าว", "Noodles or pasta":"เมนูเส้นหรือพาสต้า", "Fast food":"อาหารจานด่วน", "Soup or hot pot":"ซุปหรือหม้อไฟ", "Light and healthy":"เมนูเบาและสุขภาพดี" }[item.type] || item.type;
+      const areaLabel = { "300 m from MFU":"ห่างจาก มฟล. 300 ม.", "MFU campus":"ภายใน มฟล.", "In front of MFU":"หน้าประตู มฟล.", "Old Kochaphon Road":"ถนนกกชพลเดิม", "Around MFU":"รอบ มฟล.", "MFU Medical Center":"ศูนย์การแพทย์ มฟล.", "Ban Du · about 1.6 km":"บ้านดู่ · ประมาณ 1.6 กม.", "Near the MFU bus terminal":"ใกล้สถานีรถโดยสาร มฟล.", "About 1.6 km from MFU":"ห่างจาก มฟล. ประมาณ 1.6 กม.", "Lamduan dormitory zone":"บริเวณหอพักลำดวน", "Dormitory F zone":"บริเวณหอพักโซน F", "400 m from MFU":"ห่างจาก มฟล. 400 ม.", "Nang Lae · about 300 m":"นางแล · ประมาณ 300 ม.", "200 m from MFU":"ห่างจาก มฟล. 200 ม." }[item.area] || item.area;
+      return "เหตุผลที่แนะนำ: " + escapeText(item.typeLabel || typeLabel) + "ที่เข้ากับมื้อแบบที่เลือก ราคา " + escapeText(item.price.replace("≈", "ประมาณ ")) + " และอยู่ในพื้นที่ " + escapeText(areaLabel) + '<span hidden>' + escapeText(item.type + " · " + item.area) + "</span>";
     }
 
     function cardMarkup(item, index) {
       return '<article class="card card-deal-in glass border border-2 shadow shadow-hover" style="--card-index:' + index + '" data-item-id="' + encodeURIComponent(itemId(item)) + '">' +
-        '<div class="food-art"><img src="' + item.image + '" alt="Generated prototype image of ' + item.name + '"><span class="tag">Illustrative image</span><span class="pick-number">PICK 0' + (index + 1) + '</span></div>' +
+          '<div class="food-art"><img src="' + adminEscape(item.image) + '" alt="ภาพประกอบต้นแบบของ ' + adminEscape(mealName(item)) + '"><span class="tag">ภาพประกอบ</span><span class="pick-number">ตัวเลือก 0' + (index + 1) + '</span></div>' +
         '<div class="card-body">' +
-          '<span class="match">' + (state.usingFallback ? "Closest available match" : "Matches your choices") + '</span>' +
-          '<div class="card-row"><h3>' + item.name + '</h3><span class="price">' + item.price + '</span></div>' +
-          '<p class="restaurant">' + item.restaurant + '</p>' +
-          '<div class="quick-facts"><span class="quick-fact">' + item.area + '</span></div>' +
+          '<span class="match">' + (state.usingFallback ? "ตัวเลือกที่ใกล้เคียงที่สุด" : "ตรงกับเงื่อนไขของคุณ") + '</span>' +
+              '<div class="card-row"><h3>' + adminEscape(mealName(item)) + '</h3><span class="price">' + adminEscape(item.price) + '</span></div>' +
+              '<p class="restaurant">' + adminEscape(restaurantName(item)) + '</p>' +
+              '<div class="quick-facts"><span class="quick-fact">' + adminEscape(areaText(item)) + '</span></div>' +
           '<p class="reason">' + reasonFor(item) + '</p>' +
-          '<div class="detail-tags"><span class="detail-tag">Freshness: review needed</span><span class="detail-tag">Tags: ' + (exclusionTags(item).join(", ") || "none listed") + '</span></div>' +
-          '<div class="card-actions"><button type="button">Choose this</button><button class="reject" type="button">Not this one</button><button class="favorite" type="button">Save favorite</button></div>' +
+          '<div class="detail-tags"><span class="detail-tag">ควรตรวจสอบข้อมูลล่าสุด</span><span class="detail-tag">วัตถุดิบ: ' + (exclusionTags(item).join(", ") || "ไม่ระบุ") + '</span></div>' +
+          '<div class="card-actions"><button type="button">เลือกเมนูนี้</button><button class="reject" type="button" aria-label="ไม่เอาเมนูนี้">ไม่ใช่</button><button class="favorite" type="button" aria-label="บันทึกเป็นเมนูที่ชอบ">เก็บ</button></div>' +
         '</div>' +
       '</article>';
     }
@@ -2589,10 +3651,10 @@
     function updateSummary() {
       const parts = [
         state.usingFallback ? "Showing the closest safe alternatives" : null,
-        state.type,
-        state.mood,
+        prototypeChoiceLabel(state.type, 2),
+        prototypeChoiceLabel(state.mood, 1),
         state.budget,
-        state.area
+        prototypeChoiceLabel(state.area, 3)
       ].filter(Boolean);
       document.getElementById("result-summary").textContent = parts.join(" · ");
     }
@@ -2618,7 +3680,11 @@
       document.getElementById("empty-state").hidden = true;
       document.getElementById("results-grid").innerHTML = items.map(cardMarkup).join("");
       document.getElementById("results-grid").scrollTo({ left: 0, behavior: "instant" });
-      document.getElementById("results-title").textContent = title;
+      const presentationTitles = {
+        "Closest ideas for your meal": "เมนูที่ใกล้เคียงกับเงื่อนไขที่สุด",
+        "One idea for your meal": "หนึ่งเมนูที่น่าจะตรงใจ"
+      };
+      document.getElementById("results-title").textContent = presentationTitles[title] || title.replace(" ideas for your meal", " เมนูที่น่าจะตรงใจ");
       updateSummary();
       renderSessionPanels();
       const swipeOverlay = document.getElementById("results-swipe-overlay");
@@ -2633,14 +3699,14 @@
 
     function listMarkup(items, emptyCopy) {
       if (!items.length) return "<li><span>" + emptyCopy + "</span><strong></strong></li>";
-      return items.map(item => "<li><span>" + item.name + "</span><strong>" + item.restaurant + "</strong></li>").join("");
+      return items.map(item => "<li><span>" + adminEscape(mealName(item)) + "</span><strong>" + adminEscape(restaurantName(item)) + "</strong></li>").join("");
     }
 
     function renderSessionPanels() {
       const hasContent = state.favorites.length > 0 || state.history.length > 0;
       document.getElementById("session-panels").hidden = !hasContent;
-      document.getElementById("favorites-list").innerHTML = listMarkup(state.favorites, "No favorites yet");
-      document.getElementById("history-list").innerHTML = listMarkup(state.history, "No choices yet");
+      document.getElementById("favorites-list").innerHTML = listMarkup(state.favorites, "ยังไม่มีเมนูที่บันทึก");
+      document.getElementById("history-list").innerHTML = listMarkup(state.history, "ยังไม่ได้เลือกเมนู");
     }
 
     function saveFavoriteFromButton(button) {
@@ -2651,7 +3717,7 @@
         state.favorites.unshift(item);
         renderSessionPanels();
       }
-      announce("Favorite saved", "This stays in the current page session.");
+      announce("บันทึกเมนูแล้ว", "เมนูนี้จะอยู่เฉพาะในหน้าที่เปิดอยู่");
     }
 
     function availableItems() {
@@ -2670,8 +3736,8 @@
       currentPool = recommendation.usingFallback ? recommendation.items : preferredItems(recommendation.items);
       if (!currentPool.length) {
         showEmptyState(
-          "No safe suggestions available",
-          "Edit your allergy profile or start a new session to see more choices."
+          "ยังไม่มีเมนูที่เหมาะสม",
+          "ลองแก้ไขข้อจำกัดอาหารหรือเริ่มเลือกใหม่เพื่อดูตัวเลือกเพิ่มเติม"
         );
         updateSummary();
         return;
@@ -2679,7 +3745,7 @@
       const shortlist = currentPool.slice(0, 3);
       const title = recommendation.usingFallback
         ? "Closest ideas for your meal"
-        : (shortlist.length === 1 ? "One idea for your meal" : shortlist.length + " ideas for your meal");
+        : (shortlist.length === 1 ? "หนึ่งเมนูที่น่าจะตรงใจ" : shortlist.length + " เมนูที่น่าจะตรงใจ");
       renderItems(shortlist, title, recommendation.usingFallback);
     }
 
@@ -2714,7 +3780,7 @@
     const areaSelect = document.getElementById("area-select");
     const areaSelectShell = document.getElementById("area-select-shell");
     const areaOptions = document.getElementById("area-options");
-    const areaOptionItems = [...areaOptions.querySelectorAll('[role="option"]')];
+    let areaOptionItems = [...areaOptions.querySelectorAll('[role="option"]')];
 
     function closeAreaOptions(returnFocus = false) {
       areaOptions.hidden = true;
@@ -2734,7 +3800,7 @@
     function chooseArea(option) {
       clearUndo();
       state.area = option.dataset.value;
-      document.getElementById("area-select-value").textContent = state.area;
+      document.getElementById("area-select-value").textContent = option.textContent.trim();
       areaOptionItems.forEach(item => item.setAttribute("aria-selected", String(item === option)));
       areaSelectShell.classList.add("has-value");
       updateChoiceProgress();
@@ -2842,8 +3908,8 @@
     function renderVoteList(sampleVotes = false) {
       const votes = sampleVotes ? [3, 2, 1] : [0, 0, 0];
       document.getElementById("vote-list").innerHTML = state.shown.map((item, index) =>
-        "<li><span>" + item.name + "</span><strong>" + votes[index] + " votes</strong></li>"
-      ).join("") || "<li><span>Run the meal search first</span><strong>0 votes</strong></li>";
+        "<li><span>" + mealName(item) + "</span><strong>" + votes[index] + " คะแนน</strong></li>"
+      ).join("") || "<li><span>กรุณาค้นหาเมนูก่อน</span><strong>0 คะแนน</strong></li>";
     }
 
     document.getElementById("group-vote").addEventListener("click", () => {
@@ -2879,8 +3945,8 @@
           document.getElementById("results-edit").focus({ preventScroll: true });
         }
         announce(
-          rejectedItem.name + " removed",
-          replaced ? "Another meal took its place." : "The meal was removed from this session."
+        "นำ " + mealName(rejectedItem) + " ออกจากตัวเลือกแล้ว",
+          replaced ? "ระบบนำเมนูอื่นมาแทนในตำแหน่งเดิม" : "เมนูนี้จะไม่แสดงอีกในการเลือกครั้งนี้"
         );
       } else if (event.target.closest(".favorite")) {
         return;
@@ -2925,7 +3991,7 @@
         chip.classList.remove("active");
         chip.setAttribute("aria-pressed", "false");
       });
-      document.getElementById("area-select-value").textContent = "Choose an area";
+      document.getElementById("area-select-value").textContent = "เลือกพื้นที่";
       areaOptionItems.forEach(option => option.setAttribute("aria-selected", "false"));
       areaSelectShell.classList.remove("has-value");
       closeAreaOptions();
@@ -2976,6 +4042,10 @@
     let resultsReady = false;
 
     function showMeals() {
+      history.replaceState(null, "", "#/");
+      document.getElementById("access-page").hidden = true;
+      document.getElementById("admin-page").hidden = true;
+      document.getElementById("admin-open").removeAttribute("aria-current");
       profilePage.hidden = true;
       mealPage.hidden = false;
       pageFooter.hidden = (activeScreen === "results" || activeScreen === "decision");
@@ -2989,6 +4059,9 @@
       });
       document.getElementById("allergy-other").value = savedOtherAllergy;
       mealPage.hidden = true;
+      document.getElementById("access-page").hidden = true;
+      document.getElementById("admin-page").hidden = true;
+      document.getElementById("admin-open").removeAttribute("aria-current");
       profilePage.hidden = false;
       pageFooter.hidden = true;
       profileOpen.setAttribute("aria-current", "page");
@@ -3072,7 +4145,379 @@
     document.getElementById("explore-flow").addEventListener("click", () => showMealScreen("decision"));
     document.getElementById("back-home").addEventListener("click", () => showMealScreen("home"));
     document.querySelectorAll(".section-dot").forEach(dot => dot.addEventListener("click", () => showMealScreen(dot.dataset.section)));
+    // All identity and catalog changes are in-memory prototype simulations, never application API calls.
+    const adminLabels = { overview: "จัดการระบบ", restaurants: "ร้านอาหาร", menus: "เมนูอาหาร", zones: "โซน", types: "ประเภทอาหาร", tastes: "รสชาติ", audit: "บันทึกการแก้ไข" };
+    const adminZoneSeeds = [{ id: "campus", name: "ในมหาวิทยาลัยและหน้าประตู", nameEn: "Campus and front gate" }, { id: "dorm", name: "บริเวณหอพัก", nameEn: "Dormitory area" }, { id: "ban-du", name: "บ้านดู่และนางแล", nameEn: "Ban Du and Nang Lae" }, { id: "around", name: "รอบมหาวิทยาลัย", nameEn: "Around the university" }];
+    const adminData = {
+      zones: adminZoneSeeds.map((row, index) => ({ ...row, sortOrder: index + 1, removed: false })),
+      types: Object.entries(thaiTypes).map(([key, name], index) => ({ id: "type-" + index, key, name, nameEn: key, sortOrder: index + 1, removed: false })),
+      tastes: [{ id: "Spicy", name: "เผ็ดจัดจ้าน", nameEn: "Spicy", sortOrder: 1, removed: false }, { id: "Fresh", name: "สดชื่นเบา ๆ", nameEn: "Fresh", sortOrder: 2, removed: false }, { id: "Comforting", name: "อิ่มอุ่นใจ", nameEn: "Comforting", sortOrder: 3, removed: false }],
+      restaurants: [...new Set(menuCatalog.map(item => item.restaurant))].map((key, index) => {
+        const menu = menuCatalog.find(item => item.restaurant === key);
+        return { id: "restaurant-" + index, key, name: thaiRestaurants[key] || key, nameEn: key, zone: menu.areaKey || "around", image: "", phone: "", removed: false };
+      }),
+      menus: [], audit: []
+    };
+    adminData.menus = menuCatalog.map((item, index) => ({ id: "menu-" + index, name: mealName(item), nameEn: item.name, restaurant: adminData.restaurants.find(row => row.key === item.restaurant).id, type: adminData.types.find(row => row.key === item.type).id, tastes: [...item.moods], price: Number(item.price.replace(/[^\d]/g, "")), image: item.image, removed: false }));
+    const adminOriginalMenus = new Map(adminData.menus.map((row, index) => [row.id, {...menuCatalog[index]}]));
+    adminData.types.forEach((row, index) => row.icon = ["rice", "noodles", "sandwich", "soup", "salad"][index]);
+    adminData.tastes.forEach((row, index) => row.icon = ["flame", "leaf", "bowl"][index]);
+    [...adminData.restaurants, ...adminData.menus].forEach(row => row.deletedAt = null);
+    const adminIconKeys = { types:["rice","noodles","sandwich","soup","salad","sparkles"], tastes:["flame","leaf","sparkles","heart","bowl"] };
+    const adminPaths = {overview:"/admin",restaurants:"/admin/restaurants",menus:"/admin/menu-items",zones:"/admin/zones",types:"/admin/food-types",tastes:"/admin/tastes",audit:"/admin/audit-logs"};
+    const prototypeRole = "ADMIN";
+    let prototypeReturnTo = "/admin", adminAuditSequence = 1;
+    let adminSection = "overview", adminCurrentPage = 1, adminEditing = null, adminReturnFocus = null, adminSequence = 100;
+    const adminPageSize = 6;
+    const adminDialog = document.getElementById("admin-dialog");
+    const adminEscape = value => String(value ?? "").replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
+    const adminRelatedName = (section, id) => adminData[section].find(row => row.id === id)?.name || "ไม่พบข้อมูล";
+    function adminOptions(section, selected = "", allLabel = "เลือกข้อมูล", includeRemoved = false) {
+      const rows = adminData[section].filter(row => includeRemoved || !row.removed || row.id === selected).slice().sort((a,b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+      return '<option value="">' + adminEscape(allLabel) + '</option>' + rows.map(row => '<option value="' + adminEscape(row.id) + '"' + (row.id === selected ? ' selected' : '') + '>' + adminEscape(row.name) + (row.removed ? " (นำออกแล้ว)" : "") + '</option>').join("");
+    }
+    function adminField(label, name, value = "", type = "text", required = false) {
+      return '<label class="admin-field"><span>' + label + (required ? ' <span class="admin-required" aria-hidden="true">*</span>' : '') + '</span><input name="' + name + '" value="' + adminEscape(value) + '" type="' + type + '"' + (required ? ' required' : '') + (type === "number" ? ' min="' + (name === "price" ? '1' : '0') + '" max="2147483647" step="1"' : '') + '></label>';
+    }
+    function adminSelect(label, name, section, value = "") {
+      return '<label class="admin-field"><span>' + label + ' <span class="admin-required" aria-hidden="true">*</span></span><select name="' + name + '" required>' + adminOptions(section, value) + '</select></label>';
+    }
+    function renderAdminRecords() {
+      const search = document.getElementById("admin-search").value.trim().toLocaleLowerCase();
+      const filter = document.getElementById("admin-filter").value;
+      const foodType = document.getElementById("admin-type-filter").value;
+      const status = document.getElementById("admin-state-filter").value;
+      const hasFilters = Boolean(search || filter || foodType || status !== "active");
+      document.getElementById("admin-clear-filters").hidden = !hasFilters;
+      const rows = [...(adminData[adminSection] || [])];
+      if (["zones", "types", "tastes"].includes(adminSection)) rows.sort((a, b) => a.sortOrder - b.sortOrder);
+      const filteredRecords = rows.filter(row => (status === "all" || Boolean(row.removed) === (status === "removed")) && (!filter || (adminSection === "menus" ? row.restaurant : row.zone) === filter) && (!foodType || adminSection !== "menus" || row.type === foodType) && (row.name + " " + row.nameEn).toLocaleLowerCase().includes(search));
+      const pages = Math.max(1, Math.ceil(filteredRecords.length / adminPageSize));
+      adminCurrentPage = Math.max(1, Math.min(adminCurrentPage, pages));
+      const firstRecord = (adminCurrentPage - 1) * adminPageSize;
+      document.getElementById("admin-record-list").innerHTML = filteredRecords.slice(firstRecord, firstRecord + adminPageSize).map(row => {
+        const hasImage = ["menus", "restaurants"].includes(adminSection);
+        const detail = adminSection === "restaurants" ? "โซน " + adminRelatedName("zones", row.zone) + " · " + adminData.menus.filter(menu => menu.restaurant === row.id && !menu.removed).length + " เมนูที่ใช้งาน" : adminSection === "menus" ? adminRelatedName("restaurants", row.restaurant) + " · " + adminRelatedName("types", row.type) : "ลำดับการแสดง " + row.sortOrder + (adminIconKeys[adminSection] ? " · ไอคอน " + (row.icon || "สำรอง") : "");
+        return '<article class="admin-row' + (hasImage ? '' : ' no-image') + '">' + (hasImage ? (row.image ? '<img src="' + adminEscape(row.image) + '" alt="ภาพประกอบ ' + adminEscape(row.name) + '">' : '<div class="admin-image-placeholder">ไม่มีรูป</div>') : '') + '<div><h2>' + adminEscape(row.name) + '</h2><p>' + adminEscape(row.nameEn) + '</p><p>' + adminEscape(detail) + '</p>' + (adminSection === "menus" ? '<p class="admin-price">฿' + row.price.toLocaleString("th-TH") + ' · <span style="font-size:13px;font-weight:500">' + adminEscape(row.tastes.map(id => adminRelatedName("tastes", id)).join(" · ")) + '</span></p>' : '') + '<span class="admin-badge' + (row.removed ? ' removed' : '') + '">' + (row.removed ? 'นำออกแล้ว' : 'ใช้งานอยู่') + '</span></div><div class="admin-row-actions">' + (!row.removed ? '<button type="button" data-admin-edit="' + row.id + '" aria-label="แก้ไข ' + adminEscape(row.name) + '">แก้ไข</button><button type="button" data-admin-remove="' + row.id + '" aria-label="นำ ' + adminEscape(row.name) + ' ออกจากรายการ">นำออก</button>' : '') + (adminSection === "restaurants" ? '<button type="button" data-admin-menus="' + row.id + '">ดูเมนู</button>' : '') + '</div></article>';
+      }).join("") || '<div class="admin-empty"><strong>ไม่พบรายการ' + (hasFilters ? 'ที่ตรงกับตัวกรอง' : 'ในหมวดนี้') + '</strong><p>' + (hasFilters ? 'ลองล้างตัวกรองเพื่อดูรายการทั้งหมด' : 'เริ่มต้นด้วยการเพิ่มข้อมูลตัวอย่างใหม่') + '</p><button class="admin-secondary" type="button" data-admin-empty="' + (hasFilters ? 'clear' : 'add') + '">' + (hasFilters ? 'ล้างตัวกรอง' : 'เพิ่ม' + adminLabels[adminSection]) + '</button></div>';
+      document.getElementById("admin-page-info").textContent = filteredRecords.length ? "แสดง " + (firstRecord + 1) + "–" + Math.min(firstRecord + adminPageSize, filteredRecords.length) + " จาก " + filteredRecords.length + " รายการ · หน้า " + adminCurrentPage + " จาก " + pages : "0 รายการ";
+      document.getElementById("admin-page-controls").hidden = pages <= 1;
+      document.getElementById("admin-page-select").innerHTML = Array.from({length:pages}, (_,index) => '<option value="' + (index + 1) + '"' + (index + 1 === adminCurrentPage ? ' selected' : '') + '>' + (index + 1) + '</option>').join("");
+      document.getElementById("admin-page-prev").disabled = adminCurrentPage <= 1;
+      document.getElementById("admin-page-next").disabled = adminCurrentPage >= pages;
+      applyDoodleButtons();
+    }
+    function showAdminSection(section, focus = true) {
+      if (prototypeRole !== "ADMIN") return openPrototypeAdmin(adminPaths[section] || "/admin");
+      adminSection = section; adminCurrentPage = 1;
+      history.replaceState(null, "", "#" + adminPaths[section]);
+      document.getElementById("admin-title").textContent = section === "overview" ? "จัดการระบบ" : adminLabels[section];
+      document.getElementById("admin-description").textContent = section === "overview" ? "เริ่มจากข้อมูลร้าน แล้วเพิ่มเมนูของร้าน" : section === "audit" ? "ดูสิ่งที่เปลี่ยนระหว่างทดลองใช้งานในหน้านี้" : "ค้นหาและดูแลข้อมูล" + adminLabels[section];
+      document.getElementById("admin-navigation-label").textContent = "เมนูจัดการ · " + (section === "overview" ? "ภาพรวม" : adminLabels[section]);
+      document.querySelectorAll("[data-admin-section]").forEach(button => { if (button.dataset.adminSection === section) button.setAttribute("aria-current", "page"); else button.removeAttribute("aria-current"); });
+      document.getElementById("admin-overview").hidden = section !== "overview";
+      document.getElementById("admin-audit-list").hidden = section !== "audit";
+      document.getElementById("admin-record-list").hidden = ["overview", "audit"].includes(section);
+      document.getElementById("admin-filters").hidden = ["overview", "audit"].includes(section);
+      document.getElementById("admin-pagination").hidden = ["overview", "audit"].includes(section);
+      document.getElementById("admin-new").hidden = ["overview", "audit"].includes(section);
+      document.getElementById("admin-new").textContent = "เพิ่ม" + adminLabels[section];
+      document.getElementById("admin-search").value = ""; document.getElementById("admin-state-filter").value = "active";
+      document.getElementById("admin-state-filter").parentElement.hidden = !["menus","restaurants"].includes(section);
+      document.getElementById("admin-type-filter-field").hidden = section !== "menus";
+      document.getElementById("admin-type-filter").innerHTML = adminOptions("types", "", "ทั้งหมด");
+      document.getElementById("admin-status").textContent = "";
+      const filter = document.getElementById("admin-filter");
+      filter.parentElement.hidden = !["menus", "restaurants"].includes(section);
+      filter.innerHTML = adminOptions(section === "menus" ? "restaurants" : "zones", "", "ทั้งหมด", section === "menus");
+      document.getElementById("admin-filter-label").textContent = section === "menus" ? "ร้านอาหาร" : "โซน";
+      if (section === "overview") document.getElementById("admin-overview").innerHTML = ["restaurants", "menus", "zones", "types", "tastes", "audit"].map(key => '<button type="button" data-admin-section="' + key + '"><strong>' + adminLabels[key] + ' ↗</strong><span>' + (key === "audit" ? adminData.audit.length + " การเปลี่ยนแปลงในการทดลองนี้" : adminData[key].filter(row => !row.removed).length + " รายการที่ใช้งาน") + '</span></button>').join("");
+      else if (section === "audit") renderAdminAudit(); else renderAdminRecords();
+      if (window.innerWidth <= 980) document.getElementById("admin-navigation").open = false;
+      applyDoodleButtons();
+      if (focus) { window.scrollTo({top:0, behavior:"instant"}); document.getElementById("admin-title").focus({preventScroll:true}); }
+    }
+    function closeAdminDialog() {
+      const recordId = adminEditing?.id;
+      adminDialog.close(); adminEditing = null;
+      const replacement = recordId ? [...document.querySelectorAll("[data-admin-edit]")].find(button => button.dataset.adminEdit === recordId) : null;
+      (adminReturnFocus?.isConnected ? adminReturnFocus : replacement || document.getElementById("admin-new")).focus({preventScroll:true});
+    }
+    function openAdminEditor(record = null) {
+      if (prototypeRole !== "ADMIN") return openPrototypeAdmin(adminPaths[adminSection]);
+      adminEditing = record; adminReturnFocus = document.activeElement;
+      const row = record || {};
+      document.getElementById("admin-dialog-title").textContent = (record ? "แก้ไข" : "เพิ่ม") + adminLabels[adminSection];
+      document.getElementById("admin-record-form").hidden = false; document.getElementById("admin-remove-panel").hidden = true; document.getElementById("admin-form-error").hidden = true;
+      let fields = '<p class="admin-help admin-span">ช่องที่มี * จำเป็นต้องกรอก · ข้อมูลตัวอย่างอยู่เฉพาะในหน้านี้</p>' + adminField("ชื่อภาษาไทย", "name", row.name, "text", true) + adminField("ชื่อภาษาอังกฤษ", "nameEn", row.nameEn, "text", true);
+      if (adminSection === "restaurants") fields += adminSelect("โซน", "zone", "zones", row.zone) + adminField("เบอร์ติดต่อสาธารณะ (ไม่บังคับ)", "phone", row.phone, "tel");
+      if (adminSection === "menus") fields += adminSelect("ร้านอาหาร", "restaurant", "restaurants", row.restaurant) + adminSelect("ประเภทอาหาร", "type", "types", row.type) + adminField("ราคา (บาท)", "price", row.price, "number", true) + '<fieldset class="admin-field"><legend>รสชาติ · เลือกได้หลายข้อ</legend><div class="admin-tastes">' + adminData.tastes.filter(taste => !taste.removed).map(taste => '<label><input type="checkbox" name="tastes" value="' + adminEscape(taste.id) + '"' + (row.tastes?.includes(taste.id) ? ' checked' : '') + '>' + adminEscape(taste.name) + '</label>').join("") + '</div></fieldset>';
+      if (["menus", "restaurants"].includes(adminSection)) fields += adminField("ลิงก์รูปภาพ (ไม่บังคับ)", "image", row.image) + '<p class="admin-field">ใช้รูปที่ได้รับอนุญาต · รองรับลิงก์ https และรูปตัวอย่างใน assets/food/</p>';
+      else {
+        fields += adminField("ลำดับการแสดงผล", "sortOrder", row.sortOrder ?? 0, "number", true);
+        if (adminIconKeys[adminSection]) fields += '<label class="admin-field">ไอคอน<select name="icon"><option value="">ไม่ระบุ · ใช้ไอคอนสำรอง</option>' + [...new Set([...adminIconKeys[adminSection], ...(row.icon ? [row.icon] : [])])].map(key => '<option value="' + adminEscape(key) + '"' + (row.icon === key ? ' selected' : '') + '>' + adminEscape(key) + (adminIconKeys[adminSection].includes(key) ? '' : ' · ไอคอนสำรอง') + '</option>').join('') + '</select></label>';
+      }
+      if (!["types","tastes"].includes(adminSection)) fields += '<label class="admin-field admin-span">คำอธิบายภาษาไทย (ไม่บังคับ)<textarea name="description">' + adminEscape(row.description) + '</textarea></label>' + '<label class="admin-field admin-span">คำอธิบายภาษาอังกฤษ (ไม่บังคับ)<textarea name="descriptionEn">' + adminEscape(row.descriptionEn) + '</textarea></label>';
+      document.getElementById("admin-form-fields").innerHTML = fields;
+      const tasteGroup = document.querySelector("#admin-form-fields .admin-tastes");
+      if (tasteGroup) {
+        tasteGroup.closest("fieldset").querySelector("legend").textContent = "รสชาติ · เลือกอย่างน้อย 1 ข้อ *";
+        [...tasteGroup.children].sort((a,b) => adminData.tastes.find(row=>row.id===a.querySelector("input").value).sortOrder - adminData.tastes.find(row=>row.id===b.querySelector("input").value).sortOrder).forEach(label=>tasteGroup.append(label));
+      }
+      if (adminIconKeys[adminSection]) {
+        const preview = document.createElement("div"); preview.id = "admin-icon-preview"; preview.className = "admin-icon-preview admin-span";
+        document.getElementById("admin-form-fields").append(preview); updateAdminIconPreview();
+      }
+      document.getElementById("admin-save").textContent = record ? "บันทึกการแก้ไข" : "เพิ่ม" + adminLabels[adminSection];
+      adminDialog.showModal(); document.querySelector('#admin-record-form [name="name"]').focus();
+    }
+    function openAdminRemoval(record) {
+      if (prototypeRole !== "ADMIN") return openPrototypeAdmin(adminPaths[adminSection]);
+      adminEditing = record; adminReturnFocus = document.activeElement;
+      document.getElementById("admin-dialog-title").textContent = ["restaurants","menus"].includes(adminSection) ? "นำ" + adminLabels[adminSection] + "ออกจากรายการ" : "ลบ" + adminLabels[adminSection];
+      document.getElementById("admin-retire").textContent = ["restaurants","menus"].includes(adminSection) ? "ยืนยันนำออก" : "ยืนยันลบ";
+      document.getElementById("admin-record-form").hidden = true; document.getElementById("admin-remove-panel").hidden = false; document.getElementById("admin-remove-error").hidden = true;
+      document.getElementById("admin-remove-copy").textContent = ["restaurants","menus"].includes(adminSection) ? "นำ “" + record.name + "” ออกจากรายการ" + (adminSection === "restaurants" ? " รวมถึงเมนูที่ยังใช้งานอยู่ของร้านนี้" : "") + "? รายการจะยังอยู่แต่ไม่ถูกแนะนำ ไม่มีการลบข้อมูลระบบจริง" : "ลบ “" + record.name + "” จากข้อมูลพื้นฐานตัวอย่าง? ลบได้เฉพาะเมื่อไม่มีร้านหรือเมนูอ้างอิง และไม่มีรายการเก็บถาวร";
+      adminDialog.showModal(); document.getElementById("admin-remove-cancel").focus();
+    }
+    function addAdminAudit(action, record, before = null, section = adminSection) {
+      const snapshot = row => row ? Object.fromEntries(Object.entries(row).filter(([key]) => !["phone","key","removed"].includes(key))) : null;
+      const sequence = adminAuditSequence++;
+      adminData.audit.unshift({ id:"audit-"+sequence, actorId:"demo-admin", entityId:record.id, requestId:"req_demo-"+sequence, action, name:record.name, section:adminLabels[section], time:new Date().toLocaleString("th-TH"), before:snapshot(before), after:action === "นำออก" || action === "ลบ" || action === "นำออกพร้อมร้าน" ? null : snapshot(record) });
+    }
+    function renderAdminAudit() {
+      const snapshotText = value => value ? JSON.stringify(value, null, 2) : "ไม่มีข้อมูล";
+      document.getElementById("admin-audit-list").innerHTML = '<p>บันทึกการแก้ไขของแอป ไม่ใช่บันทึกการจราจรคอมพิวเตอร์ · ระบบจริงเก็บ 180 วัน ตัวอย่างนี้หายเมื่อโหลดใหม่</p>' + (adminData.audit.map(entry => '<details class="admin-audit"><summary>' + adminEscape(entry.time + " · " + entry.action + " · " + entry.section + " “" + entry.name + "”") + '</summary><p>ผู้ดำเนินการ: ' + adminEscape(entry.actorId) + '<br>รายการ: ' + adminEscape(entry.entityId) + '<br>อ้างอิง: ' + adminEscape(entry.requestId) + '</p><p><strong>ก่อนแก้ไข</strong></p><pre>' + adminEscape(snapshotText(entry.before)) + '</pre><p><strong>หลังแก้ไข</strong></p><pre>' + adminEscape(snapshotText(entry.after)) + '</pre></details>').join("") || '<div class="admin-empty"><strong>ยังไม่มีการแก้ไข</strong><p>ลองเพิ่มหรือแก้ข้อมูล แล้วกลับมาตรวจดูที่นี่</p></div>');
+      const labels = {name:"ชื่อภาษาไทย",nameEn:"ชื่อภาษาอังกฤษ",description:"คำอธิบายภาษาไทย",descriptionEn:"คำอธิบายภาษาอังกฤษ",price:"ราคา (บาท)",restaurant:"ร้านอาหาร",type:"ประเภทอาหาร",tastes:"รสชาติ",zone:"โซน",icon:"ไอคอน",sortOrder:"ลำดับการแสดงผล",image:"รูปภาพ"};
+      const displayValue = (key,value) => {
+        if (value === undefined || value === null || value === "") return "ไม่ระบุ";
+        const relation = {restaurant:"restaurants",type:"types",zone:"zones"}[key];
+        if (relation) return adminRelatedName(relation,value);
+        if (key === "tastes") return value.map(id=>adminRelatedName("tastes",id)).join(" · ") || "ไม่ระบุ";
+        return String(value);
+      };
+      document.querySelectorAll("#admin-audit-list > .admin-audit").forEach((panel,index) => {
+        const entry = adminData.audit[index];
+        const technical = document.createElement("details"); technical.className = "admin-technical";
+        const technicalTitle = document.createElement("summary"); technicalTitle.textContent = "ดูข้อมูลก่อนและหลังแบบละเอียด"; technical.append(technicalTitle);
+        [...panel.children].slice(2).forEach(child=>technical.append(child));
+        const changes = document.createElement("ul"); changes.className = "admin-change-list";
+        changes.innerHTML = entry.after ? Object.keys(labels).filter(key=>JSON.stringify(entry.before?.[key]) !== JSON.stringify(entry.after[key]) && (entry.before?.[key] !== undefined || entry.after[key] !== undefined)).map(key=>'<li><strong>'+labels[key]+'</strong>: '+adminEscape(displayValue(key,entry.before?.[key]))+' → '+adminEscape(displayValue(key,entry.after[key]))+'</li>').join("") : '<li>' + (entry.action === "ลบ" ? "ลบข้อมูลพื้นฐานที่ไม่มีรายการอ้างอิง" : "นำรายการออกจากชุดคำแนะนำ โดยยังเก็บข้อมูลไว้") + '</li>';
+        panel.append(changes,technical);
+      });
+    }
+    document.getElementById("admin-open").addEventListener("click", () => prototypeRole === "ADMIN" ? openPrototypeAdmin(adminPaths[adminSection]) : showPrototypeAccess(prototypeRole === "USER" ? "account" : "login"));
+    document.getElementById("admin-page").addEventListener("click", event => {
+      const emptyAction = event.target.closest("[data-admin-empty]");
+      if (emptyAction) return emptyAction.dataset.adminEmpty === "clear" ? clearAdminFilters() : openAdminEditor();
+      const sectionButton = event.target.closest("[data-admin-section]");
+      if (sectionButton) return showAdminSection(sectionButton.dataset.adminSection);
+      const edit = event.target.closest("[data-admin-edit]"), remove = event.target.closest("[data-admin-remove]"), menus = event.target.closest("[data-admin-menus]");
+      if (edit) openAdminEditor(adminData[adminSection].find(row => row.id === edit.dataset.adminEdit));
+      if (remove) openAdminRemoval(adminData[adminSection].find(row => row.id === remove.dataset.adminRemove));
+      if (menus) {
+        const restaurant = adminData.restaurants.find(row => row.id === menus.dataset.adminMenus);
+        showAdminSection("menus"); document.getElementById("admin-filter").value = menus.dataset.adminMenus;
+        if (restaurant?.removed) document.getElementById("admin-state-filter").value = "removed";
+        renderAdminRecords();
+      }
+    });
+    document.getElementById("admin-new").addEventListener("click", () => openAdminEditor());
+    function clearAdminFilters() {
+      document.getElementById("admin-search").value = "";
+      ["admin-filter","admin-type-filter"].forEach(id => document.getElementById(id).value = "");
+      document.getElementById("admin-state-filter").value = "active";
+      adminCurrentPage = 1; renderAdminRecords(); document.getElementById("admin-search").focus();
+    }
+    document.getElementById("admin-clear-filters").addEventListener("click", clearAdminFilters);
+    function updateAdminIconPreview() {
+      const preview = document.getElementById("admin-icon-preview");
+      const select = document.querySelector('#admin-record-form [name="icon"]');
+      if (preview && select) preview.innerHTML = prototypeIcon(select.value) + '<span>ตัวอย่างไอคอน · ' + adminEscape(select.value || "ไอคอนสำรอง") + '</span>';
+    }
+    document.getElementById("admin-record-form").addEventListener("input", () => { document.getElementById("admin-form-error").hidden = true; });
+    document.getElementById("admin-record-form").addEventListener("change", updateAdminIconPreview);
+    document.getElementById("admin-record-list").addEventListener("error", event => {
+      const image = event.target;
+      if (image.tagName === "IMG") {
+        const fallback = document.createElement("div"); fallback.className = "admin-image-placeholder"; fallback.textContent = "รูปไม่พร้อม";
+        image.replaceWith(fallback);
+      }
+    }, true);
+    document.getElementById("admin-search").addEventListener("input", () => { adminCurrentPage = 1; renderAdminRecords(); });
+    ["admin-filter", "admin-state-filter", "admin-type-filter"].forEach(id => document.getElementById(id).addEventListener("change", () => { adminCurrentPage = 1; renderAdminRecords(); }));
+    document.getElementById("admin-filters").addEventListener("submit", event => event.preventDefault());
+    function changeAdminPage(page) {
+      adminCurrentPage = page; renderAdminRecords();
+      const list = document.getElementById("admin-record-list");
+      list.setAttribute("tabindex", "-1"); list.focus({preventScroll:true}); list.scrollIntoView({block:"start"});
+    }
+    document.getElementById("admin-page-prev").addEventListener("click", () => changeAdminPage(adminCurrentPage - 1));
+    document.getElementById("admin-page-next").addEventListener("click", () => changeAdminPage(adminCurrentPage + 1));
+    document.getElementById("admin-page-select").addEventListener("change", event => changeAdminPage(Number(event.target.value)));
+    ["admin-dialog-close", "admin-cancel", "admin-remove-cancel"].forEach(id => document.getElementById(id).addEventListener("click", closeAdminDialog));
+    adminDialog.addEventListener("cancel", event => { event.preventDefault(); closeAdminDialog(); });
+    document.getElementById("admin-record-form").addEventListener("submit", event => {
+      event.preventDefault();
+      if (prototypeRole !== "ADMIN") return openPrototypeAdmin(adminPaths[adminSection]);
+      const form = event.currentTarget;
+      const data = new FormData(form);
+      const values = Object.fromEntries([...data.entries()].map(([key,value]) => [key,String(value).trim()]));
+      const showError = message => { const error=document.getElementById("admin-form-error"); error.textContent=message; error.hidden=false; };
+      if (!values.name || !values.nameEn) { showError("กรุณากรอกชื่อทั้งสองภาษา"); form.querySelector('[name="' + (!values.name ? 'name' : 'nameEn') + '"]').focus(); return; }
+      if (Boolean(values.description) !== Boolean(values.descriptionEn)) { showError("กรอกคำอธิบายทั้งสองภาษา หรือเว้นว่างทั้งสองช่อง"); form.querySelector('[name="' + (values.description ? 'descriptionEn' : 'description') + '"]').focus(); return; }
+      if (values.image && !( /^https:\/\//i.test(values.image) && URL.canParse(values.image) || /^assets\/food\/[a-z0-9/_-]+\.(jpg|jpeg|png|webp)$/i.test(values.image))) { showError("ใช้ลิงก์รูปแบบ https หรือรูปใน assets/food/ เท่านั้น"); form.querySelector('[name="image"]').focus(); return; }
+      if (adminSection === "menus") {
+        values.tastes = data.getAll("tastes"); values.price=Number(values.price);
+        if (!values.tastes.length) { showError("เลือกรสชาติอย่างน้อยหนึ่งข้อ"); form.querySelector('[name="tastes"]')?.focus(); return; }
+        if (!Number.isInteger(values.price) || values.price <= 0 || values.price > 2147483647) { showError("ราคาต้องเป็นจำนวนบาทเต็มและมากกว่า 0"); return; }
+      } else if (!["restaurants"].includes(adminSection)) {
+        values.sortOrder=Number(values.sortOrder);
+        if(adminData[adminSection].some(row => !row.removed && row !== adminEditing && (row.name===values.name || row.nameEn===values.nameEn))) { showError("มีรายการอื่นใช้ชื่อนี้แล้ว กรุณาใช้ชื่ออื่น"); return; }
+      }
+      const before = adminEditing ? {...adminEditing} : null;
+      if (before && Object.entries(values).every(([key,value]) => JSON.stringify(before[key] ?? "") === JSON.stringify(value))) { closeAdminDialog(); document.getElementById("admin-status").textContent="ไม่มีข้อมูลเปลี่ยนแปลง · ไม่ได้เพิ่มบันทึกการแก้ไข"; return; }
+      const record = adminEditing || {id:"demo-" + adminSequence++, removed:false};
+      Object.assign(record,values);
+      if (["menus","restaurants"].includes(adminSection)) record.deletedAt = record.deletedAt || null;
+      if(!adminEditing) { adminData[adminSection].unshift(record); adminCurrentPage = 1; }
+      addAdminAudit(before ? "แก้ไข" : "เพิ่ม",record,before);
+      syncCatalogFromAdmin();
+      renderAdminRecords(); closeAdminDialog(); document.getElementById("admin-status").textContent="บันทึก “" + record.name + "” แล้ว · ข้อมูลตัวอย่างในหน้านี้";
+    });
+    document.getElementById("admin-retire").addEventListener("click", () => {
+      if (prototypeRole !== "ADMIN") return openPrototypeAdmin(adminPaths[adminSection]);
+      const record=adminEditing;
+      const inUse = adminSection === "zones" ? adminData.restaurants.some(row => row.zone === record.id) : adminSection === "types" ? adminData.menus.some(row => row.type === record.id) : adminSection === "tastes" ? adminData.menus.some(row => row.tastes.includes(record.id)) : false;
+      if(inUse) { const error=document.getElementById("admin-remove-error"); error.hidden=false; error.textContent="รายการนี้ยังถูกใช้งานอยู่ กรุณาแก้ข้อมูลที่อ้างอิงก่อนนำออก"; return; }
+      const before={...record};
+      const softDelete = ["restaurants","menus"].includes(adminSection);
+      if (softDelete) { record.removed=true; record.deletedAt=new Date().toISOString(); }
+      else adminData[adminSection] = adminData[adminSection].filter(row => row !== record);
+      if(adminSection==="restaurants") adminData.menus.filter(row => row.restaurant===record.id && !row.removed).forEach(row => { const previous={...row};row.removed=true;row.deletedAt=record.deletedAt;addAdminAudit("นำออกพร้อมร้าน",row,previous,"menus"); });
+      addAdminAudit(softDelete ? "นำออก" : "ลบ",record,before); syncCatalogFromAdmin(); renderAdminRecords(); closeAdminDialog(); document.getElementById("admin-status").textContent="นำ “" + record.name + "” ออกจากรายการตัวอย่างแล้ว";
+    });
+    function setPrototypeRole() {
+      document.getElementById("prototype-role").value = prototypeRole;
+      document.getElementById("admin-open").textContent = prototypeRole === "ADMIN" ? "จัดการระบบ" : prototypeRole === "USER" ? "บัญชีของฉัน" : "เข้าสู่ระบบ";
+      document.getElementById("admin-open").setAttribute("aria-controls",prototypeRole === "ADMIN" ? "admin-page" : "access-page");
+      if (adminDialog.open) closeAdminDialog();
+    }
+    function safePrototypeReturn(path) { return Object.values(adminPaths).includes(path) ? path : "/admin"; }
+    function showPrototypeAccess(mode, denied = false) {
+      showMeals(); mealPage.hidden = true; pageFooter.hidden = true;
+      document.getElementById("access-page").hidden = false;
+      document.getElementById("access-title").textContent = mode === "login" ? "เข้าสู่ระบบ" : "บัญชีของฉัน";
+      document.getElementById("access-message").textContent = denied ? "บัญชีนี้ไม่มีสิทธิ์จัดการระบบ" : mode === "login" ? "เลือกมื้อได้โดยไม่เข้าสู่ระบบ · หากต้องการจัดการข้อมูล ให้ใช้บัญชีผู้ดูแลตัวอย่าง" : "หน้าบัญชีตัวอย่าง · ไม่มีการจัดการผู้ใช้หรือเปลี่ยนสิทธิ์ใน Admin";
+      document.getElementById("prototype-login").hidden = mode !== "login";
+      document.getElementById("prototype-login-error").hidden = true;
+      document.getElementById("prototype-logout").hidden = mode === "login";
+      history.replaceState(null,"",mode === "login" ? "#/login?returnTo=" + encodeURIComponent(safePrototypeReturn(prototypeReturnTo)) : "#/account");
+      document.getElementById("access-title").focus();
+    }
+    function openPrototypeAdmin(path = "/admin") {
+      prototypeReturnTo = safePrototypeReturn(path);
+      if (prototypeRole === "anonymous") return showPrototypeAccess("login");
+      if (prototypeRole === "USER") return showPrototypeAccess("account", true);
+      showMeals(); mealPage.hidden=true; pageFooter.hidden=true;
+      document.getElementById("admin-page").hidden=false;
+      document.getElementById("admin-open").setAttribute("aria-current","page");
+      showAdminSection(Object.keys(adminPaths).find(key => adminPaths[key] === prototypeReturnTo) || "overview");
+    }
+    document.getElementById("prototype-role").addEventListener("change", event => { setPrototypeRole(event.target.value); showMeals(); showMealScreen("home"); history.replaceState(null,"","#/"); });
+    document.getElementById("prototype-admin-route").addEventListener("click", () => openPrototypeAdmin("/admin/restaurants"));
+    document.getElementById("prototype-login").addEventListener("submit", event => {
+      event.preventDefault(); const form = event.currentTarget; const data=new FormData(form);
+      const email=String(data.get("email")).trim(); const password=String(data.get("password"));
+      if (!["admin@example.test","user@example.test"].includes(email) || password !== "demo-only") { const error=document.getElementById("prototype-login-error"); error.hidden=false;error.textContent="ข้อมูลตัวอย่างไม่ถูกต้อง ใช้บัญชีและรหัสผ่านตัวอย่างที่แสดงด้านบน";return; }
+      setPrototypeRole(email === "admin@example.test" ? "ADMIN" : "USER"); form.reset(); openPrototypeAdmin(prototypeReturnTo);
+    });
+    ["prototype-logout","admin-session-logout"].forEach(id => document.getElementById(id).addEventListener("click", () => { setPrototypeRole("anonymous"); showMeals(); showMealScreen("home");history.replaceState(null,"","#/"); }));
+    document.getElementById("access-home").addEventListener("click", () => { showMeals();showMealScreen("home");history.replaceState(null,"","#/"); });
+    function handlePrototypeRoute() {
+      const target=location.hash.slice(1);
+      if (target.startsWith("/admin")) openPrototypeAdmin(target);
+      else if (target.startsWith("/login")) {
+        prototypeReturnTo=safePrototypeReturn(new URLSearchParams(target.split("?")[1] || "").get("returnTo"));
+        if (prototypeRole === "ADMIN") openPrototypeAdmin(prototypeReturnTo);
+        else showPrototypeAccess(prototypeRole === "USER" ? "account" : "login");
+      } else if (target === "/account") openPrototypeAdmin();
+      else if(target === "/") {showMeals();showMealScreen("home");}
+    }
+    window.addEventListener("hashchange",handlePrototypeRoute);
+    function syncCatalogFromAdmin() {
+      const activeMenus = adminData.menus.filter(row => !row.deletedAt && adminData.restaurants.some(restaurant => restaurant.id === row.restaurant && !restaurant.deletedAt));
+      menuCatalog.splice(0,menuCatalog.length,...activeMenus.map(row => {
+        const restaurant=adminData.restaurants.find(item=>item.id===row.restaurant);
+        const type=adminData.types.find(item=>item.id===row.type);
+        const zone=adminData.zones.find(item=>item.id===restaurant.zone);
+        const original=adminOriginalMenus.get(row.id) || {};
+        const nameKey="catalog:"+row.id, restaurantKey="catalog:"+restaurant.id;
+        thaiMealNames[nameKey]=row.name;thaiRestaurants[restaurantKey]=restaurant.name;
+        const typeKey=type.key || type.id;thaiTypes[typeKey]=type.name;
+        return {...original,id:row.id,name:nameKey,restaurant:restaurantKey,type:typeKey,typeLabel:type.name,moods:[...row.tastes],price:"฿"+row.price,area:zone.name,areaKey:zone.id,image:row.image || original.image || "assets/food/datasets/rice/pad-kra-pao.jpg",wait:original.wait || "ไม่ระบุ",status:"Active"};
+      }));
+      document.getElementById("dataset-note").textContent=menuCatalog.length+" ไอเดียอาหารตัวอย่าง";
+      ["types","tastes"].forEach(section => {
+        const group=document.querySelector('[data-choice-group="'+(section === "types" ? "type" : "mood")+'"]');
+        const selectionKey=section === "types" ? "type" : "mood";
+        const anyValue=section === "types" ? "Any food type" : "Surprise me";
+        const rows=adminData[section].slice().sort((a,b)=>a.sortOrder-b.sortOrder);
+        group.innerHTML=rows.map(row => '<button type="button" class="chip'+(state[selectionKey]===(row.key||row.id)?' active':'')+'" data-value="'+adminEscape(row.key||row.id)+'" aria-pressed="'+String(state[selectionKey]===(row.key||row.id))+'">'+prototypeIcon(row.icon)+'<span>'+adminEscape(row.name)+'</span></button>').join('')+'<button type="button" class="chip'+(state[selectionKey]===anyValue?' active':'')+'" data-value="'+anyValue+'" aria-pressed="'+String(state[selectionKey]===anyValue)+'">อะไรก็ได้</button>';
+        if (state[selectionKey] && state[selectionKey]!==anyValue && !rows.some(row => (row.key||row.id)===state[selectionKey])) state[selectionKey]=null;
+      });
+      const zones=adminData.zones.slice().sort((a,b)=>a.sortOrder-b.sortOrder);
+      areaOptions.replaceChildren(...[...zones, {id:"Any area near MFU",name:"ที่ไหนก็ได้"}].map(row => {
+        const option=document.createElement("li"); option.className="doodle-option";
+        option.setAttribute("role","option");option.tabIndex=-1;
+        option.setAttribute("aria-selected",String(state.area===row.id));
+        option.dataset.value=row.id;option.textContent=row.name;return option;
+      }));
+      areaOptionItems=[...areaOptions.querySelectorAll('[role="option"]')];
+      const oldZone={"MFU campus and front gate":"campus","Dormitory area":"dorm","Ban Du and Nang Lae":"ban-du"}[state.area];
+      if(oldZone) state.area=oldZone;
+      areaOptionItems.forEach(option=>option.setAttribute("aria-selected",String(option.dataset.value===state.area)));
+      if(state.area && state.area!=="Any area near MFU" && !zones.some(row=>row.id===state.area)) state.area=null;
+      document.getElementById("area-select-value").textContent=zones.find(row=>row.id===state.area)?.name || (state.area==="Any area near MFU"?"ที่ไหนก็ได้":"เลือกพื้นที่");
+      closeAreaOptions();clearUndo();state.shown=[];currentPool=[];resultsReady=false;
+      document.getElementById("results").hidden=true;document.getElementById("results-dot").hidden=true;updateChoiceProgress();
+    }
+    function prototypeChoiceLabel(value, index) {
+      if (!value) return "";
+      const section=[null,"tastes","types","zones"][index];
+      const row=section ? adminData[section].find(item=>(item.key||item.id)===value) : null;
+      return row?.name || ({"Surprise me":"อะไรก็ได้","Any food type":"อะไรก็ได้","Any area near MFU":"ที่ไหนก็ได้"}[value]) || value;
+    }
+    function prototypeIcon(key) {
+      if (key === "heart") return '<span class="icon" aria-hidden="true">♡</span>';
+      const symbol = {rice:"rice",noodles:"noodles",sandwich:"sandwich",soup:"soup",salad:"salad",flame:"flame",leaf:"leaf",sparkles:"sparkles",bowl:"soup",heart:"utensils"}[key] || "utensils";
+      return '<svg class="icon" aria-hidden="true"><use href="#icon-'+symbol+'"/></svg>';
+    }
+    function applyDoodleButtons() {
+      document.querySelectorAll(".admin-row-actions").forEach(actions => {
+        const viewMenus = actions.querySelector("[data-admin-menus]");
+        if (viewMenus) actions.prepend(viewMenus);
+        const remove = actions.querySelector("[data-admin-remove]");
+        if (remove && ["zones","types","tastes"].includes(adminSection)) {
+          const record = adminData[adminSection].find(row => row.id === remove.dataset.adminRemove);
+          remove.textContent = "ลบ"; remove.setAttribute("aria-label", "ลบ " + record.name);
+        }
+      });
+      document.querySelectorAll("#admin-page button, #access-page button, #admin-dialog button, #prototype-access-controls button, #admin-open, #start-choosing, #profile-open").forEach(button => {
+        button.classList.add("paper-btn", "doodle-framework-button");
+        button.classList.remove("btn-primary", "btn-primary-outline", "btn-danger", "btn-danger-outline");
+        const variant = button.id === "admin-retire" ? "btn-danger" : button.hasAttribute("data-admin-remove") ? "btn-danger-outline" : button.classList.contains("admin-primary") || button.id === "start-choosing" ? "btn-primary" : "btn-primary-outline";
+        button.classList.add(variant);
+      });
+    }
+    const adminDesktopQuery=window.matchMedia("(min-width: 981px)");
+    function resizeAdminNavigation() { document.getElementById("admin-navigation").open=adminDesktopQuery.matches; }
+    adminDesktopQuery.addEventListener("change",resizeAdminNavigation); resizeAdminNavigation();
     showMealScreen("home", false);
+    syncCatalogFromAdmin();
+    applyDoodleButtons();
+    setPrototypeRole();
+    openPrototypeAdmin(safePrototypeReturn(location.hash.slice(1)));
 
     goToChoicePanel(0, false);
     window.addEventListener("resize", () => requestAnimationFrame(setupDoodleAnnotations));
