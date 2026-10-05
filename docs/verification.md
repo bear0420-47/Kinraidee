@@ -620,3 +620,24 @@ A review against issues #39, #40, #41, and #42 found three bugs and two weakness
 - Images are never converted to base64 or stored in browser storage, external images are never proxied or downloaded, and cleanup messages never show file paths.
 - Restaurant phone numbers are business contact data shown only to `ADMIN` users. Soft delete keeps image references, and restore does not restore menu items.
 - No R2/production upload, MenuItem CRUD, public Restaurant page, image processing, or background orphan cleanup was added.
+
+## Design-system fonts
+
+### Scope
+
+- Verification date: 2026-10-05 (ICT, `UTC+07:00`)
+- Change: Nunito with Noto Sans Thai fallback for body text, buttons, and forms; Delius Swash Caps with Mali fallback for main headings; Nunito for admin headings and record names. Fonts are self-hosted, and the stacks are defined once in `src/web/src/styles.css` (decision recorded in `docs/plan.md`; design rules in `docs/02-design/design-system.md`)
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm --filter web test` | 0 | Pass: 2 new router tests. The `<html>` admin marker is set only while an admin route is shown, is removed after leaving, and is never set for a `USER` redirected away from `/admin`. |
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests (API 47 files/379 tests; web 19 files/204 tests, after rebasing onto #41), API build with OpenAPI generation, and web production build. The build emits the font files split by script (Latin, Thai, Vietnamese, Cyrillic), and browsers download only the subsets a page uses. |
+| `prettier --check --end-of-line auto .` in `src/api` and `src/web` | 0 | Pass. |
+
+### Manual browser checks (Chrome)
+
+- `/login`: the `Kinraidee` wordmark renders in Delius Swash Caps, the Thai heading `เข้าสู่ระบบ` in Mali, and labels and buttons in Noto Sans Thai.
+- `/admin` and `/admin/zones`: page headings and the portaled `เพิ่มโซน` dialog heading render in the body font, while the wordmark keeps Delius Swash Caps.
+- No request goes to a third-party font host; font files load from the web app's own origin.

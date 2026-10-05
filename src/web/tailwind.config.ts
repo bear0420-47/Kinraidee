@@ -28,9 +28,11 @@ export default {
       glass: 'rgba(255, 255, 255, .96)',
     },
     extend: {
+      // Font stacks live in src/styles.css as CSS variables.
       fontFamily: {
-        body: ['Nunito', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        display: ['"Delius Swash Caps"', 'cursive'],
+        body: ['var(--font-body)'],
+        display: ['var(--font-display)'],
+        brand: ['var(--font-brand)'],
       },
       fontSize: {
         hero: 'clamp(48px, 6.2vw, 74px)',
