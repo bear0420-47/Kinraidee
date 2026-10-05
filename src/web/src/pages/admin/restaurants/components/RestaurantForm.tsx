@@ -27,22 +27,28 @@ import {
 import type { Zone } from '@/schemas/admin/zones/zoneSchemas'
 import { RestaurantImageField } from './RestaurantImageField'
 
-export type UnsavedRestaurantState = {
+export type RestaurantFormState = {
+  // Unsaved input or an unsaved upload; leaving should be confirmed.
   dirty: boolean
   // An upload made in this form that the database does not reference yet.
   pendingUploadKey: string | null
+  // A save is in flight; its own success or failure handling owns the upload.
+  saving: boolean
+  // A save or upload is in flight; the form must not be closed.
+  busy: boolean
 }
 
 type RestaurantFormProps = {
   restaurant?: Restaurant
   zones: Zone[]
+  zonesFailed: boolean
   submitLabel: string
   onSave: (
     body: CreateRestaurantBody,
     pendingUploadKey: string | null,
   ) => Promise<unknown>
   onCancel: () => void
-  onUnsavedChange: (state: UnsavedRestaurantState) => void
+  onStateChange: (state: RestaurantFormState) => void
 }
 
 const API_FIELDS: Record<string, keyof RestaurantFormInput> = {
@@ -91,15 +97,17 @@ function showSaveError(
 export function RestaurantForm({
   restaurant,
   zones,
+  zonesFailed,
   submitLabel,
   onSave,
   onCancel,
-  onUnsavedChange,
+  onStateChange,
 }: RestaurantFormProps) {
   const [defaults] = useState(() => toRestaurantFormValues(restaurant))
   const [formAlert, setFormAlert] = useState<string | null>(null)
   const [uploadError, setUploadError] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const isMounted = useRef(true)
   const upload = useUploadRestaurantImage()
   const {
     register,
@@ -123,17 +131,33 @@ export function RestaurantForm({
       ? uploadedImage.key
       : null
 
+  const busy = isSubmitting || upload.isPending
+
   useEffect(() => {
-    onUnsavedChange({
+    onStateChange({
       dirty: isDirty || pendingUploadKey !== null,
       pendingUploadKey,
+      saving: isSubmitting,
+      busy,
     })
-  }, [isDirty, pendingUploadKey, onUnsavedChange])
+  }, [isDirty, pendingUploadKey, isSubmitting, busy, onStateChange])
+
+  useEffect(() => {
+    isMounted.current = true
+    return () => {
+      isMounted.current = false
+    }
+  }, [])
 
   async function uploadFile(file: File) {
     setUploadError(null)
     try {
       const image = await upload.mutateAsync(file)
+      // The form closed while uploading, so nothing will ever reference this file.
+      if (!isMounted.current) {
+        void discardUploadedImage(image.key)
+        return
+      }
       // A replaced, never-saved upload would otherwise be orphaned.
       if (pendingUploadKey) void discardUploadedImage(pendingUploadKey)
       setValue('uploadedImage', image, { shouldDirty: true })
@@ -182,6 +206,9 @@ export function RestaurantForm({
   return (
     <form noValidate className="flex flex-col gap-4" onSubmit={submit}>
       {formAlert ? <FormAlert key={submitCount} message={formAlert} /> : null}
+      {zonesFailed ? (
+        <FormAlert message="โหลดรายการโซนไม่สำเร็จ กรุณาปิดแล้วลองใหม่อีกครั้ง" />
+      ) : null}
       <SelectField
         id="restaurant-zone"
         label="โซน"
@@ -239,12 +266,12 @@ export function RestaurantForm({
         onFileSelected={(file) => void uploadFile(file)}
       />
       <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
-        <Button variant="secondary" onClick={onCancel}>
+        <Button variant="secondary" disabled={busy} onClick={onCancel}>
           ยกเลิก
         </Button>
         <Button
           type="submit"
-          disabled={isSubmitting || upload.isPending}
+          disabled={busy || zonesFailed}
           aria-busy={isSubmitting}
         >
           {isSubmitting ? 'กำลังบันทึก…' : submitLabel}

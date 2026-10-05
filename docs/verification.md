@@ -581,7 +581,7 @@ The repository provides the retention command but no production scheduler. Produ
 |---|---:|---|
 | `pnpm --filter web test` | 0 | Pass: 19 files/196 tests (43 new). Schema tests cover trimming, empty phone to `null`, required Zone and names, the description pair, each image mode's API body (none to nulls, URL with `imageKey: null`, upload as key and URL), URL validation (empty, non-URL, `javascript:`, `ftp:`), a required file in upload mode, pre-fill for each stored image source, changed-field detection with the image key and URL sent together, and list query building. File checks cover JPEG/PNG/WebP, rejected types, and the 2 MiB boundary. Page tests cover the list with zone, phone, image, and status; uploaded images resolved against the API origin; pagination from API metadata; search, Zone, and deleted filters in the query with reset to page 1; deleted rows with a text status, restore, and no edit; create validation with focus; external URL submit with `imageKey: null` and preview only after validation; a broken-image fallback; edit pre-fill sending only changes; no upload control in production; the `accept` list and client rejection of GIF and oversized files before any request; upload preview and the saved key/URL with no browser storage or `data:`/`blob:` values; a missing file focusing the file input; cleanup after a failed create; old-image deletion only after a successful update (request order checked); a failed update removing only the new upload and keeping the old preview; external images never sent to deletion; cleanup on cancel and on replacing an unsaved upload; the leave prompt with cleanup, and no prompt without unsaved changes; and delete/restore confirmations with the approved warnings and no image deletion on soft delete. |
 | Deliberate regression checks | — | Deleting the old image before saving (2 failures), skipping cleanup after a failed save (2 failures), and showing the upload option in production (1 failure) were each caught, then restored. |
-| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests (API 47 files/379 tests; web 19 files/196 tests), API build with OpenAPI generation, and web production build. |
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests (API 47 files/379 tests; web 19 files/196 tests), API build with OpenAPI generation, and web production build. Re-run after the review fixes below: web 19 files/202 tests. |
 | Production bundle check | — | `src/web/dist` contains the external-URL option but not the local-upload control. |
 | `prettier --check --end-of-line auto .` in `src/api` and `src/web` | 0 | Pass. |
 | `git diff --check` | 0 | Pass. |
@@ -597,6 +597,22 @@ Run against the real API and database at desktop and 375px widths. The browser p
 - Delete shows the menu warning. "Show deleted" lists the restaurant with `ลบแล้ว` and a restore button only, and restore shows the warning that menu items are not restored.
 - With an unsaved upload, the browser Back button inside the app shows `ออกจากหน้านี้?`. Leaving deletes the upload. Two full-document unloads during testing left their uploads on disk, as documented in `docs/plan.md`.
 - At 375px, the filters first overflowed their card; after the fix every control fits. The page does not scroll horizontally, and the form dialog fits the screen.
+
+### Review follow-up
+
+A review against issues #39, #40, #41, and #42 found three bugs and two weaknesses, all fixed in `fix(web): guard restaurant form closing and paging edge cases (#41)`:
+
+- Closing the form (Cancel or Escape) or leaving through the prompt while a save was in flight discarded the new upload, even if the save then succeeded. The form now reports when it is busy: closing is ignored while busy, and the leave prompt leaves cleanup to the save itself.
+- An upload that finished after the user left the page was never discarded. The form now discards an upload that resolves after it unmounts.
+- Removing the last row of a later page left the list past its end, showing "ยังไม่มีร้านอาหาร" with "หน้า 2 จาก 1". The page now moves back to the last page and shows loading meanwhile.
+- A Zone load failure left an empty Zone select with no explanation. The form now shows an alert and disables saving.
+- An unparseable image URL threw while rendering a preview. URL resolution now returns `null`, and the preview shows its fallback.
+
+| Check | Result |
+|---|---|
+| `pnpm --filter web exec vitest run src/pages/admin/restaurants` | Pass: 27 tests (6 new). Covers Escape and a disabled Cancel during a pending save with no upload deleted, leaving during a pending save without deleting the upload, discarding an upload that resolves after leaving, moving back to page 1 after deleting the only row on page 2, the Zone load alert with saving disabled, and the malformed-URL fallback. |
+| Deliberate regression checks | Removing the busy guard, the save-aware leave cleanup, the unmount discard, the page clamp, the Zone alert, and the safe URL resolution each failed its test (1 failure each); all were restored. |
+| Browser check (21 restaurants) | Deleting the only restaurant on page 2 returned to page 1 with all 20 rows. The Escape-during-save and Zone-failure cases could not be reproduced against the local API (saves finish too quickly, and stopping the API also stops the session check), so they rely on the automated tests. |
 
 ### Security, privacy, and scope checks
 

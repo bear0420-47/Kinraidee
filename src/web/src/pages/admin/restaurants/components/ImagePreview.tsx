@@ -18,8 +18,9 @@ const sizeClassNames = {
 // External images are shown as-is (never proxied); a broken URL shows a text fallback.
 export function ImagePreview({ url, alt, size }: ImagePreviewProps) {
   const [brokenUrl, setBrokenUrl] = useState<string | null>(null)
+  const src = resolveImageUrl(url)
 
-  if (brokenUrl === url) {
+  if (!src || brokenUrl === url) {
     return (
       <span className="inline-flex items-center gap-2 text-small text-muted">
         <ImageBroken aria-hidden size={24} />
@@ -30,7 +31,7 @@ export function ImagePreview({ url, alt, size }: ImagePreviewProps) {
 
   return (
     <img
-      src={resolveImageUrl(url)}
+      src={src}
       alt={alt}
       onError={() => setBrokenUrl(url)}
       className={`${sizeClassNames[size]} rounded-sm border-2 border-line-soft object-cover`}

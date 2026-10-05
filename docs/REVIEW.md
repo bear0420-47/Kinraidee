@@ -491,10 +491,16 @@ No blocking findings. All #41 list, filter, form, image-mode, upload-transaction
 - When a save fails after a new upload, the form returns to the restaurant's saved image, or asks for the file again on create.
 - Search applies on submit; the Zone and deleted filters apply immediately.
 
+### Follow-up review
+
+A second review against issues #39, #40, #41, and #42 found the change in scope. It fixed three bugs and two weaknesses: closing or leaving during a save could delete an upload the saved restaurant references; an upload finishing after the user left was orphaned; an emptied last page showed the empty state; a Zone load failure was silent; and a malformed image URL could crash a preview. Details and tests are in `docs/verification.md`. Left unchanged by design:
+- Restaurant and MenuItem writes still accept a generated upload key in production. MenuItem (#42) already did, and production cannot create uploads, so changing it belongs with the teammate's module.
+- A failed save still deletes its new upload, as the issue requires, even in the rare case where the server committed but the response was lost.
+
 ### Review scope
 
 - Diff: `git diff fix/39-restaurant-local-images...feat/41-restaurant-admin`
-- Commit: `feat(web): add restaurant management screen (#41)`
+- Commits: `feat(web): add restaurant management screen (#41)`, `fix(web): guard restaurant form closing and paging edge cases (#41)`
 - Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/02-design/design-system.md`, `docs/03-implementation/engineering-guidelines.md`, and `docs/03-implementation/module-implementation-checklist.md`
 - Specification source: GitHub issue #41
 - Upload ordering and orphan cleanup, development-only upload gating, image URL handling, browser-storage use, admin-only access versus server-side authorization, mobile layout, and out-of-scope boundaries

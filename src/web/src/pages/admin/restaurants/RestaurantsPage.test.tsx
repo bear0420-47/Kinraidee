@@ -76,7 +76,7 @@ function fakeRestaurantsApi({
   overrides = {},
 }: {
   items?: Restaurant[]
-  overrides?: Record<string, (body: unknown) => Response>
+  overrides?: Record<string, (body: unknown) => Response | Promise<Response>>
 } = {}) {
   let items = [...initialItems]
   let uploads = 0
@@ -696,5 +696,179 @@ describe('RestaurantsPage delete and restore', () => {
       .getByRole('rowheader', { name: 'ร้านปิดแล้ว' })
       .closest('tr')!
     expect(within(row).getByText('ใช้งาน')).toBeTruthy()
+  })
+})
+
+// A response the test releases later, to observe the page while a request is in flight.
+function deferredResponse() {
+  let release: (response: Response) => void = () => undefined
+  const promise = new Promise<Response>((resolve) => {
+    release = resolve
+  })
+  return { promise, release }
+}
+
+describe('RestaurantsPage in-flight requests', () => {
+  it('keeps the form open and the upload intact while a save is in flight', async () => {
+    const pendingCreate = deferredResponse()
+    const api = fakeRestaurantsApi({
+      overrides: { 'POST /api/restaurants': () => pendingCreate.promise },
+    })
+    const { user } = await openRestaurantsPage()
+
+    await user.click(screen.getByRole('button', { name: 'เพิ่มร้านอาหาร' }))
+    await fillNewRestaurant(user)
+    await user.click(dialog().getByLabelText('อัปโหลดรูปจากเครื่อง'))
+    await user.upload(imageFileInput(), pngFile())
+    await dialog().findByText('อัปโหลดรูปแล้ว')
+    await user.click(dialog().getByRole('button', { name: 'เพิ่มร้านอาหาร' }))
+
+    await dialog().findByRole('button', { name: 'กำลังบันทึก…' })
+    expect(
+      (dialog().getByRole('button', { name: 'ยกเลิก' }) as HTMLButtonElement)
+        .disabled,
+    ).toBe(true)
+    await user.keyboard('{Escape}')
+    expect(screen.getByRole('dialog')).toBeTruthy()
+
+    pendingCreate.release(
+      jsonResponse(201, {
+        data: {
+          restaurant: restaurant({
+            id: 'restaurant_new',
+            name: { th: 'ร้านใหม่', en: 'New Shop' },
+            imageKey: uploadKey(1),
+            imageUrl: `/uploads/${uploadKey(1)}`,
+          }),
+        },
+      }),
+    )
+
+    expect(await screen.findByText('เพิ่มร้าน ร้านใหม่ แล้ว')).toBeTruthy()
+    expect(api.deletedUploads()).toEqual([])
+  })
+
+  it('does not delete the upload when leaving during a save that then succeeds', async () => {
+    const pendingCreate = deferredResponse()
+    const api = fakeRestaurantsApi({
+      overrides: { 'POST /api/restaurants': () => pendingCreate.promise },
+    })
+    const { user, router } = await openRestaurantsPage()
+
+    await user.click(screen.getByRole('button', { name: 'เพิ่มร้านอาหาร' }))
+    await fillNewRestaurant(user)
+    await user.click(dialog().getByLabelText('อัปโหลดรูปจากเครื่อง'))
+    await user.upload(imageFileInput(), pngFile())
+    await dialog().findByText('อัปโหลดรูปแล้ว')
+    await user.click(dialog().getByRole('button', { name: 'เพิ่มร้านอาหาร' }))
+    await dialog().findByRole('button', { name: 'กำลังบันทึก…' })
+
+    void router.navigate('/admin')
+    const prompt = await screen.findByRole('dialog', { name: 'ออกจากหน้านี้?' })
+    await user.click(
+      within(prompt).getByRole('button', { name: 'ออกจากหน้านี้' }),
+    )
+    await screen.findByRole('heading', { name: 'จัดการระบบ' })
+    pendingCreate.release(
+      jsonResponse(201, {
+        data: {
+          restaurant: restaurant({
+            id: 'restaurant_new',
+            name: { th: 'ร้านใหม่', en: 'New Shop' },
+            imageKey: uploadKey(1),
+            imageUrl: `/uploads/${uploadKey(1)}`,
+          }),
+        },
+      }),
+    )
+
+    await waitFor(() =>
+      expect(api.requestsFor('POST', '/api/restaurants')).toHaveLength(1),
+    )
+    expect(api.deletedUploads()).toEqual([])
+  })
+
+  it('discards an upload that finishes after the user left the page', async () => {
+    const pendingUpload = deferredResponse()
+    const lateKey = uploadKey(9)
+    const api = fakeRestaurantsApi({
+      overrides: { 'POST /api/uploads/images': () => pendingUpload.promise },
+    })
+    const { user, router } = await openRestaurantsPage()
+
+    await user.click(screen.getByRole('button', { name: 'เพิ่มร้านอาหาร' }))
+    await user.click(dialog().getByLabelText('อัปโหลดรูปจากเครื่อง'))
+    await user.upload(imageFileInput(), pngFile())
+    await dialog().findByText('กำลังอัปโหลดรูป…')
+
+    void router.navigate('/admin')
+    const prompt = await screen.findByRole('dialog', { name: 'ออกจากหน้านี้?' })
+    await user.click(
+      within(prompt).getByRole('button', { name: 'ออกจากหน้านี้' }),
+    )
+    await screen.findByRole('heading', { name: 'จัดการระบบ' })
+
+    pendingUpload.release(
+      jsonResponse(201, {
+        data: { image: { key: lateKey, url: `/uploads/${lateKey}` } },
+      }),
+    )
+
+    await waitFor(() => expect(api.deletedUploads()).toEqual([lateKey]))
+  })
+})
+
+describe('RestaurantsPage edge cases', () => {
+  it('moves back to the last page when the only row on a later page is deleted', async () => {
+    const many = Array.from({ length: 21 }, (_, index) =>
+      restaurant({
+        id: `r_${index}`,
+        name: { th: `ร้าน ${index}`, en: `Shop ${index}` },
+      }),
+    )
+    fakeRestaurantsApi({ items: many })
+    const { user } = await openRestaurantsPage()
+
+    await user.click(screen.getByRole('button', { name: 'ถัดไป' }))
+    await screen.findByText('หน้า 2 จาก 2 · ทั้งหมด 21 รายการ')
+    await user.click(screen.getByRole('button', { name: 'ลบร้าน ร้าน 20' }))
+    await user.click(dialog().getByRole('button', { name: 'ลบร้าน' }))
+
+    expect(
+      await screen.findByText('หน้า 1 จาก 1 · ทั้งหมด 20 รายการ'),
+    ).toBeTruthy()
+    expect(rows()).toHaveLength(20)
+    expect(screen.queryByText('ยังไม่มีร้านอาหาร')).toBeNull()
+  })
+
+  it('explains a Zone load failure and blocks saving', async () => {
+    fakeRestaurantsApi({
+      overrides: {
+        'GET /api/zones': () => errorResponse(500, 'INTERNAL_SERVER_ERROR'),
+      },
+    })
+    const { user } = await openRestaurantsPage()
+
+    await user.click(screen.getByRole('button', { name: 'เพิ่มร้านอาหาร' }))
+
+    expect(
+      dialog().getByText('โหลดรายการโซนไม่สำเร็จ กรุณาปิดแล้วลองใหม่อีกครั้ง'),
+    ).toBeTruthy()
+    expect(
+      (
+        dialog().getByRole('button', {
+          name: 'เพิ่มร้านอาหาร',
+        }) as HTMLButtonElement
+      ).disabled,
+    ).toBe(true)
+  })
+
+  it('shows the image fallback for a malformed image URL instead of crashing', async () => {
+    fakeRestaurantsApi({
+      items: [{ ...boatNoodles, imageUrl: 'http://' }],
+    })
+    await openRestaurantsPage()
+
+    expect(screen.getByText('โหลดรูปไม่ได้')).toBeTruthy()
   })
 })

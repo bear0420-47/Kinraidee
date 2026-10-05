@@ -5,7 +5,7 @@ import { useBlocker } from 'react-router'
 import { ConfirmDialog } from '@/components/ConfirmDialog'
 import { Dialog } from '@/components/Dialog'
 import { MasterDataPageShell } from '@/components/MasterDataPageShell'
-import { Pagination } from '@/components/Pagination'
+import { getLastPage, Pagination } from '@/components/Pagination'
 import { QueryListState } from '@/components/QueryListState'
 import { discardUploadedImage } from '@/hooks/admin/restaurants/useRestaurantImage'
 import {
@@ -24,7 +24,7 @@ import {
 import { DeleteRestaurantDialog } from './components/DeleteRestaurantDialog'
 import {
   RestaurantForm,
-  type UnsavedRestaurantState,
+  type RestaurantFormState,
 } from './components/RestaurantForm'
 import { RestaurantFilters } from './components/RestaurantFilters'
 import { RestaurantTable } from './components/RestaurantTable'
@@ -36,9 +36,11 @@ type DialogState =
   | { mode: 'delete'; restaurant: Restaurant }
   | { mode: 'restore'; restaurant: Restaurant }
 
-const noUnsavedChanges: UnsavedRestaurantState = {
+const idleForm: RestaurantFormState = {
   dirty: false,
   pendingUploadKey: null,
+  saving: false,
+  busy: false,
 }
 
 const CLEANUP_WARNING = 'ระบบลบรูปที่ไม่ได้ใช้แล้วไม่สำเร็จ'
@@ -51,12 +53,12 @@ export function RestaurantsPage() {
   const deleteRestaurant = useDeleteRestaurant()
   const restoreRestaurant = useRestoreRestaurant()
   const [dialog, setDialog] = useState<DialogState | null>(null)
-  const [unsaved, setUnsaved] = useState(noUnsavedChanges)
+  const [formState, setFormState] = useState(idleForm)
   const [notice, setNotice] = useState('')
   const createButtonRef = useRef<HTMLButtonElement>(null)
 
   const isFormOpen = dialog?.mode === 'create' || dialog?.mode === 'edit'
-  const hasUnsavedChanges = isFormOpen && unsaved.dirty
+  const hasUnsavedChanges = isFormOpen && formState.dirty
 
   // Prompt only when an open form has unsaved input or an unsaved upload.
   const blocker = useBlocker(
@@ -72,10 +74,21 @@ export function RestaurantsPage() {
     return () => window.removeEventListener('beforeunload', warnBeforeUnload)
   }, [hasUnsavedChanges])
 
-  const trackUnsaved = useCallback(
-    (state: UnsavedRestaurantState) => setUnsaved(state),
+  const trackFormState = useCallback(
+    (state: RestaurantFormState) => setFormState(state),
     [],
   )
+
+  const meta = restaurants.data?.meta
+  const lastPage = meta ? getLastPage(meta.total, meta.pageSize) : 1
+  // Deleting or restoring the last row of the last page leaves the query past the end.
+  const isPastLastPage = Boolean(meta && meta.total > 0 && meta.page > lastPage)
+
+  useEffect(() => {
+    if (isPastLastPage) {
+      setFilters((current) => ({ ...current, page: lastPage }))
+    }
+  }, [isPastLastPage, lastPage])
 
   function changeFilters(changes: Partial<Omit<Filters, 'page'>>) {
     setFilters((current) => ({ ...current, ...changes, page: 1 }))
@@ -83,25 +96,28 @@ export function RestaurantsPage() {
 
   function openDialog(next: DialogState) {
     setNotice('')
-    setUnsaved(noUnsavedChanges)
+    setFormState(idleForm)
     setDialog(next)
   }
 
   function finish(message: string) {
     setDialog(null)
-    setUnsaved(noUnsavedChanges)
+    setFormState(idleForm)
     setNotice(message)
   }
 
   async function discardPendingUpload() {
-    const key = unsaved.pendingUploadKey
+    // An in-flight save cleans up its own upload if it fails; deleting it here could
+    // remove a file the saved restaurant now points at.
+    const key = formState.saving ? null : formState.pendingUploadKey
     if (key && !(await discardUploadedImage(key))) setNotice(CLEANUP_WARNING)
   }
 
   function closeForm() {
+    if (formState.busy) return
     void discardPendingUpload()
     setDialog(null)
-    setUnsaved(noUnsavedChanges)
+    setFormState(idleForm)
   }
 
   async function save(
@@ -132,7 +148,6 @@ export function RestaurantsPage() {
     filters.search.trim() !== '' ||
     filters.zoneId !== '' ||
     filters.includeDeleted
-  const meta = restaurants.data?.meta
 
   return (
     <MasterDataPageShell
@@ -149,7 +164,11 @@ export function RestaurantsPage() {
         onChange={changeFilters}
       />
       <QueryListState
-        query={restaurants}
+        // While the page is being moved back into range, show loading rather than "empty".
+        query={{
+          ...restaurants,
+          isPending: restaurants.isPending || isPastLastPage,
+        }}
         items={restaurants.data?.items}
         loadingMessage="กำลังโหลดร้านอาหาร…"
         errorMessage="โหลดรายการร้านอาหารไม่สำเร็จ กรุณาลองใหม่อีกครั้ง"
@@ -170,7 +189,7 @@ export function RestaurantsPage() {
           />
         )}
       </QueryListState>
-      {meta && meta.total > 0 ? (
+      {meta && meta.total > 0 && !isPastLastPage ? (
         <Pagination
           label="หน้ารายการร้านอาหาร"
           page={meta.page}
@@ -186,10 +205,11 @@ export function RestaurantsPage() {
         <Dialog title="เพิ่มร้านอาหาร" onClose={closeForm}>
           <RestaurantForm
             zones={zones.data ?? []}
+            zonesFailed={zones.isError}
             submitLabel="เพิ่มร้านอาหาร"
             onSave={(body, pendingUploadKey) => save(body, pendingUploadKey)}
             onCancel={closeForm}
-            onUnsavedChange={trackUnsaved}
+            onStateChange={trackFormState}
           />
         </Dialog>
       ) : null}
@@ -198,12 +218,13 @@ export function RestaurantsPage() {
           <RestaurantForm
             restaurant={dialog.restaurant}
             zones={zones.data ?? []}
+            zonesFailed={zones.isError}
             submitLabel="บันทึกการแก้ไข"
             onSave={(body, pendingUploadKey) =>
               save(body, pendingUploadKey, dialog.restaurant)
             }
             onCancel={closeForm}
-            onUnsavedChange={trackUnsaved}
+            onStateChange={trackFormState}
           />
         </Dialog>
       ) : null}

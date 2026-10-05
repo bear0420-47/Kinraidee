@@ -32,7 +32,8 @@ type FakeApiOptions = {
   currentUser?: CurrentUser | null
   loginAs?: CurrentUser
   // Exact `METHOD /path` handlers, matched on the pathname only.
-  responses?: Record<string, (body: unknown) => Response>
+  // A handler may return a promise to hold the response until the test resolves it.
+  responses?: Record<string, (body: unknown) => Response | Promise<Response>>
   // Fallback for dynamic paths; return undefined to continue to the built-ins.
   handle?: (method: string, url: URL, body: unknown) => Response | undefined
 }
