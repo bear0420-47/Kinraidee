@@ -93,18 +93,19 @@ export function MenuCard(props: MenuCardProps) {
   return <RevealedCard {...props} item={slot.item} />
 }
 
-// The photo spans the top of the card. Without one (or when it cannot load), a same-size
-// panel with the food-type icon keeps every revealed card lined up.
+// The photo is a short strip across the card top, so a revealed card fits on screen. Without
+// one (or when it cannot load), a same-size panel with the food-type icon keeps every
+// revealed card lined up.
 function CardPhoto({ item }: { item: RecommendationItem }) {
   const placeholder = (label: string) => (
     <span className="flex h-full flex-col items-center justify-center gap-2 text-small text-muted">
-      <FoodTypeIcon aria-hidden icon={item.foodType.icon} size={48} />
+      <FoodTypeIcon aria-hidden icon={item.foodType.icon} size={40} />
       {label}
     </span>
   )
 
   return (
-    <div className="-mx-4 -mt-4 aspect-[4/3] overflow-hidden rounded-t-[10px] border-b-2 border-paper bg-canvas-soft">
+    <div className="-mx-4 -mt-4 h-40 overflow-hidden rounded-t-[10px] border-b-2 border-paper bg-canvas-soft">
       {item.imageUrl ? (
         // Decorative: the menu name follows as the card heading.
         <ImagePreview
@@ -140,13 +141,18 @@ function RevealedCard({
         <p className="text-small text-muted">
           การ์ดใบที่ {position} · เปิดแล้ว
         </p>
-        <h3
-          id={focusTargetId}
-          tabIndex={-1}
-          className="font-display text-card-title leading-tight"
-        >
-          {item.name.th}
-        </h3>
+        <div className="flex items-start justify-between gap-3">
+          <h3
+            id={focusTargetId}
+            tabIndex={-1}
+            className="font-display text-card-title leading-tight"
+          >
+            {item.name.th}
+          </h3>
+          <p className="shrink-0 text-card-title font-extrabold">
+            {formatPrice(item.price)}
+          </p>
+        </div>
         <p lang="en" className="text-small text-muted">
           {item.name.en}
         </p>
@@ -171,10 +177,6 @@ function RevealedCard({
           {item.foodType.name.th}
         </li>
       </ul>
-
-      <p className="text-card-title font-extrabold">
-        {formatPrice(item.price)}
-      </p>
 
       {item.tastes.length > 0 ? (
         <ul aria-label="รสชาติ" className="flex flex-wrap gap-2">

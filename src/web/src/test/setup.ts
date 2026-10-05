@@ -27,6 +27,20 @@ globalThis.FormData = TestFormData
 globalThis.Blob = NodeBlob
 globalThis.File = NodeFile
 
+// jsdom has no layout or media queries. Tests can override the stubs to check scrolling
+// and reduced motion.
+Element.prototype.scrollIntoView = vi.fn()
+window.matchMedia = vi.fn((query: string) => ({
+  matches: false,
+  media: query,
+  onchange: null,
+  addEventListener: vi.fn(),
+  removeEventListener: vi.fn(),
+  addListener: vi.fn(),
+  removeListener: vi.fn(),
+  dispatchEvent: vi.fn(() => false),
+}))
+
 afterEach(() => {
   cleanup()
   vi.mocked(fetch).mockReset()

@@ -872,3 +872,10 @@ Deliberate regression checks confirmed the tests fail when:
   - A card without a photo, or with a broken photo, keeps the same-size panel with the food-type icon.
   - Rechecked in Chrome: the menu names of a photo card, a no-photo card, and a broken-photo card start at the same height, and there is no overflow at 390 px.
   - A new page test covers all three cases. Admin image previews are unchanged.
+- **Follow-up requested by the human reviewer: revealed cards ran off screen.**
+  - Revealing a card stretched it so far that its actions sat below the fold.
+  - The photo is now a `160px` strip instead of `4:3`, and the price sits beside the menu name. A revealed card dropped to about `670px` tall.
+  - Revealing, replacing, or restoring a card now scrolls the whole card into view (`block: 'nearest'`), smoothly, or instantly under reduced motion. Focus still moves to the card heading, without its own scroll.
+  - Rechecked in Chrome at an `842px`-tall viewport: revealing each of the three cards from the top of the page left the whole card visible, from its top to its last button (`top 173`, `bottom 842`), with focus on the card heading.
+  - A new page test checks the scroll target and the reduced-motion behaviour; a deliberate regression check (always smooth) made it fail.
+  - `pnpm verify` passes again: API 427 tests, web 28 files/322 tests, and builds.
