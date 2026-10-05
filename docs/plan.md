@@ -108,6 +108,20 @@ Authorization: seed execution is an operator-only setup action; no application r
 Tests: complete fixture validation before writes, references and duplicate IDs, one transaction, idempotent upserts, exact taste relations, no deletion or silent deletedAt changes, and safe created/updated/unchanged counts
 ```
 
+## Issue #44 Implementation Note
+
+```txt
+Module: stateless meal recommendations
+Requirement/backlog ID: F1, F2, F3, F4, F5, F6, F7, F12, F19; B1, B2, B3, B4, B5, B6, B7, B14, B24
+Legal requirement ID: LR1, LR2, LR3, LR7
+Design artifact: N/A — API-only implementation; no screen or workflow-order changes
+API routes: POST /api/recommendations
+Web pages: N/A
+Personal data: none; transient meal conditions and exclusion IDs are processed without persistence or request-body logging
+Authorization: public; anonymous and authenticated users use the same stateless endpoint
+Tests: request validation and normalization, master-data validation, mandatory filters, soft-delete exclusion, shortlist limits, restaurant diversity, randomization invariants, rejected/displayed exclusion, response minimization, no-match relaxation priority, replacement no-result behavior, public route, OpenAPI, and warm p95 measurement
+```
+
 ## Deployment Decisions
 
 - Web hosting: Cloudflare Pages.
