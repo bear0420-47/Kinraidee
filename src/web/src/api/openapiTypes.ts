@@ -2016,6 +2016,54 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/recommendations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["RecommendationRequest"];
+                };
+            };
+            responses: {
+                /** @description Stateless recommendation shortlist or no-match result */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["RecommendationEnvelope"];
+                    };
+                };
+                /** @description Invalid conditions, exclusions, or count */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorEnvelope"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/audit-logs": {
         parameters: {
             query?: never;
@@ -2532,6 +2580,95 @@ export interface components {
         BulkMenuItemEnvelope: {
             data: {
                 updatedCount: number;
+            };
+        };
+        RecommendationRequest: {
+            conditions: {
+                /** @enum {string} */
+                budget: "UNDER_50" | "BETWEEN_50_100" | "BETWEEN_101_200" | "OVER_200";
+                tasteId: string | null;
+                foodTypeId: string | null;
+                zoneId: string | null;
+            };
+            rejectedMenuItemIds: string[];
+            displayedMenuItemIds: string[];
+            count: 1 | 3;
+        };
+        RecommendationEnvelope: {
+            data: {
+                items: {
+                    id: string;
+                    name: {
+                        th: string;
+                        en: string;
+                    };
+                    description: {
+                        th: string;
+                        en: string;
+                    } | null;
+                    price: number;
+                    imageUrl: string | null;
+                    restaurant: {
+                        id: string;
+                        name: {
+                            th: string;
+                            en: string;
+                        };
+                    };
+                    zone: {
+                        id: string;
+                        name: {
+                            th: string;
+                            en: string;
+                        };
+                    };
+                    foodType: {
+                        id: string;
+                        name: {
+                            th: string;
+                            en: string;
+                        };
+                        icon: string | null;
+                    };
+                    tastes: {
+                        id: string;
+                        name: {
+                            th: string;
+                            en: string;
+                        };
+                        icon: string | null;
+                    }[];
+                    rationale: {
+                        /** @enum {boolean} */
+                        matchedBudget: true;
+                        matchedTaste: boolean;
+                        matchedFoodType: boolean;
+                        matchedZone: boolean;
+                    };
+                }[];
+                relaxation?: {
+                    /** @enum {string} */
+                    field: "zone" | "budget" | "taste" | "foodType";
+                    from: {
+                        /** @enum {string} */
+                        type: "BUDGET_RANGE" | "TASTE" | "ANY_TASTE" | "FOOD_TYPE" | "ANY_FOOD_TYPE" | "ZONE" | "ANY_ZONE";
+                        id: string | null;
+                        label: {
+                            th: string;
+                            en: string;
+                        };
+                    };
+                    to: {
+                        /** @enum {string} */
+                        type: "BUDGET_RANGE" | "TASTE" | "ANY_TASTE" | "FOOD_TYPE" | "ANY_FOOD_TYPE" | "ZONE" | "ANY_ZONE";
+                        id: string | null;
+                        label: {
+                            th: string;
+                            en: string;
+                        };
+                    };
+                    resultCount: number;
+                } | null;
             };
         };
         AuditLogListEnvelope: {

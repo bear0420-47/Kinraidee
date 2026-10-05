@@ -674,3 +674,36 @@ A review against issues #39, #40, #41, and #42 found three bugs and two weakness
 - `/login`: the `Kinraidee` wordmark renders in Delius Swash Caps, the Thai heading `เข้าสู่ระบบ` in Mali, and labels and buttons in Noto Sans Thai.
 - `/admin` and `/admin/zones`: page headings and the portaled `เพิ่มโซน` dialog heading render in the body font, while the wordmark keeps Delius Swash Caps.
 - No request goes to a third-party font host; font files load from the web app's own origin.
+
+## Issue #44 — Stateless meal recommendation endpoint
+
+### Scope
+
+- Verification date/time: 2026-10-06 00:30 ICT (`UTC+07:00`)
+- Environment: local macOS workspace, Node.js 26.4.0, pnpm 12.4.2, PostgreSQL 17
+- Route: public `POST /api/recommendations`
+- Database: isolated temporary PostgreSQL database `kinraidee_issue44_verify` with 2 Zones, 6 FoodTypes, 2 Tastes, 500 active plus 1 deleted Restaurant, 514 active plus 1 deleted MenuItem, and 504 MenuItemTaste links. Of the 514 non-deleted MenuItems, 513 belong to active Restaurants.
+- Cleanup: the verification script is retained in the repository; its uniquely prefixed fixtures are removed in `finally`. The temporary database, PostgreSQL cluster, and log used for this run were removed after verification.
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm --filter api exec vitest run src/modules/recommendations --reporter verbose` | 0 | Pass: 7 files/35 tests covering strict DTO validation, all budget boundaries, 0/1/2/3/more-than-3 result behavior, count and 500-ID limits, exclusion normalization, master-data validation, Prisma filter shape, soft-delete filters, public response minimization, rationale flags, Restaurant-first diversity, randomization invariants, no-match priority, replacement exhaustion, public route behavior, OpenAPI, and performance. Warm service p95 was 0.15 ms over 30 samples with 500 distinct Restaurants. |
+| `NODE_ENV=test DATABASE_URL=<test-db> JWT_SECRET=<test-secret> CORS_ALLOWED_ORIGINS=http://localhost:5173 pnpm --filter api recommendations:verify` | 0 | Pass against real PostgreSQL and HTTP with 500 active Restaurants. Verified every budget boundary, deleted MenuItem exclusion, MenuItems under a deleted Restaurant exclusion, a selected Taste when the MenuItem has additional Taste relations, distinct-Restaurant diversity, rejected/displayed exclusion, unknown master ID rejection, exhausted replacement with `relaxation: null`, Zone-first relaxation, and response redaction. Local first request was 47.1 ms; warm HTTP p95 was 26.21 ms over 30 samples. Deployed-host cold-start timing remains unavailable until a test deployment exists. |
+| `NODE_OPTIONS=--localstorage-file=/private/tmp/kinraidee-vitest-localstorage pnpm verify` | 0 | Pass: workspace typecheck, lint, tests, and builds completed. API: 55 files/427 tests; web: 19 files/204 tests. API build regenerated OpenAPI and web production build completed. |
+| `pnpm verify` inside the filesystem sandbox | 1 | Environment-only failure: Supertest could not open `127.0.0.1` (`listen EPERM`). The API suite passed after running the same verification outside the sandbox. |
+| `pnpm verify` outside the sandbox without `NODE_OPTIONS` | 1 | Environment-only failure: API passed 55 files/426 tests, while Node.js 26 exposed unavailable experimental Web Storage and all web tests failed during `localStorage.clear()`. The controlled command above passed with the temporary storage file. |
+| `pnpm format` | 0 | Pass: API and web files matched Prettier formatting. |
+| `pnpm --filter api openapi:generate` and `pnpm --filter web openapi:generate` | 0 | Pass: generated contract and typed web client contain the recommendation request, response, rationale, and relaxation types. |
+| `git diff --check` | 0 | Pass. |
+| `node tests/wireframe-requirements.test.cjs` | 1 | Existing prototype gap outside #44: 20 passed and 4 failed for the untranslated header expectation and missing Admin prototype states. No prototype or wireframe test was modified. |
+
+### Security, privacy, and scope checks
+
+- The endpoint is public and stateless. It creates no RecommendationSession or history row and performs no database write.
+- Conditions and rejected/displayed MenuItem IDs are used only for the current request and are not logged by the module.
+- Strict Zod validation rejects unknown selected master IDs, malformed exclusions, invalid counts, extra fields, and exclusion arrays above 500 entries.
+- Active MenuItems under active Restaurants are the only candidates. Supplied mandatory filters and normalized exclusions are applied in Prisma before randomization.
+- Responses include only card/detail/confirmation fields. They omit image ownership keys, soft-delete fields, timestamps, Restaurant phone, and audit metadata.
+- Replacement requests never suggest relaxation. Initial no-match requests change only one condition in the approved Zone, Budget, Taste, FoodType priority.

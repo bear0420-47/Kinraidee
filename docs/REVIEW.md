@@ -31,6 +31,33 @@ Human reviewer: Pending pull-request review
 Decision: Pending
 Date: TBD
 
+## Issue #44 — Stateless meal recommendation endpoint
+
+### Status
+
+Automated two-axis review complete on 2026-10-06. No unresolved findings remain. Human pull-request approval remains pending.
+
+### Standards review
+
+No documented-standard violations or unresolved code-smell findings remain. The module follows the existing controller/service/repository structure, validates the public boundary with strict Zod schemas, performs no writes or request-data logging, and keeps response fields minimized. The initial Middle Man judgement call was resolved by removing `countRelaxed` and calling the repository directly. Verification evidence now exactly describes the retained fixture and reproducible command.
+
+### Specification review
+
+No findings remain. The endpoint implements the Issue #44 filters, exclusions, Restaurant-first diversity, replacement behavior, minimized response, and Zone → Budget → Taste → FoodType relaxation order. The retained real PostgreSQL and HTTP harness covers all price boundaries, soft-deleted MenuItems and Restaurants, multi-Taste matching, exclusions, exhaustion, redaction, master-data validation, and diversity. It reports the local first request separately from the 30-sample warm p95. Deployed-host cold-start latency remains unmeasured until a test deployment exists and is recorded as a verification limitation.
+
+### Review scope
+
+- Diff: working tree against `HEAD`, including new Issue #44 files
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/03-implementation/engineering-guidelines.md`, `docs/03-implementation/data-model.md`, and `docs/03-implementation/module-implementation-checklist.md`
+- Specification source: GitHub issue #44 and its approved implementation note
+- Validation, authorization scope, statelessness, database filtering, soft-delete handling, diversity, replacement, no-match relaxation, response minimization, OpenAPI, reproducible integration verification, and performance evidence
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD
+
 ## Issue #29 — Initial administrator seed
 
 ### Status
