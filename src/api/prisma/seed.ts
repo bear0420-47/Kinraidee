@@ -10,6 +10,11 @@ import {
   createPasswordSchema,
   normalizedEmailSchema,
 } from '../src/config/credentials'
+import {
+  formatCatalogSeedSummary,
+  loadCatalogSeed,
+  seedCatalog,
+} from './catalog-seed'
 
 const seedEnvSchema = z.object({
   DATABASE_URL: z.string().min(1, 'DATABASE_URL is required.'),
@@ -25,11 +30,7 @@ export function parseSeedEnv(input: NodeJS.ProcessEnv) {
   return seedEnvSchema.parse(input)
 }
 
-export async function seedInitialAdmin(
-  upsertAdmin: UpsertAdmin,
-  input: NodeJS.ProcessEnv,
-  writeSummary: (message: string) => void = console.log,
-) {
+export async function createInitialAdminUpsertArgs(input: NodeJS.ProcessEnv) {
   const config = parseSeedEnv(input)
   const password = await argon2.hash(config.SEED_ADMIN_PASSWORD, {
     type: argon2.argon2id,
@@ -38,7 +39,7 @@ export async function seedInitialAdmin(
     parallelism: config.ARGON2_PARALLELISM,
   })
 
-  await upsertAdmin({
+  return {
     where: { email: config.SEED_ADMIN_EMAIL },
     create: {
       email: config.SEED_ADMIN_EMAIL,
@@ -49,7 +50,15 @@ export async function seedInitialAdmin(
       password,
       role: UserRole.ADMIN,
     },
-  })
+  } satisfies Prisma.UserUpsertArgs
+}
+
+export async function seedInitialAdmin(
+  upsertAdmin: UpsertAdmin,
+  input: NodeJS.ProcessEnv,
+  writeSummary: (message: string) => void = console.log,
+) {
+  await upsertAdmin(await createInitialAdminUpsertArgs(input))
 
   writeSummary('Seeded 1 administrator account.')
 }
@@ -61,14 +70,25 @@ export function formatSeedError(error: unknown) {
       .join('\n')
   }
 
-  return 'Administrator seed failed.'
+  return 'Database seed failed.'
 }
 
-export async function runSeed(input: NodeJS.ProcessEnv = process.env) {
+export async function runSeed(
+  input: NodeJS.ProcessEnv = process.env,
+  writeSummary: (message: string) => void = console.log,
+) {
+  const adminUpsertArgs = await createInitialAdminUpsertArgs(input)
+  const catalog = await loadCatalogSeed()
   const prisma = new PrismaClient()
 
   try {
-    await seedInitialAdmin((args) => prisma.user.upsert(args), input)
+    const counts = await prisma.$transaction(async (transaction) => {
+      await transaction.user.upsert(adminUpsertArgs)
+      return seedCatalog(transaction, catalog)
+    })
+
+    writeSummary('Seeded 1 administrator account.')
+    writeSummary(formatCatalogSeedSummary(counts))
   } finally {
     await prisma.$disconnect()
   }

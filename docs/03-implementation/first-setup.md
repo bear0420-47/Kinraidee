@@ -155,7 +155,7 @@ pnpm --filter api prisma generate --schema=prisma/schema.prisma
 
 Do not create a migration until there is a real approved database schema.
 
-## 6. Apply Migrations And Seed The Initial Administrator
+## 6. Apply Migrations And Seed Approved Starter Data
 
 Apply committed migrations, then run the environment-backed seed:
 
@@ -164,7 +164,9 @@ pnpm --filter api prisma migrate deploy
 pnpm --filter api prisma db seed
 ```
 
-The seed creates or updates exactly one administrator identified by the normalized `SEED_ADMIN_EMAIL`. Repeated runs update its Argon2id password hash and keep its role as `ADMIN` without creating duplicates. It does not create users, zones, food types, tastes, restaurants, or menu items.
+The seed creates or updates exactly one administrator identified by the normalized `SEED_ADMIN_EMAIL`, then imports the approved starter catalog from `src/api/prisma/data/catalog.seed.json`. Repeated runs update the administrator's Argon2id password hash, keep its role as `ADMIN`, and upsert the same catalog IDs without creating duplicates. Seeded menu-taste links are synchronized with the fixture, while catalog records outside the fixture and existing `deletedAt` values are preserved.
+
+The starter catalog contains 3 zones, 4 food types, 6 tastes, 3 restaurants, 9 menu items, and 22 menu-taste links. Source and authorization evidence for the supplied dataset and images is recorded in `assets/catalog/README.md`.
 
 Never commit real administrator credentials. Supply production values through the approved secret-management process only after production deployment is separately approved.
 

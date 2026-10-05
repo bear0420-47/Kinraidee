@@ -84,6 +84,20 @@ Approved — full-app build plan updated through 2026-09-28 decisions. Implement
 - Verification commands and results: `docs/verification.md`.
 - Bug, security, PDPA, and requirement review: `docs/REVIEW.md`.
 
+## Issue #30 Implementation Note
+
+```txt
+Module: approved catalog starter-data seed and organized source assets
+Requirement/backlog ID: F1, F2, F3, F8, F19; B1, B2, B3, B8, B24; OA1
+Legal requirement ID: LR1, LR7
+Design artifact: N/A — database seed only; no user-facing workflow or screen changes
+API routes: N/A
+Web pages: N/A
+Personal data: no user personal data; one approved public restaurant contact number; source images contain no identifiable people
+Authorization: seed execution is an operator-only setup action; no application route is added
+Tests: complete fixture validation before writes, references and duplicate IDs, one transaction, idempotent upserts, exact taste relations, no deletion or silent deletedAt changes, and safe created/updated/unchanged counts
+```
+
 ## Deployment Decisions
 
 - Web hosting: Cloudflare Pages.
