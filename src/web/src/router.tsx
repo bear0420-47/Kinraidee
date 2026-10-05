@@ -1,6 +1,7 @@
 import { createBrowserRouter, Navigate, type RouteObject } from 'react-router'
 
 import { App } from '@/App'
+import { AdminArea } from '@/components/AdminArea'
 import { RedirectIfAuthenticated } from '@/components/RedirectIfAuthenticated'
 import { RequireAuth } from '@/components/RequireAuth'
 import { AccountPage } from '@/pages/account/AccountPage'
@@ -39,7 +40,11 @@ export const routes: RouteObject[] = [
       },
       {
         path: 'admin',
-        element: <RequireAuth role="ADMIN" />,
+        element: (
+          <AdminArea>
+            <RequireAuth role="ADMIN" />
+          </AdminArea>
+        ),
         children: [
           { index: true, element: <AdminPage /> },
           { path: 'zones', element: <ZonesPage /> },

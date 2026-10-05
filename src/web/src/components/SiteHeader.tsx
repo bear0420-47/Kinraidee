@@ -23,7 +23,7 @@ export function SiteHeader() {
       <div className="mx-auto flex max-w-shell items-center justify-between gap-4 px-4 py-3">
         <Link
           to="/"
-          className="rounded-md font-display text-card-title leading-none"
+          className="rounded-md font-brand text-card-title leading-none"
         >
           Kinraidee
         </Link>
