@@ -155,6 +155,7 @@ describe('upload routes', () => {
     const served = await request(app).get(`/uploads/${key}`)
     expect(served.status).toBe(200)
     expect(served.headers['content-type']).toMatch(/^image\/jpeg/)
+    expect(served.headers['cross-origin-resource-policy']).toBe('cross-origin')
     expect(served.body).toEqual(jpeg)
   })
 

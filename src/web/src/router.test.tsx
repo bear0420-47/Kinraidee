@@ -187,3 +187,30 @@ describe('logout', () => {
     expect(currentPath(router)).toBe('/account')
   })
 })
+
+describe('admin font area', () => {
+  it('marks the document as the admin area only while an admin route is shown', async () => {
+    fakeAuthApi({ currentUser: testAdmin })
+    const { router } = renderApp('/')
+
+    await screen.findByRole('link', { name: 'จัดการระบบ' })
+    expect(document.documentElement.dataset.area).toBeUndefined()
+
+    await router.navigate('/admin')
+    await screen.findByRole('heading', { name: 'จัดการระบบ' })
+    expect(document.documentElement.dataset.area).toBe('admin')
+
+    await router.navigate('/')
+    await waitFor(() =>
+      expect(document.documentElement.dataset.area).toBeUndefined(),
+    )
+  })
+
+  it('does not mark the admin area for a USER redirected away from it', async () => {
+    fakeAuthApi({ currentUser: testUser })
+    renderApp('/admin')
+
+    await screen.findByRole('heading', { name: 'บัญชีของฉัน' })
+    expect(document.documentElement.dataset.area).toBeUndefined()
+  })
+})

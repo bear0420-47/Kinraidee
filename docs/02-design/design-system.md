@@ -48,8 +48,8 @@ Raw colours are not used directly in implementation files. Add a token first whe
 
 | Token | Value | Role |
 |---|---|---|
-| `--font-body` | `Nunito, ui-sans-serif, system-ui, sans-serif` | Body, controls, cards |
-| `--font-display` | `"Delius Swash Caps", cursive` | Main headings, decorative labels, selected meal names |
+| `--font-body` | `Nunito, "Noto Sans Thai", ui-sans-serif, system-ui, sans-serif` | Body, buttons, forms, cards |
+| `--font-display` | `"Delius Swash Caps", Mali, cursive` | Main headings and decorative labels in the Doodle style; the Kinraidee wordmark always uses it |
 | `--text-hero` | `clamp(48px, 6.2vw, 74px)` | Desktop hero heading |
 | `--text-hero-mobile` | `clamp(42px, 12.5vw, 49px)` | Mobile hero heading |
 | `--text-section` | `32px` | Section heading |
@@ -65,6 +65,9 @@ Rules:
 - Display headings use tight line-height around `0.98–1.05`.
 - Eyebrows use uppercase, heavy weight, and wide letter spacing.
 - Do not replace visible text with decorative font if readability suffers on mobile.
+- Nunito and Delius Swash Caps have no Thai glyphs, so Thai text falls back to Noto Sans Thai (body) and Mali (headings).
+- Admin screens (`/admin/*`, including their dialogs) use the body font for headings as well as record names, for readability. The brand wordmark keeps the display font.
+- Fonts are self-hosted with the application bundle; no third-party font service is requested.
 
 ### Spacing
 

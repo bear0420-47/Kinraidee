@@ -10,6 +10,8 @@ import {
   type RestaurantWithZone,
 } from './restaurants.dto'
 
+const localKey = '123e4567-e89b-42d3-a456-426614174000.webp'
+
 const validBody = {
   zoneId: ' zone_1 ',
   name: { th: ' ร้านครัวไทย ', en: ' Thai Kitchen ' },
@@ -44,7 +46,7 @@ const restaurant: RestaurantWithZone = {
 }
 
 describe('Restaurant DTOs', () => {
-  it('trims create fields and always stores external images without imageKey', () => {
+  it('trims create fields and stores external images without imageKey', () => {
     const input = parseCreateRestaurant(validBody)
 
     expect(toRestaurantCreateData(input)).toEqual({
@@ -76,11 +78,41 @@ describe('Restaurant DTOs', () => {
     ['invalid URL', { ...validBody, imageUrl: 'not-a-url' }],
     ['non-HTTP URL', { ...validBody, imageUrl: 'javascript:alert(1)' }],
     ['empty zone', { ...validBody, zoneId: ' ' }],
-    ['unknown field', { ...validBody, imageKey: 'local.jpg' }],
+    ['unknown field', { ...validBody, rating: 5 }],
+    [
+      'local URL without its key',
+      { ...validBody, imageUrl: `/uploads/${localKey}` },
+    ],
+    [
+      'key with a different URL',
+      { ...validBody, imageKey: localKey, imageUrl: '/uploads/other.webp' },
+    ],
+    ['non-generated key', { ...validBody, imageKey: 'local.jpg' }],
   ])('rejects %s', (_name, input) => {
     expect(() => parseCreateRestaurant(input)).toThrowError(
       expect.objectContaining({ status: 400, code: 'VALIDATION_ERROR' }),
     )
+  })
+
+  it('stores a local upload key with its matching URL', () => {
+    const input = parseCreateRestaurant({
+      ...validBody,
+      imageKey: localKey,
+      imageUrl: `/uploads/${localKey}`,
+    })
+
+    expect(toRestaurantCreateData(input)).toMatchObject({
+      imageKey: localKey,
+      imageUrl: `/uploads/${localKey}`,
+    })
+    expect(
+      toRestaurantUpdateData(
+        parseUpdateRestaurant({
+          imageKey: localKey,
+          imageUrl: `/uploads/${localKey}`,
+        }),
+      ),
+    ).toEqual({ imageKey: localKey, imageUrl: `/uploads/${localKey}` })
   })
 
   it('requires at least one update field and clears imageKey with imageUrl', () => {

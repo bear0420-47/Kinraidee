@@ -1,8 +1,30 @@
+/* Self-hosted fonts (no third-party requests). Nunito and Delius Swash Caps have no Thai
+   glyphs, so Noto Sans Thai and Mali cover Thai text. */
+@import '@fontsource-variable/nunito';
+@import '@fontsource-variable/noto-sans-thai';
+@import '@fontsource/delius-swash-caps';
+@import '@fontsource/mali';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  /* The only place font stacks are defined; Tailwind's font-body, font-display, and
+     font-brand read these variables. */
+  :root {
+    --font-body:
+      'Nunito Variable', 'Noto Sans Thai Variable', ui-sans-serif, system-ui,
+      sans-serif;
+    --font-brand: 'Delius Swash Caps', 'Mali', cursive;
+    --font-display: var(--font-brand);
+  }
+
+  /* Admin screens use the body font for headings too, for readability. */
+  :root[data-area='admin'] {
+    --font-display: var(--font-body);
+  }
+
   body {
     @apply bg-canvas font-body text-body leading-relaxed text-paper;
   }
