@@ -4,6 +4,7 @@ import { useEffect, useState, type Ref } from 'react'
 import { Button } from '@/components/Button'
 import { FormAlert } from '@/components/FormAlert'
 import { useRequestRecommendations } from '@/hooks/meal/useRecommendations'
+import { prefersReducedMotion } from '@/lib/motion'
 import {
   replacementRequest,
   type RecommendationConditions,
@@ -59,7 +60,14 @@ export function ShuffleCardGrid({
 
   useEffect(() => {
     if (focusSlot === null) return
-    document.getElementById(focusTargetId(focusSlot))?.focus()
+    const target = document.getElementById(focusTargetId(focusSlot))
+    // Bring the whole card into view, not just its heading, so its actions are visible
+    // without scrolling. A card taller than the screen is aligned to its top.
+    target?.focus({ preventScroll: true })
+    target?.closest('li')?.scrollIntoView({
+      block: 'nearest',
+      behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+    })
     setFocusSlot(null)
   }, [focusSlot, shortlist])
 

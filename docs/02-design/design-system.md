@@ -164,7 +164,7 @@ Use slight asymmetric radii for doodle surfaces when practical, e.g. `6px 12px 5
 - Soft-deleted menu items may appear only in account history/favorites with an unavailable status, never in public recommendation results.
 
 - In the React flow, a card has four visible states, each stated in text and not by colour or motion alone: face-down (`การ์ดใบที่ {n}` with `ยังไม่เปิด`), revealed (menu details and actions), finding a replacement (`กำลังหาเมนูใหม่…`), and no more options (`ไม่มีตัวเลือกเพิ่มแล้ว`). The reveal animation runs only under `prefers-reduced-motion: no-preference`.
-- A revealed card's photo spans the card top at a `4:3` ratio, cropped to fill (`object-cover`). A card without a photo, or whose photo cannot load, shows a same-size panel with the food-type icon and `ไม่มีรูปเมนู` / `โหลดรูปไม่ได้`, so every revealed card lines up.
+- A revealed card's photo is a `160px` strip across the card top, cropped to fill (`object-cover`), and the price sits beside the menu name, so a revealed card fits on a laptop screen. Revealing, replacing, or restoring a card scrolls the whole card into view (smoothly, or instantly under reduced motion) so its actions are visible. A card without a photo, or whose photo cannot load, shows a same-size panel with the food-type icon and `ไม่มีรูปเมนู` / `โหลดรูปไม่ได้`, so every revealed card lines up.
 
 ### Dialogs And Overlays
 
@@ -173,7 +173,7 @@ Use slight asymmetric radii for doodle surfaces when practical, e.g. `6px 12px 5
 - Non-dialog page content must be inert while a modal dialog is open.
 - Selected-menu confirmation shows menu name, restaurant, price, zone, image, and rationale. It never shows wait time.
 - Confirmation uses playful Thai actions. Stage 1 provides `เอาเมนูนี้แหละ` as the primary action and `ขอคิดอีกที` as the secondary action. The success state provides only `กลับหน้าหลัก`.
-- In the React flow both stages share one dialog. Stage 1 (`เลือกเมนูนี้ใช่ไหม?`) shows the same 4:3 photo or fallback panel as the card, framed with the default radius. The success stage (`ได้มื้อนี้แล้ว!`) shows a Phosphor `Confetti` icon and the message, announced in a status region, and moves focus to `กลับหน้าหลัก`. Escape closes stage 1 like `ขอคิดอีกที`, and on the success stage acts as `กลับหน้าหลัก`.
+- In the React flow both stages share one dialog. Stage 1 (`เลือกเมนูนี้ใช่ไหม?`) shows the photo, or the card's fallback panel, at a full `4:3` ratio, framed with the default radius. The success stage (`ได้มื้อนี้แล้ว!`) shows a Phosphor `Confetti` icon and the message, announced in a status region, and moves focus to `กลับหน้าหลัก`. Escape closes stage 1 like `ขอคิดอีกที`, and on the success stage acts as `กลับหน้าหลัก`.
 
 ### Admin Tables And Bulk Selection
 

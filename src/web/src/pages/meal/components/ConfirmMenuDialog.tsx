@@ -46,7 +46,7 @@ export function ConfirmMenuDialog({
         <RecommendationSuccess item={item} onFinish={onFinish} />
       ) : (
         <>
-          <MenuPhoto item={item} className="rounded-md border-2" />
+          <MenuPhoto item={item} className="aspect-[4/3] rounded-md border-2" />
           <div className="flex flex-col gap-1">
             <p className="font-display text-card-title leading-tight">
               {item.name.th}

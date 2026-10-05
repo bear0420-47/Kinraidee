@@ -104,22 +104,27 @@ function RevealedCard({
       aria-labelledby={focusTargetId}
       className={`${cardClassName} bg-surface motion-safe:animate-card-reveal`}
     >
-      {/* The photo spans the top of the card, so every revealed card lines up. */}
+      {/* A short strip across the card top, so a revealed card fits on screen. */}
       <MenuPhoto
         item={item}
-        className="-mx-4 -mt-4 rounded-t-[10px] border-b-2"
+        className="-mx-4 -mt-4 h-40 rounded-t-[10px] border-b-2"
       />
       <div className="flex flex-col gap-1">
         <p className="text-small text-muted">
           การ์ดใบที่ {position} · เปิดแล้ว
         </p>
-        <h3
-          id={focusTargetId}
-          tabIndex={-1}
-          className="font-display text-card-title leading-tight"
-        >
-          {item.name.th}
-        </h3>
+        <div className="flex items-start justify-between gap-3">
+          <h3
+            id={focusTargetId}
+            tabIndex={-1}
+            className="font-display text-card-title leading-tight"
+          >
+            {item.name.th}
+          </h3>
+          <p className="shrink-0 text-card-title font-extrabold">
+            {formatPrice(item.price)}
+          </p>
+        </div>
         <p lang="en" className="text-small text-muted">
           {item.name.en}
         </p>
@@ -144,10 +149,6 @@ function RevealedCard({
           {item.foodType.name.th}
         </li>
       </ul>
-
-      <p className="text-card-title font-extrabold">
-        {formatPrice(item.price)}
-      </p>
 
       {item.tastes.length > 0 ? (
         <ul aria-label="รสชาติ" className="flex flex-wrap gap-2">

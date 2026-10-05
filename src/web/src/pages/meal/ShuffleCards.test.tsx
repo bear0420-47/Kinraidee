@@ -5,7 +5,7 @@ import {
   waitFor,
   within,
 } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import {
   RECOMMENDATION_STORAGE_KEY,
@@ -145,6 +145,34 @@ describe('Revealing', () => {
       screen.getByRole('button', { name: 'เปิดการ์ดใบที่ 2' }),
     ).toBeTruthy()
     expect(api.recommendationBodies()).toHaveLength(1)
+  })
+
+  it('scrolls the whole revealed card into view, instantly under reduced motion', async () => {
+    fakeShuffleApi({ results: [{ items: [krapao, noodles] }] })
+    const { user } = renderApp('/meal')
+    await shuffleCards(user)
+    const scroll = vi.mocked(Element.prototype.scrollIntoView)
+    scroll.mockClear()
+
+    await revealCard(user, 1)
+    expect(scroll.mock.contexts).toEqual([cards()[0]])
+    expect(scroll).toHaveBeenLastCalledWith({
+      block: 'nearest',
+      behavior: 'smooth',
+    })
+    expect(document.activeElement).toBe(
+      screen.getByRole('heading', { name: 'ผัดกะเพรา' }),
+    )
+
+    vi.mocked(window.matchMedia).mockReturnValueOnce({
+      matches: true,
+    } as MediaQueryList)
+    await revealCard(user, 2)
+    expect(scroll.mock.contexts.at(-1)).toBe(cards()[1])
+    expect(scroll).toHaveBeenLastCalledWith({
+      block: 'nearest',
+      behavior: 'auto',
+    })
   })
 
   it('reveals every card with เปิดทั้งหมด', async () => {
