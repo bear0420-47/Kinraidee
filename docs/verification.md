@@ -535,6 +535,39 @@ Run against the real API and database at desktop and 375px widths:
 
 The repository provides the retention command but no production scheduler. Production deployment remains blocked until an approved deployment environment configures and verifies a recurring job that runs `pnpm --filter api audit-logs:prune`. The application audit log is not a Computer Crime Act traffic log and does not satisfy any future LR10 traffic-log duty.
 
+## Issue #30 — Approved catalog starter-data seed
+
+### Scope
+
+- Verification date: 2026-10-05 (ICT, `UTC+07:00`)
+- Environment: local macOS workspace, Node.js 26.4.0, pnpm 12.4.2, PostgreSQL 17
+- Database: isolated local database `kinraidee_issue30_verify` with the committed migration; removed after verification
+- Fixture: 3 zones, 4 food types, 6 tastes, 3 restaurants, 9 menu items, and 22 approved menu-taste links
+- Source assets: 3 restaurant logos and 9 menu images supplied and approved by the project owner, organized under `assets/catalog/`
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm --filter api exec vitest run prisma/seed.test.ts prisma/catalog-seed.test.ts` | 0 | Pass: 2 files/19 tests covering the existing administrator seed, full-fixture validation before database access, stable IDs, localized values, relation integrity, prices, sort orders, HTTP(S)-only URL validation, idempotency, exact taste-link synchronization, external image behavior, soft-delete preservation, safe summaries, and credential/PII scans. |
+| First `pnpm --filter api prisma db seed` against the isolated database | 0 | Pass: logged one administrator and `47 created, 0 updated, 0 unchanged`; database inspection found 3 Zones, 4 FoodTypes, 6 Tastes, 3 Restaurants, 9 MenuItems, 22 MenuItemTaste rows, and 1 administrator. |
+| Second identical `pnpm --filter api prisma db seed` | 0 | Pass: logged `0 created, 0 updated, 47 unchanged`; no duplicate rows were created. |
+| Seed after adding one out-of-fixture Zone, one stale taste link, and a `deletedAt` value | 0 | Pass: removed exactly 1 stale link from a fixture-managed menu item, retained 22 approved links, preserved the out-of-fixture Zone, and left the existing Restaurant `deletedAt` non-null. |
+| `NODE_OPTIONS=--no-experimental-webstorage pnpm verify` | 0 | Pass after resolving review findings: typecheck, lint, tests, and builds completed. API: 47 files/371 tests; web: 16 files/153 tests. OpenAPI generation and the web production build completed. Node 26's experimental global Web Storage was disabled so jsdom supplies the test storage implementation. |
+| `pnpm format` | 0 | Pass: API and web files matched Prettier formatting. |
+| `git diff --check` | 0 | Pass. |
+| `node tests/wireframe-requirements.test.cjs` | 1 | Existing design-prototype gap outside issue #30: 19 passed and 5 failed for missing Profile/Admin prototype states. No prototype or wireframe test was modified. |
+| Post-merge `NODE_OPTIONS=--no-experimental-webstorage pnpm verify` after pulling `main` at `df07b81` | 0 | Pass: typecheck, lint, tests, and builds completed with the merged Restaurant management and font changes. API: 48 files/392 tests; web: 19 files/204 tests. Prisma Client was regenerated after installing the merged lockfile. |
+| Post-merge `node tests/wireframe-requirements.test.cjs` | 1 | Existing design-prototype gap outside issue #30: 20 passed and 4 failed for the untranslated header expectation and missing Admin prototype states. No wireframe test was modified. |
+
+### Safety and scope checks
+
+- The complete localized fixture is parsed by Zod before Prisma is instantiated or the transaction begins. Invalid IDs, duplicate IDs, missing localized names, invalid relations, non-positive prices, invalid image URLs, and non-integer sort orders fail before database access.
+- The administrator and catalog write in one Prisma transaction. Records are processed in dependency order and upserted by stable CUID-shaped IDs; identical records are skipped so their timestamps remain unchanged.
+- Seed-managed Restaurant and MenuItem updates never set `deletedAt`. Catalog records absent from the fixture are not deleted. Only stale `MenuItemTaste` links belonging to fixture-managed menu items are removed to synchronize approved `tasteIds`.
+- Every seeded `imageUrl` and `imageKey` is `null`. No network request, upload, R2 integration, image blob, plaintext credential, account email, GPS coordinate, or unnecessary personal data is included.
+- Seed output contains aggregate record counts only. The fixture's one phone number is the explicitly approved public restaurant contact used by the catalog schema.
+
 ## Restaurant local images (API prerequisite for #41)
 
 ### Scope

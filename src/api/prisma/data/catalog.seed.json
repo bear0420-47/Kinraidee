@@ -1,0 +1,292 @@
+{
+  "zones": [
+    {
+      "id": "c8gds70havtzwmks5lhd2caul",
+      "name": {
+        "th": "ตรงข้ามมหาวิทยาลัย",
+        "en": "Opposite Mae Fah Luang University"
+      },
+      "description": {
+        "th": "พื้นที่ร้านอาหารฝั่งตรงข้ามมหาวิทยาลัยแม่ฟ้าหลวง",
+        "en": "Restaurant area across from Mae Fah Luang University."
+      },
+      "sortOrder": 1
+    },
+    {
+      "id": "cep3gqyzjntb4qr8w3mcnp5w6",
+      "name": { "th": "ตลาดฟ้าไทย", "en": "Fa Thai Market" },
+      "description": {
+        "th": "พื้นที่ร้านอาหารบริเวณตลาดฟ้าไทย",
+        "en": "Restaurant area around Fa Thai Market."
+      },
+      "sortOrder": 2
+    },
+    {
+      "id": "cb1z0wkjoc2hbh34yrslm7unn",
+      "name": { "th": "คชพล", "en": "Kotchapol" },
+      "description": {
+        "th": "พื้นที่ร้านอาหารบริเวณโครงการคชพลแลนด์",
+        "en": "Restaurant area around the Kotchapol Land project."
+      },
+      "sortOrder": 3
+    }
+  ],
+  "foodTypes": [
+    {
+      "id": "cbdllxmb0sv247maiq26k5r9k",
+      "name": { "th": "เมนูข้าว", "en": "Rice Dishes" },
+      "icon": "rice",
+      "sortOrder": 1
+    },
+    {
+      "id": "c2x3kwmcic11b8yrrmwpl7mex",
+      "name": { "th": "พาสต้า", "en": "Pasta" },
+      "icon": "noodles",
+      "sortOrder": 2
+    },
+    {
+      "id": "cebaq98hdcaj27drszj1uzz4r",
+      "name": {
+        "th": "เบอร์เกอร์ แซนด์วิช และแรป",
+        "en": "Burgers, Sandwiches & Wraps"
+      },
+      "icon": "sandwich",
+      "sortOrder": 3
+    },
+    {
+      "id": "c2786ovitbd3kl0ongp9uax8o",
+      "name": {
+        "th": "อาหารเรียกน้ำย่อยและของทานเล่น",
+        "en": "Appetizers & Snacks"
+      },
+      "icon": "sparkles",
+      "sortOrder": 4
+    }
+  ],
+  "tastes": [
+    {
+      "id": "c12yme2yu2wne82ugvfce7wfw",
+      "name": { "th": "เผ็ด", "en": "Spicy" },
+      "icon": "flame",
+      "sortOrder": 1
+    },
+    {
+      "id": "c1spiyrw91ifmryner9y1bvb4",
+      "name": { "th": "กลมกล่อม", "en": "Savory" },
+      "icon": "bowl",
+      "sortOrder": 2
+    },
+    {
+      "id": "cahxbgiqa0hxlfer1dw6itmz1",
+      "name": { "th": "ครีมมี่และเข้มข้น", "en": "Creamy & Rich" },
+      "icon": "heart",
+      "sortOrder": 3
+    },
+    {
+      "id": "c3lg0r5rrv15qvznx1tilwoy4",
+      "name": { "th": "สดชื่นและเบา", "en": "Fresh & Light" },
+      "icon": "leaf",
+      "sortOrder": 4
+    },
+    {
+      "id": "cayiejo3s8ogwe5uqz1pxg29o",
+      "name": {
+        "th": "หอมเครื่องเทศและกลิ่นย่าง",
+        "en": "Spiced & Smoky"
+      },
+      "icon": "sparkles",
+      "sortOrder": 5
+    },
+    {
+      "id": "c6c7oshlpa0xsaq9jiz3vnjdq",
+      "name": { "th": "กรอบ", "en": "Crispy" },
+      "icon": "sparkles",
+      "sortOrder": 6
+    }
+  ],
+  "restaurants": [
+    {
+      "id": "ccm6hoivi9d3427wrp9nptfez",
+      "zoneId": "c8gds70havtzwmks5lhd2caul",
+      "name": { "th": "แฟมิลี่ เคบับ ฮาลาล", "en": "Family Kebab Halal" },
+      "description": {
+        "th": "ร้านเคบับฮาลาลใกล้มหาวิทยาลัยแม่ฟ้าหลวง เสิร์ฟโดเนอร์เคบับไก่และเนื้อ รวมถึงโคฟต้าเนื้อพร้อมข้าว แป้งแผ่น และสลัด",
+        "en": "Halal kebab shop near Mae Fah Luang University, serving chicken and beef doner kebabs and beef kofta with rice, flatbread, and salad."
+      },
+      "phone": null,
+      "imageUrl": null
+    },
+    {
+      "id": "c6suhn091scra0pn8ec6eytcb",
+      "zoneId": "cep3gqyzjntb4qr8w3mcnp5w6",
+      "name": { "th": "ไอวิชพาสต้า", "en": "I Wish Pasta" },
+      "description": {
+        "th": "ร้านอาหารสไตล์อิตาเลียนคอมฟอร์ตฟู้ด เช่น พาสต้าและแซนด์วิชแบบเปิดหน้า",
+        "en": "Italian-style comfort food such as pasta and open-faced sandwiches."
+      },
+      "phone": "0633249622",
+      "imageUrl": null
+    },
+    {
+      "id": "c3hy6sew7jxx48rqguikvx40a",
+      "zoneId": "cb1z0wkjoc2hbh34yrslm7unn",
+      "name": {
+        "th": "ยันยัน เคอร์รีแอนด์เบอร์เกอร์",
+        "en": "YanYan Curry & Burger"
+      },
+      "description": {
+        "th": "ร้านเบอร์เกอร์และแกงกะหรี่สไตล์ญี่ปุ่นในโครงการคชพลแลนด์",
+        "en": "Burger and Japanese-style curry shop in the Kotchapol Land project."
+      },
+      "phone": null,
+      "imageUrl": null
+    }
+  ],
+  "menuItems": [
+    {
+      "id": "ccfkkwlq5fa6jl7bmet1qmdw9",
+      "restaurantId": "ccm6hoivi9d3427wrp9nptfez",
+      "foodTypeId": "cebaq98hdcaj27drszj1uzz4r",
+      "name": {
+        "th": "โดเนอร์เคบับแซ่บไก่",
+        "en": "Spicy Chicken Doner Kebab"
+      },
+      "description": {
+        "th": "ไก่หมักเครื่องเทศย่างบนเตาหมุน ฝานเป็นแผ่นบางแล้วห่อด้วยแป้ง พร้อมผักกาด มะเขือเทศ และซอส",
+        "en": "Spiced marinated chicken shaved from the rotisserie and wrapped in flatbread with lettuce, tomato, and sauce."
+      },
+      "price": 99,
+      "imageUrl": null,
+      "tasteIds": [
+        "c12yme2yu2wne82ugvfce7wfw",
+        "c1spiyrw91ifmryner9y1bvb4",
+        "cahxbgiqa0hxlfer1dw6itmz1",
+        "cayiejo3s8ogwe5uqz1pxg29o"
+      ]
+    },
+    {
+      "id": "cud1a0qfdptb8de6u1oo02g2w",
+      "restaurantId": "ccm6hoivi9d3427wrp9nptfez",
+      "foodTypeId": "cbdllxmb0sv247maiq26k5r9k",
+      "name": { "th": "โคฟต้าเนื้อพร้อมข้าว", "en": "Beef Kofta with Rice" },
+      "description": {
+        "th": "เนื้อบดปรุงรสปั้นเป็นก้อนแล้วย่าง ราดซอสมะเขือเทศ เสิร์ฟบนแป้งพร้อมข้าวและสลัดผัก",
+        "en": "Seasoned ground beef patties grilled and served in tomato sauce on flatbread with rice and a side salad."
+      },
+      "price": 179,
+      "imageUrl": null,
+      "tasteIds": ["c1spiyrw91ifmryner9y1bvb4", "cayiejo3s8ogwe5uqz1pxg29o"]
+    },
+    {
+      "id": "cdpf6bc5wjiegwdzit0433kdw",
+      "restaurantId": "ccm6hoivi9d3427wrp9nptfez",
+      "foodTypeId": "c2786ovitbd3kl0ongp9uax8o",
+      "name": { "th": "ฮัมมุส", "en": "Hummus" },
+      "description": {
+        "th": "ดิปถั่วลูกไก่บดละเอียด ปรุงรสด้วยกระเทียม น้ำมะนาว และทาฮีนี ราดน้ำมันมะกอกและโรยพริกปาปริกา",
+        "en": "Smooth chickpea dip with garlic, lemon, and tahini, drizzled with olive oil and dusted with paprika."
+      },
+      "price": 99,
+      "imageUrl": null,
+      "tasteIds": ["c1spiyrw91ifmryner9y1bvb4", "cahxbgiqa0hxlfer1dw6itmz1"]
+    },
+    {
+      "id": "c4b9w0zitbhccx5kfaeg453zr",
+      "restaurantId": "c6suhn091scra0pn8ec6eytcb",
+      "foodTypeId": "c2x3kwmcic11b8yrrmwpl7mex",
+      "name": {
+        "th": "พาสต้าครีมทริปเปิลชีส",
+        "en": "Triple Cheese Cream Pasta"
+      },
+      "description": {
+        "th": "พาสต้าในซอสครีมผสมพาร์เมซาน มอสซาเรลลา และเชดดาร์ เลือกเส้นและโปรตีนได้ เสิร์ฟพร้อมขนมปัง",
+        "en": "Pasta in a cream sauce with Parmesan, mozzarella, and cheddar, with a choice of pasta and protein, served with bread."
+      },
+      "price": 179,
+      "imageUrl": null,
+      "tasteIds": ["c1spiyrw91ifmryner9y1bvb4", "cahxbgiqa0hxlfer1dw6itmz1"]
+    },
+    {
+      "id": "c5srfcwccmfzy2vqy6cucodol",
+      "restaurantId": "c6suhn091scra0pn8ec6eytcb",
+      "foodTypeId": "cbdllxmb0sv247maiq26k5r9k",
+      "name": { "th": "แซลมอนโปเก้โบวล์", "en": "Salmon Poke Bowl" },
+      "description": {
+        "th": "แซลมอนหั่นเต๋าคลุกซอส เสิร์ฟบนข้าวซูชิญี่ปุ่น พร้อมอะโวคาโด มะเขือเทศราชินี ข้าวโพด สาหร่ายวากาเมะ และแตงกวา",
+        "en": "Diced salmon tossed in sauce and served over Japanese sushi rice with avocado, cherry tomato, sweetcorn, wakame, and cucumber."
+      },
+      "price": 259,
+      "imageUrl": null,
+      "tasteIds": ["c1spiyrw91ifmryner9y1bvb4", "c3lg0r5rrv15qvznx1tilwoy4"]
+    },
+    {
+      "id": "cf1gg5bntukbmedplhc53sr8t",
+      "restaurantId": "c6suhn091scra0pn8ec6eytcb",
+      "foodTypeId": "cebaq98hdcaj27drszj1uzz4r",
+      "name": { "th": "บรูสเกตตากัวคาโมเล", "en": "Guacamole Bruschetta" },
+      "description": {
+        "th": "ขนมปังปิ้งแบบเปิดหน้า เสิร์ฟพร้อมกัวคาโมเลสไตล์เม็กซิกันและมะเขือเทศราชินี โดยแยกขนมปังกับกัวคาโมเลให้ทาเอง",
+        "en": "Open-faced toast served with Mexican-style guacamole and cherry tomato, with the bread and guacamole served separately."
+      },
+      "price": 99,
+      "imageUrl": null,
+      "tasteIds": [
+        "c1spiyrw91ifmryner9y1bvb4",
+        "cahxbgiqa0hxlfer1dw6itmz1",
+        "c3lg0r5rrv15qvznx1tilwoy4"
+      ]
+    },
+    {
+      "id": "c6pealq64mpkfz8dnf6uwwg9p",
+      "restaurantId": "c3hy6sew7jxx48rqguikvx40a",
+      "foodTypeId": "cebaq98hdcaj27drszj1uzz4r",
+      "name": {
+        "th": "ชุดเบอร์เกอร์เนื้อ ชีส และเฟรนช์ฟรายส์",
+        "en": "Beef Burger Set with Cheese and Fries"
+      },
+      "description": {
+        "th": "เบอร์เกอร์เนื้อฉ่ำกับชีสละลาย เสิร์ฟพร้อมเฟรนช์ฟรายส์กรอบ",
+        "en": "Juicy beef burger with melted cheese, served with crispy French fries."
+      },
+      "price": 119,
+      "imageUrl": null,
+      "tasteIds": ["c1spiyrw91ifmryner9y1bvb4", "cahxbgiqa0hxlfer1dw6itmz1"]
+    },
+    {
+      "id": "c2uvlwbmvmhe91itses2hxumr",
+      "restaurantId": "c3hy6sew7jxx48rqguikvx40a",
+      "foodTypeId": "c2786ovitbd3kl0ongp9uax8o",
+      "name": {
+        "th": "โฮมเมดเฟรนช์ฟรายส์ ไซซ์ L",
+        "en": "Homemade French Fries, Large"
+      },
+      "description": {
+        "th": "เฟรนช์ฟรายส์โฮมเมดกรอบนอกนุ่มใน",
+        "en": "Homemade French fries that are crispy outside and soft inside."
+      },
+      "price": 89,
+      "imageUrl": null,
+      "tasteIds": ["c1spiyrw91ifmryner9y1bvb4", "c6c7oshlpa0xsaq9jiz3vnjdq"]
+    },
+    {
+      "id": "c8q9z9whi7tglkc0ho4dqwabk",
+      "restaurantId": "c3hy6sew7jxx48rqguikvx40a",
+      "foodTypeId": "cbdllxmb0sv247maiq26k5r9k",
+      "name": {
+        "th": "ข้าวแกงกะหรี่แฮมเบิร์กหมูชีส",
+        "en": "Japanese Curry Rice with Pork and Cheese Hamburg"
+      },
+      "description": {
+        "th": "แฮมเบิร์กหมูนุ่มราดซอสแกงกะหรี่และชีสเข้มข้น เสิร์ฟพร้อมข้าว",
+        "en": "Tender pork hamburg steak with curry sauce and rich melted cheese, served with rice."
+      },
+      "price": 89,
+      "imageUrl": null,
+      "tasteIds": [
+        "c12yme2yu2wne82ugvfce7wfw",
+        "c1spiyrw91ifmryner9y1bvb4",
+        "cahxbgiqa0hxlfer1dw6itmz1"
+      ]
+    }
+  ]
+}
