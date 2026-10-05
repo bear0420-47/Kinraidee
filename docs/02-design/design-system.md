@@ -130,7 +130,8 @@ Use slight asymmetric radii for doodle surfaces when practical, e.g. `6px 12px 5
 - Primary buttons use peach/yellow fills, dark ink border, and offset shadow.
 - Secondary buttons use white/paper fill with ink border.
 - Ghost buttons keep a border and no heavy fill.
-- Minimum target height is `44px`; mobile controls prefer `48–52px`.
+- Minimum target height is `44px`; mobile controls prefer `48–52px`. Exception: compact row actions in dense admin tables (currently the MenuItem table) are `40px`, still well above the WCAG 2.2 `24px` minimum.
+- Soft buttons use a faint yellow fill (`yellow` at 25%, a soft orange on white) for a positive secondary action such as `กู้คืน`.
 - Pressed/selected state may rotate or offset slightly, but must not impair readability.
 
 ### Choice Chips
@@ -170,9 +171,9 @@ Use slight asymmetric radii for doodle surfaces when practical, e.g. `6px 12px 5
 
 - Admin tables share one cell style; the actions column sits at the right edge with its header centred over the buttons.
 - Admin pages use the `1120px` shell. A data-dense table page, such as MenuItems, may use the `1240px` extra-wide card so the table fits without horizontal scrolling on desktop.
-- When a table shows images, the image is the first column at `80px` square; a record without an image shows a dashed `ไม่มีรูป` placeholder of the same size so rows stay aligned.
+- When a table shows images, the image is the first content column at `80px` square; a record without an image shows a dashed `ไม่มีรูป` placeholder of the same size so rows stay aligned.
 - A table image is a button labelled `ดูรูปเต็ม {name}` that opens the whole, uncropped image in a wide modal (a lightbox) with a `ปิด` button. It follows the dialog rules: Escape closes it and focus returns to the image.
-- A selectable table puts a labelled checkbox first in each row and a labelled "select all on this page" checkbox in the header.
+- A selectable table puts a labelled checkbox first in each row (before the image) and a labelled "select all on this page" checkbox in the header.
 - The bulk-action bar sits above the table. It always shows the selected count in a live region and the per-action limit, and each bulk button's accessible name includes the count.
 - A blocked bulk action stays visible but disabled, with the reason as text next to it.
 - Multi-value choices in admin forms, such as MenuItem tastes, use a labelled checkbox group with the icon beside the name.

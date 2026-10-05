@@ -35,7 +35,15 @@ type MenuItemTableProps = {
   onRestore: (menuItem: MenuItem) => void
 }
 
-const headers = ['เมนู', 'ร้านอาหาร', 'ประเภทอาหาร', 'รสชาติ']
+// Fixed-content columns shrink to fit (`w-px`) and tastes wrap within a set width, so the
+// spare width goes to the menu and Restaurant names, which vary most in length.
+const columns = [
+  { label: 'รูป', className: 'w-px' },
+  { label: 'เมนู', className: 'min-w-44' },
+  { label: 'ร้านอาหาร', className: 'min-w-32' },
+  { label: 'ประเภทอาหาร', className: 'w-px whitespace-nowrap' },
+  { label: 'รสชาติ', className: 'w-44' },
+]
 
 const checkboxClassName = 'h-5 w-5 accent-paper'
 
@@ -120,27 +128,28 @@ export function MenuItemTable({
         <thead className="bg-peach-deep text-small">
           <tr>
             <th scope="col" className={`${headerCellClassName} w-px`}>
-              รูป
-            </th>
-            <th scope="col" className={`${headerCellClassName} w-px`}>
               <SelectAllCheckbox
                 menuItems={menuItems}
                 selectedIds={selectedIds}
                 onToggleAll={onToggleAll}
               />
             </th>
-            {headers.map((header) => (
-              <th key={header} scope="col" className={headerCellClassName}>
-                {header}
+            {columns.map(({ label, className }) => (
+              <th
+                key={label}
+                scope="col"
+                className={`${headerCellClassName} ${className}`}
+              >
+                {label}
               </th>
             ))}
             <th
               scope="col"
-              className={`${headerCellClassName} ${numberColumnClassName}`}
+              className={`${headerCellClassName} ${numberColumnClassName} w-px`}
             >
               ราคา
             </th>
-            <th scope="col" className={headerCellClassName}>
+            <th scope="col" className={`${headerCellClassName} w-px`}>
               สถานะ
             </th>
             <th
@@ -164,6 +173,17 @@ export function MenuItemTable({
                 className={deleted || restaurantDeleted ? 'bg-canvas-soft' : ''}
               >
                 <td className={bodyCellClassName}>
+                  <input
+                    type="checkbox"
+                    aria-label={`เลือกเมนู ${menuItem.name.th}`}
+                    className={checkboxClassName}
+                    checked={selected}
+                    // At the bulk limit, only already-selected rows can change.
+                    disabled={!selected && selectionFull}
+                    onChange={() => onToggle(menuItem)}
+                  />
+                </td>
+                <td className={bodyCellClassName}>
                   {menuItem.imageUrl ? (
                     <ImageLightbox
                       url={menuItem.imageUrl}
@@ -175,18 +195,7 @@ export function MenuItemTable({
                     </span>
                   )}
                 </td>
-                <td className={bodyCellClassName}>
-                  <input
-                    type="checkbox"
-                    aria-label={`เลือกเมนู ${menuItem.name.th}`}
-                    className={checkboxClassName}
-                    checked={selected}
-                    // At the bulk limit, only already-selected rows can change.
-                    disabled={!selected && selectionFull}
-                    onChange={() => onToggle(menuItem)}
-                  />
-                </td>
-                <th scope="row" className={`${bodyCellClassName} min-w-36`}>
+                <th scope="row" className={bodyCellClassName}>
                   <span className="block font-bold">{menuItem.name.th}</span>
                   <span lang="en" className="block text-small text-muted">
                     {menuItem.name.en}
@@ -239,7 +248,8 @@ export function MenuItemTable({
                     // A deleted item must be restored before it can be edited.
                     <div className="flex justify-center">
                       <Button
-                        variant="secondary"
+                        variant="soft"
+                        size="compact"
                         aria-label={`กู้คืนเมนู ${menuItem.name.th}`}
                         onClick={() => onRestore(menuItem)}
                       >
@@ -250,6 +260,7 @@ export function MenuItemTable({
                   ) : (
                     <RowActions
                       entityLabel="เมนู"
+                      size="compact"
                       name={menuItem.name.th}
                       onEdit={() => onEdit(menuItem)}
                       onDelete={() => onDelete(menuItem)}
