@@ -4,7 +4,9 @@ import type { ReactNode } from 'react'
 import { Button } from '@/components/Button'
 
 type QueryListStateProps<Item> = {
-  query: UseQueryResult<Item[]>
+  query: Pick<UseQueryResult, 'isPending' | 'isError' | 'refetch'>
+  // The list from the query's data; separate so paged responses can pass `data.items`.
+  items: Item[] | undefined
   loadingMessage: string
   errorMessage: string
   emptyMessage: string
@@ -14,6 +16,7 @@ type QueryListStateProps<Item> = {
 // Loading, error-with-retry, and empty states around a list query.
 export function QueryListState<Item>({
   query,
+  items,
   loadingMessage,
   errorMessage,
   emptyMessage,
@@ -32,7 +35,7 @@ export function QueryListState<Item>({
     )
   }
 
-  if (query.data.length === 0) {
+  if (!items || items.length === 0) {
     return (
       <p className="rounded-sm border-2 border-line-soft p-6 text-center font-bold text-muted">
         {emptyMessage}
@@ -40,5 +43,5 @@ export function QueryListState<Item>({
     )
   }
 
-  return children(query.data)
+  return children(items)
 }

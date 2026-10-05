@@ -21,15 +21,20 @@ export const testAdmin: CurrentUser = {
 
 export type RecordedRequest = {
   method: string
+  // Pathname plus any query string, e.g. `/api/restaurants?page=2`.
   path: string
   credentials: RequestCredentials
+  // Parsed JSON, or undefined for empty and non-JSON (multipart) bodies.
   body: unknown
 }
 
 type FakeApiOptions = {
   currentUser?: CurrentUser | null
   loginAs?: CurrentUser
+  // Exact `METHOD /path` handlers, matched on the pathname only.
   responses?: Record<string, (body: unknown) => Response>
+  // Fallback for dynamic paths; return undefined to continue to the built-ins.
+  handle?: (method: string, url: URL, body: unknown) => Response | undefined
 }
 
 export function jsonResponse(status: number, body: unknown) {
@@ -54,25 +59,31 @@ export function fakeAuthApi({
   currentUser = null,
   loginAs = testUser,
   responses = {},
+  handle,
 }: FakeApiOptions = {}) {
   let sessionUser = currentUser
   const requests: RecordedRequest[] = []
 
   vi.mocked(fetch).mockImplementation(async (input) => {
     const request = input as Request
-    const path = new URL(request.url).pathname
-    const text = await request.text()
+    const url = new URL(request.url)
+    const isJson = request.headers
+      .get('content-type')
+      ?.includes('application/json')
+    const text = isJson ? await request.text() : ''
     const body: unknown = text ? JSON.parse(text) : undefined
     requests.push({
       method: request.method,
-      path,
+      path: `${url.pathname}${url.search}`,
       credentials: request.credentials,
       body,
     })
 
-    const key = `${request.method} ${path}`
+    const key = `${request.method} ${url.pathname}`
     const override = responses[key]
     if (override) return override(body)
+    const handled = handle?.(request.method, url, body)
+    if (handled) return handled
 
     switch (key) {
       case 'GET /api/auth/me':

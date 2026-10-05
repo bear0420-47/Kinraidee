@@ -469,3 +469,38 @@ No blocking findings. #41 requires saving an uploaded `imageKey`/`imageUrl` on a
 Human reviewer: Pending pull-request review
 Decision: Pending
 Date: TBD
+
+## Issue #41 — Restaurant management screen
+
+### Status
+
+Automated two-axis review complete on 2026-10-05. Human pull-request approval remains pending.
+
+### Standards review
+
+No documented-standard violations remain. The page follows the master-data structure (shell, filters, `QueryListState`, table with `RowActions`, shared dialogs) and the issue's file layout. Typed hooks own every endpoint; React Hook Form and Zod validate input; icons are Phosphor components next to text; nothing is persisted in browser storage. Shared pieces were generalized rather than copied: `ConfirmDialog`, `Pagination`, `QueryListState`, the description-pair rule, and image URL resolution. Judgement calls accepted:
+- The save/cleanup orchestration lives in `useSaveRestaurant`, not the form, so cleanup still runs after the dialog closes.
+- The test setup swaps in Node's `FormData`/`File`/`Blob`, because jsdom's cannot be sent through Node's `Request`. The swap is limited to tests and documented in `docs/plan.md`.
+- The audit-log page was not refactored onto `Pagination`, to keep this change scoped.
+
+### Specification review
+
+No blocking findings. All #41 list, filter, form, image-mode, upload-transaction, delete/restore, copy, accessibility, and required-test items are implemented. Manual browser checks ran against the real API, and they surfaced two API gaps (Restaurant upload keys and the `/uploads` resource policy) fixed in the prerequisite change. Notes:
+- Uploads start as soon as a file is picked, which the preview requires.
+- An upload made just before a full page unload can remain on disk. The page warns through `beforeunload`, and automatic orphan cleanup is out of scope for the issue.
+- When a save fails after a new upload, the form returns to the restaurant's saved image, or asks for the file again on create.
+- Search applies on submit; the Zone and deleted filters apply immediately.
+
+### Review scope
+
+- Diff: `git diff fix/39-restaurant-local-images...feat/41-restaurant-admin`
+- Commit: `feat(web): add restaurant management screen (#41)`
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/02-design/design-system.md`, `docs/03-implementation/engineering-guidelines.md`, and `docs/03-implementation/module-implementation-checklist.md`
+- Specification source: GitHub issue #41
+- Upload ordering and orphan cleanup, development-only upload gating, image URL handling, browser-storage use, admin-only access versus server-side authorization, mobile layout, and out-of-scope boundaries
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD

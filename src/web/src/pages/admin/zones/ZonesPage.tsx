@@ -75,6 +75,7 @@ export function ZonesPage() {
     >
       <QueryListState
         query={zones}
+        items={zones.data}
         loadingMessage="กำลังโหลดโซน…"
         errorMessage="โหลดรายการโซนไม่สำเร็จ กรุณาลองใหม่อีกครั้ง"
         emptyMessage="ยังไม่มีโซน"
