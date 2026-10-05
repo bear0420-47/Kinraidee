@@ -2301,7 +2301,7 @@ export interface components {
                 en: string;
             } | null;
             phone?: string | null;
-            /** Format: uri */
+            imageKey?: string | null;
             imageUrl?: string | null;
         };
         UpdateRestaurantRequest: {
@@ -2315,7 +2315,7 @@ export interface components {
                 en: string;
             } | null;
             phone?: string | null;
-            /** Format: uri */
+            imageKey?: string | null;
             imageUrl?: string | null;
         };
         RestaurantEnvelope: {
@@ -2401,7 +2401,7 @@ export interface components {
             } | null;
             price: number;
             imageKey?: string | null;
-            imageUrl?: string | unknown;
+            imageUrl?: string | null;
         };
         UpdateMenuItemRequest: {
             restaurantId?: string;
@@ -2417,7 +2417,7 @@ export interface components {
             } | null;
             price?: number;
             imageKey?: string | null;
-            imageUrl?: string | unknown;
+            imageUrl?: string | null;
         };
         BulkMenuItemsRequest: {
             ids: string[];

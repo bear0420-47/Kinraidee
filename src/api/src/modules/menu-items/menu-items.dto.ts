@@ -1,36 +1,21 @@
 import { Prisma, type MenuItem } from '@prisma/client'
 import { z } from 'zod'
 
-import { uploadFileNameSchema } from '@/modules/uploads/uploads.dto'
+import {
+  imageReferenceFields,
+  toImageReferenceCreateData,
+  toImageReferenceUpdateData,
+  validateImageReference,
+} from '@/modules/uploads/imageReference'
 import {
   localizationSchema,
   toLocalization,
   toOptionalLocalization,
 } from '@/shared/localization'
 import {
-  emptyTrimmedStringToNull,
   optionalTrimmedStringSchema,
   parseWithSchema,
 } from '@/shared/validation'
-
-const externalImageUrlSchema = z
-  .string()
-  .url()
-  .refine((value) => /^https?:\/\//i.test(value), {
-    message: 'External images must use HTTP or HTTPS.',
-  })
-
-const imageUrlSchema = z.preprocess(
-  emptyTrimmedStringToNull,
-  z
-    .union([externalImageUrlSchema, z.string().startsWith('/uploads/')])
-    .nullable(),
-)
-
-const imageKeySchema = z.preprocess(
-  emptyTrimmedStringToNull,
-  uploadFileNameSchema.nullable(),
-)
 
 const menuItemFieldsSchema = z
   .object({
@@ -43,48 +28,9 @@ const menuItemFieldsSchema = z
     name: localizationSchema,
     description: localizationSchema.nullable().optional(),
     price: z.number().int().positive(),
-    imageKey: imageKeySchema.optional(),
-    imageUrl: imageUrlSchema.optional(),
+    ...imageReferenceFields,
   })
   .strict()
-
-function validateImageReference(
-  input: {
-    imageKey?: string | null | undefined
-    imageUrl?: string | null | undefined
-  },
-  context: z.RefinementCtx,
-) {
-  const { imageKey, imageUrl } = input
-
-  if (imageKey !== undefined && imageUrl === undefined) {
-    context.addIssue({
-      code: 'custom',
-      path: ['imageUrl'],
-      message: 'imageUrl is required when imageKey is supplied.',
-    })
-    return
-  }
-
-  if (imageKey) {
-    if (imageUrl !== `/uploads/${imageKey}`) {
-      context.addIssue({
-        code: 'custom',
-        path: ['imageUrl'],
-        message: 'Local imageUrl must match imageKey.',
-      })
-    }
-    return
-  }
-
-  if (imageUrl?.startsWith('/uploads/')) {
-    context.addIssue({
-      code: 'custom',
-      path: ['imageKey'],
-      message: 'Local uploads require their generated imageKey.',
-    })
-  }
-}
 
 export const createMenuItemSchema = menuItemFieldsSchema.superRefine(
   validateImageReference,
@@ -240,8 +186,7 @@ export function toMenuItemCreateData(input: CreateMenuItemInput) {
       descriptionTh: input.description?.th ?? null,
       descriptionEn: input.description?.en ?? null,
       price: input.price,
-      imageKey: input.imageKey ?? null,
-      imageUrl: input.imageUrl ?? null,
+      ...toImageReferenceCreateData(input),
     } satisfies Required<MenuItemData>,
     tasteIds: input.tasteIds,
   }
@@ -261,14 +206,11 @@ export function toMenuItemUpdateData(input: UpdateMenuItemInput) {
     data.descriptionEn = input.description?.en ?? null
   }
   if (input.price !== undefined) data.price = input.price
-  if (input.imageUrl !== undefined) {
-    data.imageUrl = input.imageUrl
-    data.imageKey = input.imageUrl?.startsWith('/uploads/')
-      ? (input.imageKey ?? null)
-      : null
-  }
 
-  return { data, tasteIds: input.tasteIds }
+  return {
+    data: { ...data, ...toImageReferenceUpdateData(input) },
+    tasteIds: input.tasteIds,
+  }
 }
 
 export function toAdminMenuItem(

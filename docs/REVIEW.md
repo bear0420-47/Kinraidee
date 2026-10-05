@@ -441,3 +441,31 @@ All eight routes, filtering and pagination, localized response mapping, Restaura
 Human reviewer: `aboutblank0000000`
 Decision: Approved
 Date: 2026-09-30
+
+## Restaurant local images (API prerequisite for #41)
+
+### Status
+
+Automated two-axis review complete on 2026-10-05. Human pull-request approval remains pending.
+
+### Standards review
+
+No documented-standard violations remain. Instead of copying MenuItem's image validation into Restaurant, the rule moves to the uploads module, which already owns the upload key and `/uploads` URL contract. Both DTOs now spread `imageReferenceFields` and use the same refinement and column mapping. The change stays inside the DTO layer: controllers, services, repositories, and audit snapshots are untouched. Judgement call accepted: `imageUrl` is written as one refined nullable string instead of a union, so the generated OpenAPI type is `string | null` rather than `string | unknown`. Validation behavior is the same, and only the error message for an invalid URL is more general.
+
+### Specification review
+
+No blocking findings. #41 requires saving an uploaded `imageKey`/`imageUrl` on a Restaurant, which #39 explicitly scoped out. This change adds exactly that, using the data-model rule already applied to MenuItem in #42: an external URL keeps `imageKey = null`, and a local upload stores its generated key with the matching URL. The #39 behaviors its tests still check are unchanged: HTTP(S)-only external URLs, and an external URL clearing an earlier key.
+
+### Review scope
+
+- Diff: `git diff origin/main...fix/39-restaurant-local-images`
+- Commit: `fix(api): accept uploaded images on restaurants`
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/03-implementation/data-model.md`, and `docs/03-implementation/engineering-guidelines.md`
+- Specification sources: GitHub issues #39, #40, and #41
+- Image key/URL integrity, external URL scheme validation, MenuItem regression risk, and the OpenAPI contract
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD

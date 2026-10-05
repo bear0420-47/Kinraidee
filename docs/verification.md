@@ -534,3 +534,31 @@ Run against the real API and database at desktop and 375px widths:
 ### Production deployment blocker
 
 The repository provides the retention command but no production scheduler. Production deployment remains blocked until an approved deployment environment configures and verifies a recurring job that runs `pnpm --filter api audit-logs:prune`. The application audit log is not a Computer Crime Act traffic log and does not satisfy any future LR10 traffic-log duty.
+
+## Restaurant local images (API prerequisite for #41)
+
+### Scope
+
+- Verification date: 2026-10-05 (ICT, `UTC+07:00`)
+- Environment: local Windows 11 workspace, Node.js 24.12.0, pnpm 12.4.2, PostgreSQL 17 through the committed Docker Compose service
+- Database: isolated local database `kinraidee_verify` with the committed migrations and the #29 administrator seed; removed after verification. Uploads were written to a temporary directory and deleted afterwards
+- Change: Restaurant create/update accept `imageKey` with its matching `/uploads/<key>` `imageUrl`, using the image rule shared with MenuItem (`modules/uploads/imageReference.ts`). Decision recorded in `docs/plan.md`
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm --filter api exec vitest run src/modules/uploads src/modules/restaurants src/modules/menu-items` | 0 | Pass: 157 tests. New shared-rule tests cover empty, null, trimmed external, and local values; rejection of non-HTTP schemes, non-generated keys, a key without a URL, a key with a different or external URL, and a local URL without its key; and the create/update column mapping, including clearing the key for an external URL or `null`. Restaurant DTO tests now accept a local key with its matching URL and reject a keyless local URL, a mismatched URL, and a non-generated key. The MenuItem tests pass unchanged. |
+| Deliberate regression check | — | Removing the image rule from Restaurant create failed 2 tests; it was restored. |
+| `node image-fix-check.mjs` (temporary script against the real app and database) | 0 | Pass, 8/8: upload returns its key and `/uploads` URL; create stores the key and URL; the stored URL is served; a mismatched key/URL and a keyless local URL return 400 on the right field; an external URL clears the key; `imageUrl: null` clears both columns; and the upload can then be deleted. The script was removed after the run. |
+| `pnpm --filter api openapi:generate` and `pnpm --filter web openapi:generate` | 0 | Pass: `CreateRestaurantRequest`/`UpdateRestaurantRequest` gain `imageKey`; `imageUrl` is `string \| null` for both Restaurant and MenuItem (previously `string \| unknown`). |
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests (API 47 files/379 tests; web 16 files/153 tests), API build with OpenAPI generation, and web production build. |
+| `prettier --check --end-of-line auto .` in `src/api` and `src/web` | 0 | Pass. |
+| `git diff --check` | 0 | Pass. |
+
+### Security and scope checks
+
+- Only generated upload file names are accepted as keys, and a key must match its `/uploads/<key>` URL exactly, so a record cannot point at another upload or an arbitrary path.
+- External images still require HTTP(S); `javascript:` and other schemes are rejected.
+- Soft delete still keeps image references. The API does not delete files on update; #41 owns best-effort cleanup after a successful save.
+- Production behavior is unchanged: uploads stay disabled there, and external URLs keep working.

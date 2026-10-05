@@ -2,6 +2,12 @@ import { Prisma, type Restaurant } from '@prisma/client'
 import { z } from 'zod'
 
 import {
+  imageReferenceFields,
+  toImageReferenceCreateData,
+  toImageReferenceUpdateData,
+  validateImageReference,
+} from '@/modules/uploads/imageReference'
+import {
   localizationSchema,
   toLocalization,
   toOptionalLocalization,
@@ -16,16 +22,6 @@ const nullablePhoneSchema = z.preprocess(
   emptyTrimmedStringToNull,
   z.string().nullable(),
 )
-const nullableImageUrlSchema = z.preprocess(
-  emptyTrimmedStringToNull,
-  z
-    .string()
-    .url()
-    .refine((value) => /^https?:\/\//i.test(value), {
-      message: 'Must use HTTP or HTTPS.',
-    })
-    .nullable(),
-)
 
 const restaurantFieldsSchema = z
   .object({
@@ -33,11 +29,13 @@ const restaurantFieldsSchema = z
     name: localizationSchema,
     description: localizationSchema.nullable().optional(),
     phone: nullablePhoneSchema.optional(),
-    imageUrl: nullableImageUrlSchema.optional(),
+    ...imageReferenceFields,
   })
   .strict()
 
-export const createRestaurantSchema = restaurantFieldsSchema
+export const createRestaurantSchema = restaurantFieldsSchema.superRefine(
+  validateImageReference,
+)
 
 export const updateRestaurantSchema = restaurantFieldsSchema
   .partial()
@@ -45,6 +43,7 @@ export const updateRestaurantSchema = restaurantFieldsSchema
   .refine((input) => Object.keys(input).length > 0, {
     message: 'At least one field is required.',
   })
+  .superRefine(validateImageReference)
 
 export const restaurantIdParamsSchema = z.object({
   id: z.string().trim().min(1),
@@ -142,8 +141,7 @@ export function toRestaurantCreateData(
     descriptionTh: input.description?.th ?? null,
     descriptionEn: input.description?.en ?? null,
     phone: input.phone ?? null,
-    imageKey: null,
-    imageUrl: input.imageUrl ?? null,
+    ...toImageReferenceCreateData(input),
   }
 }
 
@@ -162,12 +160,8 @@ export function toRestaurantUpdateData(
     data.descriptionEn = input.description?.en ?? null
   }
   if (input.phone !== undefined) data.phone = input.phone
-  if (input.imageUrl !== undefined) {
-    data.imageKey = null
-    data.imageUrl = input.imageUrl
-  }
 
-  return data
+  return { ...data, ...toImageReferenceUpdateData(input) }
 }
 
 export function toAdminRestaurant(
