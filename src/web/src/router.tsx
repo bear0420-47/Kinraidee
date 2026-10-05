@@ -15,6 +15,7 @@ import { ZonesPage } from '@/pages/admin/zones/ZonesPage'
 import { LoginPage } from '@/pages/auth/LoginPage'
 import { RegisterPage } from '@/pages/auth/RegisterPage'
 import { HomePage } from '@/pages/home/HomePage'
+import { MealPage } from '@/pages/meal/MealPage'
 
 // Unbuilt account/admin child pages fall back to their landing page until
 // their own issues add routes; the guard still protects every child path.
@@ -24,6 +25,7 @@ export const routes: RouteObject[] = [
     element: <App />,
     children: [
       { index: true, element: <HomePage /> },
+      { path: 'meal', element: <MealPage /> },
       {
         element: <RedirectIfAuthenticated />,
         children: [

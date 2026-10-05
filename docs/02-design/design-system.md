@@ -147,6 +147,8 @@ Use slight asymmetric radii for doodle surfaces when practical, e.g. `6px 12px 5
 - Show one decision step at a time for the core recommendation flow.
 - Completed steps show a clear picked/completed state, not colour alone.
 - Progress indicators are supportive; they do not replace field-level validation.
+- Condition choices are native radio buttons styled as choice chips, so arrow keys move the selection and exactly one option can be chosen. A step heading receives focus when the step changes, and the progress copy reads `ข้อ {n} จาก 4`.
+- A primary action that is not yet available stays visible but disabled, with a short note that explains why.
 
 ### Result Cards
 

@@ -737,3 +737,59 @@ A review against issues #39, #40, #41, and #42 found three bugs and two weakness
 - Active MenuItems under active Restaurants are the only candidates. Supplied mandatory filters and normalized exclusions are applied in Prisma before randomization.
 - Responses include only card/detail/confirmation fields. They omit image ownership keys, soft-delete fields, timestamps, Restaurant phone, and audit metadata.
 - Replacement requests never suggest relaxation. Initial no-match requests change only one condition in the approved Zone, Budget, Taste, FoodType priority.
+
+## Issue #53 — Recommendation condition flow shell
+
+### Scope
+
+- Verification date: 2026-10-06 (ICT, `UTC+07:00`)
+- Change:
+  - Home becomes the landing hero, using the approved prototype copy.
+  - The public `/meal` flow covers budget, taste, food type, and zone, then a condition summary with `สับการ์ดเมนู` disabled until #54.
+  - Step and conditions are kept in `sessionStorage` and validated on read.
+  - The approved session notice is shown.
+  - No recommendation API call.
+  - Decisions are recorded in `docs/plan.md`; design rules are in `docs/02-design/design-system.md`.
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm --filter web test` | 0 | Pass: 25 files/290 tests. New: `MealPage.test.tsx` (17) and `recommendationSchemas.test.ts` (9). Coverage is listed below the table. |
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests (API 55 files/427 tests; web 25 files/290 tests), API build with OpenAPI generation, and web production build. |
+| `prettier --check --end-of-line auto .` in `src/api` and `src/web` | 0 | Pass. |
+
+`MealPage.test.tsx` covers:
+- Anonymous entry from Home.
+- Field-level errors on all four steps, linked with `aria-describedby` and focused.
+- Approved budget labels with no default.
+- Master data from `/api/tastes`, `/api/food-types`, and `/api/zones` in API order, with the fallback icon for an unknown key.
+- `อะไรก็ได้` / `ที่ไหนก็ได้` stored as `null`.
+- Summary labels, editing an answer from the summary, back navigation, and retry after a load failure.
+- State kept across route changes and through the header login round trip.
+- Storage limited to the one key `{ step, conditions }`, with malformed or extra-key storage reset.
+- A deleted stored choice sends the user back to that step.
+- No `/api/recommendations` request.
+- No GPS, allergy, voting, wait-time, card, favorite, or history controls.
+- Arrow-key radio selection, and focus moving to each new step heading.
+
+Deliberate regression checks confirmed that the page and schema tests fail when:
+- "any" is not mapped to `null`.
+- The field-level error is removed.
+- The storage whitelist (`.strict()`) is removed.
+- The stored flow is not restored.
+
+### Manual browser checks (Chrome, local API with the approved #30 catalog seed)
+
+- **Anonymous run from Home through the summary:**
+  - Steps load the seeded tastes (with icons), food types, and zones.
+  - Pressing `ถัดไป` with nothing chosen shows `กรุณาเลือกงบประมาณ`.
+  - The selected chip uses the yellow fill.
+  - The summary lists `฿50–100`, `เผ็ด`, `อะไรก็ได้`, and `ตลาดฟ้าไทย`, with `สับการ์ดเมนู` disabled.
+- **Storage:** `sessionStorage` held only `kinraidee:recommendation`, with `{ step, conditions }` and `foodTypeId: null`. The app wrote nothing to `localStorage`.
+- **Login round trip:** the header `เข้าสู่ระบบ` went to `/login?returnTo=%2Fmeal`, and after login the page returned to `/meal` at the summary with every answer intact.
+- **Keyboard:** Tab and Enter reach `แก้ไข`; arrow keys move the radio selection; the chip focus ring is visible; focus moves to each new step heading.
+- **Fonts:** headings use `Delius Swash Caps` (Mali for Thai) and choices use `Nunito Variable`.
+- **Width:** at 390 px there is no horizontal overflow on `/` or `/meal`.
+- **Console:** no errors.
+- **Fixed during the check:** the first pass found the Home heading's Thai tone mark touching the line above, caused by `leading-none`. It now uses `leading-tight`.

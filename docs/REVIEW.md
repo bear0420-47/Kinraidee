@@ -601,3 +601,43 @@ No blocking findings. All #43 list, filter, form, image, bulk-selection, delete/
 Human reviewer: Pending pull-request review
 Decision: Pending
 Date: TBD
+
+## Issue #53 — Recommendation condition flow shell
+
+### Status
+
+Automated two-axis review complete on 2026-10-06. Human pull-request approval remains pending.
+
+### Standards review
+
+No documented-standard violations remain:
+- The flow follows the issue's file layout (`pages/meal`, `hooks/meal`, `schemas/meal`).
+- It uses the typed client through the existing Zone, FoodType, and Taste hooks.
+- Icons are Phosphor only, through the controlled registries.
+- Choice chips are native radios, as the design system now records.
+- `sessionStorage` writes are wrapped so the flow still works when storage is blocked.
+
+Judgement calls accepted:
+- The four step components wrap one shared `ChoiceStep`, so validation, focus, and chip styling stay identical across steps.
+- `PageShell` gained a `medium` width for single-column flows.
+- The condition type comes from the recommendation API contract, so #54 can send it without mapping.
+
+### Specification review
+
+No blocking findings. Every #53 scope rule, budget/taste/food-type/zone rule, session-storage rule, required test, and acceptance item is implemented. Notes:
+- The human approver approved the session notice wording and the Home copy, and chose to show `สับการ์ดเมนู` disabled. All three are recorded in `docs/plan.md`.
+- A stored ID whose record was deleted counts as unanswered, so the summary never shows a stale label.
+- Login started from `/meal` returns to `/meal` through the existing safe `returnTo` handling. The stored flow survives because it lives in `sessionStorage`.
+
+### Review scope
+
+- Diff: `git diff main...feat/53-recommendation-conditions`
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/02-design/design-system.md`, `docs/02-design/user-journey.md`, `docs/02-design/prototype.md`, and `docs/03-implementation/engineering-guidelines.md`
+- Specification sources: GitHub issues #53 and #45
+- Checked: session-storage contents and validation, absence of personal and sensitive data, absence of recommendation API calls, auth round-trip safety, keyboard and focus behaviour, mobile layout, and out-of-scope controls
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD
