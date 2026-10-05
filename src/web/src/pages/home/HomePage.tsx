@@ -7,10 +7,11 @@ import { buttonClassName } from '@/components/Button'
 export function HomePage() {
   return (
     <section className="mx-auto flex max-w-3xl flex-col items-start gap-5 rounded-lg border-2 border-paper bg-surface p-6 shadow-lg sm:p-10">
+      {/* Thai tone marks rise above the line box, so the heading gets extra room above it. */}
       <p className="text-small font-extrabold text-muted">
         คิดไม่ออกใช่ไหม? มาลองเลือกไปด้วยกัน
       </p>
-      <h1 className="font-display text-hero-mobile leading-tight sm:text-hero">
+      <h1 className="pt-2 font-display text-hero-mobile leading-snug sm:pt-4 sm:text-hero">
         วันนี้กินอะไรดี?
       </h1>
       <p className="max-w-xl">

@@ -793,3 +793,8 @@ Deliberate regression checks confirmed that the page and schema tests fail when:
 - **Width:** at 390 px there is no horizontal overflow on `/` or `/meal`.
 - **Console:** no errors.
 - **Fixed during the check:** the first pass found the Home heading's Thai tone mark touching the line above, caused by `leading-none`. It now uses `leading-tight`.
+- **Follow-up UI changes requested by the human reviewer:**
+  - The Home heading has more room above it (`leading-snug` plus top padding), so its tone marks clear the eyebrow text.
+  - Every step now uses one shared footer (`StepFooter`), with a divider and more space above `ย้อนกลับ` / `ถัดไป`.
+  - The choices area has a shared minimum height. Rechecked in Chrome: the `ถัดไป` button sits at the same position on all four steps. The summary uses the same footer layout, lower down because its answer list is taller.
+  - No horizontal overflow at 390 px.

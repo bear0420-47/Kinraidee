@@ -1,4 +1,4 @@
-import { ArrowLeft, PencilSimple, Shuffle } from '@phosphor-icons/react'
+import { PencilSimple, Shuffle } from '@phosphor-icons/react'
 import { useId, type Ref } from 'react'
 
 import { Button } from '@/components/Button'
@@ -9,6 +9,7 @@ import {
   type ConditionStep,
   type RecommendationConditions,
 } from '@/schemas/meal/recommendationSchemas'
+import { StepFooter } from './StepFooter'
 
 type NamedRecord = { id: string; name: { th: string } }
 
@@ -99,20 +100,17 @@ export function ConditionSummary({
       </dl>
 
       <div className="flex flex-col gap-2">
-        {/* #54 enables this once the recommendation API is connected. */}
-        <Button disabled aria-describedby={pendingNoteId}>
-          <Shuffle aria-hidden weight="bold" />
-          สับการ์ดเมนู
-        </Button>
-        <p id={pendingNoteId} className="text-center text-small text-muted">
+        <StepFooter onBack={onBack}>
+          {/* #54 enables this once the recommendation API is connected. */}
+          <Button disabled aria-describedby={pendingNoteId}>
+            <Shuffle aria-hidden weight="bold" />
+            สับการ์ดเมนู
+          </Button>
+        </StepFooter>
+        <p id={pendingNoteId} className="text-small text-muted sm:text-right">
           การสับการ์ดเมนูจะเปิดใช้งานเร็ว ๆ นี้
         </p>
       </div>
-
-      <Button variant="ghost" className="self-start" onClick={onBack}>
-        <ArrowLeft aria-hidden weight="bold" />
-        ย้อนกลับ
-      </Button>
     </section>
   )
 }
