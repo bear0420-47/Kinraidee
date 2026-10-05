@@ -441,3 +441,72 @@ All eight routes, filtering and pagination, localized response mapping, Restaura
 Human reviewer: `aboutblank0000000`
 Decision: Approved
 Date: 2026-09-30
+
+## Restaurant local images (API prerequisite for #41)
+
+### Status
+
+Automated two-axis review complete on 2026-10-05. Human pull-request approval remains pending.
+
+### Standards review
+
+No documented-standard violations remain. Instead of copying MenuItem's image validation into Restaurant, the rule moves to the uploads module, which already owns the upload key and `/uploads` URL contract. Both DTOs now spread `imageReferenceFields` and use the same refinement and column mapping. The change stays inside the DTO layer: controllers, services, repositories, and audit snapshots are untouched. Judgement call accepted: `imageUrl` is written as one refined nullable string instead of a union, so the generated OpenAPI type is `string | null` rather than `string | unknown`. Validation behavior is the same, and only the error message for an invalid URL is more general. The `/uploads` static route overrides helmet's `Cross-Origin-Resource-Policy` to `cross-origin`. Without this, the web app (another origin) cannot display uploaded images at all, a gap #40's tests could not show because they fetch files directly. The override is scoped to that route and does not grant cross-origin reads.
+
+### Specification review
+
+No blocking findings. #41 requires saving an uploaded `imageKey`/`imageUrl` on a Restaurant, which #39 explicitly scoped out. This change adds exactly that, using the data-model rule already applied to MenuItem in #42: an external URL keeps `imageKey = null`, and a local upload stores its generated key with the matching URL. The #39 behaviors its tests still check are unchanged: HTTP(S)-only external URLs, and an external URL clearing an earlier key.
+
+### Review scope
+
+- Diff: `git diff origin/main...fix/39-restaurant-local-images`
+- Commits: `fix(api): accept uploaded images on restaurants`, `fix(api): let the web app display uploaded images`
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/03-implementation/data-model.md`, and `docs/03-implementation/engineering-guidelines.md`
+- Specification sources: GitHub issues #39, #40, and #41
+- Image key/URL integrity, external URL scheme validation, MenuItem regression risk, the OpenAPI contract, and the scope of the relaxed resource policy
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD
+
+## Issue #41 — Restaurant management screen
+
+### Status
+
+Automated two-axis review complete on 2026-10-05. Human pull-request approval remains pending.
+
+### Standards review
+
+No documented-standard violations remain. The page follows the master-data structure (shell, filters, `QueryListState`, table with `RowActions`, shared dialogs) and the issue's file layout. Typed hooks own every endpoint; React Hook Form and Zod validate input; icons are Phosphor components next to text; nothing is persisted in browser storage. Shared pieces were generalized rather than copied: `ConfirmDialog`, `Pagination`, `QueryListState`, the description-pair rule, and image URL resolution. Judgement calls accepted:
+- The save/cleanup orchestration lives in `useSaveRestaurant`, not the form, so cleanup still runs after the dialog closes.
+- The test setup swaps in Node's `FormData`/`File`/`Blob`, because jsdom's cannot be sent through Node's `Request`. The swap is limited to tests and documented in `docs/plan.md`.
+- The audit-log page was not refactored onto `Pagination`, to keep this change scoped.
+
+### Specification review
+
+No blocking findings. All #41 list, filter, form, image-mode, upload-transaction, delete/restore, copy, accessibility, and required-test items are implemented. Manual browser checks ran against the real API, and they surfaced two API gaps (Restaurant upload keys and the `/uploads` resource policy) fixed in the prerequisite change. Notes:
+- Uploads start as soon as a file is picked, which the preview requires.
+- An upload made just before a full page unload can remain on disk. The page warns through `beforeunload`, and automatic orphan cleanup is out of scope for the issue.
+- When a save fails after a new upload, the form returns to the restaurant's saved image, or asks for the file again on create.
+- Search applies on submit; the Zone and deleted filters apply immediately.
+
+### Follow-up review
+
+A second review against issues #39, #40, #41, and #42 found the change in scope. It fixed three bugs and two weaknesses: closing or leaving during a save could delete an upload the saved restaurant references; an upload finishing after the user left was orphaned; an emptied last page showed the empty state; a Zone load failure was silent; and a malformed image URL could crash a preview. Details and tests are in `docs/verification.md`. Left unchanged by design:
+- Restaurant and MenuItem writes still accept a generated upload key in production. MenuItem (#42) already did, and production cannot create uploads, so changing it belongs with the teammate's module.
+- A failed save still deletes its new upload, as the issue requires, even in the rare case where the server committed but the response was lost.
+
+### Review scope
+
+- Diff: `git diff fix/39-restaurant-local-images...feat/41-restaurant-admin`
+- Commits: `feat(web): add restaurant management screen (#41)`, `fix(web): guard restaurant form closing and paging edge cases (#41)`
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/02-design/design-system.md`, `docs/03-implementation/engineering-guidelines.md`, and `docs/03-implementation/module-implementation-checklist.md`
+- Specification source: GitHub issue #41
+- Upload ordering and orphan cleanup, development-only upload gating, image URL handling, browser-storage use, admin-only access versus server-side authorization, mobile layout, and out-of-scope boundaries
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD

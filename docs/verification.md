@@ -534,3 +534,89 @@ Run against the real API and database at desktop and 375px widths:
 ### Production deployment blocker
 
 The repository provides the retention command but no production scheduler. Production deployment remains blocked until an approved deployment environment configures and verifies a recurring job that runs `pnpm --filter api audit-logs:prune`. The application audit log is not a Computer Crime Act traffic log and does not satisfy any future LR10 traffic-log duty.
+
+## Restaurant local images (API prerequisite for #41)
+
+### Scope
+
+- Verification date: 2026-10-05 (ICT, `UTC+07:00`)
+- Environment: local Windows 11 workspace, Node.js 24.12.0, pnpm 12.4.2, PostgreSQL 17 through the committed Docker Compose service
+- Database: isolated local database `kinraidee_verify` with the committed migrations and the #29 administrator seed; removed after verification. Uploads were written to a temporary directory and deleted afterwards
+- Change: Restaurant create/update accept `imageKey` with its matching `/uploads/<key>` `imageUrl`, using the image rule shared with MenuItem (`modules/uploads/imageReference.ts`). Decision recorded in `docs/plan.md`
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm --filter api exec vitest run src/modules/uploads src/modules/restaurants src/modules/menu-items` | 0 | Pass: 157 tests. New shared-rule tests cover empty, null, trimmed external, and local values; rejection of non-HTTP schemes, non-generated keys, a key without a URL, a key with a different or external URL, and a local URL without its key; and the create/update column mapping, including clearing the key for an external URL or `null`. Restaurant DTO tests now accept a local key with its matching URL and reject a keyless local URL, a mismatched URL, and a non-generated key. The MenuItem tests pass unchanged. |
+| `pnpm --filter api exec vitest run src/modules/uploads` | 0 | Pass: 36 tests; the served-image test now also requires `Cross-Origin-Resource-Policy: cross-origin` on `/uploads/<key>`. |
+| Deliberate regression checks | — | Removing the image rule from Restaurant create failed 2 tests, and removing the `/uploads` header override failed the served-image test; both were restored. |
+| `node image-fix-check.mjs` (temporary script against the real app and database) | 0 | Pass, 8/8: upload returns its key and `/uploads` URL; create stores the key and URL; the stored URL is served; a mismatched key/URL and a keyless local URL return 400 on the right field; an external URL clears the key; `imageUrl: null` clears both columns; and the upload can then be deleted. The script was removed after the run. |
+| `curl -D -` against the real app | 0 | Pass: `/uploads/<key>` returns `Cross-Origin-Resource-Policy: cross-origin`; `/api/zones` still returns `same-origin`. Before the fix, the #41 browser check showed the uploaded preview as broken because the browser blocked the image from the web origin. |
+| `pnpm --filter api openapi:generate` and `pnpm --filter web openapi:generate` | 0 | Pass: `CreateRestaurantRequest`/`UpdateRestaurantRequest` gain `imageKey`; `imageUrl` is `string \| null` for both Restaurant and MenuItem (previously `string \| unknown`). |
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests (API 47 files/379 tests; web 16 files/153 tests), API build with OpenAPI generation, and web production build. |
+| `prettier --check --end-of-line auto .` in `src/api` and `src/web` | 0 | Pass. |
+| `git diff --check` | 0 | Pass. |
+
+### Security and scope checks
+
+- Only generated upload file names are accepted as keys, and a key must match its `/uploads/<key>` URL exactly, so a record cannot point at another upload or an arbitrary path.
+- External images still require HTTP(S); `javascript:` and other schemes are rejected.
+- Soft delete still keeps image references. The API does not delete files on update; #41 owns best-effort cleanup after a successful save.
+- Production behavior is unchanged: uploads stay disabled there, and external URLs keep working.
+- Only the `/uploads` static route relaxes `Cross-Origin-Resource-Policy`, so other pages can embed those public catalog images; it serves only generated file names and adds no CORS read access. All API responses keep helmet's `same-origin`.
+
+## Issue #41 — Restaurant management screen
+
+### Scope
+
+- Verification date: 2026-10-05 (ICT, `UTC+07:00`)
+- Environment and database: same as the Restaurant local-images fix (`kinraidee_verify` with development uploads enabled into a temporary directory; both removed after verification)
+- Route: `/admin/restaurants` under the `/admin/*` guard from #32, using the typed client for list/create/update/delete/restore and for image upload/delete
+- Depends on the API fix above (Restaurant `imageKey`/`/uploads` support and the `/uploads` resource policy); decisions recorded in `docs/plan.md`
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm --filter web test` | 0 | Pass: 19 files/196 tests (43 new). Schema tests cover trimming, empty phone to `null`, required Zone and names, the description pair, each image mode's API body (none to nulls, URL with `imageKey: null`, upload as key and URL), URL validation (empty, non-URL, `javascript:`, `ftp:`), a required file in upload mode, pre-fill for each stored image source, changed-field detection with the image key and URL sent together, and list query building. File checks cover JPEG/PNG/WebP, rejected types, and the 2 MiB boundary. Page tests cover the list with zone, phone, image, and status; uploaded images resolved against the API origin; pagination from API metadata; search, Zone, and deleted filters in the query with reset to page 1; deleted rows with a text status, restore, and no edit; create validation with focus; external URL submit with `imageKey: null` and preview only after validation; a broken-image fallback; edit pre-fill sending only changes; no upload control in production; the `accept` list and client rejection of GIF and oversized files before any request; upload preview and the saved key/URL with no browser storage or `data:`/`blob:` values; a missing file focusing the file input; cleanup after a failed create; old-image deletion only after a successful update (request order checked); a failed update removing only the new upload and keeping the old preview; external images never sent to deletion; cleanup on cancel and on replacing an unsaved upload; the leave prompt with cleanup, and no prompt without unsaved changes; and delete/restore confirmations with the approved warnings and no image deletion on soft delete. |
+| Deliberate regression checks | — | Deleting the old image before saving (2 failures), skipping cleanup after a failed save (2 failures), and showing the upload option in production (1 failure) were each caught, then restored. |
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests (API 47 files/379 tests; web 19 files/196 tests), API build with OpenAPI generation, and web production build. Re-run after the review fixes below: web 19 files/202 tests. |
+| Production bundle check | — | `src/web/dist` contains the external-URL option but not the local-upload control. |
+| `prettier --check --end-of-line auto .` in `src/api` and `src/web` | 0 | Pass. |
+| `git diff --check` | 0 | Pass. |
+| `node tests/wireframe-requirements.test.cjs` | 1 | Existing design-prototype gap outside #41: 19 passed and 5 failed. |
+
+### Manual browser checks
+
+Run against the real API and database at desktop and 375px widths. The browser pane cannot open the OS file picker, so a generated PNG was placed into the file input with a script; everything after that ran through the app.
+
+- Login with `returnTo` lands on `/admin/restaurants`; the list shows zone, phone, image, status, and pagination.
+- Upload mode uploads immediately and announces `อัปโหลดรูปแล้ว`. Before the API fix, the preview was blocked by `Cross-Origin-Resource-Policy: same-origin`; after it, the image loads. Saving stores the generated key and `/uploads/<key>` URL.
+- Switching that restaurant to an external URL shows the broken-image fallback for an unreachable URL, saves `imageKey: null`, and deletes the replaced file from disk only after the update.
+- Delete shows the menu warning. "Show deleted" lists the restaurant with `ลบแล้ว` and a restore button only, and restore shows the warning that menu items are not restored.
+- With an unsaved upload, the browser Back button inside the app shows `ออกจากหน้านี้?`. Leaving deletes the upload. Two full-document unloads during testing left their uploads on disk, as documented in `docs/plan.md`.
+- At 375px, the filters first overflowed their card; after the fix every control fits. The page does not scroll horizontally, and the form dialog fits the screen.
+
+### Review follow-up
+
+A review against issues #39, #40, #41, and #42 found three bugs and two weaknesses, all fixed in `fix(web): guard restaurant form closing and paging edge cases (#41)`:
+
+- Closing the form (Cancel or Escape) or leaving through the prompt while a save was in flight discarded the new upload, even if the save then succeeded. The form now reports when it is busy: closing is ignored while busy, and the leave prompt leaves cleanup to the save itself.
+- An upload that finished after the user left the page was never discarded. The form now discards an upload that resolves after it unmounts.
+- Removing the last row of a later page left the list past its end, showing "ยังไม่มีร้านอาหาร" with "หน้า 2 จาก 1". The page now moves back to the last page and shows loading meanwhile.
+- A Zone load failure left an empty Zone select with no explanation. The form now shows an alert and disables saving.
+- An unparseable image URL threw while rendering a preview. URL resolution now returns `null`, and the preview shows its fallback.
+
+| Check | Result |
+|---|---|
+| `pnpm --filter web exec vitest run src/pages/admin/restaurants` | Pass: 27 tests (6 new). Covers Escape and a disabled Cancel during a pending save with no upload deleted, leaving during a pending save without deleting the upload, discarding an upload that resolves after leaving, moving back to page 1 after deleting the only row on page 2, the Zone load alert with saving disabled, and the malformed-URL fallback. |
+| Deliberate regression checks | Removing the busy guard, the save-aware leave cleanup, the unmount discard, the page clamp, the Zone alert, and the safe URL resolution each failed its test (1 failure each); all were restored. |
+| Browser check (21 restaurants) | Deleting the only restaurant on page 2 returned to page 1 with all 20 rows. The Escape-during-save and Zone-failure cases could not be reproduced against the local API (saves finish too quickly, and stopping the API also stops the session check), so they rely on the automated tests. |
+
+### Security, privacy, and scope checks
+
+- Endpoint strings live only in `hooks/admin/restaurants/`; components never call the API client.
+- Images are never converted to base64 or stored in browser storage, external images are never proxied or downloaded, and cleanup messages never show file paths.
+- Restaurant phone numbers are business contact data shown only to `ADMIN` users. Soft delete keeps image references, and restore does not restore menu items.
+- No R2/production upload, MenuItem CRUD, public Restaurant page, image processing, or background orphan cleanup was added.

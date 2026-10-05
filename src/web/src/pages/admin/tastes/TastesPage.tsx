@@ -75,6 +75,7 @@ export function TastesPage() {
     >
       <QueryListState
         query={tastes}
+        items={tastes.data}
         loadingMessage="กำลังโหลดรสชาติ…"
         errorMessage="โหลดรายการรสชาติไม่สำเร็จ กรุณาลองใหม่อีกครั้ง"
         emptyMessage="ยังไม่มีรสชาติ"

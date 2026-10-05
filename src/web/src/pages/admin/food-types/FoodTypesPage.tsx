@@ -77,6 +77,7 @@ export function FoodTypesPage() {
     >
       <QueryListState
         query={foodTypes}
+        items={foodTypes.data}
         loadingMessage="กำลังโหลดประเภทอาหาร…"
         errorMessage="โหลดรายการประเภทอาหารไม่สำเร็จ กรุณาลองใหม่อีกครั้ง"
         emptyMessage="ยังไม่มีประเภทอาหาร"
