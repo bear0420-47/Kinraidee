@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { ApiError } from '@/api/apiError'
 import { apiClient } from '@/api/client'
+import { menuItemsQueryKey } from '@/hooks/admin/menu-items/useMenuItems'
 import type {
   CreateFoodTypeBody,
   UpdateFoodTypeBody,
@@ -22,7 +23,12 @@ export function useFoodTypes() {
 
 function useInvalidateFoodTypes() {
   const queryClient = useQueryClient()
-  return () => queryClient.invalidateQueries({ queryKey: foodTypesQueryKey })
+  // MenuItem rows embed these names and icons, so the MenuItem list refreshes too.
+  return () =>
+    Promise.all([
+      queryClient.invalidateQueries({ queryKey: foodTypesQueryKey }),
+      queryClient.invalidateQueries({ queryKey: menuItemsQueryKey }),
+    ])
 }
 
 export function useCreateFoodType() {

@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 
 import { apiClient } from '@/api/client'
-import type { UploadedImage } from '@/schemas/admin/restaurants/restaurantSchemas'
+import type { UploadedImage } from '@/schemas/shared/imageFields'
 
 export const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp']
 export const MAX_IMAGE_BYTES = 2 * 1024 * 1024
@@ -63,6 +63,6 @@ export async function discardUploadedImage(key: string) {
   }
 }
 
-export function useUploadRestaurantImage() {
+export function useUploadImage() {
   return useMutation({ mutationFn: uploadImage })
 }

@@ -8,6 +8,13 @@ import {
   optionalDescriptionFields,
   toOptionalDescription,
 } from '@/schemas/shared/masterDataFields'
+import {
+  checkImageSource,
+  getImageChange,
+  imageFormFields,
+  toImageBody,
+  toImageFormValues,
+} from '@/schemas/shared/imageFields'
 
 export type Restaurant =
   components['schemas']['RestaurantListEnvelope']['data']['items'][number]
@@ -50,50 +57,17 @@ export function toRestaurantListQuery(
   }
 }
 
-export const imageModes = ['none', 'url', 'upload'] as const
-export type ImageMode = (typeof imageModes)[number]
-
-export type UploadedImage = { key: string; url: string }
-
-export function isHttpImageUrl(value: string) {
-  return /^https?:\/\//i.test(value) && z.url().safeParse(value).success
-}
-
-// Exactly one image source is active; it becomes the API's imageKey/imageUrl pair.
 export const restaurantFormSchema = z
   .object({
     zoneId: z.string().min(1, 'กรุณาเลือกโซน'),
     ...localizedNameFields,
     ...optionalDescriptionFields,
     phone: z.string().trim(),
-    imageMode: z.enum(imageModes),
-    imageUrl: z.string().trim(),
-    uploadedImage: z.object({ key: z.string(), url: z.string() }).nullable(),
+    ...imageFormFields,
   })
   .superRefine((values, context) => {
     checkDescriptionPair(values, context)
-
-    if (values.imageMode === 'url' && !values.imageUrl) {
-      context.addIssue({
-        code: 'custom',
-        path: ['imageUrl'],
-        message: 'กรุณากรอก URL รูปภาพ',
-      })
-    } else if (values.imageMode === 'url' && !isHttpImageUrl(values.imageUrl)) {
-      context.addIssue({
-        code: 'custom',
-        path: ['imageUrl'],
-        message: 'URL รูปภาพต้องขึ้นต้นด้วย http:// หรือ https://',
-      })
-    }
-
-    if (values.imageMode === 'upload' && !values.uploadedImage) {
-      context.addIssue({
-        code: 'custom',
-        path: ['uploadedImage'],
-        message: 'กรุณาเลือกรูปเพื่ออัปโหลด',
-      })
-    }
+    checkImageSource(values, context)
   })
   .transform((values): CreateRestaurantBody => ({
     zoneId: values.zoneId,
@@ -108,24 +82,9 @@ export const restaurantFormSchema = z
 
 export type RestaurantFormInput = z.input<typeof restaurantFormSchema>
 
-function toImageBody({
-  imageMode,
-  imageUrl,
-  uploadedImage,
-}: Pick<RestaurantFormInput, 'imageMode' | 'imageUrl' | 'uploadedImage'>) {
-  if (imageMode === 'url') return { imageKey: null, imageUrl }
-  if (imageMode === 'upload' && uploadedImage) {
-    return { imageKey: uploadedImage.key, imageUrl: uploadedImage.url }
-  }
-  return { imageKey: null, imageUrl: null }
-}
-
 export function toRestaurantFormValues(
   restaurant?: Restaurant,
 ): RestaurantFormInput {
-  const imageKey = restaurant?.imageKey ?? null
-  const imageUrl = restaurant?.imageUrl ?? null
-
   return {
     zoneId: restaurant?.zoneId ?? '',
     nameTh: restaurant?.name.th ?? '',
@@ -133,10 +92,7 @@ export function toRestaurantFormValues(
     descriptionTh: restaurant?.description?.th ?? '',
     descriptionEn: restaurant?.description?.en ?? '',
     phone: restaurant?.phone ?? '',
-    imageMode: imageKey ? 'upload' : imageUrl ? 'url' : 'none',
-    imageUrl: imageKey ? '' : (imageUrl ?? ''),
-    uploadedImage:
-      imageKey && imageUrl ? { key: imageKey, url: imageUrl } : null,
+    ...toImageFormValues(restaurant),
   }
 }
 
@@ -148,8 +104,6 @@ export function getRestaurantChanges(
   const changes: UpdateRestaurantBody = {}
   const description = body.description ?? null
   const phone = body.phone ?? null
-  const imageKey = body.imageKey ?? null
-  const imageUrl = body.imageUrl ?? null
 
   if (body.zoneId !== restaurant.zoneId) changes.zoneId = body.zoneId
   if (!isSameLocalization(body.name, restaurant.name)) changes.name = body.name
@@ -157,10 +111,8 @@ export function getRestaurantChanges(
     changes.description = description
   }
   if (phone !== restaurant.phone) changes.phone = phone
-  if (imageKey !== restaurant.imageKey || imageUrl !== restaurant.imageUrl) {
-    changes.imageKey = imageKey
-    changes.imageUrl = imageUrl
-  }
+  const imageChange = getImageChange(restaurant, body)
+  if (imageChange) Object.assign(changes, imageChange)
 
   return Object.keys(changes).length > 0 ? changes : null
 }

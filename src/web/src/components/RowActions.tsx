@@ -8,6 +8,8 @@ type RowActionsProps = {
   name: string
   onEdit: () => void
   onDelete: () => void
+  // Id of visible text explaining why the row cannot be edited; disables the edit button.
+  editBlockedReasonId?: string | undefined
 }
 
 export function RowActions({
@@ -15,12 +17,15 @@ export function RowActions({
   name,
   onEdit,
   onDelete,
+  editBlockedReasonId,
 }: RowActionsProps) {
   return (
     <div className="flex justify-center gap-2">
       <Button
         variant="secondary"
         aria-label={`แก้ไข${entityLabel} ${name}`}
+        disabled={Boolean(editBlockedReasonId)}
+        aria-describedby={editBlockedReasonId}
         onClick={onEdit}
       >
         <PencilSimple aria-hidden weight="bold" />

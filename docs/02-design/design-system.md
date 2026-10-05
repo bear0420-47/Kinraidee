@@ -166,6 +166,15 @@ Use slight asymmetric radii for doodle surfaces when practical, e.g. `6px 12px 5
 - Selected-menu confirmation shows menu name, restaurant, price, zone, image, and rationale. It never shows wait time.
 - Confirmation uses playful Thai actions. Stage 1 provides `เอาเมนูนี้แหละ` as the primary action and `ขอคิดอีกที` as the secondary action. The success state provides only `กลับหน้าหลัก`.
 
+### Admin Tables And Bulk Selection
+
+- Admin tables share one cell style; the actions column sits at the right edge with its header centred over the buttons.
+- A selectable table puts a labelled checkbox first in each row and a labelled "select all on this page" checkbox in the header.
+- The bulk-action bar sits above the table. It always shows the selected count in a live region and the per-action limit, and each bulk button's accessible name includes the count.
+- A blocked bulk action stays visible but disabled, with the reason as text next to it.
+- Multi-value choices in admin forms, such as MenuItem tastes, use a labelled checkbox group with the icon beside the name.
+- Prices show whole baht with Thai digit grouping, such as `฿1,250`.
+
 ### Toast And Undo
 
 - State changes that matter to the user use a visible message and a live-region announcement.

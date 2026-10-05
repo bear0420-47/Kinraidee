@@ -5,7 +5,7 @@ import { resolveImageUrl } from '@/lib/imageUrl'
 
 type ImagePreviewProps = {
   url: string
-  // Empty when the image is decorative next to the restaurant name.
+  // Empty when the image is decorative next to the record's name.
   alt: string
   size: 'thumbnail' | 'preview'
 }

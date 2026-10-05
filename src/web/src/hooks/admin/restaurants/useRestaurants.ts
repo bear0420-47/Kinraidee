@@ -7,6 +7,8 @@ import {
 
 import { ApiError } from '@/api/apiError'
 import { apiClient } from '@/api/client'
+import { saveWithImageCleanup } from '@/hooks/admin/images/saveWithImageCleanup'
+import { menuItemsQueryKey } from '@/hooks/admin/menu-items/useMenuItems'
 import {
   getRestaurantChanges,
   toRestaurantListQuery,
@@ -15,7 +17,6 @@ import {
   type RestaurantFilters,
   type UpdateRestaurantBody,
 } from '@/schemas/admin/restaurants/restaurantSchemas'
-import { discardUploadedImage } from './useRestaurantImage'
 
 export const restaurantsQueryKey = ['restaurants'] as const
 
@@ -37,9 +38,50 @@ export function useRestaurants(filters: RestaurantFilters) {
   })
 }
 
+const OPTIONS_PAGE_SIZE = 100
+
+// Every Restaurant, deleted ones included, for selects on other admin pages. The list API
+// pages at most 100 rows, so this walks every page.
+export function useRestaurantOptions() {
+  return useQuery({
+    queryKey: [...restaurantsQueryKey, 'options'],
+    queryFn: async () => {
+      const restaurants: Restaurant[] = []
+      for (let page = 1; ; page += 1) {
+        const { data, error, response } = await apiClient.GET(
+          '/api/restaurants',
+          {
+            params: {
+              query: {
+                page,
+                pageSize: OPTIONS_PAGE_SIZE,
+                includeDeleted: 'true',
+              },
+            },
+          },
+        )
+        if (!data) throw new ApiError(response.status, error)
+        restaurants.push(...data.data.items)
+        if (
+          data.data.items.length === 0 ||
+          restaurants.length >= data.meta.total
+        ) {
+          return restaurants
+        }
+      }
+    },
+  })
+}
+
 function useInvalidateRestaurants() {
   const queryClient = useQueryClient()
-  return () => queryClient.invalidateQueries({ queryKey: restaurantsQueryKey })
+  // MenuItem rows embed Restaurant names and deleted state (deleting a Restaurant also
+  // deletes its MenuItems), so the MenuItem list refreshes too.
+  return () =>
+    Promise.all([
+      queryClient.invalidateQueries({ queryKey: restaurantsQueryKey }),
+      queryClient.invalidateQueries({ queryKey: menuItemsQueryKey }),
+    ])
 }
 
 function useCreateRestaurant() {
@@ -111,27 +153,6 @@ export function useRestoreRestaurant() {
   })
 }
 
-// A failed save; the new upload (if any) has already been cleaned up best-effort.
-export class RestaurantSaveError extends Error {
-  readonly reason: unknown
-  readonly uploadDiscarded: boolean
-  readonly cleanupFailed: boolean
-
-  constructor(
-    reason: unknown,
-    {
-      uploadDiscarded,
-      cleanupFailed,
-    }: { uploadDiscarded: boolean; cleanupFailed: boolean },
-  ) {
-    super('Restaurant save failed.')
-    this.name = 'RestaurantSaveError'
-    this.reason = reason
-    this.uploadDiscarded = uploadDiscarded
-    this.cleanupFailed = cleanupFailed
-  }
-}
-
 type SaveRestaurantInput = {
   restaurant?: Restaurant | undefined
   body: CreateRestaurantBody
@@ -142,13 +163,6 @@ type SaveRestaurantInput = {
 export type SaveRestaurantResult = {
   changed: boolean
   cleanupFailed: boolean
-}
-
-async function discardAll(keys: (string | null | undefined)[]) {
-  const results = await Promise.all(
-    keys.flatMap((key) => (key ? [discardUploadedImage(key)] : [])),
-  )
-  return results.every(Boolean)
 }
 
 // Create or update, then remove local files only once the database no longer points at them.
@@ -162,29 +176,21 @@ export function useSaveRestaurant() {
     pendingUploadKey,
   }: SaveRestaurantInput): Promise<SaveRestaurantResult> {
     const changes = restaurant ? getRestaurantChanges(restaurant, body) : null
+    const { cleanupFailed } = await saveWithImageCleanup({
+      previousKey: restaurant?.imageKey ?? null,
+      pendingUploadKey,
+      savedKey: body.imageKey ?? null,
+      write: async () => {
+        if (!restaurant) await createRestaurant.mutateAsync(body)
+        else if (changes) {
+          await updateRestaurant.mutateAsync({
+            id: restaurant.id,
+            body: changes,
+          })
+        }
+      },
+    })
 
-    try {
-      if (!restaurant) await createRestaurant.mutateAsync(body)
-      else if (changes) {
-        await updateRestaurant.mutateAsync({ id: restaurant.id, body: changes })
-      }
-    } catch (error) {
-      // The old image stays referenced; only the new, unsaved upload is an orphan.
-      const cleaned = await discardAll([pendingUploadKey])
-      throw new RestaurantSaveError(error, {
-        uploadDiscarded: Boolean(pendingUploadKey),
-        cleanupFailed: !cleaned,
-      })
-    }
-
-    const savedKey = body.imageKey ?? null
-    const unusedUpload = pendingUploadKey !== savedKey ? pendingUploadKey : null
-    const replacedKey =
-      restaurant?.imageKey && restaurant.imageKey !== savedKey
-        ? restaurant.imageKey
-        : null
-    const cleaned = await discardAll([unusedUpload, replacedKey])
-
-    return { changed: !restaurant || Boolean(changes), cleanupFailed: !cleaned }
+    return { changed: !restaurant || Boolean(changes), cleanupFailed }
   }
 }

@@ -5,6 +5,7 @@ import {
 } from '@phosphor-icons/react'
 
 import { Button } from '@/components/Button'
+import { ImagePreview } from '@/components/ImagePreview'
 import { RowActions } from '@/components/RowActions'
 import {
   actionsColumnClassName,
@@ -12,7 +13,6 @@ import {
   headerCellClassName,
 } from '@/components/tableStyles'
 import type { Restaurant } from '@/schemas/admin/restaurants/restaurantSchemas'
-import { ImagePreview } from './ImagePreview'
 
 type RestaurantTableProps = {
   restaurants: Restaurant[]

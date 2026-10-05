@@ -53,29 +53,35 @@ describe('site header', () => {
 })
 
 describe('route guards', () => {
-  it.each(['/account', '/account/favorites', '/admin', '/admin/zones?page=2'])(
-    'redirects anonymous %s to login with returnTo',
+  it.each([
+    '/account',
+    '/account/favorites',
+    '/admin',
+    '/admin/zones?page=2',
+    '/admin/menu-items',
+  ])('redirects anonymous %s to login with returnTo', async (path) => {
+    fakeAuthApi()
+    const { router } = renderApp(path)
+
+    await screen.findByRole('heading', { name: 'เข้าสู่ระบบ' })
+    expect(currentPath(router)).toBe(
+      `/login?${new URLSearchParams({ returnTo: path })}`,
+    )
+  })
+
+  it.each(['/admin/zones', '/admin/menu-items'])(
+    'redirects USER away from %s with the approved message',
     async (path) => {
-      fakeAuthApi()
+      fakeAuthApi({ currentUser: testUser })
       const { router } = renderApp(path)
 
-      await screen.findByRole('heading', { name: 'เข้าสู่ระบบ' })
-      expect(currentPath(router)).toBe(
-        `/login?${new URLSearchParams({ returnTo: path })}`,
+      await screen.findByRole('heading', { name: 'บัญชีของฉัน' })
+      expect(currentPath(router)).toBe('/account')
+      expect(screen.getByRole('status').textContent).toBe(
+        'บัญชีนี้ไม่มีสิทธิ์จัดการระบบ',
       )
     },
   )
-
-  it('redirects USER away from admin routes with the approved message', async () => {
-    fakeAuthApi({ currentUser: testUser })
-    const { router } = renderApp('/admin/zones')
-
-    await screen.findByRole('heading', { name: 'บัญชีของฉัน' })
-    expect(currentPath(router)).toBe('/account')
-    expect(screen.getByRole('status').textContent).toBe(
-      'บัญชีนี้ไม่มีสิทธิ์จัดการระบบ',
-    )
-  })
 
   it('lets ADMIN open admin routes and lists only approved admin links', async () => {
     fakeAuthApi({ currentUser: testAdmin })
