@@ -284,6 +284,11 @@ describe('approved catalog seed', () => {
       (catalog: CatalogSeed) =>
         (catalog.restaurants[0]!.imageUrl = 'not-a-url'),
     ],
+    [
+      'non-HTTP image URL',
+      (catalog: CatalogSeed) =>
+        (catalog.menuItems[0]!.imageUrl = 'javascript:alert(1)'),
+    ],
   ])('rejects %s', async (_case, mutate) => {
     const catalog = structuredClone(await loadCatalogSeed())
     mutate(catalog)

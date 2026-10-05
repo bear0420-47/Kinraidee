@@ -2,6 +2,11 @@ import { z } from 'zod'
 
 const cuidSchema = z.string().regex(/^c[a-z0-9]{24}$/, 'Expected a CUID.')
 const requiredTextSchema = z.string().trim().min(1)
+const externalImageUrlSchema = z
+  .url()
+  .refine((value) => /^https?:\/\//i.test(value), {
+    message: 'External images must use HTTP or HTTPS.',
+  })
 
 const localizationSchema = z.object({
   th: requiredTextSchema,
@@ -41,7 +46,7 @@ const restaurantSchema = z.object({
     .string()
     .regex(/^\d{9,10}$/)
     .nullable(),
-  imageUrl: z.url().nullable(),
+  imageUrl: externalImageUrlSchema.nullable(),
 })
 
 const menuItemSchema = z.object({
@@ -52,7 +57,7 @@ const menuItemSchema = z.object({
   name: localizationSchema,
   description: optionalLocalizationSchema,
   price: z.number().int().positive(),
-  imageUrl: z.url().nullable(),
+  imageUrl: externalImageUrlSchema.nullable(),
 })
 
 function addDuplicateIssues(

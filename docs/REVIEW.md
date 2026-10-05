@@ -318,6 +318,36 @@ Human reviewer: `aboutblank0000000`
 Decision: Approved
 Date: 2026-09-30
 
+## Issue #30 — Approved catalog starter-data seed
+
+### Status
+
+Automated two-axis review complete on 2026-10-05. No unresolved findings remain. Human pull-request approval remains pending.
+
+### Standards review
+
+No documented-standard violations were found. The review identified a possible duplicated-code judgement call in the five entity-specific mapping/upsert loops in `prisma/catalog-seed.ts`. The repetition is retained because each Prisma model has a distinct validated fixture-to-column mapping, and a generic delegate abstraction would hide the required dependency order and weaken type readability for only five bounded seed entities.
+
+### Specification review
+
+The initial review found that plain `z.url()` accepted non-HTTP schemes even though issue #30 permits only approved external image URLs or `null`. The fixture schema now requires HTTP(S) for Restaurant and MenuItem external images, and a regression test rejects a syntactically valid `javascript:` URL. No other missing requirement or scope creep was found.
+
+The approved fixture contains 3 zones, 4 food types, 6 tastes, 3 restaurants, 9 menu items, and 22 exact taste links. It validates before the transaction, writes the administrator and catalog transactionally in dependency order, preserves primary records outside the fixture and all existing `deletedAt` values, synchronizes fixture-managed taste links, emits safe counts, and performs no network or R2 work.
+
+### Review scope
+
+- Diff: `git diff origin/main...HEAD` plus the HTTP(S) review-fix working-tree diff
+- Commit: `6b4edda feat(api): seed approved catalog dataset (#30)`; review fix committed separately
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/03-implementation/engineering-guidelines.md`, `docs/03-implementation/data-model.md`, and `docs/03-implementation/module-implementation-checklist.md`
+- Specification source: GitHub issue #30 and the human-approved dataset/taxonomy decisions in this work session
+- Full-fixture validation, stable IDs, dependency order, transactionality, idempotency, image handling, soft-delete preservation, taste-link synchronization, personal-data minimization, source evidence, and safe output
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD
+
 ## Issue #49 — AuditLog review API, admin screen, and retention command
 
 ### Status

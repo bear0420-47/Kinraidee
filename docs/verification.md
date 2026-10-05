@@ -549,11 +549,11 @@ The repository provides the retention command but no production scheduler. Produ
 
 | Command | Exit code | Result |
 |---|---:|---|
-| `pnpm --filter api exec vitest run prisma/seed.test.ts prisma/catalog-seed.test.ts` | 0 | Pass: 2 files/18 tests covering the existing administrator seed, full-fixture validation before database access, stable IDs, localized values, relation integrity, prices, sort orders, URL validation, idempotency, exact taste-link synchronization, external image behavior, soft-delete preservation, safe summaries, and credential/PII scans. |
+| `pnpm --filter api exec vitest run prisma/seed.test.ts prisma/catalog-seed.test.ts` | 0 | Pass: 2 files/19 tests covering the existing administrator seed, full-fixture validation before database access, stable IDs, localized values, relation integrity, prices, sort orders, HTTP(S)-only URL validation, idempotency, exact taste-link synchronization, external image behavior, soft-delete preservation, safe summaries, and credential/PII scans. |
 | First `pnpm --filter api prisma db seed` against the isolated database | 0 | Pass: logged one administrator and `47 created, 0 updated, 0 unchanged`; database inspection found 3 Zones, 4 FoodTypes, 6 Tastes, 3 Restaurants, 9 MenuItems, 22 MenuItemTaste rows, and 1 administrator. |
 | Second identical `pnpm --filter api prisma db seed` | 0 | Pass: logged `0 created, 0 updated, 47 unchanged`; no duplicate rows were created. |
 | Seed after adding one out-of-fixture Zone, one stale taste link, and a `deletedAt` value | 0 | Pass: removed exactly 1 stale link from a fixture-managed menu item, retained 22 approved links, preserved the out-of-fixture Zone, and left the existing Restaurant `deletedAt` non-null. |
-| `NODE_OPTIONS=--no-experimental-webstorage pnpm verify` | 0 | Pass: typecheck, lint, tests, and builds completed. API: 47 files/370 tests; web: 16 files/153 tests. OpenAPI generation and the web production build completed. Node 26's experimental global Web Storage was disabled so jsdom supplies the test storage implementation. |
+| `NODE_OPTIONS=--no-experimental-webstorage pnpm verify` | 0 | Pass after resolving review findings: typecheck, lint, tests, and builds completed. API: 47 files/371 tests; web: 16 files/153 tests. OpenAPI generation and the web production build completed. Node 26's experimental global Web Storage was disabled so jsdom supplies the test storage implementation. |
 | `pnpm format` | 0 | Pass: API and web files matched Prettier formatting. |
 | `git diff --check` | 0 | Pass. |
 | `node tests/wireframe-requirements.test.cjs` | 1 | Existing design-prototype gap outside issue #30: 19 passed and 5 failed for missing Profile/Admin prototype states. No prototype or wireframe test was modified. |
