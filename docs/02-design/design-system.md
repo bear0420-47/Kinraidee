@@ -163,6 +163,8 @@ Use slight asymmetric radii for doodle surfaces when practical, e.g. `6px 12px 5
 - Do not invent missing values; show unavailable only when the spec allows the field to be absent.
 - Soft-deleted menu items may appear only in account history/favorites with an unavailable status, never in public recommendation results.
 
+- In the React flow, a card has four visible states, each stated in text and not by colour or motion alone: face-down (`การ์ดใบที่ {n}` with `ยังไม่เปิด`), revealed (menu details and actions), finding a replacement (`กำลังหาเมนูใหม่…`), and no more options (`ไม่มีตัวเลือกเพิ่มแล้ว`). The reveal animation runs only under `prefers-reduced-motion: no-preference`.
+
 ### Dialogs And Overlays
 
 - Dialogs use `--glass`/paper surfaces, ink borders, large radius, and focus trapping.

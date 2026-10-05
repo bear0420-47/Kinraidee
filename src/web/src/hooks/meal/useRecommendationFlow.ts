@@ -6,8 +6,11 @@ import {
   storedFlowSchema,
   type FlowStep,
   type RecommendationConditions,
+  type RecommendationItem,
+  type Shortlist,
   type StoredFlow,
 } from '@/schemas/meal/recommendationSchemas'
+import { startShortlist } from '@/schemas/meal/shortlist'
 
 // Storage can be unavailable (private mode, blocked site data); the flow then lives in memory.
 function readStoredFlow(): StoredFlow {
@@ -29,8 +32,9 @@ function writeStoredFlow(flow: StoredFlow) {
   }
 }
 
-// The current step and chosen conditions, kept in sessionStorage so they survive route
-// changes and the login/register round trip, and end with the browser session.
+// The current step, chosen conditions, and displayed shortlist, kept in sessionStorage so
+// they survive route changes and the login/register round trip, and end with the browser
+// session.
 export function useRecommendationFlow() {
   const [flow, setFlow] = useState(readStoredFlow)
 
@@ -53,5 +57,45 @@ export function useRecommendationFlow() {
     [],
   )
 
-  return { step: flow.step, conditions: flow.conditions, choose, goTo }
+  // A successful shuffle (or relaxed re-shuffle) starts a new shortlist with these conditions.
+  const showShortlist = useCallback(
+    (conditions: RecommendationConditions, items: RecommendationItem[]) =>
+      setFlow({ step: 'cards', conditions, shortlist: startShortlist(items) }),
+    [],
+  )
+
+  const updateShortlist = useCallback(
+    (update: (shortlist: Shortlist) => Shortlist) =>
+      setFlow((current) =>
+        current.shortlist
+          ? { ...current, shortlist: update(current.shortlist) }
+          : current,
+      ),
+    [],
+  )
+
+  // Commits a full set of conditions, such as an applied relaxation, without showing cards.
+  const setConditions = useCallback(
+    (conditions: RecommendationConditions) =>
+      setFlow((current) => ({ ...current, conditions })),
+    [],
+  )
+
+  // Editing conditions starts a new session: the shortlist and rejected IDs are cleared.
+  const editConditions = useCallback(
+    () => setFlow(({ conditions }) => ({ step: 'summary', conditions })),
+    [],
+  )
+
+  return {
+    step: flow.step,
+    conditions: flow.conditions,
+    shortlist: flow.shortlist,
+    choose,
+    goTo,
+    showShortlist,
+    updateShortlist,
+    setConditions,
+    editConditions,
+  }
 }

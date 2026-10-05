@@ -1,7 +1,8 @@
 import { PencilSimple, Shuffle } from '@phosphor-icons/react'
-import { useId, type Ref } from 'react'
+import type { Ref } from 'react'
 
 import { Button } from '@/components/Button'
+import { FormAlert } from '@/components/FormAlert'
 import {
   ANY_LABEL,
   ANY_ZONE_LABEL,
@@ -19,8 +20,13 @@ type ConditionSummaryProps = {
   foodTypes: NamedRecord[]
   zones: NamedRecord[]
   headingRef: Ref<HTMLHeadingElement>
+  // A shuffle request is in flight.
+  shuffling: boolean
+  // Why the last shuffle failed, if it did.
+  shuffleError: string | null
   onEdit: (step: ConditionStep) => void
   onBack: () => void
+  onShuffle: () => void
 }
 
 function nameOf(records: NamedRecord[], id: string | null, anyLabel: string) {
@@ -34,10 +40,12 @@ export function ConditionSummary({
   foodTypes,
   zones,
   headingRef,
+  shuffling,
+  shuffleError,
   onEdit,
   onBack,
+  onShuffle,
 }: ConditionSummaryProps) {
-  const pendingNoteId = useId()
   const rows: { step: ConditionStep; label: string; value: string }[] = [
     {
       step: 'budget',
@@ -99,18 +107,17 @@ export function ConditionSummary({
         ))}
       </dl>
 
-      <div className="flex flex-col gap-2">
-        <StepFooter onBack={onBack}>
-          {/* #54 enables this once the recommendation API is connected. */}
-          <Button disabled aria-describedby={pendingNoteId}>
-            <Shuffle aria-hidden weight="bold" />
-            สับการ์ดเมนู
-          </Button>
-        </StepFooter>
-        <p id={pendingNoteId} className="text-small text-muted sm:text-right">
-          การสับการ์ดเมนูจะเปิดใช้งานเร็ว ๆ นี้
-        </p>
-      </div>
+      {shuffleError ? <FormAlert message={shuffleError} /> : null}
+      <p role="status" className="sr-only">
+        {shuffling ? 'กำลังสับการ์ดเมนู...' : ''}
+      </p>
+
+      <StepFooter onBack={onBack} backDisabled={shuffling}>
+        <Button disabled={shuffling} aria-busy={shuffling} onClick={onShuffle}>
+          <Shuffle aria-hidden weight="bold" />
+          {shuffling ? 'กำลังสับการ์ดเมนู...' : 'สับการ์ดเมนู'}
+        </Button>
+      </StepFooter>
     </section>
   )
 }

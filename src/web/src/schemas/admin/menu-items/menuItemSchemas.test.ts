@@ -2,7 +2,6 @@ import { describe, expect, it } from 'vitest'
 
 import {
   defaultMenuItemFilters,
-  formatPrice,
   getMenuItemChanges,
   MAX_BULK_SELECTION,
   menuItemFormSchema,
@@ -170,12 +169,5 @@ describe('bulk selection', () => {
     )
     expect(toggleAllVisible(new Set(visible), visible)).toEqual(new Set())
     expect(toggleAllVisible(new Set(), ids(60)).size).toBe(MAX_BULK_SELECTION)
-  })
-})
-
-describe('formatPrice', () => {
-  it('shows whole baht with Thai digit grouping', () => {
-    expect(formatPrice(50)).toBe('฿50')
-    expect(formatPrice(1250)).toBe('฿1,250')
   })
 })

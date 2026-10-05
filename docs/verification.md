@@ -798,3 +798,71 @@ Deliberate regression checks confirmed that the page and schema tests fail when:
   - Every step now uses one shared footer (`StepFooter`), with a divider and more space above `ย้อนกลับ` / `ถัดไป`.
   - The choices area has a shared minimum height. Rechecked in Chrome: the `ถัดไป` button sits at the same position on all four steps. The summary uses the same footer layout, lower down because its answer list is taller.
   - No horizontal overflow at 390 px.
+
+## Issue #54 — Shuffle cards and recommendation interaction
+
+### Scope
+
+- Verification date: 2026-10-06 (ICT, `UTC+07:00`)
+- Branch: stacked on #53 (`feat/53-recommendation-conditions`, PR #80).
+- Change:
+  - `สับการ์ดเมนู` calls `POST /api/recommendations`.
+  - Up to three face-down cards, with individual reveal and `เปิดทั้งหมด`.
+  - Rejecting a card asks for a one-card replacement in the same slot. If nothing is left, the slot shows `ไม่มีตัวเลือกเพิ่มแล้ว`.
+  - One-step `เลิกทำ`.
+  - The structured no-match relaxation.
+  - Localized rationale.
+  - The displayed shortlist, reveal state, rejected IDs, and undo record kept in `sessionStorage`.
+  - `เลือกเมนูนี้` is held disabled until #55 adds confirmation.
+- Decisions are recorded in `docs/plan.md`; card states are in `docs/02-design/design-system.md`.
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm --filter web test` | 0 | Pass: 28 files/320 tests. New: `ShuffleCards.test.tsx` (17), `shortlist.test.ts` (12), and `formatPrice.test.ts` (1). The issue's required tests are listed below the table. The existing #53 tests are updated for the now-enabled shuffle button. |
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests (API 55 files/427 tests; web 28 files/320 tests), API build with OpenAPI generation, and web production build. |
+| `prettier --check --end-of-line auto .` in `src/api` and `src/web` | 0 | Pass. |
+
+`ShuffleCards.test.tsx` covers every required test in the issue:
+- The initial request body.
+- The face-down first view.
+- Reveal without an API call, and `เปิดทั้งหมด`.
+- Fewer than three results.
+- The replacement body (rejected and displayed IDs).
+- A same-slot face-down replacement, and `ไม่มีตัวเลือกเพิ่มแล้ว` without relaxation.
+- Undo, restoring the card, its slot, reveal state, and rejected IDs.
+- A failed replacement leaves everything unchanged.
+- A no-match relaxation changes exactly one field, and `relaxation: null` offers only manual editing.
+- Manual editing keeps every selection.
+- Loading and no-match live regions.
+- `motion-safe:`-only animation.
+- Text-named card states.
+- The session allowlist and restore after a reload.
+- Editing conditions clears the shortlist.
+- No history or detail endpoints are called.
+- A signed-in user gets the same flow.
+
+Deliberate regression checks confirmed the tests fail when:
+- The rejected card is also sent as displayed.
+- Undo keeps the rejected ID.
+- A relaxation changes a second field.
+- `เปิดทั้งหมด` reveals nothing.
+
+### Manual browser checks (Chrome, local API with the approved #30 catalog)
+
+- **Anonymous shuffle and reveal:**
+  - The shuffle showed three face-down cards.
+  - Revealing card 1 showed restaurant, zone, food type, price, tastes, and rationale, and made no API call (still one `POST`).
+- **Reject and undo:**
+  - Rejecting the card put a face-down replacement in slot 1 and focused it, and the undo bar appeared.
+  - `เลิกทำ` restored the original revealed card in slot 1, emptied the rejected list, and made no request.
+- **No-match and exhausted slot** (`ไม่เกิน ฿50` + `เผ็ด` + `ตรงข้ามมหาวิทยาลัย`):
+  - The no-match panel offered `ถ้าเปลี่ยนงบประมาณจาก “ไม่เกิน ฿50” เป็น “฿50–100” จะพบ 1 เมนู`.
+  - Applying it changed only the budget, and exactly one card was shown with no placeholders.
+  - Rejecting that card showed `ไม่มีตัวเลือกเพิ่มแล้ว` with no relaxation.
+- **Storage:** `sessionStorage` held only `step`, `conditions`, and `shortlist` (`slots`, `rejectedMenuItemIds`, `undo`). The shortlist survived a reload.
+- **Motion:** the built CSS defines the reveal animation only inside `@media (prefers-reduced-motion: no-preference)`.
+- **Layout and console:** at 390 px there was no horizontal overflow, and the console showed no errors.
+- **Browser-tool artifact:** clicking a button by element reference sometimes scrolled the page before the click landed. A native click immediately after a fresh load triggered the shuffle normally, so this is not an app defect.
+- **Fixed during the check:** the conditions intro no longer shows above the cards.

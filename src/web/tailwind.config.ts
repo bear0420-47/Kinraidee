@@ -59,6 +59,16 @@ export default {
         lg: `5px 6px 0 ${ink}`,
         soft: '0 9px 24px rgba(15, 23, 42, .18)',
       },
+      // Used only through `motion-safe:`, so reduced-motion users see the card without it.
+      keyframes: {
+        'card-reveal': {
+          from: { opacity: '0', transform: 'rotateY(90deg)' },
+          to: { opacity: '1', transform: 'rotateY(0deg)' },
+        },
+      },
+      animation: {
+        'card-reveal': 'card-reveal 280ms ease-out',
+      },
       maxWidth: {
         shell: '1120px',
         'shell-wide': '1240px',

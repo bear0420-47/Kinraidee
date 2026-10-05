@@ -34,7 +34,7 @@ describe('storedFlowSchema', () => {
       'an extra condition key',
       { step: 'budget', conditions: { allergy: 'nuts' } },
     ],
-    ['an unknown step', { step: 'cards', conditions: {} }],
+    ['an unknown step', { step: 'confirm', conditions: {} }],
     ['an unknown budget', { step: 'budget', conditions: { budget: 'FREE' } }],
     ['an empty ID', { step: 'taste', conditions: { tasteId: '' } }],
   ])('rejects %s', (_, value) => {

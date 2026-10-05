@@ -641,3 +641,44 @@ No blocking findings. Every #53 scope rule, budget/taste/food-type/zone rule, se
 Human reviewer: Pending pull-request review
 Decision: Pending
 Date: TBD
+
+## Issue #54 — Shuffle cards and recommendation interaction
+
+### Status
+
+Automated two-axis review complete on 2026-10-06. Human pull-request approval remains pending.
+
+### Standards review
+
+No documented-standard violations remain:
+- Requests go through the typed client in a TanStack mutation, which throws `ApiError`, like the other hooks.
+- The shortlist logic is pure (`schemas/meal/shortlist.ts`) and unit-tested, and the components only render and dispatch.
+- Icons are Phosphor only.
+- Every card state is named in text, and motion is `motion-safe:` only.
+- `formatPrice` moved to `lib/`, so public code does not import admin code.
+
+Judgement calls accepted:
+- The shortlist is stored with the full returned items, the issue's "displayed shortlist", so a reload restores the cards without another request. It is validated on read.
+- No-match results are not stored, so a reload returns to the summary.
+- Card actions are disabled while a replacement is in flight, so two replacements cannot race over the same exclusions.
+
+### Specification review
+
+No blocking findings. All #54 scope, shuffle, reject/replacement/undo, no-match, session-storage, rationale, required-test, and acceptance items are implemented. Notes:
+- `เลือกเมนูนี้` uses the same disabled-with-note pattern the human approver chose for #53, and `MenuCard` exposes the typed `onChoose` seam for #55.
+- A failed replacement does not add the card to the rejected IDs.
+- Leaving the cards through `แก้เงื่อนไข` clears the shortlist and the rejected IDs, starting a new session (F7).
+- A rationale flag that is false reads as openness, such as `เปิดรับได้ทุกโซน`, never as a failed filter.
+
+### Review scope
+
+- Diff: `git diff feat/53-recommendation-conditions...feat/54-shuffle-cards`
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/02-design/design-system.md`, `docs/02-design/user-journey.md`, `docs/02-design/prototype.md`, and `docs/03-implementation/engineering-guidelines.md`
+- Specification sources: GitHub issues #54 and #45, and the #44 recommendation contract
+- Checked: request bodies, exclusion correctness, undo semantics, session-storage contents and validation, absence of personal data, no history or detail endpoints, focus and live-region behaviour, reduced motion, mobile layout, and out-of-scope boundaries
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD

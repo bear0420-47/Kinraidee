@@ -88,6 +88,15 @@ Approved — full-app build plan updated through 2026-09-28 decisions. Implement
 - Issue #53 reuses the existing Zone, FoodType, and Taste query hooks. They call the public list endpoints and share their cache with the admin pages.
 - The human approver approved the session notice wording for the conditions screen on 2026-10-06: `ไม่ต้องเข้าสู่ระบบ คำตอบและเมนูที่ปฏิเสธจะอยู่เฉพาะในหน้าที่เปิดอยู่นี้` (from `wireframe.html`). This closes the specification's "confirm notice wording before implementation" item for browser session state. The human approver also approved the prototype's Home hero copy, without food photos.
 - Until #54 connects the recommendation API, the condition summary shows `สับการ์ดเมนู` disabled, with the note `การสับการ์ดเมนูจะเปิดใช้งานเร็ว ๆ นี้`. This was the human approver's choice, so the summary layout is final now.
+- Issue #54 connects `สับการ์ดเมนู` to `POST /api/recommendations` through a TanStack mutation, not a cached query, so every shuffle draws fresh. The flow's `sessionStorage` value adds an optional `shortlist`, which is the issue's allowlist:
+  - The displayed card slots, each a returned item with its reveal state, or a `ไม่มีตัวเลือกเพิ่มแล้ว` slot.
+  - `rejectedMenuItemIds`.
+  - The one-step undo record.
+
+  It is validated on read like the conditions. A no-match result is not stored, so a reload shows the summary again. Leaving the cards through `แก้เงื่อนไข` clears the shortlist and the rejected IDs, which starts a new recommendation session (F7).
+- Issue #54 turns the structured rationale into Thai copy that never reads as a failed filter: `matchedBudget` → `อยู่ในงบที่เลือก`; a matched taste, food type, or zone → `ตรงกับรสชาติที่เลือก` / `ตรงกับประเภทอาหารที่เลือก` / `อยู่ในโซนที่เลือก`; an unrestricted one → `เปิดรับรสชาติได้หลากหลาย` / `เปิดรับอาหารได้ทุกประเภท` / `เปิดรับได้ทุกโซน`.
+- Until #55 adds confirmation, a revealed card's `เลือกเมนูนี้` is shown disabled with `การยืนยันเมนูจะเปิดใช้งานเร็ว ๆ นี้`, the same pattern the human approver chose for #53. The card component already exposes a typed `onChoose` callback for #55.
+- `formatPrice` moves from the admin MenuItem schemas to `src/web/src/lib/formatPrice.ts`, so public cards do not import admin code.
 
 ## Evidence Expected
 

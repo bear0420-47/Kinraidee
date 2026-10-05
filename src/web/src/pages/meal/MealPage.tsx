@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { Button } from '@/components/Button'
 import { PageShell } from '@/components/PageShell'
@@ -7,18 +7,32 @@ import { useTastes } from '@/hooks/admin/tastes/useTastes'
 import { useZones } from '@/hooks/admin/zones/useZones'
 import { useRecommendationFlow } from '@/hooks/meal/useRecommendationFlow'
 import {
+  recommendationErrorMessage,
+  useRequestRecommendations,
+} from '@/hooks/meal/useRecommendations'
+import {
+  applyRelaxation,
   conditionSteps,
   firstOpenStep,
   flowSteps,
+  initialRequest,
   isCompleteConditions,
   withKnownIds,
   type FlowStep,
+  type MealStep,
+  type RecommendationConditions,
+  type Relaxation,
 } from '@/schemas/meal/recommendationSchemas'
 import { BudgetStep } from './components/BudgetStep'
 import { ConditionSummary } from './components/ConditionSummary'
 import { FoodTypeStep } from './components/FoodTypeStep'
+import { NoMatchPanel } from './components/NoMatchPanel'
+import { ShuffleCardGrid } from './components/ShuffleCardGrid'
 import { TasteStep } from './components/TasteStep'
 import { ZoneStep } from './components/ZoneStep'
+
+const CONDITIONS_INTRO =
+  'เลือกทีละข้ออย่างรวดเร็ว แล้วเราจะคัดเฉพาะตัวเลือกที่น่าสนใจ'
 
 const SESSION_NOTICE =
   'ไม่ต้องเข้าสู่ระบบ คำตอบและเมนูที่ปฏิเสธจะอยู่เฉพาะในหน้าที่เปิดอยู่นี้'
@@ -31,15 +45,21 @@ function nextStep(step: FlowStep): FlowStep {
   return flowSteps[Math.min(flowSteps.indexOf(step) + 1, flowSteps.length - 1)]!
 }
 
-// Home → budget → taste → food type → zone → summary, one short step at a time. The
-// recommendation request itself starts in #54.
+// Home → budget → taste → food type → zone → summary → shuffle cards, one short step at a
+// time. A shuffle that finds nothing shows the no-match panel instead of cards.
 export function MealPage() {
   const flow = useRecommendationFlow()
   const tastes = useTastes()
   const foodTypes = useFoodTypes()
   const zones = useZones()
+  const recommend = useRequestRecommendations()
+  // The last shuffle found nothing. Kept in memory only, so a reload shows the summary.
+  const [noMatch, setNoMatch] = useState<{
+    relaxation: Relaxation | null
+  } | null>(null)
+  const [shuffleError, setShuffleError] = useState<string | null>(null)
   const headingRef = useRef<HTMLHeadingElement>(null)
-  const shownStep = useRef<FlowStep | null>(null)
+  const shownView = useRef<string | null>(null)
 
   const optionsLoaded =
     tastes.isSuccess && foodTypes.isSuccess && zones.isSuccess
@@ -51,33 +71,69 @@ export function MealPage() {
         zoneIds: zones.data.map(({ id }) => id),
       })
     : flow.conditions
-  // The summary needs every answer; a removed record sends the user back to that step.
-  const step =
-    flow.step === 'summary' && !isCompleteConditions(conditions)
+  const complete = isCompleteConditions(conditions)
+  // The summary and cards need every answer, so a removed record sends the user back to
+  // that step. Stored cards without a shortlist fall back to the summary.
+  const step: MealStep =
+    (flow.step === 'summary' || flow.step === 'cards') && !complete
       ? firstOpenStep(conditions)
-      : flow.step
+      : flow.step === 'cards' && !flow.shortlist
+        ? 'summary'
+        : flow.step
+  const view = step === 'summary' && noMatch ? 'noMatch' : step
 
-  // Move focus to the new step's heading, but not on first render.
+  // Move focus to the new view's heading, but not on first render.
   useEffect(() => {
-    if (shownStep.current !== null && shownStep.current !== step) {
+    if (shownView.current !== null && shownView.current !== view) {
       headingRef.current?.focus()
     }
-    shownStep.current = step
-  }, [step])
+    shownView.current = view
+  }, [view])
 
-  const go = (target: FlowStep) => flow.goTo(target)
+  const go = (target: FlowStep) => {
+    setNoMatch(null)
+    flow.goTo(target)
+  }
   const optionsFailed = tastes.isError || foodTypes.isError || zones.isError
+
+  async function shuffle(target: RecommendationConditions) {
+    setShuffleError(null)
+    try {
+      const { items, relaxation } = await recommend.mutateAsync(
+        initialRequest(target),
+      )
+      if (items.length > 0) {
+        setNoMatch(null)
+        flow.showShortlist(target, items)
+      } else {
+        flow.setConditions(target)
+        setNoMatch({ relaxation })
+      }
+    } catch (error) {
+      setNoMatch(null)
+      setShuffleError(recommendationErrorMessage(error))
+    }
+  }
+
+  function editConditions() {
+    setNoMatch(null)
+    flow.editConditions()
+  }
 
   return (
     <PageShell
       title="บอกมื้อที่อยากได้แบบคร่าว ๆ"
-      description="เลือกทีละข้ออย่างรวดเร็ว แล้วเราจะคัดเฉพาะตัวเลือกที่น่าสนใจ"
-      width="medium"
+      // The intro is about answering questions, so the cards view drops it.
+      {...(view === 'cards' ? {} : { description: CONDITIONS_INTRO })}
+      // Three cards need more room than a single question.
+      width={view === 'cards' ? 'wide' : 'medium'}
     >
       <p role="status" className="font-bold">
-        {step === 'summary'
-          ? 'ตอบครบทั้ง 4 ข้อแล้ว'
-          : `ข้อ ${flowSteps.indexOf(step) + 1} จาก ${conditionSteps.length}`}
+        {step === 'cards'
+          ? 'สับการ์ดเมนูแล้ว'
+          : step === 'summary'
+            ? 'ตอบครบทั้ง 4 ข้อแล้ว'
+            : `ข้อ ${flowSteps.indexOf(step) + 1} จาก ${conditionSteps.length}`}
       </p>
 
       {step === 'budget' ? (
@@ -118,7 +174,7 @@ export function MealPage() {
           onBack={() => go(previousStep(step))}
         />
       ) : null}
-      {step === 'summary' && !optionsLoaded ? (
+      {view === 'summary' && !optionsLoaded ? (
         // The summary names every choice, so it waits for all three lists.
         optionsFailed ? (
           <div role="alert" className="flex flex-col items-start gap-3">
@@ -140,17 +196,40 @@ export function MealPage() {
           <p role="status">กำลังโหลดตัวเลือก…</p>
         )
       ) : null}
-      {step === 'summary' &&
-      optionsLoaded &&
-      isCompleteConditions(conditions) ? (
+      {view === 'summary' && optionsLoaded && complete ? (
         <ConditionSummary
           conditions={conditions}
           tastes={tastes.data}
           foodTypes={foodTypes.data}
           zones={zones.data}
           headingRef={headingRef}
+          shuffling={recommend.isPending}
+          shuffleError={shuffleError}
           onEdit={go}
-          onBack={() => go(previousStep(step))}
+          onBack={() => go(previousStep('summary'))}
+          onShuffle={() => void shuffle(conditions)}
+        />
+      ) : null}
+      {view === 'noMatch' && noMatch && complete ? (
+        <NoMatchPanel
+          relaxation={noMatch.relaxation}
+          shuffling={recommend.isPending}
+          headingRef={headingRef}
+          onApplyRelaxation={() => {
+            if (noMatch.relaxation) {
+              void shuffle(applyRelaxation(conditions, noMatch.relaxation))
+            }
+          }}
+          onEditConditions={editConditions}
+        />
+      ) : null}
+      {view === 'cards' && flow.shortlist && complete ? (
+        <ShuffleCardGrid
+          conditions={conditions}
+          shortlist={flow.shortlist}
+          headingRef={headingRef}
+          onUpdate={flow.updateShortlist}
+          onEditConditions={editConditions}
         />
       ) : null}
 

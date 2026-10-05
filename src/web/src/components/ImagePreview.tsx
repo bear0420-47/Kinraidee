@@ -7,7 +7,7 @@ type ImagePreviewProps = {
   url: string
   // Empty when the image is decorative next to the record's name.
   alt: string
-  size: 'thumbnail' | 'cell' | 'preview' | 'full'
+  size: 'thumbnail' | 'cell' | 'preview' | 'card' | 'full'
 }
 
 const sizeClassNames = {
@@ -15,6 +15,8 @@ const sizeClassNames = {
   // A table's leading image column.
   cell: 'h-20 w-20 object-cover',
   preview: 'h-40 w-full max-w-xs object-cover',
+  // A recommendation card's photo, full card width.
+  card: 'aspect-[4/3] w-full object-cover',
   // The whole image, uncropped, as large as the viewport allows (see `ImageLightbox`).
   full: 'max-h-[70vh] w-full bg-canvas-soft object-contain',
 }

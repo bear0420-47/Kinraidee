@@ -232,14 +232,11 @@ describe('MealPage condition steps', () => {
       screen.getAllByRole('definition').map((value) => value.textContent),
     ).toEqual(['฿50–100', 'อะไรก็ได้', 'อะไรก็ได้', 'ที่ไหนก็ได้'])
 
-    const shuffle = screen.getByRole<HTMLButtonElement>('button', {
-      name: 'สับการ์ดเมนู',
-    })
-    expect(shuffle.disabled).toBe(true)
+    // Summarising makes no recommendation request; only `สับการ์ดเมนู` does (#54).
     expect(
-      document.getElementById(shuffle.getAttribute('aria-describedby')!)
-        ?.textContent,
-    ).toBe('การสับการ์ดเมนูจะเปิดใช้งานเร็ว ๆ นี้')
+      screen.getByRole<HTMLButtonElement>('button', { name: 'สับการ์ดเมนู' })
+        .disabled,
+    ).toBe(false)
     expect(
       api.requests.some((request) =>
         request.path.startsWith('/api/recommendations'),
