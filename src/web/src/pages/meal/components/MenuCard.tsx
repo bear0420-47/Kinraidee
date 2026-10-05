@@ -1,23 +1,21 @@
 import {
   Check,
-  CheckCircle,
   MapPin,
   Question,
   Storefront,
   ThumbsDown,
 } from '@phosphor-icons/react'
-import { useId } from 'react'
 
 import { Button } from '@/components/Button'
-import { ImagePreview } from '@/components/ImagePreview'
 import { FoodTypeIcon } from '@/lib/foodTypeIcons'
 import { formatPrice } from '@/lib/formatPrice'
 import { TasteIcon } from '@/lib/tasteIcons'
-import {
-  rationaleLines,
-  type RecommendationItem,
-  type Slot,
+import type {
+  RecommendationItem,
+  Slot,
 } from '@/schemas/meal/recommendationSchemas'
+import { MenuPhoto } from './MenuPhoto'
+import { RationaleList } from './RationaleList'
 
 type MenuCardProps = {
   // 1-based position, used in labels such as `การ์ดใบที่ 2`.
@@ -31,8 +29,8 @@ type MenuCardProps = {
   focusTargetId: string
   onReveal: () => void
   onReject: () => void
-  // Provided by the confirmation step (#55); until then choosing is shown but unavailable.
-  onChoose?: ((item: RecommendationItem) => void) | undefined
+  // Opens the confirmation dialog for this card's menu.
+  onChoose: (item: RecommendationItem) => void
 }
 
 const cardClassName =
@@ -93,33 +91,6 @@ export function MenuCard(props: MenuCardProps) {
   return <RevealedCard {...props} item={slot.item} />
 }
 
-// The photo spans the top of the card. Without one (or when it cannot load), a same-size
-// panel with the food-type icon keeps every revealed card lined up.
-function CardPhoto({ item }: { item: RecommendationItem }) {
-  const placeholder = (label: string) => (
-    <span className="flex h-full flex-col items-center justify-center gap-2 text-small text-muted">
-      <FoodTypeIcon aria-hidden icon={item.foodType.icon} size={48} />
-      {label}
-    </span>
-  )
-
-  return (
-    <div className="-mx-4 -mt-4 aspect-[4/3] overflow-hidden rounded-t-[10px] border-b-2 border-paper bg-canvas-soft">
-      {item.imageUrl ? (
-        // Decorative: the menu name follows as the card heading.
-        <ImagePreview
-          url={item.imageUrl}
-          alt=""
-          size="cover"
-          fallback={placeholder('โหลดรูปไม่ได้')}
-        />
-      ) : (
-        placeholder('ไม่มีรูปเมนู')
-      )}
-    </div>
-  )
-}
-
 function RevealedCard({
   item,
   position,
@@ -128,14 +99,16 @@ function RevealedCard({
   onReject,
   onChoose,
 }: MenuCardProps & { item: RecommendationItem }) {
-  const pendingNoteId = useId()
-
   return (
     <article
       aria-labelledby={focusTargetId}
       className={`${cardClassName} bg-surface motion-safe:animate-card-reveal`}
     >
-      <CardPhoto item={item} />
+      {/* The photo spans the top of the card, so every revealed card lines up. */}
+      <MenuPhoto
+        item={item}
+        className="-mx-4 -mt-4 rounded-t-[10px] border-b-2"
+      />
       <div className="flex flex-col gap-1">
         <p className="text-small text-muted">
           การ์ดใบที่ {position} · เปิดแล้ว
@@ -195,32 +168,17 @@ function RevealedCard({
         </ul>
       ) : null}
 
-      <ul
-        aria-label="เหตุผลที่แนะนำ"
-        className="flex flex-col gap-1 text-small"
-      >
-        {rationaleLines(item.rationale).map((line) => (
-          <li key={line} className="flex items-center gap-2">
-            <CheckCircle aria-hidden size={18} weight="bold" />
-            {line}
-          </li>
-        ))}
-      </ul>
+      <RationaleList rationale={item.rationale} />
 
       <div className="mt-auto flex flex-col gap-2 pt-2">
         <Button
-          disabled={!onChoose || busy}
-          aria-describedby={onChoose ? undefined : pendingNoteId}
-          onClick={() => onChoose?.(item)}
+          disabled={busy}
+          aria-label={`เลือกเมนู ${item.name.th}`}
+          onClick={() => onChoose(item)}
         >
           <Check aria-hidden weight="bold" />
           เลือกเมนูนี้
         </Button>
-        {onChoose ? null : (
-          <p id={pendingNoteId} className="text-center text-small text-muted">
-            การยืนยันเมนูจะเปิดใช้งานเร็ว ๆ นี้
-          </p>
-        )}
         <Button
           variant="secondary"
           disabled={busy}

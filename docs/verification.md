@@ -872,3 +872,50 @@ Deliberate regression checks confirmed the tests fail when:
   - A card without a photo, or with a broken photo, keeps the same-size panel with the food-type icon.
   - Rechecked in Chrome: the menu names of a photo card, a no-photo card, and a broken-photo card start at the same height, and there is no overflow at 390 px.
   - A new page test covers all three cases. Admin image previews are unchanged.
+
+## Issue #55 — Recommendation confirmation and success
+
+### Scope
+
+- Verification date: 2026-10-06 (ICT, `UTC+07:00`)
+- Branch: stacked on #54 (`feat/54-shuffle-cards`, PR #81), which is stacked on #53 (PR #80).
+- Change:
+  - `เลือกเมนูนี้` on a revealed card opens a two-stage dialog: confirmation (`เอาเมนูนี้แหละ` / `ขอคิดอีกที`), then success (`กลับหน้าหลัก`).
+  - `กลับหน้าหลัก` clears the whole flow from `sessionStorage` and returns Home.
+  - No history request; #48 owns that.
+  - The card photo and rationale list became shared components (`MenuPhoto`, `RationaleList`) used by the card and the dialog. The recommendation test fixtures moved to `src/web/src/test/fakeRecommendationApi.ts`.
+- Decisions are recorded in `docs/plan.md`; the dialog stages are in `docs/02-design/design-system.md`.
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests (API 55 files/427 tests; web 29 files/330 tests), API build with OpenAPI generation, and web production build. |
+| `prettier --check --end-of-line auto .` in `src/web` | 0 | Pass. |
+| `git diff --check` | 0 | Pass. |
+
+`ConfirmMenu.test.tsx` (10 tests) covers every required test in the issue:
+- The dialog shows the chosen card's name, restaurant, zone, price, photo, and rationale, with no wait time and no extra request.
+- Missing-photo and broken-photo fallbacks.
+- Focus starts in the dialog, Tab and Shift+Tab stay inside it, and the cards behind it are inert.
+- `ขอคิดอีกที` and Escape each restore the exact shortlist (a face-down replacement, a revealed card, a face-down card, and the undo bar), leave `sessionStorage` byte-for-byte unchanged, and return focus to the card's `เลือกเมนูนี้`.
+- `เอาเมนูนี้แหละ` shows the success state, announces it in a status region, and focuses `กลับหน้าหลัก`, its only action.
+- No history request, for anonymous and signed-in users.
+- `กลับหน้าหลัก` (and Escape on the success state) returns to `/`, with the recommendation key removed and `sessionStorage` empty.
+- The next flow starts at `ข้อ 1 จาก 4` with nothing selected.
+
+The #54 test for the disabled `เลือกเมนูนี้` was removed. The #53 tests for malformed storage now expect the bad value to be removed instead of being rewritten as an empty flow.
+
+Deliberate regression checks confirmed the tests fail when:
+- Escape on the success state cancels instead of returning Home.
+- `ขอคิดอีกที` also clears the shortlist.
+- `finish` neither clears storage nor resets the flow.
+- A fresh flow is written to storage instead of removed.
+
+### Manual browser checks (Chrome, local API with the approved #30 catalog)
+
+- **Confirmation:** the dialog showed the chosen card's photo, names, restaurant, zone, price, and rationale. No wait time.
+- **Escape:** closed the dialog, returned focus to `เลือกเมนู บรูสเกตตากัวคาโมเล`, left `sessionStorage` identical, and removed every `inert` attribute.
+- **Keyboard only:** Enter on the card's button, Tab, Enter confirmed. The success state announced `ขอให้อร่อยกับบรูสเกตตากัวคาโมเล ที่ไอวิชพาสต้า` and focused `กลับหน้าหลัก`. Enter returned to `/` with `sessionStorage` empty.
+- **Requests:** only `auth/me`, the three master-data lists, and `POST /api/recommendations`. No history or menu-detail endpoint. No console errors.
+- **Layout:** at 390 px the dialog fits without scrolling or horizontal overflow, with `เอาเมนูนี้แหละ` stacked above `ขอคิดอีกที`.

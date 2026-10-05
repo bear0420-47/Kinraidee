@@ -7,152 +7,29 @@ import {
 } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
-import type { CurrentUser } from '@/hooks/auth/useCurrentUser'
 import {
   RECOMMENDATION_STORAGE_KEY,
-  type RecommendationConditions,
-  type RecommendationItem,
-  type RecommendationRequest,
   type Relaxation,
 } from '@/schemas/meal/recommendationSchemas'
 import {
+  cards,
+  conditions,
+  curry,
+  fakeShuffleApi,
+  krapao,
+  noodles,
+  revealCard,
+  shuffleCards,
+  somtam,
+  storedShortlist,
+  type User,
+} from '@/test/fakeRecommendationApi'
+import {
   errorResponse,
-  fakeAuthApi,
   jsonResponse,
   renderApp,
   testUser,
 } from '@/test/renderApp'
-
-const tastes = [
-  {
-    id: 'taste_1',
-    name: { th: 'เผ็ด', en: 'Spicy' },
-    icon: 'flame',
-    sortOrder: 1,
-  },
-]
-const foodTypes = [
-  {
-    id: 'food_1',
-    name: { th: 'ข้าว', en: 'Rice' },
-    icon: 'rice',
-    sortOrder: 1,
-  },
-]
-const zones = [
-  {
-    id: 'zone_1',
-    name: { th: 'หน้ามอ', en: 'Front Gate' },
-    description: null,
-    sortOrder: 1,
-  },
-]
-
-const conditions: RecommendationConditions = {
-  budget: 'BETWEEN_50_100',
-  tasteId: 'taste_1',
-  foodTypeId: null,
-  zoneId: null,
-}
-
-function item(id: string, th: string): RecommendationItem {
-  return {
-    id,
-    name: { th, en: `Dish ${id}` },
-    description: null,
-    price: 60,
-    imageUrl: null,
-    restaurant: { id: 'r_1', name: { th: 'ครัวไทย', en: 'Thai Kitchen' } },
-    zone: { id: 'zone_1', name: { th: 'หน้ามอ', en: 'Front Gate' } },
-    foodType: { id: 'food_1', name: { th: 'ข้าว', en: 'Rice' }, icon: 'rice' },
-    tastes: [
-      { id: 'taste_1', name: { th: 'เผ็ด', en: 'Spicy' }, icon: 'flame' },
-    ],
-    rationale: {
-      matchedBudget: true,
-      matchedTaste: true,
-      matchedFoodType: false,
-      matchedZone: false,
-    },
-  }
-}
-
-const krapao = item('menu_1', 'ผัดกะเพรา')
-const noodles = item('menu_2', 'ก๋วยเตี๋ยว')
-const curry = item('menu_3', 'แกงเขียวหวาน')
-const somtam = item('menu_4', 'ส้มตำ')
-
-type Result = { items: RecommendationItem[]; relaxation?: Relaxation | null }
-
-// Answers each recommendation request in turn with the next queued result.
-function fakeShuffleApi({
-  results,
-  currentUser = null,
-  stored = conditions,
-}: {
-  results: (Result | Response | Promise<Response>)[]
-  currentUser?: CurrentUser | null
-  stored?: RecommendationConditions
-}) {
-  sessionStorage.setItem(
-    RECOMMENDATION_STORAGE_KEY,
-    JSON.stringify({ step: 'summary', conditions: stored }),
-  )
-  const queue = [...results]
-  const api = fakeAuthApi({
-    currentUser,
-    responses: {
-      'GET /api/tastes': () => jsonResponse(200, { data: { items: tastes } }),
-      'GET /api/food-types': () =>
-        jsonResponse(200, { data: { items: foodTypes } }),
-      'GET /api/zones': () => jsonResponse(200, { data: { items: zones } }),
-      'POST /api/recommendations': () => {
-        const next = queue.shift()
-        if (!next) throw new Error('Unexpected recommendation request.')
-        return next instanceof Response || next instanceof Promise
-          ? next
-          : jsonResponse(200, {
-              data: { relaxation: null, ...next },
-            })
-      },
-    },
-  })
-
-  return {
-    ...api,
-    recommendationBodies: () =>
-      api.requests
-        .filter((request) => request.path === '/api/recommendations')
-        .map((request) => request.body as RecommendationRequest),
-  }
-}
-
-type User = ReturnType<typeof renderApp>['user']
-
-async function shuffleCards(user: User) {
-  await user.click(await screen.findByRole('button', { name: 'สับการ์ดเมนู' }))
-  await screen.findByRole('heading', { name: 'เมนูที่น่าจะตรงใจ' })
-}
-
-// The top-level card slots, in order (each card also holds its own nested lists).
-function cards() {
-  return [...screen.getByRole('list', { name: 'การ์ดเมนู' }).children].map(
-    (slot) => slot as HTMLElement,
-  )
-}
-
-function storedShortlist() {
-  const stored = JSON.parse(
-    sessionStorage.getItem(RECOMMENDATION_STORAGE_KEY)!,
-  ) as { shortlist?: { rejectedMenuItemIds: string[] } }
-  return stored.shortlist
-}
-
-async function revealCard(user: User, position: number) {
-  await user.click(
-    screen.getByRole('button', { name: `เปิดการ์ดใบที่ ${position}` }),
-  )
-}
 
 describe('Shuffling', () => {
   it('sends the initial request and shows face-down cards, announcing the loading state', async () => {
@@ -285,22 +162,6 @@ describe('Revealing', () => {
     expect(screen.queryByText('ยังไม่เปิด')).toBeNull()
     expect(screen.queryByRole('button', { name: 'เปิดทั้งหมด' })).toBeNull()
     expect(api.recommendationBodies()).toHaveLength(1)
-  })
-
-  it('shows choosing as not yet available until confirmation exists', async () => {
-    fakeShuffleApi({ results: [{ items: [krapao] }] })
-    const { user } = renderApp('/meal')
-    await shuffleCards(user)
-    await revealCard(user, 1)
-
-    const choose = screen.getByRole<HTMLButtonElement>('button', {
-      name: 'เลือกเมนูนี้',
-    })
-    expect(choose.disabled).toBe(true)
-    expect(
-      document.getElementById(choose.getAttribute('aria-describedby')!)
-        ?.textContent,
-    ).toBe('การยืนยันเมนูจะเปิดใช้งานเร็ว ๆ นี้')
   })
 
   it('fills the photo area for a photo, a missing photo, and a broken photo alike', async () => {

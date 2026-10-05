@@ -96,6 +96,13 @@ Approved — full-app build plan updated through 2026-09-28 decisions. Implement
   It is validated on read like the conditions. A no-match result is not stored, so a reload shows the summary again. Leaving the cards through `แก้เงื่อนไข` clears the shortlist and the rejected IDs, which starts a new recommendation session (F7).
 - Issue #54 turns the structured rationale into Thai copy that never reads as a failed filter: `matchedBudget` → `อยู่ในงบที่เลือก`; a matched taste, food type, or zone → `ตรงกับรสชาติที่เลือก` / `ตรงกับประเภทอาหารที่เลือก` / `อยู่ในโซนที่เลือก`; an unrestricted one → `เปิดรับรสชาติได้หลากหลาย` / `เปิดรับอาหารได้ทุกประเภท` / `เปิดรับได้ทุกโซน`.
 - Until #55 adds confirmation, a revealed card's `เลือกเมนูนี้` is shown disabled with `การยืนยันเมนูจะเปิดใช้งานเร็ว ๆ นี้`, the same pattern the human approver chose for #53. The card component already exposes a typed `onChoose` callback for #55.
+- Issue #55 enables `เลือกเมนูนี้` (its accessible name is `เลือกเมนู {menu}`) and opens one two-stage dialog:
+  - Stage 1, titled `เลือกเมนูนี้ใช่ไหม?`, shows the menu photo (or the card's fallback panel), the Thai and English names, restaurant, zone, price, and rationale. It reads only the item already returned by `POST /api/recommendations`, so opening it makes no request, and it shows no wait time.
+  - `ขอคิดอีกที`, or Escape, closes the dialog. The chosen card is held only in page memory and the shortlist is never touched while the dialog is open, so the cards, reveal state, rejected IDs, and undo record are exactly as before, and focus returns to that card's `เลือกเมนูนี้`.
+  - `เอาเมนูนี้แหละ` switches the same dialog to the success stage, titled `ได้มื้อนี้แล้ว!`, with `ขอให้อร่อยกับ{menu} ที่{restaurant}` announced in a status region. `กลับหน้าหลัก` is its only action and receives focus. Escape on this stage does the same as `กลับหน้าหลัก`, since there is no earlier state to return to.
+  - `กลับหน้าหลัก` removes the `kinraidee:recommendation` key (conditions, step, shortlist, reveal state, rejected IDs, and undo) and navigates to `/`, so the next flow starts at step 1. A fresh flow is never written to storage; the key is removed instead.
+  - No history request is made in #55, for anonymous or signed-in users; #48 adds the signed-in history write at `เอาเมนูนี้แหละ`.
+  - The two dialog titles and the success message are AI-proposed wording; the design pack fixes only the three action labels.
 - `formatPrice` moves from the admin MenuItem schemas to `src/web/src/lib/formatPrice.ts`, so public cards do not import admin code.
 
 ## Evidence Expected

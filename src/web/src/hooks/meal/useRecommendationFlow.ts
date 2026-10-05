@@ -24,9 +24,14 @@ function readStoredFlow(): StoredFlow {
   }
 }
 
+// A fresh flow leaves nothing behind, so a finished flow clears the key instead of storing it.
 function writeStoredFlow(flow: StoredFlow) {
   try {
-    sessionStorage.setItem(RECOMMENDATION_STORAGE_KEY, JSON.stringify(flow))
+    if (flow === emptyFlow) {
+      sessionStorage.removeItem(RECOMMENDATION_STORAGE_KEY)
+    } else {
+      sessionStorage.setItem(RECOMMENDATION_STORAGE_KEY, JSON.stringify(flow))
+    }
   } catch {
     // Keep working in memory.
   }
@@ -87,6 +92,14 @@ export function useRecommendationFlow() {
     [],
   )
 
+  // A confirmed menu ends the flow: conditions, step, shortlist, rejected IDs, and undo are
+  // all cleared. Storage is cleared here too, so it never depends on the page rendering
+  // again before it navigates away.
+  const finish = useCallback(() => {
+    writeStoredFlow(emptyFlow)
+    setFlow(emptyFlow)
+  }, [])
+
   return {
     step: flow.step,
     conditions: flow.conditions,
@@ -97,5 +110,6 @@ export function useRecommendationFlow() {
     updateShortlist,
     setConditions,
     editConditions,
+    finish,
   }
 }

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router'
 
 import { Button } from '@/components/Button'
 import { PageShell } from '@/components/PageShell'
@@ -21,10 +22,12 @@ import {
   type FlowStep,
   type MealStep,
   type RecommendationConditions,
+  type RecommendationItem,
   type Relaxation,
 } from '@/schemas/meal/recommendationSchemas'
 import { BudgetStep } from './components/BudgetStep'
 import { ConditionSummary } from './components/ConditionSummary'
+import { ConfirmMenuDialog } from './components/ConfirmMenuDialog'
 import { FoodTypeStep } from './components/FoodTypeStep'
 import { NoMatchPanel } from './components/NoMatchPanel'
 import { ShuffleCardGrid } from './components/ShuffleCardGrid'
@@ -45,9 +48,11 @@ function nextStep(step: FlowStep): FlowStep {
   return flowSteps[Math.min(flowSteps.indexOf(step) + 1, flowSteps.length - 1)]!
 }
 
-// Home → budget → taste → food type → zone → summary → shuffle cards, one short step at a
-// time. A shuffle that finds nothing shows the no-match panel instead of cards.
+// Home → budget → taste → food type → zone → summary → shuffle cards → confirmation, one
+// short step at a time. A shuffle that finds nothing shows the no-match panel instead of
+// cards. Confirming a menu clears the flow and returns Home.
 export function MealPage() {
+  const navigate = useNavigate()
   const flow = useRecommendationFlow()
   const tastes = useTastes()
   const foodTypes = useFoodTypes()
@@ -58,6 +63,9 @@ export function MealPage() {
     relaxation: Relaxation | null
   } | null>(null)
   const [shuffleError, setShuffleError] = useState<string | null>(null)
+  // The card being confirmed. Kept in memory only: the cards stay unchanged underneath, so
+  // `ขอคิดอีกที` (or a reload) returns to exactly the same shortlist.
+  const [chosen, setChosen] = useState<RecommendationItem | null>(null)
   const headingRef = useRef<HTMLHeadingElement>(null)
   const shownView = useRef<string | null>(null)
 
@@ -118,6 +126,11 @@ export function MealPage() {
   function editConditions() {
     setNoMatch(null)
     flow.editConditions()
+  }
+
+  function finish() {
+    flow.finish()
+    void navigate('/')
   }
 
   return (
@@ -230,6 +243,14 @@ export function MealPage() {
           headingRef={headingRef}
           onUpdate={flow.updateShortlist}
           onEditConditions={editConditions}
+          onChoose={setChosen}
+        />
+      ) : null}
+      {view === 'cards' && chosen ? (
+        <ConfirmMenuDialog
+          item={chosen}
+          onCancel={() => setChosen(null)}
+          onFinish={finish}
         />
       ) : null}
 

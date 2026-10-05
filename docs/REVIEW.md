@@ -682,3 +682,41 @@ No blocking findings. All #54 scope, shuffle, reject/replacement/undo, no-match,
 Human reviewer: Pending pull-request review
 Decision: Pending
 Date: TBD
+
+## Issue #55 — Recommendation confirmation and success
+
+### Status
+
+Automated two-axis review complete on 2026-10-06. Human pull-request approval remains pending.
+
+### Standards review
+
+No documented-standard violations remain:
+- The dialog reuses the shared `Dialog` (inert background, focus trap, Escape, focus return) instead of a new modal.
+- The card photo and rationale list are shared components, so the card and the dialog cannot drift apart.
+- Icons are Phosphor only, and no new animation was added.
+- The recommendation test fixtures are shared through `src/test/fakeRecommendationApi.ts`, like `fakeCollectionApi.ts`.
+
+Judgement calls accepted:
+- The chosen card is held in page memory, not in `sessionStorage`, so a reload during confirmation returns to the unchanged cards.
+- Escape on the success state acts as `กลับหน้าหลัก`, because the flow is complete and there is no earlier state to return to.
+- `finish` clears storage directly as well as resetting the flow, so the clean-up never depends on a render before navigation.
+
+### Specification review
+
+No blocking findings. All #55 scope, dialog, success, accessibility, required-test, and acceptance items are implemented. Notes:
+- No history is written for anonymous or signed-in users; #48 adds it at `เอาเมนูนี้แหละ`.
+- The dialog titles (`เลือกเมนูนี้ใช่ไหม?`, `ได้มื้อนี้แล้ว!`) and the success message are AI-proposed; the design pack fixes only the action labels. Human wording approval is pending.
+
+### Review scope
+
+- Diff: `git diff feat/54-shuffle-cards...feat/55-recommendation-confirmation`
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/02-design/design-system.md`, `docs/02-design/user-journey.md`, `docs/02-design/prototype.md`, and `docs/03-implementation/engineering-guidelines.md`
+- Specification sources: GitHub issues #55 and #45
+- Checked: dialog content against the response, request log, storage clean-up, focus and live-region behaviour, keyboard-only completion, mobile layout, and out-of-scope boundaries
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD

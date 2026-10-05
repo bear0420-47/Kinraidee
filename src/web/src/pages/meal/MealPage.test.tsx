@@ -392,9 +392,8 @@ describe('MealPage session state', () => {
     expect(
       await screen.findByRole('heading', { name: /เลือกงบประมาณ/ }),
     ).toBeTruthy()
-    await waitFor(() =>
-      expect(storedFlow()).toEqual({ step: 'budget', conditions: {} }),
-    )
+    // A fresh flow has nothing to keep, so the bad value is removed rather than rewritten.
+    await waitFor(() => expect(storedFlow()).toBeNull())
   })
 
   it('sends the user back to a step whose stored choice no longer exists', async () => {

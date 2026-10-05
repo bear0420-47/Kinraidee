@@ -25,8 +25,8 @@ type ShuffleCardGridProps = {
   headingRef: Ref<HTMLHeadingElement>
   onUpdate: (update: (shortlist: Shortlist) => Shortlist) => void
   onEditConditions: () => void
-  // The confirmation step's entry point (#55).
-  onChoose?: ((item: RecommendationItem) => void) | undefined
+  // Opens confirmation for a revealed card's menu.
+  onChoose: (item: RecommendationItem) => void
 }
 
 const focusTargetId = (slotIndex: number) => `meal-card-${slotIndex}-focus`

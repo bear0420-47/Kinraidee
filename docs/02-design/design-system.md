@@ -173,6 +173,7 @@ Use slight asymmetric radii for doodle surfaces when practical, e.g. `6px 12px 5
 - Non-dialog page content must be inert while a modal dialog is open.
 - Selected-menu confirmation shows menu name, restaurant, price, zone, image, and rationale. It never shows wait time.
 - Confirmation uses playful Thai actions. Stage 1 provides `เอาเมนูนี้แหละ` as the primary action and `ขอคิดอีกที` as the secondary action. The success state provides only `กลับหน้าหลัก`.
+- In the React flow both stages share one dialog. Stage 1 (`เลือกเมนูนี้ใช่ไหม?`) shows the same 4:3 photo or fallback panel as the card, framed with the default radius. The success stage (`ได้มื้อนี้แล้ว!`) shows a Phosphor `Confetti` icon and the message, announced in a status region, and moves focus to `กลับหน้าหลัก`. Escape closes stage 1 like `ขอคิดอีกที`, and on the success stage acts as `กลับหน้าหลัก`.
 
 ### Admin Tables And Bulk Selection
 
