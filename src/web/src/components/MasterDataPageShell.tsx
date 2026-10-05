@@ -7,6 +7,7 @@ import { PageShell } from '@/components/PageShell'
 
 type MasterDataPageShellProps = {
   title: string
+  width?: 'wide' | 'extra-wide'
   note: string
   createLabel: string
   onCreate: () => void
@@ -19,6 +20,7 @@ type MasterDataPageShellProps = {
 // Shared frame for the Zone, FoodType, and Taste admin pages.
 export function MasterDataPageShell({
   title,
+  width = 'wide',
   note,
   createLabel,
   onCreate,
@@ -27,7 +29,7 @@ export function MasterDataPageShell({
   children,
 }: MasterDataPageShellProps) {
   return (
-    <PageShell title={title} width="wide">
+    <PageShell title={title} width={width}>
       <Link
         to="/admin"
         className="inline-flex items-center gap-2 self-start rounded-xs font-bold underline"

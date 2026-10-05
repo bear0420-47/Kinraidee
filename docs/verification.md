@@ -674,3 +674,33 @@ A review against issues #39, #40, #41, and #42 found three bugs and two weakness
 - `/login`: the `Kinraidee` wordmark renders in Delius Swash Caps, the Thai heading `เข้าสู่ระบบ` in Mali, and labels and buttons in Noto Sans Thai.
 - `/admin` and `/admin/zones`: page headings and the portaled `เพิ่มโซน` dialog heading render in the body font, while the wordmark keeps Delius Swash Caps.
 - No request goes to a third-party font host; font files load from the web app's own origin.
+
+## Issue #43 — MenuItem management screen
+
+### Scope
+
+- Verification date: 2026-10-05 (ICT, `UTC+07:00`)
+- Change: `/admin/menu-items` with search, Restaurant/FoodType/Taste/deleted filters, pagination, create and edit with a taste checkbox group and whole-baht price, external URL or development-only local images, single delete and restore, and explicit-ID bulk delete and restore for up to 50 selected items. The #41 image flow moved to shared modules that both screens use (decisions recorded in `docs/plan.md`; design rules in `docs/02-design/design-system.md`). No API change.
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm --filter web test` | 0 | Pass: 23 files/263 tests. New: `MenuItemsPage.test.tsx` (29 tests covering the list, filters, validation, active-Restaurant select, edit blocking, image upload and cleanup order, production build without upload controls, single and bulk delete/restore, selection clearing, and blocked restore), `menuItemSchemas.test.ts` (14), `saveWithImageCleanup.test.ts` (5), `imageFields.test.ts`, and router guard cases for `/admin/menu-items` (anonymous to login with `returnTo`; `USER` to `/account`). Every existing Restaurant test passes unchanged against the shared image modules. |
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests (API 48 files/392 tests, after rebasing onto #30; web 23 files/263 tests), API build with OpenAPI generation, and web production build. |
+| `prettier --check --end-of-line auto .` in `src/api` and `src/web` | 0 | Pass. |
+| Production bundle search for `image-file` | — | No match: the local-upload control is not in the production build. |
+
+### Manual browser checks (Chrome, local API and database)
+
+- Signed in as the local test administrator; throwaway Zone, FoodType, Taste, Restaurant, and 23 MenuItem records were created through the API for the check.
+- Created a MenuItem with a real PNG upload: the preview loaded from the API origin and the row showed the thumbnail, tastes, and `฿1,250`.
+- Replaced that image while editing: both files existed until saving, and the old file was removed from the upload directory right after the update succeeded.
+- Deleted a Restaurant through the API: the filter marked it `(ลบแล้ว)`, its items showed `ลบแล้ว` and `ร้านถูกลบ`, single restore opened a dialog with the blocked warning and a disabled confirm button, and selecting one of its items disabled bulk restore with the warning text.
+- Bulk delete of three selected items (two already deleted) reported `ลบเมนูแล้ว 1 รายการ`; bulk restore of that item reported `กู้คืนเมนูแล้ว 1 รายการ`. Selection cleared after each action, and the header checkbox showed a partial state for a partial selection.
+- Escape closed a dialog and returned focus to its trigger; no console errors.
+- Admin font rule held: the page heading, dialog heading, and item names computed to `Nunito Variable`.
+- Follow-up UI change requested by the human reviewer: the MenuItem page uses a `1240px` extra-wide card (other admin pages keep `1120px`), and the image is now the first table column at 80 px, with a same-size `ไม่มีรูป` placeholder. Rechecked in Chrome: the table fits the card without horizontal scrolling, including rows for deleted items.
+- Follow-up: clicking a table image opens the full, uncropped image in a lightbox dialog (`components/ImageLightbox.tsx`); a new page test covers opening it, closing with Escape and with `ปิด`, and focus returning to the image. Checked in Chrome with an uploaded image.
+- Follow-up: the selection checkbox is now the first column, before the image. Fixed-content columns (image, food type, price, status, actions) shrink to fit and tastes wrap within `11rem`, so spare width goes to the menu and Restaurant names. Row actions use a compact `40px` button size, and `กู้คืน` uses a new faint orange `soft` variant. Rechecked in Chrome: no horizontal scrolling, including deleted rows.
+- The first manual pass found the table too wide (the action buttons were cut off). Thai and English names now share one column and short cells no longer wrap, so the table fits the admin shell without horizontal scrolling; at 390 px wide the page has no horizontal overflow and the table scrolls inside its frame.
