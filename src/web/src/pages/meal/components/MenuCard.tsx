@@ -93,6 +93,33 @@ export function MenuCard(props: MenuCardProps) {
   return <RevealedCard {...props} item={slot.item} />
 }
 
+// The photo spans the top of the card. Without one (or when it cannot load), a same-size
+// panel with the food-type icon keeps every revealed card lined up.
+function CardPhoto({ item }: { item: RecommendationItem }) {
+  const placeholder = (label: string) => (
+    <span className="flex h-full flex-col items-center justify-center gap-2 text-small text-muted">
+      <FoodTypeIcon aria-hidden icon={item.foodType.icon} size={48} />
+      {label}
+    </span>
+  )
+
+  return (
+    <div className="-mx-4 -mt-4 aspect-[4/3] overflow-hidden rounded-t-[10px] border-b-2 border-paper bg-canvas-soft">
+      {item.imageUrl ? (
+        // Decorative: the menu name follows as the card heading.
+        <ImagePreview
+          url={item.imageUrl}
+          alt=""
+          size="cover"
+          fallback={placeholder('โหลดรูปไม่ได้')}
+        />
+      ) : (
+        placeholder('ไม่มีรูปเมนู')
+      )}
+    </div>
+  )
+}
+
 function RevealedCard({
   item,
   position,
@@ -108,10 +135,7 @@ function RevealedCard({
       aria-labelledby={focusTargetId}
       className={`${cardClassName} bg-surface motion-safe:animate-card-reveal`}
     >
-      {item.imageUrl ? (
-        // Decorative: the menu name follows as the card heading.
-        <ImagePreview url={item.imageUrl} alt="" size="card" />
-      ) : null}
+      <CardPhoto item={item} />
       <div className="flex flex-col gap-1">
         <p className="text-small text-muted">
           การ์ดใบที่ {position} · เปิดแล้ว

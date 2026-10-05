@@ -1,4 +1,10 @@
-import { cleanup, screen, waitFor, within } from '@testing-library/react'
+import {
+  cleanup,
+  fireEvent,
+  screen,
+  waitFor,
+  within,
+} from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
 import type { CurrentUser } from '@/hooks/auth/useCurrentUser'
@@ -295,6 +301,26 @@ describe('Revealing', () => {
       document.getElementById(choose.getAttribute('aria-describedby')!)
         ?.textContent,
     ).toBe('การยืนยันเมนูจะเปิดใช้งานเร็ว ๆ นี้')
+  })
+
+  it('fills the photo area for a photo, a missing photo, and a broken photo alike', async () => {
+    const withPhoto = { ...krapao, imageUrl: '/uploads/krapao.png' }
+    const brokenPhoto = {
+      ...curry,
+      imageUrl: 'https://images.example.com/x.jpg',
+    }
+    fakeShuffleApi({ results: [{ items: [withPhoto, noodles, brokenPhoto] }] })
+    const { user } = renderApp('/meal')
+    await shuffleCards(user)
+    await user.click(screen.getByRole('button', { name: 'เปิดทั้งหมด' }))
+
+    const [photo, missing, broken] = cards()
+    expect(within(photo!).getByRole<HTMLImageElement>('presentation').src).toBe(
+      'http://localhost:3000/uploads/krapao.png',
+    )
+    expect(within(missing!).getByText('ไม่มีรูปเมนู')).toBeTruthy()
+    fireEvent.error(within(broken!).getByRole('presentation'))
+    expect(await within(broken!).findByText('โหลดรูปไม่ได้')).toBeTruthy()
   })
 
   it('animates the reveal only when motion is allowed and names every state in text', async () => {

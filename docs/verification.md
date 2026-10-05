@@ -820,8 +820,8 @@ Deliberate regression checks confirmed that the page and schema tests fail when:
 
 | Command | Exit code | Result |
 |---|---:|---|
-| `pnpm --filter web test` | 0 | Pass: 28 files/320 tests. New: `ShuffleCards.test.tsx` (17), `shortlist.test.ts` (12), and `formatPrice.test.ts` (1). The issue's required tests are listed below the table. The existing #53 tests are updated for the now-enabled shuffle button. |
-| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests (API 55 files/427 tests; web 28 files/320 tests), API build with OpenAPI generation, and web production build. |
+| `pnpm --filter web test` | 0 | Pass: 28 files/321 tests. New: `ShuffleCards.test.tsx` (18), `shortlist.test.ts` (12), and `formatPrice.test.ts` (1). The issue's required tests are listed below the table. The existing #53 tests are updated for the now-enabled shuffle button. |
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests (API 55 files/427 tests; web 28 files/321 tests), API build with OpenAPI generation, and web production build. |
 | `prettier --check --end-of-line auto .` in `src/api` and `src/web` | 0 | Pass. |
 
 `ShuffleCards.test.tsx` covers every required test in the issue:
@@ -866,3 +866,9 @@ Deliberate regression checks confirmed the tests fail when:
 - **Layout and console:** at 390 px there was no horizontal overflow, and the console showed no errors.
 - **Browser-tool artifact:** clicking a button by element reference sometimes scrolled the page before the click landed. A native click immediately after a fresh load triggered the shuffle normally, so this is not an app defect.
 - **Fixed during the check:** the conditions intro no longer shows above the cards.
+- **Follow-up requested by the human reviewer: card photos.**
+  - Seven of the approved catalog photos in `assets/catalog/*/menus` (about 1206×1190 px, square) were attached to the matching local menu items, for the check only.
+  - Photos now span the card top at 4:3 and are cropped to fill.
+  - A card without a photo, or with a broken photo, keeps the same-size panel with the food-type icon.
+  - Rechecked in Chrome: the menu names of a photo card, a no-photo card, and a broken-photo card start at the same height, and there is no overflow at 390 px.
+  - A new page test covers all three cases. Admin image previews are unchanged.

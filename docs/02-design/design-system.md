@@ -164,6 +164,7 @@ Use slight asymmetric radii for doodle surfaces when practical, e.g. `6px 12px 5
 - Soft-deleted menu items may appear only in account history/favorites with an unavailable status, never in public recommendation results.
 
 - In the React flow, a card has four visible states, each stated in text and not by colour or motion alone: face-down (`การ์ดใบที่ {n}` with `ยังไม่เปิด`), revealed (menu details and actions), finding a replacement (`กำลังหาเมนูใหม่…`), and no more options (`ไม่มีตัวเลือกเพิ่มแล้ว`). The reveal animation runs only under `prefers-reduced-motion: no-preference`.
+- A revealed card's photo spans the card top at a `4:3` ratio, cropped to fill (`object-cover`). A card without a photo, or whose photo cannot load, shows a same-size panel with the food-type icon and `ไม่มีรูปเมนู` / `โหลดรูปไม่ได้`, so every revealed card lines up.
 
 ### Dialogs And Overlays
 
