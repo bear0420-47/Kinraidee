@@ -7,7 +7,7 @@ import {
 import { useEffect, useRef } from 'react'
 
 import { Button } from '@/components/Button'
-import { ImagePreview } from '@/components/ImagePreview'
+import { ImageLightbox } from '@/components/ImageLightbox'
 import { RowActions } from '@/components/RowActions'
 import {
   actionsColumnClassName,
@@ -165,7 +165,10 @@ export function MenuItemTable({
               >
                 <td className={bodyCellClassName}>
                   {menuItem.imageUrl ? (
-                    <ImagePreview url={menuItem.imageUrl} alt="" size="cell" />
+                    <ImageLightbox
+                      url={menuItem.imageUrl}
+                      name={menuItem.name.th}
+                    />
                   ) : (
                     <span className="flex h-20 w-20 items-center justify-center rounded-sm border-2 border-dashed border-line-soft text-center text-small text-muted">
                       ไม่มีรูป

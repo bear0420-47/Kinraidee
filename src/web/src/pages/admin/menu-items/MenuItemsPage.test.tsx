@@ -380,6 +380,31 @@ describe('MenuItemsPage list', () => {
     ])
   })
 
+  it('opens the full image in a lightbox and returns focus when it closes', async () => {
+    fakeMenuItemsApi()
+    const { user } = await openMenuItemsPage()
+
+    const thumbnail = screen.getByRole('button', {
+      name: 'ดูรูปเต็ม ก๋วยเตี๋ยว',
+    })
+    await user.click(thumbnail)
+
+    expect(dialog().getByRole('heading', { name: 'ก๋วยเตี๋ยว' })).toBeTruthy()
+    expect(
+      dialog().getByRole<HTMLImageElement>('img', { name: 'รูป ก๋วยเตี๋ยว' })
+        .src,
+    ).toBe('https://images.example.com/noodles.jpg')
+
+    await user.keyboard('{Escape}')
+    expect(screen.queryByRole('dialog')).toBeNull()
+    expect(document.activeElement).toBe(thumbnail)
+
+    await user.click(thumbnail)
+    await user.click(dialog().getByRole('button', { name: 'ปิด' }))
+    expect(screen.queryByRole('dialog')).toBeNull()
+    expect(document.activeElement).toBe(thumbnail)
+  })
+
   it('applies search, Restaurant, FoodType, Taste, and deleted filters and resets to page 1', async () => {
     const many = Array.from({ length: 25 }, (_, index) =>
       menuItem(`m_${index}`, `เมนู ${index}`, `Dish ${index}`),
