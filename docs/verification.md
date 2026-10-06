@@ -1003,3 +1003,108 @@ Deliberate regression checks confirmed the tests fail when:
 - **Unavailable:** after the burger was soft-deleted in admin, `PUT` returned `409 MENU_ITEM_UNAVAILABLE` and the page showed the `ไม่พร้อมให้บริการ` badge. Enter on its `นำออกจากเมนูโปรด` (described by the menu name) removed it, announced the removal, and moved focus to the favorites area. The burger was restored afterwards.
 - **Layout and console:** at 390 px the rows stack without horizontal overflow, and the console showed no errors.
 - **Reopened dialog:** signed out, the heart inside the dialog led to login with the notice and stored only the chosen card's ID. After login the same menu's dialog reopened, unsaved, with focus on `ขอคิดอีกที`. Escape closed it, removed the stored ID, and returned focus to `เลือกเมนู พาสต้าครีมทริปเปิลชีส`. No console errors.
+
+## Issue #47 — Saved default recommendation preferences
+
+### Scope
+
+- Verification date: 2026-10-07 (ICT, `UTC+07:00`)
+- Branch: `feat/47-saved-preferences`, stacked on #46 (`feat/46-menu-item-favorites`, PR #84).
+- Change:
+  - API: `GET`, `PUT`, and `DELETE /api/preferences` for any signed-in role, always for the token's user.
+  - Web: `/account/preferences`, and saved defaults pre-selected in the meal flow's condition steps.
+  - The OpenAPI document and the generated web client types are regenerated (additions only).
+  - `markSignedOut` and `isUnauthenticated` moved to `hooks/auth/useCurrentUser.ts`, shared by favorites and preferences.
+  - Follow-up chosen by the human approver: every select starts with `ไม่ตั้งค่า` (not set), and taste, food type, and zone also offer a real saved "any". The API accepts `"ANY"` for those three fields. A migration (`20261007120000_preference_any_choices`) adds `zoneAny`, `foodTypeAny`, and `tasteAny` flags, with check constraints so a flag and an ID are never both set.
+- Decisions are recorded in `docs/plan.md` and `docs/03-implementation/data-model.md`; the form rules are in `docs/02-design/design-system.md` (Saved Preferences).
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests (API 65 files/498 tests; web 34 files/372 tests), API build with OpenAPI generation, and web production build. |
+| `prettier --check --end-of-line auto .` in `src/api` and `src/web` | 0 | Pass. |
+| `git diff --check` | 0 | Pass. |
+
+| `prisma migrate deploy`, then `prisma migrate diff --from-url … --to-schema-datamodel …` on the local database | 0 | The migration applies, and the database matches the schema exactly. The three check constraints exist. |
+
+API tests (5 files, 39 tests) cover every required API test:
+- `401` on all three routes, with the service never called.
+- A missing preference returns `preference: null`.
+- `PUT` creates, and replaces the complete object (one upserted row per user).
+- An all-null object, a partial body, or an unknown budget is rejected.
+- Unknown zone, food type, and taste IDs return `400 VALIDATION_ERROR` naming each field, including the foreign-key race.
+- Individual fields may be null while one stays set. `"ANY"` is accepted for taste, food type, and zone (even all three), but not for budget. It is stored as the flag with a null ID, read back as `"ANY"`, and never checked as a record.
+- `DELETE` removes the row and is idempotent.
+- A client `userId` and allergy, health, religion, rejected-ID, or shortlist fields are rejected.
+- USER and ADMIN behave alike.
+- The OpenAPI document requires all four fields and allows no others.
+
+Web tests (`PreferencesPage.test.tsx`, 12; `MealPreferences.test.tsx`, 6; `preferenceSchemas.test.ts`, 7) cover every required web test:
+- **Account page:**
+  - The page requires login.
+  - The options come from the three master-data APIs: `ไม่ตั้งค่า` first, then `อะไรก็ได้` / `ที่ไหนก็ได้` for taste, food type, and zone (budget has none), then the records.
+  - An all-"any" save is valid and sends `"ANY"`, and a saved "any" shows as selected.
+  - A saved preference fills the form.
+  - Save sends the complete four-field object and announces `บันทึกค่าเริ่มต้นแล้ว`.
+  - A save with everything `ไม่ตั้งค่า` shows `เลือกอย่างน้อยหนึ่งค่า หรือกดล้างค่าเริ่มต้น` linked to the budget field, focuses it, and makes no request.
+  - Clear runs only after confirmation, announces `ล้างค่าเริ่มต้นแล้ว`, resets the form, and moves focus to `บันทึกค่าเริ่มต้น`.
+  - A stale choice is marked on its field, and other failures show an alert.
+  - An ADMIN account works the same.
+  - The account link reads `ค่าเริ่มต้นการสุ่มเมนู`, and logout drops the cached preference.
+  - Browser storage never holds the preference.
+- **Meal flow:**
+  - Signed in, each saved default is shown and is committed only on `ถัดไป`. A saved "any" pre-selects `อะไรก็ได้` and commits as "any".
+  - A field with no default stays unanswered.
+  - The user can override a default.
+  - An answer the user already gave, including "any", wins.
+  - A default whose record no longer exists is dropped, and `ถัดไป` asks for a choice.
+  - An anonymous user gets no defaults and no preference request.
+- `ConfirmMenu.test.tsx` now also expects a signed-in user's `GET /api/preferences`.
+
+Deliberate regression checks confirmed the tests fail when:
+- **API:**
+  - It accepts all-null.
+  - It accepts extra fields.
+  - It skips the ID check.
+  - Clear is not idempotent.
+- **Web:**
+  - The form accepts all-empty.
+  - Clear skips the confirmation.
+  - Focus is not moved after clearing.
+  - A default is stored before `ถัดไป`.
+  - A default beats the user's own answer.
+  - A null default becomes "any".
+  - A stale default is kept.
+  - Logout keeps the preference.
+- **The "any" follow-up:**
+  - The API stores `"ANY"` in the ID column.
+  - The API forgets the flag on read.
+  - The API checks `"ANY"` as a record.
+  - The API accepts `"ANY"` for budget.
+  - The page drops the "any" option.
+  - "Not set" is sent as `"ANY"`.
+  - The flow gets `"ANY"` as an ID.
+  - "Not set" becomes "any" in the flow.
+
+Two of these first survived because their tests checked before the preference had loaded; the tests now wait for it. One "any" check first survived because only food type covered "not set"; the unit test now covers all three fields. The tests also caught a real defect: after clearing, focus returned to the clear button just as it was removed. Focus now moves to `บันทึกค่าเริ่มต้น`.
+
+### Manual browser checks (Chrome, local API with the approved #30 catalog)
+
+- **Signed in, `/account/preferences`:** the four labelled selects listed the master data with the "no default" option first.
+- **Empty save:** showed the approved message linked to `งบประมาณ`, focused it, and sent no request.
+- **Save:** `฿101–200` and a zone sent one `PUT` and announced `บันทึกค่าเริ่มต้นแล้ว`. The API returned exactly the four fields, and browser storage held no preference.
+- **Meal flow, fresh session:**
+  - The budget step showed `฿101–200` selected, with nothing stored yet.
+  - `ถัดไป` committed it.
+  - Taste (no default) required a choice.
+  - The zone step showed the saved zone. Choosing another zone carried through to the summary, and only the flow's own key was in `sessionStorage`.
+- **Clear:**
+  - The confirmation opened on `ยกเลิก`, and Escape kept the preference.
+  - Confirming deleted it (the API then returned `null`), announced `ล้างค่าเริ่มต้นแล้ว`, reset every select, and focused `บันทึกค่าเริ่มต้น`.
+- **Anonymous `/meal`:** nothing pre-selected and no preference request.
+- **Not set / any follow-up:**
+  - The selects start with `ไม่ตั้งค่า`, then `อะไรก็ได้` / `ที่ไหนก็ได้`.
+  - Saving "any" for taste, food type, and zone with budget not set announced `บันทึกค่าเริ่มต้นแล้ว` with no error. The API returned `"ANY"` for the three fields, and the database row held null IDs with all three flags true.
+  - In a fresh `/meal`, the budget step had nothing selected. Taste, food type, and zone each pre-selected their "any" chip, and the flow stored them as "any". No console errors.
+- **Layout and console:** at 390 px no horizontal overflow, and no console errors.

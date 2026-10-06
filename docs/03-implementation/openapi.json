@@ -2465,6 +2465,105 @@
           "data"
         ]
       },
+      "Preference": {
+        "type": "object",
+        "properties": {
+          "budget": {
+            "type": "string",
+            "nullable": true,
+            "enum": [
+              "UNDER_50",
+              "BETWEEN_50_100",
+              "BETWEEN_101_200",
+              "OVER_200",
+              null
+            ]
+          },
+          "zoneId": {
+            "type": "string",
+            "nullable": true,
+            "minLength": 1,
+            "description": "A record ID, \"ANY\" for a saved \"any\" choice, or null when not set."
+          },
+          "foodTypeId": {
+            "type": "string",
+            "nullable": true,
+            "minLength": 1,
+            "description": "A record ID, \"ANY\" for a saved \"any\" choice, or null when not set."
+          },
+          "tasteId": {
+            "type": "string",
+            "nullable": true,
+            "minLength": 1,
+            "description": "A record ID, \"ANY\" for a saved \"any\" choice, or null when not set."
+          }
+        },
+        "required": [
+          "budget",
+          "zoneId",
+          "foodTypeId",
+          "tasteId"
+        ],
+        "additionalProperties": false
+      },
+      "PreferenceEnvelope": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "preference": {
+                "type": "object",
+                "nullable": true,
+                "properties": {
+                  "budget": {
+                    "type": "string",
+                    "nullable": true,
+                    "enum": [
+                      "UNDER_50",
+                      "BETWEEN_50_100",
+                      "BETWEEN_101_200",
+                      "OVER_200",
+                      null
+                    ]
+                  },
+                  "zoneId": {
+                    "type": "string",
+                    "nullable": true,
+                    "minLength": 1,
+                    "description": "A record ID, \"ANY\" for a saved \"any\" choice, or null when not set."
+                  },
+                  "foodTypeId": {
+                    "type": "string",
+                    "nullable": true,
+                    "minLength": 1,
+                    "description": "A record ID, \"ANY\" for a saved \"any\" choice, or null when not set."
+                  },
+                  "tasteId": {
+                    "type": "string",
+                    "nullable": true,
+                    "minLength": 1,
+                    "description": "A record ID, \"ANY\" for a saved \"any\" choice, or null when not set."
+                  }
+                },
+                "required": [
+                  "budget",
+                  "zoneId",
+                  "foodTypeId",
+                  "tasteId"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "preference"
+            ]
+          }
+        },
+        "required": [
+          "data"
+        ]
+      },
       "AuditLogListEnvelope": {
         "type": "object",
         "properties": {
@@ -4893,6 +4992,107 @@
           },
           "409": {
             "description": "The MenuItem or its Restaurant is deleted, so it cannot be added",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/preferences": {
+      "get": {
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The signed-in user preference, or null when none is saved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PreferenceEnvelope"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, invalid, or expired token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Preference"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The saved preference (a full replacement)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PreferenceEnvelope"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "All fields null, an unknown field or budget, or an unknown master-data ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, invalid, or expired token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Preference cleared (idempotent)"
+          },
+          "401": {
+            "description": "Missing, invalid, or expired token",
             "content": {
               "application/json": {
                 "schema": {

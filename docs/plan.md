@@ -119,6 +119,16 @@ Approved — full-app build plan updated through 2026-09-28 decisions. Implement
     - For #48: a reload after `เอาเมนูนี้แหละ` but before `กลับหน้าหลัก` reopens the confirmation stage, so the history write must not depend on the dialog being shown only once.
   - The favorites query is keyed by the user ID and removed on logout. A `401` from it, or from a favorite request, is treated as signed out rather than as a flow error.
   - `/account/favorites` lists favorites newest first with photo, names, Restaurant, and price. An unavailable favorite shows a `ไม่พร้อมให้บริการ` badge with an icon and can still be removed.
+- Issue #47 preferences API (`/api/preferences`) sits behind `requireAuth` for any role and always uses the token's user ID.
+  - `PUT` is a full replacement: all four fields (`budget`, `zoneId`, `foodTypeId`, `tasteId`) are required, and at least one must be set. Any other field, such as `userId` or allergy data, is a `400`.
+  - Each field is `null` for "not set". `tasteId`, `foodTypeId`, and `zoneId` also accept `"ANY"`, a saved "any" choice. `budget` has no "any", because the meal flow always asks for a budget range. This extends the issue's contract, as the human approver chose on 2026-10-07. The database keeps the ID columns and their foreign keys, and adds `tasteAny`, `foodTypeAny`, and `zoneAny` flags (see `docs/03-implementation/data-model.md`).
+  - An unknown master-data ID is a `400 VALIDATION_ERROR` naming the field; `"ANY"` needs no record.
+  - It upserts on the unique `userId` with no nested writes, so Prisma issues a native `INSERT … ON CONFLICT` and two first saves cannot collide. `DELETE` removes the row and is idempotent (`204`).
+- Issue #47 web preferences:
+  - Every select on `/account/preferences` starts with `ไม่ตั้งค่า` (not set, saved as `null`). Taste, food type, and zone then offer `อะไรก็ได้` / `ที่ไหนก็ได้`, saved as `"ANY"`, before their records. This replaces the first pass, where the "any" labels meant "not set" and an all-"any" save was refused; the human approver chose the split on 2026-10-07, and the earlier budget label `งบเท่าไหร่ก็ได้` is no longer used.
+  - The page title and the account link read `ค่าเริ่มต้นการสุ่มเมนู`. A save with all four fields `ไม่ตั้งค่า` never calls `PUT`: it shows `เลือกอย่างน้อยหนึ่งค่า หรือกดล้างค่าเริ่มต้น` on the first field and focuses it. Choosing "any" everywhere is a valid save. Clearing asks for confirmation first.
+  - The preference is cached only in the query cache, keyed by user and removed on logout, and is never written to `localStorage` or `sessionStorage`.
+  - Prefill is display-then-commit. For a signed-in user with a preference, an unanswered step shows the saved default as selected (a saved "any" selects `อะไรก็ได้` / `ที่ไหนก็ได้`), and `ถัดไป` commits it to the flow like any other answer. The user can choose differently on every step, and an answer the user already gave, including "any", always wins. A `ไม่ตั้งค่า` field stays unanswered, and a default whose record no longer exists is dropped. Prefilled steps show no extra note (human approver's choice). Anonymous users get no preference request and no defaults.
 
 ## Evidence Expected
 

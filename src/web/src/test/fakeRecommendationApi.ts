@@ -41,6 +41,14 @@ const zones = [
   },
 ]
 
+// The three master-data lists, as the public list endpoints return them.
+export const masterDataResponses = {
+  'GET /api/tastes': () => jsonResponse(200, { data: { items: tastes } }),
+  'GET /api/food-types': () =>
+    jsonResponse(200, { data: { items: foodTypes } }),
+  'GET /api/zones': () => jsonResponse(200, { data: { items: zones } }),
+}
+
 export const conditions: RecommendationConditions = {
   budget: 'BETWEEN_50_100',
   tasteId: 'taste_1',
@@ -99,10 +107,7 @@ export function fakeShuffleApi({
     currentUser,
     ...(handle ? { handle } : {}),
     responses: {
-      'GET /api/tastes': () => jsonResponse(200, { data: { items: tastes } }),
-      'GET /api/food-types': () =>
-        jsonResponse(200, { data: { items: foodTypes } }),
-      'GET /api/zones': () => jsonResponse(200, { data: { items: zones } }),
+      ...masterDataResponses,
       'POST /api/recommendations': () => {
         const next = queue.shift()
         if (!next) throw new Error('Unexpected recommendation request.')

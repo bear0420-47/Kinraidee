@@ -2275,6 +2275,117 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/preferences": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description The signed-in user preference, or null when none is saved */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["PreferenceEnvelope"];
+                    };
+                };
+                /** @description Missing, invalid, or expired token */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorEnvelope"];
+                    };
+                };
+            };
+        };
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["Preference"];
+                };
+            };
+            responses: {
+                /** @description The saved preference (a full replacement) */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["PreferenceEnvelope"];
+                    };
+                };
+                /** @description All fields null, an unknown field or budget, or an unknown master-data ID */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorEnvelope"];
+                    };
+                };
+                /** @description Missing, invalid, or expired token */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorEnvelope"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Preference cleared (idempotent) */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Missing, invalid, or expired token */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorEnvelope"];
+                    };
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/audit-logs": {
         parameters: {
             query?: never;
@@ -2912,6 +3023,30 @@ export interface components {
             data: {
                 menuItemId: string;
                 favorited: boolean;
+            };
+        };
+        Preference: {
+            /** @enum {string|null} */
+            budget: "UNDER_50" | "BETWEEN_50_100" | "BETWEEN_101_200" | "OVER_200" | null;
+            /** @description A record ID, "ANY" for a saved "any" choice, or null when not set. */
+            zoneId: string | null;
+            /** @description A record ID, "ANY" for a saved "any" choice, or null when not set. */
+            foodTypeId: string | null;
+            /** @description A record ID, "ANY" for a saved "any" choice, or null when not set. */
+            tasteId: string | null;
+        };
+        PreferenceEnvelope: {
+            data: {
+                preference: {
+                    /** @enum {string|null} */
+                    budget: "UNDER_50" | "BETWEEN_50_100" | "BETWEEN_101_200" | "OVER_200" | null;
+                    /** @description A record ID, "ANY" for a saved "any" choice, or null when not set. */
+                    zoneId: string | null;
+                    /** @description A record ID, "ANY" for a saved "any" choice, or null when not set. */
+                    foodTypeId: string | null;
+                    /** @description A record ID, "ANY" for a saved "any" choice, or null when not set. */
+                    tasteId: string | null;
+                } | null;
             };
         };
         AuditLogListEnvelope: {

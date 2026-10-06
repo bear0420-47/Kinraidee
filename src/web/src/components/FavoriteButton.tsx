@@ -2,12 +2,8 @@ import { Heart } from '@phosphor-icons/react'
 import { useLocation, useNavigate } from 'react-router'
 
 import { ApiError } from '@/api/apiError'
-import { useCurrentUser } from '@/hooks/auth/useCurrentUser'
-import {
-  isUnauthenticated,
-  useFavorites,
-  useSetFavorite,
-} from '@/hooks/favorites/useFavorites'
+import { isUnauthenticated, useCurrentUser } from '@/hooks/auth/useCurrentUser'
+import { useFavorites, useSetFavorite } from '@/hooks/favorites/useFavorites'
 import { buildAuthPath, type LoginNotice } from '@/lib/authRedirects'
 import type { FavoriteMenuItem } from '@/schemas/favorites/favoriteSchemas'
 

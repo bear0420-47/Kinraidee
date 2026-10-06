@@ -764,3 +764,42 @@ No blocking findings. All #46 routes, rules, response shapes, web scope, anonymo
 Human reviewer: Pending pull-request review
 Decision: Pending
 Date: TBD
+
+## Issue #47 — Saved default recommendation preferences
+
+### Status
+
+Automated two-axis review complete on 2026-10-07. Human pull-request approval remains pending.
+
+### Standards review
+
+No documented-standard violations remain:
+- The API module follows the existing layering and reuses `budgetRangeSchema`, `parseWithSchema`, the envelopes, and `requireAuth`. Unknown IDs use the same `400 VALIDATION_ERROR` field shape as recommendations.
+- The web uses the generated client, TanStack Query (keyed by user, removed on logout), React Hook Form with `zodFormResolver`, and the shared `SelectField`, `ConfirmDialog`, `FormAlert`, and `PageShell`.
+- `markSignedOut` and `isUnauthenticated` are now shared from `useCurrentUser` instead of living in the favorites hook.
+
+Judgement calls accepted:
+- A saved `null` means "not set" (`ไม่ตั้งค่า`), and that step stays unanswered in the flow. A saved `"ANY"` is a real "any" choice that the flow pre-selects. This extends the issue's contract and the data model (three `*Any` flags with check constraints), as the human approver chose after seeing the first pass label "not set" as `อะไรก็ได้`. Budget has no "any", because the flow always asks for a range.
+- Prefill is display-then-commit: a default is shown as selected but enters the flow's session state only on `ถัดไป`, so the preference itself is never copied into browser storage.
+- The upsert relies on Prisma's native database upsert for a single unique `where`, so first saves cannot collide.
+- The all-empty error sits on the first field, so it is linked to a field and receives focus, as the issue requires.
+
+### Specification review
+
+No blocking findings. All #47 routes, field rules, contract, web scope, behaviour, copy, accessibility, required tests, and acceptance criteria are implemented. Notes:
+- The `ไม่ตั้งค่า` / "any" split and showing no note on prefilled steps are the human approver's choices. The earlier budget label `งบเท่าไหร่ก็ได้` was retired with the split.
+- The account link text now matches the page title `ค่าเริ่มต้นการสุ่มเมนู`.
+- No multiple profiles, sensitive data, ranking, auto-save, or import/export was added.
+
+### Review scope
+
+- Diff: `git diff feat/46-menu-item-favorites...feat/47-saved-preferences`
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/02-design/design-system.md`, `docs/03-implementation/data-model.md`, and `docs/03-implementation/engineering-guidelines.md`
+- Specification source: GitHub issue #47
+- Checked: authorization and user scoping, strict field allowlist, master-data validation, idempotency, cache and storage scoping, prefill semantics, focus and live regions, keyboard use, mobile layout, and out-of-scope boundaries
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD

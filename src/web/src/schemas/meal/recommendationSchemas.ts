@@ -12,7 +12,7 @@ export type RecommendationItem = RecommendationResult['items'][number]
 export type Relaxation = NonNullable<RecommendationResult['relaxation']>
 export type Budget = RecommendationConditions['budget']
 
-const budgetValues = [
+export const budgetValues = [
   'UNDER_50',
   'BETWEEN_50_100',
   'BETWEEN_101_200',

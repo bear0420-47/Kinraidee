@@ -21,9 +21,8 @@ async function chooseMenu(user: User, name: string) {
   return screen.findByRole('dialog', { name: 'เลือกเมนูนี้ใช่ไหม?' })
 }
 
-// Only the master data and the recommendation request itself may be called.
-// Only the master data, the recommendation request, and (signed in) the favorites read may
-// be called: no history write and no menu-detail endpoint.
+// Only the master data, the recommendation request, and (signed in) the favorites and saved
+// defaults reads may be called: no history write and no menu-detail endpoint.
 const anonymousCalls = [
   'GET /api/auth/me',
   'GET /api/food-types',
@@ -31,7 +30,11 @@ const anonymousCalls = [
   'GET /api/zones',
   'POST /api/recommendations',
 ].sort()
-const signedInCalls = [...anonymousCalls, 'GET /api/favorites'].sort()
+const signedInCalls = [
+  ...anonymousCalls,
+  'GET /api/favorites',
+  'GET /api/preferences',
+].sort()
 
 function requestedCalls(api: ReturnType<typeof fakeShuffleApi>) {
   return [

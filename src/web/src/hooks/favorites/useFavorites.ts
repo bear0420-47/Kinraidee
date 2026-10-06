@@ -1,14 +1,10 @@
-import {
-  useMutation,
-  useQuery,
-  useQueryClient,
-  type QueryClient,
-} from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { ApiError } from '@/api/apiError'
 import { apiClient } from '@/api/client'
 import {
-  currentUserQueryKey,
+  isUnauthenticated,
+  markSignedOut,
   useCurrentUser,
 } from '@/hooks/auth/useCurrentUser'
 import type {
@@ -21,15 +17,6 @@ export const favoritesQueryKey = ['favorites'] as const
 // Keyed by user, so one account never sees another account's cached favorites.
 function userFavoritesKey(userId: string) {
   return [...favoritesQueryKey, userId] as const
-}
-
-// An expired session reads as signed out, not as an error in the meal flow.
-function markSignedOut(queryClient: QueryClient) {
-  queryClient.setQueryData(currentUserQueryKey, null)
-}
-
-export function isUnauthenticated(error: unknown) {
-  return error instanceof ApiError && error.status === 401
 }
 
 // The signed-in user's favorites, newest first. Idle while signed out.
