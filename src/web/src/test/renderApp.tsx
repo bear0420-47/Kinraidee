@@ -28,7 +28,7 @@ export type RecordedRequest = {
   body: unknown
 }
 
-type FakeApiOptions = {
+export type FakeApiOptions = {
   currentUser?: CurrentUser | null
   loginAs?: CurrentUser
   // Exact `METHOD /path` handlers, matched on the pathname only.

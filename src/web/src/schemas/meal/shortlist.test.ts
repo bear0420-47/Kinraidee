@@ -11,6 +11,9 @@ import {
   type Relaxation,
 } from './recommendationSchemas'
 import {
+  chooseCard,
+  chosenItem,
+  clearChoice,
   hasFaceDownCard,
   replaceCard,
   revealAll,
@@ -160,6 +163,23 @@ describe('shortlist transitions', () => {
     // Undo only restores the latest rejection; the exhausted slot stays.
     expect(undoReject(second).slots[0]).toEqual({ kind: 'exhausted' })
     expect(undoReject(second).rejectedMenuItemIds).toEqual(['a'])
+  })
+
+  it('keeps only the chosen card ID and finds it while the card is revealed', () => {
+    const revealed = revealCard(startShortlist([a, b]), 0)
+    const chosen = chooseCard(revealed, 'a')
+
+    expect(chosen.chosenMenuItemId).toBe('a')
+    expect(chosenItem(chosen)).toEqual(a)
+    // A face-down or missing card cannot reopen a dialog.
+    expect(chosenItem(chooseCard(revealed, 'b'))).toBeNull()
+    expect(chosenItem(chooseCard(revealed, 'x'))).toBeNull()
+    // Clearing removes the key, so the stored value matches the one before choosing.
+    expect(JSON.stringify(clearChoice(chosen))).toBe(JSON.stringify(revealed))
+    expect(
+      storedFlowSchema.parse({ step: 'cards', conditions, shortlist: chosen })
+        .shortlist,
+    ).toEqual(chosen)
   })
 
   it('round-trips through the stored-flow schema', () => {

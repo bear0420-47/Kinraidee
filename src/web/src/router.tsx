@@ -5,6 +5,7 @@ import { AdminArea } from '@/components/AdminArea'
 import { RedirectIfAuthenticated } from '@/components/RedirectIfAuthenticated'
 import { RequireAuth } from '@/components/RequireAuth'
 import { AccountPage } from '@/pages/account/AccountPage'
+import { FavoritesPage } from '@/pages/account/favorites/FavoritesPage'
 import { AdminPage } from '@/pages/admin/AdminPage'
 import { AuditLogsPage } from '@/pages/admin/audit-logs/AuditLogsPage'
 import { FoodTypesPage } from '@/pages/admin/food-types/FoodTypesPage'
@@ -38,6 +39,7 @@ export const routes: RouteObject[] = [
         element: <RequireAuth />,
         children: [
           { index: true, element: <AccountPage /> },
+          { path: 'favorites', element: <FavoritesPage /> },
           { path: '*', element: <Navigate replace to="/account" /> },
         ],
       },

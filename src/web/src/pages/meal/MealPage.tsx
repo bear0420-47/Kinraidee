@@ -22,9 +22,9 @@ import {
   type FlowStep,
   type MealStep,
   type RecommendationConditions,
-  type RecommendationItem,
   type Relaxation,
 } from '@/schemas/meal/recommendationSchemas'
+import { chooseCard, chosenItem, clearChoice } from '@/schemas/meal/shortlist'
 import { BudgetStep } from './components/BudgetStep'
 import { ConditionSummary } from './components/ConditionSummary'
 import { ConfirmMenuDialog } from './components/ConfirmMenuDialog'
@@ -63,9 +63,6 @@ export function MealPage() {
     relaxation: Relaxation | null
   } | null>(null)
   const [shuffleError, setShuffleError] = useState<string | null>(null)
-  // The card being confirmed. Kept in memory only: the cards stay unchanged underneath, so
-  // `ขอคิดอีกที` (or a reload) returns to exactly the same shortlist.
-  const [chosen, setChosen] = useState<RecommendationItem | null>(null)
   const headingRef = useRef<HTMLHeadingElement>(null)
   const shownView = useRef<string | null>(null)
 
@@ -89,6 +86,9 @@ export function MealPage() {
         ? 'summary'
         : flow.step
   const view = step === 'summary' && noMatch ? 'noMatch' : step
+  // The card being confirmed is stored with the shortlist, so its dialog reopens after the
+  // login round trip or a reload. The cards underneath never change while it is open.
+  const chosen = flow.shortlist ? chosenItem(flow.shortlist) : null
 
   // Move focus to the new view's heading, but not on first render.
   useEffect(() => {
@@ -243,13 +243,15 @@ export function MealPage() {
           headingRef={headingRef}
           onUpdate={flow.updateShortlist}
           onEditConditions={editConditions}
-          onChoose={setChosen}
+          onChoose={(item) =>
+            flow.updateShortlist((current) => chooseCard(current, item.id))
+          }
         />
       ) : null}
       {view === 'cards' && chosen ? (
         <ConfirmMenuDialog
           item={chosen}
-          onCancel={() => setChosen(null)}
+          onCancel={() => flow.updateShortlist(clearChoice)}
           onFinish={finish}
         />
       ) : null}

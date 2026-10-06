@@ -720,3 +720,47 @@ No blocking findings. All #55 scope, dialog, success, accessibility, required-te
 Human reviewer: Pending pull-request review
 Decision: Pending
 Date: TBD
+
+## Issue #46 — MenuItem favorites
+
+### Status
+
+Automated two-axis review complete on 2026-10-07. Human pull-request approval remains pending.
+
+### Standards review
+
+No documented-standard violations remain:
+- The API module follows the existing layering (dto, repository, service, controller, routes, OpenAPI) and reuses `menuItemNotFoundError`, `parseWithSchema`, the `ok()` envelope, and `requireAuth`.
+- The web uses the generated client and TanStack Query, keeps favorites only in the query cache (keyed by user and removed on logout), and uses Phosphor icons only.
+- State is carried by shape, text, and `aria-pressed`, never colour alone.
+
+Corrections made during the plan-mode review of the first pass:
+- The `useLogout` clean-up line was restored after an interrupted check.
+- Upserts were replaced with `createMany({ skipDuplicates: true })`, because Prisma's upsert can fail on a simultaneous insert.
+- A foreign-key failure is mapped to `404`.
+- Post-removal focus moved from the list (which unmounts when emptied) to a stable area.
+- The favorites visual rules were added to the design system.
+
+Judgement calls accepted:
+- The web sends `PUT`/`DELETE` from the known state instead of `toggle`, which a retry could reverse.
+- The availability check is not locked against a concurrent soft delete; such a favorite simply lists as unavailable.
+- After login (or a reload), an open confirmation dialog reopens, as the human approver chose, because the shortlist stores the chosen card's ID. It reopens only while that card is still revealed, and focus returns to its `เลือกเมนูนี้` on close.
+
+### Specification review
+
+No blocking findings. All #46 routes, rules, response shapes, web scope, anonymous behaviour, accessibility, required tests, and acceptance criteria are implemented. Notes:
+- Only MenuItems are favoritable; no Restaurant favorites, folders, sharing, analytics, or ranking were added.
+- No route accepts a client-supplied `userId`.
+
+### Review scope
+
+- Diff: `git diff main...feat/46-menu-item-favorites`
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/02-design/design-system.md`, `docs/03-implementation/data-model.md`, and `docs/03-implementation/engineering-guidelines.md`
+- Specification source: GitHub issue #46
+- Checked: authorization and user scoping, idempotency and races, unavailable handling, response field exposure, cache scoping, the login round trip, focus and live regions, keyboard use, mobile layout, and out-of-scope boundaries
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD

@@ -8,7 +8,12 @@ import {
   type RecommendationRequest,
   type Relaxation,
 } from '@/schemas/meal/recommendationSchemas'
-import { fakeAuthApi, jsonResponse, type renderApp } from '@/test/renderApp'
+import {
+  fakeAuthApi,
+  jsonResponse,
+  type FakeApiOptions,
+  type renderApp,
+} from '@/test/renderApp'
 
 // Master data, conditions, and menu items shared by the recommendation page tests.
 const tastes = [
@@ -77,10 +82,13 @@ export function fakeShuffleApi({
   results,
   currentUser = null,
   stored = conditions,
+  handle,
 }: {
   results: (Result | Response | Promise<Response>)[]
   currentUser?: CurrentUser | null
   stored?: RecommendationConditions
+  // Answers other routes, such as favorites.
+  handle?: FakeApiOptions['handle']
 }) {
   sessionStorage.setItem(
     RECOMMENDATION_STORAGE_KEY,
@@ -89,6 +97,7 @@ export function fakeShuffleApi({
   const queue = [...results]
   const api = fakeAuthApi({
     currentUser,
+    ...(handle ? { handle } : {}),
     responses: {
       'GET /api/tastes': () => jsonResponse(200, { data: { items: tastes } }),
       'GET /api/food-types': () =>

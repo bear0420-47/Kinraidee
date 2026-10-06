@@ -27,6 +27,16 @@ export function getPostLoginPath(
   return getSafeReturnTo(returnTo) ?? getDefaultPathForRole(role)
 }
 
+// Why a page sent the user to log in, passed in router state and announced on the login page.
+export type LoginNotice = 'FAVORITE_LOGIN'
+
+export function readLoginNotice(state: unknown): LoginNotice | null {
+  if (typeof state === 'object' && state !== null && 'notice' in state) {
+    return state.notice === 'FAVORITE_LOGIN' ? 'FAVORITE_LOGIN' : null
+  }
+  return null
+}
+
 export function buildAuthPath(
   page: '/login' | '/register',
   returnTo: string | null | undefined,

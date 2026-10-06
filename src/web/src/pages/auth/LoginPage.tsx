@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form'
-import { Link, useSearchParams } from 'react-router'
+import { Link, useLocation, useSearchParams } from 'react-router'
 
 import { ApiError } from '@/api/apiError'
 import { Button } from '@/components/Button'
@@ -7,7 +7,11 @@ import { FormAlert } from '@/components/FormAlert'
 import { PageShell } from '@/components/PageShell'
 import { TextField } from '@/components/TextField'
 import { useLogin } from '@/hooks/auth/useLogin'
-import { buildAuthPath } from '@/lib/authRedirects'
+import {
+  buildAuthPath,
+  readLoginNotice,
+  type LoginNotice,
+} from '@/lib/authRedirects'
 import { zodFormResolver } from '@/lib/zodFormResolver'
 import {
   loginFormSchema,
@@ -22,8 +26,13 @@ function getLoginErrorMessage(error: Error) {
   return 'เข้าสู่ระบบไม่สำเร็จ กรุณาลองใหม่อีกครั้ง'
 }
 
+const loginNoticeMessages: Record<LoginNotice, string> = {
+  FAVORITE_LOGIN: 'เข้าสู่ระบบเพื่อบันทึกเมนูโปรด',
+}
+
 export function LoginPage() {
   const [searchParams] = useSearchParams()
+  const notice = readLoginNotice(useLocation().state)
   const login = useLogin()
   const {
     register,
@@ -36,6 +45,14 @@ export function LoginPage() {
 
   return (
     <PageShell title="เข้าสู่ระบบ">
+      {notice ? (
+        <p
+          role="status"
+          className="rounded-sm border-2 border-paper bg-cream p-3 font-bold"
+        >
+          {loginNoticeMessages[notice]}
+        </p>
+      ) : null}
       <form
         noValidate
         className="flex flex-col gap-4"

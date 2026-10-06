@@ -926,3 +926,80 @@ Deliberate regression checks confirmed the tests fail when:
 - **Keyboard only:** Enter on the card's button, Tab, Enter confirmed. The success state announced `ขอให้อร่อยกับบรูสเกตตากัวคาโมเล ที่ไอวิชพาสต้า` and focused `กลับหน้าหลัก`. Enter returned to `/` with `sessionStorage` empty.
 - **Requests:** only `auth/me`, the three master-data lists, and `POST /api/recommendations`. No history or menu-detail endpoint. No console errors.
 - **Layout:** at 390 px the dialog fits without scrolling or horizontal overflow, with `เอาเมนูนี้แหละ` stacked above `ขอคิดอีกที`.
+
+## Issue #46 — MenuItem favorites
+
+### Scope
+
+- Verification date: 2026-10-07 (ICT, `UTC+07:00`)
+- Branch: `feat/46-menu-item-favorites`, from `main` after #53–#55 merged.
+- Change:
+  - API: `GET /api/favorites`, `PUT` / `DELETE /api/favorites/:menuItemId`, and `POST /api/favorites/:menuItemId/toggle`, for any signed-in role, always for the token's user.
+  - Web: a heart button on revealed cards and in the confirmation dialog, the login notice for signed-out users, and `/account/favorites`.
+  - The OpenAPI document and the generated web client types are regenerated (additions only).
+- Decisions are recorded in `docs/plan.md`; the visual rules are in `docs/02-design/design-system.md` (Favorites).
+- Process note: work began without plan mode. It was then reviewed against the issue in plan mode, and four corrections were made before this verification:
+  - An interrupted regression check had left `useLogout` without its favorites clean-up; it was restored.
+  - Adds now use `createMany` with `skipDuplicates`, so simultaneous adds cannot fail on the composite key.
+  - A foreign-key failure (the MenuItem vanished mid-request) now returns `404`.
+  - Focus now lands on a stable area after the last favorite is removed.
+- Follow-up chosen by the human approver: after logging in from the confirmation dialog (or reloading), the dialog reopens. The shortlist stores the chosen card's ID for this.
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests (API 60 files/459 tests; web 31 files/347 tests), API build with OpenAPI generation, and web production build. |
+| `prettier --check --end-of-line auto .` in `src/api` and `src/web` | 0 | Pass. |
+| `git diff --check` | 0 | Pass. |
+
+API tests (5 files, 32 tests) cover every required API test:
+- `401` on all four routes, with the service never called.
+- USER and ADMIN can list, favorite, unfavorite, and toggle their own favorites; a `userId` in the query or body is ignored.
+- `PUT` and `DELETE` are idempotent (`ON CONFLICT DO NOTHING` / `deleteMany`), and `toggle` flips in one transaction.
+- An unknown MenuItem returns `404` on every route, including the foreign-key race.
+- A deleted MenuItem, or one under a deleted Restaurant, cannot be newly favorited (`409 MENU_ITEM_UNAVAILABLE`), but can be unfavorited.
+- The list includes unavailable favorites with `available: false` and excludes phone, `imageKey`, and `deletedAt`.
+- The OpenAPI document marks every route as cookie-authenticated.
+
+Web tests (`MealFavorites.test.tsx`, 6; `FavoritesPage.test.tsx`, 8) cover every required web test:
+- An anonymous heart click goes to `/login?returnTo=%2Fmeal` and announces the notice. The session state is unchanged, login returns to the same cards, and nothing is favorited automatically.
+- No password or token is kept in browser storage.
+- Signed in, the heart saves with `PUT` and removes with `DELETE`, never `toggle`, and the label and `aria-pressed` follow.
+- The saved state is shared between the card and the dialog.
+- Logging in from the dialog's heart reopens the same menu's dialog, unsaved, with focus on `ขอคิดอีกที`; closing it returns focus to the card's `เลือกเมนูนี้`.
+- An expired session leads to login; a `409` explains that the menu is unavailable.
+- The favorites page:
+  - Lists newest first with details.
+  - Marks an unavailable favorite in text and lets it be removed, with the removal announced and focus kept.
+  - Handles a failed removal, an empty state, and an ADMIN account.
+  - Redirects anonymous visitors to login.
+  - Is linked from the account page.
+  - Drops cached favorites on logout.
+
+`ConfirmMenu.test.tsx` is updated: the dialog still opens on `ขอคิดอีกที`, the heart is in the focus trap, and a signed-in user's only extra request is `GET /api/favorites`. A new test reloads with the dialog open, sees it reopen, and checks that `ขอคิดอีกที` removes the stored ID. `shortlist.test.ts` covers `chooseCard`, `chosenItem` (face-down and missing cards never reopen), and `clearChoice`.
+
+Deliberate regression checks confirmed the tests fail when:
+- The heart always sends `PUT`.
+- The login notice is dropped.
+- `aria-pressed` is removed.
+- Logout keeps the favorites cache.
+- Focus goes to the unmounting list.
+- `PUT` skips the availability check.
+- The list is oldest first.
+- The foreign-key error is not mapped to `404`.
+- `Dialog` treats `<body>` as an opener (focus is lost after a reopened dialog closes).
+- A face-down card can reopen the dialog.
+- `ขอคิดอีกที` leaves a chosen ID behind.
+
+### Manual browser checks (Chrome, local API with the approved #30 catalog)
+
+- **Anonymous:** the hearts carry no `aria-pressed`. Clicking one opened `/login?returnTo=%2Fmeal` with `เข้าสู่ระบบเพื่อบันทึกเมนูโปรด`, and `sessionStorage` was unchanged.
+- **Login with the local test account:** returned to `/meal` with the same three revealed cards. Every heart read `บันทึกเป็นเมนูโปรด` / `aria-pressed="false"` (nothing saved automatically), and browser storage held no password or token.
+- **Keyboard save:** Enter on a heart turned it into a filled heart on `--ice`, labelled `นำออกจากเมนูโปรด` / `aria-pressed="true"`, and focus stayed on it.
+- **Dialog:** showed the same saved state and opened with focus on `ขอคิดอีกที`.
+- **API:** the list items contain only `menuItemId`, `createdAt`, `available`, and `menuItem` (`id`, `name`, `price`, `imageUrl`, `restaurant`).
+- **`/account/favorites`:** listed the two saved menus newest first.
+- **Unavailable:** after the burger was soft-deleted in admin, `PUT` returned `409 MENU_ITEM_UNAVAILABLE` and the page showed the `ไม่พร้อมให้บริการ` badge. Enter on its `นำออกจากเมนูโปรด` (described by the menu name) removed it, announced the removal, and moved focus to the favorites area. The burger was restored afterwards.
+- **Layout and console:** at 390 px the rows stack without horizontal overflow, and the console showed no errors.
+- **Reopened dialog:** signed out, the heart inside the dialog led to login with the notice and stored only the chosen card's ID. After login the same menu's dialog reopened, unsaved, with focus on `ขอคิดอีกที`. Escape closed it, removed the stored ID, and returned focus to `เลือกเมนู พาสต้าครีมทริปเปิลชีส`. No console errors.

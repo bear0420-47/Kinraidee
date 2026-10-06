@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router'
 
 import { ApiError } from '@/api/apiError'
 import { apiClient } from '@/api/client'
+import { favoritesQueryKey } from '@/hooks/favorites/useFavorites'
 import { currentUserQueryKey } from './useCurrentUser'
 
 export function useLogout() {
@@ -15,9 +16,11 @@ export function useLogout() {
       if (!response.ok) throw new ApiError(response.status)
     },
     // Leave the protected page before clearing the user so no guard sends us to /login.
+    // Account data, such as favorites, leaves the cache with the user.
     onSuccess: async () => {
       await navigate('/', { replace: true })
       queryClient.setQueryData(currentUserQueryKey, null)
+      queryClient.removeQueries({ queryKey: favoritesQueryKey })
     },
   })
 }

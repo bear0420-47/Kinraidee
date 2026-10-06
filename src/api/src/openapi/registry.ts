@@ -2,6 +2,7 @@ import './setup.js'
 import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi'
 import { registerAuditLogsOpenApi } from '@/modules/audit-logs/audit-logs.openapi'
 import { registerAuthOpenApi } from '@/modules/auth/auth.openapi'
+import { registerFavoritesOpenApi } from '@/modules/favorites/favorites.openapi'
 import { registerFoodTypesOpenApi } from '@/modules/food-types/food-types.openapi'
 import { registerMenuItemsOpenApi } from '@/modules/menu-items/menu-items.openapi'
 import { registerRecommendationsOpenApi } from '@/modules/recommendations/recommendations.openapi'
@@ -20,4 +21,5 @@ registerTastesOpenApi(registry)
 registerRestaurantsOpenApi(registry)
 registerMenuItemsOpenApi(registry)
 registerRecommendationsOpenApi(registry)
+registerFavoritesOpenApi(registry)
 registerAuditLogsOpenApi(registry)

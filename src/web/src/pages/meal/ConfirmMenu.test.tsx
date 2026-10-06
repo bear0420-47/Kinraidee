@@ -1,4 +1,4 @@
-import { fireEvent, screen, within } from '@testing-library/react'
+import { cleanup, fireEvent, screen, within } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
 import { RECOMMENDATION_STORAGE_KEY } from '@/schemas/meal/recommendationSchemas'
@@ -22,16 +22,23 @@ async function chooseMenu(user: User, name: string) {
 }
 
 // Only the master data and the recommendation request itself may be called.
-const allowedPaths = [
-  '/api/auth/me',
-  '/api/food-types',
-  '/api/recommendations',
-  '/api/tastes',
-  '/api/zones',
-]
+// Only the master data, the recommendation request, and (signed in) the favorites read may
+// be called: no history write and no menu-detail endpoint.
+const anonymousCalls = [
+  'GET /api/auth/me',
+  'GET /api/food-types',
+  'GET /api/tastes',
+  'GET /api/zones',
+  'POST /api/recommendations',
+].sort()
+const signedInCalls = [...anonymousCalls, 'GET /api/favorites'].sort()
 
-function requestedPaths(api: ReturnType<typeof fakeShuffleApi>) {
-  return [...new Set(api.requests.map((request) => request.path))].sort()
+function requestedCalls(api: ReturnType<typeof fakeShuffleApi>) {
+  return [
+    ...new Set(
+      api.requests.map((request) => `${request.method} ${request.path}`),
+    ),
+  ].sort()
 }
 
 describe('Confirming a menu', () => {
@@ -61,7 +68,7 @@ describe('Confirming a menu', () => {
     ])
     expect(confirm.queryByText(/นาที|รอคิว/)).toBeNull()
     expect(api.recommendationBodies()).toHaveLength(1)
-    expect(requestedPaths(api)).toEqual(allowedPaths)
+    expect(requestedCalls(api)).toEqual(anonymousCalls)
   })
 
   it('uses the approved fallback for a missing or broken photo', async () => {
@@ -89,15 +96,19 @@ describe('Confirming a menu', () => {
     const { user } = renderApp('/meal')
     await shuffleCards(user)
     await revealCard(user, 1)
-    await chooseMenu(user, 'ผัดกะเพรา')
+    const dialog = await chooseMenu(user, 'ผัดกะเพรา')
 
+    // Opening lands on the safe action, although the favorite button comes first.
+    const favorite = within(dialog).getByRole('button', {
+      name: 'บันทึกเป็นเมนูโปรด',
+    })
     const rethink = screen.getByRole('button', { name: 'ขอคิดอีกที' })
     const confirm = screen.getByRole('button', { name: 'เอาเมนูนี้แหละ' })
     expect(document.activeElement).toBe(rethink)
     await user.tab()
     expect(document.activeElement).toBe(confirm)
     await user.tab()
-    expect(document.activeElement).toBe(rethink)
+    expect(document.activeElement).toBe(favorite)
     await user.tab({ shift: true })
     expect(document.activeElement).toBe(confirm)
     expect(
@@ -153,6 +164,35 @@ describe('Thinking again', () => {
   )
 })
 
+describe('Reopening', () => {
+  it('reopens the confirmation dialog after a reload, and ขอคิดอีกที clears it', async () => {
+    fakeShuffleApi({ results: [{ items: [krapao, noodles] }] })
+    const first = renderApp('/meal')
+    await shuffleCards(first.user)
+    await revealCard(first.user, 1)
+    await chooseMenu(first.user, 'ผัดกะเพรา')
+    const stored = sessionStorage.getItem(RECOMMENDATION_STORAGE_KEY)!
+    expect(JSON.parse(stored).shortlist.chosenMenuItemId).toBe('menu_1')
+
+    // Reload: a fresh app reads the same session state.
+    cleanup()
+    fakeShuffleApi({ results: [] })
+    sessionStorage.setItem(RECOMMENDATION_STORAGE_KEY, stored)
+    const { user } = renderApp('/meal')
+
+    const dialog = await screen.findByRole('dialog', {
+      name: 'เลือกเมนูนี้ใช่ไหม?',
+    })
+    expect(within(dialog).getByText('ผัดกะเพรา')).toBeTruthy()
+    await user.click(within(dialog).getByRole('button', { name: 'ขอคิดอีกที' }))
+
+    expect(screen.queryByRole('dialog')).toBeNull()
+    expect(
+      JSON.parse(sessionStorage.getItem(RECOMMENDATION_STORAGE_KEY)!).shortlist,
+    ).not.toHaveProperty('chosenMenuItemId')
+  })
+})
+
 describe('Success', () => {
   async function confirmMenu(user: User) {
     await shuffleCards(user)
@@ -176,18 +216,18 @@ describe('Success', () => {
   })
 
   it.each([
-    ['an anonymous', null],
-    ['a signed-in', testUser],
+    ['an anonymous', null, anonymousCalls],
+    ['a signed-in', testUser, signedInCalls],
   ])(
     'writes no history for %s user, and กลับหน้าหลัก clears the flow and returns Home',
-    async (_, currentUser) => {
+    async (_, currentUser, allowedCalls) => {
       const api = fakeShuffleApi({
         results: [{ items: [krapao, noodles] }],
         currentUser,
       })
       const { user, router } = renderApp('/meal')
       await confirmMenu(user)
-      expect(requestedPaths(api)).toEqual(allowedPaths)
+      expect(requestedCalls(api)).toEqual(allowedCalls)
 
       await user.click(screen.getByRole('button', { name: 'กลับหน้าหลัก' }))
 
@@ -198,7 +238,7 @@ describe('Success', () => {
       expect(screen.queryByRole('dialog')).toBeNull()
       expect(sessionStorage.getItem(RECOMMENDATION_STORAGE_KEY)).toBeNull()
       expect(sessionStorage.length).toBe(0)
-      expect(requestedPaths(api)).toEqual(allowedPaths)
+      expect(requestedCalls(api)).toEqual(allowedCalls)
     },
   )
 
