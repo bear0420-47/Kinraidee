@@ -1022,7 +1022,7 @@ Deliberate regression checks confirmed the tests fail when:
 
 | Command | Exit code | Result |
 |---|---:|---|
-| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests (API 65 files/498 tests; web 34 files/372 tests), API build with OpenAPI generation, and web production build. |
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests (API 65 files/498 tests; web 34 files/373 tests), API build with OpenAPI generation, and web production build. |
 | `prettier --check --end-of-line auto .` in `src/api` and `src/web` | 0 | Pass. |
 | `git diff --check` | 0 | Pass. |
 
@@ -1040,7 +1040,7 @@ API tests (5 files, 39 tests) cover every required API test:
 - USER and ADMIN behave alike.
 - The OpenAPI document requires all four fields and allows no others.
 
-Web tests (`PreferencesPage.test.tsx`, 12; `MealPreferences.test.tsx`, 6; `preferenceSchemas.test.ts`, 7) cover every required web test:
+Web tests (`PreferencesPage.test.tsx`, 13; `MealPreferences.test.tsx`, 6; `preferenceSchemas.test.ts`, 7) cover every required web test:
 - **Account page:**
   - The page requires login.
   - The options come from the three master-data APIs: `ไม่ตั้งค่า` first, then `อะไรก็ได้` / `ที่ไหนก็ได้` for taste, food type, and zone (budget has none), then the records.
@@ -1048,6 +1048,7 @@ Web tests (`PreferencesPage.test.tsx`, 12; `MealPreferences.test.tsx`, 6; `prefe
   - A saved preference fills the form.
   - Save sends the complete four-field object and announces `บันทึกค่าเริ่มต้นแล้ว`.
   - A save with everything `ไม่ตั้งค่า` shows `เลือกอย่างน้อยหนึ่งค่า หรือกดล้างค่าเริ่มต้น` linked to the budget field, focuses it, and makes no request.
+  - The clear button is always shown; with nothing saved it is disabled and described by `ยังไม่ได้ตั้งค่าเริ่มต้น`.
   - Clear runs only after confirmation, announces `ล้างค่าเริ่มต้นแล้ว`, resets the form, and moves focus to `บันทึกค่าเริ่มต้น`.
   - A stale choice is marked on its field, and other failures show an alert.
   - An ADMIN account works the same.

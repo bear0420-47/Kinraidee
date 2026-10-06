@@ -187,7 +187,7 @@ Use slight asymmetric radii for doodle surfaces when practical, e.g. `6px 12px 5
 
 - `/account/preferences` is a single form of four labelled native selects (budget, taste, food type, zone). Each select's first option is `ไม่ตั้งค่า` (no default). Taste, food type, and zone then offer their "any" choice (`อะไรก็ได้` / `ที่ไหนก็ได้`) as a real saved value, then their records. Budget has no "any", because the meal flow always asks for a budget range.
 - A save with every select on `ไม่ตั้งค่า` shows its error under the first select, linked to it, and focus moves there. Save and clear results are announced in a status region.
-- `ล้างค่าเริ่มต้น` appears only when a preference is saved, and it always asks for confirmation in the shared confirm dialog before deleting.
+- `ล้างค่าเริ่มต้น` is always shown so it can be found. With nothing saved it is disabled and described by the `ยังไม่ได้ตั้งค่าเริ่มต้น` line; otherwise it always asks for confirmation in the shared confirm dialog before deleting.
 - In the meal flow, a saved default appears as the already-selected chip on its step, with no extra note.
 
 ### Admin Tables And Bulk Selection

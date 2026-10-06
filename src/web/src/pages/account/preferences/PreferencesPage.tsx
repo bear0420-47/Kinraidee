@@ -1,5 +1,5 @@
 import { Eraser, FloppyDisk } from '@phosphor-icons/react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router'
 
@@ -113,10 +113,11 @@ function PreferenceForm({
   const clear = useClearPreference()
   const [status, setStatus] = useState('')
   const [confirmingClear, setConfirmingClear] = useState(false)
-  // After clearing, the dialog closes before the clear button leaves the page, so focus is
-  // moved to the save button explicitly once both have happened.
+  // After clearing, the dialog returns focus to the clear button just before it is disabled,
+  // so focus is moved to the save button explicitly once nothing is saved.
   const [focusSave, setFocusSave] = useState(false)
   const saveButtonRef = useRef<HTMLButtonElement>(null)
+  const notSetId = useId()
   const {
     register,
     handleSubmit,
@@ -167,7 +168,7 @@ function PreferenceForm({
 
   return (
     <>
-      {saved ? null : <p>ยังไม่ได้ตั้งค่าเริ่มต้น</p>}
+      {saved ? null : <p id={notSetId}>ยังไม่ได้ตั้งค่าเริ่มต้น</p>}
       {failedSave ? (
         <FormAlert
           key={save.submittedAt}
@@ -238,15 +239,17 @@ function PreferenceForm({
           ))}
         </SelectField>
         <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
-          {saved ? (
-            <Button
-              variant="secondary"
-              onClick={() => setConfirmingClear(true)}
-            >
-              <Eraser aria-hidden weight="bold" />
-              ล้างค่าเริ่มต้น
-            </Button>
-          ) : null}
+          {/* Always shown so it can be found; with nothing saved it is disabled, and the
+              "not set" line above says why. */}
+          <Button
+            variant="secondary"
+            disabled={!saved}
+            aria-describedby={saved ? undefined : notSetId}
+            onClick={() => setConfirmingClear(true)}
+          >
+            <Eraser aria-hidden weight="bold" />
+            ล้างค่าเริ่มต้น
+          </Button>
           <Button
             ref={saveButtonRef}
             type="submit"

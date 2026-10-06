@@ -87,6 +87,20 @@ describe('PreferencesPage', () => {
     }
   })
 
+  it('always shows the clear button, disabled with the reason when nothing is saved', async () => {
+    fakeApi()
+    await openPage()
+
+    const clear = screen.getByRole<HTMLButtonElement>('button', {
+      name: 'ล้างค่าเริ่มต้น',
+    })
+    expect(clear.disabled).toBe(true)
+    expect(
+      document.getElementById(clear.getAttribute('aria-describedby')!)
+        ?.textContent,
+    ).toBe('ยังไม่ได้ตั้งค่าเริ่มต้น')
+  })
+
   it('fills the form from the saved preference', async () => {
     fakeApi({ saved })
     await openPage()
@@ -186,7 +200,11 @@ describe('PreferencesPage', () => {
     expect(select('งบประมาณ').value).toBe('')
     expect(select('โซน').value).toBe('')
     expect(screen.getByText('ยังไม่ได้ตั้งค่าเริ่มต้น')).toBeTruthy()
-    expect(screen.queryByRole('button', { name: 'ล้างค่าเริ่มต้น' })).toBeNull()
+    expect(
+      screen.getByRole<HTMLButtonElement>('button', {
+        name: 'ล้างค่าเริ่มต้น',
+      }).disabled,
+    ).toBe(true)
     expect(document.activeElement).toBe(
       screen.getByRole('button', { name: 'บันทึกค่าเริ่มต้น' }),
     )
