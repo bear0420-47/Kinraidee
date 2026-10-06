@@ -1325,6 +1325,41 @@ Deliberate regression checks confirmed the tests fail when:
   - The stored conditions held both changes and kept the taste and zone.
 - **Browser at 375 px:** the message wrapped with no horizontal overflow.
 
+## Seeded catalog photos
+
+### Scope
+
+- Verification date: 2026-10-06 (ICT, `UTC+07:00`)
+- Branch: `fix/seed-catalog-photos`, from `main`.
+- **Problem:** a fresh clone and seed showed no photos. The 12 committed photos in `assets/catalog/` were never linked, because #30 kept every seeded image `null`.
+- **Change:**
+  - `catalog.seed.json` gives each of the 3 restaurants and 9 menu items an `image` entry (asset path and fixed key).
+  - In development and test, `prisma/seed.ts` copies the photos into the local uploads directory and stores their `/uploads/<key>` URLs.
+  - Production behaviour is unchanged.
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm verify` | 0 | Pass (see the PR for test counts). |
+| `vitest run prisma` in `src/api` | 0 | Pass: 24 tests. |
+
+New seed tests:
+- Every record links to an existing committed photo, and the counts are 3 and 9.
+- Records point at `/uploads/<key>` only with local images on, and a second run is unchanged.
+- All 12 photos are copied byte-for-byte under their keys.
+- A missing photo stops the seed.
+- A key with the wrong file type is rejected.
+
+### Manual check (fresh database, as a new contributor)
+
+- A new empty database (`kinraidee_photo_check`) and an empty uploads directory went through `prisma migrate deploy`, then `prisma/seed.ts`:
+  - 47 records were created, and 12 photos were copied.
+  - 9 menu items and 3 restaurants were linked to `/uploads/...`.
+- A second seed run reported 47 unchanged.
+- An API started on that database served the Beef Kofta photo with `200 image/png`, 1,482,635 bytes, identical to the committed file.
+- The check database and its uploads were removed afterwards.
+
 ## Local API environment loading
 
 ### Scope

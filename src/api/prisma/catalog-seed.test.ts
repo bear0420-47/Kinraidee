@@ -1,7 +1,14 @@
+import { existsSync } from 'node:fs'
+import { mkdtemp, readdir, readFile, rm } from 'node:fs/promises'
+import { tmpdir } from 'node:os'
+import path from 'node:path'
+
 import type { Prisma } from '@prisma/client'
 import { describe, expect, it, vi } from 'vitest'
 
 import {
+  catalogAssetsDirectory,
+  copyCatalogImages,
   formatCatalogSeedSummary,
   loadCatalogSeed,
   seedCatalog,
@@ -305,5 +312,104 @@ describe('approved catalog seed', () => {
     expect(serializedCatalog).not.toMatch(
       /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i,
     )
+  })
+})
+
+describe('catalog photos', () => {
+  it('links every restaurant and menu item to a committed photo', async () => {
+    const catalog = await loadCatalogSeed()
+    const records = [...catalog.restaurants, ...catalog.menuItems]
+
+    expect(catalog.restaurants).toHaveLength(3)
+    expect(catalog.menuItems).toHaveLength(9)
+    for (const record of records) {
+      expect(record.image, record.name.en).toBeDefined()
+      expect(
+        existsSync(
+          path.join(catalogAssetsDirectory, ...record.image!.asset.split('/')),
+        ),
+        record.image!.asset,
+      ).toBe(true)
+    }
+  })
+
+  it('points records at their copied photos only when local images are on', async () => {
+    const catalog = await loadCatalogSeed()
+    const restaurant = catalog.restaurants[0]!
+    const menuItem = catalog.menuItems[0]!
+
+    const local = createCatalogTransaction()
+    await seedCatalog(local.transaction, catalog, { localImages: true })
+    expect(local.delegates.restaurant.records.get(restaurant.id)).toMatchObject(
+      {
+        imageKey: restaurant.image!.key,
+        imageUrl: `/uploads/${restaurant.image!.key}`,
+      },
+    )
+    expect(local.delegates.menuItem.records.get(menuItem.id)).toMatchObject({
+      imageKey: menuItem.image!.key,
+      imageUrl: `/uploads/${menuItem.image!.key}`,
+    })
+
+    // A second run is unchanged: the keys are fixed in the fixture.
+    const counts = await seedCatalog(local.transaction, catalog, {
+      localImages: true,
+    })
+    expect(counts.created + counts.updated).toBe(0)
+
+    const remote = createCatalogTransaction()
+    await seedCatalog(remote.transaction, catalog)
+    expect(remote.delegates.menuItem.records.get(menuItem.id)).toMatchObject({
+      imageKey: null,
+      imageUrl: null,
+    })
+  })
+
+  it('copies every photo into the uploads directory under its key', async () => {
+    const catalog = await loadCatalogSeed()
+    const uploads = await mkdtemp(path.join(tmpdir(), 'kinraidee-seed-'))
+    try {
+      const target = path.join(uploads, 'nested')
+      await expect(copyCatalogImages(catalog, target)).resolves.toBe(12)
+
+      const keys = [...catalog.restaurants, ...catalog.menuItems].map(
+        ({ image }) => image!.key,
+      )
+      expect((await readdir(target)).sort()).toEqual([...keys].sort())
+      const kofta = catalog.menuItems.find(
+        ({ name }) => name.en === 'Beef Kofta with Rice',
+      )!
+      expect(await readFile(path.join(target, kofta.image!.key))).toEqual(
+        await readFile(
+          path.join(catalogAssetsDirectory, ...kofta.image!.asset.split('/')),
+        ),
+      )
+    } finally {
+      await rm(uploads, { recursive: true, force: true })
+    }
+  })
+
+  it('stops when a photo file is missing', async () => {
+    const catalog = await loadCatalogSeed()
+    const uploads = await mkdtemp(path.join(tmpdir(), 'kinraidee-seed-'))
+    try {
+      await expect(
+        copyCatalogImages(catalog, uploads, path.join(uploads, 'no-assets')),
+      ).rejects.toThrow()
+    } finally {
+      await rm(uploads, { recursive: true, force: true })
+    }
+  })
+
+  it('rejects an image key that does not keep the asset file type', async () => {
+    const catalog: CatalogSeed = structuredClone(await loadCatalogSeed())
+    const image = catalog.menuItems[0]!.image!
+    image.key = image.key.replace(/\.png$/, '.jpg')
+
+    const result = catalogSeedSchema.safeParse(catalog)
+    expect(result.success).toBe(false)
+    expect(result.error?.issues.map(({ path }) => path.join('.'))).toEqual([
+      'menuItems.0.image.key',
+    ])
   })
 })

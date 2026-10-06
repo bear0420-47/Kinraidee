@@ -153,6 +153,11 @@ Approved — full-app build plan updated through 2026-09-28 decisions. Implement
   - The suggestion is `null` only when no active, non-excluded menu item exists, and for one-card replacements.
   - The web shows every change in one sentence, and `ใช้เงื่อนไขนี้แล้วสับใหม่` shuffles with the suggested `conditions`.
   - The API computes the suggestion in memory from one query of every active, non-excluded item, rather than one count query per option.
+- Seeded catalog photos (human approver's decision, 2026-10-06). It replaces #30's rule that seeded images stay `null`:
+  - Each restaurant and menu item in `catalog.seed.json` has an `image` entry: its photo in `assets/catalog/` and a fixed generated upload key.
+  - When local uploads are on (development and test, never production), the seed copies the 12 photos into `LOCAL_UPLOADS_DIRECTORY` before its transaction and stores `imageKey` plus `/uploads/<key>`. A missing photo stops the seed before any write, and fixed keys keep repeated runs unchanged.
+  - With local uploads off, records keep their approved external URL or `null`, as before.
+  - Re-running the seed still resets seeded records' images to these values, as it does for every seed-managed field.
 
 ## Evidence Expected
 

@@ -11,6 +11,7 @@ import {
   normalizedEmailSchema,
 } from '../src/config/credentials'
 import {
+  copyCatalogImages,
   formatCatalogSeedSummary,
   loadCatalogSeed,
   seedCatalog,
@@ -21,6 +22,13 @@ const seedEnvSchema = z.object({
   ...argon2EnvSchema.shape,
   SEED_ADMIN_EMAIL: normalizedEmailSchema,
   SEED_ADMIN_PASSWORD: createPasswordSchema('SEED_ADMIN_PASSWORD'),
+  // Same switches and default directory as the API, which serves the copied photos.
+  NODE_ENV: z.string().optional(),
+  LOCAL_UPLOADS_ENABLED: z
+    .enum(['true', 'false'])
+    .default('false')
+    .transform((value) => value === 'true'),
+  LOCAL_UPLOADS_DIRECTORY: z.string().trim().min(1).default('.local/uploads'),
 })
 
 export type SeedEnv = z.infer<typeof seedEnvSchema>
@@ -77,18 +85,33 @@ export async function runSeed(
   input: NodeJS.ProcessEnv = process.env,
   writeSummary: (message: string) => void = console.log,
 ) {
+  const config = parseSeedEnv(input)
   const adminUpsertArgs = await createInitialAdminUpsertArgs(input)
   const catalog = await loadCatalogSeed()
+  // Production never serves local uploads, so its records keep no local photo.
+  const localImages =
+    config.LOCAL_UPLOADS_ENABLED && config.NODE_ENV !== 'production'
+  const copiedImages = localImages
+    ? await copyCatalogImages(
+        catalog,
+        resolve(process.cwd(), config.LOCAL_UPLOADS_DIRECTORY),
+      )
+    : 0
   const prisma = new PrismaClient()
 
   try {
     const counts = await prisma.$transaction(async (transaction) => {
       await transaction.user.upsert(adminUpsertArgs)
-      return seedCatalog(transaction, catalog)
+      return seedCatalog(transaction, catalog, { localImages })
     })
 
     writeSummary('Seeded 1 administrator account.')
     writeSummary(formatCatalogSeedSummary(counts))
+    writeSummary(
+      localImages
+        ? `Copied ${copiedImages} catalog photos into local uploads.`
+        : 'Local uploads are off, so catalog photos were not attached.',
+    )
   } finally {
     await prisma.$disconnect()
   }
