@@ -2386,6 +2386,147 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/recommendation-history": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    page?: number;
+                    pageSize?: number;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description The signed-in user selected-menu history, newest first, including unavailable items */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["HistoryListEnvelope"];
+                    };
+                };
+                /** @description Invalid page or page size */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorEnvelope"];
+                    };
+                };
+                /** @description Missing, invalid, or expired token */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorEnvelope"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["RecordHistoryRequest"];
+                };
+            };
+            responses: {
+                /** @description One selection recorded (repeats are separate rows) */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["HistoryEnvelope"];
+                    };
+                };
+                /** @description Missing MenuItem ID or an unknown field */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorEnvelope"];
+                    };
+                };
+                /** @description Missing, invalid, or expired token */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorEnvelope"];
+                    };
+                };
+                /** @description MenuItem not found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorEnvelope"];
+                    };
+                };
+                /** @description The MenuItem or its Restaurant is deleted */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorEnvelope"];
+                    };
+                };
+            };
+        };
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description All of the user history cleared (idempotent) */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Missing, invalid, or expired token */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorEnvelope"];
+                    };
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/audit-logs": {
         parameters: {
             query?: never;
@@ -3047,6 +3188,51 @@ export interface components {
                     /** @description A record ID, "ANY" for a saved "any" choice, or null when not set. */
                     tasteId: string | null;
                 } | null;
+            };
+        };
+        RecordHistoryRequest: {
+            menuItemId: string;
+        };
+        HistoryEnvelope: {
+            data: {
+                history: {
+                    id: string;
+                    menuItemId: string;
+                    /** Format: date-time */
+                    selectedAt: string;
+                };
+            };
+        };
+        HistoryListEnvelope: {
+            data: {
+                items: {
+                    id: string;
+                    menuItemId: string;
+                    /** Format: date-time */
+                    selectedAt: string;
+                    available: boolean;
+                    menuItem: {
+                        id: string;
+                        name: {
+                            th: string;
+                            en: string;
+                        };
+                        price: number;
+                        imageUrl: string | null;
+                        restaurant: {
+                            id: string;
+                            name: {
+                                th: string;
+                                en: string;
+                            };
+                        };
+                    };
+                }[];
+            };
+            meta: {
+                page: number;
+                pageSize: number;
+                total: number;
             };
         };
         AuditLogListEnvelope: {

@@ -49,7 +49,7 @@ describe('FavoritesPage', () => {
     expect(within(first!).getByText('ครัวไทย')).toBeTruthy()
     expect(within(first!).getByText('฿65')).toBeTruthy()
     expect(within(first!).getByText('ไม่มีรูป')).toBeTruthy()
-    expect(within(first!).queryByText('ไม่พร้อมให้บริการ')).toBeNull()
+    expect(within(first!).queryByText('เมนูนี้ไม่พร้อมใช้งานแล้ว')).toBeNull()
     expect(within(second!).getByText('ผัดกะเพรา')).toBeTruthy()
     expect(
       within(second!).getByRole<HTMLImageElement>('presentation').src,
@@ -66,7 +66,7 @@ describe('FavoritesPage', () => {
     await screen.findByRole('list', { name: 'รายการเมนูโปรด' })
 
     const row = rows()[1]!
-    expect(within(row).getByText('ไม่พร้อมให้บริการ')).toBeTruthy()
+    expect(within(row).getByText('เมนูนี้ไม่พร้อมใช้งานแล้ว')).toBeTruthy()
     const remove = within(row).getByRole('button', {
       name: 'นำออกจากเมนูโปรด',
     })

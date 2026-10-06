@@ -6,6 +6,7 @@ import { RedirectIfAuthenticated } from '@/components/RedirectIfAuthenticated'
 import { RequireAuth } from '@/components/RequireAuth'
 import { AccountPage } from '@/pages/account/AccountPage'
 import { FavoritesPage } from '@/pages/account/favorites/FavoritesPage'
+import { HistoryPage } from '@/pages/account/history/HistoryPage'
 import { PreferencesPage } from '@/pages/account/preferences/PreferencesPage'
 import { AdminPage } from '@/pages/admin/AdminPage'
 import { AuditLogsPage } from '@/pages/admin/audit-logs/AuditLogsPage'
@@ -41,6 +42,7 @@ export const routes: RouteObject[] = [
         children: [
           { index: true, element: <AccountPage /> },
           { path: 'favorites', element: <FavoritesPage /> },
+          { path: 'history', element: <HistoryPage /> },
           { path: 'preferences', element: <PreferencesPage /> },
           { path: '*', element: <Navigate replace to="/account" /> },
         ],

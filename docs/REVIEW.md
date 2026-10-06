@@ -803,3 +803,41 @@ No blocking findings. All #47 routes, field rules, contract, web scope, behaviou
 Human reviewer: Pending pull-request review
 Decision: Pending
 Date: TBD
+
+## Issue #48 — Selected MenuItem history
+
+### Status
+
+Automated two-axis review complete on 2026-10-07. Human pull-request approval remains pending.
+
+### Standards review
+
+No documented-standard violations remain:
+- The API module follows the existing layering, reuses `requireAuth`, `parseWithSchema`, the paged envelope pattern, and `menuItemNotFoundError`. It shares the MenuItem summary and availability rule with favorites through `menu-items.summary.ts`, instead of importing across feature modules.
+- The web uses the generated client and TanStack Query (keyed by user and page, removed on logout), the shared `Pagination`, `QueryListState`, and `ConfirmDialog`, and a shared `MenuSummaryRow` for favorites and history.
+- Focus is moved explicitly after clearing, avoiding the #47 issue where a dialog returns focus to a control that is about to change.
+
+Judgement calls accepted:
+- The success stage never waits for the history write; a failure is only a warning.
+- The confirmation is remembered with the shortlist (`confirmed`), so a reload shows success instead of asking again and never records the same decision twice (human approver's choice). A new flow still records a repeat selection, as the issue requires.
+- The unavailable badge uses the approved history wording on both account pages (human approver's choice).
+
+### Specification review
+
+No blocking findings. All #48 routes, contracts, rules, web scope, confirmation integration, copy, accessibility, required tests, and acceptance criteria are implemented. Notes:
+- Only the selected MenuItem ID is sent and stored; no conditions, rejected IDs, or shortlists.
+- Account deletion cascades history through the existing schema relation.
+- There is no per-item delete, analytics, export, or administrator access.
+
+### Review scope
+
+- Diff: `git diff feat/47-saved-preferences...feat/48-selected-history`
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/02-design/design-system.md`, `docs/03-implementation/data-model.md`, and `docs/03-implementation/engineering-guidelines.md`
+- Specification source: GitHub issue #48
+- Checked: authorization and user scoping, write timing and duplicates, unavailable handling, response field exposure, pagination, cache scoping, focus and live regions, keyboard use, and out-of-scope boundaries
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD

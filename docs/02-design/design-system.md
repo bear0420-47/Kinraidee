@@ -181,7 +181,7 @@ Use slight asymmetric radii for doodle surfaces when practical, e.g. `6px 12px 5
 - Signed out, the same heart (without `aria-pressed`) leads to login, where `เข้าสู่ระบบเพื่อบันทึกเมนูโปรด` is announced. A failed save shows a short alert under the heart.
 - The confirmation dialog still opens with focus on `ขอคิดอีกที`, although the heart comes first in reading order.
 - The `/account/favorites` list shows one bordered row per favorite: an `80px` photo (or the dashed `ไม่มีรูป` placeholder), Thai and English names, Restaurant, price, and a compact secondary `นำออกจากเมนูโปรด` button whose description is the menu name.
-- An unavailable favorite carries a `ไม่พร้อมให้บริการ` pill with a Phosphor `Prohibit` icon, so its status is stated in text. It offers removal only.
+- An unavailable favorite carries the `เมนูนี้ไม่พร้อมใช้งานแล้ว` pill with a Phosphor `Prohibit` icon, so its status is stated in text. It offers removal only.
 
 ### Saved Preferences
 
@@ -189,6 +189,12 @@ Use slight asymmetric radii for doodle surfaces when practical, e.g. `6px 12px 5
 - A save with every select on `ไม่ตั้งค่า` shows its error under the first select, linked to it, and focus moves there. Save and clear results are announced in a status region.
 - `ล้างค่าเริ่มต้น` is always shown so it can be found. With nothing saved it is disabled and described by the `ยังไม่ได้ตั้งค่าเริ่มต้น` line; otherwise it always asks for confirmation in the shared confirm dialog before deleting.
 - In the meal flow, a saved default appears as the already-selected chip on its step, with no extra note.
+
+### Selected-Menu History
+
+- `/account/history` uses the same menu row as favorites (photo, names, Restaurant, price, and the `เมนูนี้ไม่พร้อมใช้งานแล้ว` pill when unavailable), plus a `เลือกเมื่อ {date}` line in Thai locale. The list is newest first and paged with the shared pagination controls.
+- `ล้างประวัติทั้งหมด` is always shown, disabled with nothing to clear, and asks `ล้างประวัติทั้งหมด?` with `การล้างประวัติจะลบรายการที่คุณเคยเลือกทั้งหมด` before deleting. The result `ล้างประวัติแล้ว` is announced.
+- When saving history fails after `เอาเมนูนี้แหละ`, the success stage still shows, with `เลือกเมนูสำเร็จ แต่บันทึกประวัติไม่สำเร็จ` as an announced warning under the message.
 
 ### Admin Tables And Bulk Selection
 

@@ -115,6 +115,8 @@ const shortlistSchema = z
       .strict()
       .nullable(),
     chosenMenuItemId: z.string().min(1).optional(),
+    // The chosen card was confirmed with `เอาเมนูนี้แหละ`; its history is already recorded.
+    confirmed: z.literal(true).optional(),
   })
   .strict()
 

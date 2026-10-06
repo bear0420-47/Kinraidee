@@ -46,9 +46,15 @@ export function chooseCard(
 
 export function clearChoice({
   chosenMenuItemId: _chosen,
+  confirmed: _confirmed,
   ...shortlist
 }: Shortlist): Shortlist {
   return shortlist
+}
+
+// `เอาเมนูนี้แหละ` was pressed: a reload shows the success stage, never the question again.
+export function confirmChoice(shortlist: Shortlist): Shortlist {
+  return { ...shortlist, confirmed: true }
 }
 
 // The card being confirmed, while it is still a revealed card in the shortlist.

@@ -1109,3 +1109,76 @@ Two of these first survived because their tests checked before the preference ha
   - Saving "any" for taste, food type, and zone with budget not set announced `บันทึกค่าเริ่มต้นแล้ว` with no error. The API returned `"ANY"` for the three fields, and the database row held null IDs with all three flags true.
   - In a fresh `/meal`, the budget step had nothing selected. Taste, food type, and zone each pre-selected their "any" chip, and the flow stored them as "any". No console errors.
 - **Layout and console:** at 390 px no horizontal overflow, and no console errors.
+
+## Issue #48 — Selected MenuItem history
+
+### Scope
+
+- Verification date: 2026-10-07 (ICT, `UTC+07:00`)
+- Branch: `feat/48-selected-history`, stacked on #47 (`feat/47-saved-preferences`, PR #85), which is stacked on #46 (PR #84).
+- Change:
+  - API: `GET`, `POST`, and `DELETE /api/recommendation-history` for any signed-in role, always for the token's user.
+  - Web: a signed-in `เอาเมนูนี้แหละ` records the menu, and `/account/history` lists and clears history.
+  - The OpenAPI document and the generated web client types are regenerated (additions only).
+  - The MenuItem summary, the availability check, and `MENU_ITEM_UNAVAILABLE` moved from favorites to `src/api/src/modules/menu-items/menu-items.summary.ts`, shared by favorites and history.
+  - On the web, favorites and history share `components/MenuSummaryRow.tsx`. Favorites now uses the approved badge `เมนูนี้ไม่พร้อมใช้งานแล้ว`.
+- Decisions are recorded in `docs/plan.md`; the page and warning rules are in `docs/02-design/design-system.md` (Selected-Menu History).
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests (API 70 files/531 tests; web 36 files/387 tests), API build with OpenAPI generation, and web production build. |
+| `prettier --check --end-of-line auto .` in `src/api` and `src/web` | 0 | Pass. |
+| `git diff --check` | 0 | Pass. |
+
+API tests (5 files, 33 tests) cover every required API test:
+- `401` on all three routes, with the service never called.
+- POST creates a row for an active MenuItem, returns `409` for a deleted item or one under a deleted Restaurant, and `404` for an unknown item, including the foreign-key race.
+- The same MenuItem twice gives two rows.
+- GET pages (default 20, at most 100) newest first by `selectedAt` then `id`, and includes unavailable rows with `available: false`.
+- No `imageKey`, `deletedAt`, phone, or user ID is returned.
+- DELETE clears only the current user's rows and is idempotent.
+- A client `userId`, conditions, rejected IDs, or shortlist in the body is a `400`.
+- USER and ADMIN behave alike.
+- The favorites tests still pass on the shared summary.
+
+Web tests (`MealHistory.test.tsx`, 4; `HistoryPage.test.tsx`, 9; and one new `shortlist.test.ts` case) cover every required web test:
+- **Recording:**
+  - A signed-in confirmation sends exactly one POST with only `{ menuItemId }`.
+  - Revealing, opening the dialog, and `ขอคิดอีกที` send nothing.
+  - An anonymous user never calls the history API.
+  - A failed write still reaches success, with `เลือกเมนูสำเร็จ แต่บันทึกประวัติไม่สำเร็จ` announced.
+  - A reload after confirming shows the success stage and records nothing again.
+- **History page:**
+  - The page requires login, and rows are newest first, each labelled by its menu.
+  - More than 20 rows page with labelled controls (`?page=2&pageSize=20`).
+  - The unavailable badge shows, and the empty state has a disabled clear button.
+  - Clear-all deletes only after confirmation, then announces `ล้างประวัติแล้ว` and moves focus to the history area. A failed clear keeps the history.
+  - ADMIN works the same, the account link works, and logout drops the cache.
+- `ConfirmMenu.test.tsx` now expects a signed-in confirmation's single history POST, and the favorites tests use the new badge text.
+
+Deliberate regression checks confirmed the tests fail when:
+- POST deduplicates.
+- POST skips the availability check.
+- POST accepts extra fields.
+- DELETE is not scoped to the user.
+- The list is oldest first.
+- Anonymous users write.
+- The write blocks success.
+- No warning is shown on failure.
+- A reload forgets the confirmation.
+- Opening the dialog writes.
+- Clear skips the confirmation.
+- Focus is not moved after clearing.
+- Logout keeps the history cache.
+
+### Manual browser checks (Chrome, local API with the approved #30 catalog)
+
+- **Signed in:** opening the confirmation recorded nothing. `เอาเมนูนี้แหละ` showed the success stage with no warning and recorded exactly one row for the chosen menu.
+- **Reload on the success stage:** the success stage came back with focus on `กลับหน้าหลัก`, and still only one row existed.
+- **`/account/history` with 23 rows:** 20 rows on page 1, newest first, each labelled by its menu, with `เลือกเมื่อ …` dates and `หน้า 1 จาก 2 · ทั้งหมด 23 รายการ`. Page 2 held the last 3, and a soft-deleted menu showed `เมนูนี้ไม่พร้อมใช้งานแล้ว`; the menu was restored afterwards.
+- **Clear all:** the dialog `ล้างประวัติทั้งหมด?` opened on `ยกเลิก` with the approved warning, and Escape kept all 23 rows. Confirming removed every row, announced `ล้างประวัติแล้ว`, showed the empty state with the clear button disabled, and focused the history area.
+- **Fixed during the check:** a dialog closed without a focused opener (as in browsers that do not focus buttons on click) now returns focus to the clear button.
+- **Anonymous:** confirming reached success with no warning and no history request.
+- **Console:** no errors.

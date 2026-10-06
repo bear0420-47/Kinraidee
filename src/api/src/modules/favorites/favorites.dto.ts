@@ -1,7 +1,11 @@
 import { Prisma } from '@prisma/client'
 import { z } from 'zod'
 
-import { localizationSchema, toLocalization } from '@/shared/localization'
+import {
+  isAvailableMenuItem,
+  menuItemSummarySchema,
+  toMenuItemSummary,
+} from '@/modules/menu-items/menu-items.summary'
 import { parseWithSchema } from '@/shared/validation'
 
 export const favoriteParamsSchema = z.object({
@@ -13,16 +17,7 @@ export const favoriteItemSchema = z.object({
   menuItemId: z.string(),
   createdAt: z.iso.datetime(),
   available: z.boolean(),
-  menuItem: z.object({
-    id: z.string(),
-    name: localizationSchema,
-    price: z.number().int().positive(),
-    imageUrl: z.string().nullable(),
-    restaurant: z.object({
-      id: z.string(),
-      name: localizationSchema,
-    }),
-  }),
+  menuItem: menuItemSummarySchema,
 })
 
 export const favoriteListEnvelopeSchema = z.object({
@@ -51,32 +46,12 @@ export function parseFavoriteMenuItemId(params: unknown) {
   return parseWithSchema(favoriteParamsSchema, params).menuItemId
 }
 
-// A MenuItem can be newly favorited only while it and its Restaurant are active.
-export function isAvailableMenuItem(menuItem: {
-  deletedAt: Date | null
-  restaurant: { deletedAt: Date | null }
-}) {
-  return menuItem.deletedAt === null && menuItem.restaurant.deletedAt === null
-}
-
 export function toFavoriteItem(favorite: FavoriteWithMenuItem): FavoriteItem {
   const { menuItem } = favorite
   return {
     menuItemId: favorite.menuItemId,
     createdAt: favorite.createdAt.toISOString(),
     available: isAvailableMenuItem(menuItem),
-    menuItem: {
-      id: menuItem.id,
-      name: toLocalization(menuItem.nameTh, menuItem.nameEn),
-      price: menuItem.price,
-      imageUrl: menuItem.imageUrl,
-      restaurant: {
-        id: menuItem.restaurant.id,
-        name: toLocalization(
-          menuItem.restaurant.nameTh,
-          menuItem.restaurant.nameEn,
-        ),
-      },
-    },
+    menuItem: toMenuItemSummary(menuItem),
   }
 }

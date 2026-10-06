@@ -2564,6 +2564,197 @@
           "data"
         ]
       },
+      "RecordHistoryRequest": {
+        "type": "object",
+        "properties": {
+          "menuItemId": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "menuItemId"
+        ],
+        "additionalProperties": false
+      },
+      "HistoryEnvelope": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "history": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "menuItemId": {
+                    "type": "string"
+                  },
+                  "selectedAt": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                },
+                "required": [
+                  "id",
+                  "menuItemId",
+                  "selectedAt"
+                ]
+              }
+            },
+            "required": [
+              "history"
+            ]
+          }
+        },
+        "required": [
+          "data"
+        ]
+      },
+      "HistoryListEnvelope": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "menuItemId": {
+                      "type": "string"
+                    },
+                    "selectedAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "available": {
+                      "type": "boolean"
+                    },
+                    "menuItem": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "object",
+                          "properties": {
+                            "th": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "en": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "required": [
+                            "th",
+                            "en"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "price": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "exclusiveMinimum": true
+                        },
+                        "imageUrl": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "restaurant": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "object",
+                              "properties": {
+                                "th": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "en": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              },
+                              "required": [
+                                "th",
+                                "en"
+                              ],
+                              "additionalProperties": false
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "name"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                        "price",
+                        "imageUrl",
+                        "restaurant"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "menuItemId",
+                    "selectedAt",
+                    "available",
+                    "menuItem"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "items"
+            ]
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "page": {
+                "type": "integer",
+                "minimum": 0,
+                "exclusiveMinimum": true
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 0,
+                "exclusiveMinimum": true,
+                "maximum": 100
+              },
+              "total": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "page",
+              "pageSize",
+              "total"
+            ]
+          }
+        },
+        "required": [
+          "data",
+          "meta"
+        ]
+      },
       "AuditLogListEnvelope": {
         "type": "object",
         "properties": {
@@ -5090,6 +5281,160 @@
         "responses": {
           "204": {
             "description": "Preference cleared (idempotent)"
+          },
+          "401": {
+            "description": "Missing, invalid, or expired token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/recommendation-history": {
+      "get": {
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            },
+            "required": false,
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "required": false,
+            "name": "pageSize",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The signed-in user selected-menu history, newest first, including unavailable items",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HistoryListEnvelope"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid page or page size",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, invalid, or expired token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecordHistoryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "One selection recorded (repeats are separate rows)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HistoryEnvelope"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing MenuItem ID or an unknown field",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, invalid, or expired token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "MenuItem not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The MenuItem or its Restaurant is deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "All of the user history cleared (idempotent)"
           },
           "401": {
             "description": "Missing, invalid, or expired token",

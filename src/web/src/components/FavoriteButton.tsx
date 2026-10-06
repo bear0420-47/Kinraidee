@@ -15,7 +15,7 @@ type FavoriteButtonProps = {
 
 function errorMessage(error: unknown) {
   if (error instanceof ApiError && error.status === 409) {
-    return 'เมนูนี้ไม่พร้อมให้บริการแล้ว'
+    return 'เมนูนี้ไม่พร้อมใช้งานแล้ว'
   }
   return 'บันทึกเมนูโปรดไม่สำเร็จ ลองใหม่อีกครั้ง'
 }

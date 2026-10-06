@@ -2,10 +2,9 @@ import { isForeignKeyConstraintError } from '@/lib/prismaErrors'
 import { menuItemNotFoundError } from '@/modules/menu-items/menu-items.helpers'
 import {
   isAvailableMenuItem,
-  toFavoriteItem,
-  type FavoriteState,
-} from './favorites.dto'
-import { menuItemUnavailableError } from './favorites.helpers'
+  menuItemUnavailableError,
+} from '@/modules/menu-items/menu-items.summary'
+import { toFavoriteItem, type FavoriteState } from './favorites.dto'
 import {
   favoritesRepository,
   type FavoritesRepository,

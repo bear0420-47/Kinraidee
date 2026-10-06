@@ -6,12 +6,14 @@ import { PageShell } from '@/components/PageShell'
 import { useFoodTypes } from '@/hooks/admin/food-types/useFoodTypes'
 import { useTastes } from '@/hooks/admin/tastes/useTastes'
 import { useZones } from '@/hooks/admin/zones/useZones'
+import { useCurrentUser } from '@/hooks/auth/useCurrentUser'
 import { useRecommendationFlow } from '@/hooks/meal/useRecommendationFlow'
 import {
   recommendationErrorMessage,
   useRequestRecommendations,
 } from '@/hooks/meal/useRecommendations'
 import { usePreference } from '@/hooks/preferences/usePreference'
+import { useRecordHistory } from '@/hooks/recommendation-history/useRecommendationHistory'
 import {
   applyRelaxation,
   conditionSteps,
@@ -24,9 +26,15 @@ import {
   type FlowStep,
   type MealStep,
   type RecommendationConditions,
+  type RecommendationItem,
   type Relaxation,
 } from '@/schemas/meal/recommendationSchemas'
-import { chooseCard, chosenItem, clearChoice } from '@/schemas/meal/shortlist'
+import {
+  chooseCard,
+  chosenItem,
+  clearChoice,
+  confirmChoice,
+} from '@/schemas/meal/shortlist'
 import { toConditionDefaults } from '@/schemas/preferences/preferenceSchemas'
 import { BudgetStep } from './components/BudgetStep'
 import { ConditionSummary } from './components/ConditionSummary'
@@ -64,6 +72,8 @@ export function MealPage() {
   const recommend = useRequestRecommendations()
   // Idle while signed out, so anonymous users never get defaults.
   const preference = usePreference()
+  const { data: user } = useCurrentUser()
+  const recordHistory = useRecordHistory()
   // The last shuffle found nothing. Kept in memory only, so a reload shows the summary.
   const [noMatch, setNoMatch] = useState<{
     relaxation: Relaxation | null
@@ -153,6 +163,13 @@ export function MealPage() {
   function editConditions() {
     setNoMatch(null)
     flow.editConditions()
+  }
+
+  // `เอาเมนูนี้แหละ`: the decision stands at once. A signed-in user's choice is also recorded
+  // in history, once; a failure only shows a warning. Anonymous users never record history.
+  function confirm(item: RecommendationItem) {
+    flow.updateShortlist(confirmChoice)
+    if (user) recordHistory.mutate(item.id)
   }
 
   function finish() {
@@ -278,6 +295,9 @@ export function MealPage() {
       {view === 'cards' && chosen ? (
         <ConfirmMenuDialog
           item={chosen}
+          confirmed={flow.shortlist?.confirmed === true}
+          historyFailed={recordHistory.isError}
+          onConfirm={() => confirm(chosen)}
           onCancel={() => flow.updateShortlist(clearChoice)}
           onFinish={finish}
         />

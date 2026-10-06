@@ -4,7 +4,7 @@ import {
   MapPin,
   Storefront,
 } from '@phosphor-icons/react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 import { Button } from '@/components/Button'
 import { Dialog } from '@/components/Dialog'
@@ -20,6 +20,12 @@ import { RecommendationSuccess, successMessage } from './RecommendationSuccess'
 type ConfirmMenuDialogProps = {
   // The chosen card's menu, exactly as the recommendation response returned it.
   item: RecommendationItem
+  // `เอาเมนูนี้แหละ` was pressed; kept with the shortlist, so a reload stays on success.
+  confirmed: boolean
+  // Recording the selection in history failed (signed-in users only).
+  historyFailed: boolean
+  // `เอาเมนูนี้แหละ`: move to the success stage.
+  onConfirm: () => void
   // `ขอคิดอีกที`: close and go back to the unchanged cards.
   onCancel: () => void
   // `กลับหน้าหลัก`: clear the flow and go Home.
@@ -30,10 +36,12 @@ type ConfirmMenuDialogProps = {
 // comes from the recommendation response, so opening it makes no request.
 export function ConfirmMenuDialog({
   item,
+  confirmed,
+  historyFailed,
+  onConfirm,
   onCancel,
   onFinish,
 }: ConfirmMenuDialogProps) {
-  const [confirmed, setConfirmed] = useState(false)
   const rethinkRef = useRef<HTMLButtonElement>(null)
   // A dialog reopened after login or a reload has no opener, so closing it returns focus to
   // this card's choose button instead.
@@ -57,7 +65,11 @@ export function ConfirmMenuDialog({
         {confirmed ? successMessage(item) : ''}
       </p>
       {confirmed ? (
-        <RecommendationSuccess item={item} onFinish={onFinish} />
+        <RecommendationSuccess
+          item={item}
+          historyFailed={historyFailed}
+          onFinish={onFinish}
+        />
       ) : (
         <>
           <div className="relative">
@@ -97,7 +109,7 @@ export function ConfirmMenuDialog({
               <ArrowCounterClockwise aria-hidden weight="bold" />
               ขอคิดอีกที
             </Button>
-            <Button onClick={() => setConfirmed(true)}>
+            <Button onClick={onConfirm}>
               <Check aria-hidden weight="bold" />
               เอาเมนูนี้แหละ
             </Button>

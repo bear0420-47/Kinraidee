@@ -249,7 +249,7 @@ describe('Favorites on recommendation cards', () => {
     )
 
     expect((await within(card).findByRole('alert')).textContent).toBe(
-      'เมนูนี้ไม่พร้อมให้บริการแล้ว',
+      'เมนูนี้ไม่พร้อมใช้งานแล้ว',
     )
     expect(
       within(card).getByRole('button', { name: SAVE, pressed: false }),

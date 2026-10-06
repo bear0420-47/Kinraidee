@@ -22,7 +22,7 @@ async function chooseMenu(user: User, name: string) {
 }
 
 // Only the master data, the recommendation request, and (signed in) the favorites and saved
-// defaults reads may be called: no history write and no menu-detail endpoint.
+// defaults reads may be called before confirming, and never a menu-detail endpoint.
 const anonymousCalls = [
   'GET /api/auth/me',
   'GET /api/food-types',
@@ -34,6 +34,11 @@ const signedInCalls = [
   ...anonymousCalls,
   'GET /api/favorites',
   'GET /api/preferences',
+].sort()
+// Confirming adds exactly one history write, for signed-in users only (#48).
+const signedInConfirmedCalls = [
+  ...signedInCalls,
+  'POST /api/recommendation-history',
 ].sort()
 
 function requestedCalls(api: ReturnType<typeof fakeShuffleApi>) {
@@ -220,9 +225,9 @@ describe('Success', () => {
 
   it.each([
     ['an anonymous', null, anonymousCalls],
-    ['a signed-in', testUser, signedInCalls],
+    ['a signed-in', testUser, signedInConfirmedCalls],
   ])(
-    'writes no history for %s user, and กลับหน้าหลัก clears the flow and returns Home',
+    'for %s user, records history only when signed in, and กลับหน้าหลัก clears the flow and returns Home',
     async (_, currentUser, allowedCalls) => {
       const api = fakeShuffleApi({
         results: [{ items: [krapao, noodles] }],

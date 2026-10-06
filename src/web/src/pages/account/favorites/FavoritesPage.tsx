@@ -1,18 +1,14 @@
-import { HeartBreak, Prohibit, Storefront } from '@phosphor-icons/react'
-import { useId, useRef, useState } from 'react'
+import { HeartBreak } from '@phosphor-icons/react'
+import { useRef, useState } from 'react'
 import { Link } from 'react-router'
 
 import { Button } from '@/components/Button'
 import { FormAlert } from '@/components/FormAlert'
-import { ImagePreview } from '@/components/ImagePreview'
+import { MenuSummaryRow } from '@/components/MenuSummaryRow'
 import { PageShell } from '@/components/PageShell'
 import { QueryListState } from '@/components/QueryListState'
 import { useFavorites, useSetFavorite } from '@/hooks/favorites/useFavorites'
-import { formatPrice } from '@/lib/formatPrice'
 import type { FavoriteItem } from '@/schemas/favorites/favoriteSchemas'
-
-const placeholderClassName =
-  'flex h-20 w-20 shrink-0 items-center justify-center rounded-sm border-2 border-dashed border-line-soft text-center text-small text-muted'
 
 // The signed-in user's saved menus, newest first. A deleted menu, or one whose Restaurant is
 // deleted, stays listed as unavailable so it can still be removed.
@@ -70,83 +66,35 @@ export function FavoritesPage() {
         >
           {(items) => (
             <ul aria-label="รายการเมนูโปรด" className="flex flex-col gap-3">
-              {items.map((favorite) => (
-                <FavoriteRow
-                  key={favorite.menuItemId}
-                  favorite={favorite}
-                  removing={
-                    remove.isPending &&
-                    remove.variables.menuItem.id === favorite.menuItemId
-                  }
-                  onRemove={() => removeFavorite(favorite)}
-                />
-              ))}
+              {items.map((favorite) => {
+                const removing =
+                  remove.isPending &&
+                  remove.variables.menuItem.id === favorite.menuItemId
+                return (
+                  <MenuSummaryRow
+                    key={favorite.menuItemId}
+                    menuItem={favorite.menuItem}
+                    available={favorite.available}
+                    action={(nameId) => (
+                      <Button
+                        variant="secondary"
+                        size="compact"
+                        aria-describedby={nameId}
+                        aria-busy={removing}
+                        disabled={removing}
+                        onClick={() => removeFavorite(favorite)}
+                      >
+                        <HeartBreak aria-hidden weight="bold" />
+                        นำออกจากเมนูโปรด
+                      </Button>
+                    )}
+                  />
+                )
+              })}
             </ul>
           )}
         </QueryListState>
       </section>
     </PageShell>
-  )
-}
-
-function FavoriteRow({
-  favorite,
-  removing,
-  onRemove,
-}: {
-  favorite: FavoriteItem
-  removing: boolean
-  onRemove: () => void
-}) {
-  const nameId = useId()
-  const { menuItem, available } = favorite
-
-  return (
-    <li className="flex flex-col gap-3 rounded-sm border-2 border-paper bg-surface-raised p-3 shadow-sm sm:flex-row sm:items-center">
-      <div className="flex flex-1 items-center gap-3">
-        {menuItem.imageUrl ? (
-          <ImagePreview
-            url={menuItem.imageUrl}
-            alt=""
-            size="cell"
-            fallback={
-              <span className={placeholderClassName}>โหลดรูปไม่ได้</span>
-            }
-          />
-        ) : (
-          <span className={placeholderClassName}>ไม่มีรูป</span>
-        )}
-        <div className="flex min-w-0 flex-col gap-1">
-          <p id={nameId} className="font-bold">
-            {menuItem.name.th}
-          </p>
-          <p lang="en" className="text-small text-muted">
-            {menuItem.name.en}
-          </p>
-          <p className="flex items-center gap-2 text-small">
-            <Storefront aria-hidden size={18} weight="bold" />
-            {menuItem.restaurant.name.th}
-          </p>
-          <p className="font-extrabold">{formatPrice(menuItem.price)}</p>
-          {available ? null : (
-            <p className="inline-flex items-center gap-1 self-start rounded-pill border-2 border-line-soft bg-canvas-soft px-2 text-small font-bold">
-              <Prohibit aria-hidden size={16} weight="bold" />
-              ไม่พร้อมให้บริการ
-            </p>
-          )}
-        </div>
-      </div>
-      <Button
-        variant="secondary"
-        size="compact"
-        aria-describedby={nameId}
-        aria-busy={removing}
-        disabled={removing}
-        onClick={onRemove}
-      >
-        <HeartBreak aria-hidden weight="bold" />
-        นำออกจากเมนูโปรด
-      </Button>
-    </li>
   )
 }
