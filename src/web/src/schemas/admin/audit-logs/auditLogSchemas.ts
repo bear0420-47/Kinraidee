@@ -17,6 +17,21 @@ export const auditEntityTypes = [
 
 export const auditActions = ['CREATE', 'UPDATE', 'DELETE'] as const
 
+// Thai labels for the API's enum values, shown in the table and the filters.
+export const auditEntityTypeLabels: Record<AuditLog['entityType'], string> = {
+  ZONE: 'โซน',
+  RESTAURANT: 'ร้านอาหาร',
+  FOOD_TYPE: 'ประเภทอาหาร',
+  TASTE: 'รสชาติ',
+  MENU_ITEM: 'เมนูอาหาร',
+}
+
+export const auditActionLabels: Record<AuditLog['action'], string> = {
+  CREATE: 'เพิ่ม',
+  UPDATE: 'แก้ไข',
+  DELETE: 'ลบ',
+}
+
 export function toIsoDateTime(value: string) {
   return value ? new Date(value).toISOString() : undefined
 }

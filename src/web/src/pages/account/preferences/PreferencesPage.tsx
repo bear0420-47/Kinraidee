@@ -226,7 +226,7 @@ function PreferenceForm({
         </SelectField>
         <SelectField
           id="preference-zone"
-          label="โซน"
+          label="พื้นที่"
           error={errors.zoneId?.message}
           {...register('zoneId')}
         >

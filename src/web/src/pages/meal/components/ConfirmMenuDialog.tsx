@@ -75,7 +75,7 @@ export function ConfirmMenuDialog({
           <div className="relative">
             <MenuPhoto
               item={item}
-              className="aspect-[4/3] rounded-md border-2"
+              className="aspect-[16/10] rounded-md border-2"
             />
             <FavoriteButton
               menuItem={toFavoriteMenuItem(item)}

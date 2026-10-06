@@ -2,7 +2,11 @@ import {
   bodyCellClassName,
   headerCellClassName,
 } from '@/components/tableStyles'
-import type { AuditLog } from '@/schemas/admin/audit-logs/auditLogSchemas'
+import {
+  type AuditLog,
+  auditActionLabels,
+  auditEntityTypeLabels,
+} from '@/schemas/admin/audit-logs/auditLogSchemas'
 import { AuditSnapshot } from './AuditSnapshot'
 
 export function AuditLogTable({ items }: { items: AuditLog[] }) {
@@ -40,9 +44,11 @@ export function AuditLogTable({ items }: { items: AuditLog[] }) {
               <td className={`${bodyCellClassName} whitespace-nowrap`}>
                 {new Date(item.createdAt).toLocaleString('th-TH')}
               </td>
-              <td className={bodyCellClassName}>{item.action}</td>
               <td className={bodyCellClassName}>
-                <strong>{item.entityType}</strong>
+                {auditActionLabels[item.action]}
+              </td>
+              <td className={bodyCellClassName}>
+                <strong>{auditEntityTypeLabels[item.entityType]}</strong>
                 <br />
                 <span className="break-all text-muted">{item.entityId}</span>
               </td>

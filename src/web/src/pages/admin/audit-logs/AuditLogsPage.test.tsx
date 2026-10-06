@@ -53,7 +53,11 @@ describe('AuditLogsPage', () => {
     const table = await screen.findByRole('table', {
       name: 'รายการบันทึกการแก้ไขระบบ',
     })
-    expect(table.textContent).toContain('MENU_ITEM')
+    // Record and action types show Thai labels, never the API's enum values.
+    expect(within(table).getByText('เมนูอาหาร')).toBeTruthy()
+    expect(within(table).getByText('แก้ไข')).toBeTruthy()
+    expect(table.textContent).not.toContain('MENU_ITEM')
+    expect(table.textContent).not.toContain('UPDATE')
     expect(table.textContent).toContain('admin_1')
     expect(table.textContent).toContain('[REDACTED]')
     expect(table.textContent).not.toContain('admin@example.com')

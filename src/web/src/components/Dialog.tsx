@@ -113,7 +113,7 @@ export function Dialog({
         aria-labelledby={titleId}
         tabIndex={-1}
         onKeyDown={handleKeyDown}
-        className={`flex max-h-[90vh] w-full ${sizeClassNames[size]} flex-col gap-4 overflow-y-auto rounded-dialog border-2 border-paper bg-glass p-6 shadow-lg`}
+        className={`flex max-h-[90vh] w-full ${sizeClassNames[size]} flex-col gap-4 overflow-y-auto rounded-dialog border-2 border-paper bg-surface p-6 shadow-lg`}
       >
         <h2 id={titleId} className="font-display text-card-title leading-tight">
           {title}

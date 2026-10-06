@@ -30,19 +30,20 @@ const headers = [
   'สถานะ',
 ]
 
+// Short fixed labels never break mid-word in a narrow column.
 function MutedText({ children }: { children: string }) {
-  return <span className="text-muted">{children}</span>
+  return <span className="whitespace-nowrap text-muted">{children}</span>
 }
 
 // Status uses an icon and text, never colour alone.
 function RestaurantStatus({ deleted }: { deleted: boolean }) {
   return deleted ? (
-    <span className="inline-flex items-center gap-2 font-bold text-rust">
+    <span className="inline-flex items-center gap-2 whitespace-nowrap font-bold text-rust">
       <Prohibit aria-hidden size={20} weight="bold" />
       ลบแล้ว
     </span>
   ) : (
-    <span className="inline-flex items-center gap-2">
+    <span className="inline-flex items-center gap-2 whitespace-nowrap">
       <CheckCircle aria-hidden size={20} weight="bold" />
       ใช้งาน
     </span>

@@ -13,6 +13,7 @@ import {
   useSaveRestaurant,
 } from '@/hooks/admin/restaurants/useRestaurants'
 import { useZones } from '@/hooks/admin/zones/useZones'
+import { useUrlFilters } from '@/hooks/useUrlFilters'
 import {
   defaultRestaurantFilters,
   type CreateRestaurantBody,
@@ -34,7 +35,8 @@ type DialogState =
 const CLEANUP_WARNING = 'ระบบลบรูปที่ไม่ได้ใช้แล้วไม่สำเร็จ'
 
 export function RestaurantsPage() {
-  const [filters, setFilters] = useState<Filters>(defaultRestaurantFilters)
+  // Kept in the URL, so a reload or a shared link keeps the search and page.
+  const [filters, setFilters] = useUrlFilters<Filters>(defaultRestaurantFilters)
   const restaurants = useRestaurants(filters)
   const zones = useZones()
   const saveRestaurant = useSaveRestaurant()

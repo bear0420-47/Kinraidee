@@ -436,6 +436,35 @@ describe('MenuItemsPage list', () => {
     expect(rows()).toHaveLength(1)
   })
 
+  it('opens with the filters and page from the URL, and keeps later changes there', async () => {
+    const many = Array.from({ length: 25 }, (_, index) =>
+      menuItem(`m_${index}`, `เมนู ${index}`, `Dish ${index}`),
+    )
+    const api = fakeMenuItemsApi({ items: many })
+    const { user, router } = await openMenuItemsPage(
+      '/admin/menu-items?search=Dish&foodTypeId=food_1&includeDeleted=true&page=2',
+    )
+
+    expect(api.requestsFor('GET', '/api/menu-items')[0]?.path).toBe(
+      '/api/menu-items?page=2&pageSize=20&search=Dish&foodTypeId=food_1&includeDeleted=true',
+    )
+    expect(
+      (screen.getByLabelText('ค้นหาชื่อเมนู') as HTMLInputElement).value,
+    ).toBe('Dish')
+    expect(
+      (screen.getByLabelText('แสดงเมนูที่ลบแล้ว') as HTMLInputElement).checked,
+    ).toBe(true)
+
+    // A filter change resets to page 1, which is the default and so leaves the URL.
+    await user.click(screen.getByLabelText('แสดงเมนูที่ลบแล้ว'))
+    await waitFor(() => {
+      const params = new URLSearchParams(router.state.location.search)
+      expect(params.has('includeDeleted')).toBe(false)
+      expect(params.has('page')).toBe(false)
+      expect(params.get('search')).toBe('Dish')
+    })
+  })
+
   it('lists every Restaurant in the filter, marking deleted ones', async () => {
     fakeMenuItemsApi()
     await openMenuItemsPage()

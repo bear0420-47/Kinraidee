@@ -196,3 +196,24 @@ describe('Saved defaults in the meal flow', () => {
     ).toBe(false)
   })
 })
+
+describe('Session note', () => {
+  const note =
+    'ไม่ต้องเข้าสู่ระบบ คำตอบและเมนูที่ปฏิเสธจะอยู่เฉพาะในหน้าที่เปิดอยู่นี้'
+
+  it('is hidden for a signed-in user', async () => {
+    startFlow()
+    const { queryClient } = renderApp('/meal')
+
+    await screen.findByRole('heading', { name: /เลือกงบประมาณ/ })
+    await preferenceLoaded(queryClient)
+    expect(screen.queryByText(note)).toBeNull()
+  })
+
+  it('is shown to an anonymous visitor', async () => {
+    startFlow({ signedIn: false })
+    renderApp('/meal')
+
+    expect(await screen.findByText(note)).toBeTruthy()
+  })
+})
