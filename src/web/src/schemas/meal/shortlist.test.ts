@@ -1,14 +1,14 @@
 import { describe, expect, it } from 'vitest'
 
 import {
-  applyRelaxation,
   initialRequest,
   rationaleLines,
   replacementRequest,
   storedFlowSchema,
   type RecommendationConditions,
   type RecommendationItem,
-  type Relaxation,
+  type Suggestion,
+  suggestionMessage,
 } from './recommendationSchemas'
 import {
   chooseCard,
@@ -57,18 +57,6 @@ const [a, b, c, d] = ['a', 'b', 'c', 'd'].map(item) as [
   RecommendationItem,
 ]
 
-function relaxation(
-  field: Relaxation['field'],
-  toId: string | null,
-): Relaxation {
-  return {
-    field,
-    from: { type: 'ZONE', id: 'x', label: { th: 'x', en: 'x' } },
-    to: { type: 'ANY_ZONE', id: toId, label: { th: 'y', en: 'y' } },
-    resultCount: 2,
-  }
-}
-
 describe('request builders', () => {
   it('asks for three cards with no exclusions first', () => {
     expect(initialRequest(conditions)).toEqual({
@@ -90,22 +78,39 @@ describe('request builders', () => {
   })
 })
 
-describe('applyRelaxation', () => {
-  it.each([
-    ['zone', null, { zoneId: null }],
-    ['taste', null, { tasteId: null }],
-    ['foodType', null, { foodTypeId: null }],
-    ['budget', 'BETWEEN_50_100', { budget: 'BETWEEN_50_100' }],
-  ] as const)('changes only %s', (field, toId, change) => {
-    expect(applyRelaxation(conditions, relaxation(field, toId))).toEqual({
-      ...conditions,
-      ...change,
-    })
+describe('suggestionMessage', () => {
+  const change = (
+    field: Suggestion['changes'][number]['field'],
+    from: string,
+    to: string,
+  ): Suggestion['changes'][number] => ({
+    field,
+    from: { type: 'ZONE', id: from, label: { th: from, en: from } },
+    to: { type: 'ZONE', id: to, label: { th: to, en: to } },
   })
 
-  it('ignores a budget relaxation without a known budget value', () => {
-    expect(applyRelaxation(conditions, relaxation('budget', 'FREE'))).toEqual(
-      conditions,
+  it('names one change with the result count', () => {
+    expect(
+      suggestionMessage({
+        changes: [change('zone', 'คชพล', 'ตลาดฟ้าไทย')],
+        conditions,
+        resultCount: 4,
+      }),
+    ).toBe('ถ้าเปลี่ยนพื้นที่จาก “คชพล” เป็น “ตลาดฟ้าไทย” จะพบ 4 เมนู')
+  })
+
+  it('joins several changes with และ in the order given', () => {
+    expect(
+      suggestionMessage({
+        changes: [
+          change('budget', '฿50–100', '฿101–200'),
+          change('foodType', 'ข้าว', 'เส้น'),
+        ],
+        conditions,
+        resultCount: 1,
+      }),
+    ).toBe(
+      'ถ้าเปลี่ยนงบประมาณจาก “฿50–100” เป็น “฿101–200” และประเภทอาหารจาก “ข้าว” เป็น “เส้น” จะพบ 1 เมนู',
     )
   })
 })

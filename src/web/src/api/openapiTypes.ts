@@ -3109,26 +3109,36 @@ export interface components {
                         matchedZone: boolean;
                     };
                 }[];
-                relaxation?: {
-                    /** @enum {string} */
-                    field: "zone" | "budget" | "taste" | "foodType";
-                    from: {
+                /** @description No-match suggestion. Null only when no active, non-excluded menu item exists, and for one-card replacements. */
+                suggestion?: {
+                    changes: {
                         /** @enum {string} */
-                        type: "BUDGET_RANGE" | "TASTE" | "ANY_TASTE" | "FOOD_TYPE" | "ANY_FOOD_TYPE" | "ZONE" | "ANY_ZONE";
-                        id: string | null;
-                        label: {
-                            th: string;
-                            en: string;
+                        field: "zone" | "budget" | "taste" | "foodType";
+                        from: {
+                            /** @enum {string} */
+                            type: "BUDGET_RANGE" | "TASTE" | "FOOD_TYPE" | "ZONE";
+                            id: string;
+                            label: {
+                                th: string;
+                                en: string;
+                            };
                         };
-                    };
-                    to: {
+                        to: {
+                            /** @enum {string} */
+                            type: "BUDGET_RANGE" | "TASTE" | "FOOD_TYPE" | "ZONE";
+                            id: string;
+                            label: {
+                                th: string;
+                                en: string;
+                            };
+                        };
+                    }[];
+                    conditions: {
                         /** @enum {string} */
-                        type: "BUDGET_RANGE" | "TASTE" | "ANY_TASTE" | "FOOD_TYPE" | "ANY_FOOD_TYPE" | "ZONE" | "ANY_ZONE";
-                        id: string | null;
-                        label: {
-                            th: string;
-                            en: string;
-                        };
+                        budget: "UNDER_50" | "BETWEEN_50_100" | "BETWEEN_101_200" | "OVER_200";
+                        tasteId: string | null;
+                        foodTypeId: string | null;
+                        zoneId: string | null;
                     };
                     resultCount: number;
                 } | null;

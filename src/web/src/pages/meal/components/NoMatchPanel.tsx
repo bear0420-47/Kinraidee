@@ -3,27 +3,27 @@ import type { Ref } from 'react'
 
 import { Button } from '@/components/Button'
 import {
-  relaxationFieldLabels,
-  type Relaxation,
+  suggestionMessage,
+  type Suggestion,
 } from '@/schemas/meal/recommendationSchemas'
 
 type NoMatchPanelProps = {
-  // The single relaxation the API proved has results, or null when none does.
-  relaxation: Relaxation | null
-  // A relaxed re-shuffle is in flight.
+  // The filter changes the API proved have results, or null when no menu is available.
+  suggestion: Suggestion | null
+  // A re-shuffle with the suggested conditions is in flight.
   shuffling: boolean
   headingRef: Ref<HTMLHeadingElement>
-  onApplyRelaxation: () => void
+  onApplySuggestion: () => void
   onEditConditions: () => void
 }
 
-// Shown when the first shuffle finds nothing. It never invents a result or relaxes a condition
+// Shown when the first shuffle finds nothing. It never invents a result or changes a condition
 // silently, and it has no Home action: the header brand already leads home.
 export function NoMatchPanel({
-  relaxation,
+  suggestion,
   shuffling,
   headingRef,
-  onApplyRelaxation,
+  onApplySuggestion,
   onEditConditions,
 }: NoMatchPanelProps) {
   return (
@@ -36,8 +36,8 @@ export function NoMatchPanel({
         ไม่พบเมนูที่ตรงทุกเงื่อนไข
       </h2>
       <p role="status">
-        {relaxation
-          ? `ถ้าเปลี่ยน${relaxationFieldLabels[relaxation.field]}จาก “${relaxation.from.label.th}” เป็น “${relaxation.to.label.th}” จะพบ ${relaxation.resultCount} เมนู`
+        {suggestion
+          ? suggestionMessage(suggestion)
           : 'ตอนนี้ยังไม่มีเมนูในระบบที่ตรงกับเงื่อนไขนี้ ลองแก้เงื่อนไขดูอีกครั้ง'}
       </p>
       <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
@@ -49,11 +49,11 @@ export function NoMatchPanel({
           <PencilSimple aria-hidden weight="bold" />
           แก้เงื่อนไขเอง
         </Button>
-        {relaxation ? (
+        {suggestion ? (
           <Button
             disabled={shuffling}
             aria-busy={shuffling}
-            onClick={onApplyRelaxation}
+            onClick={onApplySuggestion}
           >
             <Shuffle aria-hidden weight="bold" />
             {shuffling ? 'กำลังสับการ์ดเมนู...' : 'ใช้เงื่อนไขนี้แล้วสับใหม่'}

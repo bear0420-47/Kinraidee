@@ -85,7 +85,7 @@ const repository = {
   findFoodType: vi.fn(),
   findZone: vi.fn(),
   findCandidates: vi.fn(),
-  countCandidates: vi.fn(),
+  findSuggestionPool: vi.fn(),
 }
 
 beforeEach(() => {
@@ -182,72 +182,82 @@ describe('recommendations service', () => {
     expect(repository.findZone).not.toHaveBeenCalled()
   })
 
-  it('returns the first working relaxation in Zone then Budget order', async () => {
+  it('suggests a filter change from the pool when nothing matches', async () => {
     repository.findCandidates.mockResolvedValue([])
-    repository.countCandidates.mockResolvedValueOnce(0).mockResolvedValueOnce(4)
+    const market = {
+      id: 'zone_2',
+      nameTh: 'ตลาด',
+      nameEn: 'Market',
+      sortOrder: 1,
+    }
+    repository.findSuggestionPool.mockResolvedValue([
+      {
+        price: 65,
+        zone: market,
+        foodType: { ...foodType },
+        tastes: [{ ...taste }],
+      },
+    ])
     const service = createRecommendationsService(repository as never)
-    const result = await service.recommend(fullRequest)
-
-    expect(repository.countCandidates).toHaveBeenNthCalledWith(
-      1,
-      { ...fullRequest.conditions, zoneId: null },
-      [],
-    )
-    expect(repository.countCandidates).toHaveBeenNthCalledWith(
-      2,
-      { ...fullRequest.conditions, budget: 'BETWEEN_101_200' },
-      [],
-    )
-    expect(result.relaxation).toMatchObject({
-      field: 'budget',
-      from: { type: 'BUDGET_RANGE', id: 'BETWEEN_50_100' },
-      to: { type: 'BUDGET_RANGE', id: 'BETWEEN_101_200' },
-      resultCount: 4,
+    const result = await service.recommend({
+      ...fullRequest,
+      rejectedMenuItemIds: ['menu_9'],
+      displayedMenuItemIds: ['menu_8'],
     })
-    expect(repository.countCandidates).toHaveBeenCalledTimes(2)
+
+    expect(repository.findSuggestionPool).toHaveBeenCalledWith([
+      'menu_9',
+      'menu_8',
+    ])
+    expect(result).toEqual({
+      items: [],
+      suggestion: {
+        changes: [
+          {
+            field: 'zone',
+            from: {
+              type: 'ZONE',
+              id: zone.id,
+              label: { th: 'หน้ามอ', en: 'Front Gate' },
+            },
+            to: {
+              type: 'ZONE',
+              id: 'zone_2',
+              label: { th: 'ตลาด', en: 'Market' },
+            },
+          },
+        ],
+        conditions: { ...fullRequest.conditions, zoneId: 'zone_2' },
+        resultCount: 1,
+      },
+    })
   })
 
-  it('tries Taste before FoodType after earlier relaxations fail', async () => {
+  it('returns a null suggestion only when no item is available', async () => {
     repository.findCandidates.mockResolvedValue([])
-    repository.countCandidates
-      .mockResolvedValueOnce(0)
-      .mockResolvedValueOnce(0)
-      .mockResolvedValueOnce(0)
-      .mockResolvedValueOnce(2)
-    const service = createRecommendationsService(repository as never)
-    const result = await service.recommend(fullRequest)
-
-    expect(result.relaxation).toMatchObject({
-      field: 'foodType',
-      from: { type: 'FOOD_TYPE', id: foodType.id },
-      to: { type: 'ANY_FOOD_TYPE', id: null },
-      resultCount: 2,
-    })
-    expect(repository.countCandidates).toHaveBeenNthCalledWith(
-      3,
-      { ...fullRequest.conditions, tasteId: null },
-      [],
-    )
-  })
-
-  it('returns null when no single initial relaxation works', async () => {
-    repository.findCandidates.mockResolvedValue([])
-    repository.countCandidates.mockResolvedValue(0)
+    repository.findSuggestionPool.mockResolvedValue([])
     const service = createRecommendationsService(repository as never)
 
     await expect(service.recommend(fullRequest)).resolves.toEqual({
       items: [],
-      relaxation: null,
+      suggestion: null,
     })
   })
 
-  it('never suggests relaxation for replacement requests', async () => {
+  it('never suggests a change for replacement requests', async () => {
     repository.findCandidates.mockResolvedValue([])
     const service = createRecommendationsService(repository as never)
 
     await expect(
       service.recommend({ ...fullRequest, count: 1 }),
-    ).resolves.toEqual({ items: [], relaxation: null })
-    expect(repository.countCandidates).not.toHaveBeenCalled()
+    ).resolves.toEqual({ items: [], suggestion: null })
+    expect(repository.findSuggestionPool).not.toHaveBeenCalled()
+  })
+
+  it('does not load the suggestion pool when items match', async () => {
+    const service = createRecommendationsService(repository as never)
+    await service.recommend(fullRequest)
+
+    expect(repository.findSuggestionPool).not.toHaveBeenCalled()
   })
 })

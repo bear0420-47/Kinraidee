@@ -18,19 +18,6 @@ export function budgetWhere(budget: BudgetRange): Prisma.IntFilter {
   }
 }
 
-export function nextBudgetRange(budget: BudgetRange): BudgetRange | null {
-  switch (budget) {
-    case 'UNDER_50':
-      return 'BETWEEN_50_100'
-    case 'BETWEEN_50_100':
-      return 'BETWEEN_101_200'
-    case 'BETWEEN_101_200':
-      return 'OVER_200'
-    case 'OVER_200':
-      return null
-  }
-}
-
 export function shuffle<T>(items: readonly T[], random = Math.random): T[] {
   const shuffled = [...items]
   for (let index = shuffled.length - 1; index > 0; index -= 1) {

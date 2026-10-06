@@ -15,7 +15,6 @@ import {
 import { usePreference } from '@/hooks/preferences/usePreference'
 import { useRecordHistory } from '@/hooks/recommendation-history/useRecommendationHistory'
 import {
-  applyRelaxation,
   conditionSteps,
   firstOpenStep,
   flowSteps,
@@ -27,7 +26,7 @@ import {
   type MealStep,
   type RecommendationConditions,
   type RecommendationItem,
-  type Relaxation,
+  type Suggestion,
 } from '@/schemas/meal/recommendationSchemas'
 import {
   chooseCard,
@@ -76,7 +75,7 @@ export function MealPage() {
   const recordHistory = useRecordHistory()
   // The last shuffle found nothing. Kept in memory only, so a reload shows the summary.
   const [noMatch, setNoMatch] = useState<{
-    relaxation: Relaxation | null
+    suggestion: Suggestion | null
   } | null>(null)
   const [shuffleError, setShuffleError] = useState<string | null>(null)
   const headingRef = useRef<HTMLHeadingElement>(null)
@@ -144,7 +143,7 @@ export function MealPage() {
   async function shuffle(target: RecommendationConditions) {
     setShuffleError(null)
     try {
-      const { items, relaxation } = await recommend.mutateAsync(
+      const { items, suggestion } = await recommend.mutateAsync(
         initialRequest(target),
       )
       if (items.length > 0) {
@@ -152,7 +151,7 @@ export function MealPage() {
         flow.showShortlist(target, items)
       } else {
         flow.setConditions(target)
-        setNoMatch({ relaxation })
+        setNoMatch({ suggestion })
       }
     } catch (error) {
       setNoMatch(null)
@@ -269,12 +268,13 @@ export function MealPage() {
       ) : null}
       {view === 'noMatch' && noMatch && complete ? (
         <NoMatchPanel
-          relaxation={noMatch.relaxation}
+          suggestion={noMatch.suggestion}
           shuffling={recommend.isPending}
           headingRef={headingRef}
-          onApplyRelaxation={() => {
-            if (noMatch.relaxation) {
-              void shuffle(applyRelaxation(conditions, noMatch.relaxation))
+          // The suggestion carries the complete conditions, every change already applied.
+          onApplySuggestion={() => {
+            if (noMatch.suggestion) {
+              void shuffle(noMatch.suggestion.conditions)
             }
           }}
           onEditConditions={editConditions}

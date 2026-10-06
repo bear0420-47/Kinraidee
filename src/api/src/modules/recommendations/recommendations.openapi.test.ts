@@ -35,4 +35,30 @@ describe('Recommendations OpenAPI', () => {
     expect(operation?.responses).toHaveProperty('200')
     expect(operation?.responses).toHaveProperty('400')
   })
+
+  it('describes the no-match suggestion instead of a single relaxation', () => {
+    const registry = new OpenAPIRegistry()
+    registerRecommendationsOpenApi(registry)
+    const document = new OpenApiGeneratorV3(
+      registry.definitions,
+    ).generateDocument({
+      openapi: '3.0.0',
+      info: { title: 'Test', version: '1.0.0' },
+    })
+    const envelope = JSON.stringify(
+      document.components?.schemas?.RecommendationEnvelope,
+    )
+
+    expect(envelope).toContain('"suggestion"')
+    expect(envelope).not.toContain('relaxation')
+    for (const field of [
+      'changes',
+      'conditions',
+      'resultCount',
+      'BUDGET_RANGE',
+    ]) {
+      expect(envelope).toContain(field)
+    }
+    expect(envelope).not.toContain('ANY_ZONE')
+  })
 })

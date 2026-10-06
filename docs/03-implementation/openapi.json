@@ -2206,106 +2206,149 @@
                 },
                 "maxItems": 3
               },
-              "relaxation": {
+              "suggestion": {
                 "type": "object",
                 "nullable": true,
                 "properties": {
-                  "field": {
-                    "type": "string",
-                    "enum": [
-                      "zone",
+                  "changes": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "field": {
+                          "type": "string",
+                          "enum": [
+                            "zone",
+                            "budget",
+                            "taste",
+                            "foodType"
+                          ]
+                        },
+                        "from": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "BUDGET_RANGE",
+                                "TASTE",
+                                "FOOD_TYPE",
+                                "ZONE"
+                              ]
+                            },
+                            "id": {
+                              "type": "string"
+                            },
+                            "label": {
+                              "type": "object",
+                              "properties": {
+                                "th": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "en": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              },
+                              "required": [
+                                "th",
+                                "en"
+                              ],
+                              "additionalProperties": false
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "id",
+                            "label"
+                          ]
+                        },
+                        "to": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "BUDGET_RANGE",
+                                "TASTE",
+                                "FOOD_TYPE",
+                                "ZONE"
+                              ]
+                            },
+                            "id": {
+                              "type": "string"
+                            },
+                            "label": {
+                              "type": "object",
+                              "properties": {
+                                "th": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "en": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              },
+                              "required": [
+                                "th",
+                                "en"
+                              ],
+                              "additionalProperties": false
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "id",
+                            "label"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "field",
+                        "from",
+                        "to"
+                      ]
+                    },
+                    "minItems": 1,
+                    "maxItems": 4
+                  },
+                  "conditions": {
+                    "type": "object",
+                    "properties": {
+                      "budget": {
+                        "type": "string",
+                        "enum": [
+                          "UNDER_50",
+                          "BETWEEN_50_100",
+                          "BETWEEN_101_200",
+                          "OVER_200"
+                        ]
+                      },
+                      "tasteId": {
+                        "type": "string",
+                        "nullable": true,
+                        "minLength": 1
+                      },
+                      "foodTypeId": {
+                        "type": "string",
+                        "nullable": true,
+                        "minLength": 1
+                      },
+                      "zoneId": {
+                        "type": "string",
+                        "nullable": true,
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
                       "budget",
-                      "taste",
-                      "foodType"
-                    ]
-                  },
-                  "from": {
-                    "type": "object",
-                    "properties": {
-                      "type": {
-                        "type": "string",
-                        "enum": [
-                          "BUDGET_RANGE",
-                          "TASTE",
-                          "ANY_TASTE",
-                          "FOOD_TYPE",
-                          "ANY_FOOD_TYPE",
-                          "ZONE",
-                          "ANY_ZONE"
-                        ]
-                      },
-                      "id": {
-                        "type": "string",
-                        "nullable": true
-                      },
-                      "label": {
-                        "type": "object",
-                        "properties": {
-                          "th": {
-                            "type": "string",
-                            "minLength": 1
-                          },
-                          "en": {
-                            "type": "string",
-                            "minLength": 1
-                          }
-                        },
-                        "required": [
-                          "th",
-                          "en"
-                        ],
-                        "additionalProperties": false
-                      }
-                    },
-                    "required": [
-                      "type",
-                      "id",
-                      "label"
-                    ]
-                  },
-                  "to": {
-                    "type": "object",
-                    "properties": {
-                      "type": {
-                        "type": "string",
-                        "enum": [
-                          "BUDGET_RANGE",
-                          "TASTE",
-                          "ANY_TASTE",
-                          "FOOD_TYPE",
-                          "ANY_FOOD_TYPE",
-                          "ZONE",
-                          "ANY_ZONE"
-                        ]
-                      },
-                      "id": {
-                        "type": "string",
-                        "nullable": true
-                      },
-                      "label": {
-                        "type": "object",
-                        "properties": {
-                          "th": {
-                            "type": "string",
-                            "minLength": 1
-                          },
-                          "en": {
-                            "type": "string",
-                            "minLength": 1
-                          }
-                        },
-                        "required": [
-                          "th",
-                          "en"
-                        ],
-                        "additionalProperties": false
-                      }
-                    },
-                    "required": [
-                      "type",
-                      "id",
-                      "label"
-                    ]
+                      "tasteId",
+                      "foodTypeId",
+                      "zoneId"
+                    ],
+                    "additionalProperties": false
                   },
                   "resultCount": {
                     "type": "integer",
@@ -2314,11 +2357,11 @@
                   }
                 },
                 "required": [
-                  "field",
-                  "from",
-                  "to",
+                  "changes",
+                  "conditions",
                   "resultCount"
-                ]
+                ],
+                "description": "No-match suggestion. Null only when no active, non-excluded menu item exists, and for one-card replacements."
               }
             },
             "required": [

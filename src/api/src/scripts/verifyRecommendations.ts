@@ -283,18 +283,29 @@ async function verifyBehavior() {
     .post('/api/recommendations')
     .send({ ...body, rejectedMenuItemIds: allBaseIds, count: 1 })
     .expect(200)
-  assert.deepEqual(exhausted.body.data, { items: [], relaxation: null })
+  assert.deepEqual(exhausted.body.data, { items: [], suggestion: null })
 
-  const relaxed = await request(app)
+  const noMatch = await request(app)
     .post('/api/recommendations')
     .send({
       ...body,
       conditions: { ...body.conditions, zoneId: emptyZoneId },
     })
     .expect(200)
-  assert.equal(relaxed.body.data.relaxation.field, 'zone')
-  assert.equal(relaxed.body.data.relaxation.to.type, 'ANY_ZONE')
-  assert.equal(relaxed.body.data.relaxation.resultCount, activeRestaurantCount)
+  // The suggestion moves to the specific zone that has every active item, and its
+  // conditions return items when sent back unchanged.
+  const suggestion = noMatch.body.data.suggestion
+  assert.equal(suggestion.changes.length, 1)
+  assert.equal(suggestion.changes[0].field, 'zone')
+  assert.equal(suggestion.changes[0].to.type, 'ZONE')
+  assert.equal(suggestion.changes[0].to.id, zoneId)
+  assert.equal(suggestion.conditions.zoneId, zoneId)
+  assert.equal(suggestion.resultCount, activeRestaurantCount)
+  const applied = await request(app)
+    .post('/api/recommendations')
+    .send({ ...body, conditions: suggestion.conditions })
+    .expect(200)
+  assert.ok(applied.body.data.items.length > 0)
 
   const filtered = await request(app)
     .post('/api/recommendations')

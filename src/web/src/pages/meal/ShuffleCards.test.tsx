@@ -9,7 +9,7 @@ import { describe, expect, it, vi } from 'vitest'
 
 import {
   RECOMMENDATION_STORAGE_KEY,
-  type Relaxation,
+  type Suggestion,
 } from '@/schemas/meal/recommendationSchemas'
 import {
   cards,
@@ -50,7 +50,7 @@ describe('Shuffling', () => {
     ).toBe(true)
     release(
       jsonResponse(200, {
-        data: { items: [krapao, noodles, curry], relaxation: null },
+        data: { items: [krapao, noodles, curry], suggestion: null },
       }),
     )
 
@@ -272,9 +272,9 @@ describe('Rejecting and undo', () => {
     expect(screen.getByRole('heading', { name: 'ส้มตำ' })).toBeTruthy()
   })
 
-  it('shows ไม่มีตัวเลือกเพิ่มแล้ว when no replacement exists, without suggesting a relaxation', async () => {
+  it('shows ไม่มีตัวเลือกเพิ่มแล้ว when no replacement exists, without suggesting a filter change', async () => {
     fakeShuffleApi({
-      results: [{ items: [krapao, noodles] }, { items: [], relaxation: null }],
+      results: [{ items: [krapao, noodles] }, { items: [], suggestion: null }],
     })
     const { user } = renderApp('/meal')
     await showRevealedCards(user)
@@ -347,26 +347,37 @@ describe('Rejecting and undo', () => {
 })
 
 describe('No match', () => {
-  const zoneRelaxation: Relaxation = {
-    field: 'zone',
-    from: {
-      type: 'ZONE',
-      id: 'zone_1',
-      label: { th: 'หน้ามอ', en: 'Front Gate' },
-    },
-    to: {
-      type: 'ANY_ZONE',
-      id: null,
-      label: { th: 'ที่ไหนก็ได้', en: 'Anywhere' },
-    },
-    resultCount: 4,
-  }
+  const budgetChange = (
+    from: Suggestion['conditions']['budget'],
+    to: Suggestion['conditions']['budget'],
+    th: [string, string],
+  ): Suggestion['changes'][number] => ({
+    field: 'budget',
+    from: { type: 'BUDGET_RANGE', id: from, label: { th: th[0], en: th[0] } },
+    to: { type: 'BUDGET_RANGE', id: to, label: { th: th[1], en: th[1] } },
+  })
 
-  it('explains the single relaxation and applies only that change', async () => {
-    const strict = { ...conditions, zoneId: 'zone_1' }
+  it('explains a single suggested change and shuffles with its conditions', async () => {
+    const strict = { ...conditions, budget: 'UNDER_50' as const }
+    const suggested = { ...strict, budget: 'BETWEEN_50_100' as const }
     const api = fakeShuffleApi({
       stored: strict,
-      results: [{ items: [], relaxation: zoneRelaxation }, { items: [krapao] }],
+      results: [
+        {
+          items: [],
+          suggestion: {
+            changes: [
+              budgetChange('UNDER_50', 'BETWEEN_50_100', [
+                'ไม่เกิน ฿50',
+                '฿50–100',
+              ]),
+            ],
+            conditions: suggested,
+            resultCount: 4,
+          },
+        },
+        { items: [krapao] },
+      ],
     })
     const { user } = renderApp('/meal')
 
@@ -378,7 +389,7 @@ describe('No match', () => {
     })
     await waitFor(() => expect(document.activeElement).toBe(heading))
     const explanation = screen.getByText(
-      'ถ้าเปลี่ยนพื้นที่จาก “หน้ามอ” เป็น “ที่ไหนก็ได้” จะพบ 4 เมนู',
+      'ถ้าเปลี่ยนงบประมาณจาก “ไม่เกิน ฿50” เป็น “฿50–100” จะพบ 4 เมนู',
     )
     expect(explanation.getAttribute('role')).toBe('status')
     expect(screen.queryByRole('button', { name: /หน้าหลัก/ })).toBeNull()
@@ -390,11 +401,87 @@ describe('No match', () => {
 
     const [first, second] = api.recommendationBodies()
     expect(first?.conditions).toEqual(strict)
-    expect(second?.conditions).toEqual({ ...strict, zoneId: null })
+    expect(second?.conditions).toEqual(suggested)
   })
 
-  it('offers only manual editing when no relaxation helps, keeping every selection', async () => {
-    fakeShuffleApi({ results: [{ items: [], relaxation: null }] })
+  it('names every change when several are needed and applies them all at once', async () => {
+    const strict = {
+      ...conditions,
+      budget: 'UNDER_50' as const,
+      zoneId: 'zone_1',
+    }
+    const suggested = {
+      ...strict,
+      budget: 'BETWEEN_101_200' as const,
+      zoneId: 'zone_2',
+      tasteId: 'taste_2',
+    }
+    const api = fakeShuffleApi({
+      stored: strict,
+      results: [
+        {
+          items: [],
+          suggestion: {
+            changes: [
+              {
+                field: 'zone',
+                from: {
+                  type: 'ZONE',
+                  id: 'zone_1',
+                  label: { th: 'หน้ามอ', en: 'Front Gate' },
+                },
+                to: {
+                  type: 'ZONE',
+                  id: 'zone_2',
+                  label: { th: 'ตลาด', en: 'Market' },
+                },
+              },
+              budgetChange('UNDER_50', 'BETWEEN_101_200', [
+                'ไม่เกิน ฿50',
+                '฿101–200',
+              ]),
+              {
+                field: 'taste',
+                from: {
+                  type: 'TASTE',
+                  id: 'taste_1',
+                  label: { th: 'เผ็ด', en: 'Spicy' },
+                },
+                to: {
+                  type: 'TASTE',
+                  id: 'taste_2',
+                  label: { th: 'กลมกล่อม', en: 'Savory' },
+                },
+              },
+            ],
+            conditions: suggested,
+            resultCount: 2,
+          },
+        },
+        { items: [krapao] },
+      ],
+    })
+    const { user } = renderApp('/meal')
+
+    await user.click(
+      await screen.findByRole('button', { name: 'สับการ์ดเมนู' }),
+    )
+    expect(
+      await screen.findByText(
+        'ถ้าเปลี่ยนพื้นที่จาก “หน้ามอ” เป็น “ตลาด” และงบประมาณจาก “ไม่เกิน ฿50” เป็น “฿101–200” และรสชาติจาก “เผ็ด” เป็น “กลมกล่อม” จะพบ 2 เมนู',
+      ),
+    ).toBeTruthy()
+
+    await user.click(
+      screen.getByRole('button', { name: 'ใช้เงื่อนไขนี้แล้วสับใหม่' }),
+    )
+
+    await waitFor(() => expect(api.recommendationBodies()).toHaveLength(2))
+    expect(api.recommendationBodies()[1]?.conditions).toEqual(suggested)
+  })
+
+  it('offers only manual editing when no menu is available, keeping every selection', async () => {
+    fakeShuffleApi({ results: [{ items: [], suggestion: null }] })
     const { user } = renderApp('/meal')
 
     await user.click(
