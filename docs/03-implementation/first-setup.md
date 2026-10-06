@@ -153,6 +153,8 @@ The Prisma schema lives at `src/api/prisma/schema.prisma`. Generate the client w
 pnpm --filter api prisma generate --schema=prisma/schema.prisma
 ```
 
+The API development, production-start, maintenance, and Prisma commands load `src/api/.env` automatically when the file exists. Injected environment variables still work when no local `.env` file is present.
+
 Do not create a migration until there is a real approved database schema.
 
 ## 6. Apply Migrations And Seed Approved Starter Data

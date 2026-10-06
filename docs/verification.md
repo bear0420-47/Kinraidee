@@ -1359,3 +1359,24 @@ New seed tests:
 - A second seed run reported 47 unchanged.
 - An API started on that database served the Beef Kofta photo with `200 image/png`, 1,482,635 bytes, identical to the committed file.
 - The check database and its uploads were removed afterwards.
+
+## Local API environment loading
+
+### Scope
+
+- Verification date/time: 2026-10-06 22:47 ICT (`UTC+07:00`)
+- Environment: local macOS workspace, Node.js 26.4.0, pnpm 12.4.2, PostgreSQL 17
+- Base: `main` at `a7cd099`
+- Change: API development/start and maintenance scripts load optional `src/api/.env` values directly; Prisma config loads the same file before schema evaluation. Shell-specific `source` commands are no longer required.
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm --filter api prisma migrate status` | 0 | Pass without preloading shell variables. Prisma connected to the configured `kinraidee` database and reported both migrations applied. |
+| `pnpm --filter api prisma migrate deploy` | 0 | Pass without preloading shell variables; no pending migrations. |
+| `pnpm --filter api prisma db seed` | 0 | Pass without preloading shell variables. The administrator was upserted and all 47 catalog records/links were unchanged on the repeated idempotency run. |
+| `pnpm dev:api` then `curl -fsS http://localhost:3000/health` | 0 | Pass without preloading shell variables. The API listened on port 3000 and returned `{"data":{"ok":true}}`; the temporary server was stopped after verification. |
+| `NODE_OPTIONS=--localstorage-file=/private/tmp/kinraidee-vitest-localstorage pnpm verify` | 0 | Pass: typecheck, lint, tests, and production builds. API: 71 files/545 tests; web: 37 files/399 tests. |
+| `pnpm format` | 0 | Pass. |
+| `git diff --check` | 0 | Pass. |

@@ -3,17 +3,17 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/server.ts",
+    "dev": "node --env-file-if-exists=.env --import tsx --watch src/server.ts",
     "build": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json && pnpm openapi:generate",
-    "start": "node dist/server.js",
+    "start": "node --env-file-if-exists=.env dist/server.js",
     "test": "vitest run --exclude 'dist/**'",
     "lint": "eslint .",
     "format": "prettier --check .",
     "typecheck": "tsc -p tsconfig.json --noEmit --pretty false",
     "prisma": "prisma",
     "openapi:generate": "node --import tsx src/openapi/generateOpenapi.ts",
-    "recommendations:verify": "node --import tsx src/scripts/verifyRecommendations.ts",
-    "audit-logs:prune": "node --import tsx src/scripts/pruneAuditLogs.ts"
+    "recommendations:verify": "node --env-file-if-exists=.env --import tsx src/scripts/verifyRecommendations.ts",
+    "audit-logs:prune": "node --env-file-if-exists=.env --import tsx src/scripts/pruneAuditLogs.ts"
   },
   "dependencies": {
     "@asteasolutions/zod-to-openapi": "^8.5.0",
