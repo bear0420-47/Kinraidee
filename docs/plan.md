@@ -191,6 +191,11 @@ Authorization: public; anonymous and authenticated users use the same stateless 
 Tests: request validation and normalization, master-data validation, mandatory filters, soft-delete exclusion, shortlist limits, restaurant diversity, randomization invariants, rejected/displayed exclusion, response minimization, no-match suggestion (originally single-field relaxation priority; see the no-match suggestion decision), replacement no-result behavior, public route, OpenAPI, and warm p95 measurement
 ```
 
+## Local API environment loading
+
+- API development/start and maintenance scripts use Node's optional `--env-file-if-exists=.env`, so local commands load `src/api/.env` without a shell-specific `source` step while deployed environments can continue injecting variables.
+- `prisma.config.ts` loads the same optional local file before Prisma evaluates `env("DATABASE_URL")`; this restores the direct setup commands documented in `first-setup.md` without adding a runtime dependency.
+
 ## Deployment Decisions
 
 - Web hosting: Cloudflare Pages.
