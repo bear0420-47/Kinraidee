@@ -192,7 +192,3 @@ export function toggleAllVisible(
   }
   return next
 }
-
-export function formatPrice(price: number) {
-  return `฿${price.toLocaleString('th-TH')}`
-}

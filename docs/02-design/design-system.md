@@ -147,6 +147,10 @@ Use slight asymmetric radii for doodle surfaces when practical, e.g. `6px 12px 5
 - Show one decision step at a time for the core recommendation flow.
 - Completed steps show a clear picked/completed state, not colour alone.
 - Progress indicators are supportive; they do not replace field-level validation.
+- Condition choices are native radio buttons styled as choice chips, so arrow keys move the selection and exactly one option can be chosen. A step heading receives focus when the step changes, and the progress copy reads `ข้อ {n} จาก 4`.
+- Every step ends with the same footer: a divider, then `ย้อนกลับ` on the left and the forward action on the right. The choices area has a shared minimum height, so the footer stays in the same place from step to step.
+- Large Thai display headings need extra room above them for tone marks; do not set them with `leading-none`.
+- A primary action that is not yet available stays visible but disabled, with a short note that explains why.
 
 ### Result Cards
 
@@ -159,6 +163,9 @@ Use slight asymmetric radii for doodle surfaces when practical, e.g. `6px 12px 5
 - Do not invent missing values; show unavailable only when the spec allows the field to be absent.
 - Soft-deleted menu items may appear only in account history/favorites with an unavailable status, never in public recommendation results.
 
+- In the React flow, a card has four visible states, each stated in text and not by colour or motion alone: face-down (`การ์ดใบที่ {n}` with `ยังไม่เปิด`), revealed (menu details and actions), finding a replacement (`กำลังหาเมนูใหม่…`), and no more options (`ไม่มีตัวเลือกเพิ่มแล้ว`). The reveal animation runs only under `prefers-reduced-motion: no-preference`.
+- A revealed card's photo is a `160px` strip across the card top, cropped to fill (`object-cover`), and the price sits beside the menu name, so a revealed card fits on a laptop screen. Revealing, replacing, or restoring a card scrolls the whole card into view (smoothly, or instantly under reduced motion) so its actions are visible. A card without a photo, or whose photo cannot load, shows a same-size panel with the food-type icon and `ไม่มีรูปเมนู` / `โหลดรูปไม่ได้`, so every revealed card lines up.
+
 ### Dialogs And Overlays
 
 - Dialogs use `--glass`/paper surfaces, ink borders, large radius, and focus trapping.
@@ -166,6 +173,7 @@ Use slight asymmetric radii for doodle surfaces when practical, e.g. `6px 12px 5
 - Non-dialog page content must be inert while a modal dialog is open.
 - Selected-menu confirmation shows menu name, restaurant, price, zone, image, and rationale. It never shows wait time.
 - Confirmation uses playful Thai actions. Stage 1 provides `เอาเมนูนี้แหละ` as the primary action and `ขอคิดอีกที` as the secondary action. The success state provides only `กลับหน้าหลัก`.
+- In the React flow both stages share one dialog. Stage 1 (`เลือกเมนูนี้ใช่ไหม?`) shows the photo, or the card's fallback panel, at a full `4:3` ratio, framed with the default radius. The success stage (`ได้มื้อนี้แล้ว!`) shows a Phosphor `Confetti` icon and the message, announced in a status region, and moves focus to `กลับหน้าหลัก`. Escape closes stage 1 like `ขอคิดอีกที`, and on the success stage acts as `กลับหน้าหลัก`.
 
 ### Admin Tables And Bulk Selection
 

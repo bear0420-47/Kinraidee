@@ -737,3 +737,192 @@ A review against issues #39, #40, #41, and #42 found three bugs and two weakness
 - Active MenuItems under active Restaurants are the only candidates. Supplied mandatory filters and normalized exclusions are applied in Prisma before randomization.
 - Responses include only card/detail/confirmation fields. They omit image ownership keys, soft-delete fields, timestamps, Restaurant phone, and audit metadata.
 - Replacement requests never suggest relaxation. Initial no-match requests change only one condition in the approved Zone, Budget, Taste, FoodType priority.
+
+## Issue #53 — Recommendation condition flow shell
+
+### Scope
+
+- Verification date: 2026-10-06 (ICT, `UTC+07:00`)
+- Change:
+  - Home becomes the landing hero, using the approved prototype copy.
+  - The public `/meal` flow covers budget, taste, food type, and zone, then a condition summary with `สับการ์ดเมนู` disabled until #54.
+  - Step and conditions are kept in `sessionStorage` and validated on read.
+  - The approved session notice is shown.
+  - No recommendation API call.
+  - Decisions are recorded in `docs/plan.md`; design rules are in `docs/02-design/design-system.md`.
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm --filter web test` | 0 | Pass: 25 files/290 tests. New: `MealPage.test.tsx` (17) and `recommendationSchemas.test.ts` (9). Coverage is listed below the table. |
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests (API 55 files/427 tests; web 25 files/290 tests), API build with OpenAPI generation, and web production build. |
+| `prettier --check --end-of-line auto .` in `src/api` and `src/web` | 0 | Pass. |
+
+`MealPage.test.tsx` covers:
+- Anonymous entry from Home.
+- Field-level errors on all four steps, linked with `aria-describedby` and focused.
+- Approved budget labels with no default.
+- Master data from `/api/tastes`, `/api/food-types`, and `/api/zones` in API order, with the fallback icon for an unknown key.
+- `อะไรก็ได้` / `ที่ไหนก็ได้` stored as `null`.
+- Summary labels, editing an answer from the summary, back navigation, and retry after a load failure.
+- State kept across route changes and through the header login round trip.
+- Storage limited to the one key `{ step, conditions }`, with malformed or extra-key storage reset.
+- A deleted stored choice sends the user back to that step.
+- No `/api/recommendations` request.
+- No GPS, allergy, voting, wait-time, card, favorite, or history controls.
+- Arrow-key radio selection, and focus moving to each new step heading.
+
+Deliberate regression checks confirmed that the page and schema tests fail when:
+- "any" is not mapped to `null`.
+- The field-level error is removed.
+- The storage whitelist (`.strict()`) is removed.
+- The stored flow is not restored.
+
+### Manual browser checks (Chrome, local API with the approved #30 catalog seed)
+
+- **Anonymous run from Home through the summary:**
+  - Steps load the seeded tastes (with icons), food types, and zones.
+  - Pressing `ถัดไป` with nothing chosen shows `กรุณาเลือกงบประมาณ`.
+  - The selected chip uses the yellow fill.
+  - The summary lists `฿50–100`, `เผ็ด`, `อะไรก็ได้`, and `ตลาดฟ้าไทย`, with `สับการ์ดเมนู` disabled.
+- **Storage:** `sessionStorage` held only `kinraidee:recommendation`, with `{ step, conditions }` and `foodTypeId: null`. The app wrote nothing to `localStorage`.
+- **Login round trip:** the header `เข้าสู่ระบบ` went to `/login?returnTo=%2Fmeal`, and after login the page returned to `/meal` at the summary with every answer intact.
+- **Keyboard:** Tab and Enter reach `แก้ไข`; arrow keys move the radio selection; the chip focus ring is visible; focus moves to each new step heading.
+- **Fonts:** headings use `Delius Swash Caps` (Mali for Thai) and choices use `Nunito Variable`.
+- **Width:** at 390 px there is no horizontal overflow on `/` or `/meal`.
+- **Console:** no errors.
+- **Fixed during the check:** the first pass found the Home heading's Thai tone mark touching the line above, caused by `leading-none`. It now uses `leading-tight`.
+- **Follow-up UI changes requested by the human reviewer:**
+  - The Home heading has more room above it (`leading-snug` plus top padding), so its tone marks clear the eyebrow text.
+  - Every step now uses one shared footer (`StepFooter`), with a divider and more space above `ย้อนกลับ` / `ถัดไป`.
+  - The choices area has a shared minimum height. Rechecked in Chrome: the `ถัดไป` button sits at the same position on all four steps. The summary uses the same footer layout, lower down because its answer list is taller.
+  - No horizontal overflow at 390 px.
+
+## Issue #54 — Shuffle cards and recommendation interaction
+
+### Scope
+
+- Verification date: 2026-10-06 (ICT, `UTC+07:00`)
+- Branch: stacked on #53 (`feat/53-recommendation-conditions`, PR #80).
+- Change:
+  - `สับการ์ดเมนู` calls `POST /api/recommendations`.
+  - Up to three face-down cards, with individual reveal and `เปิดทั้งหมด`.
+  - Rejecting a card asks for a one-card replacement in the same slot. If nothing is left, the slot shows `ไม่มีตัวเลือกเพิ่มแล้ว`.
+  - One-step `เลิกทำ`.
+  - The structured no-match relaxation.
+  - Localized rationale.
+  - The displayed shortlist, reveal state, rejected IDs, and undo record kept in `sessionStorage`.
+  - `เลือกเมนูนี้` is held disabled until #55 adds confirmation.
+- Decisions are recorded in `docs/plan.md`; card states are in `docs/02-design/design-system.md`.
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm --filter web test` | 0 | Pass: 28 files/321 tests. New: `ShuffleCards.test.tsx` (18), `shortlist.test.ts` (12), and `formatPrice.test.ts` (1). The issue's required tests are listed below the table. The existing #53 tests are updated for the now-enabled shuffle button. |
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests (API 55 files/427 tests; web 28 files/321 tests), API build with OpenAPI generation, and web production build. |
+| `prettier --check --end-of-line auto .` in `src/api` and `src/web` | 0 | Pass. |
+
+`ShuffleCards.test.tsx` covers every required test in the issue:
+- The initial request body.
+- The face-down first view.
+- Reveal without an API call, and `เปิดทั้งหมด`.
+- Fewer than three results.
+- The replacement body (rejected and displayed IDs).
+- A same-slot face-down replacement, and `ไม่มีตัวเลือกเพิ่มแล้ว` without relaxation.
+- Undo, restoring the card, its slot, reveal state, and rejected IDs.
+- A failed replacement leaves everything unchanged.
+- A no-match relaxation changes exactly one field, and `relaxation: null` offers only manual editing.
+- Manual editing keeps every selection.
+- Loading and no-match live regions.
+- `motion-safe:`-only animation.
+- Text-named card states.
+- The session allowlist and restore after a reload.
+- Editing conditions clears the shortlist.
+- No history or detail endpoints are called.
+- A signed-in user gets the same flow.
+
+Deliberate regression checks confirmed the tests fail when:
+- The rejected card is also sent as displayed.
+- Undo keeps the rejected ID.
+- A relaxation changes a second field.
+- `เปิดทั้งหมด` reveals nothing.
+
+### Manual browser checks (Chrome, local API with the approved #30 catalog)
+
+- **Anonymous shuffle and reveal:**
+  - The shuffle showed three face-down cards.
+  - Revealing card 1 showed restaurant, zone, food type, price, tastes, and rationale, and made no API call (still one `POST`).
+- **Reject and undo:**
+  - Rejecting the card put a face-down replacement in slot 1 and focused it, and the undo bar appeared.
+  - `เลิกทำ` restored the original revealed card in slot 1, emptied the rejected list, and made no request.
+- **No-match and exhausted slot** (`ไม่เกิน ฿50` + `เผ็ด` + `ตรงข้ามมหาวิทยาลัย`):
+  - The no-match panel offered `ถ้าเปลี่ยนงบประมาณจาก “ไม่เกิน ฿50” เป็น “฿50–100” จะพบ 1 เมนู`.
+  - Applying it changed only the budget, and exactly one card was shown with no placeholders.
+  - Rejecting that card showed `ไม่มีตัวเลือกเพิ่มแล้ว` with no relaxation.
+- **Storage:** `sessionStorage` held only `step`, `conditions`, and `shortlist` (`slots`, `rejectedMenuItemIds`, `undo`). The shortlist survived a reload.
+- **Motion:** the built CSS defines the reveal animation only inside `@media (prefers-reduced-motion: no-preference)`.
+- **Layout and console:** at 390 px there was no horizontal overflow, and the console showed no errors.
+- **Browser-tool artifact:** clicking a button by element reference sometimes scrolled the page before the click landed. A native click immediately after a fresh load triggered the shuffle normally, so this is not an app defect.
+- **Fixed during the check:** the conditions intro no longer shows above the cards.
+- **Follow-up requested by the human reviewer: card photos.**
+  - Seven of the approved catalog photos in `assets/catalog/*/menus` (about 1206×1190 px, square) were attached to the matching local menu items, for the check only.
+  - Photos now span the card top at 4:3 and are cropped to fill.
+  - A card without a photo, or with a broken photo, keeps the same-size panel with the food-type icon.
+  - Rechecked in Chrome: the menu names of a photo card, a no-photo card, and a broken-photo card start at the same height, and there is no overflow at 390 px.
+  - A new page test covers all three cases. Admin image previews are unchanged.
+- **Follow-up requested by the human reviewer: revealed cards ran off screen.**
+  - Revealing a card stretched it so far that its actions sat below the fold.
+  - The photo is now a `160px` strip instead of `4:3`, and the price sits beside the menu name. A revealed card dropped to about `670px` tall.
+  - Revealing, replacing, or restoring a card now scrolls the whole card into view (`block: 'nearest'`), smoothly, or instantly under reduced motion. Focus still moves to the card heading, without its own scroll.
+  - Rechecked in Chrome at an `842px`-tall viewport: revealing each of the three cards from the top of the page left the whole card visible, from its top to its last button (`top 173`, `bottom 842`), with focus on the card heading.
+  - A new page test checks the scroll target and the reduced-motion behaviour; a deliberate regression check (always smooth) made it fail.
+  - `pnpm verify` passes again: API 427 tests, web 28 files/322 tests, and builds.
+
+## Issue #55 — Recommendation confirmation and success
+
+### Scope
+
+- Verification date: 2026-10-06 (ICT, `UTC+07:00`)
+- Branch: stacked on #54 (`feat/54-shuffle-cards`, PR #81), which is stacked on #53 (PR #80).
+- Change:
+  - `เลือกเมนูนี้` on a revealed card opens a two-stage dialog: confirmation (`เอาเมนูนี้แหละ` / `ขอคิดอีกที`), then success (`กลับหน้าหลัก`).
+  - `กลับหน้าหลัก` clears the whole flow from `sessionStorage` and returns Home.
+  - No history request; #48 owns that.
+  - The card photo and rationale list became shared components (`MenuPhoto`, `RationaleList`) used by the card and the dialog. The recommendation test fixtures moved to `src/web/src/test/fakeRecommendationApi.ts`.
+- Decisions are recorded in `docs/plan.md`; the dialog stages are in `docs/02-design/design-system.md`.
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests (API 55 files/427 tests; web 29 files/330 tests), API build with OpenAPI generation, and web production build. |
+| `prettier --check --end-of-line auto .` in `src/web` | 0 | Pass. |
+| `git diff --check` | 0 | Pass. |
+
+`ConfirmMenu.test.tsx` (10 tests) covers every required test in the issue:
+- The dialog shows the chosen card's name, restaurant, zone, price, photo, and rationale, with no wait time and no extra request.
+- Missing-photo and broken-photo fallbacks.
+- Focus starts in the dialog, Tab and Shift+Tab stay inside it, and the cards behind it are inert.
+- `ขอคิดอีกที` and Escape each restore the exact shortlist (a face-down replacement, a revealed card, a face-down card, and the undo bar), leave `sessionStorage` byte-for-byte unchanged, and return focus to the card's `เลือกเมนูนี้`.
+- `เอาเมนูนี้แหละ` shows the success state, announces it in a status region, and focuses `กลับหน้าหลัก`, its only action.
+- No history request, for anonymous and signed-in users.
+- `กลับหน้าหลัก` (and Escape on the success state) returns to `/`, with the recommendation key removed and `sessionStorage` empty.
+- The next flow starts at `ข้อ 1 จาก 4` with nothing selected.
+
+The #54 test for the disabled `เลือกเมนูนี้` was removed. The #53 tests for malformed storage now expect the bad value to be removed instead of being rewritten as an empty flow.
+
+Deliberate regression checks confirmed the tests fail when:
+- Escape on the success state cancels instead of returning Home.
+- `ขอคิดอีกที` also clears the shortlist.
+- `finish` neither clears storage nor resets the flow.
+- A fresh flow is written to storage instead of removed.
+
+### Manual browser checks (Chrome, local API with the approved #30 catalog)
+
+- **Confirmation:** the dialog showed the chosen card's photo, names, restaurant, zone, price, and rationale. No wait time.
+- **Escape:** closed the dialog, returned focus to `เลือกเมนู บรูสเกตตากัวคาโมเล`, left `sessionStorage` identical, and removed every `inert` attribute.
+- **Keyboard only:** Enter on the card's button, Tab, Enter confirmed. The success state announced `ขอให้อร่อยกับบรูสเกตตากัวคาโมเล ที่ไอวิชพาสต้า` and focused `กลับหน้าหลัก`. Enter returned to `/` with `sessionStorage` empty.
+- **Requests:** only `auth/me`, the three master-data lists, and `POST /api/recommendations`. No history or menu-detail endpoint. No console errors.
+- **Layout:** at 390 px the dialog fits without scrolling or horizontal overflow, with `เอาเมนูนี้แหละ` stacked above `ขอคิดอีกที`.

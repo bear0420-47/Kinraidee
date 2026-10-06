@@ -4,12 +4,14 @@ type PageShellProps = {
   title: string
   description?: string
   // `extra-wide` is for data-dense tables, such as the MenuItem list.
-  width?: 'narrow' | 'wide' | 'extra-wide'
+  width?: 'narrow' | 'medium' | 'wide' | 'extra-wide'
   children: ReactNode
 }
 
 const widthClassNames = {
   narrow: 'max-w-md',
+  // Single-column flows with choice chips, such as the meal conditions.
+  medium: 'max-w-2xl',
   wide: 'max-w-shell',
   'extra-wide': 'max-w-shell-wide',
 }

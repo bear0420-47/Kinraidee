@@ -16,9 +16,9 @@ import {
   numberColumnClassName,
 } from '@/components/tableStyles'
 import { FoodTypeIcon } from '@/lib/foodTypeIcons'
+import { formatPrice } from '@/lib/formatPrice'
 import { TasteIcon } from '@/lib/tasteIcons'
 import {
-  formatPrice,
   isMenuItemDeleted,
   isRestaurantDeleted,
   MAX_BULK_SELECTION,
