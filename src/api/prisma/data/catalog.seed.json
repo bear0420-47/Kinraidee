@@ -114,7 +114,11 @@
         "en": "Halal kebab shop near Mae Fah Luang University, serving chicken and beef doner kebabs and beef kofta with rice, flatbread, and salad."
       },
       "phone": null,
-      "imageUrl": null
+      "imageUrl": null,
+      "image": {
+        "asset": "family-kebab-halal/logo.png",
+        "key": "ce3f87ab-80e7-471a-ac1d-1d29926c83a0.png"
+      }
     },
     {
       "id": "c6suhn091scra0pn8ec6eytcb",
@@ -125,7 +129,11 @@
         "en": "Italian-style comfort food such as pasta and open-faced sandwiches."
       },
       "phone": "0633249622",
-      "imageUrl": null
+      "imageUrl": null,
+      "image": {
+        "asset": "i-wish-pasta/logo.png",
+        "key": "12ac056a-5050-496e-8938-ed1307495e6e.png"
+      }
     },
     {
       "id": "c3hy6sew7jxx48rqguikvx40a",
@@ -139,7 +147,11 @@
         "en": "Burger and Japanese-style curry shop in the Kotchapol Land project."
       },
       "phone": null,
-      "imageUrl": null
+      "imageUrl": null,
+      "image": {
+        "asset": "yanyan-curry-burger/logo.jpg",
+        "key": "37a332e8-9317-4156-b2bc-1710c799a422.jpg"
+      }
     }
   ],
   "menuItems": [
@@ -157,6 +169,10 @@
       },
       "price": 99,
       "imageUrl": null,
+      "image": {
+        "asset": "family-kebab-halal/menus/spicy-chicken-doner-kebab.png",
+        "key": "993676da-126e-46b2-8a2b-928859947099.png"
+      },
       "tasteIds": [
         "c12yme2yu2wne82ugvfce7wfw",
         "c1spiyrw91ifmryner9y1bvb4",
@@ -175,6 +191,10 @@
       },
       "price": 179,
       "imageUrl": null,
+      "image": {
+        "asset": "family-kebab-halal/menus/beef-kofta-with-rice.png",
+        "key": "1c6fcee5-d93f-4ec4-ba5c-d31189ed2446.png"
+      },
       "tasteIds": ["c1spiyrw91ifmryner9y1bvb4", "cayiejo3s8ogwe5uqz1pxg29o"]
     },
     {
@@ -188,6 +208,10 @@
       },
       "price": 99,
       "imageUrl": null,
+      "image": {
+        "asset": "family-kebab-halal/menus/hummus.png",
+        "key": "e48212c5-319f-491c-b9af-17bc6210ac2b.png"
+      },
       "tasteIds": ["c1spiyrw91ifmryner9y1bvb4", "cahxbgiqa0hxlfer1dw6itmz1"]
     },
     {
@@ -204,6 +228,10 @@
       },
       "price": 179,
       "imageUrl": null,
+      "image": {
+        "asset": "i-wish-pasta/menus/triple-cheese-cream-pasta.png",
+        "key": "b36030a4-d1b3-4a75-89c2-241a9f16aca7.png"
+      },
       "tasteIds": ["c1spiyrw91ifmryner9y1bvb4", "cahxbgiqa0hxlfer1dw6itmz1"]
     },
     {
@@ -217,6 +245,10 @@
       },
       "price": 259,
       "imageUrl": null,
+      "image": {
+        "asset": "i-wish-pasta/menus/salmon-poke-bowl.png",
+        "key": "daa10d49-7c67-4f28-954a-0925d5805fd2.png"
+      },
       "tasteIds": ["c1spiyrw91ifmryner9y1bvb4", "c3lg0r5rrv15qvznx1tilwoy4"]
     },
     {
@@ -230,6 +262,10 @@
       },
       "price": 99,
       "imageUrl": null,
+      "image": {
+        "asset": "i-wish-pasta/menus/guacamole-bruschetta.png",
+        "key": "dc55b740-e06c-496d-a476-c64ac0e160d6.png"
+      },
       "tasteIds": [
         "c1spiyrw91ifmryner9y1bvb4",
         "cahxbgiqa0hxlfer1dw6itmz1",
@@ -250,6 +286,10 @@
       },
       "price": 119,
       "imageUrl": null,
+      "image": {
+        "asset": "yanyan-curry-burger/menus/beef-burger-set.png",
+        "key": "3294f869-ed20-44ea-82ed-b101a78770eb.png"
+      },
       "tasteIds": ["c1spiyrw91ifmryner9y1bvb4", "cahxbgiqa0hxlfer1dw6itmz1"]
     },
     {
@@ -266,6 +306,10 @@
       },
       "price": 89,
       "imageUrl": null,
+      "image": {
+        "asset": "yanyan-curry-burger/menus/homemade-french-fries-large.png",
+        "key": "586caf30-61c6-4e72-9b69-b751fd79797d.png"
+      },
       "tasteIds": ["c1spiyrw91ifmryner9y1bvb4", "c6c7oshlpa0xsaq9jiz3vnjdq"]
     },
     {
@@ -282,6 +326,10 @@
       },
       "price": 89,
       "imageUrl": null,
+      "image": {
+        "asset": "yanyan-curry-burger/menus/japanese-curry-pork-cheese-hamburg.png",
+        "key": "75e3632b-a10e-4127-b88f-0c06a98e1f6b.png"
+      },
       "tasteIds": [
         "c12yme2yu2wne82ugvfce7wfw",
         "c1spiyrw91ifmryner9y1bvb4",

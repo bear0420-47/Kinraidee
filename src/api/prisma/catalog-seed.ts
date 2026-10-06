@@ -1,9 +1,51 @@
-import { readFile } from 'node:fs/promises'
+import { copyFile, mkdir, readFile } from 'node:fs/promises'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { isDeepStrictEqual } from 'node:util'
 
 import type { Prisma } from '@prisma/client'
 
-import { catalogSeedSchema } from './seedSchemas'
+import { catalogSeedSchema, type CatalogSeed } from './seedSchemas'
+
+// The approved catalog photos and logos, committed with the repository.
+export const catalogAssetsDirectory = fileURLToPath(
+  new URL('../../../assets/catalog/', import.meta.url),
+)
+
+export type CatalogSeedOptions = {
+  // Development and test seeds point records at their copied catalog photos. Without local
+  // uploads (production), records keep their approved external URL or no image.
+  localImages?: boolean
+}
+
+type CatalogRecord =
+  CatalogSeed['restaurants'][number] | CatalogSeed['menuItems'][number]
+
+function imageFields(record: CatalogRecord, localImages: boolean) {
+  return localImages && record.image
+    ? { imageKey: record.image.key, imageUrl: `/uploads/${record.image.key}` }
+    : { imageKey: null, imageUrl: record.imageUrl }
+}
+
+// Copies every catalog photo into the local uploads directory under its fixed key. It runs
+// before the database transaction, so a missing photo stops the seed before any write.
+export async function copyCatalogImages(
+  catalog: CatalogSeed,
+  uploadsDirectory: string,
+  assetsDirectory = catalogAssetsDirectory,
+) {
+  const images = [...catalog.restaurants, ...catalog.menuItems].flatMap(
+    ({ image }) => (image ? [image] : []),
+  )
+  await mkdir(uploadsDirectory, { recursive: true })
+  for (const image of images) {
+    await copyFile(
+      path.join(assetsDirectory, ...image.asset.split('/')),
+      path.join(uploadsDirectory, image.key),
+    )
+  }
+  return images.length
+}
 
 export type CatalogSeedCounts = {
   created: number
@@ -42,6 +84,7 @@ export async function loadCatalogSeed(
 export async function seedCatalog(
   transaction: Prisma.TransactionClient,
   input: unknown,
+  { localImages = false }: CatalogSeedOptions = {},
 ): Promise<CatalogSeedCounts> {
   const catalog = catalogSeedSchema.parse(input)
   const counts: CatalogSeedCounts = {
@@ -141,8 +184,7 @@ export async function seedCatalog(
       descriptionTh: restaurant.description?.th ?? null,
       descriptionEn: restaurant.description?.en ?? null,
       phone: restaurant.phone,
-      imageKey: null,
-      imageUrl: restaurant.imageUrl,
+      ...imageFields(restaurant, localImages),
     }
     const state = getSeedState(restaurantById.get(restaurant.id), record)
     increment(counts, state)
@@ -171,8 +213,7 @@ export async function seedCatalog(
       descriptionTh: menuItem.description?.th ?? null,
       descriptionEn: menuItem.description?.en ?? null,
       price: menuItem.price,
-      imageKey: null,
-      imageUrl: menuItem.imageUrl,
+      ...imageFields(menuItem, localImages),
     }
     const state = getSeedState(menuItemById.get(menuItem.id), record)
     increment(counts, state)

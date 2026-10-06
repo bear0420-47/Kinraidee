@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { uploadFileNameSchema } from '../src/modules/uploads/uploads.dto'
+
 const cuidSchema = z.string().regex(/^c[a-z0-9]{24}$/, 'Expected a CUID.')
 const requiredTextSchema = z.string().trim().min(1)
 const externalImageUrlSchema = z
@@ -7,6 +9,25 @@ const externalImageUrlSchema = z
   .refine((value) => /^https?:\/\//i.test(value), {
     message: 'External images must use HTTP or HTTPS.',
   })
+
+// A photo from `assets/catalog/` that development seeds copy into local uploads under a
+// fixed generated key, so every run gives the same `/uploads/<key>` URL.
+const catalogImageSchema = z
+  .object({
+    asset: z
+      .string()
+      .regex(
+        /^[a-z0-9-]+(?:\/[a-z0-9-]+)*\.(?:jpg|png|webp)$/,
+        'Expected a path inside assets/catalog.',
+      ),
+    key: uploadFileNameSchema,
+  })
+  .refine(
+    ({ asset, key }) =>
+      asset.slice(asset.lastIndexOf('.')) === key.slice(key.lastIndexOf('.')),
+    { message: 'The key must keep the asset file type.', path: ['key'] },
+  )
+  .optional()
 
 const localizationSchema = z.object({
   th: requiredTextSchema,
@@ -47,6 +68,7 @@ const restaurantSchema = z.object({
     .regex(/^\d{9,10}$/)
     .nullable(),
   imageUrl: externalImageUrlSchema.nullable(),
+  image: catalogImageSchema,
 })
 
 const menuItemSchema = z.object({
@@ -58,6 +80,7 @@ const menuItemSchema = z.object({
   description: optionalLocalizationSchema,
   price: z.number().int().positive(),
   imageUrl: externalImageUrlSchema.nullable(),
+  image: catalogImageSchema,
 })
 
 function addDuplicateIssues(
@@ -99,6 +122,13 @@ export const catalogSeedSchema = z
     addDuplicateIssues(
       collections.flatMap(([, records]) => records.map(({ id }) => id)),
       ['ids'],
+      context,
+    )
+    addDuplicateIssues(
+      [...catalog.restaurants, ...catalog.menuItems].flatMap(({ image }) =>
+        image ? [image.key] : [],
+      ),
+      ['imageKeys'],
       context,
     )
 
