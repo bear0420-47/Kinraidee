@@ -195,6 +195,7 @@ Tests: request validation and normalization, master-data validation, mandatory f
 
 - API development/start and maintenance scripts use Node's optional `--env-file-if-exists=.env`, so local commands load `src/api/.env` without a shell-specific `source` step while deployed environments can continue injecting variables.
 - `prisma.config.ts` loads the same optional local file before Prisma evaluates `env("DATABASE_URL")`; this restores the direct setup commands documented in `first-setup.md` without adding a runtime dependency.
+- Development logging uses `pino-pretty` with colors and readable local timestamps. Test logging remains silent, and production keeps structured JSON for log aggregation.
 
 ## Deployment Decisions
 

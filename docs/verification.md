@@ -1345,3 +1345,9 @@ Deliberate regression checks confirmed the tests fail when:
 | `NODE_OPTIONS=--localstorage-file=/private/tmp/kinraidee-vitest-localstorage pnpm verify` | 0 | Pass: typecheck, lint, tests, and production builds. API: 71 files/545 tests; web: 37 files/399 tests. |
 | `pnpm format` | 0 | Pass. |
 | `git diff --check` | 0 | Pass. |
+
+### Development logging
+
+- `pnpm dev:api` formats startup and HTTP request logs through `pino-pretty` with ANSI colors, readable local timestamps, and no `pid`/`hostname` noise. A live `GET /api/zones` produced a colored `INFO request completed` entry with the sanitized request, status `200`, and response time.
+- `NODE_ENV=production LOCAL_UPLOADS_ENABLED=false node --env-file=.env --import tsx -e "…"` emitted one structured JSON log line, confirming production does not use the pretty transport.
+- The full verification suite passed with API logger tests unchanged, confirming test logging remains silent and sensitive-field redaction still applies.

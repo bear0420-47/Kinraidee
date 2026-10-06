@@ -196,6 +196,8 @@ Default local URLs:
 - API: `http://localhost:3000`
 - Web: `http://localhost:5173`
 
+API development logs use colored `pino-pretty` output. Production startup keeps structured JSON logs for aggregation.
+
 ## AI Agent Rules
 
 - Read `AGENTS.md`, `rule.md`, `docs/plan.md`, the current specification, and `docs/03-implementation/engineering-guidelines.md` before changing implementation files.

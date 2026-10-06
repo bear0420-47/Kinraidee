@@ -37,6 +37,7 @@
     "@types/multer": "^2.3.0",
     "@types/node": "^24.13.5",
     "@types/supertest": "^7.2.1",
+    "pino-pretty": "^13.2.0",
     "prisma": "^6.19.3",
     "supertest": "^7.3.0",
     "tsc-alias": "^1.9.5",

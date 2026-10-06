@@ -126,6 +126,18 @@ export const httpSerializers = {
 
 export const loggerOptions: LoggerOptions = {
   level: env.NODE_ENV === 'test' ? 'silent' : 'info',
+  ...(env.NODE_ENV === 'development'
+    ? {
+        transport: {
+          target: 'pino-pretty',
+          options: {
+            colorize: true,
+            ignore: 'pid,hostname',
+            translateTime: 'SYS:standard',
+          },
+        },
+      }
+    : {}),
   formatters: {
     log: sanitizeLogObject,
   },
