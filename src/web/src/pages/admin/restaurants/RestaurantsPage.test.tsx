@@ -297,6 +297,51 @@ describe('RestaurantsPage list', () => {
     )
   })
 
+  it('keeps the filters in the URL and restores them on reload', async () => {
+    const many = Array.from({ length: 25 }, (_, index) =>
+      restaurant({
+        id: `r_${index}`,
+        name: { th: `ร้าน ${index}`, en: `Shop ${index}` },
+      }),
+    )
+    fakeRestaurantsApi({ items: many })
+    const { user, router } = await openRestaurantsPage()
+
+    await user.type(screen.getByLabelText('ค้นหาชื่อร้าน'), 'ร้าน')
+    await user.click(screen.getByRole('button', { name: 'ค้นหา' }))
+    await user.click(screen.getByLabelText('แสดงร้านที่ลบแล้ว'))
+
+    await waitFor(() => {
+      const params = new URLSearchParams(router.state.location.search)
+      expect(params.get('search')).toBe('ร้าน')
+      expect(params.get('includeDeleted')).toBe('true')
+    })
+  })
+
+  it('opens with the search, deleted filter, and page from the URL', async () => {
+    const many = Array.from({ length: 25 }, (_, index) =>
+      restaurant({
+        id: `r_${index}`,
+        name: { th: `ร้าน ${index}`, en: `Shop ${index}` },
+      }),
+    )
+    const api = fakeRestaurantsApi({ items: many })
+    await openRestaurantsPage(
+      `/admin/restaurants?search=${encodeURIComponent('ร้าน')}&includeDeleted=true&page=2`,
+    )
+
+    expect(api.requestsFor('GET', '/api/restaurants')[0]?.path).toBe(
+      `/api/restaurants?page=2&pageSize=20&search=${encodeURIComponent('ร้าน')}&includeDeleted=true`,
+    )
+    expect(
+      (screen.getByLabelText('ค้นหาชื่อร้าน') as HTMLInputElement).value,
+    ).toBe('ร้าน')
+    expect(
+      (screen.getByLabelText('แสดงร้านที่ลบแล้ว') as HTMLInputElement).checked,
+    ).toBe(true)
+    expect(await screen.findByText(/หน้า 2 จาก 2/)).toBeTruthy()
+  })
+
   it('shows deleted restaurants with a text status and restore instead of edit', async () => {
     fakeRestaurantsApi({ items: [closedShop] })
     const { user } = renderApp('/admin/restaurants')

@@ -17,6 +17,7 @@ import {
 } from '@/hooks/admin/menu-items/useMenuItems'
 import { useRestaurantOptions } from '@/hooks/admin/restaurants/useRestaurants'
 import { useTastes } from '@/hooks/admin/tastes/useTastes'
+import { useUrlFilters } from '@/hooks/useUrlFilters'
 import {
   defaultMenuItemFilters,
   isFilteringMenuItems,
@@ -47,7 +48,8 @@ const CLEANUP_WARNING = 'ระบบลบรูปที่ไม่ได้�
 const NO_SELECTION: ReadonlySet<string> = new Set()
 
 export function MenuItemsPage() {
-  const [filters, setFilters] = useState<Filters>(defaultMenuItemFilters)
+  // Kept in the URL, so a reload or a shared link keeps the search and page.
+  const [filters, setFilters] = useUrlFilters<Filters>(defaultMenuItemFilters)
   const menuItems = useMenuItems(filters)
   const restaurants = useRestaurantOptions()
   const foodTypes = useFoodTypes()

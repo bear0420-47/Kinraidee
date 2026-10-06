@@ -6,7 +6,9 @@ import { SelectField } from '@/components/SelectField'
 import { TextField } from '@/components/TextField'
 import { useAuditLogs } from '@/hooks/admin/audit-logs/useAuditLogs'
 import {
+  auditActionLabels,
   auditActions,
+  auditEntityTypeLabels,
   auditEntityTypes,
   type AuditLogFilters,
   toIsoDateTime,
@@ -78,7 +80,9 @@ export function AuditLogsPage() {
         >
           <option value="">ทั้งหมด</option>
           {auditEntityTypes.map((value) => (
-            <option key={value}>{value}</option>
+            <option key={value} value={value}>
+              {auditEntityTypeLabels[value]}
+            </option>
           ))}
         </SelectField>
         <SelectField
@@ -89,7 +93,9 @@ export function AuditLogsPage() {
         >
           <option value="">ทั้งหมด</option>
           {auditActions.map((value) => (
-            <option key={value}>{value}</option>
+            <option key={value} value={value}>
+              {auditActionLabels[value]}
+            </option>
           ))}
         </SelectField>
         <TextField id="audit-actor-id" name="actorId" label="Actor ID" />

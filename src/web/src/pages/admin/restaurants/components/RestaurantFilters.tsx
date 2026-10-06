@@ -21,6 +21,12 @@ export function RestaurantFilters({
   onChange,
 }: RestaurantFiltersProps) {
   const [search, setSearch] = useState(filters.search)
+  // The draft follows the applied search when it changes elsewhere, e.g. the URL.
+  const [appliedSearch, setAppliedSearch] = useState(filters.search)
+  if (appliedSearch !== filters.search) {
+    setAppliedSearch(filters.search)
+    setSearch(filters.search)
+  }
 
   function submitSearch(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()

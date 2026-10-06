@@ -39,7 +39,7 @@ Kinraidee uses a playful notebook-and-doodle style:
 | `--rust` | `#694538` | Price and warm emphasis text |
 | `--line-soft` | `#d8dfe2` | Soft divider or disabled border |
 | `--focus` | `#d9ffbe` | Focus ring |
-| `--glass` | `rgba(255, 255, 255, .96)` | Overlay/dialog/card translucent surface |
+| `--glass` | `rgba(255, 255, 255, .96)` | Translucent surface for meal-flow step cards (never dialogs) |
 | `--shadow` | `5px 6px 0 #263d4b` | Primary doodle shadow |
 
 Raw colours are not used directly in implementation files. Add a token first when a new value is necessary.
@@ -168,12 +168,12 @@ Use slight asymmetric radii for doodle surfaces when practical, e.g. `6px 12px 5
 
 ### Dialogs And Overlays
 
-- Dialogs use `--glass`/paper surfaces, ink borders, large radius, and focus trapping.
+- Dialogs use the opaque `--surface`, ink borders, large radius, and focus trapping. They never use `--glass`, so page text cannot show through.
 - Opening a dialog moves focus into the dialog; closing returns focus to the trigger.
 - Non-dialog page content must be inert while a modal dialog is open.
 - Selected-menu confirmation shows menu name, restaurant, price, zone, image, and rationale. It never shows wait time.
 - Confirmation uses playful Thai actions. Stage 1 provides `เอาเมนูนี้แหละ` as the primary action and `ขอคิดอีกที` as the secondary action. The success state provides only `กลับหน้าหลัก`.
-- In the React flow both stages share one dialog. Stage 1 (`เลือกเมนูนี้ใช่ไหม?`) shows the photo, or the card's fallback panel, at a full `4:3` ratio, framed with the default radius. The success stage (`ได้มื้อนี้แล้ว!`) shows a Phosphor `Confetti` icon and the message, announced in a status region, and moves focus to `กลับหน้าหลัก`. Escape closes stage 1 like `ขอคิดอีกที`, and on the success stage acts as `กลับหน้าหลัก`.
+- In the React flow both stages share one dialog. Stage 1 (`เลือกเมนูนี้ใช่ไหม?`) shows the photo, or the card's fallback panel, at a `16:10` ratio (so the dialog fits a 1366×768 laptop without scrolling), framed with the default radius. The success stage (`ได้มื้อนี้แล้ว!`) shows a Phosphor `Confetti` icon and the message, announced in a status region, and moves focus to `กลับหน้าหลัก`. Escape closes stage 1 like `ขอคิดอีกที`, and on the success stage acts as `กลับหน้าหลัก`.
 
 ### Favorites
 
@@ -185,7 +185,7 @@ Use slight asymmetric radii for doodle surfaces when practical, e.g. `6px 12px 5
 
 ### Saved Preferences
 
-- `/account/preferences` is a single form of four labelled native selects (budget, taste, food type, zone). Each select's first option is `ไม่ตั้งค่า` (no default). Taste, food type, and zone then offer their "any" choice (`อะไรก็ได้` / `ที่ไหนก็ได้`) as a real saved value, then their records. Budget has no "any", because the meal flow always asks for a budget range.
+- `/account/preferences` is a single form of four labelled native selects (budget, taste, food type, and zone, labelled `พื้นที่` as in the meal flow). Each select's first option is `ไม่ตั้งค่า` (no default). Taste, food type, and zone then offer their "any" choice (`อะไรก็ได้` / `ที่ไหนก็ได้`) as a real saved value, then their records. Budget has no "any", because the meal flow always asks for a budget range.
 - A save with every select on `ไม่ตั้งค่า` shows its error under the first select, linked to it, and focus moves there. Save and clear results are announced in a status region.
 - `ล้างค่าเริ่มต้น` is always shown so it can be found. With nothing saved it is disabled and described by the `ยังไม่ได้ตั้งค่าเริ่มต้น` line; otherwise it always asks for confirmation in the shared confirm dialog before deleting.
 - In the meal flow, a saved default appears as the already-selected chip on its step, with no extra note.
@@ -199,6 +199,9 @@ Use slight asymmetric radii for doodle surfaces when practical, e.g. `6px 12px 5
 ### Admin Tables And Bulk Selection
 
 - Admin tables share one cell style; the actions column sits at the right edge with its header centred over the buttons.
+- Long names in a column (such as a food type) wrap beside their icon rather than widening the table. Short fixed labels (`ไม่มีรูป`, `ใช้งาน`, `ลบแล้ว`) never wrap.
+- Audit-log action and record types show Thai labels (`เพิ่ม` / `แก้ไข` / `ลบ`; `โซน`, `ประเภทอาหาร`, `รสชาติ`, `ร้านอาหาร`, `เมนูอาหาร`) in the table and the filters.
+- The Restaurant and MenuItem list filters (search, selects, show-deleted, page) live in the URL query, so a reload or a shared link keeps them.
 - Admin pages use the `1120px` shell. A data-dense table page, such as MenuItems, may use the `1240px` extra-wide card so the table fits without horizontal scrolling on desktop.
 - When a table shows images, the image is the first content column at `80px` square; a record without an image shows a dashed `ไม่มีรูป` placeholder of the same size so rows stay aligned.
 - A table image is a button labelled `ดูรูปเต็ม {name}` that opens the whole, uncropped image in a wide modal (a lightbox) with a `ปิด` button. It follows the dialog rules: Escape closes it and focus returns to the image.
@@ -218,7 +221,7 @@ Use slight asymmetric radii for doodle surfaces when practical, e.g. `6px 12px 5
 ### Navigation
 
 - Use a lightweight header with brand and one or two primary navigation actions.
-- Anonymous users see `เข้าสู่ระบบ`; authenticated `USER` accounts see `บัญชีของฉัน`; authenticated `ADMIN` accounts see `จัดการระบบ` in the same header slot.
+- Anonymous users see `เข้าสู่ระบบ`; authenticated `USER` accounts see `บัญชีของฉัน`; authenticated `ADMIN` accounts see both `บัญชีของฉัน` and `จัดการระบบ`, because admins also have favorites, history, and saved defaults (human approver's choice, 2026-10-06).
 - Treat account and administrator entries as secondary navigation. They must not visually compete with the current screen's primary action.
 
 ### Icons

@@ -81,7 +81,11 @@ describe('PreferencesPage', () => {
       'อะไรก็ได้',
       'ข้าว',
     ])
-    expect(optionsOf('โซน')).toEqual(['ไม่ตั้งค่า', 'ที่ไหนก็ได้', 'หน้ามอ'])
+    expect(optionsOf('พื้นที่')).toEqual([
+      'ไม่ตั้งค่า',
+      'ที่ไหนก็ได้',
+      'หน้ามอ',
+    ])
     for (const path of ['/api/tastes', '/api/food-types', '/api/zones']) {
       expect(api.calls('GET', path).length).toBeGreaterThan(0)
     }
@@ -108,7 +112,7 @@ describe('PreferencesPage', () => {
     expect(select('งบประมาณ').value).toBe('BETWEEN_50_100')
     expect(select('รสชาติ').value).toBe('taste_1')
     expect(select('ประเภทอาหาร').value).toBe('')
-    expect(select('โซน').value).toBe('zone_1')
+    expect(select('พื้นที่').value).toBe('zone_1')
     expect(screen.queryByText('ยังไม่ได้ตั้งค่าเริ่มต้น')).toBeNull()
   })
 
@@ -116,7 +120,7 @@ describe('PreferencesPage', () => {
     const api = fakeApi({ saved })
     const { user } = await openPage()
 
-    await user.selectOptions(select('โซน'), '')
+    await user.selectOptions(select('พื้นที่'), '')
     await user.selectOptions(select('ประเภทอาหาร'), 'food_1')
     await user.click(screen.getByRole('button', { name: 'บันทึกค่าเริ่มต้น' }))
 
@@ -143,7 +147,7 @@ describe('PreferencesPage', () => {
 
     await user.selectOptions(select('รสชาติ'), 'ANY')
     await user.selectOptions(select('ประเภทอาหาร'), 'ANY')
-    await user.selectOptions(select('โซน'), 'ANY')
+    await user.selectOptions(select('พื้นที่'), 'ANY')
     await user.click(screen.getByRole('button', { name: 'บันทึกค่าเริ่มต้น' }))
 
     expect(await screen.findByText('บันทึกค่าเริ่มต้นแล้ว')).toBeTruthy()
@@ -198,7 +202,7 @@ describe('PreferencesPage', () => {
     expect(api.preferences.current()).toBeNull()
     expect(screen.queryByRole('dialog')).toBeNull()
     expect(select('งบประมาณ').value).toBe('')
-    expect(select('โซน').value).toBe('')
+    expect(select('พื้นที่').value).toBe('')
     expect(screen.getByText('ยังไม่ได้ตั้งค่าเริ่มต้น')).toBeTruthy()
     expect(
       screen.getByRole<HTMLButtonElement>('button', {
@@ -224,8 +228,8 @@ describe('PreferencesPage', () => {
     const message = await screen.findByText(
       'ตัวเลือกนี้ไม่มีในระบบแล้ว กรุณาเลือกใหม่',
     )
-    expect(select('โซน').getAttribute('aria-describedby')).toBe(message.id)
-    expect(document.activeElement).toBe(select('โซน'))
+    expect(select('พื้นที่').getAttribute('aria-describedby')).toBe(message.id)
+    expect(document.activeElement).toBe(select('พื้นที่'))
     expect(screen.queryByRole('alert')).toBeNull()
     expect(api.calls('GET', '/api/zones').length).toBeGreaterThan(zoneLoads)
   })

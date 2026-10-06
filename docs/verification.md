@@ -1182,3 +1182,73 @@ Deliberate regression checks confirmed the tests fail when:
 - **Fixed during the check:** a dialog closed without a focused opener (as in browsers that do not focus buttons on click) now returns focus to the clear button.
 - **Anonymous:** confirming reached success with no warning and no history request.
 - **Console:** no errors.
+
+## MVP browser-test fixes
+
+### Scope
+
+- Verification date: 2026-10-06 (ICT, `UTC+07:00`)
+- Branch: `fix/mvp-ui-polish`, from `main` at `7411978`.
+- Source: the end-to-end MVP browser test of `main` as an anonymous visitor, a USER, and an ADMIN. No flow was broken; these are the layout, navigation, and wording issues it found. Web only: no API, OpenAPI, or data-model change.
+- Changes:
+  - **MenuItem admin table:** food-type names now wrap. At 1280, 1440, and 1920 px the table fits its `1240px` card, which the design system requires, so edit and delete no longer need horizontal scrolling.
+  - **Restaurant admin table:** `ไม่มีรูป`, `ใช้งาน`, and `ลบแล้ว` no longer break mid-word.
+  - **Header:** ADMIN accounts see `บัญชีของฉัน` beside `จัดการระบบ`, on one row at 375 px.
+  - **Dialogs:** they use the opaque `--surface` instead of `--glass`, so page text cannot show through.
+  - **Confirmation photo:** now `16:10`, so the dialog fits 1280×800 and 1366×768 without scrolling.
+  - **Wording:** the preferences zone select is labelled `พื้นที่`. The meal-page session note is shown only to anonymous users.
+  - **Audit log:** action and record types use Thai labels in the table and the filters.
+  - **Admin filters:** Restaurant and MenuItem filters live in the URL query (`useUrlFilters`, `lib/urlFilters.ts`), so a reload or a shared link keeps the search, selects, show-deleted, and page.
+- Decisions are recorded in `docs/plan.md` and `docs/02-design/design-system.md`.
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests (API 70 files/531 tests; web 37 files/401 tests), API build with OpenAPI generation, and web production build. |
+| `prettier --check --end-of-line auto .` in `src/web` | 0 | Pass. |
+| `git diff --check` | 0 | Pass. |
+
+New and updated web tests:
+- `lib/urlFilters.test.ts` covers:
+  - Defaults and typed reading.
+  - Unreadable pages and booleans fall back.
+  - Defaults are left out of the URL, and other keys are kept.
+  - A round trip.
+- The Restaurants and MenuItems page tests:
+  - Open from a URL with search, a select, show-deleted, and page 2, and send that query first.
+  - Later filter changes are written back to the URL.
+- `router.test.tsx`: ADMIN sees both header links.
+- `MealPreferences.test.tsx`: the session note is hidden when signed in and shown when signed out.
+- The audit-log and preferences tests use the Thai labels.
+
+Deliberate regression checks confirmed the tests fail when:
+- The note is shown to a signed-in user.
+- The admin header has one link.
+- Either page keeps its filters in component state instead of the URL.
+- Defaults are written to the URL, or an invalid page is accepted.
+- The audit action or record type is shown in English.
+- The preferences label goes back to `โซน`.
+
+The table widths and the dialog height are layout rules that jsdom cannot measure, so they were checked in the browser.
+
+### Manual browser checks (local API with the approved #30 catalog)
+
+- **MenuItem table:** `table.scrollWidth` equals the wrapper width at 1280, 1440, and 1920 px (it was 1346 px in a 1184 px box), with the edit and delete buttons in view.
+- **Restaurant table:** every image and status label sits on one line, and the table fits.
+- **Admin header:**
+  - Shows `บัญชีของฉัน` (→ `/account`) and `จัดการระบบ` (→ `/admin`) at 1280 px, on one 70 px row at 375 px, and wrapped without overflow at 320 px.
+  - A USER still sees one link, and a signed-out visitor sees `เข้าสู่ระบบ`.
+- **Dialogs:** the zone delete dialog's background is `rgb(255, 255, 255)`, and no table text shows through.
+- **Confirmation dialog:** no internal scrolling at 1280×800 (690/690) or 1366×768 (680/680). It overflowed by 12 px before.
+- **Wording:**
+  - Preferences labels read `งบประมาณ`, `รสชาติ`, `ประเภทอาหาร`, `พื้นที่`.
+  - The session note is hidden for a signed-in admin and shown again after logout.
+- **Audit log:** filters show `โซน`… and `เพิ่ม` / `แก้ไข` / `ลบ` with the same enum values, rows show Thai labels, and filtering by `ลบ` returned only delete rows.
+- **Filters in the URL:**
+  - A Restaurant search plus show-deleted wrote `?search=…&includeDeleted=true`, with focus kept in the search box, and survived a reload.
+  - MenuItems `?page=2` reloaded on page 2.
+  - `?page=abc&includeDeleted=yes` fell back to the defaults.
+  - `?page=9` moved back to the last page.
+- **Phone width:** no horizontal page scroll at 375 px on any changed page.
+- **API:** no 5xx responses. The only errors were the expected signed-out session checks and a deliberate duplicate-zone `409`.
