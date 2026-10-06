@@ -8,6 +8,10 @@ const dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
   plugins: [react()],
+  // The API's CORS allowlist names this exact origin. If the port is busy, Vite stops with an
+  // error instead of moving to another port that the API would refuse.
+  server: { port: 5173, strictPort: true },
+  preview: { port: 5173, strictPort: true },
   resolve: {
     alias: {
       '@': path.resolve(dirname, './src'),

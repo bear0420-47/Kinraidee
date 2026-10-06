@@ -1,4 +1,9 @@
-import { ArrowCounterClockwise, Eye, PencilSimple } from '@phosphor-icons/react'
+import {
+  ArrowCounterClockwise,
+  ArrowsClockwise,
+  Eye,
+  PencilSimple,
+} from '@phosphor-icons/react'
 import { useEffect, useState, type Ref } from 'react'
 
 import { Button } from '@/components/Button'
@@ -26,6 +31,8 @@ type ShuffleCardGridProps = {
   headingRef: Ref<HTMLHeadingElement>
   onUpdate: (update: (shortlist: Shortlist) => Shortlist) => void
   onEditConditions: () => void
+  // Clears the whole flow and returns to question 1.
+  onStartOver: () => void
   // Opens confirmation for a revealed card's menu.
   onChoose: (item: RecommendationItem) => void
 }
@@ -47,6 +54,7 @@ export function ShuffleCardGrid({
   headingRef,
   onUpdate,
   onEditConditions,
+  onStartOver,
   onChoose,
 }: ShuffleCardGridProps) {
   const request = useRequestRecommendations()
@@ -130,6 +138,10 @@ export function ShuffleCardGrid({
           <Button variant="ghost" disabled={busy} onClick={onEditConditions}>
             <PencilSimple aria-hidden weight="bold" />
             แก้เงื่อนไข
+          </Button>
+          <Button variant="ghost" disabled={busy} onClick={onStartOver}>
+            <ArrowsClockwise aria-hidden weight="bold" />
+            เริ่มใหม่
           </Button>
         </div>
       </div>

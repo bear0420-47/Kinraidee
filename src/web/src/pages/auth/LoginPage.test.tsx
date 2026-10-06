@@ -99,7 +99,8 @@ describe('LoginPage', () => {
     const { router, user } = renderApp('/login')
     await screen.findByLabelText('อีเมล')
 
-    // Header brand and header login link come first in tab order.
+    // Header brand, home link, and login link come first in tab order.
+    await user.tab()
     await user.tab()
     await user.tab()
     await user.tab()

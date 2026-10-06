@@ -158,6 +158,11 @@ Approved — full-app build plan updated through 2026-09-28 decisions. Implement
   - When local uploads are on (development and test, never production), the seed copies the 12 photos into `LOCAL_UPLOADS_DIRECTORY` before its transaction and stores `imageKey` plus `/uploads/<key>`. A missing photo stops the seed before any write, and fixed keys keep repeated runs unchanged.
   - With local uploads off, records keep their approved external URL or `null`, as before.
   - Re-running the seed still resets seeded records' images to these values, as it does for every seed-managed field.
+- Navigation and fresh-setup fixes (human approver's decision, 2026-10-07), from a teammate's report on a fresh clone of `main`:
+  - Every page except Home shows a `หน้าแรก` header link, `บัญชีของฉัน` links `กลับหน้าแรก`, and the cards view adds `เริ่มใหม่`, which clears the flow and shows question 1.
+  - The web dev server is pinned to port 5173 (`strictPort`). Before, a busy port moved Vite to 5174, which the API's CORS allowlist refuses, so the taste step showed `โหลดตัวเลือกไม่สำเร็จ`.
+  - The API stops with the startup error when its port is in use. Before, Express 5 passed the error to the listen callback, which logged `Kinraidee API listening` and exited.
+  - A database seeded before the catalog-photo change keeps `null` images until the seed is re-run; `first-setup.md` now says to re-run it after pulling.
 
 ## Evidence Expected
 

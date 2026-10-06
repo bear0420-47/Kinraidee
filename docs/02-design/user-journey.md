@@ -47,7 +47,7 @@ No-match actions:
 
 - Primary: `ใช้เงื่อนไขนี้แล้วสับใหม่` applies every suggested change at once (the suggestion's complete conditions) and calls the recommendation API again.
 - Secondary: `แก้เงื่อนไขเอง` returns to the condition summary with all current selections preserved.
-- Do not add a third Home action inside the no-match panel; Home remains reachable through the Kinraidee brand/header.
+- Do not add a third Home action inside the no-match panel; Home remains reachable through the header's `หน้าแรก` link and the Kinraidee brand.
 
 ## Notes
 
@@ -55,6 +55,7 @@ No-match actions:
 - `เข้าสู่ระบบ` navigates to a dedicated `/login` page; account creation uses a dedicated `/register` page. Do not use authentication modals in the first release.
 - Authentication navigation preserves the current recommendation state in `sessionStorage` and includes a safe internal return target. After successful login, return the user to the page/step that initiated login; when login starts from Home, return Home.
 - After authentication, the header action is `บัญชีของฉัน` for `USER` and `จัดการระบบ` for `ADMIN`. Do not show an administrator entry action to anonymous users or `USER` accounts.
+- Every page except Home shows a visible `หน้าแรก` link in the header (icon only at phone width, with the same accessible name), so Home never depends on recognising the brand as a link. `บัญชีของฉัน` also links `กลับหน้าแรก` (human approver's decision, 2026-10-07).
 - Administrator management routes use `/admin`, `/admin/zones`, `/admin/food-types`, `/admin/tastes`, `/admin/restaurants`, `/admin/menu-items`, and `/admin/audit-logs`.
 - Anonymous access to `/admin/*` redirects to `/login` with a validated internal `returnTo`. Authenticated `USER` access redirects to `/account` with `บัญชีนี้ไม่มีสิทธิ์จัดการระบบ`. An authenticated `ADMIN` returns to the requested `/admin/*` route after login.
 - Budget step uses quick ranges with no default selection: `ไม่เกิน ฿50`, `฿50–100`, `฿101–200`, and `มากกว่า ฿200`.
@@ -75,7 +76,7 @@ No-match actions:
 - Confirmation has two stages. Stage 1 actions are `เอาเมนูนี้แหละ` and `ขอคิดอีกที`.
 - `เอาเมนูนี้แหละ` writes `RecommendationHistory` only for logged-in users and moves to the success state. Anonymous confirmation never writes history to PostgreSQL. Merely revealing or opening a card never writes history.
 - `ขอคิดอีกที` closes confirmation and returns to the same revealed-card state without writing history.
-- Success state marks the flow complete and shows `กลับหน้าหลัก` as the only dialog action. `กลับหน้าหลัก` clears current conditions, rejected IDs, shortlist, reveal state, and replacement/undo state, then returns to Home. A new flow always starts from Home.
+- Success state marks the flow complete and shows `กลับหน้าหลัก` as the only dialog action. `กลับหน้าหลัก` clears current conditions, rejected IDs, shortlist, reveal state, and replacement/undo state, then returns to Home. A new flow starts from Home, or from `เริ่มใหม่` on the cards view: it clears the same state and shows question 1 with no answers (human approver's decision, 2026-10-07). Leaving the cards for Home and pressing the Home CTA again resumes the unfinished flow.
 - Steps 2–5 are keyboard-operable end to end with a visible focus indicator (NFR12).
 - The user is told, on the conditions screen, that conditions and rejected choices stay only in the open page session (LR1, LR3).
 - GPS/current location, food exclusions, registered-user library features, and group voting are outside this anonymous-first core journey and must not block it.

@@ -1,4 +1,5 @@
 import { spawnSync } from 'node:child_process'
+import { createServer, type AddressInfo } from 'node:net'
 import { beforeAll, describe, expect, it, vi } from 'vitest'
 
 const validEnv = {
@@ -109,5 +110,30 @@ describe('parseEnv', () => {
 
     expect(result.status).not.toBe(0)
     expect(result.stderr).toContain('LOCAL_UPLOADS_ENABLED')
+  })
+
+  it('fails startup instead of reporting it is listening when the port is taken', async () => {
+    const blocker = createServer()
+    await new Promise<void>((resolve) => blocker.listen(0, resolve))
+    const { port } = blocker.address() as AddressInfo
+
+    try {
+      const result = spawnSync(
+        process.execPath,
+        ['--import', 'tsx', 'src/server.ts'],
+        {
+          cwd: process.cwd(),
+          encoding: 'utf8',
+          env: { ...process.env, ...validEnv, PORT: String(port) },
+          timeout: 5_000,
+        },
+      )
+
+      expect(result.status).not.toBe(0)
+      expect(result.stderr).toContain('EADDRINUSE')
+      expect(result.stdout).not.toContain('Kinraidee API listening')
+    } finally {
+      await new Promise((resolve) => blocker.close(resolve))
+    }
   })
 })

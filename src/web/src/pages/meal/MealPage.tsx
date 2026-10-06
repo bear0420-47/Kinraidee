@@ -164,6 +164,12 @@ export function MealPage() {
     flow.editConditions()
   }
 
+  // `เริ่มใหม่` clears every answer and the shortlist, then asks question 1 again.
+  function startOver() {
+    setNoMatch(null)
+    flow.finish()
+  }
+
   // `เอาเมนูนี้แหละ`: the decision stands at once. A signed-in user's choice is also recorded
   // in history, once; a failure only shows a warning. Anonymous users never record history.
   function confirm(item: RecommendationItem) {
@@ -287,6 +293,7 @@ export function MealPage() {
           headingRef={headingRef}
           onUpdate={flow.updateShortlist}
           onEditConditions={editConditions}
+          onStartOver={startOver}
           onChoose={(item) =>
             flow.updateShortlist((current) => chooseCard(current, item.id))
           }
