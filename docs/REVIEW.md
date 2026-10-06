@@ -841,3 +841,43 @@ No blocking findings. All #48 routes, contracts, rules, web scope, confirmation 
 Human reviewer: Pending pull-request review
 Decision: Pending
 Date: TBD
+
+## Guaranteed no-match suggestion
+
+### Status
+
+Automated two-axis review complete on 2026-10-06. Human pull-request approval remains pending.
+
+### Standards review
+
+No documented-standard violations remain:
+- **Pure logic:** the suggestion rules are a pure module (`recommendations.suggestion.ts`) with a written correctness argument, so they can be tested without a database. `priceInBudget` mirrors `budgetWhere`, which is documented next to both.
+- **Repository:** it keeps all Prisma access. `availableWhere` is shared by the candidate query and the new pool query, so "available" means the same thing in both.
+- **Contract:** the API returns structured values only, and the web owns the Thai sentence (`suggestionMessage`), as before.
+- **Docs:** they changed before the code. The journey priority, prototype copy, activity diagram, and contract examples all describe the new behaviour.
+
+Judgement calls accepted:
+- **In-memory search:** the suggestion is computed in memory from one narrow query of every available item, instead of up to 15 count queries per request. The worst case (500 items, four fields changed) measured under 1 ms. The pool grows with the catalog, which is a few hundred campus menus.
+- **Rename:** `relaxation` was renamed to `suggestion` rather than kept alongside it, because the web is the only client.
+- **Repository test:** the "unrestricted filters" test now checks `findCandidates`, since `countCandidates` was removed with its only caller.
+
+### Specification review
+
+No blocking findings. The approved decisions are all implemented and covered by tests:
+- Multi-change `suggestion` with complete `conditions`.
+- Budget nearest in either direction, up first.
+- Zone, taste, and food type move to the specific option with the most results.
+
+The guarantee (a suggestion whenever an available item exists) is argued in code, checked by a 300-case property test, and confirmed against every combination in the live catalog. Rejected and displayed IDs stay excluded, mandatory filters are never broken silently, and the one-card replacement still never suggests a change.
+
+### Review scope
+
+- Diff: `git diff main...feat/no-match-suggestion`
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/02-design/user-journey.md`, and `docs/03-implementation/engineering-guidelines.md`
+- Checked: guarantee and minimality, field priority, budget direction, tie-breaks, unchanged "any" fields, exclusions, the replacement path, response shape and OpenAPI, the performance worst case, web copy and apply behaviour, and the phone layout
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD

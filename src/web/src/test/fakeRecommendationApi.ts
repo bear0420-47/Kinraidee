@@ -6,7 +6,7 @@ import {
   type RecommendationConditions,
   type RecommendationItem,
   type RecommendationRequest,
-  type Relaxation,
+  type Suggestion,
 } from '@/schemas/meal/recommendationSchemas'
 import {
   fakeAuthApi,
@@ -83,7 +83,7 @@ export const noodles = recommendationItem('menu_2', 'ก๋วยเตี๋ย
 export const curry = recommendationItem('menu_3', 'แกงเขียวหวาน')
 export const somtam = recommendationItem('menu_4', 'ส้มตำ')
 
-type Result = { items: RecommendationItem[]; relaxation?: Relaxation | null }
+type Result = { items: RecommendationItem[]; suggestion?: Suggestion | null }
 
 // Answers each recommendation request in turn with the next queued result.
 export function fakeShuffleApi({
@@ -114,7 +114,7 @@ export function fakeShuffleApi({
         return next instanceof Response || next instanceof Promise
           ? next
           : jsonResponse(200, {
-              data: { relaxation: null, ...next },
+              data: { suggestion: null, ...next },
             })
       },
     },

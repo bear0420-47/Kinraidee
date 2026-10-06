@@ -140,6 +140,12 @@ Approved — full-app build plan updated through 2026-09-28 decisions. Implement
   - Favorites and history share one menu-row component and the approved unavailable badge `เมนูนี้ไม่พร้อมใช้งานแล้ว` (human approver's choice).
   - The preference is cached only in the query cache, keyed by user and removed on logout, and is never written to `localStorage` or `sessionStorage`.
   - Prefill is display-then-commit. For a signed-in user with a preference, an unanswered step shows the saved default as selected (a saved "any" selects `อะไรก็ได้` / `ที่ไหนก็ได้`), and `ถัดไป` commits it to the flow like any other answer. The user can choose differently on every step, and an answer the user already gave, including "any", always wins. A `ไม่ตั้งค่า` field stays unanswered, and a default whose record no longer exists is dropped. Prefilled steps show no extra note (human approver's choice). Anonymous users get no preference request and no defaults.
+- No-match suggestion (human approver's decision, 2026-10-06). It replaces #54's single-field `relaxation` with a guaranteed `suggestion`:
+  - When nothing matches, `POST /api/recommendations` returns the fewest filter changes that produce at least one result, as `suggestion: { changes, conditions, resultCount }`. Single changes come before pairs, and so on, in field priority zone, budget, taste, food type.
+  - Budget moves to the nearest range in either direction, trying up first. Zone, taste, and food type move to the specific option with the most results, not to "any". A field the user left as "any" is never changed.
+  - The suggestion is `null` only when no active, non-excluded menu item exists, and for one-card replacements.
+  - The web shows every change in one sentence, and `ใช้เงื่อนไขนี้แล้วสับใหม่` shuffles with the suggested `conditions`.
+  - The API computes the suggestion in memory from one query of every active, non-excluded item, rather than one count query per option.
 
 ## Evidence Expected
 
@@ -175,7 +181,7 @@ API routes: POST /api/recommendations
 Web pages: N/A
 Personal data: none; transient meal conditions and exclusion IDs are processed without persistence or request-body logging
 Authorization: public; anonymous and authenticated users use the same stateless endpoint
-Tests: request validation and normalization, master-data validation, mandatory filters, soft-delete exclusion, shortlist limits, restaurant diversity, randomization invariants, rejected/displayed exclusion, response minimization, no-match relaxation priority, replacement no-result behavior, public route, OpenAPI, and warm p95 measurement
+Tests: request validation and normalization, master-data validation, mandatory filters, soft-delete exclusion, shortlist limits, restaurant diversity, randomization invariants, rejected/displayed exclusion, response minimization, no-match suggestion (originally single-field relaxation priority; see the no-match suggestion decision), replacement no-result behavior, public route, OpenAPI, and warm p95 measurement
 ```
 
 ## Deployment Decisions

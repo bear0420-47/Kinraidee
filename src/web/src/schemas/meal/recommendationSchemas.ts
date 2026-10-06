@@ -9,7 +9,7 @@ export type RecommendationConditions = RecommendationRequest['conditions']
 type RecommendationResult =
   components['schemas']['RecommendationEnvelope']['data']
 export type RecommendationItem = RecommendationResult['items'][number]
-export type Relaxation = NonNullable<RecommendationResult['relaxation']>
+export type Suggestion = NonNullable<RecommendationResult['suggestion']>
 export type Budget = RecommendationConditions['budget']
 
 export const budgetValues = [
@@ -216,31 +216,24 @@ export function replacementRequest(
   }
 }
 
-// Applies only the suggested relaxation; every other condition stays as chosen.
-export function applyRelaxation(
-  conditions: RecommendationConditions,
-  { field, to }: Relaxation,
-): RecommendationConditions {
-  switch (field) {
-    case 'budget': {
-      // A budget relaxation always moves to the next range, never to "any".
-      const budget = budgetValues.find((value) => value === to.id)
-      return budget ? { ...conditions, budget } : conditions
-    }
-    case 'taste':
-      return { ...conditions, tasteId: to.id }
-    case 'foodType':
-      return { ...conditions, foodTypeId: to.id }
-    case 'zone':
-      return { ...conditions, zoneId: to.id }
-  }
-}
-
-export const relaxationFieldLabels: Record<Relaxation['field'], string> = {
+export const suggestionFieldLabels: Record<
+  Suggestion['changes'][number]['field'],
+  string
+> = {
   budget: 'งบประมาณ',
   taste: 'รสชาติ',
   foodType: 'ประเภทอาหาร',
   zone: 'พื้นที่',
+}
+
+// One sentence naming every suggested change, e.g. "ถ้าเปลี่ยนพื้นที่จาก “คชพล” เป็น
+// “ตลาดฟ้าไทย” และรสชาติจาก “เผ็ด” เป็น “กลมกล่อม” จะพบ 4 เมนู".
+export function suggestionMessage({ changes, resultCount }: Suggestion) {
+  const parts = changes.map(
+    ({ field, from, to }) =>
+      `${suggestionFieldLabels[field]}จาก “${from.label.th}” เป็น “${to.label.th}”`,
+  )
+  return `ถ้าเปลี่ยน${parts.join(' และ')} จะพบ ${resultCount} เมนู`
 }
 
 // Structured rationale as Thai copy. A false flag means the user chose "any", never that a

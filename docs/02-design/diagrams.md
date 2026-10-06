@@ -131,10 +131,10 @@ flowchart TD
   v -->|"[yes]"| cta["Submit with สับการ์ดเมนู"]
   cta --> q{"Any qualifying choice left?"}
 
-  q -->|"[no]"| relax{"Approved relaxation available?"}
-  relax -->|"[yes]"| none["Suggest the first relaxation that has results"]
+  q -->|"[no]"| relax{"Any menu available after changing filters?"}
+  relax -->|"[yes]"| none["Suggest the fewest filter changes that have results"]
   none --> noMatchAction{"User action?"}
-  noMatchAction -->|"Use suggested conditions"| useRelax["Apply one relaxation and shuffle again"]
+  noMatchAction -->|"Use suggested conditions"| useRelax["Apply the suggested conditions and shuffle again"]
   useRelax --> cta
   noMatchAction -->|"Edit conditions manually"| s2
   relax -->|"[no]"| manual["Show no-match state with manual edit only"]

@@ -1182,3 +1182,75 @@ Deliberate regression checks confirmed the tests fail when:
 - **Fixed during the check:** a dialog closed without a focused opener (as in browsers that do not focus buttons on click) now returns focus to the clear button.
 - **Anonymous:** confirming reached success with no warning and no history request.
 - **Console:** no errors.
+
+## Guaranteed no-match suggestion
+
+### Scope
+
+- Verification date: 2026-10-06 (ICT, `UTC+07:00`)
+- Branch: `feat/no-match-suggestion`, from `main`.
+- **Change:** `POST /api/recommendations` replaces #54's single-field `relaxation` with `suggestion: { changes, conditions, resultCount }`. It is the fewest filter changes that leave at least one item, and it is `null` only when no active, non-excluded item exists, and for one-card replacements.
+- **New module:** the rules live in `src/api/src/modules/recommendations/recommendations.suggestion.ts`, computed in memory from one query of every available item (`findSuggestionPool`). The approved choices:
+  - Field priority is zone, budget, taste, food type.
+  - Budget moves to the nearest range, up before down.
+  - Zone, taste, and food type move to the specific option with the most results.
+  - A field the user left as "any" is never changed.
+- **Web:** the no-match panel names every change in one sentence, and `ใช้เงื่อนไขนี้แล้วสับใหม่` shuffles with the suggested `conditions`.
+- **Regenerated:** the OpenAPI document and the web client types.
+- **Docs:** decisions are recorded in `docs/plan.md`, with the contract in `engineering-guidelines.md` and the journey in `user-journey.md`, `prototype.md`, and `diagrams.md`.
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests (API 71 files/545 tests; web 36 files/385 tests), API build with OpenAPI generation, and web production build. |
+| `prettier --check --end-of-line auto .` in `src/api` and `src/web` | 0 | Pass. |
+| `git diff --check` | 0 | Pass. |
+| `pnpm --filter api recommendations:verify` (local PostgreSQL, 500 Restaurants) | 0 | Pass. The no-match suggestion moves to the fixture zone, and sending its `conditions` back returns items. Warm p95 is 147 ms. |
+
+API tests:
+- **`recommendations.suggestion.test.ts`:**
+  - Budget bounds and order.
+  - `null` only for an empty pool.
+  - Zone first when it alone works, then budget, taste, food type.
+  - Budget up, down, and from `OVER_200`.
+  - Most results, with ties going to display order and then name.
+  - Every taste of an item counted.
+  - Fields left as any are untouched.
+  - A two-field change and a four-field change.
+- **Property test:** 300 seeded random catalogs and conditions with no match. Each gets a suggestion whose `conditions` match exactly `resultCount` > 0 items, without changing any "any" field.
+- **Other modules:**
+  - The service uses the pool with rejected and displayed IDs, stays `null` for replacements, and does not load the pool when items match.
+  - The repository select is checked.
+  - OpenAPI has `suggestion` and no `relaxation`.
+  - The route envelope is checked.
+  - A worst-case p95 with 500 items and all four fields changed measured 0.94 ms.
+
+Web tests:
+- A single change is explained and shuffles with its `conditions`.
+- Three changes are named in one sentence and applied at once.
+- `null` keeps the manual-edit-only state.
+- `suggestionMessage` joins changes with `และ`.
+
+Deliberate regression checks confirmed the tests fail when:
+- Only single changes are tried, so the result is `null` when two are needed.
+- The budget only goes up, or tries lower before higher.
+- The first option is chosen instead of the one with the most results.
+- A tie ignores display order.
+- `resultCount` counts the whole pool.
+- The pool ignores excluded IDs.
+- Replacements get a suggestion.
+- The field priority changes.
+- The web applies only the first change, or names only the first change.
+
+### Manual checks (local API with the approved #30 catalog)
+
+- **Every combination:** all 1,260 combinations of budget, zone, taste, and food type (including "any") were sent to the live API. 1,122 had no match today. Every one got a suggestion (507 needed more than one change), and sending each suggestion's `conditions` back returned items every time.
+- **Examples:**
+  - `ไม่เกิน ฿50` + `พาสต้า` + `กรอบ` + `คชพล` previously returned `relaxation: null`. It now suggests budget to `฿50–100` and food type to `อาหารเรียกน้ำย่อยและของทานเล่น`.
+  - `มากกว่า ฿200` + `เบอร์เกอร์ แซนด์วิช และแรป` + `สดชื่นและเบา` + `ตลาดฟ้าไทย` now moves the budget down to `฿50–100`.
+- **Browser at 1280 px:**
+  - The panel read `ถ้าเปลี่ยนงบประมาณจาก “ไม่เกิน ฿50” เป็น “฿50–100” และประเภทอาหารจาก “พาสต้า” เป็น “อาหารเรียกน้ำย่อยและของทานเล่น” จะพบ 1 เมนู`.
+  - `ใช้เงื่อนไขนี้แล้วสับใหม่` showed the card with focus on its heading.
+  - The stored conditions held both changes and kept the taste and zone.
+- **Browser at 375 px:** the message wrapped with no horizontal overflow.

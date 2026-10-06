@@ -16,7 +16,7 @@ export function useRequestRecommendations() {
       if (!data) throw new ApiError(response.status, error)
       return {
         items: data.data.items,
-        relaxation: data.data.relaxation ?? null,
+        suggestion: data.data.suggestion ?? null,
       }
     },
   })

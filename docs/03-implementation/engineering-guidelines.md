@@ -462,23 +462,27 @@ No-match responses remain successful `200` responses because the request is vali
 {
   "data": {
     "items": [],
-    "relaxation": {
-      "field": "zone",
-      "from": {
-        "type": "ZONE",
-        "id": "zone_front_gate",
-        "label": {
-          "th": "หน้ามอ",
-          "en": "Front Gate"
+    "suggestion": {
+      "changes": [
+        {
+          "field": "zone",
+          "from": {
+            "type": "ZONE",
+            "id": "zone_front_gate",
+            "label": { "th": "หน้ามอ", "en": "Front Gate" }
+          },
+          "to": {
+            "type": "ZONE",
+            "id": "zone_market",
+            "label": { "th": "ตลาดฟ้าไทย", "en": "Fa Thai Market" }
+          }
         }
-      },
-      "to": {
-        "type": "ANY_ZONE",
-        "id": null,
-        "label": {
-          "th": "ที่ไหนก็ได้",
-          "en": "Any zone"
-        }
+      ],
+      "conditions": {
+        "budget": "BETWEEN_101_200",
+        "tasteId": "taste_spicy",
+        "foodTypeId": null,
+        "zoneId": "zone_market"
       },
       "resultCount": 4
     }
@@ -486,22 +490,29 @@ No-match responses remain successful `200` responses because the request is vali
 }
 ```
 
-If no single approved relaxation produces a result:
+If no active, non-excluded menu item exists at all (or for a one-card replacement request):
 
 ```json
 {
   "data": {
     "items": [],
-    "relaxation": null
+    "suggestion": null
   }
 }
 ```
 
-- `relaxation.field` possible values are `zone`, `budget`, `taste`, and `foodType`.
-- `from` and `to` are structured values with type, nullable database ID, and localized label.
-- `RelaxationValue.type` accepts only `BUDGET_RANGE`, `TASTE`, `ANY_TASTE`, `FOOD_TYPE`, `ANY_FOOD_TYPE`, `ZONE`, and `ANY_ZONE`.
-- A `BUDGET_RANGE` value uses a `BudgetRange` enum value as its `id`. `TASTE`, `FOOD_TYPE`, and `ZONE` use their database record ID. Every `ANY_*` value uses `id: null`.
-- `resultCount` is the number of qualifying menu items after applying only the suggested relaxation.
+- `suggestion.changes` holds one to four changes, in field priority order (`zone`, `budget`, `taste`, `foodType`). It has more than one only when no single change produces a result.
+- `field` possible values are `zone`, `budget`, `taste`, and `foodType`.
+- `from` and `to` are structured values with a type, an ID, and a localized label.
+  - `type` accepts only `BUDGET_RANGE`, `TASTE`, `FOOD_TYPE`, and `ZONE`.
+  - A `BUDGET_RANGE` value uses a `BudgetRange` enum value as its `id`; the others use their database record ID.
+  - A field the user left unrestricted (`null`) is never changed, so `from` is always a specific value.
+- Choosing the new value:
+  - Budget moves to the nearest range with results, trying one up, then one down, then further out.
+  - Zone, taste, and food type move to the specific option with the most results; ties go to display order, then the Thai name.
+- `conditions` is the complete request conditions with every change applied. Sending it back unchanged, with the same exclusions, returns at least one item.
+- `resultCount` is the number of qualifying menu items for `conditions`, still excluding rejected and displayed IDs.
+- A suggestion always exists while at least one active, non-excluded menu item exists. The web owns the localized explanatory sentence and action labels.
 - The API chooses the first relaxation that produces results using the approved priority. The web owns the localized explanatory sentence and action labels.
 - Do not return `404` for a valid no-match recommendation request.
 

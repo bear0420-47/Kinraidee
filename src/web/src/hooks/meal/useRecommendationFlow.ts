@@ -79,7 +79,7 @@ export function useRecommendationFlow() {
     [],
   )
 
-  // Commits a full set of conditions, such as an applied relaxation, without showing cards.
+  // Commits a full set of conditions, such as an applied suggestion, without showing cards.
   const setConditions = useCallback(
     (conditions: RecommendationConditions) =>
       setFlow((current) => ({ ...current, conditions })),

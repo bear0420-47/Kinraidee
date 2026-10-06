@@ -21,16 +21,18 @@ const exclusionIdsSchema = z
   .max(500)
   .transform((ids) => [...new Set(ids)])
 
+export const recommendationConditionsSchema = z
+  .object({
+    budget: budgetRangeSchema,
+    tasteId: optionalConditionIdSchema,
+    foodTypeId: optionalConditionIdSchema,
+    zoneId: optionalConditionIdSchema,
+  })
+  .strict()
+
 export const recommendationRequestSchema = z
   .object({
-    conditions: z
-      .object({
-        budget: budgetRangeSchema,
-        tasteId: optionalConditionIdSchema,
-        foodTypeId: optionalConditionIdSchema,
-        zoneId: optionalConditionIdSchema,
-      })
-      .strict(),
+    conditions: recommendationConditionsSchema,
     rejectedMenuItemIds: exclusionIdsSchema,
     displayedMenuItemIds: exclusionIdsSchema,
     count: z.union([z.literal(1), z.literal(3)]),
@@ -71,31 +73,44 @@ export const recommendationItemSchema = z.object({
   }),
 })
 
-export const relaxationValueSchema = z.object({
-  type: z.enum([
-    'BUDGET_RANGE',
-    'TASTE',
-    'ANY_TASTE',
-    'FOOD_TYPE',
-    'ANY_FOOD_TYPE',
-    'ZONE',
-    'ANY_ZONE',
-  ]),
-  id: z.string().nullable(),
+// A filter value in a no-match suggestion. `BUDGET_RANGE` uses a BudgetRange value as its
+// `id`; the others use their record ID.
+export const suggestionValueSchema = z.object({
+  type: z.enum(['BUDGET_RANGE', 'TASTE', 'FOOD_TYPE', 'ZONE']),
+  id: z.string(),
   label: localizationSchema,
 })
 
-export const recommendationRelaxationSchema = z.object({
-  field: z.enum(['zone', 'budget', 'taste', 'foodType']),
-  from: relaxationValueSchema,
-  to: relaxationValueSchema,
-  resultCount: z.number().int().positive(),
+export const suggestionFieldSchema = z.enum([
+  'zone',
+  'budget',
+  'taste',
+  'foodType',
+])
+
+export const suggestionChangeSchema = z.object({
+  field: suggestionFieldSchema,
+  from: suggestionValueSchema,
+  to: suggestionValueSchema,
 })
+
+// The fewest filter changes that leave at least one item. `conditions` has every change
+// applied, so the client can send it back as-is; `resultCount` counts the items it matches
+// with the same exclusions.
+export const recommendationSuggestionSchema = z
+  .object({
+    changes: z.array(suggestionChangeSchema).min(1).max(4),
+    conditions: recommendationConditionsSchema,
+    resultCount: z.number().int().positive(),
+  })
+  .describe(
+    'No-match suggestion. Null only when no active, non-excluded menu item exists, and for one-card replacements.',
+  )
 
 export const recommendationEnvelopeSchema = z.object({
   data: z.object({
     items: z.array(recommendationItemSchema).max(3),
-    relaxation: recommendationRelaxationSchema.nullable().optional(),
+    suggestion: recommendationSuggestionSchema.nullable().optional(),
   }),
 })
 
@@ -115,9 +130,10 @@ export type RecommendationCandidate = Prisma.MenuItemGetPayload<
   typeof recommendationCandidate
 >
 export type RecommendationItem = z.infer<typeof recommendationItemSchema>
-export type RecommendationRelaxation = z.infer<
-  typeof recommendationRelaxationSchema
+export type RecommendationSuggestion = z.infer<
+  typeof recommendationSuggestionSchema
 >
+export type SuggestionField = z.infer<typeof suggestionFieldSchema>
 
 export function parseRecommendationRequest(input: unknown) {
   return parseWithSchema(recommendationRequestSchema, input)

@@ -27,20 +27,25 @@ One core workflow only: **Get a meal shortlist** (the core feature in `feature-l
 At step 3, **are there any qualifying choices left?**
 
 - **Yes** → show up to three and continue to step 4.
-- **No** → suggest one relaxation that produces at least one result, or say no relaxation is available. Never invent a result and never break mandatory filters silently (NFR8).
+- **No** → suggest a filter change that is guaranteed to produce at least one result, or say that no menu is available at all. Never invent a result and never break mandatory filters silently (NFR8).
 
-No-match relaxation priority:
+No-match suggestion (human approver's decision, 2026-10-06):
 
-1. `Zone`: from a specific zone to `ที่ไหนก็ได้`.
-2. `Budget`: move up one range, from `ไม่เกิน ฿50` → `฿50–100` → `฿101–200` → `มากกว่า ฿200`.
-3. `Taste`: from a specific taste to `อะไรก็ได้`.
-4. `FoodType`: from a specific food type to `อะไรก็ได้`.
-
-The system offers only the first relaxation in this order that has at least one matching menu item. This keeps personal intent such as taste and food type stable before relaxing more flexible constraints like zone or budget.
+- The API suggests the fewest filter changes that produce at least one result. It tries every single-field change before any two-field change, and so on.
+- Fields are tried in this priority, which keeps personal intent such as taste and food type stable before more flexible constraints:
+  1. `Zone`
+  2. `Budget`
+  3. `Taste`
+  4. `FoodType`
+- A changed field gets a concrete value:
+  - Budget moves to the nearest range that has results, trying one range up, then one down, then further out.
+  - Zone, taste, and food type move to the specific option with the most results. Ties go to the record's display order.
+- A field the user left as `อะไรก็ได้` / `ที่ไหนก็ได้` is never changed, because it cannot get any wider.
+- A suggestion always exists while at least one active menu item is not excluded. It is absent only when the catalog has none left (for example, every item was rejected), and for one-card replacement requests.
 
 No-match actions:
 
-- Primary: `ใช้เงื่อนไขนี้แล้วสับใหม่` applies the suggested single relaxation and calls the recommendation API again.
+- Primary: `ใช้เงื่อนไขนี้แล้วสับใหม่` applies every suggested change at once (the suggestion's complete conditions) and calls the recommendation API again.
 - Secondary: `แก้เงื่อนไขเอง` returns to the condition summary with all current selections preserved.
 - Do not add a third Home action inside the no-match panel; Home remains reachable through the Kinraidee brand/header.
 
@@ -63,7 +68,7 @@ No-match actions:
 - If fewer than three choices match, show only the returned card count. Do not render empty placeholder cards.
 - Initial shortlist and replacement both use the same stateless API contract, `POST /api/recommendations`. Initial requests ask for up to three cards; replacement requests ask for one card while sending rejected IDs and currently displayed IDs.
 - Recommendation items include menu, restaurant, zone, food-type, taste, price, image, and structured rationale data in one response. The web converts structured rationale flags into localized user-facing copy.
-- Valid no-match responses return `items: []` with a structured `relaxation` object or `relaxation: null`. The API returns the field/from/to/result count; the web owns the localized explanation and action copy.
+- Valid no-match responses return `items: []` with a structured `suggestion` object or `suggestion: null`. The suggestion lists each change (field, from, to), the complete suggested conditions, and the result count; the web owns the localized explanation and action copy.
 - Rejecting a revealed card adds its `menuItemId` to the session rejected IDs and requests one non-duplicate replacement that excludes rejected IDs and menu items still displayed. The replacement enters the same card slot face-down.
 - Reject feedback offers `เลิกทำ`. Undo removes the original ID from rejected IDs, removes the replacement, and restores the original card in its previous slot and reveal state.
 - Confirmation shows menu name, restaurant, price, zone, image, and recommendation rationale. It does not show wait time.
