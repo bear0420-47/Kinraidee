@@ -32,12 +32,16 @@ describe('site header', () => {
     expect(header().queryByRole('link', { name: 'จัดการระบบ' })).toBeNull()
   })
 
-  it('shows จัดการระบบ to ADMIN accounts', async () => {
+  it('shows both บัญชีของฉัน and จัดการระบบ to ADMIN accounts', async () => {
     fakeAuthApi({ currentUser: testAdmin })
     renderApp('/')
 
     const link = await header().findByRole('link', { name: 'จัดการระบบ' })
     expect(link.getAttribute('href')).toBe('/admin')
+    // Admins also have favorites, history, and saved defaults.
+    expect(
+      header().getByRole('link', { name: 'บัญชีของฉัน' }).getAttribute('href'),
+    ).toBe('/account')
   })
 
   it('links the brand to Home', async () => {

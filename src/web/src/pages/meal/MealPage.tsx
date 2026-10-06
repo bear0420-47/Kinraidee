@@ -303,9 +303,13 @@ export function MealPage() {
         />
       ) : null}
 
-      <p className="rounded-sm border-2 border-dashed border-line-soft bg-cream p-3 text-small">
-        {SESSION_NOTICE}
-      </p>
+      {/* Only for signed-out users (`null`); hidden while the session loads so it never
+          flashes for a signed-in user. */}
+      {user === null ? (
+        <p className="rounded-sm border-2 border-dashed border-line-soft bg-cream p-3 text-small">
+          {SESSION_NOTICE}
+        </p>
+      ) : null}
     </PageShell>
   )
 }

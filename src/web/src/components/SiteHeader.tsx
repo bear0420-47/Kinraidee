@@ -12,11 +12,13 @@ export function SiteHeader() {
     ? `/login${location.search}`
     : buildAuthPath('/login', `${location.pathname}${location.search}`)
 
-  const action = !user
-    ? { to: loginPath, label: 'เข้าสู่ระบบ' }
+  // Admins also have favorites, history, and saved defaults, so they get both links.
+  const accountLink = { to: '/account', label: 'บัญชีของฉัน' }
+  const actions = !user
+    ? [{ to: loginPath, label: 'เข้าสู่ระบบ' }]
     : user.role === 'ADMIN'
-      ? { to: '/admin', label: 'จัดการระบบ' }
-      : { to: '/account', label: 'บัญชีของฉัน' }
+      ? [accountLink, { to: '/admin', label: 'จัดการระบบ' }]
+      : [accountLink]
 
   return (
     <header className="border-b-2 border-paper bg-canvas">
@@ -28,9 +30,21 @@ export function SiteHeader() {
           Kinraidee
         </Link>
         {isPending ? null : (
-          <Link to={action.to} className={buttonClassName('ghost')}>
-            {action.label}
-          </Link>
+          <nav
+            aria-label="เมนูหลัก"
+            className="flex flex-wrap justify-end gap-1"
+          >
+            {actions.map((action) => (
+              <Link
+                key={action.to}
+                to={action.to}
+                // Two links share one phone-width row, so they lose some side padding.
+                className={`${buttonClassName('ghost')} ${actions.length > 1 ? 'max-sm:px-3' : ''}`}
+              >
+                {action.label}
+              </Link>
+            ))}
+          </nav>
         )}
       </div>
     </header>

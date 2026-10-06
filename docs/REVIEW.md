@@ -842,6 +842,49 @@ Human reviewer: Pending pull-request review
 Decision: Pending
 Date: TBD
 
+## MVP browser-test fixes
+
+### Status
+
+Automated two-axis review complete on 2026-10-06. Human pull-request approval remains pending.
+
+### Standards review
+
+No documented-standard violations remain:
+- **Reuse:**
+  - The fixes use existing tokens (`--surface`) and the shared button styles.
+  - The new URL-filter logic is a pure, tested module (`lib/urlFilters.ts`) behind a hook with the same shape as `useState`, so both admin pages swap one line and keep their page clamping and selection reset.
+- **Search box:** the draft follows the applied search by adjusting state during render, as React recommends, rather than in an effect.
+- **Design system:**
+  - The MenuItem table again meets the rule that the extra-wide card fits it without horizontal scrolling.
+  - The header, dialog, image-ratio, and admin-table rules were updated before the code.
+
+Judgement calls accepted:
+- **Header width:** two header links lose some side padding on phones only (`max-sm:px-3`), so the admin header stays one row at 375 px. A single link is unchanged.
+- **MenuItem columns:** the menu and Restaurant name minimum widths dropped one step (`min-w-40`, `min-w-28`). Those names already wrap, and the change makes room for the actions column.
+- **Filter history:** URL filter changes replace the history entry, so Back leaves the page rather than stepping through filters.
+
+### Specification review
+
+No blocking findings. Every item from the MVP browser-test report is addressed with the human approver's choices:
+- Both header links for ADMIN.
+- The session note only for anonymous visitors.
+- Audit-log Thai labels only.
+
+The audit log still never shows an actor's email (#49). The audit-log page's own filters are not in the URL; that is out of scope.
+
+### Review scope
+
+- Diff: `git diff main...fix/mvp-ui-polish`
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/02-design/design-system.md`, and `docs/03-implementation/engineering-guidelines.md`
+- Checked: table layout at three desktop widths, the header at 320 and 375 px, dialog surfaces, the dialog height on short screens, role-based header links, session-note visibility, audit-label mapping with unchanged filter values, URL parsing of invalid input, page clamping, and search-box focus
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD
+
 ## Guaranteed no-match suggestion
 
 ### Status

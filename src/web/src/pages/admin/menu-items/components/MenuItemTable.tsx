@@ -35,13 +35,14 @@ type MenuItemTableProps = {
   onRestore: (menuItem: MenuItem) => void
 }
 
-// Fixed-content columns shrink to fit (`w-px`) and tastes wrap within a set width, so the
-// spare width goes to the menu and Restaurant names, which vary most in length.
+// The image column shrinks to fit (`w-px`), and food types and tastes wrap within a set
+// width, so a long food-type name cannot push the actions out of the card. The spare width
+// goes to the menu and Restaurant names, which vary most in length.
 const columns = [
   { label: 'รูป', className: 'w-px' },
-  { label: 'เมนู', className: 'min-w-44' },
-  { label: 'ร้านอาหาร', className: 'min-w-32' },
-  { label: 'ประเภทอาหาร', className: 'w-px whitespace-nowrap' },
+  { label: 'เมนู', className: 'min-w-40' },
+  { label: 'ร้านอาหาร', className: 'min-w-28' },
+  { label: 'ประเภทอาหาร', className: 'w-40' },
   { label: 'รสชาติ', className: 'w-44' },
 ]
 
@@ -205,9 +206,10 @@ export function MenuItemTable({
                   {menuItem.restaurant.name.th}
                 </td>
                 <td className={bodyCellClassName}>
-                  <span className="inline-flex items-center gap-2 whitespace-nowrap">
+                  <span className="flex items-center gap-2">
                     <FoodTypeIcon
                       aria-hidden
+                      className="shrink-0"
                       icon={menuItem.foodType.icon}
                       size={20}
                       weight="bold"
