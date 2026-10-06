@@ -36,6 +36,38 @@ export function revealAll(shortlist: Shortlist) {
   return mapCard(shortlist, (slot) => ({ ...slot, revealed: true }))
 }
 
+// Opens confirmation for a revealed card. Only its ID is kept; the item comes from its slot.
+export function chooseCard(
+  shortlist: Shortlist,
+  menuItemId: string,
+): Shortlist {
+  return { ...shortlist, chosenMenuItemId: menuItemId }
+}
+
+export function clearChoice({
+  chosenMenuItemId: _chosen,
+  confirmed: _confirmed,
+  ...shortlist
+}: Shortlist): Shortlist {
+  return shortlist
+}
+
+// `เอาเมนูนี้แหละ` was pressed: a reload shows the success stage, never the question again.
+export function confirmChoice(shortlist: Shortlist): Shortlist {
+  return { ...shortlist, confirmed: true }
+}
+
+// The card being confirmed, while it is still a revealed card in the shortlist.
+export function chosenItem(shortlist: Shortlist): RecommendationItem | null {
+  const slot = shortlist.slots.find(
+    (candidate): candidate is CardSlot =>
+      candidate.kind === 'card' &&
+      candidate.revealed &&
+      candidate.item.id === shortlist.chosenMenuItemId,
+  )
+  return slot?.item ?? null
+}
+
 export function hasFaceDownCard(shortlist: Shortlist) {
   return shortlist.slots.some((slot) => slot.kind === 'card' && !slot.revealed)
 }

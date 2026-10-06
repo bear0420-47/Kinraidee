@@ -8,7 +8,7 @@ import type { AccountNotice } from '@/components/RequireAuth'
 const accountLinks = [
   { to: '/account/favorites', label: 'เมนูโปรด' },
   { to: '/account/history', label: 'ประวัติเมนูที่เลือก' },
-  { to: '/account/preferences', label: 'ค่าเริ่มต้นการแนะนำ' },
+  { to: '/account/preferences', label: 'ค่าเริ่มต้นการสุ่มเมนู' },
 ]
 
 function readNotice(state: unknown): AccountNotice | null {

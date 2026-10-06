@@ -6,11 +6,14 @@ import { PageShell } from '@/components/PageShell'
 import { useFoodTypes } from '@/hooks/admin/food-types/useFoodTypes'
 import { useTastes } from '@/hooks/admin/tastes/useTastes'
 import { useZones } from '@/hooks/admin/zones/useZones'
+import { useCurrentUser } from '@/hooks/auth/useCurrentUser'
 import { useRecommendationFlow } from '@/hooks/meal/useRecommendationFlow'
 import {
   recommendationErrorMessage,
   useRequestRecommendations,
 } from '@/hooks/meal/useRecommendations'
+import { usePreference } from '@/hooks/preferences/usePreference'
+import { useRecordHistory } from '@/hooks/recommendation-history/useRecommendationHistory'
 import {
   applyRelaxation,
   conditionSteps,
@@ -19,12 +22,20 @@ import {
   initialRequest,
   isCompleteConditions,
   withKnownIds,
+  type ConditionDraft,
   type FlowStep,
   type MealStep,
   type RecommendationConditions,
   type RecommendationItem,
   type Relaxation,
 } from '@/schemas/meal/recommendationSchemas'
+import {
+  chooseCard,
+  chosenItem,
+  clearChoice,
+  confirmChoice,
+} from '@/schemas/meal/shortlist'
+import { toConditionDefaults } from '@/schemas/preferences/preferenceSchemas'
 import { BudgetStep } from './components/BudgetStep'
 import { ConditionSummary } from './components/ConditionSummary'
 import { ConfirmMenuDialog } from './components/ConfirmMenuDialog'
@@ -50,7 +61,8 @@ function nextStep(step: FlowStep): FlowStep {
 
 // Home → budget → taste → food type → zone → summary → shuffle cards → confirmation, one
 // short step at a time. A shuffle that finds nothing shows the no-match panel instead of
-// cards. Confirming a menu clears the flow and returns Home.
+// cards. Confirming a menu clears the flow and returns Home. A signed-in user's saved
+// defaults are shown as each step's selection until the user answers it.
 export function MealPage() {
   const navigate = useNavigate()
   const flow = useRecommendationFlow()
@@ -58,27 +70,37 @@ export function MealPage() {
   const foodTypes = useFoodTypes()
   const zones = useZones()
   const recommend = useRequestRecommendations()
+  // Idle while signed out, so anonymous users never get defaults.
+  const preference = usePreference()
+  const { data: user } = useCurrentUser()
+  const recordHistory = useRecordHistory()
   // The last shuffle found nothing. Kept in memory only, so a reload shows the summary.
   const [noMatch, setNoMatch] = useState<{
     relaxation: Relaxation | null
   } | null>(null)
   const [shuffleError, setShuffleError] = useState<string | null>(null)
-  // The card being confirmed. Kept in memory only: the cards stay unchanged underneath, so
-  // `ขอคิดอีกที` (or a reload) returns to exactly the same shortlist.
-  const [chosen, setChosen] = useState<RecommendationItem | null>(null)
   const headingRef = useRef<HTMLHeadingElement>(null)
   const shownView = useRef<string | null>(null)
 
   const optionsLoaded =
     tastes.isSuccess && foodTypes.isSuccess && zones.isSuccess
-  // Until the lists load, stored IDs cannot be checked, so they are trusted for now.
-  const conditions = optionsLoaded
-    ? withKnownIds(flow.conditions, {
+  const knownIds = optionsLoaded
+    ? {
         tasteIds: tastes.data.map(({ id }) => id),
         foodTypeIds: foodTypes.data.map(({ id }) => id),
         zoneIds: zones.data.map(({ id }) => id),
-      })
+      }
+    : null
+  // Until the lists load, stored IDs cannot be checked, so they are trusted for now.
+  const conditions = knownIds
+    ? withKnownIds(flow.conditions, knownIds)
     : flow.conditions
+  // Saved defaults wait for the lists, so a default whose record is gone is never shown.
+  const defaults: ConditionDraft = knownIds
+    ? withKnownIds(toConditionDefaults(preference.data), knownIds)
+    : {}
+  // What each step shows: the user's own answer (even "any") wins over a saved default.
+  const shown: ConditionDraft = { ...defaults, ...conditions }
   const complete = isCompleteConditions(conditions)
   // The summary and cards need every answer, so a removed record sends the user back to
   // that step. Stored cards without a shortlist fall back to the summary.
@@ -89,6 +111,9 @@ export function MealPage() {
         ? 'summary'
         : flow.step
   const view = step === 'summary' && noMatch ? 'noMatch' : step
+  // The card being confirmed is stored with the shortlist, so its dialog reopens after the
+  // login round trip or a reload. The cards underneath never change while it is open.
+  const chosen = flow.shortlist ? chosenItem(flow.shortlist) : null
 
   // Move focus to the new view's heading, but not on first render.
   useEffect(() => {
@@ -101,6 +126,18 @@ export function MealPage() {
   const go = (target: FlowStep) => {
     setNoMatch(null)
     flow.goTo(target)
+  }
+
+  // `ถัดไป` on a step still showing a saved default commits it, like any other answer.
+  function next<Field extends keyof ConditionDraft>(
+    field: Field,
+    from: FlowStep,
+  ) {
+    const value = shown[field]
+    if (conditions[field] === undefined && value !== undefined) {
+      flow.choose(field, value as RecommendationConditions[Field])
+    }
+    go(nextStep(from))
   }
   const optionsFailed = tastes.isError || foodTypes.isError || zones.isError
 
@@ -128,6 +165,13 @@ export function MealPage() {
     flow.editConditions()
   }
 
+  // `เอาเมนูนี้แหละ`: the decision stands at once. A signed-in user's choice is also recorded
+  // in history, once; a failure only shows a warning. Anonymous users never record history.
+  function confirm(item: RecommendationItem) {
+    flow.updateShortlist(confirmChoice)
+    if (user) recordHistory.mutate(item.id)
+  }
+
   function finish() {
     flow.finish()
     void navigate('/')
@@ -151,39 +195,39 @@ export function MealPage() {
 
       {step === 'budget' ? (
         <BudgetStep
-          value={conditions.budget}
+          value={shown.budget}
           headingRef={headingRef}
           onChoose={(budget) => flow.choose('budget', budget)}
-          onNext={() => go(nextStep(step))}
+          onNext={() => next('budget', step)}
         />
       ) : null}
       {step === 'taste' ? (
         <TasteStep
           tastes={tastes}
-          value={conditions.tasteId}
+          value={shown.tasteId}
           headingRef={headingRef}
           onChoose={(tasteId) => flow.choose('tasteId', tasteId)}
-          onNext={() => go(nextStep(step))}
+          onNext={() => next('tasteId', step)}
           onBack={() => go(previousStep(step))}
         />
       ) : null}
       {step === 'foodType' ? (
         <FoodTypeStep
           foodTypes={foodTypes}
-          value={conditions.foodTypeId}
+          value={shown.foodTypeId}
           headingRef={headingRef}
           onChoose={(foodTypeId) => flow.choose('foodTypeId', foodTypeId)}
-          onNext={() => go(nextStep(step))}
+          onNext={() => next('foodTypeId', step)}
           onBack={() => go(previousStep(step))}
         />
       ) : null}
       {step === 'zone' ? (
         <ZoneStep
           zones={zones}
-          value={conditions.zoneId}
+          value={shown.zoneId}
           headingRef={headingRef}
           onChoose={(zoneId) => flow.choose('zoneId', zoneId)}
-          onNext={() => go(nextStep(step))}
+          onNext={() => next('zoneId', step)}
           onBack={() => go(previousStep(step))}
         />
       ) : null}
@@ -243,13 +287,18 @@ export function MealPage() {
           headingRef={headingRef}
           onUpdate={flow.updateShortlist}
           onEditConditions={editConditions}
-          onChoose={setChosen}
+          onChoose={(item) =>
+            flow.updateShortlist((current) => chooseCard(current, item.id))
+          }
         />
       ) : null}
       {view === 'cards' && chosen ? (
         <ConfirmMenuDialog
           item={chosen}
-          onCancel={() => setChosen(null)}
+          confirmed={flow.shortlist?.confirmed === true}
+          historyFailed={recordHistory.isError}
+          onConfirm={() => confirm(chosen)}
+          onCancel={() => flow.updateShortlist(clearChoice)}
           onFinish={finish}
         />
       ) : null}

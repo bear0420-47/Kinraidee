@@ -175,6 +175,27 @@ Use slight asymmetric radii for doodle surfaces when practical, e.g. `6px 12px 5
 - Confirmation uses playful Thai actions. Stage 1 provides `เอาเมนูนี้แหละ` as the primary action and `ขอคิดอีกที` as the secondary action. The success state provides only `กลับหน้าหลัก`.
 - In the React flow both stages share one dialog. Stage 1 (`เลือกเมนูนี้ใช่ไหม?`) shows the photo, or the card's fallback panel, at a full `4:3` ratio, framed with the default radius. The success stage (`ได้มื้อนี้แล้ว!`) shows a Phosphor `Confetti` icon and the message, announced in a status region, and moves focus to `กลับหน้าหลัก`. Escape closes stage 1 like `ขอคิดอีกที`, and on the success stage acts as `กลับหน้าหลัก`.
 
+### Favorites
+
+- A favorite is a round `44px` heart button overlaid on the top-right corner of a menu photo, on revealed cards and in the confirmation dialog. Not saved: an outline Phosphor `Heart` on `--surface`. Saved: a filled `Heart` on the `--ice` accent. The state is carried by the heart's shape, the label (`บันทึกเป็นเมนูโปรด` / `นำออกจากเมนูโปรด`), and `aria-pressed`, never by colour alone.
+- Signed out, the same heart (without `aria-pressed`) leads to login, where `เข้าสู่ระบบเพื่อบันทึกเมนูโปรด` is announced. A failed save shows a short alert under the heart.
+- The confirmation dialog still opens with focus on `ขอคิดอีกที`, although the heart comes first in reading order.
+- The `/account/favorites` list shows one bordered row per favorite: an `80px` photo (or the dashed `ไม่มีรูป` placeholder), Thai and English names, Restaurant, price, and a compact secondary `นำออกจากเมนูโปรด` button whose description is the menu name.
+- An unavailable favorite carries the `เมนูนี้ไม่พร้อมใช้งานแล้ว` pill with a Phosphor `Prohibit` icon, so its status is stated in text. It offers removal only.
+
+### Saved Preferences
+
+- `/account/preferences` is a single form of four labelled native selects (budget, taste, food type, zone). Each select's first option is `ไม่ตั้งค่า` (no default). Taste, food type, and zone then offer their "any" choice (`อะไรก็ได้` / `ที่ไหนก็ได้`) as a real saved value, then their records. Budget has no "any", because the meal flow always asks for a budget range.
+- A save with every select on `ไม่ตั้งค่า` shows its error under the first select, linked to it, and focus moves there. Save and clear results are announced in a status region.
+- `ล้างค่าเริ่มต้น` is always shown so it can be found. With nothing saved it is disabled and described by the `ยังไม่ได้ตั้งค่าเริ่มต้น` line; otherwise it always asks for confirmation in the shared confirm dialog before deleting.
+- In the meal flow, a saved default appears as the already-selected chip on its step, with no extra note.
+
+### Selected-Menu History
+
+- `/account/history` uses the same menu row as favorites (photo, names, Restaurant, price, and the `เมนูนี้ไม่พร้อมใช้งานแล้ว` pill when unavailable), plus a `เลือกเมื่อ {date}` line in Thai locale. The list is newest first and paged with the shared pagination controls.
+- `ล้างประวัติทั้งหมด` is always shown, disabled with nothing to clear, and asks `ล้างประวัติทั้งหมด?` with `การล้างประวัติจะลบรายการที่คุณเคยเลือกทั้งหมด` before deleting. The result `ล้างประวัติแล้ว` is announced.
+- When saving history fails after `เอาเมนูนี้แหละ`, the success stage still shows, with `เลือกเมนูสำเร็จ แต่บันทึกประวัติไม่สำเร็จ` as an announced warning under the message.
+
 ### Admin Tables And Bulk Selection
 
 - Admin tables share one cell style; the actions column sits at the right edge with its header centred over the buttons.

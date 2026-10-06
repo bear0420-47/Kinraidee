@@ -1,8 +1,11 @@
 import { Router, type Router as ExpressRouter } from 'express'
 import { auditLogsRoutes } from '@/modules/audit-logs/audit-logs.routes'
 import { authRoutes } from '@/modules/auth/auth.routes'
+import { favoritesRoutes } from '@/modules/favorites/favorites.routes'
 import { foodTypesRoutes } from '@/modules/food-types/food-types.routes'
 import { menuItemsRoutes } from '@/modules/menu-items/menu-items.routes'
+import { preferencesRoutes } from '@/modules/preferences/preferences.routes'
+import { recommendationHistoryRoutes } from '@/modules/recommendation-history/recommendation-history.routes'
 import { recommendationsRoutes } from '@/modules/recommendations/recommendations.routes'
 import { restaurantsRoutes } from '@/modules/restaurants/restaurants.routes'
 import { tastesRoutes } from '@/modules/tastes/tastes.routes'
@@ -23,4 +26,7 @@ routes.use('/api/tastes', tastesRoutes)
 routes.use('/api/restaurants', restaurantsRoutes)
 routes.use('/api/menu-items', menuItemsRoutes)
 routes.use('/api/recommendations', recommendationsRoutes)
+routes.use('/api/favorites', favoritesRoutes)
+routes.use('/api/preferences', preferencesRoutes)
+routes.use('/api/recommendation-history', recommendationHistoryRoutes)
 routes.use('/api/audit-logs', auditLogsRoutes)

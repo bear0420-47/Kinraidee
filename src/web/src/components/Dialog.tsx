@@ -27,6 +27,9 @@ type DialogProps = {
   children: ReactNode
   // Receives focus on close when the opener no longer exists, e.g. a deleted row's button.
   fallbackFocusRef?: RefObject<HTMLElement | null>
+  // Receives focus on open instead of the first control, e.g. the safe action when an
+  // optional control comes first.
+  initialFocusRef?: RefObject<HTMLElement | null>
   // `wide` fits content larger than a form, such as a full-size image.
   size?: 'default' | 'wide'
 }
@@ -42,6 +45,7 @@ export function Dialog({
   onClose,
   children,
   fallbackFocusRef,
+  initialFocusRef,
   size = 'default',
 }: DialogProps) {
   const dialogRef = useRef<HTMLDivElement>(null)
@@ -51,15 +55,21 @@ export function Dialog({
     const dialog = dialogRef.current
     if (!dialog) return
 
+    // A dialog opened without a focused control (on page load) falls back on close.
     const opener =
-      document.activeElement instanceof HTMLElement
+      document.activeElement instanceof HTMLElement &&
+      document.activeElement !== document.body
         ? document.activeElement
         : null
     const background = [...document.body.children].filter(
       (element) => !element.contains(dialog) && !element.hasAttribute('inert'),
     )
     background.forEach((element) => element.setAttribute('inert', ''))
-    ;(getFocusableElements(dialog)[0] ?? dialog).focus()
+    ;(
+      initialFocusRef?.current ??
+      getFocusableElements(dialog)[0] ??
+      dialog
+    ).focus()
 
     return () => {
       background.forEach((element) => element.removeAttribute('inert'))

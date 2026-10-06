@@ -10,12 +10,15 @@ export function successMessage(item: RecommendationItem) {
 
 type RecommendationSuccessProps = {
   item: RecommendationItem
+  // Saving the selection to history failed; the decision itself still stands.
+  historyFailed: boolean
   onFinish: () => void
 }
 
 // The confirmed decision. `กลับหน้าหลัก` is its only action, so it receives focus.
 export function RecommendationSuccess({
   item,
+  historyFailed,
   onFinish,
 }: RecommendationSuccessProps) {
   const homeRef = useRef<HTMLButtonElement>(null)
@@ -29,6 +32,14 @@ export function RecommendationSuccess({
       <p aria-hidden className="font-bold">
         {successMessage(item)}
       </p>
+      {historyFailed ? (
+        <p
+          role="alert"
+          className="rounded-sm border-2 border-rust bg-peach-deep px-3 py-2 text-small font-bold text-rust"
+        >
+          เลือกเมนูสำเร็จ แต่บันทึกประวัติไม่สำเร็จ
+        </p>
+      ) : null}
       <Button ref={homeRef} onClick={onFinish}>
         <House aria-hidden weight="bold" />
         กลับหน้าหลัก

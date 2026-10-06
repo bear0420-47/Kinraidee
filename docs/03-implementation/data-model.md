@@ -455,6 +455,9 @@ model UserPreference {
   foodTypeId String?
   tasteId    String?
   budget     BudgetRange?
+  zoneAny     Boolean  @default(false)
+  foodTypeAny Boolean  @default(false)
+  tasteAny    Boolean  @default(false)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
@@ -477,6 +480,7 @@ Fields:
 - `foodTypeId` — optional default food type.
 - `tasteId` — optional default taste; the current recommendation flow selects one taste.
 - `budget` — optional default using the same fixed `BudgetRange` values as the recommendation request.
+- `zoneAny`, `foodTypeAny`, `tasteAny` — the saved default for that condition is "any" (`ที่ไหนก็ได้` / `อะไรก็ได้`). When true, the matching ID column is null; a database check constraint enforces this. When false and the ID is null, the field is not set. Budget has no "any", because the recommendation flow always asks for a budget range.
 - `createdAt` — creation timestamp.
 - `updatedAt` — last update timestamp.
 
@@ -484,12 +488,14 @@ API/web contract:
 
 ```ts
 type UserPreference = {
-  zoneId: string | null
-  foodTypeId: string | null
-  tasteId: string | null
+  zoneId: string | 'ANY' | null
+  foodTypeId: string | 'ANY' | null
+  tasteId: string | 'ANY' | null
   budget: BudgetRange | null
 }
 ```
+
+`null` means not set, and `'ANY'` means a saved "any" choice (stored as the `*Any` flag). At least one field must be set. Approved by the human approver on 2026-10-07 for issue #47.
 
 ### RecommendationHistory
 

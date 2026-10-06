@@ -12,7 +12,7 @@ export type RecommendationItem = RecommendationResult['items'][number]
 export type Relaxation = NonNullable<RecommendationResult['relaxation']>
 export type Budget = RecommendationConditions['budget']
 
-const budgetValues = [
+export const budgetValues = [
   'UNDER_50',
   'BETWEEN_50_100',
   'BETWEEN_101_200',
@@ -96,7 +96,8 @@ const slotSchema = z.discriminatedUnion('kind', [
 
 export const MAX_CARDS = 3
 
-// The displayed shortlist, reveal state, rejected IDs, and the one-step undo record.
+// The displayed shortlist, reveal state, rejected IDs, the one-step undo record, and the card
+// being confirmed (only its ID, so a login round trip or reload reopens its dialog).
 const shortlistSchema = z
   .object({
     slots: z.array(slotSchema).min(1).max(MAX_CARDS),
@@ -113,6 +114,9 @@ const shortlistSchema = z
       })
       .strict()
       .nullable(),
+    chosenMenuItemId: z.string().min(1).optional(),
+    // The chosen card was confirmed with `เอาเมนูนี้แหละ`; its history is already recorded.
+    confirmed: z.literal(true).optional(),
   })
   .strict()
 

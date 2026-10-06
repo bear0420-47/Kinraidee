@@ -926,3 +926,259 @@ Deliberate regression checks confirmed the tests fail when:
 - **Keyboard only:** Enter on the card's button, Tab, Enter confirmed. The success state announced `ขอให้อร่อยกับบรูสเกตตากัวคาโมเล ที่ไอวิชพาสต้า` and focused `กลับหน้าหลัก`. Enter returned to `/` with `sessionStorage` empty.
 - **Requests:** only `auth/me`, the three master-data lists, and `POST /api/recommendations`. No history or menu-detail endpoint. No console errors.
 - **Layout:** at 390 px the dialog fits without scrolling or horizontal overflow, with `เอาเมนูนี้แหละ` stacked above `ขอคิดอีกที`.
+
+## Issue #46 — MenuItem favorites
+
+### Scope
+
+- Verification date: 2026-10-07 (ICT, `UTC+07:00`)
+- Branch: `feat/46-menu-item-favorites`, from `main` after #53–#55 merged.
+- Change:
+  - API: `GET /api/favorites`, `PUT` / `DELETE /api/favorites/:menuItemId`, and `POST /api/favorites/:menuItemId/toggle`, for any signed-in role, always for the token's user.
+  - Web: a heart button on revealed cards and in the confirmation dialog, the login notice for signed-out users, and `/account/favorites`.
+  - The OpenAPI document and the generated web client types are regenerated (additions only).
+- Decisions are recorded in `docs/plan.md`; the visual rules are in `docs/02-design/design-system.md` (Favorites).
+- Process note: work began without plan mode. It was then reviewed against the issue in plan mode, and four corrections were made before this verification:
+  - An interrupted regression check had left `useLogout` without its favorites clean-up; it was restored.
+  - Adds now use `createMany` with `skipDuplicates`, so simultaneous adds cannot fail on the composite key.
+  - A foreign-key failure (the MenuItem vanished mid-request) now returns `404`.
+  - Focus now lands on a stable area after the last favorite is removed.
+- Follow-up chosen by the human approver: after logging in from the confirmation dialog (or reloading), the dialog reopens. The shortlist stores the chosen card's ID for this.
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests (API 60 files/459 tests; web 31 files/347 tests), API build with OpenAPI generation, and web production build. |
+| `prettier --check --end-of-line auto .` in `src/api` and `src/web` | 0 | Pass. |
+| `git diff --check` | 0 | Pass. |
+
+API tests (5 files, 32 tests) cover every required API test:
+- `401` on all four routes, with the service never called.
+- USER and ADMIN can list, favorite, unfavorite, and toggle their own favorites; a `userId` in the query or body is ignored.
+- `PUT` and `DELETE` are idempotent (`ON CONFLICT DO NOTHING` / `deleteMany`), and `toggle` flips in one transaction.
+- An unknown MenuItem returns `404` on every route, including the foreign-key race.
+- A deleted MenuItem, or one under a deleted Restaurant, cannot be newly favorited (`409 MENU_ITEM_UNAVAILABLE`), but can be unfavorited.
+- The list includes unavailable favorites with `available: false` and excludes phone, `imageKey`, and `deletedAt`.
+- The OpenAPI document marks every route as cookie-authenticated.
+
+Web tests (`MealFavorites.test.tsx`, 6; `FavoritesPage.test.tsx`, 8) cover every required web test:
+- An anonymous heart click goes to `/login?returnTo=%2Fmeal` and announces the notice. The session state is unchanged, login returns to the same cards, and nothing is favorited automatically.
+- No password or token is kept in browser storage.
+- Signed in, the heart saves with `PUT` and removes with `DELETE`, never `toggle`, and the label and `aria-pressed` follow.
+- The saved state is shared between the card and the dialog.
+- Logging in from the dialog's heart reopens the same menu's dialog, unsaved, with focus on `ขอคิดอีกที`; closing it returns focus to the card's `เลือกเมนูนี้`.
+- An expired session leads to login; a `409` explains that the menu is unavailable.
+- The favorites page:
+  - Lists newest first with details.
+  - Marks an unavailable favorite in text and lets it be removed, with the removal announced and focus kept.
+  - Handles a failed removal, an empty state, and an ADMIN account.
+  - Redirects anonymous visitors to login.
+  - Is linked from the account page.
+  - Drops cached favorites on logout.
+
+`ConfirmMenu.test.tsx` is updated: the dialog still opens on `ขอคิดอีกที`, the heart is in the focus trap, and a signed-in user's only extra request is `GET /api/favorites`. A new test reloads with the dialog open, sees it reopen, and checks that `ขอคิดอีกที` removes the stored ID. `shortlist.test.ts` covers `chooseCard`, `chosenItem` (face-down and missing cards never reopen), and `clearChoice`.
+
+Deliberate regression checks confirmed the tests fail when:
+- The heart always sends `PUT`.
+- The login notice is dropped.
+- `aria-pressed` is removed.
+- Logout keeps the favorites cache.
+- Focus goes to the unmounting list.
+- `PUT` skips the availability check.
+- The list is oldest first.
+- The foreign-key error is not mapped to `404`.
+- `Dialog` treats `<body>` as an opener (focus is lost after a reopened dialog closes).
+- A face-down card can reopen the dialog.
+- `ขอคิดอีกที` leaves a chosen ID behind.
+
+### Manual browser checks (Chrome, local API with the approved #30 catalog)
+
+- **Anonymous:** the hearts carry no `aria-pressed`. Clicking one opened `/login?returnTo=%2Fmeal` with `เข้าสู่ระบบเพื่อบันทึกเมนูโปรด`, and `sessionStorage` was unchanged.
+- **Login with the local test account:** returned to `/meal` with the same three revealed cards. Every heart read `บันทึกเป็นเมนูโปรด` / `aria-pressed="false"` (nothing saved automatically), and browser storage held no password or token.
+- **Keyboard save:** Enter on a heart turned it into a filled heart on `--ice`, labelled `นำออกจากเมนูโปรด` / `aria-pressed="true"`, and focus stayed on it.
+- **Dialog:** showed the same saved state and opened with focus on `ขอคิดอีกที`.
+- **API:** the list items contain only `menuItemId`, `createdAt`, `available`, and `menuItem` (`id`, `name`, `price`, `imageUrl`, `restaurant`).
+- **`/account/favorites`:** listed the two saved menus newest first.
+- **Unavailable:** after the burger was soft-deleted in admin, `PUT` returned `409 MENU_ITEM_UNAVAILABLE` and the page showed the `ไม่พร้อมให้บริการ` badge. Enter on its `นำออกจากเมนูโปรด` (described by the menu name) removed it, announced the removal, and moved focus to the favorites area. The burger was restored afterwards.
+- **Layout and console:** at 390 px the rows stack without horizontal overflow, and the console showed no errors.
+- **Reopened dialog:** signed out, the heart inside the dialog led to login with the notice and stored only the chosen card's ID. After login the same menu's dialog reopened, unsaved, with focus on `ขอคิดอีกที`. Escape closed it, removed the stored ID, and returned focus to `เลือกเมนู พาสต้าครีมทริปเปิลชีส`. No console errors.
+
+## Issue #47 — Saved default recommendation preferences
+
+### Scope
+
+- Verification date: 2026-10-07 (ICT, `UTC+07:00`)
+- Branch: `feat/47-saved-preferences`, stacked on #46 (`feat/46-menu-item-favorites`, PR #84).
+- Change:
+  - API: `GET`, `PUT`, and `DELETE /api/preferences` for any signed-in role, always for the token's user.
+  - Web: `/account/preferences`, and saved defaults pre-selected in the meal flow's condition steps.
+  - The OpenAPI document and the generated web client types are regenerated (additions only).
+  - `markSignedOut` and `isUnauthenticated` moved to `hooks/auth/useCurrentUser.ts`, shared by favorites and preferences.
+  - Follow-up chosen by the human approver: every select starts with `ไม่ตั้งค่า` (not set), and taste, food type, and zone also offer a real saved "any". The API accepts `"ANY"` for those three fields. A migration (`20261007120000_preference_any_choices`) adds `zoneAny`, `foodTypeAny`, and `tasteAny` flags, with check constraints so a flag and an ID are never both set.
+- Decisions are recorded in `docs/plan.md` and `docs/03-implementation/data-model.md`; the form rules are in `docs/02-design/design-system.md` (Saved Preferences).
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests (API 65 files/498 tests; web 34 files/373 tests), API build with OpenAPI generation, and web production build. |
+| `prettier --check --end-of-line auto .` in `src/api` and `src/web` | 0 | Pass. |
+| `git diff --check` | 0 | Pass. |
+
+| `prisma migrate deploy`, then `prisma migrate diff --from-url … --to-schema-datamodel …` on the local database | 0 | The migration applies, and the database matches the schema exactly. The three check constraints exist. |
+
+API tests (5 files, 39 tests) cover every required API test:
+- `401` on all three routes, with the service never called.
+- A missing preference returns `preference: null`.
+- `PUT` creates, and replaces the complete object (one upserted row per user).
+- An all-null object, a partial body, or an unknown budget is rejected.
+- Unknown zone, food type, and taste IDs return `400 VALIDATION_ERROR` naming each field, including the foreign-key race.
+- Individual fields may be null while one stays set. `"ANY"` is accepted for taste, food type, and zone (even all three), but not for budget. It is stored as the flag with a null ID, read back as `"ANY"`, and never checked as a record.
+- `DELETE` removes the row and is idempotent.
+- A client `userId` and allergy, health, religion, rejected-ID, or shortlist fields are rejected.
+- USER and ADMIN behave alike.
+- The OpenAPI document requires all four fields and allows no others.
+
+Web tests (`PreferencesPage.test.tsx`, 13; `MealPreferences.test.tsx`, 6; `preferenceSchemas.test.ts`, 7) cover every required web test:
+- **Account page:**
+  - The page requires login.
+  - The options come from the three master-data APIs: `ไม่ตั้งค่า` first, then `อะไรก็ได้` / `ที่ไหนก็ได้` for taste, food type, and zone (budget has none), then the records.
+  - An all-"any" save is valid and sends `"ANY"`, and a saved "any" shows as selected.
+  - A saved preference fills the form.
+  - Save sends the complete four-field object and announces `บันทึกค่าเริ่มต้นแล้ว`.
+  - A save with everything `ไม่ตั้งค่า` shows `เลือกอย่างน้อยหนึ่งค่า หรือกดล้างค่าเริ่มต้น` linked to the budget field, focuses it, and makes no request.
+  - The clear button is always shown; with nothing saved it is disabled and described by `ยังไม่ได้ตั้งค่าเริ่มต้น`.
+  - Clear runs only after confirmation, announces `ล้างค่าเริ่มต้นแล้ว`, resets the form, and moves focus to `บันทึกค่าเริ่มต้น`.
+  - A stale choice is marked on its field, and other failures show an alert.
+  - An ADMIN account works the same.
+  - The account link reads `ค่าเริ่มต้นการสุ่มเมนู`, and logout drops the cached preference.
+  - Browser storage never holds the preference.
+- **Meal flow:**
+  - Signed in, each saved default is shown and is committed only on `ถัดไป`. A saved "any" pre-selects `อะไรก็ได้` and commits as "any".
+  - A field with no default stays unanswered.
+  - The user can override a default.
+  - An answer the user already gave, including "any", wins.
+  - A default whose record no longer exists is dropped, and `ถัดไป` asks for a choice.
+  - An anonymous user gets no defaults and no preference request.
+- `ConfirmMenu.test.tsx` now also expects a signed-in user's `GET /api/preferences`.
+
+Deliberate regression checks confirmed the tests fail when:
+- **API:**
+  - It accepts all-null.
+  - It accepts extra fields.
+  - It skips the ID check.
+  - Clear is not idempotent.
+- **Web:**
+  - The form accepts all-empty.
+  - Clear skips the confirmation.
+  - Focus is not moved after clearing.
+  - A default is stored before `ถัดไป`.
+  - A default beats the user's own answer.
+  - A null default becomes "any".
+  - A stale default is kept.
+  - Logout keeps the preference.
+- **The "any" follow-up:**
+  - The API stores `"ANY"` in the ID column.
+  - The API forgets the flag on read.
+  - The API checks `"ANY"` as a record.
+  - The API accepts `"ANY"` for budget.
+  - The page drops the "any" option.
+  - "Not set" is sent as `"ANY"`.
+  - The flow gets `"ANY"` as an ID.
+  - "Not set" becomes "any" in the flow.
+
+Two of these first survived because their tests checked before the preference had loaded; the tests now wait for it. One "any" check first survived because only food type covered "not set"; the unit test now covers all three fields. The tests also caught a real defect: after clearing, focus returned to the clear button just as it was removed. Focus now moves to `บันทึกค่าเริ่มต้น`.
+
+### Manual browser checks (Chrome, local API with the approved #30 catalog)
+
+- **Signed in, `/account/preferences`:** the four labelled selects listed the master data with the "no default" option first.
+- **Empty save:** showed the approved message linked to `งบประมาณ`, focused it, and sent no request.
+- **Save:** `฿101–200` and a zone sent one `PUT` and announced `บันทึกค่าเริ่มต้นแล้ว`. The API returned exactly the four fields, and browser storage held no preference.
+- **Meal flow, fresh session:**
+  - The budget step showed `฿101–200` selected, with nothing stored yet.
+  - `ถัดไป` committed it.
+  - Taste (no default) required a choice.
+  - The zone step showed the saved zone. Choosing another zone carried through to the summary, and only the flow's own key was in `sessionStorage`.
+- **Clear:**
+  - The confirmation opened on `ยกเลิก`, and Escape kept the preference.
+  - Confirming deleted it (the API then returned `null`), announced `ล้างค่าเริ่มต้นแล้ว`, reset every select, and focused `บันทึกค่าเริ่มต้น`.
+- **Anonymous `/meal`:** nothing pre-selected and no preference request.
+- **Not set / any follow-up:**
+  - The selects start with `ไม่ตั้งค่า`, then `อะไรก็ได้` / `ที่ไหนก็ได้`.
+  - Saving "any" for taste, food type, and zone with budget not set announced `บันทึกค่าเริ่มต้นแล้ว` with no error. The API returned `"ANY"` for the three fields, and the database row held null IDs with all three flags true.
+  - In a fresh `/meal`, the budget step had nothing selected. Taste, food type, and zone each pre-selected their "any" chip, and the flow stored them as "any". No console errors.
+- **Layout and console:** at 390 px no horizontal overflow, and no console errors.
+
+## Issue #48 — Selected MenuItem history
+
+### Scope
+
+- Verification date: 2026-10-07 (ICT, `UTC+07:00`)
+- Branch: `feat/48-selected-history`, stacked on #47 (`feat/47-saved-preferences`, PR #85), which is stacked on #46 (PR #84).
+- Change:
+  - API: `GET`, `POST`, and `DELETE /api/recommendation-history` for any signed-in role, always for the token's user.
+  - Web: a signed-in `เอาเมนูนี้แหละ` records the menu, and `/account/history` lists and clears history.
+  - The OpenAPI document and the generated web client types are regenerated (additions only).
+  - The MenuItem summary, the availability check, and `MENU_ITEM_UNAVAILABLE` moved from favorites to `src/api/src/modules/menu-items/menu-items.summary.ts`, shared by favorites and history.
+  - On the web, favorites and history share `components/MenuSummaryRow.tsx`. Favorites now uses the approved badge `เมนูนี้ไม่พร้อมใช้งานแล้ว`.
+- Decisions are recorded in `docs/plan.md`; the page and warning rules are in `docs/02-design/design-system.md` (Selected-Menu History).
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm verify` | 0 | Pass: workspace typecheck, lint, tests (API 70 files/531 tests; web 36 files/387 tests), API build with OpenAPI generation, and web production build. |
+| `prettier --check --end-of-line auto .` in `src/api` and `src/web` | 0 | Pass. |
+| `git diff --check` | 0 | Pass. |
+
+API tests (5 files, 33 tests) cover every required API test:
+- `401` on all three routes, with the service never called.
+- POST creates a row for an active MenuItem, returns `409` for a deleted item or one under a deleted Restaurant, and `404` for an unknown item, including the foreign-key race.
+- The same MenuItem twice gives two rows.
+- GET pages (default 20, at most 100) newest first by `selectedAt` then `id`, and includes unavailable rows with `available: false`.
+- No `imageKey`, `deletedAt`, phone, or user ID is returned.
+- DELETE clears only the current user's rows and is idempotent.
+- A client `userId`, conditions, rejected IDs, or shortlist in the body is a `400`.
+- USER and ADMIN behave alike.
+- The favorites tests still pass on the shared summary.
+
+Web tests (`MealHistory.test.tsx`, 4; `HistoryPage.test.tsx`, 9; and one new `shortlist.test.ts` case) cover every required web test:
+- **Recording:**
+  - A signed-in confirmation sends exactly one POST with only `{ menuItemId }`.
+  - Revealing, opening the dialog, and `ขอคิดอีกที` send nothing.
+  - An anonymous user never calls the history API.
+  - A failed write still reaches success, with `เลือกเมนูสำเร็จ แต่บันทึกประวัติไม่สำเร็จ` announced.
+  - A reload after confirming shows the success stage and records nothing again.
+- **History page:**
+  - The page requires login, and rows are newest first, each labelled by its menu.
+  - More than 20 rows page with labelled controls (`?page=2&pageSize=20`).
+  - The unavailable badge shows, and the empty state has a disabled clear button.
+  - Clear-all deletes only after confirmation, then announces `ล้างประวัติแล้ว` and moves focus to the history area. A failed clear keeps the history.
+  - ADMIN works the same, the account link works, and logout drops the cache.
+- `ConfirmMenu.test.tsx` now expects a signed-in confirmation's single history POST, and the favorites tests use the new badge text.
+
+Deliberate regression checks confirmed the tests fail when:
+- POST deduplicates.
+- POST skips the availability check.
+- POST accepts extra fields.
+- DELETE is not scoped to the user.
+- The list is oldest first.
+- Anonymous users write.
+- The write blocks success.
+- No warning is shown on failure.
+- A reload forgets the confirmation.
+- Opening the dialog writes.
+- Clear skips the confirmation.
+- Focus is not moved after clearing.
+- Logout keeps the history cache.
+
+### Manual browser checks (Chrome, local API with the approved #30 catalog)
+
+- **Signed in:** opening the confirmation recorded nothing. `เอาเมนูนี้แหละ` showed the success stage with no warning and recorded exactly one row for the chosen menu.
+- **Reload on the success stage:** the success stage came back with focus on `กลับหน้าหลัก`, and still only one row existed.
+- **`/account/history` with 23 rows:** 20 rows on page 1, newest first, each labelled by its menu, with `เลือกเมื่อ …` dates and `หน้า 1 จาก 2 · ทั้งหมด 23 รายการ`. Page 2 held the last 3, and a soft-deleted menu showed `เมนูนี้ไม่พร้อมใช้งานแล้ว`; the menu was restored afterwards.
+- **Clear all:** the dialog `ล้างประวัติทั้งหมด?` opened on `ยกเลิก` with the approved warning, and Escape kept all 23 rows. Confirming removed every row, announced `ล้างประวัติแล้ว`, showed the empty state with the clear button disabled, and focused the history area.
+- **Fixed during the check:** a dialog closed without a focused opener (as in browsers that do not focus buttons on click) now returns focus to the clear button.
+- **Anonymous:** confirming reached success with no warning and no history request.
+- **Console:** no errors.

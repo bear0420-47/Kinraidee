@@ -7,9 +7,11 @@ import {
 } from '@phosphor-icons/react'
 
 import { Button } from '@/components/Button'
+import { FavoriteButton } from '@/components/FavoriteButton'
 import { FoodTypeIcon } from '@/lib/foodTypeIcons'
 import { formatPrice } from '@/lib/formatPrice'
 import { TasteIcon } from '@/lib/tasteIcons'
+import { toFavoriteMenuItem } from '@/schemas/favorites/favoriteSchemas'
 import type {
   RecommendationItem,
   Slot,
@@ -31,6 +33,11 @@ type MenuCardProps = {
   onReject: () => void
   // Opens the confirmation dialog for this card's menu.
   onChoose: (item: RecommendationItem) => void
+}
+
+// Lets a reopened confirmation dialog return focus to the card it came from.
+export function chooseButtonId(menuItemId: string) {
+  return `meal-choose-${menuItemId}`
 }
 
 const cardClassName =
@@ -105,10 +112,13 @@ function RevealedCard({
       className={`${cardClassName} bg-surface motion-safe:animate-card-reveal`}
     >
       {/* A short strip across the card top, so a revealed card fits on screen. */}
-      <MenuPhoto
-        item={item}
-        className="-mx-4 -mt-4 h-40 rounded-t-[10px] border-b-2"
-      />
+      <div className="relative -mx-4 -mt-4">
+        <MenuPhoto item={item} className="h-40 rounded-t-[10px] border-b-2" />
+        <FavoriteButton
+          menuItem={toFavoriteMenuItem(item)}
+          className="absolute right-3 top-3"
+        />
+      </div>
       <div className="flex flex-col gap-1">
         <p className="text-small text-muted">
           การ์ดใบที่ {position} · เปิดแล้ว
@@ -173,6 +183,7 @@ function RevealedCard({
 
       <div className="mt-auto flex flex-col gap-2 pt-2">
         <Button
+          id={chooseButtonId(item.id)}
           disabled={busy}
           aria-label={`เลือกเมนู ${item.name.th}`}
           onClick={() => onChoose(item)}

@@ -35,3 +35,13 @@ export function storeCurrentUser(queryClient: QueryClient, user: CurrentUser) {
   queryClient.setQueryData(currentUserQueryKey, user)
   void queryClient.invalidateQueries({ queryKey: currentUserQueryKey })
 }
+
+// An account request that comes back 401 means the session expired: the page reads as signed
+// out, not as an error in the flow it belongs to.
+export function markSignedOut(queryClient: QueryClient) {
+  queryClient.setQueryData(currentUserQueryKey, null)
+}
+
+export function isUnauthenticated(error: unknown) {
+  return error instanceof ApiError && error.status === 401
+}

@@ -720,3 +720,124 @@ No blocking findings. All #55 scope, dialog, success, accessibility, required-te
 Human reviewer: Pending pull-request review
 Decision: Pending
 Date: TBD
+
+## Issue #46 — MenuItem favorites
+
+### Status
+
+Automated two-axis review complete on 2026-10-07. Human pull-request approval remains pending.
+
+### Standards review
+
+No documented-standard violations remain:
+- The API module follows the existing layering (dto, repository, service, controller, routes, OpenAPI) and reuses `menuItemNotFoundError`, `parseWithSchema`, the `ok()` envelope, and `requireAuth`.
+- The web uses the generated client and TanStack Query, keeps favorites only in the query cache (keyed by user and removed on logout), and uses Phosphor icons only.
+- State is carried by shape, text, and `aria-pressed`, never colour alone.
+
+Corrections made during the plan-mode review of the first pass:
+- The `useLogout` clean-up line was restored after an interrupted check.
+- Upserts were replaced with `createMany({ skipDuplicates: true })`, because Prisma's upsert can fail on a simultaneous insert.
+- A foreign-key failure is mapped to `404`.
+- Post-removal focus moved from the list (which unmounts when emptied) to a stable area.
+- The favorites visual rules were added to the design system.
+
+Judgement calls accepted:
+- The web sends `PUT`/`DELETE` from the known state instead of `toggle`, which a retry could reverse.
+- The availability check is not locked against a concurrent soft delete; such a favorite simply lists as unavailable.
+- After login (or a reload), an open confirmation dialog reopens, as the human approver chose, because the shortlist stores the chosen card's ID. It reopens only while that card is still revealed, and focus returns to its `เลือกเมนูนี้` on close.
+
+### Specification review
+
+No blocking findings. All #46 routes, rules, response shapes, web scope, anonymous behaviour, accessibility, required tests, and acceptance criteria are implemented. Notes:
+- Only MenuItems are favoritable; no Restaurant favorites, folders, sharing, analytics, or ranking were added.
+- No route accepts a client-supplied `userId`.
+
+### Review scope
+
+- Diff: `git diff main...feat/46-menu-item-favorites`
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/02-design/design-system.md`, `docs/03-implementation/data-model.md`, and `docs/03-implementation/engineering-guidelines.md`
+- Specification source: GitHub issue #46
+- Checked: authorization and user scoping, idempotency and races, unavailable handling, response field exposure, cache scoping, the login round trip, focus and live regions, keyboard use, mobile layout, and out-of-scope boundaries
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD
+
+## Issue #47 — Saved default recommendation preferences
+
+### Status
+
+Automated two-axis review complete on 2026-10-07. Human pull-request approval remains pending.
+
+### Standards review
+
+No documented-standard violations remain:
+- The API module follows the existing layering and reuses `budgetRangeSchema`, `parseWithSchema`, the envelopes, and `requireAuth`. Unknown IDs use the same `400 VALIDATION_ERROR` field shape as recommendations.
+- The web uses the generated client, TanStack Query (keyed by user, removed on logout), React Hook Form with `zodFormResolver`, and the shared `SelectField`, `ConfirmDialog`, `FormAlert`, and `PageShell`.
+- `markSignedOut` and `isUnauthenticated` are now shared from `useCurrentUser` instead of living in the favorites hook.
+
+Judgement calls accepted:
+- A saved `null` means "not set" (`ไม่ตั้งค่า`), and that step stays unanswered in the flow. A saved `"ANY"` is a real "any" choice that the flow pre-selects. This extends the issue's contract and the data model (three `*Any` flags with check constraints), as the human approver chose after seeing the first pass label "not set" as `อะไรก็ได้`. Budget has no "any", because the flow always asks for a range.
+- Prefill is display-then-commit: a default is shown as selected but enters the flow's session state only on `ถัดไป`, so the preference itself is never copied into browser storage.
+- The upsert relies on Prisma's native database upsert for a single unique `where`, so first saves cannot collide.
+- The all-empty error sits on the first field, so it is linked to a field and receives focus, as the issue requires.
+
+### Specification review
+
+No blocking findings. All #47 routes, field rules, contract, web scope, behaviour, copy, accessibility, required tests, and acceptance criteria are implemented. Notes:
+- The `ไม่ตั้งค่า` / "any" split and showing no note on prefilled steps are the human approver's choices. The earlier budget label `งบเท่าไหร่ก็ได้` was retired with the split.
+- The account link text now matches the page title `ค่าเริ่มต้นการสุ่มเมนู`.
+- No multiple profiles, sensitive data, ranking, auto-save, or import/export was added.
+
+### Review scope
+
+- Diff: `git diff feat/46-menu-item-favorites...feat/47-saved-preferences`
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/02-design/design-system.md`, `docs/03-implementation/data-model.md`, and `docs/03-implementation/engineering-guidelines.md`
+- Specification source: GitHub issue #47
+- Checked: authorization and user scoping, strict field allowlist, master-data validation, idempotency, cache and storage scoping, prefill semantics, focus and live regions, keyboard use, mobile layout, and out-of-scope boundaries
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD
+
+## Issue #48 — Selected MenuItem history
+
+### Status
+
+Automated two-axis review complete on 2026-10-07. Human pull-request approval remains pending.
+
+### Standards review
+
+No documented-standard violations remain:
+- The API module follows the existing layering, reuses `requireAuth`, `parseWithSchema`, the paged envelope pattern, and `menuItemNotFoundError`. It shares the MenuItem summary and availability rule with favorites through `menu-items.summary.ts`, instead of importing across feature modules.
+- The web uses the generated client and TanStack Query (keyed by user and page, removed on logout), the shared `Pagination`, `QueryListState`, and `ConfirmDialog`, and a shared `MenuSummaryRow` for favorites and history.
+- Focus is moved explicitly after clearing, avoiding the #47 issue where a dialog returns focus to a control that is about to change.
+
+Judgement calls accepted:
+- The success stage never waits for the history write; a failure is only a warning.
+- The confirmation is remembered with the shortlist (`confirmed`), so a reload shows success instead of asking again and never records the same decision twice (human approver's choice). A new flow still records a repeat selection, as the issue requires.
+- The unavailable badge uses the approved history wording on both account pages (human approver's choice).
+
+### Specification review
+
+No blocking findings. All #48 routes, contracts, rules, web scope, confirmation integration, copy, accessibility, required tests, and acceptance criteria are implemented. Notes:
+- Only the selected MenuItem ID is sent and stored; no conditions, rejected IDs, or shortlists.
+- Account deletion cascades history through the existing schema relation.
+- There is no per-item delete, analytics, export, or administrator access.
+
+### Review scope
+
+- Diff: `git diff feat/47-saved-preferences...feat/48-selected-history`
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/02-design/design-system.md`, `docs/03-implementation/data-model.md`, and `docs/03-implementation/engineering-guidelines.md`
+- Specification source: GitHub issue #48
+- Checked: authorization and user scoping, write timing and duplicates, unavailable handling, response field exposure, pagination, cache scoping, focus and live regions, keyboard use, and out-of-scope boundaries
+
+### Approval
+
+Human reviewer: Pending pull-request review
+Decision: Pending
+Date: TBD
