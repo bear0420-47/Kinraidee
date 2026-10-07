@@ -1386,3 +1386,32 @@ New seed tests:
 - `pnpm dev:api` formats startup and HTTP request logs through `pino-pretty` with ANSI colors, readable local timestamps, and no `pid`/`hostname` noise. A live `GET /api/zones` produced a colored `INFO request completed` entry with the sanitized request, status `200`, and response time.
 - `NODE_ENV=production LOCAL_UPLOADS_ENABLED=false node --env-file=.env --import tsx -e "…"` emitted one structured JSON log line, confirming production does not use the pretty transport.
 - The full verification suite passed with API logger tests unchanged, confirming test logging remains silent and sensitive-field redaction still applies.
+
+## Navigation and fresh-setup fixes
+
+### Scope
+
+- Verification date/time: 2026-10-07 ICT (`UTC+07:00`)
+- Environment: local Windows 11 workspace, pnpm 12.4.2, PostgreSQL in Docker (`kinraidee-postgres`)
+- Base: `main` at `9f03bc1`
+- Trigger: a teammate's report on a fresh clone. The taste step showed `โหลดตัวเลือกไม่สำเร็จ`, menus showed `ไม่มีรูปเมนู`, and there was no obvious way back Home from the cards or `บัญชีของฉัน`.
+
+### Reproduction on a clean clone
+
+- A temporary worktree of `main` followed `first-setup.md` exactly: `.env.example` copied, `pnpm install --frozen-lockfile`, `prisma migrate deploy`, and `prisma db seed` into a new database. The seed reported `Copied 12 catalog photos into local uploads.`, all 12 `/uploads/<key>` URLs returned `200`, and the cards rendered the photo.
+- With an older `pnpm dev` still running, the new API logged `Kinraidee API listening` and then exited, because Express 5 passes `EADDRINUSE` to the listen callback. Vite moved to `5174`. The API sent no `Access-Control-Allow-Origin` for `http://localhost:5174`, so the first API-backed step (taste) failed with `โหลดตัวเลือกไม่สำเร็จ`.
+- A seed run with local uploads off (`Local uploads are off, so catalog photos were not attached.`) left 0 menus with photos; re-running the normal seed restored 9 menus with photos without creating records.
+
+### Results
+
+| Check | Result |
+|---|---|
+| API startup with its port taken | Exits non-zero with `EADDRINUSE`; never logs `Kinraidee API listening` (new test in `src/config/env.test.ts`). |
+| `vite` with 5173 taken | Stops with `Port 5173 is already in use` instead of moving ports. |
+| Header home link | Hidden on Home; `หน้าแรก` on other pages links `/`; admin keeps `/account` and `/admin` (new `SiteHeader.test.tsx`). |
+| Account page | `กลับหน้าแรก` links `/`. |
+| Cards `เริ่มใหม่` | Shows question 1 with no answer checked and removes the stored flow (new test in `ShuffleCards.test.tsx`); live browser run matched. |
+| Phone width | At 375 px the anonymous header shows the icon-only home link and `เข้าสู่ระบบ` on one row; an admin's three links fit one row at 44 px height; at 320 px they wrap without horizontal scroll. |
+| Deliberate regressions | Hiding the home link, showing it on Home, removing `กลับหน้าแรก`, and making `เริ่มใหม่` keep the stored flow each fail the new tests; files restored. |
+| `pnpm verify` | Pass. API: 71 files/551 tests; web: 38 files/404 tests; builds pass. One earlier run failed `router.test.tsx` › `marks the document as the admin area only while an admin route is shown`; it passed in 8 repeated file runs and the final full run, so it is recorded as an intermittent test, not a defect in this change. |
+| Prettier `--end-of-line auto` and `git diff --check` | Pass for changed code; `user-journey.md` and `plan.md` keep their existing table formatting warnings from `main`. |

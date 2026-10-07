@@ -554,6 +554,22 @@ describe('Session and scope', () => {
     expect(storedShortlist()).toBeUndefined()
   })
 
+  it('starts over from the cards with no answers and nothing stored', async () => {
+    fakeShuffleApi({ results: [{ items: [krapao] }] })
+    const { user } = renderApp('/meal')
+    await shuffleCards(user)
+
+    await user.click(screen.getByRole('button', { name: 'เริ่มใหม่' }))
+
+    await screen.findByRole('heading', { name: /เลือกงบประมาณ/ })
+    expect(
+      screen
+        .getAllByRole('radio')
+        .some((radio) => (radio as HTMLInputElement).checked),
+    ).toBe(false)
+    expect(sessionStorage.getItem(RECOMMENDATION_STORAGE_KEY)).toBeNull()
+  })
+
   it('calls no history or menu-detail endpoint', async () => {
     const api = fakeShuffleApi({
       results: [{ items: [krapao, noodles] }, { items: [curry] }],

@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router'
+import { Link, useLocation } from 'react-router'
 
 import { LogoutButton } from '@/components/LogoutButton'
 import { NavLinkList } from '@/components/NavLinkList'
@@ -34,6 +34,9 @@ export function AccountPage() {
       ) : null}
       <NavLinkList label="เมนูบัญชี" links={accountLinks} />
       <LogoutButton />
+      <Link to="/" className="self-start rounded-xs font-bold underline">
+        กลับหน้าแรก
+      </Link>
     </PageShell>
   )
 }
