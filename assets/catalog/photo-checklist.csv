@@ -28,6 +28,36 @@ family-kebab-halal,adana-beef-kebab,อดาน่าเคบับเนื�
 family-kebab-halal,vegetarian-falafel-plate,ฟาลาเฟลมังสวิรัติ,Vegetarian Falafel Plate,appetizers-snacks,assets/catalog/family-kebab-halal/menus/vegetarian-falafel-plate.png,missing
 family-kebab-halal,potato-samosa,ซามูซามัน,Potato Samosa,appetizers-snacks,assets/catalog/family-kebab-halal/menus/potato-samosa.png,missing
 family-kebab-halal,chicken-samosa,ซามูซาไก่,Chicken Samosa,appetizers-snacks,assets/catalog/family-kebab-halal/menus/chicken-samosa.png,missing
+gindon,flat-iron-beef-rice-bowl-l,ข้าวหน้าเนื้อใบพาย + ไข่ออนเซ็น ไซส์ L,Flat Iron Beef Rice Bowl with Onsen Egg (L),rice-dishes,assets/catalog/gindon/menus/flat-iron-beef-rice-bowl-l.png,missing
+gindon,premium-beef-rice-bowl-l,ข้าวหน้าเนื้อพรีเมี่ยม + ไข่ออนเซ็น ไซส์ L,Premium Beef Rice Bowl with Onsen Egg (L),rice-dishes,assets/catalog/gindon/menus/premium-beef-rice-bowl-l.png,missing
+gindon,two-tone-pork-rice-bowl-l,ข้าวหน้าหมูย่างทูโทน (สามชั้น+สันคอ) ไซส์ L,Two-tone Pork (Belly & Neck) Rice Bowl (L),rice-dishes,assets/catalog/gindon/menus/two-tone-pork-rice-bowl-l.png,missing
+gindon,pork-belly-rice-bowl-l,ข้าวหน้าหมูสามชั้น ไซส์ L,Pork Belly Rice Bowl (L),rice-dishes,assets/catalog/gindon/menus/pork-belly-rice-bowl-l.png,missing
+gindon,pork-belly-rice-bowl-m,ข้าวหน้าหมูสามชั้น ไซส์ M,Pork Belly Rice Bowl (M),rice-dishes,assets/catalog/gindon/menus/pork-belly-rice-bowl-m.png,missing
+gindon,pork-neck-rice-bowl-l,ข้าวหน้าหมูสันคอ ไซส์ L,Pork Neck Rice Bowl (L),rice-dishes,assets/catalog/gindon/menus/pork-neck-rice-bowl-l.png,missing
+gindon,pork-neck-rice-bowl-m,ข้าวหน้าหมูสันคอ ไซส์ M,Pork Neck Rice Bowl (M),rice-dishes,assets/catalog/gindon/menus/pork-neck-rice-bowl-m.png,missing
+gindon,salmon-rice-bowl,ข้าวหน้าแซลม่อนย่าง,Grilled Salmon Rice Bowl,rice-dishes,assets/catalog/gindon/menus/salmon-rice-bowl.png,missing
+gindon,shrimp-rice-bowl,ข้าวหน้ากุ้งย่าง,Grilled Shrimp Rice Bowl,rice-dishes,assets/catalog/gindon/menus/shrimp-rice-bowl.png,missing
+gindon,chicken-rice-bowl-l,ข้าวหน้าไก่ย่าง ไซส์ L,Grilled Chicken Rice Bowl (L),rice-dishes,assets/catalog/gindon/menus/chicken-rice-bowl-l.png,missing
+gindon,chicken-rice-bowl-m,ข้าวหน้าไก่ย่าง ไซส์ M,Grilled Chicken Rice Bowl (M),rice-dishes,assets/catalog/gindon/menus/chicken-rice-bowl-m.png,missing
+gindon,flat-iron-beef-rice-bowl-fire-chili-l,ข้าวหน้าเนื้อใบพาย + ไข่ออนเซ็น พ่นไฟ ไซส์ L,Flat Iron Beef Rice Bowl with Onsen Egg with Fire Chili (L),rice-dishes,assets/catalog/gindon/menus/flat-iron-beef-rice-bowl-fire-chili-l.png,missing
+gindon,premium-beef-rice-bowl-fire-chili-l,ข้าวหน้าเนื้อพรีเมี่ยม + ไข่ออนเซ็น พ่นไฟ ไซส์ L,Premium Beef Rice Bowl with Onsen Egg with Fire Chili (L),rice-dishes,assets/catalog/gindon/menus/premium-beef-rice-bowl-fire-chili-l.png,missing
+gindon,two-tone-pork-rice-bowl-fire-chili-l,ข้าวหน้าหมูย่างทูโทน (สามชั้น+สันคอ) พ่นไฟ ไซส์ L,Two-tone Pork (Belly & Neck) Rice Bowl with Fire Chili (L),rice-dishes,assets/catalog/gindon/menus/two-tone-pork-rice-bowl-fire-chili-l.png,missing
+gindon,pork-belly-rice-bowl-fire-chili-l,ข้าวหน้าหมูสามชั้น พ่นไฟ ไซส์ L,Pork Belly Rice Bowl with Fire Chili (L),rice-dishes,assets/catalog/gindon/menus/pork-belly-rice-bowl-fire-chili-l.png,missing
+gindon,pork-belly-rice-bowl-fire-chili-m,ข้าวหน้าหมูสามชั้น พ่นไฟ ไซส์ M,Pork Belly Rice Bowl with Fire Chili (M),rice-dishes,assets/catalog/gindon/menus/pork-belly-rice-bowl-fire-chili-m.png,missing
+gindon,pork-neck-rice-bowl-fire-chili-l,ข้าวหน้าหมูสันคอ พ่นไฟ ไซส์ L,Pork Neck Rice Bowl with Fire Chili (L),rice-dishes,assets/catalog/gindon/menus/pork-neck-rice-bowl-fire-chili-l.png,missing
+gindon,pork-neck-rice-bowl-fire-chili-m,ข้าวหน้าหมูสันคอ พ่นไฟ ไซส์ M,Pork Neck Rice Bowl with Fire Chili (M),rice-dishes,assets/catalog/gindon/menus/pork-neck-rice-bowl-fire-chili-m.png,missing
+gindon,salmon-rice-bowl-fire-chili,ข้าวหน้าแซลม่อนย่าง พ่นไฟ,Grilled Salmon Rice Bowl with Fire Chili,rice-dishes,assets/catalog/gindon/menus/salmon-rice-bowl-fire-chili.png,missing
+gindon,shrimp-rice-bowl-fire-chili,ข้าวหน้ากุ้งย่าง พ่นไฟ,Grilled Shrimp Rice Bowl with Fire Chili,rice-dishes,assets/catalog/gindon/menus/shrimp-rice-bowl-fire-chili.png,missing
+gindon,chicken-rice-bowl-fire-chili-l,ข้าวหน้าไก่ย่าง พ่นไฟ ไซส์ L,Grilled Chicken Rice Bowl with Fire Chili (L),rice-dishes,assets/catalog/gindon/menus/chicken-rice-bowl-fire-chili-l.png,missing
+gindon,chicken-rice-bowl-fire-chili-m,ข้าวหน้าไก่ย่าง พ่นไฟ ไซส์ M,Grilled Chicken Rice Bowl with Fire Chili (M),rice-dishes,assets/catalog/gindon/menus/chicken-rice-bowl-fire-chili-m.png,missing
+gindon,pork-belly-rice-bowl-mala,ข้าวหน้าหมูสามชั้น หม่าล่า,Pork Belly Rice Bowl with Mala,rice-dishes,assets/catalog/gindon/menus/pork-belly-rice-bowl-mala.png,missing
+gindon,pork-neck-rice-bowl-mala,ข้าวหน้าหมูสันคอ หม่าล่า,Pork Neck Rice Bowl with Mala,rice-dishes,assets/catalog/gindon/menus/pork-neck-rice-bowl-mala.png,missing
+gindon,saba-rice-bowl-mala,ข้าวหน้าปลาซาบะย่าง หม่าล่า,Grilled Saba Rice Bowl with Mala,rice-dishes,assets/catalog/gindon/menus/saba-rice-bowl-mala.png,missing
+gindon,chicken-rice-bowl-mala,ข้าวหน้าไก่ย่าง หม่าล่า,Grilled Chicken Rice Bowl with Mala,rice-dishes,assets/catalog/gindon/menus/chicken-rice-bowl-mala.png,missing
+gindon,premium-beef-rice-bowl-mala,ข้าวหน้าเนื้อพรีเมี่ยม + ไข่ออนเซ็น หม่าล่า,Premium Beef Rice Bowl with Onsen Egg with Mala,rice-dishes,assets/catalog/gindon/menus/premium-beef-rice-bowl-mala.png,missing
+gindon,flat-iron-beef-rice-bowl-mala,ข้าวหน้าเนื้อใบพาย + ไข่ออนเซ็น หม่าล่า,Flat Iron Beef Rice Bowl with Onsen Egg with Mala,rice-dishes,assets/catalog/gindon/menus/flat-iron-beef-rice-bowl-mala.png,missing
+gindon,shrimp-rice-bowl-mala,ข้าวหน้ากุ้งย่าง หม่าล่า,Grilled Shrimp Rice Bowl with Mala,rice-dishes,assets/catalog/gindon/menus/shrimp-rice-bowl-mala.png,missing
+gindon,salmon-rice-bowl-mala,ข้าวหน้าแซลม่อนย่าง หม่าล่า,Grilled Salmon Rice Bowl with Mala,rice-dishes,assets/catalog/gindon/menus/salmon-rice-bowl-mala.png,missing
 jong-hua-a-ming,spicy-pork-belly-and-minced-pork-tofu-on-rice,สามชั้นทอดรสแซ่บ + เต้าหู้หมูสับ ราดข้าว,Spicy Fried Pork Belly & Minced Pork Tofu on Rice,rice-dishes,assets/catalog/jong-hua-a-ming/menus/spicy-pork-belly-and-minced-pork-tofu-on-rice.png,missing
 jong-hua-a-ming,spicy-pork-belly-and-tomato-egg-on-rice,สามชั้นทอดรสแซ่บ + มะเขือเทศผัดไข่ ราดข้าว,Spicy Fried Pork Belly & Tomato Egg on Rice,rice-dishes,assets/catalog/jong-hua-a-ming/menus/spicy-pork-belly-and-tomato-egg-on-rice.png,missing
 jong-hua-a-ming,spicy-pork-belly-and-eggplant-on-rice,สามชั้นทอดรสแซ่บ + มะเขือยาวหมูสับ ราดข้าว,Spicy Fried Pork Belly & Eggplant with Minced Pork on Rice,rice-dishes,assets/catalog/jong-hua-a-ming/menus/spicy-pork-belly-and-eggplant-on-rice.png,missing
