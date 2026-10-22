@@ -135,6 +135,7 @@ describe('FoodTypesPage icon field', () => {
       'soup',
       'salad',
       'sparkles',
+      'grill',
     ])
     expect([...select.options].map((option) => option.textContent)).toEqual([
       'ไม่เลือก (ใช้ไอคอนเริ่มต้น)',
@@ -144,6 +145,7 @@ describe('FoodTypesPage icon field', () => {
       'ซุป (soup)',
       'สลัด (salad)',
       'พิเศษ (sparkles)',
+      'ปิ้งย่าง (grill)',
     ])
     expect(
       document.getElementById(select.getAttribute('aria-describedby') ?? '')

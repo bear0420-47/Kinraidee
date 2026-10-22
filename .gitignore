@@ -13,3 +13,6 @@ coverage/
 .tmp/
 *.log
 **/.local/uploads/
+
+# Source screenshots for the catalog (never committed)
+menu-inbox/

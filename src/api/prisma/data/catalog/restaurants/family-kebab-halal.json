@@ -1,0 +1,460 @@
+{
+  "slug": "family-kebab-halal",
+  "zone": "opposite-mfu",
+  "name": {
+    "th": "แฟมิลี่ เคบับ ฮาลาล",
+    "en": "Family Kebab Halal"
+  },
+  "description": {
+    "th": "ร้านอาหารฮาลาลสไตล์ตุรกีใกล้มหาวิทยาลัยแม่ฟ้าหลวง มีเคบับแรป พิซซ่าและพิเดแบบตุรกี สเต็ก และเมนูย่าง",
+    "en": "Turkish-style halal restaurant near Mae Fah Luang University, serving kebab wraps, Turkish pizza and pide, steaks, and grills."
+  },
+  "phone": null,
+  "source": {
+    "type": "grab-screenshot",
+    "capturedOn": "2026-10-22",
+    "pricesInclude": "grab-delivery-markup",
+    "ownerConsent": {
+      "given": false,
+      "by": null,
+      "on": null
+    }
+  },
+  "menuItems": [
+    {
+      "slug": "adana-beef-kebab-wrap",
+      "name": {
+        "th": "อดาน่าเคบับแรปเนื้อ",
+        "en": "Adana Beef Kebab Wrap"
+      },
+      "description": {
+        "th": "เนื้อบดปรุงเครื่องเทศแบบอดาน่า ย่างไฟแล้วห่อในแป้งพร้อมผักสด",
+        "en": "Spiced minced-beef Adana kebab, grilled and wrapped in flatbread with fresh vegetables."
+      },
+      "price": 199,
+      "foodType": "burgers-sandwiches-wraps",
+      "tastes": ["spiced-smoky", "spicy", "savory"],
+      "review": null
+    },
+    {
+      "slug": "shish-kebab-liver-wrap",
+      "name": {
+        "th": "ชิชเคบับแรปตับ",
+        "en": "Liver Shish Kebab Wrap"
+      },
+      "description": {
+        "th": "ตับเสียบไม้ย่างแบบชิชเคบับ ห่อในแป้งพร้อมผักและซอส",
+        "en": "Skewer-grilled liver wrapped in flatbread with vegetables and sauce."
+      },
+      "price": 149,
+      "foodType": "burgers-sandwiches-wraps",
+      "tastes": ["spiced-smoky", "savory"],
+      "review": null
+    },
+    {
+      "slug": "grilled-saba-wrap",
+      "name": {
+        "th": "แรปปลาซาบะย่าง",
+        "en": "Grilled Saba Fish Wrap"
+      },
+      "description": {
+        "th": "ปลาซาบะย่างหอม ๆ ห่อในแป้งพร้อมผักสดและซอส",
+        "en": "Grilled saba mackerel wrapped in flatbread with fresh vegetables and sauce."
+      },
+      "price": 99,
+      "foodType": "burgers-sandwiches-wraps",
+      "tastes": ["savory", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "falafel-wrap",
+      "name": {
+        "th": "ฟาลาเฟลแรป",
+        "en": "Falafel Wrap"
+      },
+      "description": {
+        "th": "ฟาลาเฟลถั่วลูกไก่ทอดกรอบ ห่อในแป้งพร้อมผักสดและซอส",
+        "en": "Crispy chickpea falafel wrapped in flatbread with fresh vegetables and sauce."
+      },
+      "price": 99,
+      "foodType": "burgers-sandwiches-wraps",
+      "tastes": ["crispy", "fresh-light"],
+      "review": null
+    },
+    {
+      "slug": "lamb-doner-kebab-wrap",
+      "name": {
+        "th": "โดเนอร์เคบับแรปแกะ",
+        "en": "Lamb Doner Kebab Wrap"
+      },
+      "description": {
+        "th": "เนื้อแกะหมักเครื่องเทศย่างบนเตาหมุน ฝานบางแล้วห่อในแป้งพร้อมผักและซอส",
+        "en": "Spiced lamb shaved from the rotisserie and wrapped in flatbread with vegetables and sauce."
+      },
+      "price": 159,
+      "foodType": "burgers-sandwiches-wraps",
+      "tastes": ["spiced-smoky", "savory"],
+      "review": null
+    },
+    {
+      "slug": "beef-doner-kebab-wrap",
+      "name": {
+        "th": "โดเนอร์เคบับแรปเนื้อ",
+        "en": "Beef Doner Kebab Wrap"
+      },
+      "description": {
+        "th": "เนื้อวัวหมักเครื่องเทศย่างบนเตาหมุน ฝานบางแล้วห่อในแป้งพร้อมผักและซอส",
+        "en": "Spiced beef shaved from the rotisserie and wrapped in flatbread with vegetables and sauce."
+      },
+      "price": 129,
+      "foodType": "burgers-sandwiches-wraps",
+      "tastes": ["spiced-smoky", "savory"],
+      "review": null
+    },
+    {
+      "slug": "chicken-doner-kebab-wrap",
+      "name": {
+        "th": "โดเนอร์เคบับแรปไก่",
+        "en": "Chicken Doner Kebab Wrap"
+      },
+      "description": {
+        "th": "ไก่หมักเครื่องเทศย่างบนเตาหมุน ฝานบางแล้วห่อในแป้งพร้อมผักและซอส",
+        "en": "Spiced chicken shaved from the rotisserie and wrapped in flatbread with vegetables and sauce."
+      },
+      "price": 99,
+      "foodType": "burgers-sandwiches-wraps",
+      "tastes": ["spiced-smoky", "savory"],
+      "review": null
+    },
+    {
+      "slug": "hummus",
+      "name": {
+        "th": "ฮัมมุส",
+        "en": "Hummus"
+      },
+      "description": {
+        "th": "ดิปถั่วลูกไก่บดเนื้อเนียนผสมงาบดและน้ำมันมะกอก โรยปาปริก้า",
+        "en": "Smooth chickpea and tahini dip finished with olive oil and paprika."
+      },
+      "price": 99,
+      "foodType": "appetizers-snacks",
+      "tastes": ["creamy-rich", "savory"],
+      "review": null
+    },
+    {
+      "slug": "lahmacun",
+      "name": {
+        "th": "ลาห์มาจุน",
+        "en": "Lahmacun"
+      },
+      "description": {
+        "th": "แป้งบางอบกรอบแบบตุรกี ทาหน้าเนื้อบดปรุงเครื่องเทศ เสิร์ฟกับผักสดและมะนาว",
+        "en": "Thin Turkish flatbread baked with a spiced minced-meat topping, served with fresh vegetables and lime."
+      },
+      "price": 149,
+      "foodType": "pizza-flatbread",
+      "tastes": ["spiced-smoky", "savory"],
+      "review": null
+    },
+    {
+      "slug": "vegetarian-pizza",
+      "name": {
+        "th": "พิซซ่ามังสวิรัติ",
+        "en": "Vegetarian Pizza"
+      },
+      "description": {
+        "th": "พิซซ่าสไตล์ตุรกีหน้าผักและชีส ไม่มีเนื้อสัตว์",
+        "en": "Turkish-style pizza topped with vegetables and cheese, no meat."
+      },
+      "price": 99,
+      "foodType": "pizza-flatbread",
+      "tastes": ["savory", "creamy-rich"],
+      "review": null
+    },
+    {
+      "slug": "beef-doner-kebab-pizza",
+      "name": {
+        "th": "โดเนอร์เคบับพิซซ่าเนื้อ",
+        "en": "Beef Doner Kebab Pizza"
+      },
+      "description": {
+        "th": "พิซซ่าสไตล์ตุรกีหน้าโดเนอร์เคบับเนื้อ ผัก และชีส",
+        "en": "Turkish-style pizza topped with beef doner kebab, vegetables, and cheese."
+      },
+      "price": 159,
+      "foodType": "pizza-flatbread",
+      "tastes": ["savory", "creamy-rich", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "chicken-doner-kebab-pizza",
+      "name": {
+        "th": "โดเนอร์เคบับพิซซ่าไก่",
+        "en": "Chicken Doner Kebab Pizza"
+      },
+      "description": {
+        "th": "พิซซ่าสไตล์ตุรกีหน้าโดเนอร์เคบับไก่ ผัก และชีส",
+        "en": "Turkish-style pizza topped with chicken doner kebab, vegetables, and cheese."
+      },
+      "price": 129,
+      "foodType": "pizza-flatbread",
+      "tastes": ["savory", "creamy-rich", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "chicken-breast-steak",
+      "name": {
+        "th": "สเต็กอกไก่",
+        "en": "Chicken Breast Steak"
+      },
+      "description": {
+        "th": "อกไก่หมักเครื่องเทศย่าง เสิร์ฟพร้อมข้าว แป้งย่าง และสลัด",
+        "en": "Spice-marinated grilled chicken breast served with rice, grilled flatbread, and salad."
+      },
+      "price": 159,
+      "foodType": "grills-steaks",
+      "tastes": ["savory", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "chicken-thigh-steak",
+      "name": {
+        "th": "สเต็กไก่สะโพก",
+        "en": "Chicken Thigh Steak"
+      },
+      "description": {
+        "th": "สะโพกไก่หมักเครื่องเทศย่างจนหอม เสิร์ฟพร้อมข้าว แป้งย่าง และสลัด",
+        "en": "Spice-marinated grilled chicken thigh served with rice, grilled flatbread, and salad."
+      },
+      "price": 169,
+      "foodType": "grills-steaks",
+      "tastes": ["savory", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "salmon-steak",
+      "name": {
+        "th": "สเต็กปลาแซลมอน",
+        "en": "Salmon Steak"
+      },
+      "description": {
+        "th": "สเต็กปลาแซลมอนย่าง เสิร์ฟกับสลัดผักและน้ำจิ้ม",
+        "en": "Grilled salmon steak served with salad and a dipping sauce."
+      },
+      "price": 219,
+      "foodType": "grills-steaks",
+      "tastes": ["savory", "fresh-light"],
+      "review": null
+    },
+    {
+      "slug": "beef-steak",
+      "name": {
+        "th": "สเต็กเนื้อ",
+        "en": "Beef Steak"
+      },
+      "description": {
+        "th": "สเต็กเนื้อวัวย่าง เสิร์ฟพร้อมเฟรนช์ฟรายส์ สลัด และซอส",
+        "en": "Grilled beef steak served with French fries, salad, and sauce."
+      },
+      "price": 259,
+      "foodType": "grills-steaks",
+      "tastes": ["savory"],
+      "review": null
+    },
+    {
+      "slug": "beef-kofta-with-rice",
+      "name": {
+        "th": "โคฟต้าเนื้อ+ข้าว",
+        "en": "Beef Kofta with Rice"
+      },
+      "description": {
+        "th": "โคฟต้าเนื้อบดปรุงเครื่องเทศย่าง เสิร์ฟพร้อมข้าว แป้งย่าง และสลัด",
+        "en": "Grilled spiced beef meatballs served with rice, grilled flatbread, and salad."
+      },
+      "price": 179,
+      "foodType": "rice-dishes",
+      "tastes": ["spiced-smoky", "savory"],
+      "review": null
+    },
+    {
+      "slug": "chicken-kofta-with-rice",
+      "name": {
+        "th": "โคฟต้าไก่+ข้าว",
+        "en": "Chicken Kofta with Rice"
+      },
+      "description": {
+        "th": "โคฟต้าไก่บดปรุงเครื่องเทศย่าง เสิร์ฟพร้อมข้าว แป้งย่าง และสลัด",
+        "en": "Grilled spiced chicken meatballs served with rice, grilled flatbread, and salad."
+      },
+      "price": 159,
+      "foodType": "rice-dishes",
+      "tastes": ["spiced-smoky", "savory"],
+      "review": null
+    },
+    {
+      "slug": "chicken-doner-kebab-pide",
+      "name": {
+        "th": "โดเนอร์เคบับพิเดไก่",
+        "en": "Chicken Doner Kebab Pide"
+      },
+      "description": {
+        "th": "พิเดขนมปังทรงเรือแบบตุรกี อบกับโดเนอร์เคบับไก่และชีส",
+        "en": "Boat-shaped Turkish pide baked with chicken doner kebab and cheese."
+      },
+      "price": 129,
+      "foodType": "pizza-flatbread",
+      "tastes": ["savory", "creamy-rich"],
+      "review": null
+    },
+    {
+      "slug": "beef-doner-kebab-pide",
+      "name": {
+        "th": "โดเนอร์เคบับพิเดเนื้อ",
+        "en": "Beef Doner Kebab Pide"
+      },
+      "description": {
+        "th": "พิเดขนมปังทรงเรือแบบตุรกี อบกับโดเนอร์เคบับเนื้อและชีส",
+        "en": "Boat-shaped Turkish pide baked with beef doner kebab and cheese."
+      },
+      "price": 149,
+      "foodType": "pizza-flatbread",
+      "tastes": ["savory", "creamy-rich"],
+      "review": null
+    },
+    {
+      "slug": "turkish-grilled-beef",
+      "name": {
+        "th": "เนื้อย่างตุรกี",
+        "en": "Turkish Grilled Beef Skewers"
+      },
+      "description": {
+        "th": "เนื้อวัวเสียบไม้ย่างสไตล์ตุรกี เสิร์ฟพร้อมข้าว แป้งย่าง และสลัด",
+        "en": "Turkish-style grilled beef skewers served with rice, grilled flatbread, and salad."
+      },
+      "price": 179,
+      "foodType": "grills-steaks",
+      "tastes": ["spiced-smoky", "savory"],
+      "review": null
+    },
+    {
+      "slug": "grilled-saba-baguette",
+      "name": {
+        "th": "ปลาซาบะย่างแป้งบาเกตต์",
+        "en": "Grilled Saba Fish Baguette"
+      },
+      "description": {
+        "th": "ปลาซาบะย่างสอดไส้ในขนมปังบาเกตต์ พร้อมผักและซอส",
+        "en": "Grilled saba mackerel in a baguette with vegetables and sauce."
+      },
+      "price": 149,
+      "foodType": "burgers-sandwiches-wraps",
+      "tastes": ["savory", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "grilled-beef-liver-shish-kebab",
+      "name": {
+        "th": "ชิชเคบับตับเนื้อวัวย่าง",
+        "en": "Grilled Beef Liver Shish Kebab"
+      },
+      "description": {
+        "th": "ตับเนื้อวัวเสียบไม้ย่าง เสิร์ฟพร้อมข้าว แป้งย่าง และสลัด",
+        "en": "Skewer-grilled beef liver served with rice, grilled flatbread, and salad."
+      },
+      "price": 199,
+      "foodType": "grills-steaks",
+      "tastes": ["spiced-smoky", "savory"],
+      "review": null
+    },
+    {
+      "slug": "grilled-chicken-wings",
+      "name": {
+        "th": "ปีกไก่ย่าง",
+        "en": "Grilled Chicken Wings"
+      },
+      "description": {
+        "th": "ปีกไก่หมักเครื่องเทศย่าง เสิร์ฟพร้อมข้าว แป้งย่าง และสลัด",
+        "en": "Spice-marinated grilled chicken wings served with rice, grilled flatbread, and salad."
+      },
+      "price": 189,
+      "foodType": "grills-steaks",
+      "tastes": ["spiced-smoky", "savory"],
+      "review": null
+    },
+    {
+      "slug": "turkish-grilled-chicken-breast",
+      "name": {
+        "th": "อกไก่ย่างสูตรตุรกี",
+        "en": "Turkish-style Grilled Chicken Breast"
+      },
+      "description": {
+        "th": "อกไก่เสียบไม้หมักสูตรตุรกีย่าง เสิร์ฟพร้อมข้าว แป้งย่าง และสลัด",
+        "en": "Turkish-marinated chicken breast skewers served with rice, grilled flatbread, and salad."
+      },
+      "price": 129,
+      "foodType": "grills-steaks",
+      "tastes": ["spiced-smoky", "savory"],
+      "review": null
+    },
+    {
+      "slug": "adana-beef-kebab",
+      "name": {
+        "th": "อดาน่าเคบับเนื้อ",
+        "en": "Adana Beef Kebab Plate"
+      },
+      "description": {
+        "th": "เนื้อบดปรุงเครื่องเทศรสเผ็ดแบบอดาน่า ย่างเสียบไม้ เสิร์ฟพร้อมข้าว แป้งย่าง และสลัด",
+        "en": "Spicy minced-beef Adana kebab grilled on a skewer, served with rice, grilled flatbread, and salad."
+      },
+      "price": 279,
+      "foodType": "grills-steaks",
+      "tastes": ["spicy", "spiced-smoky", "savory"],
+      "review": null
+    },
+    {
+      "slug": "vegetarian-falafel-plate",
+      "name": {
+        "th": "ฟาลาเฟลมังสวิรัติ",
+        "en": "Vegetarian Falafel Plate"
+      },
+      "description": {
+        "th": "ฟาลาเฟลถั่วลูกไก่ทอดกรอบ เสิร์ฟกับเฟรนช์ฟรายส์ สลัด และฮัมมุส",
+        "en": "Crispy chickpea falafel served with French fries, salad, and hummus."
+      },
+      "price": 129,
+      "foodType": "appetizers-snacks",
+      "tastes": ["crispy", "fresh-light"],
+      "review": null
+    },
+    {
+      "slug": "potato-samosa",
+      "name": {
+        "th": "ซามูซามัน",
+        "en": "Potato Samosa"
+      },
+      "description": {
+        "th": "แป้งทอดกรอบสามเหลี่ยมสอดไส้มันฝรั่งปรุงเครื่องเทศ เสิร์ฟกับซอสพริก",
+        "en": "Crispy triangular pastries filled with spiced potato, served with chili sauce."
+      },
+      "price": 129,
+      "foodType": "appetizers-snacks",
+      "tastes": ["crispy", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "chicken-samosa",
+      "name": {
+        "th": "ซามูซาไก่",
+        "en": "Chicken Samosa"
+      },
+      "description": {
+        "th": "แป้งทอดกรอบสามเหลี่ยมสอดไส้ไก่ปรุงเครื่องเทศ เสิร์ฟกับซอสพริก",
+        "en": "Crispy triangular pastries filled with spiced chicken, served with chili sauce."
+      },
+      "price": 129,
+      "foodType": "appetizers-snacks",
+      "tastes": ["crispy", "spiced-smoky"],
+      "review": null
+    }
+  ]
+}

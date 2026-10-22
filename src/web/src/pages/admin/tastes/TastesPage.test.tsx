@@ -128,6 +128,8 @@ describe('TastesPage list', () => {
       'ประกาย (sparkles)',
       'หัวใจ (heart)',
       'ชาม (bowl)',
+      'ขนม (cake)',
+      'ส้ม (citrus)',
     ])
     expect(
       document.getElementById(

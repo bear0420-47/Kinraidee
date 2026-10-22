@@ -2,6 +2,7 @@ import {
   BowlFood,
   BowlSteam,
   CookingPot,
+  Fire,
   ForkKnife,
   Hamburger,
   Leaf,
@@ -19,6 +20,7 @@ export const foodTypeIcons = createIconRegistry(
     soup: { label: 'ซุป', Icon: CookingPot },
     salad: { label: 'สลัด', Icon: Leaf },
     sparkles: { label: 'พิเศษ', Icon: Sparkle },
+    grill: { label: 'ปิ้งย่าง', Icon: Fire },
   },
   ForkKnife,
 )

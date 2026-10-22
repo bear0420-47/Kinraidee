@@ -1,0 +1,30 @@
+﻿restaurant,menuItem,nameTh,nameEn,foodType,expectedPath,status
+family-kebab-halal,adana-beef-kebab-wrap,อดาน่าเคบับแรปเนื้อ,Adana Beef Kebab Wrap,burgers-sandwiches-wraps,assets/catalog/family-kebab-halal/menus/adana-beef-kebab-wrap.png,missing
+family-kebab-halal,shish-kebab-liver-wrap,ชิชเคบับแรปตับ,Liver Shish Kebab Wrap,burgers-sandwiches-wraps,assets/catalog/family-kebab-halal/menus/shish-kebab-liver-wrap.png,missing
+family-kebab-halal,grilled-saba-wrap,แรปปลาซาบะย่าง,Grilled Saba Fish Wrap,burgers-sandwiches-wraps,assets/catalog/family-kebab-halal/menus/grilled-saba-wrap.png,missing
+family-kebab-halal,falafel-wrap,ฟาลาเฟลแรป,Falafel Wrap,burgers-sandwiches-wraps,assets/catalog/family-kebab-halal/menus/falafel-wrap.png,missing
+family-kebab-halal,lamb-doner-kebab-wrap,โดเนอร์เคบับแรปแกะ,Lamb Doner Kebab Wrap,burgers-sandwiches-wraps,assets/catalog/family-kebab-halal/menus/lamb-doner-kebab-wrap.png,missing
+family-kebab-halal,beef-doner-kebab-wrap,โดเนอร์เคบับแรปเนื้อ,Beef Doner Kebab Wrap,burgers-sandwiches-wraps,assets/catalog/family-kebab-halal/menus/beef-doner-kebab-wrap.png,missing
+family-kebab-halal,chicken-doner-kebab-wrap,โดเนอร์เคบับแรปไก่,Chicken Doner Kebab Wrap,burgers-sandwiches-wraps,assets/catalog/family-kebab-halal/menus/chicken-doner-kebab-wrap.png,missing
+family-kebab-halal,hummus,ฮัมมุส,Hummus,appetizers-snacks,assets/catalog/family-kebab-halal/menus/hummus.png,missing
+family-kebab-halal,lahmacun,ลาห์มาจุน,Lahmacun,pizza-flatbread,assets/catalog/family-kebab-halal/menus/lahmacun.png,missing
+family-kebab-halal,vegetarian-pizza,พิซซ่ามังสวิรัติ,Vegetarian Pizza,pizza-flatbread,assets/catalog/family-kebab-halal/menus/vegetarian-pizza.png,missing
+family-kebab-halal,beef-doner-kebab-pizza,โดเนอร์เคบับพิซซ่าเนื้อ,Beef Doner Kebab Pizza,pizza-flatbread,assets/catalog/family-kebab-halal/menus/beef-doner-kebab-pizza.png,missing
+family-kebab-halal,chicken-doner-kebab-pizza,โดเนอร์เคบับพิซซ่าไก่,Chicken Doner Kebab Pizza,pizza-flatbread,assets/catalog/family-kebab-halal/menus/chicken-doner-kebab-pizza.png,missing
+family-kebab-halal,chicken-breast-steak,สเต็กอกไก่,Chicken Breast Steak,grills-steaks,assets/catalog/family-kebab-halal/menus/chicken-breast-steak.png,missing
+family-kebab-halal,chicken-thigh-steak,สเต็กไก่สะโพก,Chicken Thigh Steak,grills-steaks,assets/catalog/family-kebab-halal/menus/chicken-thigh-steak.png,missing
+family-kebab-halal,salmon-steak,สเต็กปลาแซลมอน,Salmon Steak,grills-steaks,assets/catalog/family-kebab-halal/menus/salmon-steak.png,missing
+family-kebab-halal,beef-steak,สเต็กเนื้อ,Beef Steak,grills-steaks,assets/catalog/family-kebab-halal/menus/beef-steak.png,missing
+family-kebab-halal,beef-kofta-with-rice,โคฟต้าเนื้อ+ข้าว,Beef Kofta with Rice,rice-dishes,assets/catalog/family-kebab-halal/menus/beef-kofta-with-rice.png,missing
+family-kebab-halal,chicken-kofta-with-rice,โคฟต้าไก่+ข้าว,Chicken Kofta with Rice,rice-dishes,assets/catalog/family-kebab-halal/menus/chicken-kofta-with-rice.png,missing
+family-kebab-halal,chicken-doner-kebab-pide,โดเนอร์เคบับพิเดไก่,Chicken Doner Kebab Pide,pizza-flatbread,assets/catalog/family-kebab-halal/menus/chicken-doner-kebab-pide.png,missing
+family-kebab-halal,beef-doner-kebab-pide,โดเนอร์เคบับพิเดเนื้อ,Beef Doner Kebab Pide,pizza-flatbread,assets/catalog/family-kebab-halal/menus/beef-doner-kebab-pide.png,missing
+family-kebab-halal,turkish-grilled-beef,เนื้อย่างตุรกี,Turkish Grilled Beef Skewers,grills-steaks,assets/catalog/family-kebab-halal/menus/turkish-grilled-beef.png,missing
+family-kebab-halal,grilled-saba-baguette,ปลาซาบะย่างแป้งบาเกตต์,Grilled Saba Fish Baguette,burgers-sandwiches-wraps,assets/catalog/family-kebab-halal/menus/grilled-saba-baguette.png,missing
+family-kebab-halal,grilled-beef-liver-shish-kebab,ชิชเคบับตับเนื้อวัวย่าง,Grilled Beef Liver Shish Kebab,grills-steaks,assets/catalog/family-kebab-halal/menus/grilled-beef-liver-shish-kebab.png,missing
+family-kebab-halal,grilled-chicken-wings,ปีกไก่ย่าง,Grilled Chicken Wings,grills-steaks,assets/catalog/family-kebab-halal/menus/grilled-chicken-wings.png,missing
+family-kebab-halal,turkish-grilled-chicken-breast,อกไก่ย่างสูตรตุรกี,Turkish-style Grilled Chicken Breast,grills-steaks,assets/catalog/family-kebab-halal/menus/turkish-grilled-chicken-breast.png,missing
+family-kebab-halal,adana-beef-kebab,อดาน่าเคบับเนื้อ,Adana Beef Kebab Plate,grills-steaks,assets/catalog/family-kebab-halal/menus/adana-beef-kebab.png,missing
+family-kebab-halal,vegetarian-falafel-plate,ฟาลาเฟลมังสวิรัติ,Vegetarian Falafel Plate,appetizers-snacks,assets/catalog/family-kebab-halal/menus/vegetarian-falafel-plate.png,missing
+family-kebab-halal,potato-samosa,ซามูซามัน,Potato Samosa,appetizers-snacks,assets/catalog/family-kebab-halal/menus/potato-samosa.png,missing
+family-kebab-halal,chicken-samosa,ซามูซาไก่,Chicken Samosa,appetizers-snacks,assets/catalog/family-kebab-halal/menus/chicken-samosa.png,missing

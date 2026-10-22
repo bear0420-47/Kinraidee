@@ -1415,3 +1415,26 @@ New seed tests:
 | Deliberate regressions | Hiding the home link, showing it on Home, removing `กลับหน้าแรก`, and making `เริ่มใหม่` keep the stored flow each fail the new tests; files restored. |
 | `pnpm verify` | Pass. API: 71 files/551 tests; web: 38 files/404 tests; builds pass. One earlier run failed `router.test.tsx` › `marks the document as the admin area only while an admin route is shown`; it passed in 8 repeated file runs and the final full run, so it is recorded as an intermittent test, not a defect in this change. |
 | Prettier `--end-of-line auto` and `git diff --check` | Pass for changed code; `user-journey.md` and `plan.md` keep their existing table formatting warnings from `main`. |
+
+## Catalog source format and first restaurant
+
+### Scope
+
+- Verification date: 2026-10-22 ICT (`UTC+07:00`)
+- Environment: local Windows 11 workspace, pnpm 12.4.2
+- Base: `main` at `76efd97`
+- Change: per-restaurant catalog source (`src/api/prisma/data/catalog/`), `catalog:build`, expanded taxonomy with hidden `desserts` and `drinks`, the archived starter catalog, and Family Kebab Halal (29 menu items) from Grab screenshots.
+
+### Results
+
+| Check | Result |
+|---|---|
+| `pnpm --filter api catalog:build` | Pass: 1 restaurant, 29 menu items, 0 hidden; 29 photos missing, all listed in `photo-checklist.csv`. Before the two items Grab showed as unavailable were removed, the build refused to run with their open review notes, and `--draft` built them with the notes reported. |
+| `catalog:build --check` | Pass when in sync; a test writes a stale seed and the check fails with `catalog.seed.json is out of date`. |
+| Screenshot handling | Duplicates merged: Hummus and the vegetarian pizza (Top picks and their sections) and the item split across screenshots 7 and 8. Dishes Grab showed with a shared photo but different names and prices were kept separately. Left out as incomplete: the two unavailable Iskender kebabs, the cut-off first item of `อาหารทานเล่น`, and the Top-pick items with no menu entry in the screenshots (Chicken Pitta Doner Kebab, beef fried rice). No Grab photo or description was stored. |
+| New build tests (17) | Slug-derived IDs and image keys, nesting flattened into the existing seed shape, hidden food types and all-hidden restaurants left out, photos found by name in any of the three formats, unmatched photos reported, missing-photo paths listed, every validation problem named by file and field, review notes blocking the build, duplicate slugs, CSV quoting with a UTF-8 BOM, unchanged taxonomy IDs, and the committed source building in sync. |
+| Seed tests | Use the archived catalog as their fixture, so counts (47 records, 12 photos) are independent of the live catalog. |
+| Deliberate regressions | Including hidden dishes, ignoring review notes, finding only PNG photos, not reporting unmatched photos, menu IDs ignoring the restaurant, a `--check` that never fails, and accepting an unknown zone each fail the tests; files restored. |
+| `pnpm verify` | Pass. API: 72 files/568 tests; web: 38 files/407 tests; builds pass. |
+| Prettier `--end-of-line auto` and `git diff --check` | Pass for changed files (`plan.md` keeps its existing table warnings from `main`). |
+| Fresh-database seed | Not run: Docker Desktop's engine did not start on this machine during verification. To be run before the PR is merged. |

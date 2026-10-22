@@ -107,8 +107,9 @@ export const catalogSeedSchema = z
     zones: z.array(zoneSchema).min(1),
     foodTypes: z.array(iconMasterDataSchema).min(1),
     tastes: z.array(iconMasterDataSchema).min(1),
-    restaurants: z.array(restaurantSchema).min(1),
-    menuItems: z.array(menuItemSchema).min(1),
+    // Restaurants are added over time, so the catalog may start with none.
+    restaurants: z.array(restaurantSchema),
+    menuItems: z.array(menuItemSchema),
   })
   .superRefine((catalog, context) => {
     const collections = [

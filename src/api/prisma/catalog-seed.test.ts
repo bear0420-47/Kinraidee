@@ -15,6 +15,15 @@ import {
 } from './catalog-seed'
 import { catalogSeedSchema, type CatalogSeed } from './seedSchemas'
 
+// The archived starter catalog is the fixture: its records and photos never change, so
+// these counts stay fixed however the live catalog grows.
+const archivedCatalogUrl = new URL(
+  './data/archive/catalog.seed.2026-10-06.json',
+  import.meta.url,
+)
+const archivedAssetsDirectory = path.join(catalogAssetsDirectory, '_archive')
+const loadArchivedCatalog = () => loadCatalogSeed(archivedCatalogUrl)
+
 type StoredRecord = Record<string, unknown> & { id: string }
 
 function createRecordDelegate() {
@@ -115,7 +124,7 @@ function createCatalogTransaction() {
 
 describe('approved catalog seed', () => {
   it('loads the complete approved fixture with valid references', async () => {
-    const catalog = await loadCatalogSeed()
+    const catalog = await loadArchivedCatalog()
 
     expect(catalog.zones).toHaveLength(3)
     expect(catalog.foodTypes).toHaveLength(4)
@@ -132,7 +141,7 @@ describe('approved catalog seed', () => {
   })
 
   it('rejects the complete fixture before any database read or write', async () => {
-    const catalog = structuredClone(await loadCatalogSeed())
+    const catalog = structuredClone(await loadArchivedCatalog())
     const { transaction, delegates } = createCatalogTransaction()
     catalog.menuItems[0]!.tasteIds[0] = 'c000000000000000000000000'
 
@@ -144,7 +153,7 @@ describe('approved catalog seed', () => {
   })
 
   it('creates the dataset once and leaves an identical second run unchanged', async () => {
-    const catalog = await loadCatalogSeed()
+    const catalog = await loadArchivedCatalog()
     const { transaction, delegates } = createCatalogTransaction()
 
     await expect(seedCatalog(transaction, catalog)).resolves.toEqual({
@@ -167,7 +176,7 @@ describe('approved catalog seed', () => {
   })
 
   it('updates managed fields without restoring soft deletes', async () => {
-    const catalog = await loadCatalogSeed()
+    const catalog = await loadArchivedCatalog()
     const { transaction, delegates } = createCatalogTransaction()
     await seedCatalog(transaction, catalog)
 
@@ -219,7 +228,7 @@ describe('approved catalog seed', () => {
   })
 
   it('removes stale taste links only for menu items managed by the fixture', async () => {
-    const catalog = await loadCatalogSeed()
+    const catalog = await loadArchivedCatalog()
     const { transaction, delegates } = createCatalogTransaction()
     await seedCatalog(transaction, catalog)
 
@@ -267,7 +276,7 @@ describe('approved catalog seed', () => {
   })
 
   it('rejects duplicate stable IDs', async () => {
-    const catalog = structuredClone(await loadCatalogSeed())
+    const catalog = structuredClone(await loadArchivedCatalog())
     catalog.foodTypes[0]!.id = catalog.zones[0]!.id
 
     expect(() => catalogSeedSchema.parse(catalog)).toThrow('Duplicate value')
@@ -297,14 +306,14 @@ describe('approved catalog seed', () => {
         (catalog.menuItems[0]!.imageUrl = 'javascript:alert(1)'),
     ],
   ])('rejects %s', async (_case, mutate) => {
-    const catalog = structuredClone(await loadCatalogSeed())
+    const catalog = structuredClone(await loadArchivedCatalog())
     mutate(catalog)
 
     expect(catalogSeedSchema.safeParse(catalog).success).toBe(false)
   })
 
   it('contains no credential fields or email addresses', async () => {
-    const serializedCatalog = JSON.stringify(await loadCatalogSeed())
+    const serializedCatalog = JSON.stringify(await loadArchivedCatalog())
 
     expect(serializedCatalog).not.toMatch(
       /password|jwt|cookie|secret|authorization/i,
@@ -317,7 +326,7 @@ describe('approved catalog seed', () => {
 
 describe('catalog photos', () => {
   it('links every restaurant and menu item to a committed photo', async () => {
-    const catalog = await loadCatalogSeed()
+    const catalog = await loadArchivedCatalog()
     const records = [...catalog.restaurants, ...catalog.menuItems]
 
     expect(catalog.restaurants).toHaveLength(3)
@@ -326,7 +335,7 @@ describe('catalog photos', () => {
       expect(record.image, record.name.en).toBeDefined()
       expect(
         existsSync(
-          path.join(catalogAssetsDirectory, ...record.image!.asset.split('/')),
+          path.join(archivedAssetsDirectory, ...record.image!.asset.split('/')),
         ),
         record.image!.asset,
       ).toBe(true)
@@ -334,7 +343,7 @@ describe('catalog photos', () => {
   })
 
   it('points records at their copied photos only when local images are on', async () => {
-    const catalog = await loadCatalogSeed()
+    const catalog = await loadArchivedCatalog()
     const restaurant = catalog.restaurants[0]!
     const menuItem = catalog.menuItems[0]!
 
@@ -366,11 +375,13 @@ describe('catalog photos', () => {
   })
 
   it('copies every photo into the uploads directory under its key', async () => {
-    const catalog = await loadCatalogSeed()
+    const catalog = await loadArchivedCatalog()
     const uploads = await mkdtemp(path.join(tmpdir(), 'kinraidee-seed-'))
     try {
       const target = path.join(uploads, 'nested')
-      await expect(copyCatalogImages(catalog, target)).resolves.toBe(12)
+      await expect(
+        copyCatalogImages(catalog, target, archivedAssetsDirectory),
+      ).resolves.toBe(12)
 
       const keys = [...catalog.restaurants, ...catalog.menuItems].map(
         ({ image }) => image!.key,
@@ -381,7 +392,7 @@ describe('catalog photos', () => {
       )!
       expect(await readFile(path.join(target, kofta.image!.key))).toEqual(
         await readFile(
-          path.join(catalogAssetsDirectory, ...kofta.image!.asset.split('/')),
+          path.join(archivedAssetsDirectory, ...kofta.image!.asset.split('/')),
         ),
       )
     } finally {
@@ -390,7 +401,7 @@ describe('catalog photos', () => {
   })
 
   it('stops when a photo file is missing', async () => {
-    const catalog = await loadCatalogSeed()
+    const catalog = await loadArchivedCatalog()
     const uploads = await mkdtemp(path.join(tmpdir(), 'kinraidee-seed-'))
     try {
       await expect(
@@ -402,7 +413,7 @@ describe('catalog photos', () => {
   })
 
   it('rejects an image key that does not keep the asset file type', async () => {
-    const catalog: CatalogSeed = structuredClone(await loadCatalogSeed())
+    const catalog: CatalogSeed = structuredClone(await loadArchivedCatalog())
     const image = catalog.menuItems[0]!.image!
     image.key = image.key.replace(/\.png$/, '.jpg')
 

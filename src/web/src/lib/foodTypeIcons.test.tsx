@@ -2,6 +2,7 @@ import {
   BowlFood,
   BowlSteam,
   CookingPot,
+  Fire,
   ForkKnife,
   Hamburger,
   Leaf,
@@ -27,6 +28,7 @@ describe('foodTypeIcons', () => {
       'soup',
       'salad',
       'sparkles',
+      'grill',
     ])
   })
 
@@ -37,6 +39,7 @@ describe('foodTypeIcons', () => {
     ['soup', CookingPot],
     ['salad', Leaf],
     ['sparkles', Sparkle],
+    ['grill', Fire],
   ])('renders %s with its Phosphor icon', (key, Expected) => {
     expect(markup(<FoodTypeIcon icon={key} />)).toBe(markup(<Expected />))
   })
