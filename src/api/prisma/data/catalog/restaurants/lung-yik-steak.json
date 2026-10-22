@@ -1,0 +1,430 @@
+{
+  "slug": "lung-yik-steak",
+  "zone": "opposite-mfu",
+  "name": {
+    "th": "สเต็กลุงหยิกเชียงราย",
+    "en": "Lung Yik Steak Chiang Rai"
+  },
+  "description": {
+    "th": "ร้านสเต็กและอาหารตะวันตกย่านท่าสุด มีสเต็กหมู ไก่ เนื้อ ปลา เบอร์เกอร์ ข้าวจานเดียว และเมนูเส้น",
+    "en": "Western-style steak shop in Tha Sut serving pork, chicken, beef, and fish steaks, burgers, rice plates, and noodles."
+  },
+  "phone": null,
+  "source": {
+    "type": "grab-screenshot",
+    "capturedOn": "2026-10-22",
+    "pricesInclude": "grab-delivery-markup",
+    "ownerConsent": {
+      "given": false,
+      "by": null,
+      "on": null
+    }
+  },
+  "menuItems": [
+    {
+      "slug": "black-pepper-pork-chop",
+      "name": {
+        "th": "พอร์คชอปพริกไทยดำ",
+        "en": "Black Pepper Pork Chop"
+      },
+      "description": {
+        "th": "พอร์คชอปหมักพริกไทยดำย่าง เสิร์ฟพร้อมเฟรนช์ฟรายส์ สลัดผัก และน้ำจิ้ม",
+        "en": "Black-pepper-marinated grilled pork chop, served with French fries, salad, and sauce."
+      },
+      "price": 179,
+      "foodType": "grills-steaks",
+      "tastes": ["savory", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "black-pepper-fried-pork-steak",
+      "name": {
+        "th": "สเต็กหมูทอดพริกไทยดำ",
+        "en": "Black Pepper Fried Pork Steak"
+      },
+      "description": {
+        "th": "หมูหมักพริกไทยดำชุบเกล็ดขนมปังทอดกรอบ เสิร์ฟพร้อมเฟรนช์ฟรายส์ สลัดผัก และน้ำจิ้ม",
+        "en": "Black-pepper pork coated in breadcrumbs and fried until crisp, served with French fries, salad, and sauce."
+      },
+      "price": 139,
+      "foodType": "grills-steaks",
+      "tastes": ["crispy", "savory"],
+      "review": null
+    },
+    {
+      "slug": "black-pepper-minced-pork-steak",
+      "name": {
+        "th": "สเต็กหมูบดพริกไทยดำ",
+        "en": "Black Pepper Minced Pork Steak"
+      },
+      "description": {
+        "th": "หมูบดปั้นเป็นแผ่นหมักพริกไทยดำย่าง เสิร์ฟพร้อมเฟรนช์ฟรายส์ สลัดผัก และน้ำจิ้ม",
+        "en": "Black-pepper minced pork patty, grilled, served with French fries, salad, and sauce."
+      },
+      "price": 109,
+      "foodType": "grills-steaks",
+      "tastes": ["savory", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "black-pepper-tender-pork-steak",
+      "name": {
+        "th": "สเต็กหมูนุ่มพริกไทยดำ",
+        "en": "Black Pepper Tender Pork Steak"
+      },
+      "description": {
+        "th": "หมูนุ่มหมักพริกไทยดำย่าง เสิร์ฟพร้อมเฟรนช์ฟรายส์ สลัดผัก และน้ำจิ้ม",
+        "en": "Tender black-pepper-marinated grilled pork, served with French fries, salad, and sauce."
+      },
+      "price": 129,
+      "foodType": "grills-steaks",
+      "tastes": ["savory", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "spicy-chicken-steak",
+      "name": {
+        "th": "สเต็กไก่สไปซี่",
+        "en": "Spicy Chicken Steak"
+      },
+      "description": {
+        "th": "สะโพกไก่หมักซอสสไปซี่ย่าง เสิร์ฟพร้อมเฟรนช์ฟรายส์ สลัดผัก และน้ำจิ้ม",
+        "en": "Chicken thigh marinated in a spicy sauce and grilled, served with French fries, salad, and sauce."
+      },
+      "price": 99,
+      "foodType": "grills-steaks",
+      "tastes": ["spicy", "savory", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "black-pepper-chicken-breast-steak",
+      "name": {
+        "th": "สเต็กอกไก่พริกไทยดำ",
+        "en": "Black Pepper Chicken Breast Steak"
+      },
+      "description": {
+        "th": "อกไก่หมักพริกไทยดำย่าง เสิร์ฟพร้อมเฟรนช์ฟรายส์ สลัดผัก และน้ำจิ้ม",
+        "en": "Black-pepper-marinated grilled chicken breast, served with French fries, salad, and sauce."
+      },
+      "price": 99,
+      "foodType": "grills-steaks",
+      "tastes": ["savory", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "fried-chicken-steak",
+      "name": {
+        "th": "สเต็กไก่ทอด",
+        "en": "Fried Chicken Steak"
+      },
+      "description": {
+        "th": "ไก่หมักพริกไทยดำชุบเกล็ดขนมปังทอดกรอบ เสิร์ฟพร้อมเฟรนช์ฟรายส์ สลัดผัก และน้ำจิ้ม",
+        "en": "Black-pepper chicken coated in breadcrumbs and fried until crisp, served with French fries, salad, and sauce."
+      },
+      "price": 119,
+      "foodType": "grills-steaks",
+      "tastes": ["crispy", "savory"],
+      "review": null
+    },
+    {
+      "slug": "sirloin-steak",
+      "name": {
+        "th": "สเต็กเนื้อเซอร์ลอย",
+        "en": "Sirloin Steak"
+      },
+      "description": {
+        "th": "เนื้อเซอร์ลอยหมักพริกไทยดำย่าง เสิร์ฟพร้อมเฟรนช์ฟรายส์ สลัดผัก และน้ำจิ้ม",
+        "en": "Black-pepper-marinated grilled sirloin, served with French fries, salad, and sauce."
+      },
+      "price": 259,
+      "foodType": "grills-steaks",
+      "tastes": ["savory", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "grilled-salmon-steak",
+      "name": {
+        "th": "สเต็กปลาแซลมอนย่าง",
+        "en": "Grilled Salmon Steak"
+      },
+      "description": {
+        "th": "ปลาแซลมอนย่าง เสิร์ฟพร้อมเฟรนช์ฟรายส์ สลัดผัก และซอส",
+        "en": "Grilled salmon served with French fries, salad, and sauce."
+      },
+      "price": 249,
+      "foodType": "grills-steaks",
+      "tastes": ["savory", "fresh-light"],
+      "review": null
+    },
+    {
+      "slug": "super-fried-fish-steak",
+      "name": {
+        "th": "สเต็กปลาทอดซุปเปอร์",
+        "en": "Super Fried Fish Steak"
+      },
+      "description": {
+        "th": "ปลาทั้งตัวชุบเกล็ดขนมปังทอดกรอบ เสิร์ฟพร้อมเฟรนช์ฟรายส์ สลัดผัก และซอส",
+        "en": "A whole fish coated in breadcrumbs and fried until crisp, served with French fries, salad, and sauce."
+      },
+      "price": 139,
+      "foodType": "grills-steaks",
+      "tastes": ["crispy", "savory"],
+      "review": null
+    },
+    {
+      "slug": "super-burger",
+      "name": {
+        "th": "ซุปเปอร์เบอร์เกอร์",
+        "en": "Super Burger"
+      },
+      "description": {
+        "th": "เบอร์เกอร์ขนมปังขาวไส้เนื้อสองชิ้น เสิร์ฟพร้อมเฟรนช์ฟรายส์ราดชีส",
+        "en": "White-bun burger with two patties, served with cheese-topped fries."
+      },
+      "price": 189,
+      "foodType": "burgers-sandwiches-wraps",
+      "tastes": ["savory", "creamy-rich"],
+      "review": null
+    },
+    {
+      "slug": "charcoal-burger",
+      "name": {
+        "th": "เบอร์เกอร์ชาโคร",
+        "en": "Charcoal Burger"
+      },
+      "description": {
+        "th": "เบอร์เกอร์ขนมปังสีดำ เลือกไส้ได้ 1 อย่าง เสิร์ฟพร้อมเฟรนช์ฟรายส์",
+        "en": "Black charcoal-bun burger with a choice of one filling, served with French fries."
+      },
+      "price": 139,
+      "foodType": "burgers-sandwiches-wraps",
+      "tastes": ["savory"],
+      "review": null
+    },
+    {
+      "slug": "original-burger",
+      "name": {
+        "th": "เบอร์เกอร์ออริจินอล",
+        "en": "Original Burger"
+      },
+      "description": {
+        "th": "เบอร์เกอร์ขนมปังขาว เลือกไส้ได้ 1 อย่าง เสิร์ฟพร้อมเฟรนช์ฟรายส์",
+        "en": "White-bun burger with a choice of one filling, served with French fries."
+      },
+      "price": 139,
+      "foodType": "burgers-sandwiches-wraps",
+      "tastes": ["savory"],
+      "review": null
+    },
+    {
+      "slug": "lung-yik-salad-wrap",
+      "name": {
+        "th": "แรปสลัดลุงหยิก",
+        "en": "Lung Yik Salad Wrap"
+      },
+      "description": {
+        "th": "แรปห่อไก่และผักสลัดสด จัดเต็มคำ",
+        "en": "A generous wrap of chicken and fresh salad vegetables."
+      },
+      "price": 164,
+      "foodType": "burgers-sandwiches-wraps",
+      "tastes": ["fresh-light", "savory"],
+      "review": null
+    },
+    {
+      "slug": "vegetable-salad",
+      "name": {
+        "th": "สลัดผัก",
+        "en": "Vegetable Salad"
+      },
+      "description": {
+        "th": "ผักสลัดสดหลายชนิด ราดน้ำสลัด โรยไข่กุ้ง",
+        "en": "Mixed fresh salad vegetables with dressing, topped with fish roe."
+      },
+      "price": 89,
+      "foodType": "salads-yum-somtam",
+      "tastes": ["fresh-light"],
+      "review": null
+    },
+    {
+      "slug": "marinated-shrimp-rice-bowl",
+      "name": {
+        "th": "ข้าวหน้ากุ้งดอง",
+        "en": "Marinated Shrimp Rice Bowl"
+      },
+      "description": {
+        "th": "กุ้งดองซอสหอมกระเทียมและพริก วางบนข้าว โรยสาหร่ายและไข่กุ้ง",
+        "en": "Soy-marinated shrimp with garlic and chili over rice, topped with seaweed and fish roe."
+      },
+      "price": 219,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "spicy", "sweet"],
+      "review": null
+    },
+    {
+      "slug": "black-pepper-fried-pork-rice",
+      "name": {
+        "th": "ข้าวหมูทอดพริกไทยดำ",
+        "en": "Black Pepper Fried Pork with Rice"
+      },
+      "description": {
+        "th": "หมูหมักพริกไทยดำทอดกรอบ เสิร์ฟพร้อมข้าวสวย สลัดผัก และน้ำจิ้ม",
+        "en": "Crispy black-pepper fried pork, served with rice, salad, and sauce."
+      },
+      "price": 149,
+      "foodType": "rice-dishes",
+      "tastes": ["crispy", "savory"],
+      "review": null
+    },
+    {
+      "slug": "fried-chicken-rice",
+      "name": {
+        "th": "ข้าวไก่ทอด",
+        "en": "Fried Chicken with Rice"
+      },
+      "description": {
+        "th": "ไก่ชุบเกล็ดขนมปังทอดกรอบ เสิร์ฟพร้อมข้าวสวย สลัดผัก และน้ำจิ้ม",
+        "en": "Crispy breaded fried chicken, served with rice, salad, and sauce."
+      },
+      "price": 139,
+      "foodType": "rice-dishes",
+      "tastes": ["crispy", "savory"],
+      "review": null
+    },
+    {
+      "slug": "fried-fish-rice",
+      "name": {
+        "th": "ข้าวปลาทอด",
+        "en": "Fried Fish with Rice"
+      },
+      "description": {
+        "th": "ปลาชุบเกล็ดขนมปังทอดกรอบ เสิร์ฟพร้อมข้าวสวย สลัดผัก และน้ำจิ้ม",
+        "en": "Crispy breaded fried fish, served with rice, salad, and sauce."
+      },
+      "price": 119,
+      "foodType": "rice-dishes",
+      "tastes": ["crispy", "savory"],
+      "review": null
+    },
+    {
+      "slug": "spicy-chicken-rice",
+      "name": {
+        "th": "ข้าวไก่สไปซี่",
+        "en": "Spicy Chicken with Rice"
+      },
+      "description": {
+        "th": "ไก่หมักซอสสไปซี่ย่าง เสิร์ฟพร้อมข้าวสวย สลัดผัก และน้ำจิ้ม",
+        "en": "Grilled chicken in a spicy marinade, served with rice, salad, and sauce."
+      },
+      "price": 119,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "savory"],
+      "review": null
+    },
+    {
+      "slug": "black-pepper-grilled-chicken-rice",
+      "name": {
+        "th": "ข้าวไก่ย่างพริกไทยดำ",
+        "en": "Black Pepper Grilled Chicken with Rice"
+      },
+      "description": {
+        "th": "ไก่หมักพริกไทยดำย่าง เสิร์ฟพร้อมข้าวสวย สลัดผัก และน้ำจิ้ม",
+        "en": "Black-pepper grilled chicken, served with rice, salad, and sauce."
+      },
+      "price": 119,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "black-pepper-minced-pork-rice",
+      "name": {
+        "th": "ข้าวหมูบดพริกไทยดำ",
+        "en": "Black Pepper Minced Pork Patty with Rice"
+      },
+      "description": {
+        "th": "หมูบดปั้นเป็นแผ่นหมักพริกไทยดำย่าง เสิร์ฟพร้อมข้าวสวย สลัดผัก และน้ำจิ้ม",
+        "en": "Grilled black-pepper minced pork patty, served with rice, salad, and sauce."
+      },
+      "price": 119,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "ham-fried-rice",
+      "name": {
+        "th": "ข้าวผัดแฮม",
+        "en": "Ham Fried Rice"
+      },
+      "description": {
+        "th": "ข้าวผัดกับแฮมและไข่ เสิร์ฟพร้อมสลัดผัก",
+        "en": "Rice stir-fried with ham and egg, served with salad."
+      },
+      "price": 99,
+      "foodType": "rice-dishes",
+      "tastes": ["savory"],
+      "review": null
+    },
+    {
+      "slug": "drunken-spaghetti-crispy-chicken",
+      "name": {
+        "th": "สปาเก็ตตี้ขี้เมาไก่กรอบ",
+        "en": "Drunken Spaghetti with Crispy Chicken"
+      },
+      "description": {
+        "th": "สปาเก็ตตี้ผัดขี้เมารสจัดจ้าน ท็อปด้วยไก่ทอดกรอบ",
+        "en": "Spicy Thai drunken-style spaghetti topped with crispy fried chicken."
+      },
+      "price": 139,
+      "foodType": "pasta",
+      "tastes": ["spicy", "crispy", "savory"],
+      "review": null
+    },
+    {
+      "slug": "ham-mushroom-cream-spaghetti",
+      "name": {
+        "th": "สปาเก็ตตี้ครีมซอสแฮมเห็ด",
+        "en": "Ham & Mushroom Cream Spaghetti"
+      },
+      "description": {
+        "th": "สปาเก็ตตี้ซอสครีมกับแฮมและเห็ด",
+        "en": "Spaghetti in a cream sauce with ham and mushrooms."
+      },
+      "price": 89,
+      "foodType": "pasta",
+      "tastes": ["creamy-rich", "savory"],
+      "review": null
+    },
+    {
+      "slug": "wai-wai-pad-cha-seafood",
+      "name": {
+        "th": "ไวไวผัดฉ่าทะเล",
+        "en": "Stir-fried Wai Wai Noodles Pad Cha with Seafood"
+      },
+      "description": {
+        "th": "บะหมี่กึ่งสำเร็จรูปไวไวผัดฉ่ากับทะเล พริก และกระชาย",
+        "en": "Wai Wai instant noodles stir-fried pad cha style with seafood, chili, and aromatic herbs."
+      },
+      "price": 109,
+      "foodType": "noodles",
+      "tastes": ["spicy", "spiced-smoky", "savory"],
+      "review": null
+    },
+    {
+      "slug": "super-mama-stir-fry",
+      "name": {
+        "th": "ซุปเปอร์มาม่าผัดลุงหยิก",
+        "en": "Lung Yik Super Stir-fried Mama Noodles"
+      },
+      "description": {
+        "th": "มาม่าผัดสูตรร้านกับแฮมและผัก ท็อปด้วยไข่ดาว",
+        "en": "House-style stir-fried Mama noodles with ham and vegetables, topped with fried eggs."
+      },
+      "price": 139,
+      "foodType": "noodles",
+      "tastes": ["savory"],
+      "review": null
+    }
+  ]
+}
