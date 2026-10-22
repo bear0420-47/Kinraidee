@@ -83,6 +83,21 @@ khang-mor-fah,korean-spicy-chicken-wrap,แร็ปไก่สไปซี่�
 khang-mor-fah,boiled-chicken-breast-salad,สลัดอกไก่ต้ม,Boiled Chicken Breast Salad,salads-yum-somtam,assets/catalog/khang-mor-fah/menus/boiled-chicken-breast-salad.png,missing
 khang-mor-fah,tuna-salad,สลัดทูน่า,Tuna Salad,salads-yum-somtam,assets/catalog/khang-mor-fah/menus/tuna-salad.png,missing
 khang-mor-fah,homemade-greek-yogurt,กรีกโยเกิร์ตโฮมเมด,Homemade Greek Yogurt,desserts,assets/catalog/khang-mor-fah/menus/homemade-greek-yogurt.png,hidden
+little-grin,teriyaki-chicken-rice,ข้าวไก่เทริยากิ,Teriyaki Chicken Rice,rice-dishes,assets/catalog/little-grin/menus/teriyaki-chicken-rice.png,missing
+little-grin,teriyaki-grilled-chicken-noodles,บะหมี่ไก่ย่างเทริยากิ,Teriyaki Grilled Chicken Noodles,noodles,assets/catalog/little-grin/menus/teriyaki-grilled-chicken-noodles.png,missing
+little-grin,teriyaki-crispy-chicken-noodles,บะหมี่ไก่กรอบเทริยากิ,Teriyaki Crispy Chicken Noodles,noodles,assets/catalog/little-grin/menus/teriyaki-crispy-chicken-noodles.png,missing
+little-grin,korean-crispy-chicken-mama,มาม่าไก่กรอบเกาหลี,Korean Crispy Chicken Mama Noodles,noodles,assets/catalog/little-grin/menus/korean-crispy-chicken-mama.png,missing
+little-grin,crispy-chicken-rice-choose-your-sauce,ข้าวไก่กรอบตามใจ,Crispy Chicken Rice with Your Choice of Sauces,rice-dishes,assets/catalog/little-grin/menus/crispy-chicken-rice-choose-your-sauce.png,missing
+little-grin,crispy-chicken-rice-korean,ข้าวไก่กรอบเกาหลี,Crispy Chicken Rice with Korean Sauce,rice-dishes,assets/catalog/little-grin/menus/crispy-chicken-rice-korean.png,missing
+little-grin,crispy-chicken-rice-korean-mayo,ข้าวไก่กรอบเกาหลีมาโย,Crispy Chicken Rice with Korean Sauce & Mayo,rice-dishes,assets/catalog/little-grin/menus/crispy-chicken-rice-korean-mayo.png,missing
+little-grin,crispy-chicken-rice-spicy-mayo,ข้าวไก่กรอบสไปซี่มาโย,Crispy Chicken Rice with Spicy Mayo,rice-dishes,assets/catalog/little-grin/menus/crispy-chicken-rice-spicy-mayo.png,missing
+little-grin,crispy-chicken-rice-cheese,ข้าวไก่กรอบชีส,Crispy Chicken Rice with Cheese Sauce,rice-dishes,assets/catalog/little-grin/menus/crispy-chicken-rice-cheese.png,missing
+little-grin,crispy-chicken-rice-korean-cheese,ข้าวไก่กรอบเกาหลี x ชีส,Crispy Chicken Rice with Korean Sauce & Cheese,rice-dishes,assets/catalog/little-grin/menus/crispy-chicken-rice-korean-cheese.png,missing
+little-grin,crispy-chicken-rice-sour-cream-onion,ข้าวไก่กรอบครีมหัวหอม,Crispy Chicken Rice with Sour Cream & Onion Sauce,rice-dishes,assets/catalog/little-grin/menus/crispy-chicken-rice-sour-cream-onion.png,missing
+little-grin,crispy-chicken-rice-sour-cream-onion-korean,ข้าวไก่กรอบครีมหัวหอม x ซอสเกาหลี,Crispy Chicken Rice with Sour Cream & Onion and Korean Sauce,rice-dishes,assets/catalog/little-grin/menus/crispy-chicken-rice-sour-cream-onion-korean.png,missing
+little-grin,crispy-chicken-rice-teriyaki,ข้าวไก่กรอบเทริยากิ,Crispy Chicken Rice with Teriyaki Sauce,rice-dishes,assets/catalog/little-grin/menus/crispy-chicken-rice-teriyaki.png,missing
+little-grin,crispy-chicken-rice-spicy-wing-powder,ข้าวไก่กรอบผงวิงค์แซ่บ,Crispy Chicken Rice with Spicy Wing Seasoning,rice-dishes,assets/catalog/little-grin/menus/crispy-chicken-rice-spicy-wing-powder.png,missing
+little-grin,crispy-chicken-rice-nori,ข้าวไก่กรอบโนริสาหร่าย,Crispy Chicken Rice with Nori Seaweed,rice-dishes,assets/catalog/little-grin/menus/crispy-chicken-rice-nori.png,missing
 lung-yik-steak,black-pepper-pork-chop,พอร์คชอปพริกไทยดำ,Black Pepper Pork Chop,grills-steaks,assets/catalog/lung-yik-steak/menus/black-pepper-pork-chop.png,missing
 lung-yik-steak,black-pepper-fried-pork-steak,สเต็กหมูทอดพริกไทยดำ,Black Pepper Fried Pork Steak,grills-steaks,assets/catalog/lung-yik-steak/menus/black-pepper-fried-pork-steak.png,missing
 lung-yik-steak,black-pepper-minced-pork-steak,สเต็กหมูบดพริกไทยดำ,Black Pepper Minced Pork Steak,grills-steaks,assets/catalog/lung-yik-steak/menus/black-pepper-minced-pork-steak.png,missing
