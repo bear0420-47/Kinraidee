@@ -1,0 +1,295 @@
+{
+  "slug": "jong-hua-a-ming",
+  "zone": "opposite-mfu",
+  "name": {
+    "th": "จงหัวอาหมิง",
+    "en": "Jong Hua A Ming"
+  },
+  "description": {
+    "th": "ร้านอาหารจีนใกล้มหาวิทยาลัยแม่ฟ้าหลวง มีข้าวราดแกงจีนทั้งแบบหนึ่งอย่างและสองอย่าง เด่นเรื่องหมูทอดรสแซ่บ",
+    "en": "Chinese restaurant near Mae Fah Luang University serving rice plates with one or two toppings, known for spicy fried pork."
+  },
+  "phone": null,
+  "source": {
+    "type": "grab-screenshot",
+    "capturedOn": "2026-10-22",
+    "pricesInclude": "grab-delivery-markup",
+    "ownerConsent": {
+      "given": false,
+      "by": null,
+      "on": null
+    }
+  },
+  "menuItems": [
+    {
+      "slug": "spicy-pork-belly-and-minced-pork-tofu-on-rice",
+      "name": {
+        "th": "สามชั้นทอดรสแซ่บ + เต้าหู้หมูสับ ราดข้าว",
+        "en": "Spicy Fried Pork Belly & Minced Pork Tofu on Rice"
+      },
+      "description": {
+        "th": "ข้าวสวยราดกับข้าวสองอย่าง หมูสามชั้นทอดคลุกพริกเกลือรสแซ่บ และเต้าหู้ผัดหมูสับ",
+        "en": "Rice topped with two dishes: crispy salt-and-chili pork belly and tofu stir-fried with minced pork."
+      },
+      "price": 110,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "crispy", "savory"],
+      "review": null
+    },
+    {
+      "slug": "spicy-pork-belly-and-tomato-egg-on-rice",
+      "name": {
+        "th": "สามชั้นทอดรสแซ่บ + มะเขือเทศผัดไข่ ราดข้าว",
+        "en": "Spicy Fried Pork Belly & Tomato Egg on Rice"
+      },
+      "description": {
+        "th": "ข้าวสวยราดกับข้าวสองอย่าง หมูสามชั้นทอดคลุกพริกเกลือรสแซ่บ และมะเขือเทศผัดไข่",
+        "en": "Rice topped with two dishes: crispy salt-and-chili pork belly and tomato stir-fried with egg."
+      },
+      "price": 110,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "crispy", "savory"],
+      "review": null
+    },
+    {
+      "slug": "spicy-pork-belly-and-eggplant-on-rice",
+      "name": {
+        "th": "สามชั้นทอดรสแซ่บ + มะเขือยาวหมูสับ ราดข้าว",
+        "en": "Spicy Fried Pork Belly & Eggplant with Minced Pork on Rice"
+      },
+      "description": {
+        "th": "ข้าวสวยราดกับข้าวสองอย่าง หมูสามชั้นทอดคลุกพริกเกลือรสแซ่บ และมะเขือยาวผัดหมูสับ",
+        "en": "Rice topped with two dishes: crispy salt-and-chili pork belly and eggplant stir-fried with minced pork."
+      },
+      "price": 110,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "crispy", "savory"],
+      "review": null
+    },
+    {
+      "slug": "spicy-pork-belly-and-bitter-melon-egg-on-rice",
+      "name": {
+        "th": "สามชั้นทอดรสแซ่บ + มะระผัดไข่ ราดข้าว",
+        "en": "Spicy Fried Pork Belly & Bitter Melon Egg on Rice"
+      },
+      "description": {
+        "th": "ข้าวสวยราดกับข้าวสองอย่าง หมูสามชั้นทอดคลุกพริกเกลือรสแซ่บ และมะระผัดไข่",
+        "en": "Rice topped with two dishes: crispy salt-and-chili pork belly and bitter melon stir-fried with egg."
+      },
+      "price": 110,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "crispy", "savory"],
+      "review": null
+    },
+    {
+      "slug": "spicy-fried-pork-and-morning-glory-on-rice",
+      "name": {
+        "th": "หมูทอดรสแซ่บ + ผัดผักบุ้ง ราดข้าว",
+        "en": "Spicy Fried Pork & Stir-fried Morning Glory on Rice"
+      },
+      "description": {
+        "th": "ข้าวสวยราดกับข้าวสองอย่าง หมูทอดคลุกพริกเกลือรสแซ่บ และผัดผักบุ้ง",
+        "en": "Rice topped with two dishes: crispy salt-and-chili fried pork and stir-fried morning glory."
+      },
+      "price": 100,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "crispy", "savory"],
+      "review": null
+    },
+    {
+      "slug": "spicy-fried-pork-and-napa-cabbage-on-rice",
+      "name": {
+        "th": "หมูทอดรสแซ่บ + ผัดผักกาดขาว ราดข้าว",
+        "en": "Spicy Fried Pork & Stir-fried Napa Cabbage on Rice"
+      },
+      "description": {
+        "th": "ข้าวสวยราดกับข้าวสองอย่าง หมูทอดคลุกพริกเกลือรสแซ่บ และผัดผักกาดขาว",
+        "en": "Rice topped with two dishes: crispy salt-and-chili fried pork and stir-fried napa cabbage."
+      },
+      "price": 100,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "crispy", "savory"],
+      "review": null
+    },
+    {
+      "slug": "eggplant-minced-pork-on-rice",
+      "name": {
+        "th": "มะเขือยาวผัดหมูสับ ราดข้าว",
+        "en": "Eggplant with Minced Pork on Rice"
+      },
+      "description": {
+        "th": "มะเขือยาวผัดกับหมูสับในซอสเข้มข้น ราดบนข้าวสวย",
+        "en": "Eggplant stir-fried with minced pork in a rich sauce, served over rice."
+      },
+      "price": 65,
+      "foodType": "rice-dishes",
+      "tastes": ["savory"],
+      "review": null
+    },
+    {
+      "slug": "bitter-melon-egg-on-rice",
+      "name": {
+        "th": "มะระผัดไข่ ราดข้าว",
+        "en": "Bitter Melon with Egg on Rice"
+      },
+      "description": {
+        "th": "มะระผัดกับไข่ รสกลมกล่อม ราดบนข้าวสวย",
+        "en": "Bitter melon stir-fried with egg, served over rice."
+      },
+      "price": 65,
+      "foodType": "rice-dishes",
+      "tastes": ["savory"],
+      "review": null
+    },
+    {
+      "slug": "tomato-egg-on-rice",
+      "name": {
+        "th": "มะเขือเทศผัดไข่ ราดข้าว",
+        "en": "Tomato with Egg on Rice"
+      },
+      "description": {
+        "th": "มะเขือเทศผัดกับไข่ รสเปรี้ยวหวานกลมกล่อม ราดบนข้าวสวย",
+        "en": "Tomato stir-fried with egg, gently sweet and tangy, served over rice."
+      },
+      "price": 65,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "sour"],
+      "review": null
+    },
+    {
+      "slug": "minced-pork-tofu-on-rice",
+      "name": {
+        "th": "เต้าหู้หมูสับ ราดข้าว",
+        "en": "Tofu with Minced Pork on Rice"
+      },
+      "description": {
+        "th": "เต้าหู้ผัดกับหมูสับในซอสแบบจีน ราดบนข้าวสวย",
+        "en": "Tofu stir-fried with minced pork in a Chinese-style sauce, served over rice."
+      },
+      "price": 65,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "potato-and-pork-on-rice",
+      "name": {
+        "th": "มันฝรั่งผัดหมู ราดข้าว",
+        "en": "Shredded Potato with Pork on Rice"
+      },
+      "description": {
+        "th": "มันฝรั่งหั่นเส้นผัดกับหมูและพริก ราดบนข้าวสวย",
+        "en": "Shredded potato stir-fried with pork and chili, served over rice."
+      },
+      "price": 65,
+      "foodType": "rice-dishes",
+      "tastes": ["savory"],
+      "review": null
+    },
+    {
+      "slug": "minced-pork-omelette-on-rice",
+      "name": {
+        "th": "ไข่เจียวหมูสับ ราดข้าว",
+        "en": "Minced Pork Omelette on Rice"
+      },
+      "description": {
+        "th": "ไข่เจียวหมูสับทอดจนหอม วางบนข้าวสวย",
+        "en": "Fluffy omelette with minced pork, served over rice."
+      },
+      "price": 55,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "crispy"],
+      "review": null
+    },
+    {
+      "slug": "chili-pork-liver-on-rice",
+      "name": {
+        "th": "ตับหมูผัดพริกสด ราดข้าว",
+        "en": "Pork Liver with Fresh Chili on Rice"
+      },
+      "description": {
+        "th": "ตับหมูผัดพริกสดและต้นหอม รสจัด ราดบนข้าวสวย",
+        "en": "Pork liver stir-fried with fresh chili and spring onion, served over rice."
+      },
+      "price": 70,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "savory"],
+      "review": null
+    },
+    {
+      "slug": "pickled-mustard-greens-pork-on-rice",
+      "name": {
+        "th": "ผักกาดดองผัดหมูสับ ราดข้าว",
+        "en": "Pickled Mustard Greens with Minced Pork on Rice"
+      },
+      "description": {
+        "th": "ผักกาดดองผัดหมูสับกับพริกแห้ง รสเปรี้ยวเค็มจัดจ้าน ราดบนข้าวสวย",
+        "en": "Pickled mustard greens stir-fried with minced pork and dried chili, served over rice."
+      },
+      "price": 70,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "sour", "savory"],
+      "review": null
+    },
+    {
+      "slug": "spicy-pork-belly-with-mushroom-on-rice",
+      "name": {
+        "th": "สามชั้นทอดเห็ด ราดข้าว",
+        "en": "Fried Pork Belly with Mushroom on Rice"
+      },
+      "description": {
+        "th": "หมูสามชั้นทอดกับเห็ดคลุกพริกเกลือ ราดบนข้าวสวย",
+        "en": "Crispy pork belly fried with mushrooms in salt and chili, served over rice."
+      },
+      "price": 80,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "crispy", "savory"],
+      "review": null
+    },
+    {
+      "slug": "spicy-fried-pork-on-rice",
+      "name": {
+        "th": "หมูทอดรสแซ่บ ราดข้าว",
+        "en": "Spicy Fried Pork on Rice"
+      },
+      "description": {
+        "th": "หมูทอดคลุกพริกเกลือรสแซ่บ ราดบนข้าวสวย",
+        "en": "Crispy pork fried with salt and chili, served over rice."
+      },
+      "price": 75,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "crispy", "savory"],
+      "review": null
+    },
+    {
+      "slug": "spicy-fried-pork-belly-on-rice",
+      "name": {
+        "th": "สามชั้นทอดรสแซ่บ ราดข้าว",
+        "en": "Spicy Fried Pork Belly on Rice"
+      },
+      "description": {
+        "th": "หมูสามชั้นทอดคลุกพริกเกลือรสแซ่บ ราดบนข้าวสวย",
+        "en": "Crispy pork belly fried with salt and chili, served over rice."
+      },
+      "price": 75,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "crispy", "savory"],
+      "review": null
+    },
+    {
+      "slug": "spicy-fried-chicken-wings-on-rice",
+      "name": {
+        "th": "ปีกไก่ทอดรสแซ่บ ราดข้าว",
+        "en": "Spicy Fried Chicken Wings on Rice"
+      },
+      "description": {
+        "th": "ปีกไก่ทอดคลุกพริกเกลือรสแซ่บ เสิร์ฟพร้อมข้าวสวย",
+        "en": "Crispy chicken wings tossed in salt and chili, served with rice."
+      },
+      "price": 75,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "crispy", "savory"],
+      "review": null
+    }
+  ]
+}

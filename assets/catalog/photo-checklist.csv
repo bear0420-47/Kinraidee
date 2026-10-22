@@ -28,6 +28,24 @@ family-kebab-halal,adana-beef-kebab,อดาน่าเคบับเนื�
 family-kebab-halal,vegetarian-falafel-plate,ฟาลาเฟลมังสวิรัติ,Vegetarian Falafel Plate,appetizers-snacks,assets/catalog/family-kebab-halal/menus/vegetarian-falafel-plate.png,missing
 family-kebab-halal,potato-samosa,ซามูซามัน,Potato Samosa,appetizers-snacks,assets/catalog/family-kebab-halal/menus/potato-samosa.png,missing
 family-kebab-halal,chicken-samosa,ซามูซาไก่,Chicken Samosa,appetizers-snacks,assets/catalog/family-kebab-halal/menus/chicken-samosa.png,missing
+jong-hua-a-ming,spicy-pork-belly-and-minced-pork-tofu-on-rice,สามชั้นทอดรสแซ่บ + เต้าหู้หมูสับ ราดข้าว,Spicy Fried Pork Belly & Minced Pork Tofu on Rice,rice-dishes,assets/catalog/jong-hua-a-ming/menus/spicy-pork-belly-and-minced-pork-tofu-on-rice.png,missing
+jong-hua-a-ming,spicy-pork-belly-and-tomato-egg-on-rice,สามชั้นทอดรสแซ่บ + มะเขือเทศผัดไข่ ราดข้าว,Spicy Fried Pork Belly & Tomato Egg on Rice,rice-dishes,assets/catalog/jong-hua-a-ming/menus/spicy-pork-belly-and-tomato-egg-on-rice.png,missing
+jong-hua-a-ming,spicy-pork-belly-and-eggplant-on-rice,สามชั้นทอดรสแซ่บ + มะเขือยาวหมูสับ ราดข้าว,Spicy Fried Pork Belly & Eggplant with Minced Pork on Rice,rice-dishes,assets/catalog/jong-hua-a-ming/menus/spicy-pork-belly-and-eggplant-on-rice.png,missing
+jong-hua-a-ming,spicy-pork-belly-and-bitter-melon-egg-on-rice,สามชั้นทอดรสแซ่บ + มะระผัดไข่ ราดข้าว,Spicy Fried Pork Belly & Bitter Melon Egg on Rice,rice-dishes,assets/catalog/jong-hua-a-ming/menus/spicy-pork-belly-and-bitter-melon-egg-on-rice.png,missing
+jong-hua-a-ming,spicy-fried-pork-and-morning-glory-on-rice,หมูทอดรสแซ่บ + ผัดผักบุ้ง ราดข้าว,Spicy Fried Pork & Stir-fried Morning Glory on Rice,rice-dishes,assets/catalog/jong-hua-a-ming/menus/spicy-fried-pork-and-morning-glory-on-rice.png,missing
+jong-hua-a-ming,spicy-fried-pork-and-napa-cabbage-on-rice,หมูทอดรสแซ่บ + ผัดผักกาดขาว ราดข้าว,Spicy Fried Pork & Stir-fried Napa Cabbage on Rice,rice-dishes,assets/catalog/jong-hua-a-ming/menus/spicy-fried-pork-and-napa-cabbage-on-rice.png,missing
+jong-hua-a-ming,eggplant-minced-pork-on-rice,มะเขือยาวผัดหมูสับ ราดข้าว,Eggplant with Minced Pork on Rice,rice-dishes,assets/catalog/jong-hua-a-ming/menus/eggplant-minced-pork-on-rice.png,missing
+jong-hua-a-ming,bitter-melon-egg-on-rice,มะระผัดไข่ ราดข้าว,Bitter Melon with Egg on Rice,rice-dishes,assets/catalog/jong-hua-a-ming/menus/bitter-melon-egg-on-rice.png,missing
+jong-hua-a-ming,tomato-egg-on-rice,มะเขือเทศผัดไข่ ราดข้าว,Tomato with Egg on Rice,rice-dishes,assets/catalog/jong-hua-a-ming/menus/tomato-egg-on-rice.png,missing
+jong-hua-a-ming,minced-pork-tofu-on-rice,เต้าหู้หมูสับ ราดข้าว,Tofu with Minced Pork on Rice,rice-dishes,assets/catalog/jong-hua-a-ming/menus/minced-pork-tofu-on-rice.png,missing
+jong-hua-a-ming,potato-and-pork-on-rice,มันฝรั่งผัดหมู ราดข้าว,Shredded Potato with Pork on Rice,rice-dishes,assets/catalog/jong-hua-a-ming/menus/potato-and-pork-on-rice.png,missing
+jong-hua-a-ming,minced-pork-omelette-on-rice,ไข่เจียวหมูสับ ราดข้าว,Minced Pork Omelette on Rice,rice-dishes,assets/catalog/jong-hua-a-ming/menus/minced-pork-omelette-on-rice.png,missing
+jong-hua-a-ming,chili-pork-liver-on-rice,ตับหมูผัดพริกสด ราดข้าว,Pork Liver with Fresh Chili on Rice,rice-dishes,assets/catalog/jong-hua-a-ming/menus/chili-pork-liver-on-rice.png,missing
+jong-hua-a-ming,pickled-mustard-greens-pork-on-rice,ผักกาดดองผัดหมูสับ ราดข้าว,Pickled Mustard Greens with Minced Pork on Rice,rice-dishes,assets/catalog/jong-hua-a-ming/menus/pickled-mustard-greens-pork-on-rice.png,missing
+jong-hua-a-ming,spicy-pork-belly-with-mushroom-on-rice,สามชั้นทอดเห็ด ราดข้าว,Fried Pork Belly with Mushroom on Rice,rice-dishes,assets/catalog/jong-hua-a-ming/menus/spicy-pork-belly-with-mushroom-on-rice.png,missing
+jong-hua-a-ming,spicy-fried-pork-on-rice,หมูทอดรสแซ่บ ราดข้าว,Spicy Fried Pork on Rice,rice-dishes,assets/catalog/jong-hua-a-ming/menus/spicy-fried-pork-on-rice.png,missing
+jong-hua-a-ming,spicy-fried-pork-belly-on-rice,สามชั้นทอดรสแซ่บ ราดข้าว,Spicy Fried Pork Belly on Rice,rice-dishes,assets/catalog/jong-hua-a-ming/menus/spicy-fried-pork-belly-on-rice.png,missing
+jong-hua-a-ming,spicy-fried-chicken-wings-on-rice,ปีกไก่ทอดรสแซ่บ ราดข้าว,Spicy Fried Chicken Wings on Rice,rice-dishes,assets/catalog/jong-hua-a-ming/menus/spicy-fried-chicken-wings-on-rice.png,missing
 khang-mor-fah,mala-chicken-wrap,แร็ปไก่ซอสหมาล่า,Mala Chicken Wrap,burgers-sandwiches-wraps,assets/catalog/khang-mor-fah/menus/mala-chicken-wrap.png,missing
 khang-mor-fah,boiled-chicken-breast-wrap,แร็ปอกไก่ต้ม,Boiled Chicken Breast Wrap,burgers-sandwiches-wraps,assets/catalog/khang-mor-fah/menus/boiled-chicken-breast-wrap.png,missing
 khang-mor-fah,tuna-wrap,แร็ปทูน่า,Tuna Wrap,burgers-sandwiches-wraps,assets/catalog/khang-mor-fah/menus/tuna-wrap.png,missing
