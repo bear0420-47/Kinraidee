@@ -1050,7 +1050,7 @@
       ],
       "name": {
         "th": "ข้าวหน้าเนื้อใบพาย + ไข่ออนเซ็น พ่นไฟ ไซส์ L",
-        "en": "Flat Iron Beef Rice Bowl with Onsen Egg with Fire Chili (L)"
+        "en": "Fire Chili Flat Iron Beef Rice Bowl with Onsen Egg (L)"
       },
       "description": {
         "th": "เนื้อใบพายมันน้อยย่างไฟ ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น เสิร์ฟพร้อมไข่ออนเซ็น 1 ฟอง",
@@ -1071,7 +1071,7 @@
       ],
       "name": {
         "th": "ข้าวหน้าเนื้อพรีเมี่ยม + ไข่ออนเซ็น พ่นไฟ ไซส์ L",
-        "en": "Premium Beef Rice Bowl with Onsen Egg with Fire Chili (L)"
+        "en": "Fire Chili Premium Beef Rice Bowl with Onsen Egg (L)"
       },
       "description": {
         "th": "เนื้อวัวสายมันย่างไฟ ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น เสิร์ฟพร้อมไข่ออนเซ็น 1 ฟอง",
@@ -1091,7 +1091,7 @@
       ],
       "name": {
         "th": "ข้าวหน้าหมูย่างทูโทน (สามชั้น+สันคอ) พ่นไฟ ไซส์ L",
-        "en": "Two-tone Pork (Belly & Neck) Rice Bowl with Fire Chili (L)"
+        "en": "Fire Chili Two-tone Pork (Belly & Neck) Rice Bowl (L)"
       },
       "description": {
         "th": "หมูสามชั้นและหมูสันคอย่างซอส ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น",
@@ -1111,7 +1111,7 @@
       ],
       "name": {
         "th": "ข้าวหน้าหมูสามชั้น พ่นไฟ ไซส์ L",
-        "en": "Pork Belly Rice Bowl with Fire Chili (L)"
+        "en": "Fire Chili Pork Belly Rice Bowl (L)"
       },
       "description": {
         "th": "หมูสามชั้นหนากำลังดีย่างซอสจนหอม ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น",
@@ -1131,7 +1131,7 @@
       ],
       "name": {
         "th": "ข้าวหน้าหมูสามชั้น พ่นไฟ ไซส์ M",
-        "en": "Pork Belly Rice Bowl with Fire Chili (M)"
+        "en": "Fire Chili Pork Belly Rice Bowl (M)"
       },
       "description": {
         "th": "หมูสามชั้นหนากำลังดีย่างซอสจนหอม ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น",
@@ -1151,7 +1151,7 @@
       ],
       "name": {
         "th": "ข้าวหน้าหมูสันคอ พ่นไฟ ไซส์ L",
-        "en": "Pork Neck Rice Bowl with Fire Chili (L)"
+        "en": "Fire Chili Pork Neck Rice Bowl (L)"
       },
       "description": {
         "th": "หมูสันคอนุ่มฉ่ำย่างซอส ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น",
@@ -1171,7 +1171,7 @@
       ],
       "name": {
         "th": "ข้าวหน้าหมูสันคอ พ่นไฟ ไซส์ M",
-        "en": "Pork Neck Rice Bowl with Fire Chili (M)"
+        "en": "Fire Chili Pork Neck Rice Bowl (M)"
       },
       "description": {
         "th": "หมูสันคอนุ่มฉ่ำย่างซอส ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น",
@@ -1191,7 +1191,7 @@
       ],
       "name": {
         "th": "ข้าวหน้าแซลม่อนย่าง พ่นไฟ",
-        "en": "Grilled Salmon Rice Bowl with Fire Chili"
+        "en": "Fire Chili Grilled Salmon Rice Bowl"
       },
       "description": {
         "th": "แซลม่อนย่างซอส ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น",
@@ -1211,7 +1211,7 @@
       ],
       "name": {
         "th": "ข้าวหน้ากุ้งย่าง พ่นไฟ",
-        "en": "Grilled Shrimp Rice Bowl with Fire Chili"
+        "en": "Fire Chili Grilled Shrimp Rice Bowl"
       },
       "description": {
         "th": "กุ้งขาวแกะเปลือกย่างซอส ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น",
@@ -1231,7 +1231,7 @@
       ],
       "name": {
         "th": "ข้าวหน้าไก่ย่าง พ่นไฟ ไซส์ L",
-        "en": "Grilled Chicken Rice Bowl with Fire Chili (L)"
+        "en": "Fire Chili Grilled Chicken Rice Bowl (L)"
       },
       "description": {
         "th": "ไก่ย่างซอสนุ่มฉ่ำ ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น",
@@ -1251,7 +1251,7 @@
       ],
       "name": {
         "th": "ข้าวหน้าไก่ย่าง พ่นไฟ ไซส์ M",
-        "en": "Grilled Chicken Rice Bowl with Fire Chili (M)"
+        "en": "Fire Chili Grilled Chicken Rice Bowl (M)"
       },
       "description": {
         "th": "ไก่ย่างซอสนุ่มฉ่ำ ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น",
@@ -1271,7 +1271,7 @@
       ],
       "name": {
         "th": "ข้าวหน้าหมูสามชั้น หม่าล่า",
-        "en": "Pork Belly Rice Bowl with Mala"
+        "en": "Mala Pork Belly Rice Bowl"
       },
       "description": {
         "th": "หมูสามชั้นหนากำลังดีย่างซอสจนหอม โรยผงหม่าล่าชาลิ้น บนข้าวญี่ปุ่น",
@@ -1291,7 +1291,7 @@
       ],
       "name": {
         "th": "ข้าวหน้าหมูสันคอ หม่าล่า",
-        "en": "Pork Neck Rice Bowl with Mala"
+        "en": "Mala Pork Neck Rice Bowl"
       },
       "description": {
         "th": "หมูสันคอนุ่มฉ่ำย่างซอส โรยผงหม่าล่าชาลิ้น บนข้าวญี่ปุ่น",
@@ -1311,7 +1311,7 @@
       ],
       "name": {
         "th": "ข้าวหน้าปลาซาบะย่าง หม่าล่า",
-        "en": "Grilled Saba Rice Bowl with Mala"
+        "en": "Mala Grilled Saba Rice Bowl"
       },
       "description": {
         "th": "ปลาซาบะชิ้นหนาย่างซอสจนผิวกรอบ โรยผงหม่าล่าชาลิ้น บนข้าวญี่ปุ่น",
@@ -1331,7 +1331,7 @@
       ],
       "name": {
         "th": "ข้าวหน้าไก่ย่าง หม่าล่า",
-        "en": "Grilled Chicken Rice Bowl with Mala"
+        "en": "Mala Grilled Chicken Rice Bowl"
       },
       "description": {
         "th": "ไก่ย่างซอสนุ่มฉ่ำ โรยผงหม่าล่าชาลิ้น บนข้าวญี่ปุ่น",
@@ -1352,7 +1352,7 @@
       ],
       "name": {
         "th": "ข้าวหน้าเนื้อพรีเมี่ยม + ไข่ออนเซ็น หม่าล่า",
-        "en": "Premium Beef Rice Bowl with Onsen Egg with Mala"
+        "en": "Mala Premium Beef Rice Bowl with Onsen Egg"
       },
       "description": {
         "th": "เนื้อวัวสายมันย่างไฟ โรยผงหม่าล่าชาลิ้น บนข้าวญี่ปุ่น เสิร์ฟพร้อมไข่ออนเซ็น 1 ฟอง",
@@ -1373,7 +1373,7 @@
       ],
       "name": {
         "th": "ข้าวหน้าเนื้อใบพาย + ไข่ออนเซ็น หม่าล่า",
-        "en": "Flat Iron Beef Rice Bowl with Onsen Egg with Mala"
+        "en": "Mala Flat Iron Beef Rice Bowl with Onsen Egg"
       },
       "description": {
         "th": "เนื้อใบพายมันน้อยย่างไฟ โรยผงหม่าล่าชาลิ้น บนข้าวญี่ปุ่น เสิร์ฟพร้อมไข่ออนเซ็น 1 ฟอง",
@@ -1393,7 +1393,7 @@
       ],
       "name": {
         "th": "ข้าวหน้ากุ้งย่าง หม่าล่า",
-        "en": "Grilled Shrimp Rice Bowl with Mala"
+        "en": "Mala Grilled Shrimp Rice Bowl"
       },
       "description": {
         "th": "กุ้งขาวแกะเปลือกย่างซอส โรยผงหม่าล่าชาลิ้น บนข้าวญี่ปุ่น",
@@ -1413,7 +1413,7 @@
       ],
       "name": {
         "th": "ข้าวหน้าแซลม่อนย่าง หม่าล่า",
-        "en": "Grilled Salmon Rice Bowl with Mala"
+        "en": "Mala Grilled Salmon Rice Bowl"
       },
       "description": {
         "th": "แซลม่อนย่างซอส โรยผงหม่าล่าชาลิ้น บนข้าวญี่ปุ่น",
