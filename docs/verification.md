@@ -1453,3 +1453,16 @@ New seed tests:
 | Admin API | Logged in as the seeded administrator: 13 restaurants and 222 menu items listed. |
 | Retiring the archived catalog | A database seeded with the archived starter catalog (3 restaurants, 9 menu items active), then seeded with the current catalog, reported `Retired 3 archived restaurants and 9 archived menu items.`: 13 of 16 restaurants and 222 of 231 menu items active, and only the new Family Kebab Halal active. A second run retired nothing and left every record unchanged. New tests cover keeping IDs the current catalog uses, skipping already-deleted records, idempotency, and that no archived ID collides with the live catalog. |
 | `pnpm verify` after the retirement change | Pass: API 72 files/570 tests; web 38 files/407 tests; builds pass. Two earlier full runs each failed 2–3 different web tests (logout and account-link tests) that pass in isolation, with no web changes since the last full pass; recorded as intermittent. The photo-copy seed test, which took 6–9 s on busy runs, now has a 30 s timeout. |
+
+## Dish photos and photo-required recommendations
+
+- Verification date: 2026-10-24 ICT. Base: `feat/catalog-source-format` (PR #92).
+
+| Check | Result |
+|---|---|
+| Photo selection | Candidates from Unsplash and Openverse (Wikimedia Commons, Flickr) were checked by eye on contact sheets against each dish name; a second, stricter audit at larger size removed unclear or near-miss photos (for example a khao kluk kapi plate offered for bacon fried rice, chicken karaage for sauce variants, a ham sandwich for the saba baguette). Result: 187 photos across 104 of the 222 visible dishes; 118 dishes have no accurate stock photo and keep the food-type icon. All 187 image links returned `200 image/*`. |
+| Wikimedia sizes | 800 px thumbnail links failed (`HTTP 400`); Commons photos now use the standard 960 px size. Covered by a test. |
+| Unsplash download reports | Queued in `pending-downloads.json` and sent with `catalog:photos report-downloads` in batches under the 50-per-hour demo limit; 48 sent, 91 queued at the time of writing. |
+| Photo required for recommendation | `availableWhere` adds `imageUrl: { not: null }`; repository tests assert it for candidates and the suggestion pool, and removing it fails 3 tests. Against the local database, all 1,584 filter combinations returned either cards or a working suggestion (200 with cards, 1,384 suggestions, all suggestions returned cards), with 0 recommended cards without a photo. |
+| Browser (375 px) | Grilled salmon steak and ข้าวราดซอสเผ็ด x2 cards showed matching photos with the `ภาพประกอบ` label; a Creative Commons photo showed its `© creator · licence` credit on the card and in the confirmation dialog. |
+| `pnpm verify` | Pass after the change (see below). |

@@ -9,10 +9,12 @@ import { budgetWhere } from './recommendations.helpers'
 
 const include = recommendationCandidate.include
 
-// Active, non-excluded items under an active Restaurant, before any condition.
+// Active, non-excluded items with a photo under an active Restaurant, before any condition.
+// Items without a photo are never recommended until one is added.
 function availableWhere(excludedIds: string[]) {
   return {
     deletedAt: null,
+    imageUrl: { not: null },
     ...(excludedIds.length > 0 ? { id: { notIn: excludedIds } } : {}),
   } satisfies Prisma.MenuItemWhereInput
 }
