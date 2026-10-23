@@ -1,4 +1,11 @@
 ﻿restaurant,menuItem,nameTh,nameEn,foodType,expectedPath,status
+charoen-rot,fried-chicken-rice-jaew,ข้าวไก่ทอด น้ำจิ้มแจ่ว,Fried Chicken Rice with Jaew Dip,rice-dishes,assets/catalog/charoen-rot/menus/fried-chicken-rice-jaew.png,missing
+charoen-rot,fried-pork-rice-jaew,ข้าวหมูทอด น้ำจิ้มแจ่ว,Fried Pork Rice with Jaew Dip,rice-dishes,assets/catalog/charoen-rot/menus/fried-pork-rice-jaew.png,missing
+charoen-rot,fried-chicken-rice-sauce,ข้าวไก่ทอด ราดซอส,Fried Chicken Rice with Sauce,rice-dishes,assets/catalog/charoen-rot/menus/fried-chicken-rice-sauce.png,missing
+charoen-rot,fried-pork-rice-sauce,ข้าวหมูทอด ราดซอส,Fried Pork Rice with Sauce,rice-dishes,assets/catalog/charoen-rot/menus/fried-pork-rice-sauce.png,missing
+charoen-rot,spicy-fried-chicken-yum-rice,ข้าวยำไก่แซ่บ,Spicy Fried Chicken Salad with Rice,rice-dishes,assets/catalog/charoen-rot/menus/spicy-fried-chicken-yum-rice.png,missing
+charoen-rot,spicy-fried-pork-yum-rice,ข้าวยำหมูทอดแซ่บ,Spicy Fried Pork Salad with Rice,rice-dishes,assets/catalog/charoen-rot/menus/spicy-fried-pork-yum-rice.png,missing
+charoen-rot,two-fried-eggs-rice,ข้าวไข่ดาว 2 ฟอง,Rice with Two Fried Eggs,rice-dishes,assets/catalog/charoen-rot/menus/two-fried-eggs-rice.png,missing
 chef-toy,snow-white-crispy-chicken-rice,ข้าว+ไก่กรอบสโนว์ไวท์,Crispy Chicken with Snow White Sauce on Rice,rice-dishes,assets/catalog/chef-toy/menus/snow-white-crispy-chicken-rice.png,missing
 chef-toy,thai-basil-mackerel-rice,ข้าว+กะเพราปลาทู,Thai Basil Mackerel on Rice,rice-dishes,assets/catalog/chef-toy/menus/thai-basil-mackerel-rice.png,missing
 chef-toy,crispy-chicken-satay-rice,ข้าว+สะเต๊ะไก่กรอบ,Crispy Chicken with Satay Sauce on Rice,rice-dishes,assets/catalog/chef-toy/menus/crispy-chicken-satay-rice.png,missing
