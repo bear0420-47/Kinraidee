@@ -123,6 +123,19 @@ gindon,premium-beef-rice-bowl-mala,ข้าวหน้าเนื้อพร
 gindon,flat-iron-beef-rice-bowl-mala,ข้าวหน้าเนื้อใบพาย + ไข่ออนเซ็น หม่าล่า,Mala Flat Iron Beef Rice Bowl with Onsen Egg,rice-dishes,assets/catalog/gindon/menus/flat-iron-beef-rice-bowl-mala.png,missing
 gindon,shrimp-rice-bowl-mala,ข้าวหน้ากุ้งย่าง หม่าล่า,Mala Grilled Shrimp Rice Bowl,rice-dishes,assets/catalog/gindon/menus/shrimp-rice-bowl-mala.png,missing
 gindon,salmon-rice-bowl-mala,ข้าวหน้าแซลม่อนย่าง หม่าล่า,Mala Grilled Salmon Rice Bowl,rice-dishes,assets/catalog/gindon/menus/salmon-rice-bowl-mala.png,missing
+heng-heng-suki,suki-sauce-rice-bowl,ข้าวหน้าน้ำจิ้มสุกี้,Suki Sauce Rice Bowl,rice-dishes,assets/catalog/heng-heng-suki/menus/suki-sauce-rice-bowl.png,missing
+heng-heng-suki,dry-suki-vegetable,สุกี้แห้งผัก,Dry Sukiyaki with Vegetables,noodles,assets/catalog/heng-heng-suki/menus/dry-suki-vegetable.png,missing
+heng-heng-suki,dry-suki-chicken,สุกี้แห้งไก่,Dry Sukiyaki with Chicken,noodles,assets/catalog/heng-heng-suki/menus/dry-suki-chicken.png,missing
+heng-heng-suki,dry-suki-pork,สุกี้แห้งหมู,Dry Sukiyaki with Pork,noodles,assets/catalog/heng-heng-suki/menus/dry-suki-pork.png,missing
+heng-heng-suki,dry-suki-bacon,สุกี้แห้งเบคอน,Dry Sukiyaki with Bacon,noodles,assets/catalog/heng-heng-suki/menus/dry-suki-bacon.png,missing
+heng-heng-suki,dry-suki-crispy-squid,สุกี้แห้งหมึกกรอบ,Dry Sukiyaki with Crispy Squid,noodles,assets/catalog/heng-heng-suki/menus/dry-suki-crispy-squid.png,missing
+heng-heng-suki,dry-suki-seafood,สุกี้แห้งทะเล,Dry Sukiyaki with Seafood,noodles,assets/catalog/heng-heng-suki/menus/dry-suki-seafood.png,missing
+heng-heng-suki,dry-suki-shrimp,สุกี้แห้งกุ้ง,Dry Sukiyaki with Shrimp,noodles,assets/catalog/heng-heng-suki/menus/dry-suki-shrimp.png,missing
+heng-heng-suki,dry-suki-mixed,สุกี้แห้งรวมมิตร,Dry Sukiyaki with Mixed Meats,noodles,assets/catalog/heng-heng-suki/menus/dry-suki-mixed.png,missing
+heng-heng-suki,suki-soup-mixed,สุกี้น้ำรวมมิตร,Sukiyaki Soup with Mixed Meats,curries-soups,assets/catalog/heng-heng-suki/menus/suki-soup-mixed.png,missing
+heng-heng-suki,suki-soup-crispy-squid,สุกี้น้ำหมึกกรอบ,Sukiyaki Soup with Crispy Squid,curries-soups,assets/catalog/heng-heng-suki/menus/suki-soup-crispy-squid.png,missing
+heng-heng-suki,suki-soup-squid,สุกี้น้ำหมึก,Sukiyaki Soup with Squid,curries-soups,assets/catalog/heng-heng-suki/menus/suki-soup-squid.png,missing
+heng-heng-suki,suki-soup-shrimp,สุกี้น้ำกุ้ง,Sukiyaki Soup with Shrimp,curries-soups,assets/catalog/heng-heng-suki/menus/suki-soup-shrimp.png,missing
 jong-hua-a-ming,spicy-pork-belly-and-minced-pork-tofu-on-rice,สามชั้นทอดรสแซ่บ + เต้าหู้หมูสับ ราดข้าว,Spicy Fried Pork Belly & Minced Pork Tofu on Rice,rice-dishes,assets/catalog/jong-hua-a-ming/menus/spicy-pork-belly-and-minced-pork-tofu-on-rice.png,missing
 jong-hua-a-ming,spicy-pork-belly-and-tomato-egg-on-rice,สามชั้นทอดรสแซ่บ + มะเขือเทศผัดไข่ ราดข้าว,Spicy Fried Pork Belly & Tomato Egg on Rice,rice-dishes,assets/catalog/jong-hua-a-ming/menus/spicy-pork-belly-and-tomato-egg-on-rice.png,missing
 jong-hua-a-ming,spicy-pork-belly-and-eggplant-on-rice,สามชั้นทอดรสแซ่บ + มะเขือยาวหมูสับ ราดข้าว,Spicy Fried Pork Belly & Eggplant with Minced Pork on Rice,rice-dishes,assets/catalog/jong-hua-a-ming/menus/spicy-pork-belly-and-eggplant-on-rice.png,missing
