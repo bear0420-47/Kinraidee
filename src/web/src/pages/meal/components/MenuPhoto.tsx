@@ -1,5 +1,6 @@
 import { ImagePreview } from '@/components/ImagePreview'
 import { FoodTypeIcon } from '@/lib/foodTypeIcons'
+import { creativeCommonsCredit, isStockPhoto } from '@/lib/photoCredits'
 import type { RecommendationItem } from '@/schemas/meal/recommendationSchemas'
 
 type MenuPhotoProps = {
@@ -7,12 +8,6 @@ type MenuPhotoProps = {
   // Sizes, positions, and frames the photo area, such as a card's top strip or a dialog's
   // 4:3 panel.
   className: string
-}
-
-// Catalog stock photos are hotlinked from Unsplash; they illustrate the dish rather than show
-// the restaurant's own plate, so they carry a label.
-export function isStockPhoto(url: string) {
-  return url.startsWith('https://images.unsplash.com/')
 }
 
 // A menu photo, cropped to fill. Without one (or when it cannot load), a same-size panel with
@@ -24,6 +19,8 @@ export function MenuPhoto({ item, className }: MenuPhotoProps) {
       {label}
     </span>
   )
+
+  const credit = item.imageUrl ? creativeCommonsCredit(item.imageUrl) : null
 
   return (
     <div
@@ -43,6 +40,16 @@ export function MenuPhoto({ item, className }: MenuPhotoProps) {
         <span className="absolute bottom-2 left-2 rounded-xs bg-paper/80 px-2 py-0.5 text-small font-bold text-cream">
           ภาพประกอบ
         </span>
+      ) : null}
+      {credit ? (
+        <a
+          href={credit.pageUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="absolute right-2 bottom-2 max-w-[60%] truncate rounded-xs bg-paper/80 px-2 py-0.5 text-eyebrow text-cream underline"
+        >
+          © {credit.creator} · {credit.license}
+        </a>
       ) : null}
     </div>
   )

@@ -7,6 +7,21 @@ import {
 } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
+const COMMONS_PHOTO =
+  'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Pad_see_ew.jpg/800px-Pad_see_ew.jpg'
+
+vi.mock('@/generated/photoCredits.json', () => ({
+  default: {
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Pad_see_ew.jpg/800px-Pad_see_ew.jpg':
+      {
+        creator: 'stu_spivack',
+        license: 'CC BY-SA 2.0',
+        pageUrl: 'https://commons.wikimedia.org/w/index.php?curid=2923094',
+        source: 'Wikimedia Commons',
+      },
+  },
+}))
+
 import {
   RECOMMENDATION_STORAGE_KEY,
   type Suggestion,
@@ -230,6 +245,23 @@ describe('Revealing', () => {
     expect(
       screen.getByRole('link', { name: 'Unsplash' }).getAttribute('href'),
     ).toBe('https://unsplash.com/?utm_source=kinraidee&utm_medium=referral')
+  })
+
+  it('credits the creator and licence of a Creative Commons photo on its card', async () => {
+    const commons = { ...krapao, imageUrl: COMMONS_PHOTO }
+    fakeShuffleApi({ results: [{ items: [commons] }] })
+    const { user } = renderApp('/meal')
+    await shuffleCards(user)
+    await revealCard(user, 1)
+
+    const [card] = cards()
+    expect(within(card!).getByText('ภาพประกอบ')).toBeTruthy()
+    const credit = within(card!).getByRole('link', {
+      name: '© stu_spivack · CC BY-SA 2.0',
+    })
+    expect(credit.getAttribute('href')).toBe(
+      'https://commons.wikimedia.org/w/index.php?curid=2923094',
+    )
   })
 
   it('animates the reveal only when motion is allowed and names every state in text', async () => {

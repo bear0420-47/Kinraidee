@@ -7,10 +7,14 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import {
   applySelection,
   cardImageUrl,
+  openverseCardUrl,
+  readOpenverseCached,
   reportDownloads,
   reviewPage,
+  searchOpenverse,
   searchPhotos,
   toCandidates,
+  toOpenverseCandidates,
   type Candidate,
 } from './catalog-photos'
 
@@ -236,5 +240,120 @@ describe('reviewPage', () => {
     expect(html).toContain('Carbonara &#60;b&#62;')
     expect(html).toContain('value="id2" checked')
     expect(html).not.toContain('value="id1" checked')
+  })
+})
+
+const openverseResult = (overrides: Record<string, unknown> = {}) => ({
+  id: 'f808ad9e-4b19-4f06-b26a-98edc5551243',
+  title: 'Pad see ew',
+  url: 'https://upload.wikimedia.org/wikipedia/commons/a/ab/Pad_see_ew.jpg',
+  thumbnail:
+    'https://api.openverse.org/v1/images/f808ad9e-4b19-4f06-b26a-98edc5551243/thumb/',
+  creator: 'stu_spivack',
+  creator_url: 'https://www.flickr.com/people/35034346243@N01',
+  license: 'by-sa',
+  license_version: '2.0',
+  license_url: 'https://creativecommons.org/licenses/by-sa/2.0/',
+  foreign_landing_url:
+    'https://commons.wikimedia.org/w/index.php?curid=2923094',
+  source: 'wikimedia',
+  width: 2560,
+  ...overrides,
+})
+
+describe('Openverse', () => {
+  it('maps Wikimedia and Flickr results to credited 800 px photos', () => {
+    const [commons, flickr] = toOpenverseCandidates({
+      results: [
+        openverseResult(),
+        openverseResult({
+          id: 'fd98b7c6-e749-4f93-90b8-40f37bf5a090',
+          url: 'https://live.staticflickr.com/4017/4634396904_6181062e9b_b.jpg',
+          source: 'flickr',
+          license: 'by',
+          width: 1024,
+        }),
+      ],
+    })
+    expect(commons!.photo).toEqual({
+      url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Pad_see_ew.jpg/800px-Pad_see_ew.jpg',
+      openverseId: 'f808ad9e-4b19-4f06-b26a-98edc5551243',
+      source: 'wikimedia',
+      title: 'Pad see ew',
+      creator: 'stu_spivack',
+      creatorUrl: 'https://www.flickr.com/people/35034346243@N01',
+      license: 'by-sa',
+      licenseVersion: '2.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by-sa/2.0/',
+      pageUrl: 'https://commons.wikimedia.org/w/index.php?curid=2923094',
+    })
+    expect(flickr!.photo.url).toBe(
+      'https://live.staticflickr.com/4017/4634396904_6181062e9b_c.jpg',
+    )
+  })
+
+  it('drops other sources and licences that forbid changes or commercial use', () => {
+    expect(
+      toOpenverseCandidates({
+        results: [
+          openverseResult({ source: 'stocksnap' }),
+          openverseResult({ license: 'by-nd' }),
+          openverseResult({ license: 'by-nc' }),
+        ],
+      }),
+    ).toEqual([])
+  })
+
+  it('keeps a small Commons image at its own size', () => {
+    expect(
+      openverseCardUrl(
+        'https://upload.wikimedia.org/wikipedia/commons/a/ab/Small.jpg',
+        640,
+      ),
+    ).toBe('https://upload.wikimedia.org/wikipedia/commons/a/ab/Small.jpg')
+  })
+
+  it('searches with commercial-and-modification licences and a user agent', async () => {
+    const cacheDirectory = await mkdtemp(path.join(tmpdir(), 'kinraidee-ov-'))
+    try {
+      const fetchImpl = vi.fn(async (_url: URL | string, _init?: RequestInit) =>
+        Response.json({ results: [openverseResult()] }),
+      )
+      await searchOpenverse({
+        queries: { 'pad-see-ew': 'pad see ew' },
+        fetchImpl: fetchImpl as unknown as typeof fetch,
+        cacheDirectory,
+        log: () => {},
+      })
+      const [url, init] = fetchImpl.mock.calls[0]!
+      const params = new URL(url).searchParams
+      expect(params.get('license_type')).toBe('commercial,modification')
+      expect(params.get('source')).toBe('wikimedia,flickr')
+      expect(init?.headers).toMatchObject({
+        'User-Agent': expect.stringContaining('Kinraidee'),
+      })
+      expect(
+        (await readOpenverseCached('pad-see-ew', cacheDirectory))?.[0]
+          ?.openverseId,
+      ).toBe('f808ad9e-4b19-4f06-b26a-98edc5551243')
+    } finally {
+      await rm(cacheDirectory, { recursive: true, force: true })
+    }
+  })
+
+  it('applies an Openverse pick without reporting it to Unsplash', () => {
+    const [ov] = toOpenverseCandidates({ results: [openverseResult()] })
+    const { pools, chosen } = applySelection(
+      {},
+      {
+        'pad-see-ew': {
+          query: 'pad see ew',
+          ids: ['f808ad9e-4b19-4f06-b26a-98edc5551243', 'id1'],
+        },
+      },
+      { 'pad-see-ew': [ov!, candidate(1)] },
+    )
+    expect(pools['pad-see-ew']!.photos[0]).toEqual(ov!.photo)
+    expect(chosen.map(({ unsplashId }) => unsplashId)).toEqual(['id1'])
   })
 })

@@ -320,7 +320,8 @@ export function MealPage() {
             className="rounded-xs font-bold underline"
           >
             Unsplash
-          </a>
+          </a>{' '}
+          และภาพ Creative Commons จาก Wikimedia Commons และ Flickr
         </p>
       ) : null}
 

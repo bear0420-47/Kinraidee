@@ -12,6 +12,7 @@ import {
   runCatalogBuild,
   serializeChecklist,
   serializeCredits,
+  serializeWebCredits,
   stableId,
   stableImageKey,
   type RestaurantFile,
@@ -502,6 +503,70 @@ describe('stock photo pools', () => {
   })
 })
 
+describe('Creative Commons photos', () => {
+  const commons = {
+    url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/P.jpg/800px-P.jpg',
+    openverseId: 'f808ad9e-4b19-4f06-b26a-98edc5551243',
+    source: 'wikimedia' as const,
+    title: 'Pad see ew',
+    creator: 'stu|spivack',
+    creatorUrl: null,
+    license: 'by-sa' as const,
+    licenseVersion: '2.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by-sa/2.0/',
+    pageUrl: 'https://commons.wikimedia.org/w/index.php?curid=2923094',
+  }
+  const pools = {
+    'pad-kra-pao': { query: 'pad see ew', photos: [commons, stock(1)] },
+  }
+
+  it('accepts a pool mixing Unsplash and Creative Commons photos and credits both', () => {
+    const result = buildCatalog({
+      taxonomy,
+      restaurants: [withPhoto('a-shop', 'pad-kra-pao')],
+      photos: new Set(),
+      photoPools: pools,
+    })
+    expect(result.seed.menuItems[0]!.imageUrl).toBe(commons.url)
+    const credits = serializeCredits(pools, result.checklist)
+    expect(credits).toContain(
+      '| pad-kra-pao | stu\\|spivack | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/) | [Wikimedia Commons](https://commons.wikimedia.org/w/index.php?curid=2923094) |',
+    )
+    expect(JSON.parse(serializeWebCredits(pools, result.checklist))).toEqual({
+      [commons.url]: {
+        creator: 'stu|spivack',
+        license: 'CC BY-SA 2.0',
+        pageUrl: commons.pageUrl,
+        source: 'Wikimedia Commons',
+      },
+      [stock(1).url]: {
+        creator: 'Photographer 1',
+        license: 'Unsplash License',
+        pageUrl: stock(1).pageUrl,
+        source: 'Unsplash',
+      },
+    })
+  })
+
+  it.each([
+    ['another host', { url: 'https://example.com/p.jpg' }],
+    ['a licence that forbids changes', { license: 'by-nd' }],
+  ])('rejects %s', (_case, change) => {
+    const problems = problemsOf(() =>
+      buildCatalog({
+        taxonomy,
+        restaurants: [file(restaurant())],
+        photos: new Set(),
+        photoPools: {
+          'pad-kra-pao': { query: 'q', photos: [{ ...commons, ...change }] },
+        },
+      }),
+    )
+    expect(problems).toHaveLength(1)
+    expect(problems[0]).toMatch(/^photos\.json: pad-kra-pao\.photos\.0/)
+  })
+})
+
 describe('photo checklist', () => {
   it('quotes cells with commas or quotes and starts with a UTF-8 byte-order mark', () => {
     const text = serializeChecklist([
@@ -546,7 +611,14 @@ describe('committed catalog source', () => {
     const seedPath = path.join(directory, 'catalog.seed.json')
     const checklistPath = path.join(directory, 'photo-checklist.csv')
     const creditsPath = path.join(directory, 'PHOTO-CREDITS.md')
-    const options = { seedPath, checklistPath, creditsPath, write: () => {} }
+    const webCreditsPath = path.join(directory, 'photoCredits.json')
+    const options = {
+      seedPath,
+      checklistPath,
+      creditsPath,
+      webCreditsPath,
+      write: () => {},
+    }
     try {
       await runCatalogBuild(options)
       expect(await readFile(checklistPath, 'utf8')).toMatch(
@@ -555,6 +627,12 @@ describe('committed catalog source', () => {
       await expect(
         runCatalogBuild({ ...options, check: true }),
       ).resolves.toBeDefined()
+
+      await writeFile(webCreditsPath, '{"stale": true}')
+      await expect(
+        runCatalogBuild({ ...options, check: true }),
+      ).rejects.toThrow('photoCredits.json is out of date')
+      await runCatalogBuild(options)
 
       await writeFile(seedPath, '{}')
       await expect(

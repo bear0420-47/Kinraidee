@@ -9,3 +9,4 @@ src/api/dist/
 docs/03-implementation/openapi.json
 src/api/prisma/data/catalog.seed.json
 src/web/src/api/openapiTypes.ts
+src/web/src/generated/
