@@ -262,7 +262,7 @@ const openverseResult = (overrides: Record<string, unknown> = {}) => ({
 })
 
 describe('Openverse', () => {
-  it('maps Wikimedia and Flickr results to credited 800 px photos', () => {
+  it('maps Wikimedia and Flickr results to credited, card-sized photos at sizes the hosts serve', () => {
     const [commons, flickr] = toOpenverseCandidates({
       results: [
         openverseResult(),
@@ -276,7 +276,7 @@ describe('Openverse', () => {
       ],
     })
     expect(commons!.photo).toEqual({
-      url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Pad_see_ew.jpg/800px-Pad_see_ew.jpg',
+      url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Pad_see_ew.jpg/960px-Pad_see_ew.jpg',
       openverseId: 'f808ad9e-4b19-4f06-b26a-98edc5551243',
       source: 'wikimedia',
       title: 'Pad see ew',

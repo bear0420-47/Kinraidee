@@ -210,13 +210,17 @@ export type AnyCandidate = Candidate | OpenverseCandidate
 const candidateId = (candidate: AnyCandidate) =>
   'openverseId' in candidate ? candidate.openverseId : candidate.unsplashId
 
-// An 800 px rendition: Wikimedia Commons serves sized thumbnails, Flickr uses size suffixes.
+// Wikimedia Commons only serves standard thumbnail widths (250, 330, 500, 960, 1280…),
+// so Commons photos use 960 px; Flickr's `_c` size suffix is 800 px.
+const COMMONS_WIDTH = 960
+
+// A card-sized rendition of a Commons or Flickr photo.
 export function openverseCardUrl(url: string, width?: number | null) {
   const commons = url.match(
     /^https:\/\/upload\.wikimedia\.org\/wikipedia\/commons\/(\w\/\w\w)\/([^/]+\.(?:jpe?g|png))$/i,
   )
-  if (commons && (width ?? 801) > 800) {
-    return `https://upload.wikimedia.org/wikipedia/commons/thumb/${commons[1]}/${commons[2]}/800px-${commons[2]}`
+  if (commons && (width ?? COMMONS_WIDTH + 1) > COMMONS_WIDTH) {
+    return `https://upload.wikimedia.org/wikipedia/commons/thumb/${commons[1]}/${commons[2]}/${COMMONS_WIDTH}px-${commons[2]}`
   }
   return url.replace(/_[bhko]\.jpg$/, '_c.jpg')
 }
@@ -514,15 +518,43 @@ async function main(argv: string[]) {
       ]
     }
     const { pools: next, chosen } = applySelection(pools, selection, candidates)
-    await reportDownloads(chosen, accessKey())
     await writeFile(photoPoolsPath, `${JSON.stringify(next, null, 2)}\n`)
+    const pending = await readJson<string[]>('pending-downloads.json', [])
+    const queued = [
+      ...new Set([
+        ...pending,
+        ...chosen.map(({ downloadLocation }) => downloadLocation),
+      ]),
+    ]
+    await writeFile(
+      path.join(photoSearchDirectory, 'pending-downloads.json'),
+      JSON.stringify(queued, null, 2),
+    )
     process.stdout.write(
-      `Wrote ${Object.keys(next).length} photo pools (${chosen.length} photos reported to Unsplash). Run catalog:build next.\n`,
+      `Wrote ${Object.keys(next).length} photo pools; ${queued.length} Unsplash download reports queued. Run catalog:build, then catalog:photos report-downloads hourly until none are left.\n`,
+    )
+    return
+  }
+  // Unsplash counts download reports against the same hourly limit, so they go in batches.
+  if (command === 'report-downloads') {
+    const pending = await readJson<string[]>('pending-downloads.json', [])
+    const batch = pending.slice(0, HOURLY_REQUEST_LIMIT)
+    await reportDownloads(
+      batch.map((downloadLocation) => ({ downloadLocation }) as Candidate),
+      accessKey(),
+    )
+    const left = pending.slice(batch.length)
+    await writeFile(
+      path.join(photoSearchDirectory, 'pending-downloads.json'),
+      JSON.stringify(left, null, 2),
+    )
+    process.stdout.write(
+      `Reported ${batch.length} downloads to Unsplash; ${left.length} left.\n`,
     )
     return
   }
   throw new Error(
-    'Usage: catalog:photos search | search-openverse | apply <selection.json>',
+    'Usage: catalog:photos search | search-openverse | apply <selection.json> | report-downloads',
   )
 }
 
