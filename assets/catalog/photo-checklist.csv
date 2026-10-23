@@ -1,4 +1,62 @@
 ﻿restaurant,menuItem,nameTh,nameEn,foodType,expectedPath,status
+chef-toy,snow-white-crispy-chicken-rice,ข้าว+ไก่กรอบสโนว์ไวท์,Crispy Chicken with Snow White Sauce on Rice,rice-dishes,assets/catalog/chef-toy/menus/snow-white-crispy-chicken-rice.png,missing
+chef-toy,thai-basil-mackerel-rice,ข้าว+กะเพราปลาทู,Thai Basil Mackerel on Rice,rice-dishes,assets/catalog/chef-toy/menus/thai-basil-mackerel-rice.png,missing
+chef-toy,crispy-chicken-satay-rice,ข้าว+สะเต๊ะไก่กรอบ,Crispy Chicken with Satay Sauce on Rice,rice-dishes,assets/catalog/chef-toy/menus/crispy-chicken-satay-rice.png,missing
+chef-toy,spicy-cheese-crispy-chicken-fried-rice,ข้าวผัดไก่กรอบสไปซ์ชีส,Spicy Cheese Crispy Chicken Fried Rice,rice-dishes,assets/catalog/chef-toy/menus/spicy-cheese-crispy-chicken-fried-rice.png,missing
+chef-toy,fish-sauce-pork-belly-rice,ข้าว+สามชั้นทอดน้ำปลา,Fish Sauce Fried Pork Belly on Rice,rice-dishes,assets/catalog/chef-toy/menus/fish-sauce-pork-belly-rice.png,missing
+chef-toy,black-mala-crispy-chicken-mama,มาม่าดำมาเลย์หม่าล่าไก่กรอบ,Black Malay Mala Mama Noodles with Crispy Chicken,noodles,assets/catalog/chef-toy/menus/black-mala-crispy-chicken-mama.png,missing
+chef-toy,pan-fried-macaroni,ผัดมักกะโรนี,Pan-fried Macaroni,pasta,assets/catalog/chef-toy/menus/pan-fried-macaroni.png,missing
+chef-toy,thai-basil-pork-spaghetti,สปาเกตตี้กะเพราหมูสับ,Spicy Thai Basil Spaghetti with Ground Pork,pasta,assets/catalog/chef-toy/menus/thai-basil-pork-spaghetti.png,missing
+chef-toy,drunken-crispy-chicken-spaghetti,สปาเกตตี้ขี้เมาไก่กรอบ,Drunken Spaghetti with Crispy Chicken,pasta,assets/catalog/chef-toy/menus/drunken-crispy-chicken-spaghetti.png,missing
+chef-toy,crispy-chicken-bolognese,โบโลเนสไก่กรอบ,Bolognese with Crispy Chicken,pasta,assets/catalog/chef-toy/menus/crispy-chicken-bolognese.png,missing
+chef-toy,mala-crispy-chicken-spaghetti,สปาเกตตี้หม่าล่าไก่กรอบ,Mala Spaghetti with Crispy Chicken,pasta,assets/catalog/chef-toy/menus/mala-crispy-chicken-spaghetti.png,missing
+chef-toy,chow-mein,ผัดเฉาหมิ่น,Chow Mein,noodles,assets/catalog/chef-toy/menus/chow-mein.png,missing
+chef-toy,spicy-vermicelli-pork-balls,หมี่คลุกลูกชิ้นหมู,Spicy Mixed Rice Vermicelli with Pork Balls,noodles,assets/catalog/chef-toy/menus/spicy-vermicelli-pork-balls.png,missing
+chef-toy,tom-yum-mama-jumbo-pork-balls,ผัดมาม่าต้มยำลูกชิ้นจัมโบ้,Stir-fried Tom Yum Mama with Jumbo Pork Balls,noodles,assets/catalog/chef-toy/menus/tom-yum-mama-jumbo-pork-balls.png,missing
+chef-toy,noodles-tomato-sauce-minced-pork,ก๋วยเตี๋ยวหมูสับซอสมะเขือเทศ,Pan-fried Noodles with Minced Pork in Tomato Sauce,noodles,assets/catalog/chef-toy/menus/noodles-tomato-sauce-minced-pork.png,missing
+chef-toy,rad-na,ราดหน้า,Rad Na,noodles,assets/catalog/chef-toy/menus/rad-na.png,missing
+chef-toy,carbonara,คาโบนาร่า,Carbonara,pasta,assets/catalog/chef-toy/menus/carbonara.png,missing
+chef-toy,pan-fried-flat-noodles-chicken,ก๋วยเตี๋ยวคั่วไก่,Pan-fried Flat Noodles with Chicken,noodles,assets/catalog/chef-toy/menus/pan-fried-flat-noodles-chicken.png,missing
+chef-toy,minced-pork-bolognese,โบโลเนสหมูสับ,Minced Pork Bolognese,pasta,assets/catalog/chef-toy/menus/minced-pork-bolognese.png,missing
+chef-toy,pad-see-ew,ผัดซีอิ๊ว,Pad See Ew,noodles,assets/catalog/chef-toy/menus/pad-see-ew.png,missing
+chef-toy,tom-yum-mama-crispy-pork,ผัดมาม่าทรงเครื่องต้มยำ,Stir-fried Tom Yum Mama with Crispy Pork,noodles,assets/catalog/chef-toy/menus/tom-yum-mama-crispy-pork.png,missing
+chef-toy,basil-bamboo-shoot-pork-rice,กะเพราหน่อไม้หมูสับ ราดข้าว,Spicy Thai Basil with Bamboo Shoots on Rice,rice-dishes,assets/catalog/chef-toy/menus/basil-bamboo-shoot-pork-rice.png,missing
+chef-toy,omelette-fried-egg-rice,ข้าวดาวเจียว,Omelette and Fried Egg on Rice,rice-dishes,assets/catalog/chef-toy/menus/omelette-fried-egg-rice.png,missing
+chef-toy,crispy-pork-curry-paste-rice,พริกแกงหมูกรอบ ราดข้าว,Crispy Pork in Curry Paste on Rice,rice-dishes,assets/catalog/chef-toy/menus/crispy-pork-curry-paste-rice.png,missing
+chef-toy,curry-powder-chicken-fried-egg-rice,ข้าว+ไก่ผัดผงกะหรี่+ไข่ดาว,Curry Powder Chicken with Fried Egg on Rice,rice-dishes,assets/catalog/chef-toy/menus/curry-powder-chicken-fried-egg-rice.png,missing
+chef-toy,thai-basil-crispy-pork-rice,ข้าว+กะเพราหมูกรอบ,Thai Basil with Crispy Pork on Rice,rice-dishes,assets/catalog/chef-toy/menus/thai-basil-crispy-pork-rice.png,missing
+chef-toy,salt-chili-chicken-sausage-rice,คั่วเกลือไส้กรอกไก่ ราดข้าว,Hot & Spicy Chicken Sausage on Rice,rice-dishes,assets/catalog/chef-toy/menus/salt-chili-chicken-sausage-rice.png,missing
+chef-toy,prik-khing-crispy-chicken-rice,พริกขิงไก่กรอบ ราดข้าว,Prik Khing Crispy Chicken on Rice,rice-dishes,assets/catalog/chef-toy/menus/prik-khing-crispy-chicken-rice.png,missing
+chef-toy,panang-pork-rice,ข้าว+พะแนงหมู,Panang Pork Curry with Rice,rice-dishes,assets/catalog/chef-toy/menus/panang-pork-rice.png,missing
+chef-toy,panang-chicken-rice,ข้าว+พะแนงไก่,Panang Chicken Curry with Rice,rice-dishes,assets/catalog/chef-toy/menus/panang-chicken-rice.png,missing
+chef-toy,basil-pork-balls-crackling-rice,ข้าว+กะเพราลูกชิ้นหมูกากเจียว,Thai Basil Pork Balls with Crackling on Rice,rice-dishes,assets/catalog/chef-toy/menus/basil-pork-balls-crackling-rice.png,missing
+chef-toy,thai-basil-crispy-chicken-rice,ข้าว+กะเพราไก่กรอบ,Thai Basil with Crispy Chicken on Rice,rice-dishes,assets/catalog/chef-toy/menus/thai-basil-crispy-chicken-rice.png,missing
+chef-toy,spicy-mixed-rice-fried-pork,ข้าวยำหมูทอด,Spicy Herb Mixed Rice with Fried Pork,rice-dishes,assets/catalog/chef-toy/menus/spicy-mixed-rice-fried-pork.png,missing
+chef-toy,sweet-sour-crispy-chicken-rice,ข้าว+ผัดเปรี้ยวหวานไก่กรอบ,Sweet & Sour Crispy Chicken on Rice,rice-dishes,assets/catalog/chef-toy/menus/sweet-sour-crispy-chicken-rice.png,missing
+chef-toy,crispy-chicken-larb-rice,ข้าว+ลาบไก่กรอบ,Crispy Chicken Larb with Rice,rice-dishes,assets/catalog/chef-toy/menus/crispy-chicken-larb-rice.png,missing
+chef-toy,mala-crispy-chicken-rice,ข้าว+หม่าล่าไก่กรอบ,Mala Crispy Chicken with Rice,rice-dishes,assets/catalog/chef-toy/menus/mala-crispy-chicken-rice.png,missing
+chef-toy,hamburg-rice,ข้าวแฮมเบิร์ก,Hamburg Rice,rice-dishes,assets/catalog/chef-toy/menus/hamburg-rice.png,missing
+chef-toy,salt-chili-ground-pork-rice,ข้าว+หมูสับคั่วพริกเกลือ,Spicy Salt & Chili Ground Pork on Rice,rice-dishes,assets/catalog/chef-toy/menus/salt-chili-ground-pork-rice.png,missing
+chef-toy,garlic-ground-pork-fried-egg-rice,ข้าว+กระเทียมหมูสับ+ไข่ดาว,Garlic Ground Pork with Fried Egg on Rice,rice-dishes,assets/catalog/chef-toy/menus/garlic-ground-pork-fried-egg-rice.png,missing
+chef-toy,broccoli-shrimp-rice,ข้าว+ผัดบร็อคโคลีกุ้ง,Stir-fried Broccoli with Shrimp on Rice,rice-dishes,assets/catalog/chef-toy/menus/broccoli-shrimp-rice.png,missing
+chef-toy,cabbage-pork-crackling-rice,ข้าว+กะหล่ำคั่วกากหมู,Stir-fried Cabbage with Pork Crackling on Rice,rice-dishes,assets/catalog/chef-toy/menus/cabbage-pork-crackling-rice.png,missing
+chef-toy,salt-chili-crispy-pork-rice,ข้าว+หมูกรอบคั่วพริกเกลือ,Spicy Salt & Chili Crispy Pork on Rice,rice-dishes,assets/catalog/chef-toy/menus/salt-chili-crispy-pork-rice.png,missing
+chef-toy,thai-basil-fried-egg-rice,ข้าวกะเพราไข่ดาว,Thai Basil with Fried Egg on Rice,rice-dishes,assets/catalog/chef-toy/menus/thai-basil-fried-egg-rice.png,missing
+chef-toy,cashew-crispy-chicken-rice,ข้าว+ไก่กรอบผัดเม็ดมะม่วง,Cashew Nut Crispy Chicken on Rice,rice-dishes,assets/catalog/chef-toy/menus/cashew-crispy-chicken-rice.png,missing
+chef-toy,isan-larb-rice,ลาบอีสาน+ข้าว,Isan Larb with Rice,rice-dishes,assets/catalog/chef-toy/menus/isan-larb-rice.png,missing
+chef-toy,maggi-pork-fried-rice,ข้าวผัดหมูแม๊กกี้,Fried Rice with Pork in Maggi Sauce,rice-dishes,assets/catalog/chef-toy/menus/maggi-pork-fried-rice.png,missing
+chef-toy,chicken-sausage-fried-rice,ข้าวผัดไส้กรอกไก่,Fried Rice with Chicken Sausage,rice-dishes,assets/catalog/chef-toy/menus/chicken-sausage-fried-rice.png,missing
+chef-toy,shrimp-fried-rice,ข้าวผัดกุ้ง,Fried Rice with Shrimp,rice-dishes,assets/catalog/chef-toy/menus/shrimp-fried-rice.png,missing
+chef-toy,sweet-pork-fried-rice,ข้าวผัดหมูหวาน,Fried Rice with Sweet Pork,rice-dishes,assets/catalog/chef-toy/menus/sweet-pork-fried-rice.png,missing
+chef-toy,chinese-sausage-fried-rice,ข้าวผัดกุนเชียง,Fried Rice with Chinese Sausage,rice-dishes,assets/catalog/chef-toy/menus/chinese-sausage-fried-rice.png,missing
+chef-toy,combo-pork-chicken-crackling-fried-rice,ข้าวผัดหมูไก่กากเจียว,"Combo Fried Rice with Pork, Chicken & Crackling",rice-dishes,assets/catalog/chef-toy/menus/combo-pork-chicken-crackling-fried-rice.png,missing
+chef-toy,rot-fai-fried-rice,ข้าวผัดรถไฟ,Rot Fai Fried Rice,rice-dishes,assets/catalog/chef-toy/menus/rot-fai-fried-rice.png,missing
+chef-toy,mala-crispy-chicken-fried-rice,ข้าวผัดหม่าล่าไก่กรอบ,Mala Fried Rice with Crispy Chicken,rice-dishes,assets/catalog/chef-toy/menus/mala-crispy-chicken-fried-rice.png,missing
+chef-toy,bacon-fried-rice,ข้าวผัดเบคอน,Fried Rice with Bacon,rice-dishes,assets/catalog/chef-toy/menus/bacon-fried-rice.png,missing
+chef-toy,lemon-tea,ชามะนาว,Lemon Tea,drinks,assets/catalog/chef-toy/menus/lemon-tea.png,hidden
+chef-toy,red-syrup-lime,แดงมะนาว,Red Syrup Lime Soda,drinks,assets/catalog/chef-toy/menus/red-syrup-lime.png,hidden
+chef-toy,iced-cocoa,โกโก้,Iced Cocoa,drinks,assets/catalog/chef-toy/menus/iced-cocoa.png,hidden
+chef-toy,pink-milk,นมชมพู,Pink Milk,drinks,assets/catalog/chef-toy/menus/pink-milk.png,hidden
 family-kebab-halal,adana-beef-kebab-wrap,อดาน่าเคบับแรปเนื้อ,Adana Beef Kebab Wrap,burgers-sandwiches-wraps,assets/catalog/family-kebab-halal/menus/adana-beef-kebab-wrap.png,missing
 family-kebab-halal,shish-kebab-liver-wrap,ชิชเคบับแรปตับ,Liver Shish Kebab Wrap,burgers-sandwiches-wraps,assets/catalog/family-kebab-halal/menus/shish-kebab-liver-wrap.png,missing
 family-kebab-halal,grilled-saba-wrap,แรปปลาซาบะย่าง,Grilled Saba Fish Wrap,burgers-sandwiches-wraps,assets/catalog/family-kebab-halal/menus/grilled-saba-wrap.png,missing
