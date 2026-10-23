@@ -172,6 +172,7 @@ Approved — full-app build plan updated through 2026-09-28 decisions. Implement
   - The taxonomy grows to fit Thai dishes: new food types `noodles`, `pizza-flatbread`, `curries-soups`, `salads-yum-somtam`, `grills-steaks`, `hotpot-bbq`, `desserts`, and `drinks`, and new tastes `sweet` and `sour`. Existing zones, food types, and tastes keep their CUIDs, so saved preferences keep working.
   - `desserts` and `drinks` are marked `hidden`: their records stay in the source files but the build leaves those food types and their menu items out of the generated seed, so they never reach the database or the meal flow until the flag is removed.
   - The previous 3 restaurants and 9 menu items are archived, not deleted: the seed moves to `src/api/prisma/data/archive/catalog.seed.2026-10-06.json` and their photos to `assets/catalog/_archive/`. The archive is also the fixture for the seed tests, so their counts no longer depend on the live catalog. Until the first new restaurant is added, the catalog may have no restaurants; the seed then creates only the administrator and the taxonomy.
+  - The seed soft-deletes (`deletedAt`) any archived restaurant or menu item a database seeded earlier still has active, unless the current catalog uses the same ID, so old databases match the current catalog without being wiped. Favorites and history that point at those records are kept (human approver's decision, 2026-10-23).
 
 ## Evidence Expected
 

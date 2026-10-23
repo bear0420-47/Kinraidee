@@ -181,7 +181,7 @@ Never commit real administrator credentials. Supply production values through th
 3. Run `pnpm --filter api catalog:build`. It validates every file, refuses to build while a menu item still has a `review` note, regenerates `catalog.seed.json` and the photo checklist, and prints which photos are missing or match no dish.
 4. Run `pnpm --filter api prisma db seed` to load the changes into the local database.
 
-Never rename a restaurant or menu slug after it has been seeded: IDs are derived from slugs, so a rename creates a new record. Keep source screenshots out of the repository; the git-ignored `menu-inbox/` folder at the repository root is for them. The seed never deletes records missing from the file, so to see only the current catalog, seed a new empty database.
+Never rename a restaurant or menu slug after it has been seeded: IDs are derived from slugs, so a rename creates a new record. Keep source screenshots out of the repository; the git-ignored `menu-inbox/` folder at the repository root is for them. The seed never removes records missing from the file. It does soft-delete the archived starter catalog (3 restaurants, 9 menu items) when an older database still has it active, so re-seeding an existing database shows only the current catalog.
 
 ## 7. Run Verification
 

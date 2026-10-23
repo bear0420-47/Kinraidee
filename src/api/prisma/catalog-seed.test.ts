@@ -7,20 +7,18 @@ import type { Prisma } from '@prisma/client'
 import { describe, expect, it, vi } from 'vitest'
 
 import {
+  archivedCatalogUrl,
   catalogAssetsDirectory,
   copyCatalogImages,
   formatCatalogSeedSummary,
   loadCatalogSeed,
+  retireArchivedCatalog,
   seedCatalog,
 } from './catalog-seed'
 import { catalogSeedSchema, type CatalogSeed } from './seedSchemas'
 
 // The archived starter catalog is the fixture: its records and photos never change, so
 // these counts stay fixed however the live catalog grows.
-const archivedCatalogUrl = new URL(
-  './data/archive/catalog.seed.2026-10-06.json',
-  import.meta.url,
-)
 const archivedAssetsDirectory = path.join(catalogAssetsDirectory, '_archive')
 const loadArchivedCatalog = () => loadCatalogSeed(archivedCatalogUrl)
 
@@ -398,7 +396,8 @@ describe('catalog photos', () => {
     } finally {
       await rm(uploads, { recursive: true, force: true })
     }
-  })
+    // Copies and compares 12 large photos, which can pass 5 s on a busy full test run.
+  }, 30_000)
 
   it('stops when a photo file is missing', async () => {
     const catalog = await loadArchivedCatalog()
@@ -422,5 +421,92 @@ describe('catalog photos', () => {
     expect(result.error?.issues.map(({ path }) => path.join('.'))).toEqual([
       'menuItems.0.image.key',
     ])
+  })
+})
+
+describe('retiring the archived catalog', () => {
+  function softDeleteDelegate(
+    records: Map<string, { deletedAt: Date | null }>,
+  ) {
+    return {
+      updateMany: vi.fn(
+        async ({
+          where,
+          data,
+        }: {
+          where: { id: { in: string[] }; deletedAt: null }
+          data: { deletedAt: Date }
+        }) => {
+          let count = 0
+          for (const id of where.id.in) {
+            const record = records.get(id)
+            if (record && record.deletedAt === null) {
+              record.deletedAt = data.deletedAt
+              count += 1
+            }
+          }
+          return { count }
+        },
+      ),
+    }
+  }
+
+  it('soft-deletes archived records still active, keeps ones the current catalog uses, and is idempotent', async () => {
+    const archived = await loadArchivedCatalog()
+    const kept = archived.menuItems[0]!
+    const current: CatalogSeed = {
+      ...structuredClone(archived),
+      restaurants: [],
+      menuItems: [structuredClone(kept)],
+    }
+    const alreadyDeleted = new Date('2026-10-01T00:00:00.000Z')
+    const restaurants = new Map(
+      archived.restaurants.map(({ id }) => [
+        id,
+        { deletedAt: null as Date | null },
+      ]),
+    )
+    const menuItems = new Map(
+      archived.menuItems.map(({ id }) => [
+        id,
+        { deletedAt: null as Date | null },
+      ]),
+    )
+    menuItems.get(archived.menuItems[1]!.id)!.deletedAt = alreadyDeleted
+    const transaction = {
+      restaurant: softDeleteDelegate(restaurants),
+      menuItem: softDeleteDelegate(menuItems),
+    } as unknown as Prisma.TransactionClient
+    const now = new Date('2026-10-23T00:00:00.000Z')
+
+    await expect(
+      retireArchivedCatalog(transaction, archived, current, now),
+    ).resolves.toEqual({ restaurants: 3, menuItems: 7 })
+    expect(menuItems.get(kept.id)!.deletedAt).toBeNull()
+    expect(menuItems.get(archived.menuItems[1]!.id)!.deletedAt).toBe(
+      alreadyDeleted,
+    )
+    expect(
+      [...restaurants.values()].every(({ deletedAt }) => deletedAt === now),
+    ).toBe(true)
+
+    await expect(
+      retireArchivedCatalog(transaction, archived, current, now),
+    ).resolves.toEqual({ restaurants: 0, menuItems: 0 })
+  })
+
+  it('never retires a record of the current live catalog', async () => {
+    const archived = await loadArchivedCatalog()
+    const live = await loadCatalogSeed()
+    const liveIds = new Set([
+      ...live.restaurants.map(({ id }) => id),
+      ...live.menuItems.map(({ id }) => id),
+    ])
+
+    expect(
+      [...archived.restaurants, ...archived.menuItems].filter(({ id }) =>
+        liveIds.has(id),
+      ),
+    ).toEqual([])
   })
 })
