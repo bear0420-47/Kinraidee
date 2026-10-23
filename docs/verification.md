@@ -1437,4 +1437,17 @@ New seed tests:
 | Deliberate regressions | Including hidden dishes, ignoring review notes, finding only PNG photos, not reporting unmatched photos, menu IDs ignoring the restaurant, a `--check` that never fails, and accepting an unknown zone each fail the tests; files restored. |
 | `pnpm verify` | Pass. API: 72 files/568 tests; web: 38 files/407 tests; builds pass. |
 | Prettier `--end-of-line auto` and `git diff --check` | Pass for changed files (`plan.md` keeps its existing table warnings from `main`). |
-| Fresh-database seed | Not run: Docker Desktop's engine did not start on this machine during verification. To be run before the PR is merged. |
+| Fresh-database seed | Superseded by the full-catalog check below. |
+
+### Full catalog (13 restaurants), 2026-10-23
+
+- Restaurants added from Grab screenshots: Family Kebab Halal, Khang Mor Fah, Jong Hua A Ming, GINDON, Lung Yik Steak, Little Grin, Chef Toy, Sandwich Juseyo, Lao Ta Mala, Charoen Rot, Heng Heng Suki, Chor Charoen Phanich, Yang Hai MFU. Kept only complete single-person dishes; left out กับข้าว, sharing platters, unavailable, cut-off, unlisted, and ambiguous items; merged duplicates; stored regular prices instead of temporary Grab promotions.
+
+| Check | Result |
+|---|---|
+| Data audit | 229 source dishes (222 visible, 7 hidden desserts and drinks); every dish has Thai and English names and descriptions; prices 25–299; no open review notes. |
+| `pnpm verify` (after merging `origin/main`) | Pass. API 72 files/568 tests; web 38 files/407 tests; builds pass. `catalog:build --check` passes. |
+| Seed into the empty local `kinraidee` database | `migrate deploy` then `db seed`: 766 records and links created (13 restaurants, 222 menu items, 510 taste links, 10 food types, 8 tastes, 3 zones). A second run reports 766 unchanged. No dessert or drink menu items reached the database. |
+| Every filter combination via `POST /api/recommendations` | 1,584 combinations: 277 return dishes, 1,307 return a no-match suggestion, and every suggestion returns dishes when applied. No errors and no duplicate cards. |
+| Browser | The meal flow lists the 10 visible food types and 8 tastes; ฿50–100 + เผ็ด + เมนูข้าว + ตรงข้ามมหาวิทยาลัย shuffled three cards from three different restaurants, each showing the no-photo state. |
+| Admin API | Logged in as the seeded administrator: 13 restaurants and 222 menu items listed. |
