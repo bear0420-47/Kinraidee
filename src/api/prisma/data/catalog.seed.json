@@ -301,6 +301,20 @@
       },
       "phone": null,
       "imageUrl": null
+    },
+    {
+      "id": "cf2ck82pt60ua01f4xmbde9cg",
+      "zoneId": "c8gds70havtzwmks5lhd2caul",
+      "name": {
+        "th": "แซนด์วิชไส้ทะลัก จูเซโย",
+        "en": "Sandwich Juseyo"
+      },
+      "description": {
+        "th": "ร้านแซนด์วิชไข่ข้นสไตล์เกาหลีย่านท่าสุด เลือกไส้ได้เอง มีบรันช์และสลัด",
+        "en": "Korean-style scrambled egg sandwich shop in Tha Sut with build-your-own fillings, brunch, and salads."
+      },
+      "phone": null,
+      "imageUrl": null
     }
   ],
   "menuItems": [
@@ -3757,6 +3771,140 @@
         "en": "House-style stir-fried Mama noodles with ham and vegetables, topped with fried eggs."
       },
       "price": 139,
+      "imageUrl": null
+    },
+    {
+      "id": "cdmmxjrrqahpdwpr3zpqe3dfb",
+      "restaurantId": "cf2ck82pt60ua01f4xmbde9cg",
+      "foodTypeId": "cebaq98hdcaj27drszj1uzz4r",
+      "tasteIds": [
+        "c1spiyrw91ifmryner9y1bvb4",
+        "cahxbgiqa0hxlfer1dw6itmz1"
+      ],
+      "name": {
+        "th": "แซนด์วิชเลือกไส้เอง 2 ไส้",
+        "en": "Make-Your-Own Sandwich (2 Fillings)"
+      },
+      "description": {
+        "th": "แซนด์วิชเกาหลีไส้ไข่ข้น ผักสด และไส้ที่เลือกเอง 2 อย่าง",
+        "en": "Korean-style sandwich with fluffy scrambled egg, fresh vegetables, and two fillings of your choice."
+      },
+      "price": 50,
+      "imageUrl": null
+    },
+    {
+      "id": "c2pgckib7fqqt0b7sb96llnqa",
+      "restaurantId": "cf2ck82pt60ua01f4xmbde9cg",
+      "foodTypeId": "cebaq98hdcaj27drszj1uzz4r",
+      "tasteIds": [
+        "c1spiyrw91ifmryner9y1bvb4",
+        "cahxbgiqa0hxlfer1dw6itmz1"
+      ],
+      "name": {
+        "th": "แซนด์วิชเลือกไส้เอง 4 ไส้",
+        "en": "Make-Your-Own Sandwich (4 Fillings)"
+      },
+      "description": {
+        "th": "แซนด์วิชเกาหลีไส้ไข่ข้น ผักสด และไส้ที่เลือกเอง 4 อย่าง",
+        "en": "Korean-style sandwich with fluffy scrambled egg, fresh vegetables, and four fillings of your choice."
+      },
+      "price": 65,
+      "imageUrl": null
+    },
+    {
+      "id": "cutxp93opa4zz76ay49f5qwzi",
+      "restaurantId": "cf2ck82pt60ua01f4xmbde9cg",
+      "foodTypeId": "cebaq98hdcaj27drszj1uzz4r",
+      "tasteIds": [
+        "c12yme2yu2wne82ugvfce7wfw",
+        "cyymbgka0mellnr53f78fh44j",
+        "c1spiyrw91ifmryner9y1bvb4"
+      ],
+      "name": {
+        "th": "แซนด์วิชไก่น้ำพริกเผา",
+        "en": "Chicken Chilli Paste Sandwich"
+      },
+      "description": {
+        "th": "แซนด์วิชเกาหลีไส้ไข่ข้น อกไก่ผัดน้ำพริกเผา ชีส และผักสด",
+        "en": "Korean-style sandwich with fluffy scrambled egg, chicken breast in Thai chilli paste, cheese, and fresh vegetables."
+      },
+      "price": 65,
+      "imageUrl": null
+    },
+    {
+      "id": "cmfjlp9gizholl7joow203xz0",
+      "restaurantId": "cf2ck82pt60ua01f4xmbde9cg",
+      "foodTypeId": "cebaq98hdcaj27drszj1uzz4r",
+      "tasteIds": [
+        "c12yme2yu2wne82ugvfce7wfw",
+        "cyymbgka0mellnr53f78fh44j",
+        "c1spiyrw91ifmryner9y1bvb4"
+      ],
+      "name": {
+        "th": "แซนด์วิชเห็ดน้ำพริกเผา",
+        "en": "Mushroom Chilli Paste Sandwich"
+      },
+      "description": {
+        "th": "แซนด์วิชเกาหลีไส้ไข่ข้น เห็ดโคนขาวผัดน้ำพริกเผา ชีส และผักสด",
+        "en": "Korean-style sandwich with fluffy scrambled egg, mushrooms in Thai chilli paste, cheese, and fresh vegetables."
+      },
+      "price": 65,
+      "imageUrl": null
+    },
+    {
+      "id": "co33nk3b38oq14bkla3pbw0z2",
+      "restaurantId": "cf2ck82pt60ua01f4xmbde9cg",
+      "foodTypeId": "cebaq98hdcaj27drszj1uzz4r",
+      "tasteIds": [
+        "c1spiyrw91ifmryner9y1bvb4",
+        "cahxbgiqa0hxlfer1dw6itmz1"
+      ],
+      "name": {
+        "th": "แซนด์วิชเบคอนชีส",
+        "en": "Bacon Cheese Sandwich"
+      },
+      "description": {
+        "th": "แซนด์วิชเกาหลีไส้ไข่ข้น เบคอน ไส้กรอก ชีส และผักสด",
+        "en": "Korean-style sandwich with fluffy scrambled egg, bacon, sausage, cheese, and fresh vegetables."
+      },
+      "price": 65,
+      "imageUrl": null
+    },
+    {
+      "id": "cssc7ik1m14sp452ashfk057u",
+      "restaurantId": "cf2ck82pt60ua01f4xmbde9cg",
+      "foodTypeId": "cebaq98hdcaj27drszj1uzz4r",
+      "tasteIds": [
+        "c1spiyrw91ifmryner9y1bvb4",
+        "c3lg0r5rrv15qvznx1tilwoy4"
+      ],
+      "name": {
+        "th": "บรันช์ขนมปังธัญพืชคราฟท์คอร์น",
+        "en": "Kraftkorn Whole Grain Brunch"
+      },
+      "description": {
+        "th": "ขนมปังธัญพืชไฟเบอร์สูงน้ำตาลต่ำ ปิ้งกรอบ ท็อปไข่ข้นและผัก",
+        "en": "Toasted high-fibre, low-sugar whole grain bread topped with scrambled egg and greens."
+      },
+      "price": 95,
+      "imageUrl": null
+    },
+    {
+      "id": "ceuxjo6ppf2g8wk18viimt5mx",
+      "restaurantId": "cf2ck82pt60ua01f4xmbde9cg",
+      "foodTypeId": "c36i8m2qy4mrs8qoal5slid5i",
+      "tasteIds": [
+        "c3lg0r5rrv15qvznx1tilwoy4"
+      ],
+      "name": {
+        "th": "ทีรามิสุสลัด",
+        "en": "Tiramisu Salad"
+      },
+      "description": {
+        "th": "สลัดผักถ้วย 300 มล. เลือกไส้โปรตีนได้ 5 อย่าง",
+        "en": "A 300 ml salad bowl with five protein fillings of your choice."
+      },
+      "price": 55,
       "imageUrl": null
     }
   ]
