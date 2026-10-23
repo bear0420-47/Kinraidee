@@ -11,6 +11,7 @@ import {
   readCatalogSource,
   runCatalogBuild,
   serializeChecklist,
+  serializeCredits,
   stableId,
   stableImageKey,
   type RestaurantFile,
@@ -337,6 +338,168 @@ describe('buildCatalog', () => {
   })
 })
 
+const pexels = (id: number) => ({
+  url: `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?w=800`,
+  pexelsId: id,
+  photographer: `Photographer ${id}`,
+  photographerUrl: `https://www.pexels.com/@p${id}`,
+  pageUrl: `https://www.pexels.com/photo/${id}/`,
+})
+
+function withPhoto(
+  slug: string,
+  photo: string,
+  extra: Record<string, unknown> = {},
+) {
+  const data = restaurant({ slug, ...extra })
+  data.menuItems = data.menuItems.map((item) => ({ ...item, photo }))
+  return file(data, slug)
+}
+
+describe('stock photo pools', () => {
+  const pools = {
+    'pad-kra-pao': { query: 'pad kra pao', photos: [pexels(1), pexels(2)] },
+  }
+
+  it('gives each restaurant its own fixed photo from the pool and wraps after it', () => {
+    const run = () =>
+      buildCatalog({
+        taxonomy,
+        restaurants: [
+          withPhoto('c-shop', 'pad-kra-pao'),
+          withPhoto('a-shop', 'pad-kra-pao'),
+          withPhoto('b-shop', 'pad-kra-pao'),
+        ],
+        photos: new Set(),
+        photoPools: pools,
+      })
+    const urlOf = (seed: ReturnType<typeof run>['seed'], shop: string) =>
+      seed.menuItems.find(
+        ({ restaurantId }) => restaurantId === stableId(`restaurant:${shop}`),
+      )!.imageUrl
+
+    const { seed } = run()
+    expect(urlOf(seed, 'a-shop')).toBe(pexels(1).url)
+    expect(urlOf(seed, 'b-shop')).toBe(pexels(2).url)
+    expect(urlOf(seed, 'c-shop')).toBe(pexels(1).url)
+    // The same input always gives the same photos.
+    expect(run().seed).toEqual(seed)
+  })
+
+  it('gives one restaurant’s dishes with the same key (size variants) one photo', () => {
+    const base = restaurant()
+    const data = {
+      ...base,
+      menuItems: ['kra-pao-m', 'kra-pao-l'].map((slug) => ({
+        ...base.menuItems[0]!,
+        slug,
+        photo: 'pad-kra-pao',
+      })),
+    }
+    const { seed } = buildCatalog({
+      taxonomy,
+      restaurants: [file(data)],
+      photos: new Set(),
+      photoPools: pools,
+    })
+    expect(seed.menuItems.map(({ imageUrl }) => imageUrl)).toEqual([
+      pexels(1).url,
+      pexels(1).url,
+    ])
+  })
+
+  it('lets a dish’s own photo file win over the pool', () => {
+    const { seed, checklist } = buildCatalog({
+      taxonomy,
+      restaurants: [withPhoto('krua-pa-noi', 'pad-kra-pao')],
+      photos: new Set(['krua-pa-noi/menus/pad-kra-pao-moo.jpg']),
+      photoPools: pools,
+    })
+    expect(seed.menuItems[0]).toMatchObject({
+      imageUrl: null,
+      image: { asset: 'krua-pa-noi/menus/pad-kra-pao-moo.jpg' },
+    })
+    expect(checklist[0]).toMatchObject({
+      photoKey: 'pad-kra-pao',
+      photoSource: 'local',
+    })
+  })
+
+  it('reports keys without a pool, empty pools, and unused pools', () => {
+    const { seed, report, checklist } = buildCatalog({
+      taxonomy,
+      restaurants: [
+        withPhoto('a-shop', 'no-pool-yet'),
+        withPhoto('b-shop', 'no-match'),
+      ],
+      photos: new Set(),
+      photoPools: { ...pools, 'no-match': { query: 'x', photos: [] } },
+    })
+    expect(seed.menuItems.every(({ imageUrl }) => imageUrl === null)).toBe(true)
+    expect(report).toMatchObject({
+      stockPhotos: 0,
+      keysWithoutPool: ['no-pool-yet'],
+      keysWithoutStockMatch: ['no-match'],
+      unusedPools: ['pad-kra-pao'],
+    })
+    expect(checklist[0]!.photoSource).toBe('none')
+  })
+
+  it.each([
+    [
+      'a non-Pexels link',
+      { ...pexels(1), url: 'https://example.com/a.jpg' },
+      'url',
+    ],
+    [
+      'a missing photographer',
+      { ...pexels(1), photographer: '' },
+      'photographer',
+    ],
+  ])('rejects %s in photos.json', (_case, photo, field) => {
+    const problems = problemsOf(() =>
+      buildCatalog({
+        taxonomy,
+        restaurants: [file(restaurant())],
+        photos: new Set(),
+        photoPools: { 'pad-kra-pao': { query: 'q', photos: [photo] } },
+      }),
+    )
+    expect(problems).toHaveLength(1)
+    expect(problems[0]).toMatch(
+      new RegExp(`^photos.json: pad-kra-pao.photos.0.${field}:`),
+    )
+  })
+
+  it('rejects a pool of more than five photos', () => {
+    const problems = problemsOf(() =>
+      buildCatalog({
+        taxonomy,
+        restaurants: [file(restaurant())],
+        photos: new Set(),
+        photoPools: {
+          'pad-kra-pao': { query: 'q', photos: [1, 2, 3, 4, 5, 6].map(pexels) },
+        },
+      }),
+    )
+    expect(problems[0]).toMatch(/^photos.json: pad-kra-pao.photos:/)
+  })
+
+  it('credits every stock photo a visible dish uses', () => {
+    const result = buildCatalog({
+      taxonomy,
+      restaurants: [withPhoto('a-shop', 'pad-kra-pao')],
+      photos: new Set(),
+      photoPools: pools,
+    })
+    const credits = serializeCredits(pools, result.checklist)
+    expect(credits).toContain(
+      '| pad-kra-pao | [Photographer 1](https://www.pexels.com/@p1) |',
+    )
+    expect(credits).toContain('[provided by Pexels](https://www.pexels.com)')
+  })
+})
+
 describe('photo checklist', () => {
   it('quotes cells with commas or quotes and starts with a UTF-8 byte-order mark', () => {
     const text = serializeChecklist([
@@ -348,6 +511,8 @@ describe('photo checklist', () => {
         foodType: 'rice-dishes',
         expectedPath: 'assets/catalog/a/menus/b.png',
         status: 'missing',
+        photoKey: 'b',
+        photoSource: 'none',
       },
     ])
 
@@ -378,7 +543,8 @@ describe('committed catalog source', () => {
     const directory = await mkdtemp(path.join(tmpdir(), 'kinraidee-catalog-'))
     const seedPath = path.join(directory, 'catalog.seed.json')
     const checklistPath = path.join(directory, 'photo-checklist.csv')
-    const options = { seedPath, checklistPath, write: () => {} }
+    const creditsPath = path.join(directory, 'PHOTO-CREDITS.md')
+    const options = { seedPath, checklistPath, creditsPath, write: () => {} }
     try {
       await runCatalogBuild(options)
       expect(await readFile(checklistPath, 'utf8')).toMatch(

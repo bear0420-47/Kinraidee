@@ -9,6 +9,12 @@ type MenuPhotoProps = {
   className: string
 }
 
+// Catalog stock photos come from the Pexels CDN; they illustrate the dish rather than show
+// the restaurant's own plate, so they carry a label.
+export function isStockPhoto(url: string) {
+  return url.startsWith('https://images.pexels.com/')
+}
+
 // A menu photo, cropped to fill. Without one (or when it cannot load), a same-size panel with
 // the food-type icon keeps the layout steady. Decorative: the menu name sits next to it.
 export function MenuPhoto({ item, className }: MenuPhotoProps) {
@@ -20,7 +26,9 @@ export function MenuPhoto({ item, className }: MenuPhotoProps) {
   )
 
   return (
-    <div className={`overflow-hidden border-paper bg-canvas-soft ${className}`}>
+    <div
+      className={`relative overflow-hidden border-paper bg-canvas-soft ${className}`}
+    >
       {item.imageUrl ? (
         <ImagePreview
           url={item.imageUrl}
@@ -31,6 +39,11 @@ export function MenuPhoto({ item, className }: MenuPhotoProps) {
       ) : (
         placeholder('ไม่มีรูปเมนู')
       )}
+      {item.imageUrl && isStockPhoto(item.imageUrl) ? (
+        <span className="absolute bottom-2 left-2 rounded-xs bg-paper/80 px-2 py-0.5 text-small font-bold text-cream">
+          ภาพประกอบ
+        </span>
+      ) : null}
     </div>
   )
 }

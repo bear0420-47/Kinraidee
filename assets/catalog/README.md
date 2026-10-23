@@ -5,7 +5,8 @@ Optional photos for the restaurants and menu items in `src/api/prisma/data/catal
 - **Logo:** `assets/catalog/<restaurant-slug>/logo.png` (or `.jpg`, `.webp`).
 - **Dish photo:** `assets/catalog/<restaurant-slug>/menus/<menu-slug>.png` (or `.jpg`, `.webp`).
 - **Checklist:** `photo-checklist.csv` (generated) lists every dish with the exact path it expects and whether a photo is `found`, `missing`, or `hidden` (its food type is hidden from the app). The build also prints any photo whose name matches no dish, which usually means a typo.
-- Dishes without a photo show the app's no-photo state. A photo is copied into local uploads by the development seed, as before.
+- **Stock photos:** a dish with no file of its own uses its `photo` key's pool in `src/api/prisma/data/catalog/photos.json` (Pexels links, never downloaded). `PHOTO-CREDITS.md` (generated) credits every photographer. A file here always wins over the pool.
+- Dishes without either show the app's no-photo state. A photo is copied into local uploads by the development seed, as before.
 
 ## Rules for what may be added
 

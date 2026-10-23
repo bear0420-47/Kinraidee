@@ -34,7 +34,8 @@
       "price": 50,
       "foodType": "rice-dishes",
       "tastes": ["crispy", "spicy", "savory"],
-      "review": null
+      "review": null,
+      "photo": "fried-chicken-rice-jaew"
     },
     {
       "slug": "fried-pork-rice-jaew",
@@ -49,7 +50,8 @@
       "price": 50,
       "foodType": "rice-dishes",
       "tastes": ["crispy", "spicy", "savory"],
-      "review": null
+      "review": null,
+      "photo": "fried-pork-rice-jaew"
     },
     {
       "slug": "fried-chicken-rice-sauce",
@@ -64,7 +66,8 @@
       "price": 55,
       "foodType": "rice-dishes",
       "tastes": ["crispy", "savory"],
-      "review": null
+      "review": null,
+      "photo": "fried-chicken-rice-sauce"
     },
     {
       "slug": "fried-pork-rice-sauce",
@@ -79,7 +82,8 @@
       "price": 55,
       "foodType": "rice-dishes",
       "tastes": ["crispy", "savory"],
-      "review": null
+      "review": null,
+      "photo": "fried-pork-rice-sauce"
     },
     {
       "slug": "spicy-fried-chicken-yum-rice",
@@ -94,7 +98,8 @@
       "price": 59,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "sour", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "spicy-fried-chicken-yum-rice"
     },
     {
       "slug": "spicy-fried-pork-yum-rice",
@@ -109,7 +114,8 @@
       "price": 59,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "sour", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "spicy-fried-pork-yum-rice"
     },
     {
       "slug": "two-fried-eggs-rice",
@@ -124,7 +130,8 @@
       "price": 70,
       "foodType": "rice-dishes",
       "tastes": ["savory"],
-      "review": null
+      "review": null,
+      "photo": "fried-eggs-rice"
     }
   ]
 }

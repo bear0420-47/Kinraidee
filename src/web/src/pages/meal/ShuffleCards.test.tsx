@@ -212,6 +212,26 @@ describe('Revealing', () => {
     expect(await within(broken!).findByText('โหลดรูปไม่ได้')).toBeTruthy()
   })
 
+  it('labels stock photos as illustrations and credits Pexels, but not own photos', async () => {
+    const stock = {
+      ...krapao,
+      imageUrl:
+        'https://images.pexels.com/photos/1/pexels-photo-1.jpeg?auto=compress&w=800',
+    }
+    const own = { ...noodles, imageUrl: '/uploads/noodles.png' }
+    fakeShuffleApi({ results: [{ items: [stock, own] }] })
+    const { user } = renderApp('/meal')
+    await shuffleCards(user)
+    await user.click(screen.getByRole('button', { name: 'เปิดทั้งหมด' }))
+
+    const [stockCard, ownCard] = cards()
+    expect(within(stockCard!).getByText('ภาพประกอบ')).toBeTruthy()
+    expect(within(ownCard!).queryByText('ภาพประกอบ')).toBeNull()
+    expect(
+      screen.getByRole('link', { name: 'Pexels' }).getAttribute('href'),
+    ).toBe('https://www.pexels.com')
+  })
+
   it('animates the reveal only when motion is allowed and names every state in text', async () => {
     fakeShuffleApi({ results: [{ items: [krapao, noodles] }] })
     const { user } = renderApp('/meal')

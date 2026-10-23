@@ -34,7 +34,8 @@
       "price": 99,
       "foodType": "hotpot-bbq",
       "tastes": ["sweet", "spicy", "savory"],
-      "review": null
+      "review": null,
+      "photo": "moo-kratha-korean"
     },
     {
       "slug": "moo-kratha-korean-m",
@@ -49,7 +50,8 @@
       "price": 139,
       "foodType": "hotpot-bbq",
       "tastes": ["sweet", "spicy", "savory"],
-      "review": null
+      "review": null,
+      "photo": "moo-kratha-korean"
     },
     {
       "slug": "moo-kratha-sichuan-mala",
@@ -64,7 +66,8 @@
       "price": 99,
       "foodType": "hotpot-bbq",
       "tastes": ["spicy", "spiced-smoky", "savory"],
-      "review": null
+      "review": null,
+      "photo": "moo-kratha-sichuan-mala"
     },
     {
       "slug": "moo-kratha-sichuan-mala-m",
@@ -79,7 +82,8 @@
       "price": 139,
       "foodType": "hotpot-bbq",
       "tastes": ["spicy", "spiced-smoky", "savory"],
-      "review": null
+      "review": null,
+      "photo": "moo-kratha-sichuan-mala"
     },
     {
       "slug": "moo-kratha-black-pepper",
@@ -94,7 +98,8 @@
       "price": 99,
       "foodType": "hotpot-bbq",
       "tastes": ["savory", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "moo-kratha-black-pepper"
     },
     {
       "slug": "moo-kratha-black-pepper-m",
@@ -109,7 +114,8 @@
       "price": 139,
       "foodType": "hotpot-bbq",
       "tastes": ["savory", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "moo-kratha-black-pepper"
     }
   ]
 }

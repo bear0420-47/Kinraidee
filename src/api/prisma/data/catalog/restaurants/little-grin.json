@@ -34,7 +34,8 @@
       "price": 69,
       "foodType": "rice-dishes",
       "tastes": ["savory", "sweet"],
-      "review": null
+      "review": null,
+      "photo": "teriyaki-chicken-rice"
     },
     {
       "slug": "teriyaki-grilled-chicken-noodles",
@@ -49,7 +50,8 @@
       "price": 69,
       "foodType": "noodles",
       "tastes": ["savory", "sweet"],
-      "review": null
+      "review": null,
+      "photo": "teriyaki-grilled-chicken-noodles"
     },
     {
       "slug": "teriyaki-crispy-chicken-noodles",
@@ -64,7 +66,8 @@
       "price": 69,
       "foodType": "noodles",
       "tastes": ["crispy", "savory", "sweet"],
-      "review": null
+      "review": null,
+      "photo": "teriyaki-crispy-chicken-noodles"
     },
     {
       "slug": "korean-crispy-chicken-mama",
@@ -79,7 +82,8 @@
       "price": 79,
       "foodType": "noodles",
       "tastes": ["spicy", "sweet", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "korean-crispy-chicken-mama"
     },
     {
       "slug": "crispy-chicken-rice-choose-your-sauce",
@@ -94,7 +98,8 @@
       "price": 75,
       "foodType": "rice-dishes",
       "tastes": ["crispy", "savory"],
-      "review": null
+      "review": null,
+      "photo": "crispy-chicken-rice-choose-your-sauce"
     },
     {
       "slug": "crispy-chicken-rice-korean",
@@ -109,7 +114,8 @@
       "price": 65,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "sweet", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "crispy-chicken-rice-korean"
     },
     {
       "slug": "crispy-chicken-rice-korean-mayo",
@@ -124,7 +130,8 @@
       "price": 65,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "sweet", "creamy-rich"],
-      "review": null
+      "review": null,
+      "photo": "crispy-chicken-rice-korean-mayo"
     },
     {
       "slug": "crispy-chicken-rice-spicy-mayo",
@@ -139,7 +146,8 @@
       "price": 65,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "creamy-rich", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "crispy-chicken-rice-spicy-mayo"
     },
     {
       "slug": "crispy-chicken-rice-cheese",
@@ -154,7 +162,8 @@
       "price": 65,
       "foodType": "rice-dishes",
       "tastes": ["creamy-rich", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "crispy-chicken-rice-cheese"
     },
     {
       "slug": "crispy-chicken-rice-korean-cheese",
@@ -169,7 +178,8 @@
       "price": 69,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "sweet", "creamy-rich"],
-      "review": null
+      "review": null,
+      "photo": "crispy-chicken-rice-korean-cheese"
     },
     {
       "slug": "crispy-chicken-rice-sour-cream-onion",
@@ -184,7 +194,8 @@
       "price": 69,
       "foodType": "rice-dishes",
       "tastes": ["creamy-rich", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "crispy-chicken-rice-sour-cream-onion"
     },
     {
       "slug": "crispy-chicken-rice-sour-cream-onion-korean",
@@ -199,7 +210,8 @@
       "price": 69,
       "foodType": "rice-dishes",
       "tastes": ["creamy-rich", "spicy", "sweet"],
-      "review": null
+      "review": null,
+      "photo": "crispy-chicken-rice-sour-cream-onion-korean"
     },
     {
       "slug": "crispy-chicken-rice-teriyaki",
@@ -214,7 +226,8 @@
       "price": 65,
       "foodType": "rice-dishes",
       "tastes": ["sweet", "savory", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "crispy-chicken-rice-teriyaki"
     },
     {
       "slug": "crispy-chicken-rice-spicy-wing-powder",
@@ -229,7 +242,8 @@
       "price": 65,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "crispy", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "crispy-chicken-rice-spicy-wing-powder"
     },
     {
       "slug": "crispy-chicken-rice-nori",
@@ -244,7 +258,8 @@
       "price": 65,
       "foodType": "rice-dishes",
       "tastes": ["crispy", "savory"],
-      "review": null
+      "review": null,
+      "photo": "crispy-chicken-rice-nori"
     }
   ]
 }

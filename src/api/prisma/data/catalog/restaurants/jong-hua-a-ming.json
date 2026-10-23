@@ -34,7 +34,8 @@
       "price": 110,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "crispy", "savory"],
-      "review": null
+      "review": null,
+      "photo": "spicy-pork-belly-and-minced-pork-tofu-on-rice"
     },
     {
       "slug": "spicy-pork-belly-and-tomato-egg-on-rice",
@@ -49,7 +50,8 @@
       "price": 110,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "crispy", "savory"],
-      "review": null
+      "review": null,
+      "photo": "spicy-pork-belly-and-tomato-egg-on-rice"
     },
     {
       "slug": "spicy-pork-belly-and-eggplant-on-rice",
@@ -64,7 +66,8 @@
       "price": 110,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "crispy", "savory"],
-      "review": null
+      "review": null,
+      "photo": "spicy-pork-belly-and-eggplant-on-rice"
     },
     {
       "slug": "spicy-pork-belly-and-bitter-melon-egg-on-rice",
@@ -79,7 +82,8 @@
       "price": 110,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "crispy", "savory"],
-      "review": null
+      "review": null,
+      "photo": "spicy-pork-belly-and-bitter-melon-egg-on-rice"
     },
     {
       "slug": "spicy-fried-pork-and-morning-glory-on-rice",
@@ -94,7 +98,8 @@
       "price": 100,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "crispy", "savory"],
-      "review": null
+      "review": null,
+      "photo": "spicy-fried-pork-and-morning-glory-on-rice"
     },
     {
       "slug": "spicy-fried-pork-and-napa-cabbage-on-rice",
@@ -109,7 +114,8 @@
       "price": 100,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "crispy", "savory"],
-      "review": null
+      "review": null,
+      "photo": "spicy-fried-pork-and-napa-cabbage-on-rice"
     },
     {
       "slug": "eggplant-minced-pork-on-rice",
@@ -124,7 +130,8 @@
       "price": 65,
       "foodType": "rice-dishes",
       "tastes": ["savory"],
-      "review": null
+      "review": null,
+      "photo": "eggplant-minced-pork-on-rice"
     },
     {
       "slug": "bitter-melon-egg-on-rice",
@@ -139,7 +146,8 @@
       "price": 65,
       "foodType": "rice-dishes",
       "tastes": ["savory"],
-      "review": null
+      "review": null,
+      "photo": "bitter-melon-egg-on-rice"
     },
     {
       "slug": "tomato-egg-on-rice",
@@ -154,7 +162,8 @@
       "price": 65,
       "foodType": "rice-dishes",
       "tastes": ["savory", "sour"],
-      "review": null
+      "review": null,
+      "photo": "tomato-egg-on-rice"
     },
     {
       "slug": "minced-pork-tofu-on-rice",
@@ -169,7 +178,8 @@
       "price": 65,
       "foodType": "rice-dishes",
       "tastes": ["savory", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "minced-pork-tofu-on-rice"
     },
     {
       "slug": "potato-and-pork-on-rice",
@@ -184,7 +194,8 @@
       "price": 65,
       "foodType": "rice-dishes",
       "tastes": ["savory"],
-      "review": null
+      "review": null,
+      "photo": "potato-and-pork-on-rice"
     },
     {
       "slug": "minced-pork-omelette-on-rice",
@@ -199,7 +210,8 @@
       "price": 55,
       "foodType": "rice-dishes",
       "tastes": ["savory", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "minced-pork-omelette-on-rice"
     },
     {
       "slug": "chili-pork-liver-on-rice",
@@ -214,7 +226,8 @@
       "price": 70,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "savory"],
-      "review": null
+      "review": null,
+      "photo": "chili-pork-liver-on-rice"
     },
     {
       "slug": "pickled-mustard-greens-pork-on-rice",
@@ -229,7 +242,8 @@
       "price": 70,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "sour", "savory"],
-      "review": null
+      "review": null,
+      "photo": "pickled-mustard-greens-pork-on-rice"
     },
     {
       "slug": "spicy-pork-belly-with-mushroom-on-rice",
@@ -244,7 +258,8 @@
       "price": 80,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "crispy", "savory"],
-      "review": null
+      "review": null,
+      "photo": "spicy-pork-belly-with-mushroom-on-rice"
     },
     {
       "slug": "spicy-fried-pork-on-rice",
@@ -259,7 +274,8 @@
       "price": 75,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "crispy", "savory"],
-      "review": null
+      "review": null,
+      "photo": "spicy-fried-pork-on-rice"
     },
     {
       "slug": "spicy-fried-pork-belly-on-rice",
@@ -274,7 +290,8 @@
       "price": 75,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "crispy", "savory"],
-      "review": null
+      "review": null,
+      "photo": "spicy-fried-pork-belly-on-rice"
     },
     {
       "slug": "spicy-fried-chicken-wings-on-rice",
@@ -289,7 +306,8 @@
       "price": 75,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "crispy", "savory"],
-      "review": null
+      "review": null,
+      "photo": "spicy-fried-chicken-wings-on-rice"
     }
   ]
 }

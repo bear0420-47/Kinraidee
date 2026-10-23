@@ -239,6 +239,7 @@ Use slight asymmetric radii for doodle surfaces when practical, e.g. `6px 12px 5
 
 - Use food imagery only as representative visual support unless the image is confirmed to depict the actual restaurant/menu item.
 - Generated placeholders must not be presented as real restaurant photos.
+- Catalog stock photos (Pexels links) carry a `ภาพประกอบ` label in the photo's bottom-left corner: small bold `--cream` text on an 80% ink panel. Photos supplied by a restaurant or the team carry no label. While cards are shown, the meal page credits `ภาพประกอบเมนูจาก Pexels` with a link to pexels.com (human approver's decision, 2026-10-23).
 - Images are displayed from approved external URLs or API-served development/test upload URLs; binary image data is never stored in PostgreSQL. Production internal uploads remain disabled until durable object storage is implemented.
 
 ## Accessibility Rules

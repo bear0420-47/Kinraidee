@@ -16,3 +16,8 @@ coverage/
 
 # Source screenshots for the catalog (never committed)
 menu-inbox/
+
+# Dish photo search cache and review page (catalog:photos)
+src/api/.local/photo-search/
+src/api/.local/photo-review.html
+photo-selection.json

@@ -1,7 +1,10 @@
 {
   "slug": "khang-mor-fah",
   "zone": "fa-thai-market",
-  "name": { "th": "ข้าง ม.ฟ.", "en": "Khang Mor Fah" },
+  "name": {
+    "th": "ข้าง ม.ฟ.",
+    "en": "Khang Mor Fah"
+  },
   "description": {
     "th": "ร้านอาหารสุขภาพบริเวณหมู่บ้านฟ้าไทย มีแร็ปและสลัดผักสด และกรีกโยเกิร์ตโฮมเมด",
     "en": "Healthy food shop in the Fa Thai village area, serving fresh wraps, salads, and homemade Greek yogurt."
@@ -11,12 +14,19 @@
     "type": "grab-screenshot",
     "capturedOn": "2026-10-22",
     "pricesInclude": "grab-delivery-markup",
-    "ownerConsent": { "given": false, "by": null, "on": null }
+    "ownerConsent": {
+      "given": false,
+      "by": null,
+      "on": null
+    }
   },
   "menuItems": [
     {
       "slug": "mala-chicken-wrap",
-      "name": { "th": "แร็ปไก่ซอสหมาล่า", "en": "Mala Chicken Wrap" },
+      "name": {
+        "th": "แร็ปไก่ซอสหมาล่า",
+        "en": "Mala Chicken Wrap"
+      },
       "description": {
         "th": "ไก่คลุกซอสหมาล่ารสเผ็ดชา กับผักสด ห่อด้วยแผ่นแร็ปธัญพืช",
         "en": "Chicken tossed in numbing-spicy mala sauce with fresh vegetables in a multigrain wrap."
@@ -24,11 +34,15 @@
       "price": 99,
       "foodType": "burgers-sandwiches-wraps",
       "tastes": ["spicy", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "mala-chicken-wrap"
     },
     {
       "slug": "boiled-chicken-breast-wrap",
-      "name": { "th": "แร็ปอกไก่ต้ม", "en": "Boiled Chicken Breast Wrap" },
+      "name": {
+        "th": "แร็ปอกไก่ต้ม",
+        "en": "Boiled Chicken Breast Wrap"
+      },
       "description": {
         "th": "อกไก่ต้มนุ่ม ไข่ต้ม อะโวคาโด และผักสด ห่อด้วยแผ่นแร็ปธัญพืช",
         "en": "Tender boiled chicken breast, boiled egg, avocado, and fresh vegetables in a multigrain wrap."
@@ -36,11 +50,15 @@
       "price": 99,
       "foodType": "burgers-sandwiches-wraps",
       "tastes": ["fresh-light", "savory"],
-      "review": null
+      "review": null,
+      "photo": "boiled-chicken-breast-wrap"
     },
     {
       "slug": "tuna-wrap",
-      "name": { "th": "แร็ปทูน่า", "en": "Tuna Wrap" },
+      "name": {
+        "th": "แร็ปทูน่า",
+        "en": "Tuna Wrap"
+      },
       "description": {
         "th": "ทูน่าในน้ำแร่ ไข่ต้ม อะโวคาโด และผักสด ห่อด้วยแผ่นแร็ปธัญพืช",
         "en": "Tuna in spring water, boiled egg, avocado, and fresh vegetables in a multigrain wrap."
@@ -48,7 +66,8 @@
       "price": 99,
       "foodType": "burgers-sandwiches-wraps",
       "tastes": ["fresh-light", "savory"],
-      "review": null
+      "review": null,
+      "photo": "tuna-wrap"
     },
     {
       "slug": "korean-spicy-chicken-wrap",
@@ -63,11 +82,15 @@
       "price": 99,
       "foodType": "burgers-sandwiches-wraps",
       "tastes": ["spicy", "sweet", "savory"],
-      "review": null
+      "review": null,
+      "photo": "korean-spicy-chicken-wrap"
     },
     {
       "slug": "boiled-chicken-breast-salad",
-      "name": { "th": "สลัดอกไก่ต้ม", "en": "Boiled Chicken Breast Salad" },
+      "name": {
+        "th": "สลัดอกไก่ต้ม",
+        "en": "Boiled Chicken Breast Salad"
+      },
       "description": {
         "th": "ผักสลัดสด อกไก่ต้ม ไข่ต้ม และอะโวคาโด รสกลมกล่อมสดชื่น",
         "en": "Fresh salad greens with boiled chicken breast, boiled egg, and avocado."
@@ -75,11 +98,15 @@
       "price": 89,
       "foodType": "salads-yum-somtam",
       "tastes": ["fresh-light"],
-      "review": null
+      "review": null,
+      "photo": "boiled-chicken-breast-salad"
     },
     {
       "slug": "tuna-salad",
-      "name": { "th": "สลัดทูน่า", "en": "Tuna Salad" },
+      "name": {
+        "th": "สลัดทูน่า",
+        "en": "Tuna Salad"
+      },
       "description": {
         "th": "ผักสลัดสด ทูน่าในน้ำแร่ ไข่ต้ม อะโวคาโด และมะเขือเทศ",
         "en": "Fresh salad greens with tuna in spring water, boiled egg, avocado, and tomatoes."
@@ -87,11 +114,15 @@
       "price": 89,
       "foodType": "salads-yum-somtam",
       "tastes": ["fresh-light"],
-      "review": null
+      "review": null,
+      "photo": "tuna-salad"
     },
     {
       "slug": "homemade-greek-yogurt",
-      "name": { "th": "กรีกโยเกิร์ตโฮมเมด", "en": "Homemade Greek Yogurt" },
+      "name": {
+        "th": "กรีกโยเกิร์ตโฮมเมด",
+        "en": "Homemade Greek Yogurt"
+      },
       "description": {
         "th": "กรีกโยเกิร์ตเนื้อเนียนกับผลไม้สด เสิร์ฟพร้อมน้ำผึ้งและกราโนล่า",
         "en": "Smooth Greek yogurt with fresh fruit, served with honey and granola."
@@ -99,7 +130,8 @@
       "price": 109,
       "foodType": "desserts",
       "tastes": ["sweet", "creamy-rich"],
-      "review": null
+      "review": null,
+      "photo": "homemade-greek-yogurt"
     }
   ]
 }

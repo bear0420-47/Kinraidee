@@ -34,7 +34,8 @@
       "price": 185,
       "foodType": "rice-dishes",
       "tastes": ["savory", "sweet", "spiced-smoky", "creamy-rich"],
-      "review": null
+      "review": null,
+      "photo": "flat-iron-beef-rice-bowl"
     },
     {
       "slug": "premium-beef-rice-bowl-l",
@@ -49,7 +50,8 @@
       "price": 165,
       "foodType": "rice-dishes",
       "tastes": ["savory", "sweet", "spiced-smoky", "creamy-rich"],
-      "review": null
+      "review": null,
+      "photo": "premium-beef-rice-bowl"
     },
     {
       "slug": "two-tone-pork-rice-bowl-l",
@@ -64,7 +66,8 @@
       "price": 150,
       "foodType": "rice-dishes",
       "tastes": ["savory", "sweet", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "two-tone-pork-rice-bowl"
     },
     {
       "slug": "pork-belly-rice-bowl-l",
@@ -79,7 +82,8 @@
       "price": 115,
       "foodType": "rice-dishes",
       "tastes": ["savory", "sweet", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "pork-belly-rice-bowl"
     },
     {
       "slug": "pork-belly-rice-bowl-m",
@@ -94,7 +98,8 @@
       "price": 85,
       "foodType": "rice-dishes",
       "tastes": ["savory", "sweet", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "pork-belly-rice-bowl"
     },
     {
       "slug": "pork-neck-rice-bowl-l",
@@ -109,7 +114,8 @@
       "price": 115,
       "foodType": "rice-dishes",
       "tastes": ["savory", "sweet", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "pork-neck-rice-bowl"
     },
     {
       "slug": "pork-neck-rice-bowl-m",
@@ -124,7 +130,8 @@
       "price": 85,
       "foodType": "rice-dishes",
       "tastes": ["savory", "sweet", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "pork-neck-rice-bowl"
     },
     {
       "slug": "salmon-rice-bowl",
@@ -139,7 +146,8 @@
       "price": 110,
       "foodType": "rice-dishes",
       "tastes": ["savory", "sweet", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "salmon-rice-bowl"
     },
     {
       "slug": "shrimp-rice-bowl",
@@ -154,7 +162,8 @@
       "price": 110,
       "foodType": "rice-dishes",
       "tastes": ["savory", "sweet", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "shrimp-rice-bowl"
     },
     {
       "slug": "chicken-rice-bowl-l",
@@ -169,7 +178,8 @@
       "price": 115,
       "foodType": "rice-dishes",
       "tastes": ["savory", "sweet", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "chicken-rice-bowl"
     },
     {
       "slug": "chicken-rice-bowl-m",
@@ -184,7 +194,8 @@
       "price": 85,
       "foodType": "rice-dishes",
       "tastes": ["savory", "sweet", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "chicken-rice-bowl"
     },
     {
       "slug": "flat-iron-beef-rice-bowl-fire-chili-l",
@@ -199,7 +210,8 @@
       "price": 195,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "savory", "spiced-smoky", "creamy-rich"],
-      "review": null
+      "review": null,
+      "photo": "flat-iron-beef-rice-bowl-fire-chili"
     },
     {
       "slug": "premium-beef-rice-bowl-fire-chili-l",
@@ -214,7 +226,8 @@
       "price": 175,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "savory", "spiced-smoky", "creamy-rich"],
-      "review": null
+      "review": null,
+      "photo": "premium-beef-rice-bowl-fire-chili"
     },
     {
       "slug": "two-tone-pork-rice-bowl-fire-chili-l",
@@ -229,7 +242,8 @@
       "price": 160,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "savory", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "two-tone-pork-rice-bowl-fire-chili"
     },
     {
       "slug": "pork-belly-rice-bowl-fire-chili-l",
@@ -244,7 +258,8 @@
       "price": 125,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "savory", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "pork-belly-rice-bowl-fire-chili"
     },
     {
       "slug": "pork-belly-rice-bowl-fire-chili-m",
@@ -259,7 +274,8 @@
       "price": 95,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "savory", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "pork-belly-rice-bowl-fire-chili"
     },
     {
       "slug": "pork-neck-rice-bowl-fire-chili-l",
@@ -274,7 +290,8 @@
       "price": 125,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "savory", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "pork-neck-rice-bowl-fire-chili"
     },
     {
       "slug": "pork-neck-rice-bowl-fire-chili-m",
@@ -289,7 +306,8 @@
       "price": 95,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "savory", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "pork-neck-rice-bowl-fire-chili"
     },
     {
       "slug": "salmon-rice-bowl-fire-chili",
@@ -304,7 +322,8 @@
       "price": 120,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "savory", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "salmon-rice-bowl-fire-chili"
     },
     {
       "slug": "shrimp-rice-bowl-fire-chili",
@@ -319,7 +338,8 @@
       "price": 120,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "savory", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "shrimp-rice-bowl-fire-chili"
     },
     {
       "slug": "chicken-rice-bowl-fire-chili-l",
@@ -334,7 +354,8 @@
       "price": 125,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "savory", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "chicken-rice-bowl-fire-chili"
     },
     {
       "slug": "chicken-rice-bowl-fire-chili-m",
@@ -349,7 +370,8 @@
       "price": 95,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "savory", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "chicken-rice-bowl-fire-chili"
     },
     {
       "slug": "pork-belly-rice-bowl-mala",
@@ -364,7 +386,8 @@
       "price": 95,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "spiced-smoky", "savory"],
-      "review": null
+      "review": null,
+      "photo": "pork-belly-rice-bowl-mala"
     },
     {
       "slug": "pork-neck-rice-bowl-mala",
@@ -379,7 +402,8 @@
       "price": 95,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "spiced-smoky", "savory"],
-      "review": null
+      "review": null,
+      "photo": "pork-neck-rice-bowl-mala"
     },
     {
       "slug": "saba-rice-bowl-mala",
@@ -394,7 +418,8 @@
       "price": 129,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "spiced-smoky", "savory"],
-      "review": null
+      "review": null,
+      "photo": "saba-rice-bowl-mala"
     },
     {
       "slug": "chicken-rice-bowl-mala",
@@ -409,7 +434,8 @@
       "price": 95,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "spiced-smoky", "savory"],
-      "review": null
+      "review": null,
+      "photo": "chicken-rice-bowl-mala"
     },
     {
       "slug": "premium-beef-rice-bowl-mala",
@@ -424,7 +450,8 @@
       "price": 179,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "spiced-smoky", "savory", "creamy-rich"],
-      "review": null
+      "review": null,
+      "photo": "premium-beef-rice-bowl-mala"
     },
     {
       "slug": "flat-iron-beef-rice-bowl-mala",
@@ -439,7 +466,8 @@
       "price": 199,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "spiced-smoky", "savory", "creamy-rich"],
-      "review": null
+      "review": null,
+      "photo": "flat-iron-beef-rice-bowl-mala"
     },
     {
       "slug": "shrimp-rice-bowl-mala",
@@ -454,7 +482,8 @@
       "price": 119,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "spiced-smoky", "savory"],
-      "review": null
+      "review": null,
+      "photo": "shrimp-rice-bowl-mala"
     },
     {
       "slug": "salmon-rice-bowl-mala",
@@ -469,7 +498,8 @@
       "price": 119,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "spiced-smoky", "savory"],
-      "review": null
+      "review": null,
+      "photo": "salmon-rice-bowl-mala"
     }
   ]
 }

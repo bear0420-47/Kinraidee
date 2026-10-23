@@ -34,7 +34,8 @@
       "price": 50,
       "foodType": "burgers-sandwiches-wraps",
       "tastes": ["savory", "creamy-rich"],
-      "review": null
+      "review": null,
+      "photo": "make-your-own-sandwich"
     },
     {
       "slug": "make-your-own-sandwich-4",
@@ -49,7 +50,8 @@
       "price": 65,
       "foodType": "burgers-sandwiches-wraps",
       "tastes": ["savory", "creamy-rich"],
-      "review": null
+      "review": null,
+      "photo": "make-your-own-sandwich"
     },
     {
       "slug": "chicken-chilli-paste-sandwich",
@@ -64,7 +66,8 @@
       "price": 65,
       "foodType": "burgers-sandwiches-wraps",
       "tastes": ["spicy", "sweet", "savory"],
-      "review": null
+      "review": null,
+      "photo": "chicken-chilli-paste-sandwich"
     },
     {
       "slug": "mushroom-chilli-paste-sandwich",
@@ -79,7 +82,8 @@
       "price": 65,
       "foodType": "burgers-sandwiches-wraps",
       "tastes": ["spicy", "sweet", "savory"],
-      "review": null
+      "review": null,
+      "photo": "mushroom-chilli-paste-sandwich"
     },
     {
       "slug": "bacon-cheese-sandwich",
@@ -94,7 +98,8 @@
       "price": 65,
       "foodType": "burgers-sandwiches-wraps",
       "tastes": ["savory", "creamy-rich"],
-      "review": null
+      "review": null,
+      "photo": "bacon-cheese-sandwich"
     },
     {
       "slug": "kraftkorn-brunch",
@@ -109,7 +114,8 @@
       "price": 95,
       "foodType": "burgers-sandwiches-wraps",
       "tastes": ["savory", "fresh-light"],
-      "review": null
+      "review": null,
+      "photo": "kraftkorn-brunch"
     },
     {
       "slug": "tiramisu-salad",
@@ -124,7 +130,8 @@
       "price": 55,
       "foodType": "salads-yum-somtam",
       "tastes": ["fresh-light"],
-      "review": null
+      "review": null,
+      "photo": "tiramisu-salad"
     },
     {
       "slug": "butter-sugar-toast",
@@ -139,7 +146,8 @@
       "price": 25,
       "foodType": "desserts",
       "tastes": ["sweet", "creamy-rich"],
-      "review": null
+      "review": null,
+      "photo": "butter-sugar-toast"
     },
     {
       "slug": "ovaltine-toast",
@@ -154,7 +162,8 @@
       "price": 30,
       "foodType": "desserts",
       "tastes": ["sweet", "creamy-rich"],
-      "review": null
+      "review": null,
+      "photo": "ovaltine-toast"
     }
   ]
 }
