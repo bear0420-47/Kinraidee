@@ -1,0 +1,475 @@
+{
+  "slug": "gindon",
+  "zone": "opposite-mfu",
+  "name": {
+    "th": "กินดัง ข้าวหน้าของย่าง",
+    "en": "GINDON"
+  },
+  "description": {
+    "th": "ร้านข้าวหน้าของย่างสไตล์ญี่ปุ่นใกล้มหาวิทยาลัยแม่ฟ้าหลวง มีทั้งแบบซอสซิกเนเจอร์ พริกพ่นไฟ และหม่าล่า",
+    "en": "Japanese-style grilled rice bowl shop near Mae Fah Luang University, in signature, fire-chili, and mala styles."
+  },
+  "phone": null,
+  "source": {
+    "type": "grab-screenshot",
+    "capturedOn": "2026-10-22",
+    "pricesInclude": "grab-delivery-markup",
+    "ownerConsent": {
+      "given": false,
+      "by": null,
+      "on": null
+    }
+  },
+  "menuItems": [
+    {
+      "slug": "flat-iron-beef-rice-bowl-l",
+      "name": {
+        "th": "ข้าวหน้าเนื้อใบพาย + ไข่ออนเซ็น ไซส์ L",
+        "en": "Flat Iron Beef Rice Bowl with Onsen Egg (L)"
+      },
+      "description": {
+        "th": "เนื้อใบพายมันน้อยย่างไฟ ราดบนข้าวญี่ปุ่น โรยต้นหอม เสิร์ฟพร้อมไข่ออนเซ็น 1 ฟอง",
+        "en": "Lean flat iron beef seared over fire, served over Japanese rice with spring onion, with one onsen egg."
+      },
+      "price": 185,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "sweet", "spiced-smoky", "creamy-rich"],
+      "review": null
+    },
+    {
+      "slug": "premium-beef-rice-bowl-l",
+      "name": {
+        "th": "ข้าวหน้าเนื้อพรีเมี่ยม + ไข่ออนเซ็น ไซส์ L",
+        "en": "Premium Beef Rice Bowl with Onsen Egg (L)"
+      },
+      "description": {
+        "th": "เนื้อวัวสายมันย่างไฟ ราดบนข้าวญี่ปุ่น โรยต้นหอม เสิร์ฟพร้อมไข่ออนเซ็น 1 ฟอง",
+        "en": "Well-marbled premium beef seared over fire, served over Japanese rice with spring onion, with one onsen egg."
+      },
+      "price": 165,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "sweet", "spiced-smoky", "creamy-rich"],
+      "review": null
+    },
+    {
+      "slug": "two-tone-pork-rice-bowl-l",
+      "name": {
+        "th": "ข้าวหน้าหมูย่างทูโทน (สามชั้น+สันคอ) ไซส์ L",
+        "en": "Two-tone Pork (Belly & Neck) Rice Bowl (L)"
+      },
+      "description": {
+        "th": "หมูสามชั้นและหมูสันคอย่างซอส ราดบนข้าวญี่ปุ่น โรยต้นหอม",
+        "en": "Grilled pork belly and pork neck in sauce, served over Japanese rice with spring onion."
+      },
+      "price": 150,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "sweet", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "pork-belly-rice-bowl-l",
+      "name": {
+        "th": "ข้าวหน้าหมูสามชั้น ไซส์ L",
+        "en": "Pork Belly Rice Bowl (L)"
+      },
+      "description": {
+        "th": "หมูสามชั้นหนากำลังดีย่างซอสจนหอม ราดบนข้าวญี่ปุ่น โรยต้นหอม",
+        "en": "Thick-cut pork belly grilled in sauce, served over Japanese rice with spring onion."
+      },
+      "price": 115,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "sweet", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "pork-belly-rice-bowl-m",
+      "name": {
+        "th": "ข้าวหน้าหมูสามชั้น ไซส์ M",
+        "en": "Pork Belly Rice Bowl (M)"
+      },
+      "description": {
+        "th": "หมูสามชั้นหนากำลังดีย่างซอสจนหอม ราดบนข้าวญี่ปุ่น โรยต้นหอม",
+        "en": "Thick-cut pork belly grilled in sauce, served over Japanese rice with spring onion."
+      },
+      "price": 85,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "sweet", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "pork-neck-rice-bowl-l",
+      "name": {
+        "th": "ข้าวหน้าหมูสันคอ ไซส์ L",
+        "en": "Pork Neck Rice Bowl (L)"
+      },
+      "description": {
+        "th": "หมูสันคอนุ่มฉ่ำย่างซอส ราดบนข้าวญี่ปุ่น โรยต้นหอม",
+        "en": "Juicy grilled pork neck in sauce, served over Japanese rice with spring onion."
+      },
+      "price": 115,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "sweet", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "pork-neck-rice-bowl-m",
+      "name": {
+        "th": "ข้าวหน้าหมูสันคอ ไซส์ M",
+        "en": "Pork Neck Rice Bowl (M)"
+      },
+      "description": {
+        "th": "หมูสันคอนุ่มฉ่ำย่างซอส ราดบนข้าวญี่ปุ่น โรยต้นหอม",
+        "en": "Juicy grilled pork neck in sauce, served over Japanese rice with spring onion."
+      },
+      "price": 85,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "sweet", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "salmon-rice-bowl",
+      "name": {
+        "th": "ข้าวหน้าแซลม่อนย่าง",
+        "en": "Grilled Salmon Rice Bowl"
+      },
+      "description": {
+        "th": "แซลม่อนย่างซอส ราดบนข้าวญี่ปุ่น โรยต้นหอม",
+        "en": "Salmon grilled in sauce, served over Japanese rice with spring onion."
+      },
+      "price": 110,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "sweet", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "shrimp-rice-bowl",
+      "name": {
+        "th": "ข้าวหน้ากุ้งย่าง",
+        "en": "Grilled Shrimp Rice Bowl"
+      },
+      "description": {
+        "th": "กุ้งขาวแกะเปลือกย่างซอส ราดบนข้าวญี่ปุ่น โรยต้นหอม",
+        "en": "Peeled white shrimp grilled in sauce, served over Japanese rice with spring onion."
+      },
+      "price": 110,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "sweet", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "chicken-rice-bowl-l",
+      "name": {
+        "th": "ข้าวหน้าไก่ย่าง ไซส์ L",
+        "en": "Grilled Chicken Rice Bowl (L)"
+      },
+      "description": {
+        "th": "ไก่ย่างซอสนุ่มฉ่ำ ราดบนข้าวญี่ปุ่น โรยต้นหอม",
+        "en": "Juicy chicken grilled in sauce, served over Japanese rice with spring onion."
+      },
+      "price": 115,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "sweet", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "chicken-rice-bowl-m",
+      "name": {
+        "th": "ข้าวหน้าไก่ย่าง ไซส์ M",
+        "en": "Grilled Chicken Rice Bowl (M)"
+      },
+      "description": {
+        "th": "ไก่ย่างซอสนุ่มฉ่ำ ราดบนข้าวญี่ปุ่น โรยต้นหอม",
+        "en": "Juicy chicken grilled in sauce, served over Japanese rice with spring onion."
+      },
+      "price": 85,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "sweet", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "flat-iron-beef-rice-bowl-fire-chili-l",
+      "name": {
+        "th": "ข้าวหน้าเนื้อใบพาย + ไข่ออนเซ็น พ่นไฟ ไซส์ L",
+        "en": "Fire Chili Flat Iron Beef Rice Bowl with Onsen Egg (L)"
+      },
+      "description": {
+        "th": "เนื้อใบพายมันน้อยย่างไฟ ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น เสิร์ฟพร้อมไข่ออนเซ็น 1 ฟอง",
+        "en": "Lean flat iron beef seared over fire, topped with fiery chili sauce over Japanese rice, with one onsen egg."
+      },
+      "price": 195,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "savory", "spiced-smoky", "creamy-rich"],
+      "review": null
+    },
+    {
+      "slug": "premium-beef-rice-bowl-fire-chili-l",
+      "name": {
+        "th": "ข้าวหน้าเนื้อพรีเมี่ยม + ไข่ออนเซ็น พ่นไฟ ไซส์ L",
+        "en": "Fire Chili Premium Beef Rice Bowl with Onsen Egg (L)"
+      },
+      "description": {
+        "th": "เนื้อวัวสายมันย่างไฟ ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น เสิร์ฟพร้อมไข่ออนเซ็น 1 ฟอง",
+        "en": "Well-marbled premium beef seared over fire, topped with fiery chili sauce over Japanese rice, with one onsen egg."
+      },
+      "price": 175,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "savory", "spiced-smoky", "creamy-rich"],
+      "review": null
+    },
+    {
+      "slug": "two-tone-pork-rice-bowl-fire-chili-l",
+      "name": {
+        "th": "ข้าวหน้าหมูย่างทูโทน (สามชั้น+สันคอ) พ่นไฟ ไซส์ L",
+        "en": "Fire Chili Two-tone Pork (Belly & Neck) Rice Bowl (L)"
+      },
+      "description": {
+        "th": "หมูสามชั้นและหมูสันคอย่างซอส ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น",
+        "en": "Grilled pork belly and pork neck in sauce, topped with fiery chili sauce over Japanese rice."
+      },
+      "price": 160,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "savory", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "pork-belly-rice-bowl-fire-chili-l",
+      "name": {
+        "th": "ข้าวหน้าหมูสามชั้น พ่นไฟ ไซส์ L",
+        "en": "Fire Chili Pork Belly Rice Bowl (L)"
+      },
+      "description": {
+        "th": "หมูสามชั้นหนากำลังดีย่างซอสจนหอม ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น",
+        "en": "Thick-cut pork belly grilled in sauce, topped with fiery chili sauce over Japanese rice."
+      },
+      "price": 125,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "savory", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "pork-belly-rice-bowl-fire-chili-m",
+      "name": {
+        "th": "ข้าวหน้าหมูสามชั้น พ่นไฟ ไซส์ M",
+        "en": "Fire Chili Pork Belly Rice Bowl (M)"
+      },
+      "description": {
+        "th": "หมูสามชั้นหนากำลังดีย่างซอสจนหอม ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น",
+        "en": "Thick-cut pork belly grilled in sauce, topped with fiery chili sauce over Japanese rice."
+      },
+      "price": 95,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "savory", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "pork-neck-rice-bowl-fire-chili-l",
+      "name": {
+        "th": "ข้าวหน้าหมูสันคอ พ่นไฟ ไซส์ L",
+        "en": "Fire Chili Pork Neck Rice Bowl (L)"
+      },
+      "description": {
+        "th": "หมูสันคอนุ่มฉ่ำย่างซอส ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น",
+        "en": "Juicy grilled pork neck in sauce, topped with fiery chili sauce over Japanese rice."
+      },
+      "price": 125,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "savory", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "pork-neck-rice-bowl-fire-chili-m",
+      "name": {
+        "th": "ข้าวหน้าหมูสันคอ พ่นไฟ ไซส์ M",
+        "en": "Fire Chili Pork Neck Rice Bowl (M)"
+      },
+      "description": {
+        "th": "หมูสันคอนุ่มฉ่ำย่างซอส ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น",
+        "en": "Juicy grilled pork neck in sauce, topped with fiery chili sauce over Japanese rice."
+      },
+      "price": 95,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "savory", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "salmon-rice-bowl-fire-chili",
+      "name": {
+        "th": "ข้าวหน้าแซลม่อนย่าง พ่นไฟ",
+        "en": "Fire Chili Grilled Salmon Rice Bowl"
+      },
+      "description": {
+        "th": "แซลม่อนย่างซอส ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น",
+        "en": "Salmon grilled in sauce, topped with fiery chili sauce over Japanese rice."
+      },
+      "price": 120,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "savory", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "shrimp-rice-bowl-fire-chili",
+      "name": {
+        "th": "ข้าวหน้ากุ้งย่าง พ่นไฟ",
+        "en": "Fire Chili Grilled Shrimp Rice Bowl"
+      },
+      "description": {
+        "th": "กุ้งขาวแกะเปลือกย่างซอส ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น",
+        "en": "Peeled white shrimp grilled in sauce, topped with fiery chili sauce over Japanese rice."
+      },
+      "price": 120,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "savory", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "chicken-rice-bowl-fire-chili-l",
+      "name": {
+        "th": "ข้าวหน้าไก่ย่าง พ่นไฟ ไซส์ L",
+        "en": "Fire Chili Grilled Chicken Rice Bowl (L)"
+      },
+      "description": {
+        "th": "ไก่ย่างซอสนุ่มฉ่ำ ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น",
+        "en": "Juicy chicken grilled in sauce, topped with fiery chili sauce over Japanese rice."
+      },
+      "price": 125,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "savory", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "chicken-rice-bowl-fire-chili-m",
+      "name": {
+        "th": "ข้าวหน้าไก่ย่าง พ่นไฟ ไซส์ M",
+        "en": "Fire Chili Grilled Chicken Rice Bowl (M)"
+      },
+      "description": {
+        "th": "ไก่ย่างซอสนุ่มฉ่ำ ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น",
+        "en": "Juicy chicken grilled in sauce, topped with fiery chili sauce over Japanese rice."
+      },
+      "price": 95,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "savory", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "pork-belly-rice-bowl-mala",
+      "name": {
+        "th": "ข้าวหน้าหมูสามชั้น หม่าล่า",
+        "en": "Mala Pork Belly Rice Bowl"
+      },
+      "description": {
+        "th": "หมูสามชั้นหนากำลังดีย่างซอสจนหอม โรยผงหม่าล่าชาลิ้น บนข้าวญี่ปุ่น",
+        "en": "Thick-cut pork belly grilled in sauce, dusted with numbing mala spice over Japanese rice."
+      },
+      "price": 95,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "spiced-smoky", "savory"],
+      "review": null
+    },
+    {
+      "slug": "pork-neck-rice-bowl-mala",
+      "name": {
+        "th": "ข้าวหน้าหมูสันคอ หม่าล่า",
+        "en": "Mala Pork Neck Rice Bowl"
+      },
+      "description": {
+        "th": "หมูสันคอนุ่มฉ่ำย่างซอส โรยผงหม่าล่าชาลิ้น บนข้าวญี่ปุ่น",
+        "en": "Juicy grilled pork neck in sauce, dusted with numbing mala spice over Japanese rice."
+      },
+      "price": 95,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "spiced-smoky", "savory"],
+      "review": null
+    },
+    {
+      "slug": "saba-rice-bowl-mala",
+      "name": {
+        "th": "ข้าวหน้าปลาซาบะย่าง หม่าล่า",
+        "en": "Mala Grilled Saba Rice Bowl"
+      },
+      "description": {
+        "th": "ปลาซาบะชิ้นหนาย่างซอสจนผิวกรอบ โรยผงหม่าล่าชาลิ้น บนข้าวญี่ปุ่น",
+        "en": "Thick saba mackerel grilled until crisp, dusted with numbing mala spice over Japanese rice."
+      },
+      "price": 129,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "spiced-smoky", "savory"],
+      "review": null
+    },
+    {
+      "slug": "chicken-rice-bowl-mala",
+      "name": {
+        "th": "ข้าวหน้าไก่ย่าง หม่าล่า",
+        "en": "Mala Grilled Chicken Rice Bowl"
+      },
+      "description": {
+        "th": "ไก่ย่างซอสนุ่มฉ่ำ โรยผงหม่าล่าชาลิ้น บนข้าวญี่ปุ่น",
+        "en": "Juicy chicken grilled in sauce, dusted with numbing mala spice over Japanese rice."
+      },
+      "price": 95,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "spiced-smoky", "savory"],
+      "review": null
+    },
+    {
+      "slug": "premium-beef-rice-bowl-mala",
+      "name": {
+        "th": "ข้าวหน้าเนื้อพรีเมี่ยม + ไข่ออนเซ็น หม่าล่า",
+        "en": "Mala Premium Beef Rice Bowl with Onsen Egg"
+      },
+      "description": {
+        "th": "เนื้อวัวสายมันย่างไฟ โรยผงหม่าล่าชาลิ้น บนข้าวญี่ปุ่น เสิร์ฟพร้อมไข่ออนเซ็น 1 ฟอง",
+        "en": "Well-marbled premium beef seared over fire, dusted with numbing mala spice over Japanese rice, with one onsen egg."
+      },
+      "price": 179,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "spiced-smoky", "savory", "creamy-rich"],
+      "review": null
+    },
+    {
+      "slug": "flat-iron-beef-rice-bowl-mala",
+      "name": {
+        "th": "ข้าวหน้าเนื้อใบพาย + ไข่ออนเซ็น หม่าล่า",
+        "en": "Mala Flat Iron Beef Rice Bowl with Onsen Egg"
+      },
+      "description": {
+        "th": "เนื้อใบพายมันน้อยย่างไฟ โรยผงหม่าล่าชาลิ้น บนข้าวญี่ปุ่น เสิร์ฟพร้อมไข่ออนเซ็น 1 ฟอง",
+        "en": "Lean flat iron beef seared over fire, dusted with numbing mala spice over Japanese rice, with one onsen egg."
+      },
+      "price": 199,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "spiced-smoky", "savory", "creamy-rich"],
+      "review": null
+    },
+    {
+      "slug": "shrimp-rice-bowl-mala",
+      "name": {
+        "th": "ข้าวหน้ากุ้งย่าง หม่าล่า",
+        "en": "Mala Grilled Shrimp Rice Bowl"
+      },
+      "description": {
+        "th": "กุ้งขาวแกะเปลือกย่างซอส โรยผงหม่าล่าชาลิ้น บนข้าวญี่ปุ่น",
+        "en": "Peeled white shrimp grilled in sauce, dusted with numbing mala spice over Japanese rice."
+      },
+      "price": 119,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "spiced-smoky", "savory"],
+      "review": null
+    },
+    {
+      "slug": "salmon-rice-bowl-mala",
+      "name": {
+        "th": "ข้าวหน้าแซลม่อนย่าง หม่าล่า",
+        "en": "Mala Grilled Salmon Rice Bowl"
+      },
+      "description": {
+        "th": "แซลม่อนย่างซอส โรยผงหม่าล่าชาลิ้น บนข้าวญี่ปุ่น",
+        "en": "Salmon grilled in sauce, dusted with numbing mala spice over Japanese rice."
+      },
+      "price": 119,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "spiced-smoky", "savory"],
+      "review": null
+    }
+  ]
+}

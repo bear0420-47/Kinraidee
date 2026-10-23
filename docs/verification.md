@@ -1415,3 +1415,41 @@ New seed tests:
 | Deliberate regressions | Hiding the home link, showing it on Home, removing `กลับหน้าแรก`, and making `เริ่มใหม่` keep the stored flow each fail the new tests; files restored. |
 | `pnpm verify` | Pass. API: 71 files/551 tests; web: 38 files/404 tests; builds pass. One earlier run failed `router.test.tsx` › `marks the document as the admin area only while an admin route is shown`; it passed in 8 repeated file runs and the final full run, so it is recorded as an intermittent test, not a defect in this change. |
 | Prettier `--end-of-line auto` and `git diff --check` | Pass for changed code; `user-journey.md` and `plan.md` keep their existing table formatting warnings from `main`. |
+
+## Catalog source format and first restaurant
+
+### Scope
+
+- Verification date: 2026-10-22 ICT (`UTC+07:00`)
+- Environment: local Windows 11 workspace, pnpm 12.4.2
+- Base: `main` at `76efd97`
+- Change: per-restaurant catalog source (`src/api/prisma/data/catalog/`), `catalog:build`, expanded taxonomy with hidden `desserts` and `drinks`, the archived starter catalog, and Family Kebab Halal (29 menu items) from Grab screenshots.
+
+### Results
+
+| Check | Result |
+|---|---|
+| `pnpm --filter api catalog:build` | Pass: 1 restaurant, 29 menu items, 0 hidden; 29 photos missing, all listed in `photo-checklist.csv`. Before the two items Grab showed as unavailable were removed, the build refused to run with their open review notes, and `--draft` built them with the notes reported. |
+| `catalog:build --check` | Pass when in sync; a test writes a stale seed and the check fails with `catalog.seed.json is out of date`. |
+| Screenshot handling | Duplicates merged: Hummus and the vegetarian pizza (Top picks and their sections) and the item split across screenshots 7 and 8. Dishes Grab showed with a shared photo but different names and prices were kept separately. Left out as incomplete: the two unavailable Iskender kebabs, the cut-off first item of `อาหารทานเล่น`, and the Top-pick items with no menu entry in the screenshots (Chicken Pitta Doner Kebab, beef fried rice). No Grab photo or description was stored. |
+| New build tests (17) | Slug-derived IDs and image keys, nesting flattened into the existing seed shape, hidden food types and all-hidden restaurants left out, photos found by name in any of the three formats, unmatched photos reported, missing-photo paths listed, every validation problem named by file and field, review notes blocking the build, duplicate slugs, CSV quoting with a UTF-8 BOM, unchanged taxonomy IDs, and the committed source building in sync. |
+| Seed tests | Use the archived catalog as their fixture, so counts (47 records, 12 photos) are independent of the live catalog. |
+| Deliberate regressions | Including hidden dishes, ignoring review notes, finding only PNG photos, not reporting unmatched photos, menu IDs ignoring the restaurant, a `--check` that never fails, and accepting an unknown zone each fail the tests; files restored. |
+| `pnpm verify` | Pass. API: 72 files/568 tests; web: 38 files/407 tests; builds pass. |
+| Prettier `--end-of-line auto` and `git diff --check` | Pass for changed files (`plan.md` keeps its existing table warnings from `main`). |
+| Fresh-database seed | Superseded by the full-catalog check below. |
+
+### Full catalog (13 restaurants), 2026-10-23
+
+- Restaurants added from Grab screenshots: Family Kebab Halal, Khang Mor Fah, Jong Hua A Ming, GINDON, Lung Yik Steak, Little Grin, Chef Toy, Sandwich Juseyo, Lao Ta Mala, Charoen Rot, Heng Heng Suki, Chor Charoen Phanich, Yang Hai MFU. Kept only complete single-person dishes; left out กับข้าว, sharing platters, unavailable, cut-off, unlisted, and ambiguous items; merged duplicates; stored regular prices instead of temporary Grab promotions.
+
+| Check | Result |
+|---|---|
+| Data audit | 229 source dishes (222 visible, 7 hidden desserts and drinks); every dish has Thai and English names and descriptions; prices 25–299; no open review notes. |
+| `pnpm verify` (after merging `origin/main`) | Pass. API 72 files/568 tests; web 38 files/407 tests; builds pass. `catalog:build --check` passes. |
+| Seed into the empty local `kinraidee` database | `migrate deploy` then `db seed`: 766 records and links created (13 restaurants, 222 menu items, 510 taste links, 10 food types, 8 tastes, 3 zones). A second run reports 766 unchanged. No dessert or drink menu items reached the database. |
+| Every filter combination via `POST /api/recommendations` | 1,584 combinations: 277 return dishes, 1,307 return a no-match suggestion, and every suggestion returns dishes when applied. No errors and no duplicate cards. |
+| Browser | The meal flow lists the 10 visible food types and 8 tastes; ฿50–100 + เผ็ด + เมนูข้าว + ตรงข้ามมหาวิทยาลัย shuffled three cards from three different restaurants, each showing the no-photo state. |
+| Admin API | Logged in as the seeded administrator: 13 restaurants and 222 menu items listed. |
+| Retiring the archived catalog | A database seeded with the archived starter catalog (3 restaurants, 9 menu items active), then seeded with the current catalog, reported `Retired 3 archived restaurants and 9 archived menu items.`: 13 of 16 restaurants and 222 of 231 menu items active, and only the new Family Kebab Halal active. A second run retired nothing and left every record unchanged. New tests cover keeping IDs the current catalog uses, skipping already-deleted records, idempotency, and that no archived ID collides with the live catalog. |
+| `pnpm verify` after the retirement change | Pass: API 72 files/570 tests; web 38 files/407 tests; builds pass. Two earlier full runs each failed 2–3 different web tests (logout and account-link tests) that pass in isolation, with no web changes since the last full pass; recorded as intermittent. The photo-copy seed test, which took 6–9 s on busy runs, now has a 30 s timeout. |

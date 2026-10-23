@@ -166,13 +166,22 @@ pnpm --filter api prisma migrate deploy
 pnpm --filter api prisma db seed
 ```
 
-The seed creates or updates exactly one administrator identified by the normalized `SEED_ADMIN_EMAIL`, then imports the approved starter catalog from `src/api/prisma/data/catalog.seed.json`. Repeated runs update the administrator's Argon2id password hash, keep its role as `ADMIN`, and upsert the same catalog IDs without creating duplicates. Seeded menu-taste links are synchronized with the fixture, while catalog records outside the fixture and existing `deletedAt` values are preserved.
+The seed creates or updates exactly one administrator identified by the normalized `SEED_ADMIN_EMAIL`, then imports the catalog from `src/api/prisma/data/catalog.seed.json`, which `pnpm --filter api catalog:build` generates from `src/api/prisma/data/catalog/` (see "Add Restaurants And Menus" below). Repeated runs update the administrator's Argon2id password hash, keep its role as `ADMIN`, and upsert the same catalog IDs without creating duplicates. Seeded menu-taste links are synchronized with the fixture, while catalog records outside the fixture and existing `deletedAt` values are preserved.
 
-The starter catalog contains 3 zones, 4 food types, 6 tastes, 3 restaurants, 9 menu items, and 22 menu-taste links.
+The catalog always contains the 3 zones and the visible food types and tastes from `taxonomy.json`. Restaurants and menu items are added over time; the earlier 3-restaurant starter catalog is archived under `src/api/prisma/data/archive/`.
 
-With `LOCAL_UPLOADS_ENABLED=true`, the seed also copies the 12 catalog photos from `assets/catalog/` into `LOCAL_UPLOADS_DIRECTORY` and links them; its last line reports `Copied 12 catalog photos into local uploads.` After pulling changes, re-run `pnpm --filter api prisma db seed`: a database seeded by an older version keeps menus without photos (`ไม่มีรูปเมนู`) until then. Re-running is safe, because it upserts the same records and keeps accounts, favorites, and history. Source and authorization evidence for the supplied dataset and images is recorded in `assets/catalog/README.md`.
+With `LOCAL_UPLOADS_ENABLED=true`, the seed also copies every catalog photo from `assets/catalog/` into `LOCAL_UPLOADS_DIRECTORY` and links them; its last line reports how many were copied. After pulling changes, re-run `pnpm --filter api prisma db seed`: a database seeded by an older version keeps menus without photos (`ไม่มีรูปเมนู`) until then. Re-running is safe, because it upserts the same records and keeps accounts, favorites, and history. Source and authorization evidence for the supplied dataset and images is recorded in `assets/catalog/README.md`.
 
 Never commit real administrator credentials. Supply production values through the approved secret-management process only after production deployment is separately approved.
+
+### Add Restaurants And Menus
+
+1. Write one file per restaurant in `src/api/prisma/data/catalog/restaurants/<restaurant-slug>.json`, following an existing file. Zones, food types, and tastes are the slugs listed in `src/api/prisma/data/catalog/taxonomy.json`.
+2. Optional photos: save a dish photo as `assets/catalog/<restaurant-slug>/menus/<menu-slug>.png` (or `.jpg`/`.webp`) and a logo as `assets/catalog/<restaurant-slug>/logo.png`. `assets/catalog/photo-checklist.csv` lists the exact path each dish expects.
+3. Run `pnpm --filter api catalog:build`. It validates every file, refuses to build while a menu item still has a `review` note, regenerates `catalog.seed.json` and the photo checklist, and prints which photos are missing or match no dish.
+4. Run `pnpm --filter api prisma db seed` to load the changes into the local database.
+
+Never rename a restaurant or menu slug after it has been seeded: IDs are derived from slugs, so a rename creates a new record. Keep source screenshots out of the repository; the git-ignored `menu-inbox/` folder at the repository root is for them. The seed never removes records missing from the file. It does soft-delete the archived starter catalog (3 restaurants, 9 menu items) when an older database still has it active, so re-seeding an existing database shows only the current catalog.
 
 ## 7. Run Verification
 

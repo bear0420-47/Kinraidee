@@ -1,13 +1,16 @@
-# Catalog source assets
+# Catalog photos
 
-These assets support the approved issue #30 starter catalog dataset.
+Optional photos for the restaurants and menu items in `src/api/prisma/data/catalog/restaurants/`. `pnpm --filter api catalog:build` finds them by file name; nothing else needs editing.
 
-- Source: restaurant, menu, and image files supplied by the project owner.
-- Authorization: the project owner explicitly approved repository and seed use on 2026-10-05.
-- Verification date: 2026-10-05.
-- Privacy review: the supplied assets show food, menu artwork, and restaurant logos; no identifiable people were found.
-- Runtime handling (human approver's decision, 2026-10-06, replacing the original #30 rule):
-  - With local uploads on (`LOCAL_UPLOADS_ENABLED=true`, development and test), the seed copies each photo into `LOCAL_UPLOADS_DIRECTORY` under the fixed key in its record's `image` entry, and stores `imageKey` and `imageUrl` (`/uploads/<key>`). Anyone who runs the seed sees all 3 restaurant logos and 9 menu photos.
-  - With local uploads off (production), records keep their approved external `imageUrl` or `null` until durable application-owned storage is available.
+- **Logo:** `assets/catalog/<restaurant-slug>/logo.png` (or `.jpg`, `.webp`).
+- **Dish photo:** `assets/catalog/<restaurant-slug>/menus/<menu-slug>.png` (or `.jpg`, `.webp`).
+- **Checklist:** `photo-checklist.csv` (generated) lists every dish with the exact path it expects and whether a photo is `found`, `missing`, or `hidden` (its food type is hidden from the app). The build also prints any photo whose name matches no dish, which usually means a typo.
+- Dishes without a photo show the app's no-photo state. A photo is copied into local uploads by the development seed, as before.
 
-The canonical structured fixture is `src/api/prisma/data/catalog.seed.json`. Filenames below are normalized to match their restaurant and menu records; the original root-level filenames are intentionally not retained.
+## Rules for what may be added
+
+- Use only photos the project may publish: taken by the team, supplied by the restaurant owner, or otherwise licensed. Never save photos from Google Maps, Grab, LINE MAN, or Wongnai.
+- Check each photo for identifiable people before adding it (`rule.md`).
+- Record where each restaurant's data came from, and the owner's consent, in its `source` entry. Owner consent is required before a restaurant reaches production.
+
+The previous starter catalog's photos and their authorization record are in `_archive/`, which the build ignores.

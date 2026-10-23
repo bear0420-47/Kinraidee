@@ -1,9 +1,11 @@
 import {
   BowlFood,
+  Cake,
   Flame,
   ForkKnife,
   Heart,
   Leaf,
+  OrangeSlice,
   Sparkle,
   type Icon,
 } from '@phosphor-icons/react'
@@ -25,6 +27,8 @@ describe('tasteIcons', () => {
       'sparkles',
       'heart',
       'bowl',
+      'cake',
+      'citrus',
     ])
   })
 
@@ -34,6 +38,8 @@ describe('tasteIcons', () => {
     ['sparkles', Sparkle],
     ['heart', Heart],
     ['bowl', BowlFood],
+    ['cake', Cake],
+    ['citrus', OrangeSlice],
   ])('renders %s with its Phosphor icon', (key, Expected) => {
     expect(markup(<TasteIcon icon={key} />)).toBe(markup(<Expected />))
   })

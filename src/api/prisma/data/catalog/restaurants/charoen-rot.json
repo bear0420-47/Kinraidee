@@ -1,0 +1,130 @@
+{
+  "slug": "charoen-rot",
+  "zone": "opposite-mfu",
+  "name": {
+    "th": "เจริญรส แซ่บทอด อาหารตามสั่ง",
+    "en": "Charoen Rot"
+  },
+  "description": {
+    "th": "ร้านข้าวไก่ทอดหมูทอดและอาหารตามสั่งย่านท่าสุด มีข้าวยำรสแซ่บ",
+    "en": "Fried chicken and pork rice shop in Tha Sut, also serving spicy rice salads."
+  },
+  "phone": null,
+  "source": {
+    "type": "grab-screenshot",
+    "capturedOn": "2026-10-23",
+    "pricesInclude": "grab-delivery-markup",
+    "ownerConsent": {
+      "given": false,
+      "by": null,
+      "on": null
+    }
+  },
+  "menuItems": [
+    {
+      "slug": "fried-chicken-rice-jaew",
+      "name": {
+        "th": "ข้าวไก่ทอด น้ำจิ้มแจ่ว",
+        "en": "Fried Chicken Rice with Jaew Dip"
+      },
+      "description": {
+        "th": "ไก่ทอดกรอบหั่นชิ้น เสิร์ฟกับข้าวสวย แตงกวา และน้ำจิ้มแจ่ว",
+        "en": "Sliced crispy fried chicken with rice, cucumber, and spicy jaew dipping sauce."
+      },
+      "price": 50,
+      "foodType": "rice-dishes",
+      "tastes": ["crispy", "spicy", "savory"],
+      "review": null
+    },
+    {
+      "slug": "fried-pork-rice-jaew",
+      "name": {
+        "th": "ข้าวหมูทอด น้ำจิ้มแจ่ว",
+        "en": "Fried Pork Rice with Jaew Dip"
+      },
+      "description": {
+        "th": "หมูทอดกรอบหั่นชิ้น เสิร์ฟกับข้าวสวย แตงกวา และน้ำจิ้มแจ่ว",
+        "en": "Sliced crispy fried pork with rice, cucumber, and spicy jaew dipping sauce."
+      },
+      "price": 50,
+      "foodType": "rice-dishes",
+      "tastes": ["crispy", "spicy", "savory"],
+      "review": null
+    },
+    {
+      "slug": "fried-chicken-rice-sauce",
+      "name": {
+        "th": "ข้าวไก่ทอด ราดซอส",
+        "en": "Fried Chicken Rice with Sauce"
+      },
+      "description": {
+        "th": "ไก่ทอดกรอบราดซอส เสิร์ฟกับข้าวสวยและแตงกวา",
+        "en": "Crispy fried chicken topped with sauce, served with rice and cucumber."
+      },
+      "price": 55,
+      "foodType": "rice-dishes",
+      "tastes": ["crispy", "savory"],
+      "review": null
+    },
+    {
+      "slug": "fried-pork-rice-sauce",
+      "name": {
+        "th": "ข้าวหมูทอด ราดซอส",
+        "en": "Fried Pork Rice with Sauce"
+      },
+      "description": {
+        "th": "หมูทอดกรอบราดซอส เสิร์ฟกับข้าวสวยและแตงกวา",
+        "en": "Crispy fried pork topped with sauce, served with rice and cucumber."
+      },
+      "price": 55,
+      "foodType": "rice-dishes",
+      "tastes": ["crispy", "savory"],
+      "review": null
+    },
+    {
+      "slug": "spicy-fried-chicken-yum-rice",
+      "name": {
+        "th": "ข้าวยำไก่แซ่บ",
+        "en": "Spicy Fried Chicken Salad with Rice"
+      },
+      "description": {
+        "th": "ไก่ทอดกรอบคลุกยำรสแซ่บกับหอมแดงและสมุนไพร เสิร์ฟกับข้าวสวย",
+        "en": "Crispy fried chicken tossed in a spicy Thai herb salad with shallots, served with rice."
+      },
+      "price": 59,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "sour", "crispy"],
+      "review": null
+    },
+    {
+      "slug": "spicy-fried-pork-yum-rice",
+      "name": {
+        "th": "ข้าวยำหมูทอดแซ่บ",
+        "en": "Spicy Fried Pork Salad with Rice"
+      },
+      "description": {
+        "th": "หมูทอดกรอบคลุกยำรสแซ่บกับหอมแดงและสมุนไพร เสิร์ฟกับข้าวสวย",
+        "en": "Crispy fried pork tossed in a spicy Thai herb salad with shallots, served with rice."
+      },
+      "price": 59,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "sour", "crispy"],
+      "review": null
+    },
+    {
+      "slug": "two-fried-eggs-rice",
+      "name": {
+        "th": "ข้าวไข่ดาว 2 ฟอง",
+        "en": "Rice with Two Fried Eggs"
+      },
+      "description": {
+        "th": "ไข่ดาวกรอบ 2 ฟองบนข้าวสวยร้อน ๆ",
+        "en": "Two crispy fried eggs over hot rice."
+      },
+      "price": 70,
+      "foodType": "rice-dishes",
+      "tastes": ["savory"],
+      "review": null
+    }
+  ]
+}

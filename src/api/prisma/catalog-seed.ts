@@ -281,6 +281,43 @@ export async function seedCatalog(
   return counts
 }
 
+// The 2026-10-06 starter catalog, archived when the per-restaurant source replaced it.
+export const archivedCatalogUrl = new URL(
+  './data/archive/catalog.seed.2026-10-06.json',
+  import.meta.url,
+)
+
+// Soft-deletes archived restaurants and menu items that a database seeded earlier still
+// has active, so they leave recommendations without breaking favorites or history. Records
+// the current catalog still uses, and ones already deleted, are left alone.
+export async function retireArchivedCatalog(
+  transaction: Prisma.TransactionClient,
+  archived: CatalogSeed,
+  current: CatalogSeed,
+  deletedAt = new Date(),
+) {
+  const keep = new Set([
+    ...current.restaurants.map(({ id }) => id),
+    ...current.menuItems.map(({ id }) => id),
+  ])
+  const restaurantIds = archived.restaurants
+    .map(({ id }) => id)
+    .filter((id) => !keep.has(id))
+  const menuItemIds = archived.menuItems
+    .map(({ id }) => id)
+    .filter((id) => !keep.has(id))
+
+  const menuItems = await transaction.menuItem.updateMany({
+    where: { id: { in: menuItemIds }, deletedAt: null },
+    data: { deletedAt },
+  })
+  const restaurants = await transaction.restaurant.updateMany({
+    where: { id: { in: restaurantIds }, deletedAt: null },
+    data: { deletedAt },
+  })
+  return { restaurants: restaurants.count, menuItems: menuItems.count }
+}
+
 export function formatCatalogSeedSummary(counts: CatalogSeedCounts) {
   const total = counts.created + counts.updated + counts.unchanged
   return `Seeded ${total} catalog records and links (${counts.created} created, ${counts.updated} updated, ${counts.unchanged} unchanged, ${counts.removedTasteLinks} stale taste links removed).`

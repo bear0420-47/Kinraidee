@@ -1,0 +1,250 @@
+{
+  "slug": "little-grin",
+  "zone": "opposite-mfu",
+  "name": {
+    "th": "ลิตเติ้ลกรินทร์",
+    "en": "Little Grin"
+  },
+  "description": {
+    "th": "ร้านข้าวไก่กรอบและบะหมี่ย่านท่าสุด มีซอสให้เลือกหลายแบบ ทั้งเกาหลี เทริยากิ ชีส และครีมหัวหอม",
+    "en": "Crispy chicken rice and noodle shop in Tha Sut with many sauces, including Korean, teriyaki, cheese, and sour cream and onion."
+  },
+  "phone": null,
+  "source": {
+    "type": "grab-screenshot",
+    "capturedOn": "2026-10-22",
+    "pricesInclude": "grab-delivery-markup",
+    "ownerConsent": {
+      "given": false,
+      "by": null,
+      "on": null
+    }
+  },
+  "menuItems": [
+    {
+      "slug": "teriyaki-chicken-rice",
+      "name": {
+        "th": "ข้าวไก่เทริยากิ",
+        "en": "Teriyaki Chicken Rice"
+      },
+      "description": {
+        "th": "ไก่ย่างซอสเทริยากิ โรยงา เสิร์ฟกับข้าวสวยและผักลวก",
+        "en": "Grilled teriyaki chicken with sesame, served with rice and blanched vegetables."
+      },
+      "price": 69,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "sweet"],
+      "review": null
+    },
+    {
+      "slug": "teriyaki-grilled-chicken-noodles",
+      "name": {
+        "th": "บะหมี่ไก่ย่างเทริยากิ",
+        "en": "Teriyaki Grilled Chicken Noodles"
+      },
+      "description": {
+        "th": "บะหมี่กับไก่ย่างซอสเทริยากิ โรยงา และผักลวก",
+        "en": "Egg noodles with grilled teriyaki chicken, sesame, and blanched vegetables."
+      },
+      "price": 69,
+      "foodType": "noodles",
+      "tastes": ["savory", "sweet"],
+      "review": null
+    },
+    {
+      "slug": "teriyaki-crispy-chicken-noodles",
+      "name": {
+        "th": "บะหมี่ไก่กรอบเทริยากิ",
+        "en": "Teriyaki Crispy Chicken Noodles"
+      },
+      "description": {
+        "th": "บะหมี่กับไก่ทอดกรอบราดซอสเทริยากิ โรยงา และผักลวก",
+        "en": "Egg noodles with crispy fried chicken in teriyaki sauce, sesame, and blanched vegetables."
+      },
+      "price": 69,
+      "foodType": "noodles",
+      "tastes": ["crispy", "savory", "sweet"],
+      "review": null
+    },
+    {
+      "slug": "korean-crispy-chicken-mama",
+      "name": {
+        "th": "มาม่าไก่กรอบเกาหลี",
+        "en": "Korean Crispy Chicken Mama Noodles"
+      },
+      "description": {
+        "th": "มาม่าผัดกับไก่ทอดกรอบซอสเกาหลีรสหวานเผ็ด โรยสาหร่าย",
+        "en": "Stir-fried Mama noodles with crispy chicken in a sweet-spicy Korean sauce, topped with seaweed."
+      },
+      "price": 79,
+      "foodType": "noodles",
+      "tastes": ["spicy", "sweet", "crispy"],
+      "review": null
+    },
+    {
+      "slug": "crispy-chicken-rice-choose-your-sauce",
+      "name": {
+        "th": "ข้าวไก่กรอบตามใจ",
+        "en": "Crispy Chicken Rice with Your Choice of Sauces"
+      },
+      "description": {
+        "th": "ไก่ทอดกรอบชิ้นพอดีคำ เลือกซอสได้ตามใจชอบ วางบนข้าวสวย",
+        "en": "Bite-size crispy fried chicken with your choice of sauces, served over rice."
+      },
+      "price": 75,
+      "foodType": "rice-dishes",
+      "tastes": ["crispy", "savory"],
+      "review": null
+    },
+    {
+      "slug": "crispy-chicken-rice-korean",
+      "name": {
+        "th": "ข้าวไก่กรอบเกาหลี",
+        "en": "Crispy Chicken Rice with Korean Sauce"
+      },
+      "description": {
+        "th": "ไก่ทอดกรอบชิ้นพอดีคำราดซอสเกาหลีรสหวานเผ็ด โรยงาและต้นหอม วางบนข้าวสวย",
+        "en": "Bite-size crispy fried chicken tossed in a sweet-spicy Korean sauce with sesame and spring onion, served over rice."
+      },
+      "price": 65,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "sweet", "crispy"],
+      "review": null
+    },
+    {
+      "slug": "crispy-chicken-rice-korean-mayo",
+      "name": {
+        "th": "ข้าวไก่กรอบเกาหลีมาโย",
+        "en": "Crispy Chicken Rice with Korean Sauce & Mayo"
+      },
+      "description": {
+        "th": "ไก่ทอดกรอบชิ้นพอดีคำราดซอสเกาหลีและมายองเนส โรยสาหร่าย วางบนข้าวสวย",
+        "en": "Bite-size crispy fried chicken with Korean sauce and mayonnaise, topped with seaweed, served over rice."
+      },
+      "price": 65,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "sweet", "creamy-rich"],
+      "review": null
+    },
+    {
+      "slug": "crispy-chicken-rice-spicy-mayo",
+      "name": {
+        "th": "ข้าวไก่กรอบสไปซี่มาโย",
+        "en": "Crispy Chicken Rice with Spicy Mayo"
+      },
+      "description": {
+        "th": "ไก่ทอดกรอบชิ้นพอดีคำราดสไปซี่มาโย โรยสาหร่าย วางบนข้าวสวย",
+        "en": "Bite-size crispy fried chicken with spicy mayo, topped with seaweed, served over rice."
+      },
+      "price": 65,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "creamy-rich", "crispy"],
+      "review": null
+    },
+    {
+      "slug": "crispy-chicken-rice-cheese",
+      "name": {
+        "th": "ข้าวไก่กรอบชีส",
+        "en": "Crispy Chicken Rice with Cheese Sauce"
+      },
+      "description": {
+        "th": "ไก่ทอดกรอบชิ้นพอดีคำราดซอสชีสเข้มข้น โรยต้นหอม วางบนข้าวสวย",
+        "en": "Bite-size crispy fried chicken topped with rich cheese sauce and spring onion, served over rice."
+      },
+      "price": 65,
+      "foodType": "rice-dishes",
+      "tastes": ["creamy-rich", "crispy"],
+      "review": null
+    },
+    {
+      "slug": "crispy-chicken-rice-korean-cheese",
+      "name": {
+        "th": "ข้าวไก่กรอบเกาหลี x ชีส",
+        "en": "Crispy Chicken Rice with Korean Sauce & Cheese"
+      },
+      "description": {
+        "th": "ไก่ทอดกรอบชิ้นพอดีคำราดซอสเกาหลีและซอสชีส โรยสาหร่าย วางบนข้าวสวย",
+        "en": "Bite-size crispy fried chicken with Korean sauce and cheese sauce, topped with seaweed, served over rice."
+      },
+      "price": 69,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "sweet", "creamy-rich"],
+      "review": null
+    },
+    {
+      "slug": "crispy-chicken-rice-sour-cream-onion",
+      "name": {
+        "th": "ข้าวไก่กรอบครีมหัวหอม",
+        "en": "Crispy Chicken Rice with Sour Cream & Onion Sauce"
+      },
+      "description": {
+        "th": "ไก่ทอดกรอบชิ้นพอดีคำราดซอสครีมหัวหอม โรยงาดำ วางบนข้าวสวย",
+        "en": "Bite-size crispy fried chicken topped with sour cream and onion sauce and black sesame, served over rice."
+      },
+      "price": 69,
+      "foodType": "rice-dishes",
+      "tastes": ["creamy-rich", "crispy"],
+      "review": null
+    },
+    {
+      "slug": "crispy-chicken-rice-sour-cream-onion-korean",
+      "name": {
+        "th": "ข้าวไก่กรอบครีมหัวหอม x ซอสเกาหลี",
+        "en": "Crispy Chicken Rice with Sour Cream & Onion and Korean Sauce"
+      },
+      "description": {
+        "th": "ไก่ทอดกรอบชิ้นพอดีคำราดซอสครีมหัวหอมคู่กับซอสเกาหลี วางบนข้าวสวย",
+        "en": "Bite-size crispy fried chicken with sour cream and onion sauce alongside Korean sauce, served over rice."
+      },
+      "price": 69,
+      "foodType": "rice-dishes",
+      "tastes": ["creamy-rich", "spicy", "sweet"],
+      "review": null
+    },
+    {
+      "slug": "crispy-chicken-rice-teriyaki",
+      "name": {
+        "th": "ข้าวไก่กรอบเทริยากิ",
+        "en": "Crispy Chicken Rice with Teriyaki Sauce"
+      },
+      "description": {
+        "th": "ไก่ทอดกรอบชิ้นพอดีคำราดซอสเทริยากิ โรยงา เสิร์ฟกับผักลวก วางบนข้าวสวย",
+        "en": "Bite-size crispy fried chicken in teriyaki sauce with sesame and blanched vegetables, served over rice."
+      },
+      "price": 65,
+      "foodType": "rice-dishes",
+      "tastes": ["sweet", "savory", "crispy"],
+      "review": null
+    },
+    {
+      "slug": "crispy-chicken-rice-spicy-wing-powder",
+      "name": {
+        "th": "ข้าวไก่กรอบผงวิงค์แซ่บ",
+        "en": "Crispy Chicken Rice with Spicy Wing Seasoning"
+      },
+      "description": {
+        "th": "ไก่ทอดกรอบชิ้นพอดีคำคลุกผงปรุงรสวิงค์แซ่บรสเผ็ด วางบนข้าวสวย",
+        "en": "Bite-size crispy fried chicken coated in a spicy wing seasoning, served over rice."
+      },
+      "price": 65,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "crispy", "spiced-smoky"],
+      "review": null
+    },
+    {
+      "slug": "crispy-chicken-rice-nori",
+      "name": {
+        "th": "ข้าวไก่กรอบโนริสาหร่าย",
+        "en": "Crispy Chicken Rice with Nori Seaweed"
+      },
+      "description": {
+        "th": "ไก่ทอดกรอบชิ้นพอดีคำคลุกผงสาหร่ายโนริ โรยสาหร่ายเส้น วางบนข้าวสวย",
+        "en": "Bite-size crispy fried chicken coated in nori seasoning and topped with shredded seaweed, served over rice."
+      },
+      "price": 65,
+      "foodType": "rice-dishes",
+      "tastes": ["crispy", "savory"],
+      "review": null
+    }
+  ]
+}

@@ -1,0 +1,160 @@
+{
+  "slug": "sandwich-juseyo",
+  "zone": "opposite-mfu",
+  "name": {
+    "th": "แซนด์วิชไส้ทะลัก จูเซโย",
+    "en": "Sandwich Juseyo"
+  },
+  "description": {
+    "th": "ร้านแซนด์วิชไข่ข้นสไตล์เกาหลีย่านท่าสุด เลือกไส้ได้เอง มีบรันช์และสลัด",
+    "en": "Korean-style scrambled egg sandwich shop in Tha Sut with build-your-own fillings, brunch, and salads."
+  },
+  "phone": null,
+  "source": {
+    "type": "grab-screenshot",
+    "capturedOn": "2026-10-23",
+    "pricesInclude": "grab-delivery-markup",
+    "ownerConsent": {
+      "given": false,
+      "by": null,
+      "on": null
+    }
+  },
+  "menuItems": [
+    {
+      "slug": "make-your-own-sandwich-2",
+      "name": {
+        "th": "แซนด์วิชเลือกไส้เอง 2 ไส้",
+        "en": "Make-Your-Own Sandwich (2 Fillings)"
+      },
+      "description": {
+        "th": "แซนด์วิชเกาหลีไส้ไข่ข้น ผักสด และไส้ที่เลือกเอง 2 อย่าง",
+        "en": "Korean-style sandwich with fluffy scrambled egg, fresh vegetables, and two fillings of your choice."
+      },
+      "price": 50,
+      "foodType": "burgers-sandwiches-wraps",
+      "tastes": ["savory", "creamy-rich"],
+      "review": null
+    },
+    {
+      "slug": "make-your-own-sandwich-4",
+      "name": {
+        "th": "แซนด์วิชเลือกไส้เอง 4 ไส้",
+        "en": "Make-Your-Own Sandwich (4 Fillings)"
+      },
+      "description": {
+        "th": "แซนด์วิชเกาหลีไส้ไข่ข้น ผักสด และไส้ที่เลือกเอง 4 อย่าง",
+        "en": "Korean-style sandwich with fluffy scrambled egg, fresh vegetables, and four fillings of your choice."
+      },
+      "price": 65,
+      "foodType": "burgers-sandwiches-wraps",
+      "tastes": ["savory", "creamy-rich"],
+      "review": null
+    },
+    {
+      "slug": "chicken-chilli-paste-sandwich",
+      "name": {
+        "th": "แซนด์วิชไก่น้ำพริกเผา",
+        "en": "Chicken Chilli Paste Sandwich"
+      },
+      "description": {
+        "th": "แซนด์วิชเกาหลีไส้ไข่ข้น อกไก่ผัดน้ำพริกเผา ชีส และผักสด",
+        "en": "Korean-style sandwich with fluffy scrambled egg, chicken breast in Thai chilli paste, cheese, and fresh vegetables."
+      },
+      "price": 65,
+      "foodType": "burgers-sandwiches-wraps",
+      "tastes": ["spicy", "sweet", "savory"],
+      "review": null
+    },
+    {
+      "slug": "mushroom-chilli-paste-sandwich",
+      "name": {
+        "th": "แซนด์วิชเห็ดน้ำพริกเผา",
+        "en": "Mushroom Chilli Paste Sandwich"
+      },
+      "description": {
+        "th": "แซนด์วิชเกาหลีไส้ไข่ข้น เห็ดโคนขาวผัดน้ำพริกเผา ชีส และผักสด",
+        "en": "Korean-style sandwich with fluffy scrambled egg, mushrooms in Thai chilli paste, cheese, and fresh vegetables."
+      },
+      "price": 65,
+      "foodType": "burgers-sandwiches-wraps",
+      "tastes": ["spicy", "sweet", "savory"],
+      "review": null
+    },
+    {
+      "slug": "bacon-cheese-sandwich",
+      "name": {
+        "th": "แซนด์วิชเบคอนชีส",
+        "en": "Bacon Cheese Sandwich"
+      },
+      "description": {
+        "th": "แซนด์วิชเกาหลีไส้ไข่ข้น เบคอน ไส้กรอก ชีส และผักสด",
+        "en": "Korean-style sandwich with fluffy scrambled egg, bacon, sausage, cheese, and fresh vegetables."
+      },
+      "price": 65,
+      "foodType": "burgers-sandwiches-wraps",
+      "tastes": ["savory", "creamy-rich"],
+      "review": null
+    },
+    {
+      "slug": "kraftkorn-brunch",
+      "name": {
+        "th": "บรันช์ขนมปังธัญพืชคราฟท์คอร์น",
+        "en": "Kraftkorn Whole Grain Brunch"
+      },
+      "description": {
+        "th": "ขนมปังธัญพืชไฟเบอร์สูงน้ำตาลต่ำ ปิ้งกรอบ ท็อปไข่ข้นและผัก",
+        "en": "Toasted high-fibre, low-sugar whole grain bread topped with scrambled egg and greens."
+      },
+      "price": 95,
+      "foodType": "burgers-sandwiches-wraps",
+      "tastes": ["savory", "fresh-light"],
+      "review": null
+    },
+    {
+      "slug": "tiramisu-salad",
+      "name": {
+        "th": "ทีรามิสุสลัด",
+        "en": "Tiramisu Salad"
+      },
+      "description": {
+        "th": "สลัดผักถ้วย 300 มล. เลือกไส้โปรตีนได้ 5 อย่าง",
+        "en": "A 300 ml salad bowl with five protein fillings of your choice."
+      },
+      "price": 55,
+      "foodType": "salads-yum-somtam",
+      "tastes": ["fresh-light"],
+      "review": null
+    },
+    {
+      "slug": "butter-sugar-toast",
+      "name": {
+        "th": "ขนมปังปิ้งเนยนม",
+        "en": "Butter Sugar Toast"
+      },
+      "description": {
+        "th": "ขนมปังปิ้งทาเนยโรยน้ำตาลราดนม",
+        "en": "Toast with butter, sugar, and condensed milk."
+      },
+      "price": 25,
+      "foodType": "desserts",
+      "tastes": ["sweet", "creamy-rich"],
+      "review": null
+    },
+    {
+      "slug": "ovaltine-toast",
+      "name": {
+        "th": "ขนมปังโอวัลติน",
+        "en": "Ovaltine Toast"
+      },
+      "description": {
+        "th": "ขนมปังปิ้งราดโอวัลตินและนมฉ่ำ ๆ",
+        "en": "Toast topped with Ovaltine and milk."
+      },
+      "price": 30,
+      "foodType": "desserts",
+      "tastes": ["sweet", "creamy-rich"],
+      "review": null
+    }
+  ]
+}

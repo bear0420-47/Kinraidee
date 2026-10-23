@@ -11,9 +11,11 @@ import {
   normalizedEmailSchema,
 } from '../src/config/credentials'
 import {
+  archivedCatalogUrl,
   copyCatalogImages,
   formatCatalogSeedSummary,
   loadCatalogSeed,
+  retireArchivedCatalog,
   seedCatalog,
 } from './catalog-seed'
 
@@ -88,6 +90,7 @@ export async function runSeed(
   const config = parseSeedEnv(input)
   const adminUpsertArgs = await createInitialAdminUpsertArgs(input)
   const catalog = await loadCatalogSeed()
+  const archivedCatalog = await loadCatalogSeed(archivedCatalogUrl)
   // Production never serves local uploads, so its records keep no local photo.
   const localImages =
     config.LOCAL_UPLOADS_ENABLED && config.NODE_ENV !== 'production'
@@ -100,13 +103,26 @@ export async function runSeed(
   const prisma = new PrismaClient()
 
   try {
-    const counts = await prisma.$transaction(async (transaction) => {
-      await transaction.user.upsert(adminUpsertArgs)
-      return seedCatalog(transaction, catalog, { localImages })
-    })
+    const { counts, retired } = await prisma.$transaction(
+      async (transaction) => {
+        await transaction.user.upsert(adminUpsertArgs)
+        const counts = await seedCatalog(transaction, catalog, { localImages })
+        const retired = await retireArchivedCatalog(
+          transaction,
+          archivedCatalog,
+          catalog,
+        )
+        return { counts, retired }
+      },
+    )
 
     writeSummary('Seeded 1 administrator account.')
     writeSummary(formatCatalogSeedSummary(counts))
+    if (retired.restaurants + retired.menuItems > 0) {
+      writeSummary(
+        `Retired ${retired.restaurants} archived restaurants and ${retired.menuItems} archived menu items.`,
+      )
+    }
     writeSummary(
       localImages
         ? `Copied ${copiedImages} catalog photos into local uploads.`

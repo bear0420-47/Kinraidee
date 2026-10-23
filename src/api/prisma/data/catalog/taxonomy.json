@@ -1,0 +1,249 @@
+{
+  "zones": [
+    {
+      "slug": "opposite-mfu",
+      "id": "c8gds70havtzwmks5lhd2caul",
+      "name": {
+        "th": "ตรงข้ามมหาวิทยาลัย",
+        "en": "Opposite Mae Fah Luang University"
+      },
+      "description": {
+        "th": "พื้นที่ร้านอาหารฝั่งตรงข้ามมหาวิทยาลัยแม่ฟ้าหลวง",
+        "en": "Restaurant area across from Mae Fah Luang University."
+      },
+      "sortOrder": 1
+    },
+    {
+      "slug": "fa-thai-market",
+      "id": "cep3gqyzjntb4qr8w3mcnp5w6",
+      "name": {
+        "th": "ตลาดฟ้าไทย",
+        "en": "Fa Thai Market"
+      },
+      "description": {
+        "th": "พื้นที่ร้านอาหารบริเวณตลาดฟ้าไทย",
+        "en": "Restaurant area around Fa Thai Market."
+      },
+      "sortOrder": 2
+    },
+    {
+      "slug": "kotchapol",
+      "id": "cb1z0wkjoc2hbh34yrslm7unn",
+      "name": {
+        "th": "คชพล",
+        "en": "Kotchapol"
+      },
+      "description": {
+        "th": "พื้นที่ร้านอาหารบริเวณโครงการคชพลแลนด์",
+        "en": "Restaurant area around the Kotchapol Land project."
+      },
+      "sortOrder": 3
+    }
+  ],
+  "foodTypes": [
+    {
+      "slug": "rice-dishes",
+      "id": "cbdllxmb0sv247maiq26k5r9k",
+      "name": {
+        "th": "เมนูข้าว",
+        "en": "Rice Dishes"
+      },
+      "icon": "rice",
+      "sortOrder": 1
+    },
+    {
+      "slug": "noodles",
+      "id": "cyoa3a1cvssy70jjtctbb2brx",
+      "name": {
+        "th": "ก๋วยเตี๋ยวและเส้น",
+        "en": "Noodles"
+      },
+      "icon": "noodles",
+      "sortOrder": 2
+    },
+    {
+      "slug": "pasta",
+      "id": "c2x3kwmcic11b8yrrmwpl7mex",
+      "name": {
+        "th": "พาสต้า",
+        "en": "Pasta"
+      },
+      "icon": "noodles",
+      "sortOrder": 3
+    },
+    {
+      "slug": "pizza-flatbread",
+      "id": "cb1i8ij0pbxlvlnl1dwuti91y",
+      "name": {
+        "th": "พิซซ่าและแป้งอบ",
+        "en": "Pizza & Flatbreads"
+      },
+      "icon": "sparkles",
+      "sortOrder": 4
+    },
+    {
+      "slug": "curries-soups",
+      "id": "coj919m5pq75gcgc6ku6heovp",
+      "name": {
+        "th": "แกงและซุป",
+        "en": "Curries & Soups"
+      },
+      "icon": "soup",
+      "sortOrder": 5
+    },
+    {
+      "slug": "salads-yum-somtam",
+      "id": "c36i8m2qy4mrs8qoal5slid5i",
+      "name": {
+        "th": "ยำ สลัด และส้มตำ",
+        "en": "Salads, Yum & Som Tam"
+      },
+      "icon": "salad",
+      "sortOrder": 6
+    },
+    {
+      "slug": "grills-steaks",
+      "id": "cc67cvfk9yai8sq230sf3z4hz",
+      "name": {
+        "th": "ปิ้งย่างและสเต็ก",
+        "en": "Grills & Steaks"
+      },
+      "icon": "grill",
+      "sortOrder": 7
+    },
+    {
+      "slug": "hotpot-bbq",
+      "id": "c2a1fr11kp8w6tvzx164lryhp",
+      "name": {
+        "th": "ชาบูและหมูกระทะ",
+        "en": "Shabu & Thai BBQ"
+      },
+      "icon": "soup",
+      "sortOrder": 8
+    },
+    {
+      "slug": "burgers-sandwiches-wraps",
+      "id": "cebaq98hdcaj27drszj1uzz4r",
+      "name": {
+        "th": "เบอร์เกอร์ แซนด์วิช และแรป",
+        "en": "Burgers, Sandwiches & Wraps"
+      },
+      "icon": "sandwich",
+      "sortOrder": 9
+    },
+    {
+      "slug": "appetizers-snacks",
+      "id": "c2786ovitbd3kl0ongp9uax8o",
+      "name": {
+        "th": "อาหารเรียกน้ำย่อยและของทานเล่น",
+        "en": "Appetizers & Snacks"
+      },
+      "icon": "sparkles",
+      "sortOrder": 10
+    },
+    {
+      "slug": "desserts",
+      "id": "c94fv0d1maf918qyxt6mzwpms",
+      "name": {
+        "th": "ของหวาน",
+        "en": "Desserts"
+      },
+      "icon": "ice-cream",
+      "sortOrder": 11,
+      "hidden": true
+    },
+    {
+      "slug": "drinks",
+      "id": "cadltxfkvjsge344dwv8j1aph",
+      "name": {
+        "th": "เครื่องดื่ม",
+        "en": "Drinks"
+      },
+      "icon": "coffee",
+      "sortOrder": 12,
+      "hidden": true
+    }
+  ],
+  "tastes": [
+    {
+      "slug": "spicy",
+      "id": "c12yme2yu2wne82ugvfce7wfw",
+      "name": {
+        "th": "เผ็ด",
+        "en": "Spicy"
+      },
+      "icon": "flame",
+      "sortOrder": 1
+    },
+    {
+      "slug": "savory",
+      "id": "c1spiyrw91ifmryner9y1bvb4",
+      "name": {
+        "th": "กลมกล่อม",
+        "en": "Savory"
+      },
+      "icon": "bowl",
+      "sortOrder": 2
+    },
+    {
+      "slug": "creamy-rich",
+      "id": "cahxbgiqa0hxlfer1dw6itmz1",
+      "name": {
+        "th": "ครีมมี่และเข้มข้น",
+        "en": "Creamy & Rich"
+      },
+      "icon": "heart",
+      "sortOrder": 3
+    },
+    {
+      "slug": "fresh-light",
+      "id": "c3lg0r5rrv15qvznx1tilwoy4",
+      "name": {
+        "th": "สดชื่นและเบา",
+        "en": "Fresh & Light"
+      },
+      "icon": "leaf",
+      "sortOrder": 4
+    },
+    {
+      "slug": "spiced-smoky",
+      "id": "cayiejo3s8ogwe5uqz1pxg29o",
+      "name": {
+        "th": "หอมเครื่องเทศและกลิ่นย่าง",
+        "en": "Spiced & Smoky"
+      },
+      "icon": "sparkles",
+      "sortOrder": 5
+    },
+    {
+      "slug": "crispy",
+      "id": "c6c7oshlpa0xsaq9jiz3vnjdq",
+      "name": {
+        "th": "กรอบ",
+        "en": "Crispy"
+      },
+      "icon": "sparkles",
+      "sortOrder": 6
+    },
+    {
+      "slug": "sweet",
+      "id": "cyymbgka0mellnr53f78fh44j",
+      "name": {
+        "th": "หวาน",
+        "en": "Sweet"
+      },
+      "icon": "cake",
+      "sortOrder": 7
+    },
+    {
+      "slug": "sour",
+      "id": "cwbpp7dp3egmhn6vrhx2fi0se",
+      "name": {
+        "th": "เปรี้ยว",
+        "en": "Sour"
+      },
+      "icon": "citrus",
+      "sortOrder": 8
+    }
+  ]
+}

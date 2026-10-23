@@ -1,9 +1,11 @@
 import {
   BowlFood,
+  Cake,
   Flame,
   ForkKnife,
   Heart,
   Leaf,
+  OrangeSlice,
   Sparkle,
   type IconProps,
 } from '@phosphor-icons/react'
@@ -17,6 +19,8 @@ export const tasteIcons = createIconRegistry(
     sparkles: { label: 'ประกาย', Icon: Sparkle },
     heart: { label: 'หัวใจ', Icon: Heart },
     bowl: { label: 'ชาม', Icon: BowlFood },
+    cake: { label: 'ขนม', Icon: Cake },
+    citrus: { label: 'ส้ม', Icon: OrangeSlice },
   },
   ForkKnife,
 )

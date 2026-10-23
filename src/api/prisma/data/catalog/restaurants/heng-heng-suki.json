@@ -1,0 +1,220 @@
+{
+  "slug": "heng-heng-suki",
+  "zone": "kotchapol",
+  "name": {
+    "th": "เฮง เฮง สุกี้ มฟล.",
+    "en": "Heng Heng Suki"
+  },
+  "description": {
+    "th": "ร้านสุกี้แห้งและสุกี้น้ำในโครงการคชพลแลนด์ ผัดสดใหม่ด้วยน้ำจิ้มสุกี้สูตรร้าน",
+    "en": "Dry and soup sukiyaki shop in Kotchapol Land, wok-fried fresh with the house suki sauce."
+  },
+  "phone": null,
+  "source": {
+    "type": "grab-screenshot",
+    "capturedOn": "2026-10-23",
+    "pricesInclude": "grab-delivery-markup",
+    "ownerConsent": {
+      "given": false,
+      "by": null,
+      "on": null
+    }
+  },
+  "menuItems": [
+    {
+      "slug": "suki-sauce-rice-bowl",
+      "name": {
+        "th": "ข้าวหน้าน้ำจิ้มสุกี้",
+        "en": "Suki Sauce Rice Bowl"
+      },
+      "description": {
+        "th": "เนื้อสัตว์ผัดกับไข่และน้ำจิ้มสุกี้สูตรร้าน ราดบนข้าวสวย เลือกเนื้อสัตว์ได้",
+        "en": "Your choice of meat stir-fried with egg and the house suki sauce, served over rice."
+      },
+      "price": 69,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "spicy"],
+      "review": null
+    },
+    {
+      "slug": "dry-suki-vegetable",
+      "name": {
+        "th": "สุกี้แห้งผัก",
+        "en": "Dry Sukiyaki with Vegetables"
+      },
+      "description": {
+        "th": "วุ้นเส้นผัดผักกรอบกับน้ำจิ้มสุกี้สูตรร้าน หอมกลิ่นกระทะ ใส่ผักและเห็ดชิเมจิ ไม่มีเนื้อสัตว์",
+        "en": "Glass noodles wok-fried with crisp vegetables in the house suki sauce, with vegetables and shimeji mushrooms only, no meat."
+      },
+      "price": 65,
+      "foodType": "noodles",
+      "tastes": ["savory", "spicy"],
+      "review": null
+    },
+    {
+      "slug": "dry-suki-chicken",
+      "name": {
+        "th": "สุกี้แห้งไก่",
+        "en": "Dry Sukiyaki with Chicken"
+      },
+      "description": {
+        "th": "วุ้นเส้นผัดผักกรอบกับน้ำจิ้มสุกี้สูตรร้าน หอมกลิ่นกระทะ กับเนื้อไก่",
+        "en": "Glass noodles wok-fried with crisp vegetables in the house suki sauce, with chicken."
+      },
+      "price": 69,
+      "foodType": "noodles",
+      "tastes": ["savory", "spicy"],
+      "review": null
+    },
+    {
+      "slug": "dry-suki-pork",
+      "name": {
+        "th": "สุกี้แห้งหมู",
+        "en": "Dry Sukiyaki with Pork"
+      },
+      "description": {
+        "th": "วุ้นเส้นผัดผักกรอบกับน้ำจิ้มสุกี้สูตรร้าน หอมกลิ่นกระทะ กับเนื้อหมู",
+        "en": "Glass noodles wok-fried with crisp vegetables in the house suki sauce, with pork."
+      },
+      "price": 69,
+      "foodType": "noodles",
+      "tastes": ["savory", "spicy"],
+      "review": null
+    },
+    {
+      "slug": "dry-suki-bacon",
+      "name": {
+        "th": "สุกี้แห้งเบคอน",
+        "en": "Dry Sukiyaki with Bacon"
+      },
+      "description": {
+        "th": "วุ้นเส้นผัดผักกรอบกับน้ำจิ้มสุกี้สูตรร้าน หอมกลิ่นกระทะ กับเบคอน",
+        "en": "Glass noodles wok-fried with crisp vegetables in the house suki sauce, with bacon."
+      },
+      "price": 75,
+      "foodType": "noodles",
+      "tastes": ["savory", "spicy"],
+      "review": null
+    },
+    {
+      "slug": "dry-suki-crispy-squid",
+      "name": {
+        "th": "สุกี้แห้งหมึกกรอบ",
+        "en": "Dry Sukiyaki with Crispy Squid"
+      },
+      "description": {
+        "th": "วุ้นเส้นผัดผักกรอบกับน้ำจิ้มสุกี้สูตรร้าน หอมกลิ่นกระทะ กับหมึกกรอบ",
+        "en": "Glass noodles wok-fried with crisp vegetables in the house suki sauce, with crispy squid."
+      },
+      "price": 75,
+      "foodType": "noodles",
+      "tastes": ["savory", "spicy"],
+      "review": null
+    },
+    {
+      "slug": "dry-suki-seafood",
+      "name": {
+        "th": "สุกี้แห้งทะเล",
+        "en": "Dry Sukiyaki with Seafood"
+      },
+      "description": {
+        "th": "วุ้นเส้นผัดผักกรอบกับน้ำจิ้มสุกี้สูตรร้าน หอมกลิ่นกระทะ กับกุ้งและปลาหมึก",
+        "en": "Glass noodles wok-fried with crisp vegetables in the house suki sauce, with shrimp and squid."
+      },
+      "price": 79,
+      "foodType": "noodles",
+      "tastes": ["savory", "spicy"],
+      "review": null
+    },
+    {
+      "slug": "dry-suki-shrimp",
+      "name": {
+        "th": "สุกี้แห้งกุ้ง",
+        "en": "Dry Sukiyaki with Shrimp"
+      },
+      "description": {
+        "th": "วุ้นเส้นผัดผักกรอบกับน้ำจิ้มสุกี้สูตรร้าน หอมกลิ่นกระทะ กับกุ้ง 3–4 ตัวตามขนาด",
+        "en": "Glass noodles wok-fried with crisp vegetables in the house suki sauce, with 3 to 4 shrimp depending on size."
+      },
+      "price": 79,
+      "foodType": "noodles",
+      "tastes": ["savory", "spicy"],
+      "review": null
+    },
+    {
+      "slug": "dry-suki-mixed",
+      "name": {
+        "th": "สุกี้แห้งรวมมิตร",
+        "en": "Dry Sukiyaki with Mixed Meats"
+      },
+      "description": {
+        "th": "วุ้นเส้นผัดผักกรอบกับน้ำจิ้มสุกี้สูตรร้าน หอมกลิ่นกระทะ กับเนื้อสัตว์และทะเลรวมมิตร",
+        "en": "Glass noodles wok-fried with crisp vegetables in the house suki sauce, with mixed meats and seafood."
+      },
+      "price": 85,
+      "foodType": "noodles",
+      "tastes": ["savory", "spicy"],
+      "review": null
+    },
+    {
+      "slug": "suki-soup-mixed",
+      "name": {
+        "th": "สุกี้น้ำรวมมิตร",
+        "en": "Sukiyaki Soup with Mixed Meats"
+      },
+      "description": {
+        "th": "สุกี้น้ำสูตรร้าน วุ้นเส้นและผักในน้ำซุปน้ำจิ้มสุกี้ ทำสดใหม่ กับเนื้อสัตว์และทะเลรวมมิตร",
+        "en": "House suki soup with glass noodles and vegetables in a suki-sauce broth, made fresh, with mixed meats and seafood."
+      },
+      "price": 89,
+      "foodType": "curries-soups",
+      "tastes": ["savory", "spicy"],
+      "review": null
+    },
+    {
+      "slug": "suki-soup-crispy-squid",
+      "name": {
+        "th": "สุกี้น้ำหมึกกรอบ",
+        "en": "Sukiyaki Soup with Crispy Squid"
+      },
+      "description": {
+        "th": "สุกี้น้ำสูตรร้าน วุ้นเส้นและผักในน้ำซุปน้ำจิ้มสุกี้ ทำสดใหม่ กับหมึกกรอบ",
+        "en": "House suki soup with glass noodles and vegetables in a suki-sauce broth, made fresh, with crispy squid."
+      },
+      "price": 75,
+      "foodType": "curries-soups",
+      "tastes": ["savory", "spicy"],
+      "review": null
+    },
+    {
+      "slug": "suki-soup-squid",
+      "name": {
+        "th": "สุกี้น้ำหมึก",
+        "en": "Sukiyaki Soup with Squid"
+      },
+      "description": {
+        "th": "สุกี้น้ำสูตรร้าน วุ้นเส้นและผักในน้ำซุปน้ำจิ้มสุกี้ ทำสดใหม่ กับปลาหมึก",
+        "en": "House suki soup with glass noodles and vegetables in a suki-sauce broth, made fresh, with squid."
+      },
+      "price": 75,
+      "foodType": "curries-soups",
+      "tastes": ["savory", "spicy"],
+      "review": null
+    },
+    {
+      "slug": "suki-soup-shrimp",
+      "name": {
+        "th": "สุกี้น้ำกุ้ง",
+        "en": "Sukiyaki Soup with Shrimp"
+      },
+      "description": {
+        "th": "สุกี้น้ำสูตรร้าน วุ้นเส้นและผักในน้ำซุปน้ำจิ้มสุกี้ ทำสดใหม่ กับกุ้ง",
+        "en": "House suki soup with glass noodles and vegetables in a suki-sauce broth, made fresh, with shrimp."
+      },
+      "price": 75,
+      "foodType": "curries-soups",
+      "tastes": ["savory", "spicy"],
+      "review": null
+    }
+  ]
+}

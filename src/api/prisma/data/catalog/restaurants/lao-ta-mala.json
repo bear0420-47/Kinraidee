@@ -1,0 +1,33 @@
+{
+  "slug": "lao-ta-mala",
+  "zone": "opposite-mfu",
+  "name": { "th": "เลาต๋าหม่าล่า", "en": "Lao Ta Mala" },
+  "description": {
+    "th": "ร้านหม่าล่าทั่งสไตล์จีนย่านท่าสุด เลือกวัตถุดิบลงชามได้เอง น้ำซุปหม่าล่าเผ็ดชา",
+    "en": "Chinese-style mala soup shop in Tha Sut where you pick your own ingredients for a numbing-spicy mala broth."
+  },
+  "phone": null,
+  "source": {
+    "type": "grab-screenshot",
+    "capturedOn": "2026-10-23",
+    "pricesInclude": "grab-delivery-markup",
+    "ownerConsent": { "given": false, "by": null, "on": null }
+  },
+  "menuItems": [
+    {
+      "slug": "mala-pick-your-own-set",
+      "name": {
+        "th": "เลาต๋าหม่าล่า เซ็ตตามใจ",
+        "en": "Pick-Your-Own Mala Soup Set"
+      },
+      "description": {
+        "th": "ชามหม่าล่าทั่ง เลือกวัตถุดิบได้สูงสุด 8 อย่าง ในน้ำซุปหม่าล่าเผ็ดชา พร้อมน้ำจิ้มสุกี้",
+        "en": "A mala soup bowl with up to eight ingredients of your choice in a numbing-spicy broth, served with suki dipping sauce."
+      },
+      "price": 169,
+      "foodType": "curries-soups",
+      "tastes": ["spicy", "spiced-smoky"],
+      "review": null
+    }
+  ]
+}
