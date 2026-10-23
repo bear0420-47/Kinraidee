@@ -275,6 +275,20 @@
       "imageUrl": null
     },
     {
+      "id": "ciho03k7ugcws3xpocn5t3072",
+      "zoneId": "c8gds70havtzwmks5lhd2caul",
+      "name": {
+        "th": "เลาต๋าหม่าล่า",
+        "en": "Lao Ta Mala"
+      },
+      "description": {
+        "th": "ร้านหม่าล่าทั่งสไตล์จีนย่านท่าสุด เลือกวัตถุดิบลงชามได้เอง น้ำซุปหม่าล่าเผ็ดชา",
+        "en": "Chinese-style mala soup shop in Tha Sut where you pick your own ingredients for a numbing-spicy mala broth."
+      },
+      "phone": null,
+      "imageUrl": null
+    },
+    {
       "id": "c59l37rkqr7yer3xl8bfbbmpu",
       "zoneId": "c8gds70havtzwmks5lhd2caul",
       "name": {
@@ -2965,6 +2979,25 @@
         "en": "Fresh salad greens with tuna in spring water, boiled egg, avocado, and tomatoes."
       },
       "price": 89,
+      "imageUrl": null
+    },
+    {
+      "id": "c3lc7m4fd6h88s5f6a0f5w0wz",
+      "restaurantId": "ciho03k7ugcws3xpocn5t3072",
+      "foodTypeId": "coj919m5pq75gcgc6ku6heovp",
+      "tasteIds": [
+        "c12yme2yu2wne82ugvfce7wfw",
+        "cayiejo3s8ogwe5uqz1pxg29o"
+      ],
+      "name": {
+        "th": "เลาต๋าหม่าล่า เซ็ตตามใจ",
+        "en": "Pick-Your-Own Mala Soup Set"
+      },
+      "description": {
+        "th": "ชามหม่าล่าทั่ง เลือกวัตถุดิบได้สูงสุด 8 อย่าง ในน้ำซุปหม่าล่าเผ็ดชา พร้อมน้ำจิ้มสุกี้",
+        "en": "A mala soup bowl with up to eight ingredients of your choice in a numbing-spicy broth, served with suki dipping sauce."
+      },
+      "price": 169,
       "imageUrl": null
     },
     {
