@@ -34,6 +34,7 @@ describe('recommendations repository', () => {
     expect(mocks.prisma.menuItem.findMany).toHaveBeenCalledWith({
       where: {
         deletedAt: null,
+        imageUrl: { not: null },
         price: { gte: 50, lte: 100 },
         foodTypeId: 'food_1',
         tastes: { some: { tasteId: 'taste_1' } },
@@ -65,6 +66,7 @@ describe('recommendations repository', () => {
       expect.objectContaining({
         where: {
           deletedAt: null,
+          imageUrl: { not: null },
           price: { gt: 200 },
           restaurant: { deletedAt: null },
         },
@@ -98,6 +100,7 @@ describe('recommendations repository', () => {
     expect(mocks.prisma.menuItem.findMany).toHaveBeenCalledWith({
       where: {
         deletedAt: null,
+        imageUrl: { not: null },
         id: { notIn: ['rejected_1'] },
         restaurant: { deletedAt: null },
       },

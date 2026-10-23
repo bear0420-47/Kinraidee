@@ -34,7 +34,8 @@
       "price": 99,
       "foodType": "rice-dishes",
       "tastes": ["creamy-rich", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "snow-white-crispy-chicken-rice"
     },
     {
       "slug": "thai-basil-mackerel-rice",
@@ -49,7 +50,8 @@
       "price": 119,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "savory"],
-      "review": null
+      "review": null,
+      "photo": "thai-basil-mackerel-rice"
     },
     {
       "slug": "crispy-chicken-satay-rice",
@@ -64,7 +66,8 @@
       "price": 99,
       "foodType": "rice-dishes",
       "tastes": ["savory", "sweet", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "crispy-chicken-satay-rice"
     },
     {
       "slug": "spicy-cheese-crispy-chicken-fried-rice",
@@ -79,7 +82,8 @@
       "price": 99,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "creamy-rich", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "spicy-cheese-crispy-chicken-fried-rice"
     },
     {
       "slug": "fish-sauce-pork-belly-rice",
@@ -94,7 +98,8 @@
       "price": 119,
       "foodType": "rice-dishes",
       "tastes": ["crispy", "savory"],
-      "review": null
+      "review": null,
+      "photo": "fish-sauce-pork-belly-rice"
     },
     {
       "slug": "black-mala-crispy-chicken-mama",
@@ -109,7 +114,8 @@
       "price": 99,
       "foodType": "noodles",
       "tastes": ["spicy", "spiced-smoky", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "black-mala-crispy-chicken-mama"
     },
     {
       "slug": "pan-fried-macaroni",
@@ -124,7 +130,8 @@
       "price": 99,
       "foodType": "pasta",
       "tastes": ["savory"],
-      "review": null
+      "review": null,
+      "photo": "pan-fried-macaroni"
     },
     {
       "slug": "thai-basil-pork-spaghetti",
@@ -139,7 +146,8 @@
       "price": 99,
       "foodType": "pasta",
       "tastes": ["spicy", "savory"],
-      "review": null
+      "review": null,
+      "photo": "thai-basil-pork-spaghetti"
     },
     {
       "slug": "drunken-crispy-chicken-spaghetti",
@@ -154,7 +162,8 @@
       "price": 99,
       "foodType": "pasta",
       "tastes": ["spicy", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "drunken-spaghetti-crispy-chicken"
     },
     {
       "slug": "crispy-chicken-bolognese",
@@ -169,7 +178,8 @@
       "price": 99,
       "foodType": "pasta",
       "tastes": ["savory", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "crispy-chicken-bolognese"
     },
     {
       "slug": "mala-crispy-chicken-spaghetti",
@@ -184,7 +194,8 @@
       "price": 99,
       "foodType": "pasta",
       "tastes": ["spicy", "spiced-smoky", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "mala-crispy-chicken-spaghetti"
     },
     {
       "slug": "chow-mein",
@@ -199,7 +210,8 @@
       "price": 99,
       "foodType": "noodles",
       "tastes": ["savory"],
-      "review": null
+      "review": null,
+      "photo": "chow-mein"
     },
     {
       "slug": "spicy-vermicelli-pork-balls",
@@ -214,7 +226,8 @@
       "price": 99,
       "foodType": "noodles",
       "tastes": ["spicy", "savory"],
-      "review": null
+      "review": null,
+      "photo": "spicy-vermicelli-pork-balls"
     },
     {
       "slug": "tom-yum-mama-jumbo-pork-balls",
@@ -229,7 +242,8 @@
       "price": 79,
       "foodType": "noodles",
       "tastes": ["spicy", "sour"],
-      "review": null
+      "review": null,
+      "photo": "tom-yum-mama-jumbo-pork-balls"
     },
     {
       "slug": "noodles-tomato-sauce-minced-pork",
@@ -244,7 +258,8 @@
       "price": 99,
       "foodType": "noodles",
       "tastes": ["sweet", "sour"],
-      "review": null
+      "review": null,
+      "photo": "noodles-tomato-sauce-minced-pork"
     },
     {
       "slug": "rad-na",
@@ -259,7 +274,8 @@
       "price": 79,
       "foodType": "noodles",
       "tastes": ["savory"],
-      "review": null
+      "review": null,
+      "photo": "rad-na"
     },
     {
       "slug": "carbonara",
@@ -274,7 +290,8 @@
       "price": 99,
       "foodType": "pasta",
       "tastes": ["creamy-rich", "savory"],
-      "review": null
+      "review": null,
+      "photo": "carbonara"
     },
     {
       "slug": "pan-fried-flat-noodles-chicken",
@@ -289,7 +306,8 @@
       "price": 89,
       "foodType": "noodles",
       "tastes": ["savory"],
-      "review": null
+      "review": null,
+      "photo": "pan-fried-flat-noodles-chicken"
     },
     {
       "slug": "minced-pork-bolognese",
@@ -304,7 +322,8 @@
       "price": 99,
       "foodType": "pasta",
       "tastes": ["savory"],
-      "review": null
+      "review": null,
+      "photo": "minced-pork-bolognese"
     },
     {
       "slug": "pad-see-ew",
@@ -319,7 +338,8 @@
       "price": 79,
       "foodType": "noodles",
       "tastes": ["savory", "sweet"],
-      "review": null
+      "review": null,
+      "photo": "pad-see-ew"
     },
     {
       "slug": "tom-yum-mama-crispy-pork",
@@ -334,7 +354,8 @@
       "price": 99,
       "foodType": "noodles",
       "tastes": ["spicy", "sour", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "tom-yum-mama-crispy-pork"
     },
     {
       "slug": "basil-bamboo-shoot-pork-rice",
@@ -349,7 +370,8 @@
       "price": 79,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "savory"],
-      "review": null
+      "review": null,
+      "photo": "basil-bamboo-shoot-pork-rice"
     },
     {
       "slug": "omelette-fried-egg-rice",
@@ -364,7 +386,8 @@
       "price": 59,
       "foodType": "rice-dishes",
       "tastes": ["savory"],
-      "review": null
+      "review": null,
+      "photo": "omelette-fried-egg-rice"
     },
     {
       "slug": "crispy-pork-curry-paste-rice",
@@ -379,7 +402,8 @@
       "price": 99,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "crispy-pork-curry-paste-rice"
     },
     {
       "slug": "curry-powder-chicken-fried-egg-rice",
@@ -394,7 +418,8 @@
       "price": 99,
       "foodType": "rice-dishes",
       "tastes": ["savory", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "curry-powder-chicken-fried-egg-rice"
     },
     {
       "slug": "thai-basil-crispy-pork-rice",
@@ -409,7 +434,8 @@
       "price": 99,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "thai-basil-crispy-pork-rice"
     },
     {
       "slug": "salt-chili-chicken-sausage-rice",
@@ -424,7 +450,8 @@
       "price": 59,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "savory"],
-      "review": null
+      "review": null,
+      "photo": "salt-chili-chicken-sausage-rice"
     },
     {
       "slug": "prik-khing-crispy-chicken-rice",
@@ -439,7 +466,8 @@
       "price": 79,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "sweet", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "prik-khing-crispy-chicken-rice"
     },
     {
       "slug": "panang-pork-rice",
@@ -454,7 +482,8 @@
       "price": 99,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "creamy-rich"],
-      "review": null
+      "review": null,
+      "photo": "panang-pork-rice"
     },
     {
       "slug": "panang-chicken-rice",
@@ -469,7 +498,8 @@
       "price": 89,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "creamy-rich"],
-      "review": null
+      "review": null,
+      "photo": "panang-chicken-rice"
     },
     {
       "slug": "basil-pork-balls-crackling-rice",
@@ -484,7 +514,8 @@
       "price": 59,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "savory"],
-      "review": null
+      "review": null,
+      "photo": "basil-pork-balls-crackling-rice"
     },
     {
       "slug": "thai-basil-crispy-chicken-rice",
@@ -499,7 +530,8 @@
       "price": 79,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "thai-basil-crispy-chicken-rice"
     },
     {
       "slug": "spicy-mixed-rice-fried-pork",
@@ -514,7 +546,8 @@
       "price": 89,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "sour"],
-      "review": null
+      "review": null,
+      "photo": "spicy-mixed-rice-fried-pork"
     },
     {
       "slug": "sweet-sour-crispy-chicken-rice",
@@ -529,7 +562,8 @@
       "price": 89,
       "foodType": "rice-dishes",
       "tastes": ["sweet", "sour", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "sweet-sour-crispy-chicken-rice"
     },
     {
       "slug": "crispy-chicken-larb-rice",
@@ -544,7 +578,8 @@
       "price": 79,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "sour", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "crispy-chicken-larb-rice"
     },
     {
       "slug": "mala-crispy-chicken-rice",
@@ -559,7 +594,8 @@
       "price": 79,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "spiced-smoky", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "mala-crispy-chicken-rice"
     },
     {
       "slug": "hamburg-rice",
@@ -574,7 +610,8 @@
       "price": 99,
       "foodType": "rice-dishes",
       "tastes": ["savory"],
-      "review": null
+      "review": null,
+      "photo": "hamburg-rice"
     },
     {
       "slug": "salt-chili-ground-pork-rice",
@@ -589,7 +626,8 @@
       "price": 69,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "savory"],
-      "review": null
+      "review": null,
+      "photo": "salt-chili-ground-pork-rice"
     },
     {
       "slug": "garlic-ground-pork-fried-egg-rice",
@@ -604,7 +642,8 @@
       "price": 69,
       "foodType": "rice-dishes",
       "tastes": ["savory"],
-      "review": null
+      "review": null,
+      "photo": "garlic-ground-pork-fried-egg-rice"
     },
     {
       "slug": "broccoli-shrimp-rice",
@@ -619,7 +658,8 @@
       "price": 89,
       "foodType": "rice-dishes",
       "tastes": ["savory", "fresh-light"],
-      "review": null
+      "review": null,
+      "photo": "broccoli-shrimp-rice"
     },
     {
       "slug": "cabbage-pork-crackling-rice",
@@ -634,7 +674,8 @@
       "price": 79,
       "foodType": "rice-dishes",
       "tastes": ["savory", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "cabbage-pork-crackling-rice"
     },
     {
       "slug": "salt-chili-crispy-pork-rice",
@@ -649,7 +690,8 @@
       "price": 99,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "salt-chili-crispy-pork-rice"
     },
     {
       "slug": "thai-basil-fried-egg-rice",
@@ -664,7 +706,8 @@
       "price": 79,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "savory"],
-      "review": null
+      "review": null,
+      "photo": "thai-basil-fried-egg-rice"
     },
     {
       "slug": "cashew-crispy-chicken-rice",
@@ -679,7 +722,8 @@
       "price": 89,
       "foodType": "rice-dishes",
       "tastes": ["savory", "sweet", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "cashew-crispy-chicken-rice"
     },
     {
       "slug": "isan-larb-rice",
@@ -694,7 +738,8 @@
       "price": 79,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "sour"],
-      "review": null
+      "review": null,
+      "photo": "isan-larb-rice"
     },
     {
       "slug": "maggi-pork-fried-rice",
@@ -709,7 +754,8 @@
       "price": 99,
       "foodType": "rice-dishes",
       "tastes": ["savory"],
-      "review": null
+      "review": null,
+      "photo": "maggi-pork-fried-rice"
     },
     {
       "slug": "chicken-sausage-fried-rice",
@@ -724,7 +770,8 @@
       "price": 59,
       "foodType": "rice-dishes",
       "tastes": ["savory"],
-      "review": null
+      "review": null,
+      "photo": "chicken-sausage-fried-rice"
     },
     {
       "slug": "shrimp-fried-rice",
@@ -739,7 +786,8 @@
       "price": 99,
       "foodType": "rice-dishes",
       "tastes": ["savory"],
-      "review": null
+      "review": null,
+      "photo": "shrimp-fried-rice"
     },
     {
       "slug": "sweet-pork-fried-rice",
@@ -754,7 +802,8 @@
       "price": 99,
       "foodType": "rice-dishes",
       "tastes": ["sweet", "savory"],
-      "review": null
+      "review": null,
+      "photo": "sweet-pork-fried-rice"
     },
     {
       "slug": "chinese-sausage-fried-rice",
@@ -769,7 +818,8 @@
       "price": 79,
       "foodType": "rice-dishes",
       "tastes": ["sweet", "savory"],
-      "review": null
+      "review": null,
+      "photo": "chinese-sausage-fried-rice"
     },
     {
       "slug": "combo-pork-chicken-crackling-fried-rice",
@@ -784,7 +834,8 @@
       "price": 99,
       "foodType": "rice-dishes",
       "tastes": ["savory", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "combo-pork-chicken-crackling-fried-rice"
     },
     {
       "slug": "rot-fai-fried-rice",
@@ -799,7 +850,8 @@
       "price": 79,
       "foodType": "rice-dishes",
       "tastes": ["savory", "sweet"],
-      "review": null
+      "review": null,
+      "photo": "rot-fai-fried-rice"
     },
     {
       "slug": "mala-crispy-chicken-fried-rice",
@@ -814,7 +866,8 @@
       "price": 89,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "spiced-smoky", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "mala-crispy-chicken-fried-rice"
     },
     {
       "slug": "bacon-fried-rice",
@@ -829,7 +882,8 @@
       "price": 89,
       "foodType": "rice-dishes",
       "tastes": ["savory", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "bacon-fried-rice"
     },
     {
       "slug": "lemon-tea",
@@ -844,7 +898,8 @@
       "price": 89,
       "foodType": "drinks",
       "tastes": ["sweet", "sour"],
-      "review": null
+      "review": null,
+      "photo": "lemon-tea"
     },
     {
       "slug": "red-syrup-lime",
@@ -859,7 +914,8 @@
       "price": 79,
       "foodType": "drinks",
       "tastes": ["sweet", "sour"],
-      "review": null
+      "review": null,
+      "photo": "red-syrup-lime"
     },
     {
       "slug": "iced-cocoa",
@@ -874,7 +930,8 @@
       "price": 89,
       "foodType": "drinks",
       "tastes": ["sweet", "creamy-rich"],
-      "review": null
+      "review": null,
+      "photo": "iced-cocoa"
     },
     {
       "slug": "pink-milk",
@@ -889,7 +946,8 @@
       "price": 89,
       "foodType": "drinks",
       "tastes": ["sweet", "creamy-rich"],
-      "review": null
+      "review": null,
+      "photo": "pink-milk"
     }
   ]
 }

@@ -1,5 +1,6 @@
 import { ImagePreview } from '@/components/ImagePreview'
 import { FoodTypeIcon } from '@/lib/foodTypeIcons'
+import { creativeCommonsCredit, isStockPhoto } from '@/lib/photoCredits'
 import type { RecommendationItem } from '@/schemas/meal/recommendationSchemas'
 
 type MenuPhotoProps = {
@@ -19,8 +20,12 @@ export function MenuPhoto({ item, className }: MenuPhotoProps) {
     </span>
   )
 
+  const credit = item.imageUrl ? creativeCommonsCredit(item.imageUrl) : null
+
   return (
-    <div className={`overflow-hidden border-paper bg-canvas-soft ${className}`}>
+    <div
+      className={`relative overflow-hidden border-paper bg-canvas-soft ${className}`}
+    >
       {item.imageUrl ? (
         <ImagePreview
           url={item.imageUrl}
@@ -31,6 +36,21 @@ export function MenuPhoto({ item, className }: MenuPhotoProps) {
       ) : (
         placeholder('ไม่มีรูปเมนู')
       )}
+      {item.imageUrl && isStockPhoto(item.imageUrl) ? (
+        <span className="absolute bottom-2 left-2 rounded-xs bg-paper/80 px-2 py-0.5 text-small font-bold text-cream">
+          ภาพประกอบ
+        </span>
+      ) : null}
+      {credit ? (
+        <a
+          href={credit.pageUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="absolute right-2 bottom-2 max-w-[60%] truncate rounded-xs bg-paper/80 px-2 py-0.5 text-eyebrow text-cream underline"
+        >
+          © {credit.creator} · {credit.license}
+        </a>
+      ) : null}
     </div>
   )
 }

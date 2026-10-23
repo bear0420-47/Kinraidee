@@ -34,7 +34,8 @@
       "price": 87,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "sweet", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "double-spicy-sauce-rice"
     },
     {
       "slug": "mala-sauce-fried-rice-bowl",
@@ -49,7 +50,8 @@
       "price": 90,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "spiced-smoky", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "mala-crispy-chicken-rice"
     },
     {
       "slug": "spicy-larb-rice-bowl",
@@ -64,7 +66,8 @@
       "price": 90,
       "foodType": "rice-dishes",
       "tastes": ["spicy", "sour", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "spicy-larb-rice-bowl"
     },
     {
       "slug": "maggi-sauce-fried-rice-bowl",
@@ -79,7 +82,8 @@
       "price": 87,
       "foodType": "rice-dishes",
       "tastes": ["savory", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "maggi-sauce-fried-rice-bowl"
     },
     {
       "slug": "tamarind-sauce-fried-rice-bowl",
@@ -94,7 +98,8 @@
       "price": 87,
       "foodType": "rice-dishes",
       "tastes": ["sweet", "sour", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "tamarind-sauce-fried-rice-bowl"
     },
     {
       "slug": "teriyaki-sauce-fried-rice-bowl",
@@ -109,7 +114,8 @@
       "price": 87,
       "foodType": "rice-dishes",
       "tastes": ["sweet", "savory", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "teriyaki-sauce-fried-rice-bowl"
     },
     {
       "slug": "fish-sauce-fried-rice-bowl",
@@ -124,7 +130,8 @@
       "price": 87,
       "foodType": "rice-dishes",
       "tastes": ["savory", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "fish-sauce-fried-rice-bowl"
     },
     {
       "slug": "garlic-fried-rice-bowl",
@@ -139,7 +146,8 @@
       "price": 87,
       "foodType": "rice-dishes",
       "tastes": ["savory", "crispy"],
-      "review": null
+      "review": null,
+      "photo": "garlic-fried-rice-bowl"
     },
     {
       "slug": "two-egg-omelette-rice",
@@ -154,7 +162,8 @@
       "price": 49,
       "foodType": "rice-dishes",
       "tastes": ["savory"],
-      "review": null
+      "review": null,
+      "photo": "omelette-rice"
     }
   ]
 }

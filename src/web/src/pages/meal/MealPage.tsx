@@ -310,6 +310,21 @@ export function MealPage() {
         />
       ) : null}
 
+      {view === 'cards' ? (
+        <p className="text-small text-muted">
+          ภาพประกอบเมนูจาก{' '}
+          <a
+            href="https://unsplash.com/?utm_source=kinraidee&utm_medium=referral"
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-xs font-bold underline"
+          >
+            Unsplash
+          </a>{' '}
+          และภาพ Creative Commons จาก Wikimedia Commons และ Flickr
+        </p>
+      ) : null}
+
       {/* Only for signed-out users (`null`); hidden while the session loads so it never
           flashes for a signed-in user. */}
       {user === null ? (

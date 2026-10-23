@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto'
-import { readdir, readFile, writeFile } from 'node:fs/promises'
+import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 
@@ -18,6 +18,14 @@ export const generatedSeedPath = path.join(dataDirectory, 'catalog.seed.json')
 export const photoChecklistPath = path.join(
   catalogAssetsDirectory,
   'photo-checklist.csv',
+)
+// Per-photo credits the web app shows under Creative Commons photos.
+export const webPhotoCreditsPath = fileURLToPath(
+  new URL('../../web/src/generated/photoCredits.json', import.meta.url),
+)
+export const photoCreditsPath = path.join(
+  catalogAssetsDirectory,
+  'PHOTO-CREDITS.md',
 )
 
 const PHOTO_EXTENSIONS = ['png', 'jpg', 'webp'] as const
@@ -65,6 +73,9 @@ const menuItemSourceSchema = z.strictObject({
   tastes: z.array(slugSchema).min(1),
   // Something unclear in the source, such as an unreadable price. Blocks the build.
   review: z.string().trim().min(1).nullable().default(null),
+  // The dish-name key of its photo pool in photos.json. Dishes with the same name at
+  // different restaurants share a key; carbonara and bolognese do not.
+  photo: slugSchema.optional(),
 })
 
 export const restaurantSourceSchema = z.strictObject({
@@ -92,6 +103,95 @@ export const restaurantSourceSchema = z.strictObject({
   menuItems: z.array(menuItemSourceSchema).min(1),
 })
 
+// Approved stock photos per dish-name key. Only hotlinked Unsplash images with their
+// credit are accepted. An empty pool records that stock photos have no good match.
+// Unsplash asks that links to photographers and to Unsplash carry referral parameters.
+export function unsplashCreditUrl(link: string) {
+  const url = new URL(link)
+  url.searchParams.set('utm_source', 'kinraidee')
+  url.searchParams.set('utm_medium', 'referral')
+  return url.toString()
+}
+
+const unsplashPhotoSchema = z.strictObject({
+  url: z
+    .url()
+    .refine(
+      (value) => value.startsWith('https://images.unsplash.com/'),
+      'Expected an https://images.unsplash.com/ photo link.',
+    ),
+  unsplashId: textSchema,
+  photographer: textSchema,
+  photographerUrl: z.url(),
+  pageUrl: z.url(),
+})
+
+// A Creative Commons photo found through Openverse, hotlinked from Wikimedia Commons or
+// Flickr. Only licences allowing commercial use and changes (cropping) are searched, and
+// each photo is credited with its creator and licence.
+const OPENVERSE_IMAGE_HOSTS = [
+  'https://upload.wikimedia.org/',
+  'https://live.staticflickr.com/',
+]
+
+const openversePhotoSchema = z.strictObject({
+  url: z
+    .url()
+    .refine(
+      (value) => OPENVERSE_IMAGE_HOSTS.some((host) => value.startsWith(host)),
+      'Expected an https://upload.wikimedia.org/ or https://live.staticflickr.com/ photo link.',
+    ),
+  openverseId: z.uuid(),
+  source: z.enum(['wikimedia', 'flickr']),
+  title: textSchema,
+  creator: textSchema,
+  creatorUrl: z.url().nullable(),
+  license: z.enum(['cc0', 'pdm', 'by', 'by-sa']),
+  licenseVersion: z.string().nullable(),
+  licenseUrl: z.url(),
+  pageUrl: z.url(),
+})
+
+const stockPhotoSchema = z.union([unsplashPhotoSchema, openversePhotoSchema])
+export type StockPhoto = z.infer<typeof stockPhotoSchema>
+
+export const photoPoolsSchema = z.record(
+  slugSchema,
+  z.strictObject({
+    query: textSchema,
+    photos: z.array(stockPhotoSchema).max(5),
+  }),
+)
+
+// One credit shape for both sources: who made it, under which licence, and where it lives.
+export function photoCredit(photo: StockPhoto) {
+  if ('unsplashId' in photo) {
+    return {
+      creator: photo.photographer,
+      creatorUrl: photo.photographerUrl,
+      license: 'Unsplash License',
+      licenseUrl: 'https://unsplash.com/license',
+      pageUrl: photo.pageUrl,
+      source: 'Unsplash',
+    }
+  }
+  const license =
+    photo.license === 'cc0'
+      ? 'CC0'
+      : photo.license === 'pdm'
+        ? 'Public Domain'
+        : `CC ${photo.license.toUpperCase()}${photo.licenseVersion ? ` ${photo.licenseVersion}` : ''}`
+  return {
+    creator: photo.creator,
+    creatorUrl: photo.creatorUrl,
+    license,
+    licenseUrl: photo.licenseUrl,
+    pageUrl: photo.pageUrl,
+    source: photo.source === 'wikimedia' ? 'Wikimedia Commons' : 'Flickr',
+  }
+}
+
+export type PhotoPools = z.infer<typeof photoPoolsSchema>
 export type TaxonomySource = z.infer<typeof taxonomySourceSchema>
 export type RestaurantSource = z.infer<typeof restaurantSourceSchema>
 export type RestaurantFile = { file: string; data: unknown }
@@ -141,6 +241,9 @@ export type PhotoChecklistRow = {
   foodType: string
   expectedPath: string
   status: 'found' | 'missing' | 'hidden'
+  photoKey: string
+  // Where the dish's photo comes from: its own file, its stock pool, or nowhere yet.
+  photoSource: 'local' | 'stock' | 'none'
 }
 
 export type CatalogBuildResult = {
@@ -154,6 +257,11 @@ export type CatalogBuildResult = {
     photosMissing: number
     unmatchedPhotos: string[]
     reviewNotes: string[]
+    stockPhotos: number
+    // Keys no pool has yet, keys whose pool is empty (no stock match), and pools no dish uses.
+    keysWithoutPool: string[]
+    keysWithoutStockMatch: string[]
+    unusedPools: string[]
   }
 }
 
@@ -162,14 +270,22 @@ export function buildCatalog({
   taxonomy: rawTaxonomy,
   restaurants: restaurantFiles,
   photos,
+  photoPools: rawPhotoPools = {},
   draft = false,
 }: {
   taxonomy: unknown
   restaurants: RestaurantFile[]
   photos: Set<string>
+  photoPools?: unknown
   draft?: boolean
 }): CatalogBuildResult {
   const problems: string[] = []
+
+  const poolResult = photoPoolsSchema.safeParse(rawPhotoPools)
+  if (!poolResult.success) {
+    throw new CatalogBuildError(zodProblems('photos.json', poolResult.error))
+  }
+  const photoPools = poolResult.data
 
   const taxonomyResult = taxonomySourceSchema.safeParse(rawTaxonomy)
   if (!taxonomyResult.success) {
@@ -267,6 +383,26 @@ export function buildCatalog({
   const imageFor = (asset: string | null) =>
     asset ? { image: { asset, key: stableImageKey(asset) } } : {}
 
+  // Each restaurant using a key gets its own fixed photo from the pool, in restaurant-slug
+  // order, so the same dish at two shops looks different and never changes on a rebuild.
+  const restaurantsByKey = new Map<string, string[]>()
+  for (const restaurant of [...restaurants].sort((a, b) =>
+    a.slug.localeCompare(b.slug),
+  )) {
+    for (const { photo } of restaurant.menuItems) {
+      if (!photo) continue
+      const users = restaurantsByKey.get(photo) ?? []
+      if (!users.includes(restaurant.slug)) users.push(restaurant.slug)
+      restaurantsByKey.set(photo, users)
+    }
+  }
+  const stockPhotoFor = (restaurantSlug: string, key: string | undefined) => {
+    const pool = key ? photoPools[key]?.photos : undefined
+    if (!key || !pool || pool.length === 0) return null
+    const index = restaurantsByKey.get(key)!.indexOf(restaurantSlug)
+    return pool[index % pool.length]!
+  }
+
   const usedPhotos = new Set<string>()
   const checklist: PhotoChecklistRow[] = []
   const seedRestaurants: CatalogSeed['restaurants'] = []
@@ -288,6 +424,10 @@ export function buildCatalog({
       const photo = findPhoto(base)
       if (photo) usedPhotos.add(photo)
       const hidden = foodTypeBySlug.get(menuItem.foodType)!.hidden === true
+      // A dish's own file, such as an owner's real photo, wins over the stock pool.
+      const stock = photo
+        ? null
+        : stockPhotoFor(restaurant.slug, menuItem.photo)
       checklist.push({
         restaurant: restaurant.slug,
         menuItem: menuItem.slug,
@@ -296,6 +436,8 @@ export function buildCatalog({
         foodType: menuItem.foodType,
         expectedPath: `assets/catalog/${photo ?? `${base}.png`}`,
         status: hidden ? 'hidden' : photo ? 'found' : 'missing',
+        photoKey: menuItem.photo ?? '',
+        photoSource: photo ? 'local' : stock ? 'stock' : 'none',
       })
       if (hidden) {
         hiddenMenuItems += 1
@@ -308,7 +450,7 @@ export function buildCatalog({
         name: menuItem.name,
         description: menuItem.description,
         price: menuItem.price,
-        imageUrl: null,
+        imageUrl: stock?.url ?? null,
         ...imageFor(photo),
         tasteIds: menuItem.tastes.map((taste) => tasteBySlug.get(taste)!.id),
       })
@@ -348,6 +490,7 @@ export function buildCatalog({
   })
 
   const visibleRows = checklist.filter(({ status }) => status !== 'hidden')
+  const usedKeys = [...restaurantsByKey.keys()].sort()
   return {
     seed,
     checklist,
@@ -369,6 +512,16 @@ export function buildCatalog({
         )
         .sort(),
       reviewNotes,
+      stockPhotos: visibleRows.filter(
+        ({ photoSource }) => photoSource === 'stock',
+      ).length,
+      keysWithoutPool: usedKeys.filter((key) => !photoPools[key]),
+      keysWithoutStockMatch: usedKeys.filter(
+        (key) => photoPools[key]?.photos.length === 0,
+      ),
+      unusedPools: Object.keys(photoPools)
+        .filter((key) => !restaurantsByKey.has(key))
+        .sort(),
     },
   }
 }
@@ -385,7 +538,7 @@ function csvCell(value: string) {
 
 export function serializeChecklist(rows: PhotoChecklistRow[]) {
   const header =
-    'restaurant,menuItem,nameTh,nameEn,foodType,expectedPath,status'
+    'restaurant,menuItem,nameTh,nameEn,foodType,expectedPath,status,photoKey,photoSource'
   const lines = rows.map((row) =>
     [
       row.restaurant,
@@ -395,6 +548,8 @@ export function serializeChecklist(rows: PhotoChecklistRow[]) {
       row.foodType,
       row.expectedPath,
       row.status,
+      row.photoKey,
+      row.photoSource,
     ]
       .map(csvCell)
       .join(','),
@@ -445,7 +600,67 @@ export async function readCatalogSource(
       ])
     }
   }
-  return { taxonomy, restaurants }
+  // Photo pools are optional, so a catalog can be built before any photo is chosen.
+  const photoPools = JSON.parse(
+    await readFile(path.join(sourceDirectory, 'photos.json'), 'utf8').catch(
+      () => '{}',
+    ),
+  ) as unknown
+  return { taxonomy, restaurants, photoPools }
+}
+
+// Credits every stock photo a visible dish uses, as the Unsplash guidelines ask.
+function creditedPhotos(
+  photoPools: PhotoPools,
+  checklist: PhotoChecklistRow[],
+) {
+  const usedKeys = new Set(
+    checklist
+      .filter(({ photoSource }) => photoSource === 'stock')
+      .map(({ photoKey }) => photoKey),
+  )
+  return [...usedKeys]
+    .sort()
+    .flatMap((key) => photoPools[key]!.photos.map((photo) => ({ key, photo })))
+}
+
+// Credits every stock photo a visible dish uses, as Unsplash and the CC licences ask.
+export function serializeCredits(
+  photoPools: PhotoPools,
+  checklist: PhotoChecklistRow[],
+) {
+  const cell = (value: string) => value.replaceAll('|', '\\|')
+  const lines = creditedPhotos(photoPools, checklist).map(({ key, photo }) => {
+    const credit = photoCredit(photo)
+    const creator = credit.creatorUrl
+      ? `[${cell(credit.creator)}](${credit.creatorUrl})`
+      : cell(credit.creator)
+    return `| ${key} | ${creator} | [${credit.license}](${credit.licenseUrl}) | [${credit.source}](${credit.pageUrl}) |`
+  })
+  return [
+    '# Catalog photo credits',
+    '',
+    'Generated by `pnpm --filter api catalog:build` from `src/api/prisma/data/catalog/photos.json`. Dish photos are illustrative stock photos from [Unsplash](https://unsplash.com/?utm_source=kinraidee&utm_medium=referral) (Unsplash License) and from Wikimedia Commons and Flickr through [Openverse](https://openverse.org) (Creative Commons licences that allow commercial use and changes). They are not photos of each restaurant’s own dish.',
+    '',
+    '| Dish key | Creator | Licence | Source |',
+    '|---|---|---|---|',
+    ...lines,
+    '',
+  ].join('\n')
+}
+
+// Per-image credit the web app shows under a photo, keyed by its URL.
+export function serializeWebCredits(
+  photoPools: PhotoPools,
+  checklist: PhotoChecklistRow[],
+) {
+  const credits = Object.fromEntries(
+    creditedPhotos(photoPools, checklist).map(({ photo }) => {
+      const { creator, license, pageUrl, source } = photoCredit(photo)
+      return [photo.url, { creator, license, pageUrl, source }]
+    }),
+  )
+  return `${JSON.stringify(credits, null, 2)}\n`
 }
 
 export async function runCatalogBuild({
@@ -454,12 +669,16 @@ export async function runCatalogBuild({
   write = (text: string) => process.stdout.write(text),
   seedPath = generatedSeedPath,
   checklistPath = photoChecklistPath,
+  creditsPath = photoCreditsPath,
+  webCreditsPath = webPhotoCreditsPath,
 }: {
   check?: boolean
   draft?: boolean
   write?: (text: string) => void
   seedPath?: string
   checklistPath?: string
+  creditsPath?: string
+  webCreditsPath?: string
 } = {}) {
   const source = await readCatalogSource()
   const result = buildCatalog({
@@ -469,13 +688,25 @@ export async function runCatalogBuild({
   })
   const seedText = serializeSeed(result.seed)
   const checklistText = serializeChecklist(result.checklist)
+  const pools = photoPoolsSchema.parse(source.photoPools)
+  const webCreditsText = serializeWebCredits(pools, result.checklist)
 
   if (check) {
-    const current = await readFile(seedPath, 'utf8').catch(() => '')
-    if (current.replace(/\r\n/g, '\n') !== seedText) {
-      throw new CatalogBuildError([
-        'catalog.seed.json is out of date. Run `pnpm --filter api catalog:build`.',
-      ])
+    const stale: string[] = []
+    for (const [file, expected, name] of [
+      [seedPath, seedText, 'catalog.seed.json'],
+      [webCreditsPath, webCreditsText, 'photoCredits.json'],
+    ] as const) {
+      const current = await readFile(file, 'utf8').catch(() => '')
+      if (current.replace(/\r\n/g, '\n') !== expected) stale.push(name)
+    }
+    if (stale.length > 0) {
+      throw new CatalogBuildError(
+        stale.map(
+          (name) =>
+            `${name} is out of date. Run \`pnpm --filter api catalog:build\`.`,
+        ),
+      )
     }
     write('catalog.seed.json is up to date.\n')
     return result
@@ -483,6 +714,9 @@ export async function runCatalogBuild({
 
   await writeFile(seedPath, seedText)
   await writeFile(checklistPath, checklistText)
+  await writeFile(creditsPath, serializeCredits(pools, result.checklist))
+  await mkdir(path.dirname(webCreditsPath), { recursive: true })
+  await writeFile(webCreditsPath, webCreditsText)
 
   const { report } = result
   write(
@@ -493,6 +727,14 @@ export async function runCatalogBuild({
         (photo) =>
           `Photo matches no dish or restaurant: assets/catalog/${photo}`,
       ),
+      `Stock photos: ${report.stockPhotos} dishes use an Unsplash or Openverse photo.`,
+      ...report.keysWithoutPool.map(
+        (key) => `Photo key has no pool yet: ${key}`,
+      ),
+      ...report.keysWithoutStockMatch.map(
+        (key) => `No stock photo matches this dish: ${key}`,
+      ),
+      ...report.unusedPools.map((key) => `Photo pool no dish uses: ${key}`),
       ...report.reviewNotes.map((note) => `Review note (draft build): ${note}`),
       '',
     ].join('\n'),

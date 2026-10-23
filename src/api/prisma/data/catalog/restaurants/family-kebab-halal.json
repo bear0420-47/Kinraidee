@@ -34,7 +34,8 @@
       "price": 199,
       "foodType": "burgers-sandwiches-wraps",
       "tastes": ["spiced-smoky", "spicy", "savory"],
-      "review": null
+      "review": null,
+      "photo": "adana-beef-kebab-wrap"
     },
     {
       "slug": "shish-kebab-liver-wrap",
@@ -49,7 +50,8 @@
       "price": 149,
       "foodType": "burgers-sandwiches-wraps",
       "tastes": ["spiced-smoky", "savory"],
-      "review": null
+      "review": null,
+      "photo": "shish-kebab-liver-wrap"
     },
     {
       "slug": "grilled-saba-wrap",
@@ -64,7 +66,8 @@
       "price": 99,
       "foodType": "burgers-sandwiches-wraps",
       "tastes": ["savory", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "grilled-saba-wrap"
     },
     {
       "slug": "falafel-wrap",
@@ -79,7 +82,8 @@
       "price": 99,
       "foodType": "burgers-sandwiches-wraps",
       "tastes": ["crispy", "fresh-light"],
-      "review": null
+      "review": null,
+      "photo": "falafel-wrap"
     },
     {
       "slug": "lamb-doner-kebab-wrap",
@@ -94,7 +98,8 @@
       "price": 159,
       "foodType": "burgers-sandwiches-wraps",
       "tastes": ["spiced-smoky", "savory"],
-      "review": null
+      "review": null,
+      "photo": "lamb-doner-kebab-wrap"
     },
     {
       "slug": "beef-doner-kebab-wrap",
@@ -109,7 +114,8 @@
       "price": 129,
       "foodType": "burgers-sandwiches-wraps",
       "tastes": ["spiced-smoky", "savory"],
-      "review": null
+      "review": null,
+      "photo": "beef-doner-kebab-wrap"
     },
     {
       "slug": "chicken-doner-kebab-wrap",
@@ -124,7 +130,8 @@
       "price": 99,
       "foodType": "burgers-sandwiches-wraps",
       "tastes": ["spiced-smoky", "savory"],
-      "review": null
+      "review": null,
+      "photo": "chicken-doner-kebab-wrap"
     },
     {
       "slug": "hummus",
@@ -139,7 +146,8 @@
       "price": 99,
       "foodType": "appetizers-snacks",
       "tastes": ["creamy-rich", "savory"],
-      "review": null
+      "review": null,
+      "photo": "hummus"
     },
     {
       "slug": "lahmacun",
@@ -154,7 +162,8 @@
       "price": 149,
       "foodType": "pizza-flatbread",
       "tastes": ["spiced-smoky", "savory"],
-      "review": null
+      "review": null,
+      "photo": "lahmacun"
     },
     {
       "slug": "vegetarian-pizza",
@@ -169,7 +178,8 @@
       "price": 99,
       "foodType": "pizza-flatbread",
       "tastes": ["savory", "creamy-rich"],
-      "review": null
+      "review": null,
+      "photo": "vegetarian-pizza"
     },
     {
       "slug": "beef-doner-kebab-pizza",
@@ -184,7 +194,8 @@
       "price": 159,
       "foodType": "pizza-flatbread",
       "tastes": ["savory", "creamy-rich", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "beef-doner-kebab-pizza"
     },
     {
       "slug": "chicken-doner-kebab-pizza",
@@ -199,7 +210,8 @@
       "price": 129,
       "foodType": "pizza-flatbread",
       "tastes": ["savory", "creamy-rich", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "chicken-doner-kebab-pizza"
     },
     {
       "slug": "chicken-breast-steak",
@@ -214,7 +226,8 @@
       "price": 159,
       "foodType": "grills-steaks",
       "tastes": ["savory", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "chicken-breast-steak"
     },
     {
       "slug": "chicken-thigh-steak",
@@ -229,7 +242,8 @@
       "price": 169,
       "foodType": "grills-steaks",
       "tastes": ["savory", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "chicken-thigh-steak"
     },
     {
       "slug": "salmon-steak",
@@ -244,7 +258,8 @@
       "price": 219,
       "foodType": "grills-steaks",
       "tastes": ["savory", "fresh-light"],
-      "review": null
+      "review": null,
+      "photo": "salmon-steak"
     },
     {
       "slug": "beef-steak",
@@ -259,7 +274,8 @@
       "price": 259,
       "foodType": "grills-steaks",
       "tastes": ["savory"],
-      "review": null
+      "review": null,
+      "photo": "beef-steak"
     },
     {
       "slug": "beef-kofta-with-rice",
@@ -274,7 +290,8 @@
       "price": 179,
       "foodType": "rice-dishes",
       "tastes": ["spiced-smoky", "savory"],
-      "review": null
+      "review": null,
+      "photo": "beef-kofta-with-rice"
     },
     {
       "slug": "chicken-kofta-with-rice",
@@ -289,7 +306,8 @@
       "price": 159,
       "foodType": "rice-dishes",
       "tastes": ["spiced-smoky", "savory"],
-      "review": null
+      "review": null,
+      "photo": "chicken-kofta-with-rice"
     },
     {
       "slug": "chicken-doner-kebab-pide",
@@ -304,7 +322,8 @@
       "price": 129,
       "foodType": "pizza-flatbread",
       "tastes": ["savory", "creamy-rich"],
-      "review": null
+      "review": null,
+      "photo": "chicken-doner-kebab-pide"
     },
     {
       "slug": "beef-doner-kebab-pide",
@@ -319,7 +338,8 @@
       "price": 149,
       "foodType": "pizza-flatbread",
       "tastes": ["savory", "creamy-rich"],
-      "review": null
+      "review": null,
+      "photo": "beef-doner-kebab-pide"
     },
     {
       "slug": "turkish-grilled-beef",
@@ -334,7 +354,8 @@
       "price": 179,
       "foodType": "grills-steaks",
       "tastes": ["spiced-smoky", "savory"],
-      "review": null
+      "review": null,
+      "photo": "turkish-grilled-beef"
     },
     {
       "slug": "grilled-saba-baguette",
@@ -349,7 +370,8 @@
       "price": 149,
       "foodType": "burgers-sandwiches-wraps",
       "tastes": ["savory", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "grilled-saba-baguette"
     },
     {
       "slug": "grilled-beef-liver-shish-kebab",
@@ -364,7 +386,8 @@
       "price": 199,
       "foodType": "grills-steaks",
       "tastes": ["spiced-smoky", "savory"],
-      "review": null
+      "review": null,
+      "photo": "grilled-beef-liver-shish-kebab"
     },
     {
       "slug": "grilled-chicken-wings",
@@ -379,7 +402,8 @@
       "price": 189,
       "foodType": "grills-steaks",
       "tastes": ["spiced-smoky", "savory"],
-      "review": null
+      "review": null,
+      "photo": "grilled-chicken-wings"
     },
     {
       "slug": "turkish-grilled-chicken-breast",
@@ -394,7 +418,8 @@
       "price": 129,
       "foodType": "grills-steaks",
       "tastes": ["spiced-smoky", "savory"],
-      "review": null
+      "review": null,
+      "photo": "turkish-grilled-chicken-breast"
     },
     {
       "slug": "adana-beef-kebab",
@@ -409,7 +434,8 @@
       "price": 279,
       "foodType": "grills-steaks",
       "tastes": ["spicy", "spiced-smoky", "savory"],
-      "review": null
+      "review": null,
+      "photo": "adana-beef-kebab"
     },
     {
       "slug": "vegetarian-falafel-plate",
@@ -424,7 +450,8 @@
       "price": 129,
       "foodType": "appetizers-snacks",
       "tastes": ["crispy", "fresh-light"],
-      "review": null
+      "review": null,
+      "photo": "vegetarian-falafel-plate"
     },
     {
       "slug": "potato-samosa",
@@ -439,7 +466,8 @@
       "price": 129,
       "foodType": "appetizers-snacks",
       "tastes": ["crispy", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "potato-samosa"
     },
     {
       "slug": "chicken-samosa",
@@ -454,7 +482,8 @@
       "price": 129,
       "foodType": "appetizers-snacks",
       "tastes": ["crispy", "spiced-smoky"],
-      "review": null
+      "review": null,
+      "photo": "chicken-samosa"
     }
   ]
 }

@@ -34,7 +34,8 @@
       "price": 69,
       "foodType": "rice-dishes",
       "tastes": ["savory", "spicy"],
-      "review": null
+      "review": null,
+      "photo": "suki-sauce-rice-bowl"
     },
     {
       "slug": "dry-suki-vegetable",
@@ -49,7 +50,8 @@
       "price": 65,
       "foodType": "noodles",
       "tastes": ["savory", "spicy"],
-      "review": null
+      "review": null,
+      "photo": "dry-suki-vegetable"
     },
     {
       "slug": "dry-suki-chicken",
@@ -64,7 +66,8 @@
       "price": 69,
       "foodType": "noodles",
       "tastes": ["savory", "spicy"],
-      "review": null
+      "review": null,
+      "photo": "dry-suki-chicken"
     },
     {
       "slug": "dry-suki-pork",
@@ -79,7 +82,8 @@
       "price": 69,
       "foodType": "noodles",
       "tastes": ["savory", "spicy"],
-      "review": null
+      "review": null,
+      "photo": "dry-suki-pork"
     },
     {
       "slug": "dry-suki-bacon",
@@ -94,7 +98,8 @@
       "price": 75,
       "foodType": "noodles",
       "tastes": ["savory", "spicy"],
-      "review": null
+      "review": null,
+      "photo": "dry-suki-bacon"
     },
     {
       "slug": "dry-suki-crispy-squid",
@@ -109,7 +114,8 @@
       "price": 75,
       "foodType": "noodles",
       "tastes": ["savory", "spicy"],
-      "review": null
+      "review": null,
+      "photo": "dry-suki-crispy-squid"
     },
     {
       "slug": "dry-suki-seafood",
@@ -124,7 +130,8 @@
       "price": 79,
       "foodType": "noodles",
       "tastes": ["savory", "spicy"],
-      "review": null
+      "review": null,
+      "photo": "dry-suki-seafood"
     },
     {
       "slug": "dry-suki-shrimp",
@@ -139,7 +146,8 @@
       "price": 79,
       "foodType": "noodles",
       "tastes": ["savory", "spicy"],
-      "review": null
+      "review": null,
+      "photo": "dry-suki-shrimp"
     },
     {
       "slug": "dry-suki-mixed",
@@ -154,7 +162,8 @@
       "price": 85,
       "foodType": "noodles",
       "tastes": ["savory", "spicy"],
-      "review": null
+      "review": null,
+      "photo": "dry-suki-mixed"
     },
     {
       "slug": "suki-soup-mixed",
@@ -169,7 +178,8 @@
       "price": 89,
       "foodType": "curries-soups",
       "tastes": ["savory", "spicy"],
-      "review": null
+      "review": null,
+      "photo": "suki-soup-mixed"
     },
     {
       "slug": "suki-soup-crispy-squid",
@@ -184,7 +194,8 @@
       "price": 75,
       "foodType": "curries-soups",
       "tastes": ["savory", "spicy"],
-      "review": null
+      "review": null,
+      "photo": "suki-soup-crispy-squid"
     },
     {
       "slug": "suki-soup-squid",
@@ -199,7 +210,8 @@
       "price": 75,
       "foodType": "curries-soups",
       "tastes": ["savory", "spicy"],
-      "review": null
+      "review": null,
+      "photo": "suki-soup-squid"
     },
     {
       "slug": "suki-soup-shrimp",
@@ -214,7 +226,8 @@
       "price": 75,
       "foodType": "curries-soups",
       "tastes": ["savory", "spicy"],
-      "review": null
+      "review": null,
+      "photo": "suki-soup-shrimp"
     }
   ]
 }
