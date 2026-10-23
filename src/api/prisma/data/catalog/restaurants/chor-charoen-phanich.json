@@ -1,0 +1,160 @@
+{
+  "slug": "chor-charoen-phanich",
+  "zone": "opposite-mfu",
+  "name": {
+    "th": "ช.เจริญพาณิชย์ ข้าวหน้าของทอด",
+    "en": "Chor Charoen Phanich Fried Rice Bowls"
+  },
+  "description": {
+    "th": "ร้านข้าวหน้าของทอดใกล้มหาวิทยาลัยแม่ฟ้าหลวง เลือกซอสราดได้หลายแบบ",
+    "en": "Fried-meat rice bowl shop near Mae Fah Luang University with a choice of sauces."
+  },
+  "phone": null,
+  "source": {
+    "type": "grab-screenshot",
+    "capturedOn": "2026-10-23",
+    "pricesInclude": "grab-delivery-markup",
+    "ownerConsent": {
+      "given": false,
+      "by": null,
+      "on": null
+    }
+  },
+  "menuItems": [
+    {
+      "slug": "double-spicy-sauce-rice",
+      "name": {
+        "th": "ข้าวราดซอสเผ็ด x2",
+        "en": "Double Spicy Sauce Fried Rice Bowl"
+      },
+      "description": {
+        "th": "ของทอดกรอบ เสิร์ฟกับข้าวสวย 200 กรัม และผักเคียง ราดซอสเผ็ดเข้มข้นสองเท่า โรยงา",
+        "en": "Double-strength spicy sauce over crispy fried meat with 200 g of rice and side vegetables."
+      },
+      "price": 87,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "sweet", "crispy"],
+      "review": null
+    },
+    {
+      "slug": "mala-sauce-fried-rice-bowl",
+      "name": {
+        "th": "ข้าวของทอด ราดซอสหม่าล่า",
+        "en": "Mala Sauce Fried Rice Bowl"
+      },
+      "description": {
+        "th": "ของทอดกรอบ เสิร์ฟกับข้าวสวย 200 กรัม และผักเคียง ราดซอสหม่าล่าเผ็ดชา",
+        "en": "Numbing mala sauce over crispy fried meat with 200 g of rice and side vegetables."
+      },
+      "price": 90,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "spiced-smoky", "crispy"],
+      "review": null
+    },
+    {
+      "slug": "spicy-larb-rice-bowl",
+      "name": {
+        "th": "ข้าวหน้าลาบแซ่บ",
+        "en": "Spicy Larb Rice Bowl"
+      },
+      "description": {
+        "th": "ของทอดกรอบ เสิร์ฟกับข้าวสวย 200 กรัม และผักเคียง คลุกลาบรสแซ่บกับหอมแดงและต้นหอม",
+        "en": "Spicy larb-style dressing with shallots and spring onion on crispy fried meat with 200 g of rice and side vegetables."
+      },
+      "price": 90,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "sour", "crispy"],
+      "review": null
+    },
+    {
+      "slug": "maggi-sauce-fried-rice-bowl",
+      "name": {
+        "th": "ข้าวของทอด ราดซอสแม็กกี้",
+        "en": "Maggi Sauce Fried Rice Bowl"
+      },
+      "description": {
+        "th": "ของทอดกรอบ เสิร์ฟกับข้าวสวย 200 กรัม และผักเคียง ราดซอสแม็กกี้หอมเข้ม",
+        "en": "Savory Maggi seasoning sauce over crispy fried meat with 200 g of rice and side vegetables."
+      },
+      "price": 87,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "crispy"],
+      "review": null
+    },
+    {
+      "slug": "tamarind-sauce-fried-rice-bowl",
+      "name": {
+        "th": "ข้าวของทอด ราดซอสมะขาม",
+        "en": "Tamarind Sauce Fried Rice Bowl"
+      },
+      "description": {
+        "th": "ของทอดกรอบ เสิร์ฟกับข้าวสวย 200 กรัม และผักเคียง ราดซอสมะขามเปรี้ยวหวาน โรยหอมเจียว",
+        "en": "Sweet-sour tamarind sauce and fried shallots over crispy fried meat with 200 g of rice and side vegetables."
+      },
+      "price": 87,
+      "foodType": "rice-dishes",
+      "tastes": ["sweet", "sour", "crispy"],
+      "review": null
+    },
+    {
+      "slug": "teriyaki-sauce-fried-rice-bowl",
+      "name": {
+        "th": "ข้าวของทอด ราดซอสเทริยากิ",
+        "en": "Teriyaki Sauce Fried Rice Bowl"
+      },
+      "description": {
+        "th": "ของทอดกรอบ เสิร์ฟกับข้าวสวย 200 กรัม และผักเคียง ราดซอสเทริยากิ โรยงา",
+        "en": "Teriyaki sauce and sesame over crispy fried meat with 200 g of rice and side vegetables."
+      },
+      "price": 87,
+      "foodType": "rice-dishes",
+      "tastes": ["sweet", "savory", "crispy"],
+      "review": null
+    },
+    {
+      "slug": "fish-sauce-fried-rice-bowl",
+      "name": {
+        "th": "ข้าวของทอด ราดซอสน้ำปลา",
+        "en": "Fish Sauce Fried Rice Bowl"
+      },
+      "description": {
+        "th": "ของทอดกรอบ เสิร์ฟกับข้าวสวย 200 กรัม และผักเคียง คลุกซอสน้ำปลากลมกล่อม",
+        "en": "Savory fish sauce glaze over crispy fried meat with 200 g of rice and side vegetables."
+      },
+      "price": 87,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "crispy"],
+      "review": null
+    },
+    {
+      "slug": "garlic-fried-rice-bowl",
+      "name": {
+        "th": "ข้าวทอดกระเทียม",
+        "en": "Garlic Fried Rice Bowl"
+      },
+      "description": {
+        "th": "ของทอดกรอบ เสิร์ฟกับข้าวสวย 200 กรัม และผักเคียง ผัดกระเทียมหอมกรุ่น",
+        "en": "Fragrant fried garlic over crispy fried meat with 200 g of rice and side vegetables."
+      },
+      "price": 87,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "crispy"],
+      "review": null
+    },
+    {
+      "slug": "two-egg-omelette-rice",
+      "name": {
+        "th": "ข้าวไข่เจียว (2 ฟอง)",
+        "en": "Two-egg Omelette on Rice"
+      },
+      "description": {
+        "th": "ไข่เจียวไข่ 2 ฟอง บนข้าวสวยประมาณ 180–200 กรัม",
+        "en": "A two-egg omelette over about 180–200 g of rice."
+      },
+      "price": 49,
+      "foodType": "rice-dishes",
+      "tastes": ["savory"],
+      "review": null
+    }
+  ]
+}
