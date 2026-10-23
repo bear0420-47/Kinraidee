@@ -9,10 +9,10 @@ type MenuPhotoProps = {
   className: string
 }
 
-// Catalog stock photos come from the Pexels CDN; they illustrate the dish rather than show
+// Catalog stock photos are hotlinked from Unsplash; they illustrate the dish rather than show
 // the restaurant's own plate, so they carry a label.
 export function isStockPhoto(url: string) {
-  return url.startsWith('https://images.pexels.com/')
+  return url.startsWith('https://images.unsplash.com/')
 }
 
 // A menu photo, cropped to fill. Without one (or when it cannot load), a same-size panel with

@@ -314,12 +314,12 @@ export function MealPage() {
         <p className="text-small text-muted">
           ภาพประกอบเมนูจาก{' '}
           <a
-            href="https://www.pexels.com"
+            href="https://unsplash.com/?utm_source=kinraidee&utm_medium=referral"
             target="_blank"
             rel="noreferrer"
             className="rounded-xs font-bold underline"
           >
-            Pexels
+            Unsplash
           </a>
         </p>
       ) : null}

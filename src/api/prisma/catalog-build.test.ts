@@ -338,12 +338,12 @@ describe('buildCatalog', () => {
   })
 })
 
-const pexels = (id: number) => ({
-  url: `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?w=800`,
-  pexelsId: id,
+const stock = (id: number) => ({
+  url: `https://images.unsplash.com/photo-${id}?w=800&q=75&fit=crop&auto=format`,
+  unsplashId: `id${id}`,
   photographer: `Photographer ${id}`,
-  photographerUrl: `https://www.pexels.com/@p${id}`,
-  pageUrl: `https://www.pexels.com/photo/${id}/`,
+  photographerUrl: `https://unsplash.com/@p${id}?utm_source=kinraidee&utm_medium=referral`,
+  pageUrl: `https://unsplash.com/photos/id${id}?utm_source=kinraidee&utm_medium=referral`,
 })
 
 function withPhoto(
@@ -358,7 +358,7 @@ function withPhoto(
 
 describe('stock photo pools', () => {
   const pools = {
-    'pad-kra-pao': { query: 'pad kra pao', photos: [pexels(1), pexels(2)] },
+    'pad-kra-pao': { query: 'pad kra pao', photos: [stock(1), stock(2)] },
   }
 
   it('gives each restaurant its own fixed photo from the pool and wraps after it', () => {
@@ -379,9 +379,9 @@ describe('stock photo pools', () => {
       )!.imageUrl
 
     const { seed } = run()
-    expect(urlOf(seed, 'a-shop')).toBe(pexels(1).url)
-    expect(urlOf(seed, 'b-shop')).toBe(pexels(2).url)
-    expect(urlOf(seed, 'c-shop')).toBe(pexels(1).url)
+    expect(urlOf(seed, 'a-shop')).toBe(stock(1).url)
+    expect(urlOf(seed, 'b-shop')).toBe(stock(2).url)
+    expect(urlOf(seed, 'c-shop')).toBe(stock(1).url)
     // The same input always gives the same photos.
     expect(run().seed).toEqual(seed)
   })
@@ -403,8 +403,8 @@ describe('stock photo pools', () => {
       photoPools: pools,
     })
     expect(seed.menuItems.map(({ imageUrl }) => imageUrl)).toEqual([
-      pexels(1).url,
-      pexels(1).url,
+      stock(1).url,
+      stock(1).url,
     ])
   })
 
@@ -447,13 +447,13 @@ describe('stock photo pools', () => {
 
   it.each([
     [
-      'a non-Pexels link',
-      { ...pexels(1), url: 'https://example.com/a.jpg' },
+      'a non-Unsplash link',
+      { ...stock(1), url: 'https://example.com/a.jpg' },
       'url',
     ],
     [
       'a missing photographer',
-      { ...pexels(1), photographer: '' },
+      { ...stock(1), photographer: '' },
       'photographer',
     ],
   ])('rejects %s in photos.json', (_case, photo, field) => {
@@ -478,7 +478,7 @@ describe('stock photo pools', () => {
         restaurants: [file(restaurant())],
         photos: new Set(),
         photoPools: {
-          'pad-kra-pao': { query: 'q', photos: [1, 2, 3, 4, 5, 6].map(pexels) },
+          'pad-kra-pao': { query: 'q', photos: [1, 2, 3, 4, 5, 6].map(stock) },
         },
       }),
     )
@@ -494,9 +494,11 @@ describe('stock photo pools', () => {
     })
     const credits = serializeCredits(pools, result.checklist)
     expect(credits).toContain(
-      '| pad-kra-pao | [Photographer 1](https://www.pexels.com/@p1) |',
+      '| pad-kra-pao | [Photographer 1](https://unsplash.com/@p1?utm_source=kinraidee&utm_medium=referral) |',
     )
-    expect(credits).toContain('[provided by Pexels](https://www.pexels.com)')
+    expect(credits).toContain(
+      '[Unsplash](https://unsplash.com/?utm_source=kinraidee&utm_medium=referral)',
+    )
   })
 })
 

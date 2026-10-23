@@ -67,7 +67,7 @@ Recommendation reveal pattern: use a shuffle-card metaphor. The condition summar
 
 Reject/undo pattern: rejecting a revealed card replaces that slot with one new face-down card and shows a `เลิกทำ` toast. Undo restores the original card in the same slot and reveal state, removes the replacement, and removes the original menu ID from the session rejected IDs.
 
-Stock photo pattern: dish photos taken from Pexels show a `ภาพประกอบ` label on the photo, and the cards view credits Pexels below the cards (see `design-system.md`).
+Stock photo pattern: dish photos taken from Unsplash show a `ภาพประกอบ` label on the photo, and the cards view credits Unsplash below the cards (see `design-system.md`).
 
 Confirmation pattern: selecting a revealed card opens a two-stage dialog with menu name, restaurant, price, zone, image, and recommendation rationale. Stage 1 actions are `เอาเมนูนี้แหละ` and `ขอคิดอีกที`. `เอาเมนูนี้แหละ` confirms the decision and moves to a success state; `ขอคิดอีกที` returns to the same revealed-card state. The success state has one action, `กลับหน้าหลัก`, which clears the current flow and returns Home. Only confirmation by a logged-in user writes selected-menu history; revealing or opening a card does not.
 

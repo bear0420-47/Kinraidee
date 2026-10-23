@@ -212,11 +212,11 @@ describe('Revealing', () => {
     expect(await within(broken!).findByText('โหลดรูปไม่ได้')).toBeTruthy()
   })
 
-  it('labels stock photos as illustrations and credits Pexels, but not own photos', async () => {
+  it('labels stock photos as illustrations and credits Unsplash, but not own photos', async () => {
     const stock = {
       ...krapao,
       imageUrl:
-        'https://images.pexels.com/photos/1/pexels-photo-1.jpeg?auto=compress&w=800',
+        'https://images.unsplash.com/photo-1?w=800&q=75&fit=crop&auto=format',
     }
     const own = { ...noodles, imageUrl: '/uploads/noodles.png' }
     fakeShuffleApi({ results: [{ items: [stock, own] }] })
@@ -228,8 +228,8 @@ describe('Revealing', () => {
     expect(within(stockCard!).getByText('ภาพประกอบ')).toBeTruthy()
     expect(within(ownCard!).queryByText('ภาพประกอบ')).toBeNull()
     expect(
-      screen.getByRole('link', { name: 'Pexels' }).getAttribute('href'),
-    ).toBe('https://www.pexels.com')
+      screen.getByRole('link', { name: 'Unsplash' }).getAttribute('href'),
+    ).toBe('https://unsplash.com/?utm_source=kinraidee&utm_medium=referral')
   })
 
   it('animates the reveal only when motion is allowed and names every state in text', async () => {
