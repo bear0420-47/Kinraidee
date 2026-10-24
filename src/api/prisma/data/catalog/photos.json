@@ -1326,8 +1326,21 @@
     ]
   },
   "garlic-fried-rice-bowl": {
-    "query": "garlic fried pork rice",
-    "photos": []
+    "query": "mu thot krathiam",
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Mu_thot_krathiam.jpg/960px-Mu_thot_krathiam.jpg",
+        "openverseId": "eebae4a8-4ec0-4525-8676-4279d1401bb4",
+        "source": "wikimedia",
+        "title": "File:Mu thot krathiam.jpg",
+        "creator": "Takeaway",
+        "creatorUrl": "https://commons.wikimedia.org/wiki/User:Takeaway",
+        "license": "by-sa",
+        "licenseVersion": "3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+        "pageUrl": "https://commons.wikimedia.org/w/index.php?curid=30500984"
+      }
+    ]
   },
   "garlic-ground-pork-fried-egg-rice": {
     "query": "garlic pork rice fried egg",
@@ -1829,8 +1842,21 @@
     ]
   },
   "marinated-shrimp-rice-bowl": {
-    "query": "marinated shrimp rice bowl",
-    "photos": []
+    "query": "ganjang saeu jang",
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Ganjang-saeu-jang.jpg/960px-Ganjang-saeu-jang.jpg",
+        "openverseId": "93c336b4-b3f5-4a40-be69-1fb10eec4c79",
+        "source": "wikimedia",
+        "title": "Ganjang-saeu-jang",
+        "creator": "eommina",
+        "creatorUrl": null,
+        "license": "cc0",
+        "licenseVersion": "1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en/",
+        "pageUrl": "https://commons.wikimedia.org/w/index.php?curid=61288737"
+      }
+    ]
   },
   "minced-pork-bolognese": {
     "query": "spaghetti bolognese",
@@ -1951,8 +1977,17 @@
     "photos": []
   },
   "omelette-rice": {
-    "query": "thai omelette rice",
-    "photos": []
+    "query": "reviewed Thai omelette and white rice",
+    "photos": [
+      {
+        "url": "https://images.pexels.com/photos/35049888/pexels-photo-35049888.jpeg?auto=compress&w=800",
+        "pexelsId": "35049888",
+        "title": "Thai Omelette with Heart-Shaped Rice on Rustic Table",
+        "photographer": "UNDO KIM",
+        "photographerUrl": "https://www.pexels.com/@undo-kim-2153633398/",
+        "pageUrl": "https://www.pexels.com/photo/thai-omelette-with-heart-shaped-rice-on-rustic-table-35049888/"
+      }
+    ]
   },
   "original-burger": {
     "query": "burger fries",

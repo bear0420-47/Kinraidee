@@ -71,8 +71,8 @@ chor-charoen-phanich,maggi-sauce-fried-rice-bowl,ข้าวของทอด 
 chor-charoen-phanich,tamarind-sauce-fried-rice-bowl,ข้าวของทอด ราดซอสมะขาม,Tamarind Sauce Fried Rice Bowl,rice-dishes,assets/catalog/chor-charoen-phanich/menus/tamarind-sauce-fried-rice-bowl.png,missing,tamarind-sauce-fried-rice-bowl,none
 chor-charoen-phanich,teriyaki-sauce-fried-rice-bowl,ข้าวของทอด ราดซอสเทริยากิ,Teriyaki Sauce Fried Rice Bowl,rice-dishes,assets/catalog/chor-charoen-phanich/menus/teriyaki-sauce-fried-rice-bowl.png,missing,teriyaki-sauce-fried-rice-bowl,stock
 chor-charoen-phanich,fish-sauce-fried-rice-bowl,ข้าวของทอด ราดซอสน้ำปลา,Fish Sauce Fried Rice Bowl,rice-dishes,assets/catalog/chor-charoen-phanich/menus/fish-sauce-fried-rice-bowl.png,missing,fish-sauce-fried-rice-bowl,none
-chor-charoen-phanich,garlic-fried-rice-bowl,ข้าวทอดกระเทียม,Garlic Fried Rice Bowl,rice-dishes,assets/catalog/chor-charoen-phanich/menus/garlic-fried-rice-bowl.png,missing,garlic-fried-rice-bowl,none
-chor-charoen-phanich,two-egg-omelette-rice,ข้าวไข่เจียว (2 ฟอง),Two-egg Omelette on Rice,rice-dishes,assets/catalog/chor-charoen-phanich/menus/two-egg-omelette-rice.png,missing,omelette-rice,none
+chor-charoen-phanich,garlic-fried-rice-bowl,ข้าวทอดกระเทียม,Garlic Fried Rice Bowl,rice-dishes,assets/catalog/chor-charoen-phanich/menus/garlic-fried-rice-bowl.png,missing,garlic-fried-rice-bowl,stock
+chor-charoen-phanich,two-egg-omelette-rice,ข้าวไข่เจียว (2 ฟอง),Two-egg Omelette on Rice,rice-dishes,assets/catalog/chor-charoen-phanich/menus/two-egg-omelette-rice.png,missing,omelette-rice,stock
 family-kebab-halal,adana-beef-kebab-wrap,อดาน่าเคบับแรปเนื้อ,Adana Beef Kebab Wrap,burgers-sandwiches-wraps,assets/catalog/family-kebab-halal/menus/adana-beef-kebab-wrap.png,missing,adana-beef-kebab-wrap,none
 family-kebab-halal,shish-kebab-liver-wrap,ชิชเคบับแรปตับ,Liver Shish Kebab Wrap,burgers-sandwiches-wraps,assets/catalog/family-kebab-halal/menus/shish-kebab-liver-wrap.png,missing,shish-kebab-liver-wrap,none
 family-kebab-halal,grilled-saba-wrap,แรปปลาซาบะย่าง,Grilled Saba Fish Wrap,burgers-sandwiches-wraps,assets/catalog/family-kebab-halal/menus/grilled-saba-wrap.png,missing,grilled-saba-wrap,none
@@ -201,7 +201,7 @@ lung-yik-steak,charcoal-burger,เบอร์เกอร์ชาโคร,Cha
 lung-yik-steak,original-burger,เบอร์เกอร์ออริจินอล,Original Burger,burgers-sandwiches-wraps,assets/catalog/lung-yik-steak/menus/original-burger.png,missing,original-burger,stock
 lung-yik-steak,lung-yik-salad-wrap,แรปสลัดลุงหยิก,Lung Yik Salad Wrap,burgers-sandwiches-wraps,assets/catalog/lung-yik-steak/menus/lung-yik-salad-wrap.png,missing,lung-yik-salad-wrap,stock
 lung-yik-steak,vegetable-salad,สลัดผัก,Vegetable Salad,salads-yum-somtam,assets/catalog/lung-yik-steak/menus/vegetable-salad.png,missing,vegetable-salad,stock
-lung-yik-steak,marinated-shrimp-rice-bowl,ข้าวหน้ากุ้งดอง,Marinated Shrimp Rice Bowl,rice-dishes,assets/catalog/lung-yik-steak/menus/marinated-shrimp-rice-bowl.png,missing,marinated-shrimp-rice-bowl,none
+lung-yik-steak,marinated-shrimp-rice-bowl,ข้าวหน้ากุ้งดอง,Marinated Shrimp Rice Bowl,rice-dishes,assets/catalog/lung-yik-steak/menus/marinated-shrimp-rice-bowl.png,missing,marinated-shrimp-rice-bowl,stock
 lung-yik-steak,black-pepper-fried-pork-rice,ข้าวหมูทอดพริกไทยดำ,Black Pepper Fried Pork with Rice,rice-dishes,assets/catalog/lung-yik-steak/menus/black-pepper-fried-pork-rice.png,missing,black-pepper-fried-pork-rice,stock
 lung-yik-steak,fried-chicken-rice,ข้าวไก่ทอด,Fried Chicken with Rice,rice-dishes,assets/catalog/lung-yik-steak/menus/fried-chicken-rice.png,missing,fried-chicken-rice,stock
 lung-yik-steak,fried-fish-rice,ข้าวปลาทอด,Fried Fish with Rice,rice-dishes,assets/catalog/lung-yik-steak/menus/fried-fish-rice.png,missing,fried-fish-rice,stock

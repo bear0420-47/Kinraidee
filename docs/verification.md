@@ -1,5 +1,33 @@
 # Verification Report
 
+## 2026-10-24 — Additional free photo sources
+
+Scope: three new empty-pool mappings and minimal Pexels metadata/credit/stock-host support. Coverage: 136/222 visible menus with images, 86 unresolved. Source and accuracy evidence: `evidence/other-free-menu-photos-2026-10-24/`. Previous approved plan and verification/catalog artifacts were archived under `evidence/archive/20261024-before-other-free-photos/` before mutation. Requirements and core workflow remain unchanged.
+
+Commands used installed dependencies directly because the previously recorded pinned pnpm bootstrap failure remains unresolved. No dependency version changed. Build/test subprocesses required execution outside the sandbox after its earlier esbuild spawn restriction.
+
+| Check | Working directory | Exact command | Result |
+|---|---|---|---|
+| Catalog generation | `src/api` | `node --import tsx prisma/catalog-build.ts` | Exit 0; 136 menus use reviewed stock photos. |
+| API lint | `src/api` | `node ../../node_modules/eslint/bin/eslint.js .` | Exit 0. |
+| Web lint | `src/web` | `node ../../node_modules/eslint/bin/eslint.js .` | Exit 0. |
+| API tests | `src/api` | `node node_modules/vitest/vitest.mjs run --exclude dist/**` | Exit 0; 73 files, 604 tests passed. |
+| Web tests | `src/web` | `node node_modules/vitest/vitest.mjs run --exclude dist/** --maxWorkers=4` | Exit 0; 39 files, 411 tests passed, 75.27 seconds. |
+| API compile | `src/api` | `node node_modules/typescript/bin/tsc -p tsconfig.json` | Exit 0. |
+| API aliases | `src/api` | `node node_modules/tsc-alias/dist/bin/index.js -p tsconfig.json` | Exit 0. |
+| OpenAPI | `src/api` | `node --import tsx src/openapi/generateOpenapi.ts` | Exit 0; no semantic diff. |
+| Web compile | `src/web` | `node node_modules/typescript/bin/tsc -b` | Exit 2; existing TS2307 for node:path/node:url and TS2339 ImportMeta.url in unchanged vite.config.ts. |
+| Web bundle diagnostic | `src/web` | `node node_modules/vite/bin/vite.js build` | Exit 0, 8.21 seconds; chunk-size advisory. Does not replace the failed TypeScript build stage. |
+| API package formatting | `src/api` | `node ../../node_modules/prettier/bin/prettier.cjs --check .` | Exit 1; 268 files flagged, including ignored local research caches and existing files outside this change. No bulk rewrite performed. |
+| Web package formatting | `src/web` | `node ../../node_modules/prettier/bin/prettier.cjs --check .` | Exit 1; 189 files flagged across existing package sources. No bulk rewrite performed. |
+| Changed code formatting | repository root | `node node_modules/prettier/bin/prettier.cjs --check src/api/prisma/catalog-build.ts src/api/prisma/catalog-build.test.ts src/web/src/lib/photoCredits.ts src/web/src/lib/photoCredits.test.ts` | Exit 0. |
+| Wireframe regression | repository root | `node tests/wireframe-requirements.test.cjs` | Exit 1; 20 passed, 4 failed: tests 11, 14, 15, 16 (header/admin prototype assertions). Prototype and test files are unchanged in this task. |
+| Whitespace | repository root | `git diff --check` | Exit 0. |
+
+Manual/data checks: all three selected image URLs returned HTTP 200; source licenses and visible main ingredients were reviewed. Pexels source/image IDs and hosts are validated; generated creator/license credits and the stock-photo label are covered by tests. A baseline comparison confirms exactly three seed image fields changed, all previously empty. Existing images were preserved. Review previews have metadata removed; no credentials or GPS metadata were included. Source photos are illustrative; serving and plating limitations are documented per match.
+
+No database write/seed was performed; local PostgreSQL was unavailable in the prior pass. These source mappings still require image-only database sync when the database becomes available. No deployment occurred. Full release verification remains incomplete because web TypeScript, package-wide formatting and legacy wireframe checks do not pass.
+
 ## 2026-10-24 — Unsplash key photo-matching pass
 
 Scope: add reviewed stock-image mappings using the existing `catalog-photos.ts` workflow. No application module, dependencies or tests changed. Current catalog coverage is 133 of 222 visible menu items, with 89 missing. The two new menu IDs are documented in `evidence/unsplash-menu-matching-2026-10-24/matched.json`. Prior catalog files and this report were archived in `evidence/archive/20261024-before-unsplash-key-pass/` before mutation.
