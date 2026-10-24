@@ -1,0 +1,52 @@
+{
+  "slug": "mala-grilled-fish-fa-thai",
+  "zone": "fa-thai-market",
+  "name": {
+    "th": "ปลาเผา มะหล่า ซอยโลตัสตลาดฟ้าไทย",
+    "en": "Mala Grilled Fish, Fa Thai Market"
+  },
+  "description": {
+    "th": "ร้านปลาเผาและหม่าล่าเสียบไม้ในซอยโลตัสตลาดฟ้าไทย",
+    "en": "Grilled fish sets and mala skewers in the Lotus alley by Fa Thai Market."
+  },
+  "phone": null,
+  "source": {
+    "type": "admin",
+    "capturedOn": "2026-10-24",
+    "pricesInclude": "in-store"
+  },
+  "menuItems": [
+    {
+      "slug": "grilled-fish-vegetable-set",
+      "name": {
+        "th": "เมี่ยงปลาเผาผักสด ชุดเริ่มต้น",
+        "en": "Grilled Fish and Fresh Vegetable Set"
+      },
+      "description": {
+        "th": "ชุดปลาเผาพร้อมผักสด ตามราคาเริ่มต้นบนป้ายร้าน",
+        "en": "Grilled fish set with fresh vegetables at the starting price shown on the shop sign."
+      },
+      "price": 100,
+      "foodType": "grills-steaks",
+      "tastes": ["spiced-smoky", "savory"],
+      "review": null,
+      "photo": "mfu-grilled-fish-vegetable-set"
+    },
+    {
+      "slug": "mala-skewer-one",
+      "name": {
+        "th": "หม่าล่าเสียบไม้ 1 ไม้",
+        "en": "Mala Skewer, One Stick"
+      },
+      "description": {
+        "th": "หม่าล่าปิ้งย่างหนึ่งไม้ ชนิดวัตถุดิบเลือกตามที่ร้านมี",
+        "en": "One grilled mala skewer; ingredients depend on the available selection."
+      },
+      "price": 5,
+      "foodType": "grills-steaks",
+      "tastes": ["spicy", "spiced-smoky"],
+      "review": null,
+      "photo": "mfu-mala-skewer-one"
+    }
+  ]
+}

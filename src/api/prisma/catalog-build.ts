@@ -165,10 +165,42 @@ const pexelsPhotoSchema = z
     'Pexels image and source URLs must match the photo ID.',
   )
 
+// Direct Commons research retains its real page ID without inventing an Openverse ID.
+const commonsPhotoSchema = openversePhotoSchema
+  .omit({ openverseId: true })
+  .extend({
+    url: z.url(),
+    source: z.literal('wikimedia'),
+    commonsPageId: z.number().int().positive(),
+    title: textSchema.startsWith('File:'),
+  })
+  .refine((photo) => {
+    try {
+      const image = new URL(photo.url)
+      const filename = image.pathname.match(
+        /^\/wikipedia\/commons\/(?:thumb\/)?[a-f0-9]\/[a-f0-9]{2}\/([^/]+)(?:\/[^/]+)?$/,
+      )?.[1]
+      return (
+        [
+          'https://upload.wikimedia.org',
+          'https://thumb.wikimedia.org',
+        ].includes(image.origin) &&
+        filename !== undefined &&
+        decodeURIComponent(filename).replaceAll('_', ' ') ===
+          photo.title.slice('File:'.length) &&
+        photo.pageUrl ===
+          `https://commons.wikimedia.org/w/index.php?curid=${photo.commonsPageId}`
+      )
+    } catch {
+      return false
+    }
+  }, 'Commons image filename and source page ID must match the metadata.')
+
 const stockPhotoSchema = z.union([
   unsplashPhotoSchema,
   openversePhotoSchema,
   pexelsPhotoSchema,
+  commonsPhotoSchema,
 ])
 export type StockPhoto = z.infer<typeof stockPhotoSchema>
 

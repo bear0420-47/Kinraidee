@@ -624,6 +624,77 @@ describe('reviewed Pexels photos', () => {
   })
 })
 
+describe('directly reviewed Commons photos', () => {
+  const commons = {
+    url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Yam_mu_krop.JPG/960px-Yam_mu_krop.JPG',
+    commonsPageId: 14725223,
+    source: 'wikimedia' as const,
+    title: 'File:Yam mu krop.JPG',
+    creator: 'Takeaway',
+    creatorUrl: 'https://commons.wikimedia.org/wiki/User:Takeaway',
+    license: 'by-sa' as const,
+    licenseVersion: '3.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/',
+    pageUrl: 'https://commons.wikimedia.org/w/index.php?curid=14725223',
+  }
+  const build = (photo: unknown) =>
+    buildCatalog({
+      taxonomy,
+      restaurants: [withPhoto('a-shop', 'reviewed-dish')],
+      photos: new Set(),
+      photoPools: {
+        'reviewed-dish': { query: 'reviewed dish', photos: [photo] },
+      },
+    })
+
+  it('generates a credited menu image using the real Commons page ID', () => {
+    const result = build(commons)
+    const pools = {
+      'reviewed-dish': { query: 'reviewed dish', photos: [commons] },
+    }
+    expect(result.seed.menuItems[0]!.imageUrl).toBe(commons.url)
+    expect(serializeCredits(pools, result.checklist)).toContain('Takeaway')
+    expect(
+      JSON.parse(serializeWebCredits(pools, result.checklist)),
+    ).toMatchObject({
+      [commons.url]: {
+        creator: 'Takeaway',
+        license: 'CC BY-SA 3.0',
+        pageUrl: commons.pageUrl,
+        source: 'Wikimedia Commons',
+      },
+    })
+  })
+
+  it('accepts the current Commons API thumbnail host', () => {
+    const url = commons.url.replace(
+      'upload.wikimedia.org',
+      'thumb.wikimedia.org',
+    )
+    expect(build({ ...commons, url }).seed.menuItems[0]!.imageUrl).toBe(url)
+  })
+
+  it.each([
+    [
+      'lookalike host',
+      {
+        url: commons.url.replace(
+          'upload.wikimedia.org',
+          'upload.wikimedia.org.example.com',
+        ),
+      },
+    ],
+    ['malformed URL', { url: 'not a URL' }],
+    ['unrelated filename', { title: 'File:Other dish.JPG' }],
+    ['mismatched page ID', { commonsPageId: 123 }],
+    ['zero page ID', { commonsPageId: 0 }],
+    ['noncommercial license', { license: 'by-nc' }],
+    ['missing creator', { creator: '' }],
+  ])('rejects %s', (_name, change) => {
+    expect(() => build({ ...commons, ...change })).toThrow(CatalogBuildError)
+  })
+})
+
 describe('photo checklist', () => {
   it('quotes cells with commas or quotes and starts with a UTF-8 byte-order mark', () => {
     const text = serializeChecklist([

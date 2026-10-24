@@ -1,5 +1,78 @@
 # Verification Report
 
+## 2026-10-24 — Remaining menu photo matching
+
+Data-only follow-up: six reviewed photos fill empty pools. Coverage increased from 149/263 to **155/263 visible menus**, leaving 108 without images. Restaurant/menu counts remain 20/263. No application code, taxonomy, prices or dependency changes. Evidence and remaining menu list: `evidence/remaining-menu-photos-2026-10-24.md`. Prior verification entries below are retained as historical runs.
+
+| Check | Directory | Exact command | Result |
+|---|---|---|---|
+| Catalog generation | `src/api` | `node --import tsx prisma/catalog-build.ts` | Exit 0; 20 restaurants, 263 visible menus, 155 reviewed image mappings, 7 hidden items excluded. |
+| API lint | `src/api` | `node ../../node_modules/eslint/bin/eslint.js .` | Exit 0. |
+| Web lint | `src/web` | `node ../../node_modules/eslint/bin/eslint.js .` | Exit 0. |
+| API tests | `src/api` | `node node_modules/vitest/vitest.mjs run --exclude dist/**` | Exit 0; 73 files, 613 tests, 8.67 s; started 23:40:07 Asia/Bangkok. |
+| Final catalog attribution regression | `src/api` | `node node_modules/vitest/vitest.mjs run prisma/catalog-build.test.ts` | Exit 0; 1 file, 44 tests, 698 ms, after omitting unavailable profile links. |
+| Web tests | `src/web` | `node node_modules/vitest/vitest.mjs run --exclude dist/** --maxWorkers=4` | Exit 0; 39 files, 410 tests, 79.76 s; started 23:40:38 Asia/Bangkok. |
+| Generated consistency | `src/api` | `node --import tsx prisma/catalog-build.ts --check` | Exit 0. |
+| API compile | `src/api` | `node node_modules/typescript/bin/tsc -p tsconfig.json` | Exit 0. |
+| API aliases | `src/api` | `node node_modules/tsc-alias/dist/bin/index.js -p tsconfig.json` | Exit 0. |
+| OpenAPI generation | `src/api` | `node --import tsx src/openapi/generateOpenapi.ts` | Exit 0; no semantic diff. |
+| Web compile | `src/web` | `node node_modules/typescript/bin/tsc -b` | Exit 2; existing TS2307 node:path/node:url and TS2339 ImportMeta.url in unchanged vite.config.ts. |
+| Web bundle diagnostic | `src/web` | `node node_modules/vite/bin/vite.js build` | Exit 0; 8.51 s, chunk-size advisory. Does not replace failed TypeScript compile. |
+| Photo-pool formatting | root | `node node_modules/prettier/bin/prettier.cjs --check src/api/prisma/data/catalog/photos.json` | Exit 0. |
+
+Additional verification: compare every pre-task restaurant/taxonomy record and each menu record by ID against the regenerated seed, excluding imageUrl only for the six changed rows; reject replacement of any nonempty image URL. Result: exactly six additions, all 149 old image URLs and every other field unchanged. All six final URLs returned HTTP 200 image/jpeg, metadata passed the existing schema and generated web credits exist for every selected URL. Two unavailable creator-profile links are omitted while creator names and source-page attribution remain. `git diff --check` passed. No database synchronization or deployment occurred. Installed Node tools and subprocess execution were used as before; no new tests were added for this low-impact data change. Earlier wireframe failures below remain applicable because those files are unchanged.
+
+## 2026-10-24 — Owner-confirmed restaurant promotion
+
+The owner identified Kai Ka Beer MFU with https://maps.app.goo.gl/Br6kKXLtSs7kYXeaA and confirmed Som Tam LA in Kotchapol. Promoted the existing 6 + 5 priced menu records from pending into active sources, cleared their resolved review notes and retained delivery-channel prices. Kaprao Khokhun MFU still has no individually evidenced menu price, so its one unpriced record remains excluded. No feature code or taxonomy changed in this follow-up.
+
+Current totals: **7 added restaurants / 41 added visible menus; 20 restaurants / 263 visible menus overall** (7 hidden items remain excluded). Image mappings remain 149; 13 of the 41 new menus have images, 28 do not yet have an accurate free match. Source/identity/zone rationale is in `evidence/catalog-expansion-2026-10-24.md`. Original records were structurally compared with `git show HEAD:src/api/prisma/data/catalog.seed.json`: all 13 restaurants, 222 menus including image URLs, and taxonomy records remain unchanged.
+
+| Check | Directory | Exact command | Result |
+|---|---|---|---|
+| Catalog generation | `src/api` | `node --import tsx prisma/catalog-build.ts` | Exit 0; 20 restaurants, 263 visible menus, 149 reviewed stock-image mappings. |
+| Generated consistency | `src/api` | `node --import tsx prisma/catalog-build.ts --check` | Exit 0. |
+| API lint | `src/api` | `node ../../node_modules/eslint/bin/eslint.js .` | Exit 0. |
+| Web lint | `src/web` | `node ../../node_modules/eslint/bin/eslint.js .` | Exit 0. |
+| API tests | `src/api` | `node node_modules/vitest/vitest.mjs run --exclude dist/**` | Exit 0; 73 files, 613 tests, 10.15 s; started 23:31:59 Asia/Bangkok. |
+| Web tests | `src/web` | `node node_modules/vitest/vitest.mjs run --exclude dist/** --maxWorkers=4` | Exit 0; 39 files, 410 tests, 80.77 s; started 23:32:34 Asia/Bangkok. |
+| API compile | `src/api` | `node node_modules/typescript/bin/tsc -p tsconfig.json` | Exit 0. |
+| API aliases | `src/api` | `node node_modules/tsc-alias/dist/bin/index.js -p tsconfig.json` | Exit 0. |
+| OpenAPI generation | `src/api` | `node --import tsx src/openapi/generateOpenapi.ts` | Exit 0; no semantic diff. |
+| Web compile | `src/web` | `node node_modules/typescript/bin/tsc -b` | Exit 2; existing TS2307 node:path/node:url and TS2339 ImportMeta.url in unchanged vite.config.ts. |
+| Web bundle diagnostic | `src/web` | `node node_modules/vite/bin/vite.js build` | Exit 0; 9.02 s, chunk-size advisory. Does not replace failed TypeScript compile. |
+| Formatting | root | `node node_modules/prettier/bin/prettier.cjs --check src/api/prisma/data/catalog/restaurants/kai-ka-beer-mfu.json src/api/prisma/data/catalog/restaurants/som-tam-la-mfu.json src/api/prisma/data/catalog/photos.json` | Exit 0. |
+| Whitespace | root | `git diff --check` | Exit 0. |
+
+The prior wireframe results below still apply; no prototype/test changes were made. No database synchronization or deployment was performed; this update is to the source and generated catalog. The existing unavailable local PostgreSQL environment remains the runtime limitation. Installed Node tools were used as in the preceding checks, with no dependency changes.
+
+## 2026-10-24 — Nearby restaurant catalog expansion
+
+Scope: five active restaurants / 30 menu records, three excluded drafts / 12 records, 11 reviewed free illustrative photos covering 13 new menus, native Commons metadata validation and current-thumbnail stock labeling. The generated catalog has 18 restaurants / 252 visible menus and 149 image mappings; 7 hidden items remain excluded. Source/date/price/accuracy evidence: `evidence/catalog-expansion-2026-10-24.md`. Approved plan, verification and review snapshots were preserved under `evidence/archive/20261024-before-catalog-expansion/` before mutation. Requirements, design workflow, taxonomy and API contracts are intentionally unchanged.
+
+Final checks used installed dependencies directly because the previously recorded pinned pnpm bootstrap failure remains unresolved. No dependencies changed. TypeScript runners, tests and builds needed subprocess access outside the sandbox. Final API tests started at 23:14:47 and web tests at 23:15:20 (Asia/Bangkok).
+
+| Check | Directory | Exact command | Result |
+|---|---|---|---|
+| Catalog generation | `src/api` | `node --import tsx prisma/catalog-build.ts` | Exit 0; 18 restaurants, 252 visible menus, 149 reviewed stock-image mappings. |
+| Generated consistency | `src/api` | `node --import tsx prisma/catalog-build.ts --check` | Exit 0; generated seed and web credits are current; no `--draft`. |
+| API lint | `src/api` | `node ../../node_modules/eslint/bin/eslint.js .` | Exit 0. |
+| Web lint | `src/web` | `node ../../node_modules/eslint/bin/eslint.js .` | Exit 0. |
+| API tests | `src/api` | `node node_modules/vitest/vitest.mjs run --exclude dist/**` | Exit 0; 73 files, 613 tests passed, 9.41 s. Includes native Commons validation and generated-credit tests. |
+| Web tests | `src/web` | `node node_modules/vitest/vitest.mjs run --exclude dist/** --maxWorkers=4` | Exit 0; 39 files, 410 tests passed, 79.96 s. Includes Commons thumbnail illustrative-label coverage. |
+| API compile | `src/api` | `node node_modules/typescript/bin/tsc -p tsconfig.json` | Exit 0. |
+| API aliases | `src/api` | `node node_modules/tsc-alias/dist/bin/index.js -p tsconfig.json` | Exit 0. |
+| OpenAPI generation | `src/api` | `node --import tsx src/openapi/generateOpenapi.ts` | Exit 0; no semantic change. |
+| Web compile | `src/web` | `node node_modules/typescript/bin/tsc -b` | Exit 2; unchanged `vite.config.ts`: TS2307 for node:path/node:url and TS2339 for ImportMeta.url. Same errors recorded before this change. Full web build is not passing. |
+| Web bundle diagnostic | `src/web` | `node node_modules/vite/bin/vite.js build` | Exit 0, 8.75 s; existing chunk-size advisory. Does not replace failed TypeScript compile. |
+| Changed-file formatting | root | `node node_modules/prettier/bin/prettier.cjs --check src/api/prisma/catalog-build.ts src/api/prisma/catalog-build.test.ts src/web/src/lib/photoCredits.ts src/web/src/lib/photoCredits.test.ts src/api/prisma/data/catalog/restaurants/aroi-jung-mfu.json src/api/prisma/data/catalog/restaurants/zen-chai-mfu.json src/api/prisma/data/catalog/restaurants/fa-fa-chinese.json src/api/prisma/data/catalog/restaurants/ho-jiak-mfu.json src/api/prisma/data/catalog/restaurants/mala-grilled-fish-fa-thai.json src/api/prisma/data/catalog/pending/*.json src/api/prisma/data/catalog/photos.json` | Exit 0; all matched files use Prettier style. |
+| Wireframe regression | root | `node tests/wireframe-requirements.test.cjs` | Exit 1; 20 passed, 4 failed: tests 11, 14, 15, 16 (header/admin assertions). Prototype/test files are unchanged; same previously recorded failures. |
+| Whitespace | root | `git diff --check` | Exit 0. |
+
+Additional data checks: exact structural comparison against `git show HEAD:src/api/prisma/data/catalog.seed.json` preserved all 3 zones, 10 food types, 8 tastes, 13 restaurants and 222 menu records, including their image URLs. Normalized Thai/English names (NFKC, case and punctuation normalization) across all 21 active/draft restaurant records had no exact duplicates; source aliases were reviewed separately. Build schema validation confirms active prices, categories and taste references. Pending files are outside the builder's restaurant directory; unresolved `price:null` and review notes are not imported. All 11 selected image URLs returned HTTP 200 with image/jpeg. New pools have one reviewed image each, preventing pool rotation of existing dishes.
+
+Runtime limitation: a TCP probe to PostgreSQL at 127.0.0.1:5432 failed. No database sync, full seed, administrator provisioning, deployment or production change was performed. No end-to-end running-app claim is made. Seventeen active menus still lack an accurate freely licensed match; three restaurant drafts require location/identity or price confirmation. Review scope and remaining limitations are in `docs/REVIEW.md`; human PR/deployment approval remains separate.
+
 ## 2026-10-24 — Additional free photo sources
 
 Scope: three new empty-pool mappings and minimal Pexels metadata/credit/stock-host support. Coverage: 136/222 visible menus with images, 86 unresolved. Source and accuracy evidence: `evidence/other-free-menu-photos-2026-10-24/`. Previous approved plan and verification/catalog artifacts were archived under `evidence/archive/20261024-before-other-free-photos/` before mutation. Requirements and core workflow remain unchanged.

@@ -13,6 +13,19 @@ vi.mock('@/generated/photoCredits.json', () => ({
 
 import { creativeCommonsCredit, isStockPhoto } from './photoCredits'
 
+describe('Commons thumbnail presentation', () => {
+  it('keeps the illustrative label on current Commons API thumbnail URLs', () => {
+    expect(
+      isStockPhoto(
+        'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Dish.jpg/960px-Dish.jpg',
+      ),
+    ).toBe(true)
+    expect(
+      isStockPhoto('https://thumb.wikimedia.org.example.com/Dish.jpg'),
+    ).toBe(false)
+  })
+})
+
 describe('Pexels stock-photo presentation', () => {
   const url =
     'https://images.pexels.com/photos/35049884/pexels-photo-35049884.jpeg'

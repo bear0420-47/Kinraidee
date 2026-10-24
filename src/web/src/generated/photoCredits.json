@@ -527,6 +527,12 @@
     "pageUrl": "https://www.flickr.com/photos/150596023@N08/51362034437",
     "source": "Flickr"
   },
+  "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/Food_at_Mahidol_University_Canteen.jpg/960px-Food_at_Mahidol_University_Canteen.jpg": {
+    "creator": "Tsuki0056",
+    "license": "CC0",
+    "pageUrl": "https://commons.wikimedia.org/w/index.php?curid=198677601",
+    "source": "Wikimedia Commons"
+  },
   "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Hong_Kong_style_fired_Eggplant_with_minced_pork.jpg/960px-Hong_Kong_style_fired_Eggplant_with_minced_pork.jpg": {
     "creator": "Peachyeung316",
     "license": "CC BY-SA 4.0",
@@ -933,6 +939,96 @@
     "creator": "eommina",
     "license": "CC0",
     "pageUrl": "https://commons.wikimedia.org/w/index.php?curid=61288737",
+    "source": "Wikimedia Commons"
+  },
+  "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/71/Fried_rice_with_chicken_%2817234644521%29.jpg/960px-Fried_rice_with_chicken_%2817234644521%29.jpg": {
+    "creator": "Vee Satayamas from Bangkok, Thailand",
+    "license": "CC BY 2.0",
+    "pageUrl": "https://commons.wikimedia.org/w/index.php?curid=83172312",
+    "source": "Wikimedia Commons"
+  },
+  "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/Chinese_Beef_Noodle_Soup_-_%E4%B8%AD%E5%BC%8F%E7%89%9B%E8%82%89%E6%B9%AF%E9%BA%B5.jpg/960px-Chinese_Beef_Noodle_Soup_-_%E4%B8%AD%E5%BC%8F%E7%89%9B%E8%82%89%E6%B9%AF%E9%BA%B5.jpg": {
+    "creator": "NeoBatfreak",
+    "license": "CC BY-SA 4.0",
+    "pageUrl": "https://commons.wikimedia.org/w/index.php?curid=80341121",
+    "source": "Wikimedia Commons"
+  },
+  "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/34/2013_Tam_Lao.jpg/960px-2013_Tam_Lao.jpg": {
+    "creator": "Takeaway",
+    "license": "CC BY-SA 3.0",
+    "pageUrl": "https://commons.wikimedia.org/w/index.php?curid=26548851",
+    "source": "Wikimedia Commons"
+  },
+  "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3a/Khao_mu_krop_%28crispy_pork_with_rice%29%2C_Pathum_Thani%2C_2019-02-24_%281%29.jpg/960px-Khao_mu_krop_%28crispy_pork_with_rice%29%2C_Pathum_Thani%2C_2019-02-24_%281%29.jpg": {
+    "creator": "Bitterschoko",
+    "license": "CC0",
+    "pageUrl": "https://commons.wikimedia.org/w/index.php?curid=86791665",
+    "source": "Wikimedia Commons"
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/8/8d/Popiah.jpg": {
+    "creator": "Alicia Lim",
+    "license": "CC BY 2.0",
+    "pageUrl": "https://commons.wikimedia.org/w/index.php?curid=7974352",
+    "source": "Wikimedia Commons"
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/a/af/Korean_fried_chicken_7_dari.jpg": {
+    "creator": "happy o'ne",
+    "license": "CC BY 2.0 KR",
+    "pageUrl": "https://commons.wikimedia.org/w/index.php?curid=60618531",
+    "source": "Wikimedia Commons"
+  },
+  "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dc/Mala_skewers%2C_Chiang_Rai%2C_2018-08-03_%281%29.jpg/960px-Mala_skewers%2C_Chiang_Rai%2C_2018-08-03_%281%29.jpg": {
+    "creator": "Bitterschoko",
+    "license": "CC0",
+    "pageUrl": "https://commons.wikimedia.org/w/index.php?curid=86781716",
+    "source": "Wikimedia Commons"
+  },
+  "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/Dumplings_%28jiaozhi%29_%28Pork_and_napa_cabbage%29.jpg/960px-Dumplings_%28jiaozhi%29_%28Pork_and_napa_cabbage%29.jpg": {
+    "creator": "NeoBatfreak",
+    "license": "CC BY-SA 4.0",
+    "pageUrl": "https://commons.wikimedia.org/w/index.php?curid=80043217",
+    "source": "Wikimedia Commons"
+  },
+  "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/98/BoiledDumplingsPorkChiveAsianLegend.JPG/960px-BoiledDumplingsPorkChiveAsianLegend.JPG": {
+    "creator": "Raysonho @ Open Grid Scheduler / Grid Engine",
+    "license": "CC0",
+    "pageUrl": "https://commons.wikimedia.org/w/index.php?curid=32669018",
+    "source": "Wikimedia Commons"
+  },
+  "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6f/Khao_phat_mu.jpg/960px-Khao_phat_mu.jpg": {
+    "creator": "Takeaway",
+    "license": "CC BY-SA 3.0",
+    "pageUrl": "https://commons.wikimedia.org/w/index.php?curid=26774479",
+    "source": "Wikimedia Commons"
+  },
+  "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d2/Khao_mu_daeng_mu_krop_-_Ratchaburi_-_2017-04-16_%28002%29.jpg/960px-Khao_mu_daeng_mu_krop_-_Ratchaburi_-_2017-04-16_%28002%29.jpg": {
+    "creator": "Iudexvivorum",
+    "license": "CC0",
+    "pageUrl": "https://commons.wikimedia.org/w/index.php?curid=58282778",
+    "source": "Wikimedia Commons"
+  },
+  "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/Som_dtum_thai-bpu_%288653100003%29.jpg/960px-Som_dtum_thai-bpu_%288653100003%29.jpg": {
+    "creator": "Charles Haynes",
+    "license": "CC BY-SA 2.0",
+    "pageUrl": "https://commons.wikimedia.org/w/index.php?curid=101322659",
+    "source": "Wikimedia Commons"
+  },
+  "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0a/Som_tam_thai.JPG/960px-Som_tam_thai.JPG": {
+    "creator": "Takeaway",
+    "license": "CC BY-SA 3.0",
+    "pageUrl": "https://commons.wikimedia.org/w/index.php?curid=11629588",
+    "source": "Wikimedia Commons"
+  },
+  "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/Tomato_and_egg_noodles.jpg/960px-Tomato_and_egg_noodles.jpg": {
+    "creator": "Zhuo1221",
+    "license": "CC BY-SA 4.0",
+    "pageUrl": "https://commons.wikimedia.org/w/index.php?curid=147989771",
+    "source": "Wikimedia Commons"
+  },
+  "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Hung_Hom_Station_Maxim%27s_MX_Yangzhou_fried_rice_11-01-2023.jpg/960px-Hung_Hom_Station_Maxim%27s_MX_Yangzhou_fried_rice_11-01-2023.jpg": {
+    "creator": "LN9267",
+    "license": "CC BY-SA 4.0",
+    "pageUrl": "https://commons.wikimedia.org/w/index.php?curid=127658094",
     "source": "Wikimedia Commons"
   },
   "https://images.unsplash.com/photo-1622973536968-3ead9e780960?ixid=M3wxMTExMTcwfDB8MXxzZWFyY2h8MXx8c3BhZ2hldHRpJTIwYm9sb2duZXNlfGVufDF8MHx8fDE3OTI3NjkxNzB8MA&ixlib=rb-4.1.0&w=800&q=75&fit=crop&auto=format": {

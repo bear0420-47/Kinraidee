@@ -14,6 +14,7 @@ const photoCredits: Record<string, PhotoCredit> = credits
 const STOCK_PHOTO_HOSTS = [
   'https://images.unsplash.com/',
   'https://upload.wikimedia.org/',
+  'https://thumb.wikimedia.org/',
   'https://live.staticflickr.com/',
   'https://images.pexels.com/',
 ]

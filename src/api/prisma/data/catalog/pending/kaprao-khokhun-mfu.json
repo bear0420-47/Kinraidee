@@ -1,0 +1,36 @@
+{
+  "slug": "kaprao-khokhun-mfu",
+  "zone": "kotchapol",
+  "name": {
+    "th": "กะเพราเนื้อโคขุนพริกแห้ง@มฟล",
+    "en": "Kaprao Khokhun MFU"
+  },
+  "description": {
+    "th": "ร้านอาหารตามสั่งที่มีหน้าร้านระบุโครงการคชพลแลนด์",
+    "en": "A made-to-order restaurant listed in Kotchapol Land."
+  },
+  "phone": null,
+  "source": {
+    "type": "admin",
+    "capturedOn": "2026-10-24",
+    "pricesInclude": "in-store"
+  },
+  "menuItems": [
+    {
+      "slug": "dried-chili-beef-basil-rice",
+      "name": {
+        "th": "ข้าวกะเพราเนื้อโคขุนพริกแห้ง",
+        "en": "Dried-Chili Beef Basil Rice"
+      },
+      "description": {
+        "th": "ข้าวกับกะเพราเนื้อโคขุนพริกแห้งตามชื่อร้านและภาพอ้างอิง",
+        "en": "Rice with dried-chili beef and holy basil, based on the shop name and reference image."
+      },
+      "price": null,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "savory"],
+      "review": "No individual menu price is available from this branch; do not import or invent a numeric price.",
+      "photo": "mfu-dried-chili-beef-basil-rice"
+    }
+  ]
+}

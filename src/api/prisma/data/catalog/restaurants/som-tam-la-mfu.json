@@ -1,0 +1,100 @@
+{
+  "slug": "som-tam-la-mfu",
+  "zone": "kotchapol",
+  "name": {
+    "th": "ส้มตำ LA มฟล.",
+    "en": "Som Tam LA MFU"
+  },
+  "description": {
+    "th": "ร้านส้มตำสาขาหน้ามหาวิทยาลัยแม่ฟ้าหลวง",
+    "en": "A som tam restaurant listed at the front of Mae Fah Luang University."
+  },
+  "phone": null,
+  "source": {
+    "type": "admin",
+    "capturedOn": "2026-10-24",
+    "pricesInclude": "lineman-delivery-markup"
+  },
+  "menuItems": [
+    {
+      "slug": "rice-noodle-som-tam",
+      "name": {
+        "th": "ตำเส้นเล็ก",
+        "en": "Spicy Rice Noodle Salad"
+      },
+      "description": {
+        "th": "ตำเส้นเล็กรสแซ่บ",
+        "en": "Thin rice noodles tossed in som tam-style dressing."
+      },
+      "price": 60,
+      "foodType": "salads-yum-somtam",
+      "tastes": ["spicy", "sour"],
+      "review": null,
+      "photo": "mfu-rice-noodle-som-tam"
+    },
+    {
+      "slug": "thai-som-tam",
+      "name": {
+        "th": "ตำไทย",
+        "en": "Thai Papaya Salad"
+      },
+      "description": {
+        "th": "ตำไทยตามเมนูร้าน",
+        "en": "Thai-style papaya salad."
+      },
+      "price": 45,
+      "foodType": "salads-yum-somtam",
+      "tastes": ["sweet", "sour"],
+      "review": null,
+      "photo": "mfu-thai-som-tam"
+    },
+    {
+      "slug": "thai-crab-som-tam",
+      "name": {
+        "th": "ตำไทยปู",
+        "en": "Thai Papaya Salad with Salted Crab"
+      },
+      "description": {
+        "th": "ตำไทยใส่ปูดองเค็ม ไม่ใส่ปลาร้าตามคำอธิบายร้าน",
+        "en": "Thai papaya salad with salted crab; the menu states no fermented fish sauce."
+      },
+      "price": 45,
+      "foodType": "salads-yum-somtam",
+      "tastes": ["sweet", "sour"],
+      "review": null,
+      "photo": "mfu-thai-crab-som-tam"
+    },
+    {
+      "slug": "crab-fermented-fish-som-tam",
+      "name": {
+        "th": "ตำปูปลาร้า",
+        "en": "Papaya Salad with Crab and Fermented Fish Sauce"
+      },
+      "description": {
+        "th": "ส้มตำใส่ปูดองและปลาร้า",
+        "en": "Papaya salad with salted crab and fermented fish sauce."
+      },
+      "price": 45,
+      "foodType": "salads-yum-somtam",
+      "tastes": ["spicy", "sour"],
+      "review": null,
+      "photo": "mfu-crab-fermented-fish-som-tam"
+    },
+    {
+      "slug": "cucumber-som-tam",
+      "name": {
+        "th": "ตำแตง",
+        "en": "Spicy Cucumber Salad"
+      },
+      "description": {
+        "th": "ตำแตงตามเมนูร้าน",
+        "en": "Cucumber salad in som tam-style dressing."
+      },
+      "price": 50,
+      "foodType": "salads-yum-somtam",
+      "tastes": ["spicy", "sour"],
+      "review": null,
+      "photo": "mfu-cucumber-som-tam"
+    }
+  ]
+}
