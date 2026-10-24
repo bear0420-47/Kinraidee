@@ -1,0 +1,2531 @@
+[
+  {
+    "id": "cmy1m2wcshrjbzew3cgbgkafp",
+    "restaurant": "เจริญรส แซ่บทอด อาหารตามสั่ง",
+    "restaurantSlug": "charoen-rot",
+    "slug": "spicy-fried-chicken-yum-rice",
+    "name": {
+      "th": "ข้าวยำไก่แซ่บ",
+      "en": "Spicy Fried Chicken Salad with Rice"
+    },
+    "description": {
+      "th": "ไก่ทอดกรอบคลุกยำรสแซ่บกับหอมแดงและสมุนไพร เสิร์ฟกับข้าวสวย",
+      "en": "Crispy fried chicken tossed in a spicy Thai herb salad with shallots, served with rice."
+    },
+    "price": 59,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "sour",
+      "crispy"
+    ],
+    "review": null,
+    "photo": "spicy-fried-chicken-yum-rice",
+    "query": "thai spicy chicken salad rice",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 3,
+    "source": null
+  },
+  {
+    "id": "cy6ftid8vszlkckoh8vwdo6bf",
+    "restaurant": "เจริญรส แซ่บทอด อาหารตามสั่ง",
+    "restaurantSlug": "charoen-rot",
+    "slug": "spicy-fried-pork-yum-rice",
+    "name": {
+      "th": "ข้าวยำหมูทอดแซ่บ",
+      "en": "Spicy Fried Pork Salad with Rice"
+    },
+    "description": {
+      "th": "หมูทอดกรอบคลุกยำรสแซ่บกับหอมแดงและสมุนไพร เสิร์ฟกับข้าวสวย",
+      "en": "Crispy fried pork tossed in a spicy Thai herb salad with shallots, served with rice."
+    },
+    "price": 59,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "sour",
+      "crispy"
+    ],
+    "review": null,
+    "photo": "spicy-fried-pork-yum-rice",
+    "query": "thai spicy pork salad",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 3,
+    "source": null
+  },
+  {
+    "id": "cxo6byzvcqnpaxno0ut4ww22w",
+    "restaurant": "เชฟต๋อย",
+    "restaurantSlug": "chef-toy",
+    "slug": "snow-white-crispy-chicken-rice",
+    "name": {
+      "th": "ข้าว+ไก่กรอบสโนว์ไวท์",
+      "en": "Crispy Chicken with Snow White Sauce on Rice"
+    },
+    "description": {
+      "th": "ไก่ทอดกรอบราดซอสขาวครีมมี่ เสิร์ฟกับข้าวสวย",
+      "en": "Crispy fried chicken topped with a creamy white sauce, served with rice."
+    },
+    "price": 99,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "creamy-rich",
+      "crispy"
+    ],
+    "review": null,
+    "photo": "snow-white-crispy-chicken-rice",
+    "query": "crispy chicken creamy white sauce rice",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 2,
+    "source": null
+  },
+  {
+    "id": "c6chb98r09anjf1xbg3hfq2v5",
+    "restaurant": "เชฟต๋อย",
+    "restaurantSlug": "chef-toy",
+    "slug": "thai-basil-mackerel-rice",
+    "name": {
+      "th": "ข้าว+กะเพราปลาทู",
+      "en": "Thai Basil Mackerel on Rice"
+    },
+    "description": {
+      "th": "ปลาทูทอดราดกะเพรารสจัด เสิร์ฟกับข้าวสวย",
+      "en": "Fried mackerel topped with a spicy Thai basil sauce, served with rice."
+    },
+    "price": 119,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "savory"
+    ],
+    "review": null,
+    "photo": "thai-basil-mackerel-rice",
+    "query": "fried mackerel thai basil",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 2,
+    "source": null
+  },
+  {
+    "id": "c7tdhrpo8edvrot9pem8y2523",
+    "restaurant": "เชฟต๋อย",
+    "restaurantSlug": "chef-toy",
+    "slug": "crispy-chicken-satay-rice",
+    "name": {
+      "th": "ข้าว+สะเต๊ะไก่กรอบ",
+      "en": "Crispy Chicken with Satay Sauce on Rice"
+    },
+    "description": {
+      "th": "ไก่ทอดกรอบราดซอสสะเต๊ะถั่วลิสงผสมพริกแกง เสิร์ฟกับข้าวสวย",
+      "en": "Crispy fried chicken in a peanut and curry satay sauce, served with rice."
+    },
+    "price": 99,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "savory",
+      "sweet",
+      "crispy"
+    ],
+    "review": null,
+    "photo": "crispy-chicken-satay-rice",
+    "query": "chicken peanut satay sauce rice",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "ci846dh1fkoqfr8bdjyhcsir3",
+    "restaurant": "เชฟต๋อย",
+    "restaurantSlug": "chef-toy",
+    "slug": "spicy-cheese-crispy-chicken-fried-rice",
+    "name": {
+      "th": "ข้าวผัดไก่กรอบสไปซ์ชีส",
+      "en": "Spicy Cheese Crispy Chicken Fried Rice"
+    },
+    "description": {
+      "th": "ข้าวผัดกับไก่ทอดกรอบซอสเผ็ด โรยชีส",
+      "en": "Fried rice with crispy chicken in a spicy sauce, finished with cheese."
+    },
+    "price": 99,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "creamy-rich",
+      "crispy"
+    ],
+    "review": null,
+    "photo": "spicy-cheese-crispy-chicken-fried-rice",
+    "query": "cheese fried rice chicken",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "cwywxthvj10tmeftacgzghacw",
+    "restaurant": "เชฟต๋อย",
+    "restaurantSlug": "chef-toy",
+    "slug": "black-mala-crispy-chicken-mama",
+    "name": {
+      "th": "มาม่าดำมาเลย์หม่าล่าไก่กรอบ",
+      "en": "Black Malay Mala Mama Noodles with Crispy Chicken"
+    },
+    "description": {
+      "th": "มาม่าเส้นดำผัดซอสหม่าล่ารสเผ็ด ท็อปไก่ทอดกรอบ",
+      "en": "Black instant noodles stir-fried in spicy mala sauce, topped with crispy chicken."
+    },
+    "price": 99,
+    "foodType": "noodles",
+    "tastes": [
+      "spicy",
+      "spiced-smoky",
+      "crispy"
+    ],
+    "review": null,
+    "photo": "black-mala-crispy-chicken-mama",
+    "query": "spicy stir fried instant noodles chicken",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "cu199jskckn8iwuma4jmxaip8",
+    "restaurant": "เชฟต๋อย",
+    "restaurantSlug": "chef-toy",
+    "slug": "pan-fried-macaroni",
+    "name": {
+      "th": "ผัดมักกะโรนี",
+      "en": "Pan-fried Macaroni"
+    },
+    "description": {
+      "th": "มักกะโรนีผัดซอสมะเขือเทศกับผัก เลือกเนื้อสัตว์ได้ เช่น ไก่ ไก่กรอบ เบคอน หรือไส้กรอก",
+      "en": "Macaroni stir-fried in tomato sauce with vegetables and a choice of chicken, crispy chicken, bacon, or sausage."
+    },
+    "price": 99,
+    "foodType": "pasta",
+    "tastes": [
+      "savory"
+    ],
+    "review": null,
+    "photo": "pan-fried-macaroni",
+    "query": "stir fried macaroni tomato",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 3,
+    "source": null
+  },
+  {
+    "id": "cfp62vldn7ry2bsdpgk710mzn",
+    "restaurant": "เชฟต๋อย",
+    "restaurantSlug": "chef-toy",
+    "slug": "thai-basil-pork-spaghetti",
+    "name": {
+      "th": "สปาเกตตี้กะเพราหมูสับ",
+      "en": "Spicy Thai Basil Spaghetti with Ground Pork"
+    },
+    "description": {
+      "th": "สปาเกตตี้ผัดกะเพราหมูสับรสจัด หอมใบกะเพรา",
+      "en": "Spaghetti stir-fried with ground pork and holy basil, spicy and fragrant."
+    },
+    "price": 99,
+    "foodType": "pasta",
+    "tastes": [
+      "spicy",
+      "savory"
+    ],
+    "review": null,
+    "photo": "thai-basil-pork-spaghetti",
+    "query": "spaghetti thai basil pork",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 2,
+    "source": null
+  },
+  {
+    "id": "co1qzqvt9q33he28yqfifdyla",
+    "restaurant": "เชฟต๋อย",
+    "restaurantSlug": "chef-toy",
+    "slug": "mala-crispy-chicken-spaghetti",
+    "name": {
+      "th": "สปาเกตตี้หม่าล่าไก่กรอบ",
+      "en": "Mala Spaghetti with Crispy Chicken"
+    },
+    "description": {
+      "th": "สปาเกตตี้ผัดซอสหม่าล่ากับไก่ทอดกรอบ เลือกระดับความเผ็ดได้",
+      "en": "Spaghetti in mala sauce with crispy chicken, with a choice of spice level."
+    },
+    "price": 99,
+    "foodType": "pasta",
+    "tastes": [
+      "spicy",
+      "spiced-smoky",
+      "crispy"
+    ],
+    "review": null,
+    "photo": "mala-crispy-chicken-spaghetti",
+    "query": "spicy chili spaghetti chicken",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "ccdqrpzoi4bz6l24gg46f3z7y",
+    "restaurant": "เชฟต๋อย",
+    "restaurantSlug": "chef-toy",
+    "slug": "spicy-vermicelli-pork-balls",
+    "name": {
+      "th": "หมี่คลุกลูกชิ้นหมู",
+      "en": "Spicy Mixed Rice Vermicelli with Pork Balls"
+    },
+    "description": {
+      "th": "เส้นหมี่คลุกซอสรสจัดกับลูกชิ้นหมู เคียงไก่กรอบ โรยกากเจียว",
+      "en": "Rice vermicelli tossed in a hot sauce with pork balls, crispy chicken, and crispy pork rind."
+    },
+    "price": 99,
+    "foodType": "noodles",
+    "tastes": [
+      "spicy",
+      "savory"
+    ],
+    "review": null,
+    "photo": "spicy-vermicelli-pork-balls",
+    "query": "rice vermicelli pork balls",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "c9uiaqoyrs2ylvs99h3g2dlkq",
+    "restaurant": "เชฟต๋อย",
+    "restaurantSlug": "chef-toy",
+    "slug": "tom-yum-mama-jumbo-pork-balls",
+    "name": {
+      "th": "ผัดมาม่าต้มยำลูกชิ้นจัมโบ้",
+      "en": "Stir-fried Tom Yum Mama with Jumbo Pork Balls"
+    },
+    "description": {
+      "th": "มาม่าผัดแห้งรสต้มยำกับลูกชิ้นหมูจัมโบ้",
+      "en": "Dry stir-fried tom yum instant noodles with jumbo pork balls."
+    },
+    "price": 79,
+    "foodType": "noodles",
+    "tastes": [
+      "spicy",
+      "sour"
+    ],
+    "review": null,
+    "photo": "tom-yum-mama-jumbo-pork-balls",
+    "query": "tom yum stir fried instant noodles",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "cejz69qvp8wt5o687qn4aj3i9",
+    "restaurant": "เชฟต๋อย",
+    "restaurantSlug": "chef-toy",
+    "slug": "noodles-tomato-sauce-minced-pork",
+    "name": {
+      "th": "ก๋วยเตี๋ยวหมูสับซอสมะเขือเทศ",
+      "en": "Pan-fried Noodles with Minced Pork in Tomato Sauce"
+    },
+    "description": {
+      "th": "ก๋วยเตี๋ยวผัดราดซอสมะเขือเทศหมูสับรสเปรี้ยวหวาน",
+      "en": "Pan-fried noodles under a sweet and sour tomato sauce with minced pork."
+    },
+    "price": 99,
+    "foodType": "noodles",
+    "tastes": [
+      "sweet",
+      "sour"
+    ],
+    "review": null,
+    "photo": "noodles-tomato-sauce-minced-pork",
+    "query": "noodles minced pork tomato sauce",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 2,
+    "source": null
+  },
+  {
+    "id": "c31vx0y7s508hemkbfuuqrwum",
+    "restaurant": "เชฟต๋อย",
+    "restaurantSlug": "chef-toy",
+    "slug": "rad-na",
+    "name": {
+      "th": "ราดหน้า",
+      "en": "Rad Na"
+    },
+    "description": {
+      "th": "เส้นใหญ่ผัดราดน้ำเกรวี่กับคะน้า เลือกหมูหรือไก่",
+      "en": "Wide rice noodles in a savory gravy with Chinese kale, with pork or chicken."
+    },
+    "price": 79,
+    "foodType": "noodles",
+    "tastes": [
+      "savory"
+    ],
+    "review": null,
+    "photo": "rad-na",
+    "query": "rad na thai gravy noodles",
+    "status": "matched-and-applied",
+    "reason": "Visually verified wide rice noodles, pork, Chinese kale and thick gravy; original source confirms ingredients; no visible people or watermark.",
+    "searchCount": 4,
+    "source": "https://commons.wikimedia.org/w/index.php?curid=12262426"
+  },
+  {
+    "id": "coiztvdkzvoeqcxx3yvtvdnwe",
+    "restaurant": "เชฟต๋อย",
+    "restaurantSlug": "chef-toy",
+    "slug": "tom-yum-mama-crispy-pork",
+    "name": {
+      "th": "ผัดมาม่าทรงเครื่องต้มยำ",
+      "en": "Stir-fried Tom Yum Mama with Crispy Pork"
+    },
+    "description": {
+      "th": "มาม่าผัดแห้งหอมเครื่องต้มยำกับหมูกรอบ",
+      "en": "Dry stir-fried instant noodles with tom yum herbs and crispy pork."
+    },
+    "price": 99,
+    "foodType": "noodles",
+    "tastes": [
+      "spicy",
+      "sour",
+      "crispy"
+    ],
+    "review": null,
+    "photo": "tom-yum-mama-crispy-pork",
+    "query": "spicy stir fried instant noodles pork",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "co2q6e995dhsy17a2ddcqfhco",
+    "restaurant": "เชฟต๋อย",
+    "restaurantSlug": "chef-toy",
+    "slug": "omelette-fried-egg-rice",
+    "name": {
+      "th": "ข้าวดาวเจียว",
+      "en": "Omelette and Fried Egg on Rice"
+    },
+    "description": {
+      "th": "ไข่เจียวต้นหอมและไข่ดาวบนข้าวหอมมะลิ เสิร์ฟพร้อมพริกน้ำปลา",
+      "en": "Spring onion omelette and a fried egg over jasmine rice, with chili fish sauce."
+    },
+    "price": 59,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "savory"
+    ],
+    "review": null,
+    "photo": "omelette-fried-egg-rice",
+    "query": "omelette fried egg rice",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "c1z3jhabjmobz47uo94h0fbdt",
+    "restaurant": "เชฟต๋อย",
+    "restaurantSlug": "chef-toy",
+    "slug": "crispy-pork-curry-paste-rice",
+    "name": {
+      "th": "พริกแกงหมูกรอบ ราดข้าว",
+      "en": "Crispy Pork in Curry Paste on Rice"
+    },
+    "description": {
+      "th": "หมูกรอบผัดพริกแกงกับถั่วฝักยาว ราดข้าว",
+      "en": "Crispy pork belly stir-fried with red curry paste and long beans, over rice."
+    },
+    "price": 99,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "crispy"
+    ],
+    "review": null,
+    "photo": "crispy-pork-curry-paste-rice",
+    "query": "crispy pork red curry long beans",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 3,
+    "source": null
+  },
+  {
+    "id": "cj3ofojd0zblbrfh8jaewetgi",
+    "restaurant": "เชฟต๋อย",
+    "restaurantSlug": "chef-toy",
+    "slug": "curry-powder-chicken-fried-egg-rice",
+    "name": {
+      "th": "ข้าว+ไก่ผัดผงกะหรี่+ไข่ดาว",
+      "en": "Curry Powder Chicken with Fried Egg on Rice"
+    },
+    "description": {
+      "th": "ไก่ผัดผงกะหรี่ข้น ๆ ราดข้าวหอมมะลิ พร้อมไข่ดาว",
+      "en": "Chicken stir-fried in a thick curry powder sauce over jasmine rice, with a fried egg."
+    },
+    "price": 99,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "savory",
+      "spiced-smoky"
+    ],
+    "review": null,
+    "photo": "curry-powder-chicken-fried-egg-rice",
+    "query": "curry chicken rice fried egg",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "cycm0toegyx2ub2ifbjz8zjb4",
+    "restaurant": "เชฟต๋อย",
+    "restaurantSlug": "chef-toy",
+    "slug": "salt-chili-chicken-sausage-rice",
+    "name": {
+      "th": "คั่วเกลือไส้กรอกไก่ ราดข้าว",
+      "en": "Hot & Spicy Chicken Sausage on Rice"
+    },
+    "description": {
+      "th": "ไส้กรอกไก่คั่วพริกเกลือ เลือกระดับความเผ็ดได้ เสิร์ฟกับข้าว",
+      "en": "Chicken sausage tossed with salt and chili, with a choice of spice level, served with rice."
+    },
+    "price": 59,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "savory"
+    ],
+    "review": null,
+    "photo": "salt-chili-chicken-sausage-rice",
+    "query": "spicy sausage stir fry rice",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "cmrhdghah9i8sd1kpnujxd1m1",
+    "restaurant": "เชฟต๋อย",
+    "restaurantSlug": "chef-toy",
+    "slug": "prik-khing-crispy-chicken-rice",
+    "name": {
+      "th": "พริกขิงไก่กรอบ ราดข้าว",
+      "en": "Prik Khing Crispy Chicken on Rice"
+    },
+    "description": {
+      "th": "ไก่ทอดกรอบผัดพริกแกงพริกขิง เผ็ดหวานกลมกล่อม เสิร์ฟกับข้าว",
+      "en": "Crispy chicken stir-fried in sweet-spicy prik khing curry paste, served with rice."
+    },
+    "price": 79,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "sweet",
+      "crispy"
+    ],
+    "review": null,
+    "photo": "prik-khing-crispy-chicken-rice",
+    "query": "thai red curry stir fry chicken beans",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "cspc2hg3qf5lmrm8chxpd7b7g",
+    "restaurant": "เชฟต๋อย",
+    "restaurantSlug": "chef-toy",
+    "slug": "basil-pork-balls-crackling-rice",
+    "name": {
+      "th": "ข้าว+กะเพราลูกชิ้นหมูกากเจียว",
+      "en": "Thai Basil Pork Balls with Crackling on Rice"
+    },
+    "description": {
+      "th": "ลูกชิ้นหมูผัดกะเพรากับกากเจียวกรอบ ราดข้าว",
+      "en": "Pork balls stir-fried with holy basil and crispy pork rind, over rice."
+    },
+    "price": 59,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "savory"
+    ],
+    "review": null,
+    "photo": "basil-pork-balls-crackling-rice",
+    "query": "thai basil pork balls",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "cdip00nrint5zb73xy6t683im",
+    "restaurant": "เชฟต๋อย",
+    "restaurantSlug": "chef-toy",
+    "slug": "salt-chili-ground-pork-rice",
+    "name": {
+      "th": "ข้าว+หมูสับคั่วพริกเกลือ",
+      "en": "Spicy Salt & Chili Ground Pork on Rice"
+    },
+    "description": {
+      "th": "หมูสับคั่วพริกเกลือ ราดข้าว เปลี่ยนเป็นไก่สับได้",
+      "en": "Ground pork stir-fried with salt and chili over rice, or ground chicken on request."
+    },
+    "price": 69,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "savory"
+    ],
+    "review": null,
+    "photo": "salt-chili-ground-pork-rice",
+    "query": "spicy ground pork rice",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 2,
+    "source": null
+  },
+  {
+    "id": "c67qfsm4w8evk4qu4mo85wj82",
+    "restaurant": "เชฟต๋อย",
+    "restaurantSlug": "chef-toy",
+    "slug": "salt-chili-crispy-pork-rice",
+    "name": {
+      "th": "ข้าว+หมูกรอบคั่วพริกเกลือ",
+      "en": "Spicy Salt & Chili Crispy Pork on Rice"
+    },
+    "description": {
+      "th": "หมูกรอบคั่วพริกเกลือ เลือกระดับความเผ็ดได้ ราดข้าว",
+      "en": "Crispy pork tossed with salt and chili, with a choice of spice level, over rice."
+    },
+    "price": 99,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "crispy"
+    ],
+    "review": null,
+    "photo": "salt-chili-crispy-pork-rice",
+    "query": "crispy pork chili salt",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 2,
+    "source": null
+  },
+  {
+    "id": "cgefqjgnx7yykmjyswltqgomm",
+    "restaurant": "เชฟต๋อย",
+    "restaurantSlug": "chef-toy",
+    "slug": "sweet-pork-fried-rice",
+    "name": {
+      "th": "ข้าวผัดหมูหวาน",
+      "en": "Fried Rice with Sweet Pork"
+    },
+    "description": {
+      "th": "ข้าวผัดกับหมูหวานรสกลมกล่อม",
+      "en": "Fried rice with sweet braised pork."
+    },
+    "price": 99,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "sweet",
+      "savory"
+    ],
+    "review": null,
+    "photo": "sweet-pork-fried-rice",
+    "query": "fried rice caramelized pork",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "cnlm1sp0yrovjrlstaocu327j",
+    "restaurant": "เชฟต๋อย",
+    "restaurantSlug": "chef-toy",
+    "slug": "rot-fai-fried-rice",
+    "name": {
+      "th": "ข้าวผัดรถไฟ",
+      "en": "Rot Fai Fried Rice"
+    },
+    "description": {
+      "th": "ข้าวผัดซอสสีน้ำตาลแบบรถไฟ เลือกหมูหรือไก่",
+      "en": "Train-style fried rice in brown sauce, with pork or chicken."
+    },
+    "price": 79,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "savory",
+      "sweet"
+    ],
+    "review": null,
+    "photo": "rot-fai-fried-rice",
+    "query": "thai fried rice soy sauce",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 3,
+    "source": null
+  },
+  {
+    "id": "cnir0onlql575sehahng1yz5a",
+    "restaurant": "ช.เจริญพาณิชย์ ข้าวหน้าของทอด",
+    "restaurantSlug": "chor-charoen-phanich",
+    "slug": "maggi-sauce-fried-rice-bowl",
+    "name": {
+      "th": "ข้าวของทอด ราดซอสแม็กกี้",
+      "en": "Maggi Sauce Fried Rice Bowl"
+    },
+    "description": {
+      "th": "ของทอดกรอบ เสิร์ฟกับข้าวสวย 200 กรัม และผักเคียง ราดซอสแม็กกี้หอมเข้ม",
+      "en": "Savory Maggi seasoning sauce over crispy fried meat with 200 g of rice and side vegetables."
+    },
+    "price": 87,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "savory",
+      "crispy"
+    ],
+    "review": null,
+    "photo": "maggi-sauce-fried-rice-bowl",
+    "query": "fried chicken soy glaze rice",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "ch22fidi5d6f869kfgwoirooi",
+    "restaurant": "ช.เจริญพาณิชย์ ข้าวหน้าของทอด",
+    "restaurantSlug": "chor-charoen-phanich",
+    "slug": "tamarind-sauce-fried-rice-bowl",
+    "name": {
+      "th": "ข้าวของทอด ราดซอสมะขาม",
+      "en": "Tamarind Sauce Fried Rice Bowl"
+    },
+    "description": {
+      "th": "ของทอดกรอบ เสิร์ฟกับข้าวสวย 200 กรัม และผักเคียง ราดซอสมะขามเปรี้ยวหวาน โรยหอมเจียว",
+      "en": "Sweet-sour tamarind sauce and fried shallots over crispy fried meat with 200 g of rice and side vegetables."
+    },
+    "price": 87,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "sweet",
+      "sour",
+      "crispy"
+    ],
+    "review": null,
+    "photo": "tamarind-sauce-fried-rice-bowl",
+    "query": "tamarind chicken rice",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "ck6jbli2xfzi51bbuv5l7lk4c",
+    "restaurant": "ช.เจริญพาณิชย์ ข้าวหน้าของทอด",
+    "restaurantSlug": "chor-charoen-phanich",
+    "slug": "fish-sauce-fried-rice-bowl",
+    "name": {
+      "th": "ข้าวของทอด ราดซอสน้ำปลา",
+      "en": "Fish Sauce Fried Rice Bowl"
+    },
+    "description": {
+      "th": "ของทอดกรอบ เสิร์ฟกับข้าวสวย 200 กรัม และผักเคียง คลุกซอสน้ำปลากลมกล่อม",
+      "en": "Savory fish sauce glaze over crispy fried meat with 200 g of rice and side vegetables."
+    },
+    "price": 87,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "savory",
+      "crispy"
+    ],
+    "review": null,
+    "photo": "fish-sauce-fried-rice-bowl",
+    "query": "fish sauce fried chicken rice",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "c2wu8jqya85w2zz7quk25jzyr",
+    "restaurant": "ช.เจริญพาณิชย์ ข้าวหน้าของทอด",
+    "restaurantSlug": "chor-charoen-phanich",
+    "slug": "garlic-fried-rice-bowl",
+    "name": {
+      "th": "ข้าวทอดกระเทียม",
+      "en": "Garlic Fried Rice Bowl"
+    },
+    "description": {
+      "th": "ของทอดกรอบ เสิร์ฟกับข้าวสวย 200 กรัม และผักเคียง ผัดกระเทียมหอมกรุ่น",
+      "en": "Fragrant fried garlic over crispy fried meat with 200 g of rice and side vegetables."
+    },
+    "price": 87,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "savory",
+      "crispy"
+    ],
+    "review": null,
+    "photo": "garlic-fried-rice-bowl",
+    "query": "garlic fried pork rice",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 3,
+    "source": null
+  },
+  {
+    "id": "cze167zd31wjmvs7318gj8smk",
+    "restaurant": "ช.เจริญพาณิชย์ ข้าวหน้าของทอด",
+    "restaurantSlug": "chor-charoen-phanich",
+    "slug": "two-egg-omelette-rice",
+    "name": {
+      "th": "ข้าวไข่เจียว (2 ฟอง)",
+      "en": "Two-egg Omelette on Rice"
+    },
+    "description": {
+      "th": "ไข่เจียวไข่ 2 ฟอง บนข้าวสวยประมาณ 180–200 กรัม",
+      "en": "A two-egg omelette over about 180–200 g of rice."
+    },
+    "price": 49,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "savory"
+    ],
+    "review": null,
+    "photo": "omelette-rice",
+    "query": "thai omelette rice",
+    "status": "near-match-not-applied",
+    "reason": "Thai omelette and white rice verified, but rice is served separately and two-egg count cannot be confirmed.",
+    "searchCount": 3,
+    "source": "https://www.pexels.com/photo/traditional-thai-omelette-with-rice-on-rustic-table-35049884/"
+  },
+  {
+    "id": "cm485xb6e88vfo7hc1ksu7050",
+    "restaurant": "แฟมิลี่ เคบับ ฮาลาล",
+    "restaurantSlug": "family-kebab-halal",
+    "slug": "adana-beef-kebab-wrap",
+    "name": {
+      "th": "อดาน่าเคบับแรปเนื้อ",
+      "en": "Adana Beef Kebab Wrap"
+    },
+    "description": {
+      "th": "เนื้อบดปรุงเครื่องเทศแบบอดาน่า ย่างไฟแล้วห่อในแป้งพร้อมผักสด",
+      "en": "Spiced minced-beef Adana kebab, grilled and wrapped in flatbread with fresh vegetables."
+    },
+    "price": 199,
+    "foodType": "burgers-sandwiches-wraps",
+    "tastes": [
+      "spiced-smoky",
+      "spicy",
+      "savory"
+    ],
+    "review": null,
+    "photo": "adana-beef-kebab-wrap",
+    "query": "adana kebab wrap",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 3,
+    "source": null
+  },
+  {
+    "id": "c1g8tpxlkh8p6fkxjsxq788ln",
+    "restaurant": "แฟมิลี่ เคบับ ฮาลาล",
+    "restaurantSlug": "family-kebab-halal",
+    "slug": "shish-kebab-liver-wrap",
+    "name": {
+      "th": "ชิชเคบับแรปตับ",
+      "en": "Liver Shish Kebab Wrap"
+    },
+    "description": {
+      "th": "ตับเสียบไม้ย่างแบบชิชเคบับ ห่อในแป้งพร้อมผักและซอส",
+      "en": "Skewer-grilled liver wrapped in flatbread with vegetables and sauce."
+    },
+    "price": 149,
+    "foodType": "burgers-sandwiches-wraps",
+    "tastes": [
+      "spiced-smoky",
+      "savory"
+    ],
+    "review": null,
+    "photo": "shish-kebab-liver-wrap",
+    "query": "liver kebab wrap",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 3,
+    "source": null
+  },
+  {
+    "id": "cag93v5hzsr5iyg3p3k8g6t1t",
+    "restaurant": "แฟมิลี่ เคบับ ฮาลาล",
+    "restaurantSlug": "family-kebab-halal",
+    "slug": "grilled-saba-wrap",
+    "name": {
+      "th": "แรปปลาซาบะย่าง",
+      "en": "Grilled Saba Fish Wrap"
+    },
+    "description": {
+      "th": "ปลาซาบะย่างหอม ๆ ห่อในแป้งพร้อมผักสดและซอส",
+      "en": "Grilled saba mackerel wrapped in flatbread with fresh vegetables and sauce."
+    },
+    "price": 99,
+    "foodType": "burgers-sandwiches-wraps",
+    "tastes": [
+      "savory",
+      "spiced-smoky"
+    ],
+    "review": null,
+    "photo": "grilled-saba-wrap",
+    "query": "grilled fish wrap",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 3,
+    "source": null
+  },
+  {
+    "id": "c4im5qu7tba1pwpxwbf97yl2s",
+    "restaurant": "แฟมิลี่ เคบับ ฮาลาล",
+    "restaurantSlug": "family-kebab-halal",
+    "slug": "chicken-kofta-with-rice",
+    "name": {
+      "th": "โคฟต้าไก่+ข้าว",
+      "en": "Chicken Kofta with Rice"
+    },
+    "description": {
+      "th": "โคฟต้าไก่บดปรุงเครื่องเทศย่าง เสิร์ฟพร้อมข้าว แป้งย่าง และสลัด",
+      "en": "Grilled spiced chicken meatballs served with rice, grilled flatbread, and salad."
+    },
+    "price": 159,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spiced-smoky",
+      "savory"
+    ],
+    "review": null,
+    "photo": "chicken-kofta-with-rice",
+    "query": "chicken kofta",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 2,
+    "source": null
+  },
+  {
+    "id": "cxpmxkmcknuncd7259kxxdb4h",
+    "restaurant": "กินดัง ข้าวหน้าของย่าง",
+    "restaurantSlug": "gindon",
+    "slug": "two-tone-pork-rice-bowl-l",
+    "name": {
+      "th": "ข้าวหน้าหมูย่างทูโทน (สามชั้น+สันคอ) ไซส์ L",
+      "en": "Two-tone Pork (Belly & Neck) Rice Bowl (L)"
+    },
+    "description": {
+      "th": "หมูสามชั้นและหมูสันคอย่างซอส ราดบนข้าวญี่ปุ่น โรยต้นหอม",
+      "en": "Grilled pork belly and pork neck in sauce, served over Japanese rice with spring onion."
+    },
+    "price": 150,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "savory",
+      "sweet",
+      "spiced-smoky"
+    ],
+    "review": null,
+    "photo": "two-tone-pork-rice-bowl",
+    "query": "grilled pork rice bowl",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "cjidulezoh6jjgy6lw4w220d8",
+    "restaurant": "กินดัง ข้าวหน้าของย่าง",
+    "restaurantSlug": "gindon",
+    "slug": "shrimp-rice-bowl",
+    "name": {
+      "th": "ข้าวหน้ากุ้งย่าง",
+      "en": "Grilled Shrimp Rice Bowl"
+    },
+    "description": {
+      "th": "กุ้งขาวแกะเปลือกย่างซอส ราดบนข้าวญี่ปุ่น โรยต้นหอม",
+      "en": "Peeled white shrimp grilled in sauce, served over Japanese rice with spring onion."
+    },
+    "price": 110,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "savory",
+      "sweet",
+      "spiced-smoky"
+    ],
+    "review": null,
+    "photo": "shrimp-rice-bowl",
+    "query": "grilled shrimp rice bowl",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 2,
+    "source": null
+  },
+  {
+    "id": "cqyincikm8pnlla6fkld80tus",
+    "restaurant": "กินดัง ข้าวหน้าของย่าง",
+    "restaurantSlug": "gindon",
+    "slug": "flat-iron-beef-rice-bowl-fire-chili-l",
+    "name": {
+      "th": "ข้าวหน้าเนื้อใบพาย + ไข่ออนเซ็น พ่นไฟ ไซส์ L",
+      "en": "Fire Chili Flat Iron Beef Rice Bowl with Onsen Egg (L)"
+    },
+    "description": {
+      "th": "เนื้อใบพายมันน้อยย่างไฟ ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น เสิร์ฟพร้อมไข่ออนเซ็น 1 ฟอง",
+      "en": "Lean flat iron beef seared over fire, topped with fiery chili sauce over Japanese rice, with one onsen egg."
+    },
+    "price": 195,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "savory",
+      "spiced-smoky",
+      "creamy-rich"
+    ],
+    "review": null,
+    "photo": "flat-iron-beef-rice-bowl-fire-chili",
+    "query": "spicy beef rice bowl chili",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "cgn378368vhadhmegee6zn16t",
+    "restaurant": "กินดัง ข้าวหน้าของย่าง",
+    "restaurantSlug": "gindon",
+    "slug": "premium-beef-rice-bowl-fire-chili-l",
+    "name": {
+      "th": "ข้าวหน้าเนื้อพรีเมี่ยม + ไข่ออนเซ็น พ่นไฟ ไซส์ L",
+      "en": "Fire Chili Premium Beef Rice Bowl with Onsen Egg (L)"
+    },
+    "description": {
+      "th": "เนื้อวัวสายมันย่างไฟ ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น เสิร์ฟพร้อมไข่ออนเซ็น 1 ฟอง",
+      "en": "Well-marbled premium beef seared over fire, topped with fiery chili sauce over Japanese rice, with one onsen egg."
+    },
+    "price": 175,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "savory",
+      "spiced-smoky",
+      "creamy-rich"
+    ],
+    "review": null,
+    "photo": "premium-beef-rice-bowl-fire-chili",
+    "query": "spicy beef bowl",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "c5e8lta27tfq0bxlirfv2xux2",
+    "restaurant": "กินดัง ข้าวหน้าของย่าง",
+    "restaurantSlug": "gindon",
+    "slug": "two-tone-pork-rice-bowl-fire-chili-l",
+    "name": {
+      "th": "ข้าวหน้าหมูย่างทูโทน (สามชั้น+สันคอ) พ่นไฟ ไซส์ L",
+      "en": "Fire Chili Two-tone Pork (Belly & Neck) Rice Bowl (L)"
+    },
+    "description": {
+      "th": "หมูสามชั้นและหมูสันคอย่างซอส ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น",
+      "en": "Grilled pork belly and pork neck in sauce, topped with fiery chili sauce over Japanese rice."
+    },
+    "price": 160,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "savory",
+      "spiced-smoky"
+    ],
+    "review": null,
+    "photo": "two-tone-pork-rice-bowl-fire-chili",
+    "query": "spicy pork rice bowl",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "crq5457f4y94014pt9vq8yuyr",
+    "restaurant": "กินดัง ข้าวหน้าของย่าง",
+    "restaurantSlug": "gindon",
+    "slug": "pork-belly-rice-bowl-fire-chili-l",
+    "name": {
+      "th": "ข้าวหน้าหมูสามชั้น พ่นไฟ ไซส์ L",
+      "en": "Fire Chili Pork Belly Rice Bowl (L)"
+    },
+    "description": {
+      "th": "หมูสามชั้นหนากำลังดีย่างซอสจนหอม ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น",
+      "en": "Thick-cut pork belly grilled in sauce, topped with fiery chili sauce over Japanese rice."
+    },
+    "price": 125,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "savory",
+      "spiced-smoky"
+    ],
+    "review": null,
+    "photo": "pork-belly-rice-bowl-fire-chili",
+    "query": "spicy pork belly rice",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "cp563rg6362gf055bqpwyhq9u",
+    "restaurant": "กินดัง ข้าวหน้าของย่าง",
+    "restaurantSlug": "gindon",
+    "slug": "pork-belly-rice-bowl-fire-chili-m",
+    "name": {
+      "th": "ข้าวหน้าหมูสามชั้น พ่นไฟ ไซส์ M",
+      "en": "Fire Chili Pork Belly Rice Bowl (M)"
+    },
+    "description": {
+      "th": "หมูสามชั้นหนากำลังดีย่างซอสจนหอม ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น",
+      "en": "Thick-cut pork belly grilled in sauce, topped with fiery chili sauce over Japanese rice."
+    },
+    "price": 95,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "savory",
+      "spiced-smoky"
+    ],
+    "review": null,
+    "photo": "pork-belly-rice-bowl-fire-chili",
+    "query": "spicy pork belly rice",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "cqih2lu5xnga3oejz36md9aft",
+    "restaurant": "กินดัง ข้าวหน้าของย่าง",
+    "restaurantSlug": "gindon",
+    "slug": "salmon-rice-bowl-fire-chili",
+    "name": {
+      "th": "ข้าวหน้าแซลม่อนย่าง พ่นไฟ",
+      "en": "Fire Chili Grilled Salmon Rice Bowl"
+    },
+    "description": {
+      "th": "แซลม่อนย่างซอส ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น",
+      "en": "Salmon grilled in sauce, topped with fiery chili sauce over Japanese rice."
+    },
+    "price": 120,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "savory",
+      "spiced-smoky"
+    ],
+    "review": null,
+    "photo": "salmon-rice-bowl-fire-chili",
+    "query": "spicy salmon rice bowl",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "cz13u4e1jr8b7cq9lmyiapkc6",
+    "restaurant": "กินดัง ข้าวหน้าของย่าง",
+    "restaurantSlug": "gindon",
+    "slug": "shrimp-rice-bowl-fire-chili",
+    "name": {
+      "th": "ข้าวหน้ากุ้งย่าง พ่นไฟ",
+      "en": "Fire Chili Grilled Shrimp Rice Bowl"
+    },
+    "description": {
+      "th": "กุ้งขาวแกะเปลือกย่างซอส ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น",
+      "en": "Peeled white shrimp grilled in sauce, topped with fiery chili sauce over Japanese rice."
+    },
+    "price": 120,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "savory",
+      "spiced-smoky"
+    ],
+    "review": null,
+    "photo": "shrimp-rice-bowl-fire-chili",
+    "query": "spicy shrimp rice bowl",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "cgylqxyubznzisvad9gc4b9xf",
+    "restaurant": "กินดัง ข้าวหน้าของย่าง",
+    "restaurantSlug": "gindon",
+    "slug": "pork-belly-rice-bowl-mala",
+    "name": {
+      "th": "ข้าวหน้าหมูสามชั้น หม่าล่า",
+      "en": "Mala Pork Belly Rice Bowl"
+    },
+    "description": {
+      "th": "หมูสามชั้นหนากำลังดีย่างซอสจนหอม โรยผงหม่าล่าชาลิ้น บนข้าวญี่ปุ่น",
+      "en": "Thick-cut pork belly grilled in sauce, dusted with numbing mala spice over Japanese rice."
+    },
+    "price": 95,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "spiced-smoky",
+      "savory"
+    ],
+    "review": null,
+    "photo": "pork-belly-rice-bowl-mala",
+    "query": "chili pork belly bowl",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "cqs9mudrvq6pxtg09uw2zsr1l",
+    "restaurant": "กินดัง ข้าวหน้าของย่าง",
+    "restaurantSlug": "gindon",
+    "slug": "pork-neck-rice-bowl-mala",
+    "name": {
+      "th": "ข้าวหน้าหมูสันคอ หม่าล่า",
+      "en": "Mala Pork Neck Rice Bowl"
+    },
+    "description": {
+      "th": "หมูสันคอนุ่มฉ่ำย่างซอส โรยผงหม่าล่าชาลิ้น บนข้าวญี่ปุ่น",
+      "en": "Juicy grilled pork neck in sauce, dusted with numbing mala spice over Japanese rice."
+    },
+    "price": 95,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "spiced-smoky",
+      "savory"
+    ],
+    "review": null,
+    "photo": "pork-neck-rice-bowl-mala",
+    "query": "sichuan pork rice",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "chu5kknn1utcjdgzt3255oxqw",
+    "restaurant": "กินดัง ข้าวหน้าของย่าง",
+    "restaurantSlug": "gindon",
+    "slug": "saba-rice-bowl-mala",
+    "name": {
+      "th": "ข้าวหน้าปลาซาบะย่าง หม่าล่า",
+      "en": "Mala Grilled Saba Rice Bowl"
+    },
+    "description": {
+      "th": "ปลาซาบะชิ้นหนาย่างซอสจนผิวกรอบ โรยผงหม่าล่าชาลิ้น บนข้าวญี่ปุ่น",
+      "en": "Thick saba mackerel grilled until crisp, dusted with numbing mala spice over Japanese rice."
+    },
+    "price": 129,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "spiced-smoky",
+      "savory"
+    ],
+    "review": null,
+    "photo": "saba-rice-bowl-mala",
+    "query": "grilled mackerel rice bowl",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "c39vqpolnbmg0pil6fgafszns",
+    "restaurant": "กินดัง ข้าวหน้าของย่าง",
+    "restaurantSlug": "gindon",
+    "slug": "premium-beef-rice-bowl-mala",
+    "name": {
+      "th": "ข้าวหน้าเนื้อพรีเมี่ยม + ไข่ออนเซ็น หม่าล่า",
+      "en": "Mala Premium Beef Rice Bowl with Onsen Egg"
+    },
+    "description": {
+      "th": "เนื้อวัวสายมันย่างไฟ โรยผงหม่าล่าชาลิ้น บนข้าวญี่ปุ่น เสิร์ฟพร้อมไข่ออนเซ็น 1 ฟอง",
+      "en": "Well-marbled premium beef seared over fire, dusted with numbing mala spice over Japanese rice, with one onsen egg."
+    },
+    "price": 179,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "spiced-smoky",
+      "savory",
+      "creamy-rich"
+    ],
+    "review": null,
+    "photo": "premium-beef-rice-bowl-mala",
+    "query": "sichuan beef rice bowl",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "cphkuuz5g7o678tqprix0lpus",
+    "restaurant": "กินดัง ข้าวหน้าของย่าง",
+    "restaurantSlug": "gindon",
+    "slug": "shrimp-rice-bowl-mala",
+    "name": {
+      "th": "ข้าวหน้ากุ้งย่าง หม่าล่า",
+      "en": "Mala Grilled Shrimp Rice Bowl"
+    },
+    "description": {
+      "th": "กุ้งขาวแกะเปลือกย่างซอส โรยผงหม่าล่าชาลิ้น บนข้าวญี่ปุ่น",
+      "en": "Peeled white shrimp grilled in sauce, dusted with numbing mala spice over Japanese rice."
+    },
+    "price": 119,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "spiced-smoky",
+      "savory"
+    ],
+    "review": null,
+    "photo": "shrimp-rice-bowl-mala",
+    "query": "chili shrimp rice",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "c5ddvl5pb25o2nf70ypu0itpy",
+    "restaurant": "กินดัง ข้าวหน้าของย่าง",
+    "restaurantSlug": "gindon",
+    "slug": "salmon-rice-bowl-mala",
+    "name": {
+      "th": "ข้าวหน้าแซลม่อนย่าง หม่าล่า",
+      "en": "Mala Grilled Salmon Rice Bowl"
+    },
+    "description": {
+      "th": "แซลม่อนย่างซอส โรยผงหม่าล่าชาลิ้น บนข้าวญี่ปุ่น",
+      "en": "Salmon grilled in sauce, dusted with numbing mala spice over Japanese rice."
+    },
+    "price": 119,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "spiced-smoky",
+      "savory"
+    ],
+    "review": null,
+    "photo": "salmon-rice-bowl-mala",
+    "query": "spicy salmon donburi",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "cy4enb2binf2zfr285p071h6v",
+    "restaurant": "เฮง เฮง สุกี้ มฟล.",
+    "restaurantSlug": "heng-heng-suki",
+    "slug": "suki-sauce-rice-bowl",
+    "name": {
+      "th": "ข้าวหน้าน้ำจิ้มสุกี้",
+      "en": "Suki Sauce Rice Bowl"
+    },
+    "description": {
+      "th": "เนื้อสัตว์ผัดกับไข่และน้ำจิ้มสุกี้สูตรร้าน ราดบนข้าวสวย เลือกเนื้อสัตว์ได้",
+      "en": "Your choice of meat stir-fried with egg and the house suki sauce, served over rice."
+    },
+    "price": 69,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "savory",
+      "spicy"
+    ],
+    "review": null,
+    "photo": "suki-sauce-rice-bowl",
+    "query": "egg scramble meat rice bowl",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "cuphvwt0q9tlq9vautflrvwe5",
+    "restaurant": "เฮง เฮง สุกี้ มฟล.",
+    "restaurantSlug": "heng-heng-suki",
+    "slug": "dry-suki-vegetable",
+    "name": {
+      "th": "สุกี้แห้งผัก",
+      "en": "Dry Sukiyaki with Vegetables"
+    },
+    "description": {
+      "th": "วุ้นเส้นผัดผักกรอบกับน้ำจิ้มสุกี้สูตรร้าน หอมกลิ่นกระทะ ใส่ผักและเห็ดชิเมจิ ไม่มีเนื้อสัตว์",
+      "en": "Glass noodles wok-fried with crisp vegetables in the house suki sauce, with vegetables and shimeji mushrooms only, no meat."
+    },
+    "price": 65,
+    "foodType": "noodles",
+    "tastes": [
+      "savory",
+      "spicy"
+    ],
+    "review": null,
+    "photo": "dry-suki-vegetable",
+    "query": "stir fried glass noodles vegetables",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "cgkiocloz8s87qckyanh0xl1k",
+    "restaurant": "เฮง เฮง สุกี้ มฟล.",
+    "restaurantSlug": "heng-heng-suki",
+    "slug": "dry-suki-chicken",
+    "name": {
+      "th": "สุกี้แห้งไก่",
+      "en": "Dry Sukiyaki with Chicken"
+    },
+    "description": {
+      "th": "วุ้นเส้นผัดผักกรอบกับน้ำจิ้มสุกี้สูตรร้าน หอมกลิ่นกระทะ กับเนื้อไก่",
+      "en": "Glass noodles wok-fried with crisp vegetables in the house suki sauce, with chicken."
+    },
+    "price": 69,
+    "foodType": "noodles",
+    "tastes": [
+      "savory",
+      "spicy"
+    ],
+    "review": null,
+    "photo": "dry-suki-chicken",
+    "query": "stir fried glass noodles chicken",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "c74olzobuau30fdqteqkmi4av",
+    "restaurant": "เฮง เฮง สุกี้ มฟล.",
+    "restaurantSlug": "heng-heng-suki",
+    "slug": "dry-suki-pork",
+    "name": {
+      "th": "สุกี้แห้งหมู",
+      "en": "Dry Sukiyaki with Pork"
+    },
+    "description": {
+      "th": "วุ้นเส้นผัดผักกรอบกับน้ำจิ้มสุกี้สูตรร้าน หอมกลิ่นกระทะ กับเนื้อหมู",
+      "en": "Glass noodles wok-fried with crisp vegetables in the house suki sauce, with pork."
+    },
+    "price": 69,
+    "foodType": "noodles",
+    "tastes": [
+      "savory",
+      "spicy"
+    ],
+    "review": null,
+    "photo": "dry-suki-pork",
+    "query": "stir fried glass noodles pork",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 3,
+    "source": null
+  },
+  {
+    "id": "c00639m76nqsy85vni19ujaje",
+    "restaurant": "เฮง เฮง สุกี้ มฟล.",
+    "restaurantSlug": "heng-heng-suki",
+    "slug": "dry-suki-bacon",
+    "name": {
+      "th": "สุกี้แห้งเบคอน",
+      "en": "Dry Sukiyaki with Bacon"
+    },
+    "description": {
+      "th": "วุ้นเส้นผัดผักกรอบกับน้ำจิ้มสุกี้สูตรร้าน หอมกลิ่นกระทะ กับเบคอน",
+      "en": "Glass noodles wok-fried with crisp vegetables in the house suki sauce, with bacon."
+    },
+    "price": 75,
+    "foodType": "noodles",
+    "tastes": [
+      "savory",
+      "spicy"
+    ],
+    "review": null,
+    "photo": "dry-suki-bacon",
+    "query": "glass noodles bacon stir fry",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "cgjzsnombse6sq93ua3ybr6qj",
+    "restaurant": "เฮง เฮง สุกี้ มฟล.",
+    "restaurantSlug": "heng-heng-suki",
+    "slug": "dry-suki-crispy-squid",
+    "name": {
+      "th": "สุกี้แห้งหมึกกรอบ",
+      "en": "Dry Sukiyaki with Crispy Squid"
+    },
+    "description": {
+      "th": "วุ้นเส้นผัดผักกรอบกับน้ำจิ้มสุกี้สูตรร้าน หอมกลิ่นกระทะ กับหมึกกรอบ",
+      "en": "Glass noodles wok-fried with crisp vegetables in the house suki sauce, with crispy squid."
+    },
+    "price": 75,
+    "foodType": "noodles",
+    "tastes": [
+      "savory",
+      "spicy"
+    ],
+    "review": null,
+    "photo": "dry-suki-crispy-squid",
+    "query": "stir fried glass noodles squid",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "colggmo444izey9dmzxdr4bag",
+    "restaurant": "เฮง เฮง สุกี้ มฟล.",
+    "restaurantSlug": "heng-heng-suki",
+    "slug": "dry-suki-seafood",
+    "name": {
+      "th": "สุกี้แห้งทะเล",
+      "en": "Dry Sukiyaki with Seafood"
+    },
+    "description": {
+      "th": "วุ้นเส้นผัดผักกรอบกับน้ำจิ้มสุกี้สูตรร้าน หอมกลิ่นกระทะ กับกุ้งและปลาหมึก",
+      "en": "Glass noodles wok-fried with crisp vegetables in the house suki sauce, with shrimp and squid."
+    },
+    "price": 79,
+    "foodType": "noodles",
+    "tastes": [
+      "savory",
+      "spicy"
+    ],
+    "review": null,
+    "photo": "dry-suki-seafood",
+    "query": "glass noodles seafood stir fry",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "copv8hysn0o9q3tiijaaa9x61",
+    "restaurant": "เฮง เฮง สุกี้ มฟล.",
+    "restaurantSlug": "heng-heng-suki",
+    "slug": "dry-suki-shrimp",
+    "name": {
+      "th": "สุกี้แห้งกุ้ง",
+      "en": "Dry Sukiyaki with Shrimp"
+    },
+    "description": {
+      "th": "วุ้นเส้นผัดผักกรอบกับน้ำจิ้มสุกี้สูตรร้าน หอมกลิ่นกระทะ กับกุ้ง 3–4 ตัวตามขนาด",
+      "en": "Glass noodles wok-fried with crisp vegetables in the house suki sauce, with 3 to 4 shrimp depending on size."
+    },
+    "price": 79,
+    "foodType": "noodles",
+    "tastes": [
+      "savory",
+      "spicy"
+    ],
+    "review": null,
+    "photo": "dry-suki-shrimp",
+    "query": "glass noodles shrimp stir fry",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "cdtkseh8f7dn9g1cdtslhf30f",
+    "restaurant": "เฮง เฮง สุกี้ มฟล.",
+    "restaurantSlug": "heng-heng-suki",
+    "slug": "suki-soup-mixed",
+    "name": {
+      "th": "สุกี้น้ำรวมมิตร",
+      "en": "Sukiyaki Soup with Mixed Meats"
+    },
+    "description": {
+      "th": "สุกี้น้ำสูตรร้าน วุ้นเส้นและผักในน้ำซุปน้ำจิ้มสุกี้ ทำสดใหม่ กับเนื้อสัตว์และทะเลรวมมิตร",
+      "en": "House suki soup with glass noodles and vegetables in a suki-sauce broth, made fresh, with mixed meats and seafood."
+    },
+    "price": 89,
+    "foodType": "curries-soups",
+    "tastes": [
+      "savory",
+      "spicy"
+    ],
+    "review": null,
+    "photo": "suki-soup-mixed",
+    "query": "thai suki soup",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 3,
+    "source": null
+  },
+  {
+    "id": "cyz4qmmsik7mytth7zucxpfxc",
+    "restaurant": "เฮง เฮง สุกี้ มฟล.",
+    "restaurantSlug": "heng-heng-suki",
+    "slug": "suki-soup-crispy-squid",
+    "name": {
+      "th": "สุกี้น้ำหมึกกรอบ",
+      "en": "Sukiyaki Soup with Crispy Squid"
+    },
+    "description": {
+      "th": "สุกี้น้ำสูตรร้าน วุ้นเส้นและผักในน้ำซุปน้ำจิ้มสุกี้ ทำสดใหม่ กับหมึกกรอบ",
+      "en": "House suki soup with glass noodles and vegetables in a suki-sauce broth, made fresh, with crispy squid."
+    },
+    "price": 75,
+    "foodType": "curries-soups",
+    "tastes": [
+      "savory",
+      "spicy"
+    ],
+    "review": null,
+    "photo": "suki-soup-crispy-squid",
+    "query": "squid noodle soup",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "ctbjq420skvm3nncequbg2t60",
+    "restaurant": "เฮง เฮง สุกี้ มฟล.",
+    "restaurantSlug": "heng-heng-suki",
+    "slug": "suki-soup-squid",
+    "name": {
+      "th": "สุกี้น้ำหมึก",
+      "en": "Sukiyaki Soup with Squid"
+    },
+    "description": {
+      "th": "สุกี้น้ำสูตรร้าน วุ้นเส้นและผักในน้ำซุปน้ำจิ้มสุกี้ ทำสดใหม่ กับปลาหมึก",
+      "en": "House suki soup with glass noodles and vegetables in a suki-sauce broth, made fresh, with squid."
+    },
+    "price": 75,
+    "foodType": "curries-soups",
+    "tastes": [
+      "savory",
+      "spicy"
+    ],
+    "review": null,
+    "photo": "suki-soup-squid",
+    "query": "glass noodle soup squid",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "ckwvbcv9alku11ld9zrx5iqca",
+    "restaurant": "เฮง เฮง สุกี้ มฟล.",
+    "restaurantSlug": "heng-heng-suki",
+    "slug": "suki-soup-shrimp",
+    "name": {
+      "th": "สุกี้น้ำกุ้ง",
+      "en": "Sukiyaki Soup with Shrimp"
+    },
+    "description": {
+      "th": "สุกี้น้ำสูตรร้าน วุ้นเส้นและผักในน้ำซุปน้ำจิ้มสุกี้ ทำสดใหม่ กับกุ้ง",
+      "en": "House suki soup with glass noodles and vegetables in a suki-sauce broth, made fresh, with shrimp."
+    },
+    "price": 75,
+    "foodType": "curries-soups",
+    "tastes": [
+      "savory",
+      "spicy"
+    ],
+    "review": null,
+    "photo": "suki-soup-shrimp",
+    "query": "shrimp glass noodle soup",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "cnc1z93e7ryl76r27w6kl6dp8",
+    "restaurant": "จงหัวอาหมิง",
+    "restaurantSlug": "jong-hua-a-ming",
+    "slug": "spicy-pork-belly-and-minced-pork-tofu-on-rice",
+    "name": {
+      "th": "สามชั้นทอดรสแซ่บ + เต้าหู้หมูสับ ราดข้าว",
+      "en": "Spicy Fried Pork Belly & Minced Pork Tofu on Rice"
+    },
+    "description": {
+      "th": "ข้าวสวยราดกับข้าวสองอย่าง หมูสามชั้นทอดคลุกพริกเกลือรสแซ่บ และเต้าหู้ผัดหมูสับ",
+      "en": "Rice topped with two dishes: crispy salt-and-chili pork belly and tofu stir-fried with minced pork."
+    },
+    "price": 110,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "crispy",
+      "savory"
+    ],
+    "review": null,
+    "photo": "spicy-pork-belly-and-minced-pork-tofu-on-rice",
+    "query": "mapo tofu rice",
+    "status": "no-verified-match",
+    "reason": "Do not substitute a photo of only one of the two required dishes.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "c7rkdgsd01vle1huflw127alx",
+    "restaurant": "จงหัวอาหมิง",
+    "restaurantSlug": "jong-hua-a-ming",
+    "slug": "spicy-pork-belly-and-tomato-egg-on-rice",
+    "name": {
+      "th": "สามชั้นทอดรสแซ่บ + มะเขือเทศผัดไข่ ราดข้าว",
+      "en": "Spicy Fried Pork Belly & Tomato Egg on Rice"
+    },
+    "description": {
+      "th": "ข้าวสวยราดกับข้าวสองอย่าง หมูสามชั้นทอดคลุกพริกเกลือรสแซ่บ และมะเขือเทศผัดไข่",
+      "en": "Rice topped with two dishes: crispy salt-and-chili pork belly and tomato stir-fried with egg."
+    },
+    "price": 110,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "crispy",
+      "savory"
+    ],
+    "review": null,
+    "photo": "spicy-pork-belly-and-tomato-egg-on-rice",
+    "query": "tomato egg stir fry rice",
+    "status": "no-verified-match",
+    "reason": "Do not substitute a photo of only one of the two required dishes.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "crppq0uczlm7414dh23upxy77",
+    "restaurant": "จงหัวอาหมิง",
+    "restaurantSlug": "jong-hua-a-ming",
+    "slug": "spicy-pork-belly-and-eggplant-on-rice",
+    "name": {
+      "th": "สามชั้นทอดรสแซ่บ + มะเขือยาวหมูสับ ราดข้าว",
+      "en": "Spicy Fried Pork Belly & Eggplant with Minced Pork on Rice"
+    },
+    "description": {
+      "th": "ข้าวสวยราดกับข้าวสองอย่าง หมูสามชั้นทอดคลุกพริกเกลือรสแซ่บ และมะเขือยาวผัดหมูสับ",
+      "en": "Rice topped with two dishes: crispy salt-and-chili pork belly and eggplant stir-fried with minced pork."
+    },
+    "price": 110,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "crispy",
+      "savory"
+    ],
+    "review": null,
+    "photo": "spicy-pork-belly-and-eggplant-on-rice",
+    "query": "eggplant minced pork rice",
+    "status": "no-verified-match",
+    "reason": "Do not substitute a photo of only one of the two required dishes.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "c348colnl1r3h4uwy8t4kraxg",
+    "restaurant": "จงหัวอาหมิง",
+    "restaurantSlug": "jong-hua-a-ming",
+    "slug": "spicy-pork-belly-and-bitter-melon-egg-on-rice",
+    "name": {
+      "th": "สามชั้นทอดรสแซ่บ + มะระผัดไข่ ราดข้าว",
+      "en": "Spicy Fried Pork Belly & Bitter Melon Egg on Rice"
+    },
+    "description": {
+      "th": "ข้าวสวยราดกับข้าวสองอย่าง หมูสามชั้นทอดคลุกพริกเกลือรสแซ่บ และมะระผัดไข่",
+      "en": "Rice topped with two dishes: crispy salt-and-chili pork belly and bitter melon stir-fried with egg."
+    },
+    "price": 110,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "crispy",
+      "savory"
+    ],
+    "review": null,
+    "photo": "spicy-pork-belly-and-bitter-melon-egg-on-rice",
+    "query": "bitter melon egg stir fry",
+    "status": "no-verified-match",
+    "reason": "Do not substitute a photo of only one of the two required dishes.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "cy8gluiz4gg2bqg3mb3eufyc3",
+    "restaurant": "จงหัวอาหมิง",
+    "restaurantSlug": "jong-hua-a-ming",
+    "slug": "spicy-fried-pork-and-morning-glory-on-rice",
+    "name": {
+      "th": "หมูทอดรสแซ่บ + ผัดผักบุ้ง ราดข้าว",
+      "en": "Spicy Fried Pork & Stir-fried Morning Glory on Rice"
+    },
+    "description": {
+      "th": "ข้าวสวยราดกับข้าวสองอย่าง หมูทอดคลุกพริกเกลือรสแซ่บ และผัดผักบุ้ง",
+      "en": "Rice topped with two dishes: crispy salt-and-chili fried pork and stir-fried morning glory."
+    },
+    "price": 100,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "crispy",
+      "savory"
+    ],
+    "review": null,
+    "photo": "spicy-fried-pork-and-morning-glory-on-rice",
+    "query": "stir fried morning glory",
+    "status": "no-verified-match",
+    "reason": "Do not substitute a photo of only one of the two required dishes.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "c1po14h35brcxn4asjtg5v6on",
+    "restaurant": "จงหัวอาหมิง",
+    "restaurantSlug": "jong-hua-a-ming",
+    "slug": "spicy-fried-pork-and-napa-cabbage-on-rice",
+    "name": {
+      "th": "หมูทอดรสแซ่บ + ผัดผักกาดขาว ราดข้าว",
+      "en": "Spicy Fried Pork & Stir-fried Napa Cabbage on Rice"
+    },
+    "description": {
+      "th": "ข้าวสวยราดกับข้าวสองอย่าง หมูทอดคลุกพริกเกลือรสแซ่บ และผัดผักกาดขาว",
+      "en": "Rice topped with two dishes: crispy salt-and-chili fried pork and stir-fried napa cabbage."
+    },
+    "price": 100,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "crispy",
+      "savory"
+    ],
+    "review": null,
+    "photo": "spicy-fried-pork-and-napa-cabbage-on-rice",
+    "query": "stir fried napa cabbage",
+    "status": "no-verified-match",
+    "reason": "Do not substitute a photo of only one of the two required dishes.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "c984v4cuynidravladg4dm23b",
+    "restaurant": "จงหัวอาหมิง",
+    "restaurantSlug": "jong-hua-a-ming",
+    "slug": "eggplant-minced-pork-on-rice",
+    "name": {
+      "th": "มะเขือยาวผัดหมูสับ ราดข้าว",
+      "en": "Eggplant with Minced Pork on Rice"
+    },
+    "description": {
+      "th": "มะเขือยาวผัดกับหมูสับในซอสเข้มข้น ราดบนข้าวสวย",
+      "en": "Eggplant stir-fried with minced pork in a rich sauce, served over rice."
+    },
+    "price": 65,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "savory"
+    ],
+    "review": null,
+    "photo": "eggplant-minced-pork-on-rice",
+    "query": "chinese eggplant minced pork",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 3,
+    "source": null
+  },
+  {
+    "id": "c9gxtvr1m84lbgq5tzg0rd9w6",
+    "restaurant": "จงหัวอาหมิง",
+    "restaurantSlug": "jong-hua-a-ming",
+    "slug": "potato-and-pork-on-rice",
+    "name": {
+      "th": "มันฝรั่งผัดหมู ราดข้าว",
+      "en": "Shredded Potato with Pork on Rice"
+    },
+    "description": {
+      "th": "มันฝรั่งหั่นเส้นผัดกับหมูและพริก ราดบนข้าวสวย",
+      "en": "Shredded potato stir-fried with pork and chili, served over rice."
+    },
+    "price": 65,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "savory"
+    ],
+    "review": null,
+    "photo": "potato-and-pork-on-rice",
+    "query": "shredded potato stir fry",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 2,
+    "source": null
+  },
+  {
+    "id": "cercrb9brnwn0mqpbkkuwhyhi",
+    "restaurant": "จงหัวอาหมิง",
+    "restaurantSlug": "jong-hua-a-ming",
+    "slug": "pickled-mustard-greens-pork-on-rice",
+    "name": {
+      "th": "ผักกาดดองผัดหมูสับ ราดข้าว",
+      "en": "Pickled Mustard Greens with Minced Pork on Rice"
+    },
+    "description": {
+      "th": "ผักกาดดองผัดหมูสับกับพริกแห้ง รสเปรี้ยวเค็มจัดจ้าน ราดบนข้าวสวย",
+      "en": "Pickled mustard greens stir-fried with minced pork and dried chili, served over rice."
+    },
+    "price": 70,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "sour",
+      "savory"
+    ],
+    "review": null,
+    "photo": "pickled-mustard-greens-pork-on-rice",
+    "query": "pickled mustard greens pork",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 3,
+    "source": null
+  },
+  {
+    "id": "cd57gg35rmea4334fy4m52fg9",
+    "restaurant": "จงหัวอาหมิง",
+    "restaurantSlug": "jong-hua-a-ming",
+    "slug": "spicy-pork-belly-with-mushroom-on-rice",
+    "name": {
+      "th": "สามชั้นทอดเห็ด ราดข้าว",
+      "en": "Fried Pork Belly with Mushroom on Rice"
+    },
+    "description": {
+      "th": "หมูสามชั้นทอดกับเห็ดคลุกพริกเกลือ ราดบนข้าวสวย",
+      "en": "Crispy pork belly fried with mushrooms in salt and chili, served over rice."
+    },
+    "price": 80,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "crispy",
+      "savory"
+    ],
+    "review": null,
+    "photo": "spicy-pork-belly-with-mushroom-on-rice",
+    "query": "fried pork belly mushrooms",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "cq8ubpsmhvxiw2ky5xupmly4i",
+    "restaurant": "จงหัวอาหมิง",
+    "restaurantSlug": "jong-hua-a-ming",
+    "slug": "spicy-fried-pork-on-rice",
+    "name": {
+      "th": "หมูทอดรสแซ่บ ราดข้าว",
+      "en": "Spicy Fried Pork on Rice"
+    },
+    "description": {
+      "th": "หมูทอดคลุกพริกเกลือรสแซ่บ ราดบนข้าวสวย",
+      "en": "Crispy pork fried with salt and chili, served over rice."
+    },
+    "price": 75,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "crispy",
+      "savory"
+    ],
+    "review": null,
+    "photo": "spicy-fried-pork-on-rice",
+    "query": "salt pepper pork",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 2,
+    "source": null
+  },
+  {
+    "id": "c4re4hhvw2dshpmizz372hmj4",
+    "restaurant": "จงหัวอาหมิง",
+    "restaurantSlug": "jong-hua-a-ming",
+    "slug": "spicy-fried-chicken-wings-on-rice",
+    "name": {
+      "th": "ปีกไก่ทอดรสแซ่บ ราดข้าว",
+      "en": "Spicy Fried Chicken Wings on Rice"
+    },
+    "description": {
+      "th": "ปีกไก่ทอดคลุกพริกเกลือรสแซ่บ เสิร์ฟพร้อมข้าวสวย",
+      "en": "Crispy chicken wings tossed in salt and chili, served with rice."
+    },
+    "price": 75,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "crispy",
+      "savory"
+    ],
+    "review": null,
+    "photo": "spicy-fried-chicken-wings-on-rice",
+    "query": "salt pepper chicken wings",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 2,
+    "source": null
+  },
+  {
+    "id": "cf2hygn4k8wkd4mjj6uszkof0",
+    "restaurant": "ลิตเติ้ลกรินทร์",
+    "restaurantSlug": "little-grin",
+    "slug": "korean-crispy-chicken-mama",
+    "name": {
+      "th": "มาม่าไก่กรอบเกาหลี",
+      "en": "Korean Crispy Chicken Mama Noodles"
+    },
+    "description": {
+      "th": "มาม่าผัดกับไก่ทอดกรอบซอสเกาหลีรสหวานเผ็ด โรยสาหร่าย",
+      "en": "Stir-fried Mama noodles with crispy chicken in a sweet-spicy Korean sauce, topped with seaweed."
+    },
+    "price": 79,
+    "foodType": "noodles",
+    "tastes": [
+      "spicy",
+      "sweet",
+      "crispy"
+    ],
+    "review": null,
+    "photo": "korean-crispy-chicken-mama",
+    "query": "korean fried chicken noodles",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "cj3efov3fsrjkvr6347ljz71x",
+    "restaurant": "ลิตเติ้ลกรินทร์",
+    "restaurantSlug": "little-grin",
+    "slug": "crispy-chicken-rice-korean-mayo",
+    "name": {
+      "th": "ข้าวไก่กรอบเกาหลีมาโย",
+      "en": "Crispy Chicken Rice with Korean Sauce & Mayo"
+    },
+    "description": {
+      "th": "ไก่ทอดกรอบชิ้นพอดีคำราดซอสเกาหลีและมายองเนส โรยสาหร่าย วางบนข้าวสวย",
+      "en": "Bite-size crispy fried chicken with Korean sauce and mayonnaise, topped with seaweed, served over rice."
+    },
+    "price": 65,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "sweet",
+      "creamy-rich"
+    ],
+    "review": null,
+    "photo": "crispy-chicken-rice-korean-mayo",
+    "query": "korean chicken mayo rice bowl",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 3,
+    "source": null
+  },
+  {
+    "id": "cofyxgtmvsxtelgow6a3lv9hb",
+    "restaurant": "ลิตเติ้ลกรินทร์",
+    "restaurantSlug": "little-grin",
+    "slug": "crispy-chicken-rice-spicy-mayo",
+    "name": {
+      "th": "ข้าวไก่กรอบสไปซี่มาโย",
+      "en": "Crispy Chicken Rice with Spicy Mayo"
+    },
+    "description": {
+      "th": "ไก่ทอดกรอบชิ้นพอดีคำราดสไปซี่มาโย โรยสาหร่าย วางบนข้าวสวย",
+      "en": "Bite-size crispy fried chicken with spicy mayo, topped with seaweed, served over rice."
+    },
+    "price": 65,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "creamy-rich",
+      "crispy"
+    ],
+    "review": null,
+    "photo": "crispy-chicken-rice-spicy-mayo",
+    "query": "spicy mayo chicken rice",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "c3yg9i3kak4rwsh0g0u8g00sb",
+    "restaurant": "ลิตเติ้ลกรินทร์",
+    "restaurantSlug": "little-grin",
+    "slug": "crispy-chicken-rice-cheese",
+    "name": {
+      "th": "ข้าวไก่กรอบชีส",
+      "en": "Crispy Chicken Rice with Cheese Sauce"
+    },
+    "description": {
+      "th": "ไก่ทอดกรอบชิ้นพอดีคำราดซอสชีสเข้มข้น โรยต้นหอม วางบนข้าวสวย",
+      "en": "Bite-size crispy fried chicken topped with rich cheese sauce and spring onion, served over rice."
+    },
+    "price": 65,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "creamy-rich",
+      "crispy"
+    ],
+    "review": null,
+    "photo": "crispy-chicken-rice-cheese",
+    "query": "cheese chicken rice bowl",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 2,
+    "source": null
+  },
+  {
+    "id": "cw5z2c2u5vp0r36yxpgk447es",
+    "restaurant": "ลิตเติ้ลกรินทร์",
+    "restaurantSlug": "little-grin",
+    "slug": "crispy-chicken-rice-korean-cheese",
+    "name": {
+      "th": "ข้าวไก่กรอบเกาหลี x ชีส",
+      "en": "Crispy Chicken Rice with Korean Sauce & Cheese"
+    },
+    "description": {
+      "th": "ไก่ทอดกรอบชิ้นพอดีคำราดซอสเกาหลีและซอสชีส โรยสาหร่าย วางบนข้าวสวย",
+      "en": "Bite-size crispy fried chicken with Korean sauce and cheese sauce, topped with seaweed, served over rice."
+    },
+    "price": 69,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "sweet",
+      "creamy-rich"
+    ],
+    "review": null,
+    "photo": "crispy-chicken-rice-korean-cheese",
+    "query": "korean cheese chicken",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "cl2xunh7dt7zxr3m0b4q1m589",
+    "restaurant": "ลิตเติ้ลกรินทร์",
+    "restaurantSlug": "little-grin",
+    "slug": "crispy-chicken-rice-sour-cream-onion",
+    "name": {
+      "th": "ข้าวไก่กรอบครีมหัวหอม",
+      "en": "Crispy Chicken Rice with Sour Cream & Onion Sauce"
+    },
+    "description": {
+      "th": "ไก่ทอดกรอบชิ้นพอดีคำราดซอสครีมหัวหอม โรยงาดำ วางบนข้าวสวย",
+      "en": "Bite-size crispy fried chicken topped with sour cream and onion sauce and black sesame, served over rice."
+    },
+    "price": 69,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "creamy-rich",
+      "crispy"
+    ],
+    "review": null,
+    "photo": "crispy-chicken-rice-sour-cream-onion",
+    "query": "fried chicken sour cream",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 2,
+    "source": null
+  },
+  {
+    "id": "clrn4ehaqh61n20fny2a80xox",
+    "restaurant": "ลิตเติ้ลกรินทร์",
+    "restaurantSlug": "little-grin",
+    "slug": "crispy-chicken-rice-sour-cream-onion-korean",
+    "name": {
+      "th": "ข้าวไก่กรอบครีมหัวหอม x ซอสเกาหลี",
+      "en": "Crispy Chicken Rice with Sour Cream & Onion and Korean Sauce"
+    },
+    "description": {
+      "th": "ไก่ทอดกรอบชิ้นพอดีคำราดซอสครีมหัวหอมคู่กับซอสเกาหลี วางบนข้าวสวย",
+      "en": "Bite-size crispy fried chicken with sour cream and onion sauce alongside Korean sauce, served over rice."
+    },
+    "price": 69,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "creamy-rich",
+      "spicy",
+      "sweet"
+    ],
+    "review": null,
+    "photo": "crispy-chicken-rice-sour-cream-onion-korean",
+    "query": "fried chicken rice bowl sauce",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "cd501rbibjwugagxf5ayqlfec",
+    "restaurant": "ลิตเติ้ลกรินทร์",
+    "restaurantSlug": "little-grin",
+    "slug": "crispy-chicken-rice-spicy-wing-powder",
+    "name": {
+      "th": "ข้าวไก่กรอบผงวิงค์แซ่บ",
+      "en": "Crispy Chicken Rice with Spicy Wing Seasoning"
+    },
+    "description": {
+      "th": "ไก่ทอดกรอบชิ้นพอดีคำคลุกผงปรุงรสวิงค์แซ่บรสเผ็ด วางบนข้าวสวย",
+      "en": "Bite-size crispy fried chicken coated in a spicy wing seasoning, served over rice."
+    },
+    "price": 65,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "crispy",
+      "spiced-smoky"
+    ],
+    "review": null,
+    "photo": "crispy-chicken-rice-spicy-wing-powder",
+    "query": "spicy fried chicken bites",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "cpbc973floabzb8aizky1elj7",
+    "restaurant": "ลิตเติ้ลกรินทร์",
+    "restaurantSlug": "little-grin",
+    "slug": "crispy-chicken-rice-nori",
+    "name": {
+      "th": "ข้าวไก่กรอบโนริสาหร่าย",
+      "en": "Crispy Chicken Rice with Nori Seaweed"
+    },
+    "description": {
+      "th": "ไก่ทอดกรอบชิ้นพอดีคำคลุกผงสาหร่ายโนริ โรยสาหร่ายเส้น วางบนข้าวสวย",
+      "en": "Bite-size crispy fried chicken coated in nori seasoning and topped with shredded seaweed, served over rice."
+    },
+    "price": 65,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "crispy",
+      "savory"
+    ],
+    "review": null,
+    "photo": "crispy-chicken-rice-nori",
+    "query": "fried chicken seaweed",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 2,
+    "source": null
+  },
+  {
+    "id": "ctewm67i2xo91f7i5le300668",
+    "restaurant": "สเต็กลุงหยิกเชียงราย",
+    "restaurantSlug": "lung-yik-steak",
+    "slug": "marinated-shrimp-rice-bowl",
+    "name": {
+      "th": "ข้าวหน้ากุ้งดอง",
+      "en": "Marinated Shrimp Rice Bowl"
+    },
+    "description": {
+      "th": "กุ้งดองซอสหอมกระเทียมและพริก วางบนข้าว โรยสาหร่ายและไข่กุ้ง",
+      "en": "Soy-marinated shrimp with garlic and chili over rice, topped with seaweed and fish roe."
+    },
+    "price": 219,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "savory",
+      "spicy",
+      "sweet"
+    ],
+    "review": null,
+    "photo": "marinated-shrimp-rice-bowl",
+    "query": "marinated shrimp rice bowl",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 3,
+    "source": null
+  },
+  {
+    "id": "cnimtx43oaygsuqq7n7xmlacm",
+    "restaurant": "สเต็กลุงหยิกเชียงราย",
+    "restaurantSlug": "lung-yik-steak",
+    "slug": "spicy-chicken-rice",
+    "name": {
+      "th": "ข้าวไก่สไปซี่",
+      "en": "Spicy Chicken with Rice"
+    },
+    "description": {
+      "th": "ไก่หมักซอสสไปซี่ย่าง เสิร์ฟพร้อมข้าวสวย สลัดผัก และน้ำจิ้ม",
+      "en": "Grilled chicken in a spicy marinade, served with rice, salad, and sauce."
+    },
+    "price": 119,
+    "foodType": "rice-dishes",
+    "tastes": [
+      "spicy",
+      "savory"
+    ],
+    "review": null,
+    "photo": "spicy-chicken-rice",
+    "query": "grilled spicy chicken rice",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 2,
+    "source": null
+  },
+  {
+    "id": "cqjcs54oz4romu6k1id6tr964",
+    "restaurant": "สเต็กลุงหยิกเชียงราย",
+    "restaurantSlug": "lung-yik-steak",
+    "slug": "wai-wai-pad-cha-seafood",
+    "name": {
+      "th": "ไวไวผัดฉ่าทะเล",
+      "en": "Stir-fried Wai Wai Noodles Pad Cha with Seafood"
+    },
+    "description": {
+      "th": "บะหมี่กึ่งสำเร็จรูปไวไวผัดฉ่ากับทะเล พริก และกระชาย",
+      "en": "Wai Wai instant noodles stir-fried pad cha style with seafood, chili, and aromatic herbs."
+    },
+    "price": 109,
+    "foodType": "noodles",
+    "tastes": [
+      "spicy",
+      "spiced-smoky",
+      "savory"
+    ],
+    "review": null,
+    "photo": "wai-wai-pad-cha-seafood",
+    "query": "spicy seafood stir fried noodles",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "cutxp93opa4zz76ay49f5qwzi",
+    "restaurant": "แซนด์วิชไส้ทะลัก จูเซโย",
+    "restaurantSlug": "sandwich-juseyo",
+    "slug": "chicken-chilli-paste-sandwich",
+    "name": {
+      "th": "แซนด์วิชไก่น้ำพริกเผา",
+      "en": "Chicken Chilli Paste Sandwich"
+    },
+    "description": {
+      "th": "แซนด์วิชเกาหลีไส้ไข่ข้น อกไก่ผัดน้ำพริกเผา ชีส และผักสด",
+      "en": "Korean-style sandwich with fluffy scrambled egg, chicken breast in Thai chilli paste, cheese, and fresh vegetables."
+    },
+    "price": 65,
+    "foodType": "burgers-sandwiches-wraps",
+    "tastes": [
+      "spicy",
+      "sweet",
+      "savory"
+    ],
+    "review": null,
+    "photo": "chicken-chilli-paste-sandwich",
+    "query": "egg chicken sandwich",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "cmfjlp9gizholl7joow203xz0",
+    "restaurant": "แซนด์วิชไส้ทะลัก จูเซโย",
+    "restaurantSlug": "sandwich-juseyo",
+    "slug": "mushroom-chilli-paste-sandwich",
+    "name": {
+      "th": "แซนด์วิชเห็ดน้ำพริกเผา",
+      "en": "Mushroom Chilli Paste Sandwich"
+    },
+    "description": {
+      "th": "แซนด์วิชเกาหลีไส้ไข่ข้น เห็ดโคนขาวผัดน้ำพริกเผา ชีส และผักสด",
+      "en": "Korean-style sandwich with fluffy scrambled egg, mushrooms in Thai chilli paste, cheese, and fresh vegetables."
+    },
+    "price": 65,
+    "foodType": "burgers-sandwiches-wraps",
+    "tastes": [
+      "spicy",
+      "sweet",
+      "savory"
+    ],
+    "review": null,
+    "photo": "mushroom-chilli-paste-sandwich",
+    "query": "egg mushroom sandwich",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "ceuxjo6ppf2g8wk18viimt5mx",
+    "restaurant": "แซนด์วิชไส้ทะลัก จูเซโย",
+    "restaurantSlug": "sandwich-juseyo",
+    "slug": "tiramisu-salad",
+    "name": {
+      "th": "ทีรามิสุสลัด",
+      "en": "Tiramisu Salad"
+    },
+    "description": {
+      "th": "สลัดผักถ้วย 300 มล. เลือกไส้โปรตีนได้ 5 อย่าง",
+      "en": "A 300 ml salad bowl with five protein fillings of your choice."
+    },
+    "price": 55,
+    "foodType": "salads-yum-somtam",
+    "tastes": [
+      "fresh-light"
+    ],
+    "review": null,
+    "photo": "tiramisu-salad",
+    "query": "protein salad bowl",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 1,
+    "source": null
+  },
+  {
+    "id": "cr3i8dc5fxmaeo6bjqeu0suet",
+    "restaurant": "ย่างให้ MFU",
+    "restaurantSlug": "yang-hai-mfu",
+    "slug": "moo-kratha-korean",
+    "name": {
+      "th": "ย่างให้หมูกระทะชากาเกาหลี",
+      "en": "Korean Sauce Moo Kratha Bowl"
+    },
+    "description": {
+      "th": "หมูกระทะย่างซอสเกาหลี เสิร์ฟพร้อมวุ้นเส้นและกิมจิ (หมูย่างแล้ว 150 กรัม)",
+      "en": "Thai BBQ pork grilled in Korean sauce with glass noodles and kimchi (150 g of grilled pork)."
+    },
+    "price": 99,
+    "foodType": "hotpot-bbq",
+    "tastes": [
+      "sweet",
+      "spicy",
+      "savory"
+    ],
+    "review": null,
+    "photo": "moo-kratha-korean",
+    "query": "korean bbq pork glass noodles",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 2,
+    "source": null
+  },
+  {
+    "id": "cw0lxxlhve1xw7nk3nzea14x7",
+    "restaurant": "ย่างให้ MFU",
+    "restaurantSlug": "yang-hai-mfu",
+    "slug": "moo-kratha-korean-m",
+    "name": {
+      "th": "ย่างให้หมูกระทะชากาเกาหลี ไซส์ M",
+      "en": "Korean Sauce Moo Kratha Bowl (M)"
+    },
+    "description": {
+      "th": "หมูกระทะย่างซอสเกาหลี เสิร์ฟพร้อมวุ้นเส้นและกิมจิ (หมูย่างแล้ว 230 กรัม)",
+      "en": "Thai BBQ pork grilled in Korean sauce with glass noodles and kimchi (230 g of grilled pork)."
+    },
+    "price": 139,
+    "foodType": "hotpot-bbq",
+    "tastes": [
+      "sweet",
+      "spicy",
+      "savory"
+    ],
+    "review": null,
+    "photo": "moo-kratha-korean",
+    "query": "korean bbq pork glass noodles",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 2,
+    "source": null
+  },
+  {
+    "id": "c1qh139t0lvgzl7m73ie67lpn",
+    "restaurant": "ย่างให้ MFU",
+    "restaurantSlug": "yang-hai-mfu",
+    "slug": "moo-kratha-sichuan-mala",
+    "name": {
+      "th": "ย่างให้หมูกระทะหม่าล่าเสฉวน",
+      "en": "Sichuan Mala Moo Kratha Bowl"
+    },
+    "description": {
+      "th": "หมูกระทะคลุกซอสหม่าล่าเผ็ดร้อน เสิร์ฟพร้อมวุ้นเส้น (หมูย่างแล้ว 150 กรัม)",
+      "en": "Thai BBQ pork tossed in hot Sichuan mala sauce with glass noodles (150 g of grilled pork)."
+    },
+    "price": 99,
+    "foodType": "hotpot-bbq",
+    "tastes": [
+      "spicy",
+      "spiced-smoky",
+      "savory"
+    ],
+    "review": null,
+    "photo": "moo-kratha-sichuan-mala",
+    "query": "spicy grilled pork bowl",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 2,
+    "source": null
+  },
+  {
+    "id": "ciod1aqh6gc96yf5lp2xjwiby",
+    "restaurant": "ย่างให้ MFU",
+    "restaurantSlug": "yang-hai-mfu",
+    "slug": "moo-kratha-sichuan-mala-m",
+    "name": {
+      "th": "ย่างให้หมูกระทะหม่าล่าเสฉวน ไซส์ M",
+      "en": "Sichuan Mala Moo Kratha Bowl (M)"
+    },
+    "description": {
+      "th": "หมูกระทะคลุกซอสหม่าล่าเผ็ดร้อน เสิร์ฟพร้อมวุ้นเส้น (หมูย่างแล้ว 230 กรัม)",
+      "en": "Thai BBQ pork tossed in hot Sichuan mala sauce with glass noodles (230 g of grilled pork)."
+    },
+    "price": 139,
+    "foodType": "hotpot-bbq",
+    "tastes": [
+      "spicy",
+      "spiced-smoky",
+      "savory"
+    ],
+    "review": null,
+    "photo": "moo-kratha-sichuan-mala",
+    "query": "spicy grilled pork bowl",
+    "status": "no-verified-match",
+    "reason": "No candidate verified against all named ingredients, sauce, cooking method and rice/noodle presentation; search results are not accepted automatically.",
+    "searchCount": 2,
+    "source": null
+  }
+]

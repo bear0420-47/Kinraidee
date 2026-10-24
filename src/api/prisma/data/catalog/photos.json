@@ -1043,8 +1043,21 @@
     "photos": []
   },
   "eggplant-minced-pork-on-rice": {
-    "query": "chinese eggplant minced pork",
-    "photos": []
+    "query": "eggplant minced pork",
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Hong_Kong_style_fired_Eggplant_with_minced_pork.jpg/960px-Hong_Kong_style_fired_Eggplant_with_minced_pork.jpg",
+        "openverseId": "cfcb37b1-e4af-4a3e-9ec7-fe772c73f6f7",
+        "source": "wikimedia",
+        "title": "Hong Kong style fired Eggplant with minced pork",
+        "creator": "Peachyeung316",
+        "creatorUrl": "https://commons.wikimedia.org/wiki/User:Peachyeung316",
+        "license": "by-sa",
+        "licenseVersion": "4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "pageUrl": "https://commons.wikimedia.org/w/index.php?curid=129306526"
+      }
+    ]
   },
   "falafel-wrap": {
     "query": "falafel wrap",
@@ -2216,8 +2229,21 @@
     "photos": []
   },
   "rad-na": {
-    "query": "rad na thai gravy noodles",
-    "photos": []
+    "query": "\"rat na\"",
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/1/18/Kuai-tiao_rat_na_mu.JPG",
+        "openverseId": "ddb282b0-af35-42e6-8ac9-d50ad100996a",
+        "source": "wikimedia",
+        "title": "Kuai-tiao rat na mu",
+        "creator": "Takeaway",
+        "creatorUrl": "https://commons.wikimedia.org/wiki/User:Takeaway",
+        "license": "by-sa",
+        "licenseVersion": "3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+        "pageUrl": "https://commons.wikimedia.org/w/index.php?curid=12262426"
+      }
+    ]
   },
   "red-syrup-lime": {
     "query": "red soda lime drink",
@@ -2753,7 +2779,15 @@
   },
   "tiramisu-salad": {
     "query": "protein salad bowl",
-    "photos": []
+    "photos": [
+      {
+        "url": "https://images.unsplash.com/photo-1781332149415-f420708ab98f?ixid=M3wxMTExOTI2fDB8MXxzZWFyY2h8MXx8cHJvdGVpbiUyMHNhbGFkJTIwYm93bHxlbnwxfDB8fHwxNzkyODM1MTM3fDA&ixlib=rb-4.1.0&w=800&q=75&fit=crop&auto=format",
+        "unsplashId": "bly5KOy6zNM",
+        "photographer": "Zayed Ahmed Zadu",
+        "photographerUrl": "https://unsplash.com/@zayed_ahmed_zadu?utm_source=kinraidee&utm_medium=referral",
+        "pageUrl": "https://unsplash.com/photos/grilled-chicken-salad-with-vegetables-and-nuts-top-view-bly5KOy6zNM?utm_source=kinraidee&utm_medium=referral"
+      }
+    ]
   },
   "tom-yum-mama-crispy-pork": {
     "query": "spicy stir fried instant noodles pork",

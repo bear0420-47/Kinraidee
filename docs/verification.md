@@ -1,5 +1,56 @@
 # Verification Report
 
+## 2026-10-24 — Unsplash key photo-matching pass
+
+Scope: add reviewed stock-image mappings using the existing `catalog-photos.ts` workflow. No application module, dependencies or tests changed. Current catalog coverage is 133 of 222 visible menu items, with 89 missing. The two new menu IDs are documented in `evidence/unsplash-menu-matching-2026-10-24/matched.json`. Prior catalog files and this report were archived in `evidence/archive/20261024-before-unsplash-key-pass/` before mutation.
+
+The package-manager bootstrap limitation recorded below still applies. Commands used the installed dependencies directly; no package-manager or dependency version was changed.
+
+| Check | Working directory | Exact command | Result |
+|---|---|---|---|
+| Apply selections | `src/api` | `node --env-file-if-exists=.env --import tsx prisma/catalog-photos.ts apply .local/photo-search/pass-selection.json` | Exit 0; two reviewed pools applied, existing pools retained. |
+| Generate catalog | `src/api` | `node --import tsx prisma/catalog-build.ts` | Exit 0; 133 menus use stock images. |
+| Unsplash report | `src/api` | `node --env-file-if-exists=.env --import tsx prisma/catalog-photos.ts report-downloads` | Exit 0; one event reported; zero pending. |
+| API lint | `src/api` | `node ../../node_modules/eslint/bin/eslint.js .` | Exit 0. |
+| Web lint | `src/web` | `node ../../node_modules/eslint/bin/eslint.js .` | Exit 0. |
+| API tests | `src/api` | `node node_modules/vitest/vitest.mjs run --exclude dist/**` | Exit 0; 73 files / 597 tests passed. |
+| Web tests | `src/web` | `node node_modules/vitest/vitest.mjs run --exclude dist/** --maxWorkers=4` | Exit 0; 38 files / 409 tests passed, 75.02 seconds. |
+| API compile | `src/api` | `node node_modules/typescript/bin/tsc -p tsconfig.json` | Exit 0. |
+| API aliases | `src/api` | `node node_modules/tsc-alias/dist/bin/index.js -p tsconfig.json` | Exit 0. |
+| API OpenAPI | `src/api` | `node --import tsx src/openapi/generateOpenapi.ts` | Exit 0; no semantic contract diff. |
+| Web compile | `src/web` | `node node_modules/typescript/bin/tsc -b` | Exit 2; the previously observed TS2307 (`node:path`, `node:url`) and TS2339 (`ImportMeta.url`) in unchanged `vite.config.ts` remain. Full web build does not pass. |
+| Web bundle diagnostic | `src/web` | `node node_modules/vite/bin/vite.js build` | Exit 0, 8.24 seconds; chunk-size advisory. Does not replace the failed TypeScript stage. |
+
+Manual checks: both accepted images inspected; provider credits/licenses preserved; URLs load; Unsplash tracking query parameters retained; no credentials appear in evidence; local previews have no EXIF. Attempted image-only local database sync failed on the initial read because PostgreSQL at localhost:5432 is unavailable, so no database records changed. Existing non-empty database images were never overwritten. No seed, administrator reset or deployment performed.
+
+Photo sourcing pass is recorded; 89 menus remain unresolved. Full implementation/release verification remains incomplete because the web TypeScript build fails.
+
+## 2026-10-24 — Free stock food photo matching
+
+Scope: catalog data and generated credits only. Added a visually checked, source-verified CC BY-SA 3.0 photo for `rad-na`; no feature-module code, tests, database records or deployments changed. Source inventory: 92 missing menu images before, 91 after. Full inventory and sourcing evidence: `evidence/food-photo-research-2026-10-24/`. Previous verification report and catalog files were archived in `evidence/archive/20261024-before-stock-photo-research/` before updates.
+
+Commands below ran from the indicated package directory using already installed dependencies. The package-manager entry point `pnpm --filter api catalog:build` could not bootstrap the pinned `@pnpm/win-x64@12.4.2`: registry reported no matching version (latest reported: 11.28.8). No package version or dependency declaration was changed. Direct commands reproduced the package scripts.
+
+| Check | Working directory | Exact command | Result |
+|---|---|---|---|
+| Catalog generation | `src/api` | `node --import tsx prisma/catalog-build.ts` | Exit 0; 13 restaurants, 222 visible menu items, 131 using stock images. “222 missing” in the build output means missing local files; 91 lack both local files and stock URLs. |
+| API lint | `src/api` | `node ../../node_modules/eslint/bin/eslint.js .` | Exit 0. |
+| Web lint | `src/web` | `node ../../node_modules/eslint/bin/eslint.js .` | Exit 0. |
+| API tests | `src/api` | `node node_modules/vitest/vitest.mjs run --exclude dist/**` | Exit 0; 73 files, 597 tests passed. |
+| Web tests, initial run | `src/web` | `node node_modules/vitest/vitest.mjs run --exclude dist/**` | Exit 1; 37 files passed, 1 failed; 408 tests passed, 1 failed. `PreferencesPage.test.tsx:269` timed out waiting for the meal heading after logout. |
+| Isolated web failure | `src/web` | `node node_modules/vitest/vitest.mjs run src/pages/account/preferences/PreferencesPage.test.tsx --maxWorkers=1` | Exit 0; all 13 tests passed without changing code or tests. |
+| Web tests, bounded concurrency rerun | `src/web` | `node node_modules/vitest/vitest.mjs run --exclude dist/** --maxWorkers=2` | Exit 0; all 38 files and 409 tests passed, 214.90 seconds. Initial logout failure did not reproduce; no code or tests changed. |
+| API compile | `src/api` | `node node_modules/typescript/bin/tsc -p tsconfig.json` | Exit 0. |
+| API alias rewrite | `src/api` | `node node_modules/tsc-alias/dist/bin/index.js -p tsconfig.json` | Exit 0. |
+| API OpenAPI generation | `src/api` | `node --import tsx src/openapi/generateOpenapi.ts` | Exit 0; no semantic OpenAPI diff. |
+| Web compile | `src/web` | `node node_modules/typescript/bin/tsc -b` | Exit 2; `vite.config.ts` TS2307 for `node:path` and `node:url`, TS2339 for `ImportMeta.url`. The full web build is **not passing**. No dependency/config changes made in this photo task. |
+| Web bundling diagnostic | `src/web` | `node node_modules/vite/bin/vite.js build` | Exit 0; chunk-size advisory. Does not replace the failed TypeScript stage of the package build. |
+| Whitespace | repository root | `git diff --check` | Exit 0. |
+
+Manual/data checks: all 92 baseline missing items appear in the review; every item has at least one completed search; only the intended menu ID changed in the generated seed. Accepted image was visually inspected and its original provider metadata confirmed pork, broad noodles, Chinese broccoli, creator and CC BY-SA 3.0 license. Credit is present in both generated credit outputs. Review previews have metadata removed; primary-source evidence excludes GPS fields. Search candidates are not automatically approved. No tests were edited.
+
+Release status: sourcing pass recorded with 91 unresolved photo slots. Full implementation/release verification remains incomplete because the web TypeScript build fails. No production deployment or database seed performed.
+
 ## Status
 
 Structural and scaffold verification run after adding the pnpm web/API workspace and updating pnpm to 12.4.2 on 2026-09-18. Security/compliance review remains pending before implementation is reported complete.
