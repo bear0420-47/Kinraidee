@@ -1,5 +1,23 @@
 # Implementation Plan
 
+## 2026-10-24 — Additional free photo sources
+
+User-authorized catalog maintenance: search other free image providers and apply reviewed matches. Extend the existing photo pool to accept manually reviewed Pexels images, with native source metadata and generated credits. Keep strict provider URL validation and the existing illustrative-photo label. Wikimedia/Flickr support remains unchanged. No API integration, provider credentials, new routes, API schemas, dependencies, pages or workflow steps are added.
+
+```txt
+Module: Catalog photo build tooling and existing stock-photo classification helper (no feature-module changes)
+Requirement/backlog ID: F8 / B8 / approved OA1 catalog maintenance; explicit owner request on 2026-10-24
+Legal requirement ID: LR7 (no secrets in logs); rule.md identifiable-photo minimization; provider license evidence retained
+Design artifact: Existing illustrative stock-image and credit presentation; no layout/token changes
+API routes: N/A — offline catalog build only, no API route changes
+Web pages: Existing photo consumers unchanged; shared helper recognizes the Pexels CDN
+Personal data: Public photographer attribution only; no new user fields; reject identifiable people in selected food photos
+Authorization: Owner-authorized local catalog maintenance; protected API permissions unchanged
+Tests: Pexels host/ID validation, generated seed/credits, and stock-image classification; existing API/web suites, lint and builds
+```
+
+Photo and credit retention follows the existing pool lifecycle. Only images with checked source permission and matching main ingredients may be applied; portions and plating remain illustrative. No production deployment or remote database mutation is authorized by this maintenance note. Previous plan/evidence snapshots are in `evidence/archive/20261024-before-other-free-photos/`.
+
 ## Status
 
 Approved — full-app build plan updated through 2026-09-28 decisions. Implementation work may begin from this plan; production deployment still requires separate approval.

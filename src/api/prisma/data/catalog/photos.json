@@ -1043,8 +1043,21 @@
     "photos": []
   },
   "eggplant-minced-pork-on-rice": {
-    "query": "chinese eggplant minced pork",
-    "photos": []
+    "query": "eggplant minced pork",
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Hong_Kong_style_fired_Eggplant_with_minced_pork.jpg/960px-Hong_Kong_style_fired_Eggplant_with_minced_pork.jpg",
+        "openverseId": "cfcb37b1-e4af-4a3e-9ec7-fe772c73f6f7",
+        "source": "wikimedia",
+        "title": "Hong Kong style fired Eggplant with minced pork",
+        "creator": "Peachyeung316",
+        "creatorUrl": "https://commons.wikimedia.org/wiki/User:Peachyeung316",
+        "license": "by-sa",
+        "licenseVersion": "4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "pageUrl": "https://commons.wikimedia.org/w/index.php?curid=129306526"
+      }
+    ]
   },
   "falafel-wrap": {
     "query": "falafel wrap",
@@ -1313,8 +1326,21 @@
     ]
   },
   "garlic-fried-rice-bowl": {
-    "query": "garlic fried pork rice",
-    "photos": []
+    "query": "mu thot krathiam",
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Mu_thot_krathiam.jpg/960px-Mu_thot_krathiam.jpg",
+        "openverseId": "eebae4a8-4ec0-4525-8676-4279d1401bb4",
+        "source": "wikimedia",
+        "title": "File:Mu thot krathiam.jpg",
+        "creator": "Takeaway",
+        "creatorUrl": "https://commons.wikimedia.org/wiki/User:Takeaway",
+        "license": "by-sa",
+        "licenseVersion": "3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+        "pageUrl": "https://commons.wikimedia.org/w/index.php?curid=30500984"
+      }
+    ]
   },
   "garlic-ground-pork-fried-egg-rice": {
     "query": "garlic pork rice fried egg",
@@ -1816,8 +1842,21 @@
     ]
   },
   "marinated-shrimp-rice-bowl": {
-    "query": "marinated shrimp rice bowl",
-    "photos": []
+    "query": "ganjang saeu jang",
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Ganjang-saeu-jang.jpg/960px-Ganjang-saeu-jang.jpg",
+        "openverseId": "93c336b4-b3f5-4a40-be69-1fb10eec4c79",
+        "source": "wikimedia",
+        "title": "Ganjang-saeu-jang",
+        "creator": "eommina",
+        "creatorUrl": null,
+        "license": "cc0",
+        "licenseVersion": "1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en/",
+        "pageUrl": "https://commons.wikimedia.org/w/index.php?curid=61288737"
+      }
+    ]
   },
   "minced-pork-bolognese": {
     "query": "spaghetti bolognese",
@@ -1938,8 +1977,17 @@
     "photos": []
   },
   "omelette-rice": {
-    "query": "thai omelette rice",
-    "photos": []
+    "query": "reviewed Thai omelette and white rice",
+    "photos": [
+      {
+        "url": "https://images.pexels.com/photos/35049888/pexels-photo-35049888.jpeg?auto=compress&w=800",
+        "pexelsId": "35049888",
+        "title": "Thai Omelette with Heart-Shaped Rice on Rustic Table",
+        "photographer": "UNDO KIM",
+        "photographerUrl": "https://www.pexels.com/@undo-kim-2153633398/",
+        "pageUrl": "https://www.pexels.com/photo/thai-omelette-with-heart-shaped-rice-on-rustic-table-35049888/"
+      }
+    ]
   },
   "original-burger": {
     "query": "burger fries",
@@ -2216,8 +2264,21 @@
     "photos": []
   },
   "rad-na": {
-    "query": "rad na thai gravy noodles",
-    "photos": []
+    "query": "\"rat na\"",
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/1/18/Kuai-tiao_rat_na_mu.JPG",
+        "openverseId": "ddb282b0-af35-42e6-8ac9-d50ad100996a",
+        "source": "wikimedia",
+        "title": "Kuai-tiao rat na mu",
+        "creator": "Takeaway",
+        "creatorUrl": "https://commons.wikimedia.org/wiki/User:Takeaway",
+        "license": "by-sa",
+        "licenseVersion": "3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+        "pageUrl": "https://commons.wikimedia.org/w/index.php?curid=12262426"
+      }
+    ]
   },
   "red-syrup-lime": {
     "query": "red soda lime drink",
@@ -2753,7 +2814,15 @@
   },
   "tiramisu-salad": {
     "query": "protein salad bowl",
-    "photos": []
+    "photos": [
+      {
+        "url": "https://images.unsplash.com/photo-1781332149415-f420708ab98f?ixid=M3wxMTExOTI2fDB8MXxzZWFyY2h8MXx8cHJvdGVpbiUyMHNhbGFkJTIwYm93bHxlbnwxfDB8fHwxNzkyODM1MTM3fDA&ixlib=rb-4.1.0&w=800&q=75&fit=crop&auto=format",
+        "unsplashId": "bly5KOy6zNM",
+        "photographer": "Zayed Ahmed Zadu",
+        "photographerUrl": "https://unsplash.com/@zayed_ahmed_zadu?utm_source=kinraidee&utm_medium=referral",
+        "pageUrl": "https://unsplash.com/photos/grilled-chicken-salad-with-vegetables-and-nuts-top-view-bly5KOy6zNM?utm_source=kinraidee&utm_medium=referral"
+      }
+    ]
   },
   "tom-yum-mama-crispy-pork": {
     "query": "spicy stir fried instant noodles pork",

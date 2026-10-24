@@ -567,6 +567,64 @@ describe('Creative Commons photos', () => {
   })
 })
 
+describe('reviewed Pexels photos', () => {
+  const pexels = {
+    url: 'https://images.pexels.com/photos/35049884/pexels-photo-35049884.jpeg?auto=compress&w=800',
+    pexelsId: '35049884',
+    title: 'Thai omelette and rice',
+    photographer: 'UNDO KIM',
+    photographerUrl: 'https://www.pexels.com/@photographer/',
+    pageUrl:
+      'https://www.pexels.com/photo/traditional-thai-omelette-with-rice-on-rustic-table-35049884/',
+  }
+
+  const build = (photo: unknown) =>
+    buildCatalog({
+      taxonomy,
+      restaurants: [withPhoto('a-shop', 'omelette-rice')],
+      photos: new Set(),
+      photoPools: {
+        'omelette-rice': { query: 'Thai omelette', photos: [photo] },
+      },
+    })
+
+  it('builds the menu URL and both attribution outputs from native Pexels metadata', () => {
+    const result = build(pexels)
+    expect(result.seed.menuItems[0]!.imageUrl).toBe(pexels.url)
+    const pools = {
+      'omelette-rice': { query: 'Thai omelette', photos: [pexels] },
+    }
+    expect(serializeCredits(pools, result.checklist)).toContain(
+      '[Pexels License](https://www.pexels.com/license/)',
+    )
+    expect(JSON.parse(serializeWebCredits(pools, result.checklist))).toEqual({
+      [pexels.url]: {
+        creator: 'UNDO KIM',
+        license: 'Pexels License',
+        pageUrl: pexels.pageUrl,
+        source: 'Pexels',
+      },
+    })
+  })
+
+  it.each([
+    [
+      'unapproved image host',
+      { url: 'https://example.com/photos/35049884/a.jpg' },
+    ],
+    ['malformed image URL', { url: 'not a URL' }],
+    ['malformed source URL', { pageUrl: 'not a URL' }],
+    ['mismatched image ID', { pexelsId: '123' }],
+    [
+      'mismatched source ID',
+      { pageUrl: 'https://www.pexels.com/photo/food-123/' },
+    ],
+    ['missing photographer', { photographer: '' }],
+  ])('rejects %s', (_name, change) => {
+    expect(() => build({ ...pexels, ...change })).toThrow(CatalogBuildError)
+  })
+})
+
 describe('photo checklist', () => {
   it('quotes cells with commas or quotes and starts with a UTF-8 byte-order mark', () => {
     const text = serializeChecklist([

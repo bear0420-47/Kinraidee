@@ -1,0 +1,67 @@
+[
+  {
+    "key": "tiramisu-salad",
+    "reason": "Representative customizable protein salad: grilled chicken, vegetables and nuts. Matches the salad category described by the menu; does not claim the exact five selected fillings or the restaurant portion.",
+    "preview": "previews/protein-salad.jpg",
+    "photo": {
+      "url": "https://images.unsplash.com/photo-1781332149415-f420708ab98f?ixid=M3wxMTExOTI2fDB8MXxzZWFyY2h8MXx8cHJvdGVpbiUyMHNhbGFkJTIwYm93bHxlbnwxfDB8fHwxNzkyODM1MTM3fDA&ixlib=rb-4.1.0&w=800&q=75&fit=crop&auto=format",
+      "unsplashId": "bly5KOy6zNM",
+      "photographer": "Zayed Ahmed Zadu",
+      "photographerUrl": "https://unsplash.com/@zayed_ahmed_zadu?utm_source=kinraidee&utm_medium=referral",
+      "pageUrl": "https://unsplash.com/photos/grilled-chicken-salad-with-vegetables-and-nuts-top-view-bly5KOy6zNM?utm_source=kinraidee&utm_medium=referral"
+    },
+    "menu": {
+      "id": "ceuxjo6ppf2g8wk18viimt5mx",
+      "restaurantId": "cf2ck82pt60ua01f4xmbde9cg",
+      "foodTypeId": "c36i8m2qy4mrs8qoal5slid5i",
+      "tasteIds": [
+        "c3lg0r5rrv15qvznx1tilwoy4"
+      ],
+      "name": {
+        "th": "ทีรามิสุสลัด",
+        "en": "Tiramisu Salad"
+      },
+      "description": {
+        "th": "สลัดผักถ้วย 300 มล. เลือกไส้โปรตีนได้ 5 อย่าง",
+        "en": "A 300 ml salad bowl with five protein fillings of your choice."
+      },
+      "price": 55,
+      "imageUrl": "https://images.unsplash.com/photo-1781332149415-f420708ab98f?ixid=M3wxMTExOTI2fDB8MXxzZWFyY2h8MXx8cHJvdGVpbiUyMHNhbGFkJTIwYm93bHxlbnwxfDB8fHwxNzkyODM1MTM3fDA&ixlib=rb-4.1.0&w=800&q=75&fit=crop&auto=format"
+    }
+  },
+  {
+    "key": "eggplant-minced-pork-on-rice",
+    "reason": "Eggplant and minced pork are visible and confirmed by the original source. The photo illustrates the cooked main dish; rice is not visible. Not used for the separate two-dish pork-belly combination.",
+    "preview": "previews/eggplant-pork.jpg",
+    "photo": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Hong_Kong_style_fired_Eggplant_with_minced_pork.jpg/960px-Hong_Kong_style_fired_Eggplant_with_minced_pork.jpg",
+      "openverseId": "cfcb37b1-e4af-4a3e-9ec7-fe772c73f6f7",
+      "source": "wikimedia",
+      "title": "Hong Kong style fired Eggplant with minced pork",
+      "creator": "Peachyeung316",
+      "creatorUrl": "https://commons.wikimedia.org/wiki/User:Peachyeung316",
+      "license": "by-sa",
+      "licenseVersion": "4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "pageUrl": "https://commons.wikimedia.org/w/index.php?curid=129306526"
+    },
+    "menu": {
+      "id": "c984v4cuynidravladg4dm23b",
+      "restaurantId": "cz3k1bjl5nyrj9sx3jx3uw73e",
+      "foodTypeId": "cbdllxmb0sv247maiq26k5r9k",
+      "tasteIds": [
+        "c1spiyrw91ifmryner9y1bvb4"
+      ],
+      "name": {
+        "th": "มะเขือยาวผัดหมูสับ ราดข้าว",
+        "en": "Eggplant with Minced Pork on Rice"
+      },
+      "description": {
+        "th": "มะเขือยาวผัดกับหมูสับในซอสเข้มข้น ราดบนข้าวสวย",
+        "en": "Eggplant stir-fried with minced pork in a rich sauce, served over rice."
+      },
+      "price": 65,
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Hong_Kong_style_fired_Eggplant_with_minced_pork.jpg/960px-Hong_Kong_style_fired_Eggplant_with_minced_pork.jpg"
+    }
+  }
+]
