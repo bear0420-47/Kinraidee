@@ -1,0 +1,148 @@
+{
+  "slug": "fa-fa-chinese",
+  "zone": "fa-thai-market",
+  "name": {
+    "th": "ฟาฟา 發發餐廳",
+    "en": "Fa Fa Chinese Restaurant"
+  },
+  "description": {
+    "th": "ร้านอาหารจีนบริเวณตลาดฟ้าไทย มีบะหมี่ ข้าวผัด และเกี๊ยว",
+    "en": "A Chinese restaurant near Fa Thai Market serving noodles, fried rice and dumplings."
+  },
+  "phone": null,
+  "source": {
+    "type": "admin",
+    "capturedOn": "2026-10-24",
+    "pricesInclude": "in-store"
+  },
+  "menuItems": [
+    {
+      "slug": "chinese-beef-noodle-soup",
+      "name": {
+        "th": "บะหมี่เนื้อ",
+        "en": "Chinese Beef Noodle Soup"
+      },
+      "description": {
+        "th": "บะหมี่กับเนื้อในน้ำซุป",
+        "en": "Wheat noodles with beef in broth."
+      },
+      "price": 90,
+      "foodType": "noodles",
+      "tastes": ["savory"],
+      "review": null,
+      "photo": "mfu-chinese-beef-noodle-soup"
+    },
+    {
+      "slug": "tomato-egg-noodles",
+      "name": {
+        "th": "บะหมี่มะเขือเทศไข่",
+        "en": "Tomato and Egg Noodles"
+      },
+      "description": {
+        "th": "บะหมี่กับมะเขือเทศและไข่",
+        "en": "Wheat noodles with tomato and egg."
+      },
+      "price": 60,
+      "foodType": "noodles",
+      "tastes": ["savory"],
+      "review": null,
+      "photo": "mfu-tomato-egg-noodles"
+    },
+    {
+      "slug": "green-pepper-pork-noodles",
+      "name": {
+        "th": "หมูผัดพริกหวานราดบะหมี่",
+        "en": "Pork and Sweet Pepper Noodles"
+      },
+      "description": {
+        "th": "หมูผัดพริกหวานราดบนบะหมี่",
+        "en": "Stir-fried pork and sweet pepper over wheat noodles."
+      },
+      "price": 60,
+      "foodType": "noodles",
+      "tastes": ["savory"],
+      "review": null,
+      "photo": "mfu-green-pepper-pork-noodles"
+    },
+    {
+      "slug": "yangzhou-fried-rice",
+      "name": {
+        "th": "ข้าวผัดหยางโจว",
+        "en": "Yangzhou Fried Rice"
+      },
+      "description": {
+        "th": "ข้าวผัดแบบหยางโจว",
+        "en": "Yangzhou-style fried rice."
+      },
+      "price": 60,
+      "foodType": "rice-dishes",
+      "tastes": ["savory"],
+      "review": null,
+      "photo": "mfu-yangzhou-fried-rice"
+    },
+    {
+      "slug": "pork-fried-rice",
+      "name": {
+        "th": "ข้าวผัดหมู",
+        "en": "Pork Fried Rice"
+      },
+      "description": {
+        "th": "ข้าวผัดใส่หมู",
+        "en": "Fried rice with pork."
+      },
+      "price": 60,
+      "foodType": "rice-dishes",
+      "tastes": ["savory"],
+      "review": null,
+      "photo": "mfu-pork-fried-rice"
+    },
+    {
+      "slug": "chicken-fried-rice",
+      "name": {
+        "th": "ข้าวผัดไก่",
+        "en": "Chicken Fried Rice"
+      },
+      "description": {
+        "th": "ข้าวผัดใส่ไก่",
+        "en": "Fried rice with chicken."
+      },
+      "price": 60,
+      "foodType": "rice-dishes",
+      "tastes": ["savory"],
+      "review": null,
+      "photo": "mfu-chicken-fried-rice"
+    },
+    {
+      "slug": "pork-chive-dumplings",
+      "name": {
+        "th": "เกี๊ยวหมูกุยช่าย",
+        "en": "Pork and Chive Dumplings"
+      },
+      "description": {
+        "th": "เกี๊ยวไส้หมูและกุยช่าย",
+        "en": "Dumplings filled with pork and chives."
+      },
+      "price": 70,
+      "foodType": "appetizers-snacks",
+      "tastes": ["savory"],
+      "review": null,
+      "photo": "mfu-pork-chive-dumplings"
+    },
+    {
+      "slug": "pork-cabbage-dumplings",
+      "name": {
+        "th": "เกี๊ยวหมูผักกะหล่ำ",
+        "en": "Pork and Cabbage Dumplings"
+      },
+      "description": {
+        "th": "เกี๊ยวไส้หมูและผักกะหล่ำ",
+        "en": "Dumplings filled with pork and cabbage."
+      },
+      "price": 70,
+      "foodType": "appetizers-snacks",
+      "tastes": ["savory"],
+      "review": null,
+      "photo": "mfu-pork-cabbage-dumplings"
+    }
+  ]
+}

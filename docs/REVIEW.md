@@ -1,5 +1,19 @@
 # Review Report
 
+## 2026-10-24 — Remaining menu photo matching
+
+Scoped data review: six previously empty image pools were filled after visual dish/protein/preparation review and free-license/source verification. New sources, attribution and rejection reasons are in `evidence/remaining-menu-photos-2026-10-24.md`. The native Commons schema and existing illustrative-label/credit workflow are reused without code changes. The Korean drumstick source retains its exact CC BY 2.0 KR deed/version. No recognizable people, reference-platform images, binary photo files, secrets or precise coordinates were added.
+
+Structural comparison with the immediate pre-task generated seed confirms all 20 restaurants, all taxonomy and non-image menu fields, and all 149 existing image mappings are unchanged; exactly six empty image URLs were filled. Current coverage is 155/263, leaving 108 unresolved menus. All selected URLs returned HTTP 200 image/jpeg and have generated web credits. No high-severity finding was identified within this scope. Existing web TypeScript/wireframe limitations and unavailable local database remain documented; no deployment or human approval is claimed.
+
+## 2026-10-24 — Nearby restaurant catalog expansion
+
+Scope: seven new active restaurant files (41 menus), one excluded draft (1 unpriced menu), independent photo pools, native Commons metadata validation and the existing stock-photo classification helper. Requirements/design/API/database contracts and taxonomy remain unchanged. Owner authorization and implementation scope are recorded in `docs/plan.md`; source/date/price/photo evidence is in `evidence/catalog-expansion-2026-10-24.md`. The prior report is archived in `evidence/archive/20261024-before-catalog-expansion/REVIEW.md`.
+
+No unresolved high-severity finding was identified in this scoped review. All original 13 restaurants and 222 generated menu records, including image URLs, exactly match HEAD. Existing taxonomy IDs are preserved. New image URLs use validated provider hosts and native source IDs; creator/license/source credits are generated. No secrets, raw reviewer data, contacts, GPS metadata or unlicensed reference photos are added. Existing illustrative-photo labels cover the current Commons thumbnail host.
+
+Limitations: historical menu prices are explicitly dated in evidence; 28 active menus lack an accurate free image. The owner resolved the two restaurant identities/zones; one individual price remains unresolved and excluded. The local database is unavailable, so generated data has not been synchronized to a running application. Existing web TypeScript and wireframe failures are recorded in `docs/verification.md`; no claim of a fully passing build or production readiness is made. Human PR/deployment approval is not granted by this review.
+
 ## Status
 
 Issue #27 review complete on 2026-09-29. Human pull-request approval remains pending.

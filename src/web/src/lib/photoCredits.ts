@@ -14,7 +14,9 @@ const photoCredits: Record<string, PhotoCredit> = credits
 const STOCK_PHOTO_HOSTS = [
   'https://images.unsplash.com/',
   'https://upload.wikimedia.org/',
+  'https://thumb.wikimedia.org/',
   'https://live.staticflickr.com/',
+  'https://images.pexels.com/',
 ]
 
 // Catalog stock photos illustrate the dish rather than show the restaurant's own plate.
@@ -22,7 +24,7 @@ export function isStockPhoto(url: string) {
   return STOCK_PHOTO_HOSTS.some((host) => url.startsWith(host))
 }
 
-// Creative Commons photos must name their creator and licence where they are shown.
+// Non-Unsplash sources share the existing inline creator and licence presentation.
 export function creativeCommonsCredit(url: string) {
   const credit = photoCredits[url]
   return credit && credit.source !== 'Unsplash' ? credit : null

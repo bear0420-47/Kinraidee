@@ -1,0 +1,121 @@
+[
+  {
+    "key": "omelette-rice",
+    "photo": {
+      "url": "https://images.pexels.com/photos/35049888/pexels-photo-35049888.jpeg?auto=compress&w=800",
+      "pexelsId": "35049888",
+      "title": "Thai Omelette with Heart-Shaped Rice on Rustic Table",
+      "photographer": "UNDO KIM",
+      "photographerUrl": "https://www.pexels.com/@undo-kim-2153633398/",
+      "pageUrl": "https://www.pexels.com/photo/thai-omelette-with-heart-shaped-rice-on-rustic-table-35049888/"
+    },
+    "limitation": "Illustrative Thai omelette with white rice served separately; egg count and restaurant portion are not verified.",
+    "menus": [
+      {
+        "id": "cze167zd31wjmvs7318gj8smk",
+        "restaurantId": "cu1mjin51is7veravwiwxht9i",
+        "foodTypeId": "cbdllxmb0sv247maiq26k5r9k",
+        "tasteIds": [
+          "c1spiyrw91ifmryner9y1bvb4"
+        ],
+        "name": {
+          "th": "ข้าวไข่เจียว (2 ฟอง)",
+          "en": "Two-egg Omelette on Rice"
+        },
+        "description": {
+          "th": "ไข่เจียวไข่ 2 ฟอง บนข้าวสวยประมาณ 180–200 กรัม",
+          "en": "A two-egg omelette over about 180–200 g of rice."
+        },
+        "price": 49,
+        "imageUrl": "https://images.pexels.com/photos/35049888/pexels-photo-35049888.jpeg?auto=compress&w=800",
+        "restaurant": {
+          "th": "ช.เจริญพาณิชย์ ข้าวหน้าของทอด",
+          "en": "Chor Charoen Phanich Fried Rice Bowls"
+        }
+      }
+    ]
+  },
+  {
+    "key": "garlic-fried-rice-bowl",
+    "photo": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Mu_thot_krathiam.jpg/960px-Mu_thot_krathiam.jpg",
+      "openverseId": "eebae4a8-4ec0-4525-8676-4279d1401bb4",
+      "source": "wikimedia",
+      "title": "File:Mu thot krathiam.jpg",
+      "creator": "Takeaway",
+      "creatorUrl": "https://commons.wikimedia.org/wiki/User:Takeaway",
+      "license": "by-sa",
+      "licenseVersion": "3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "pageUrl": "https://commons.wikimedia.org/w/index.php?curid=30500984"
+    },
+    "limitation": "Illustrative fried pork with garlic; rice is not pictured.",
+    "menus": [
+      {
+        "id": "c2wu8jqya85w2zz7quk25jzyr",
+        "restaurantId": "cu1mjin51is7veravwiwxht9i",
+        "foodTypeId": "cbdllxmb0sv247maiq26k5r9k",
+        "tasteIds": [
+          "c1spiyrw91ifmryner9y1bvb4",
+          "c6c7oshlpa0xsaq9jiz3vnjdq"
+        ],
+        "name": {
+          "th": "ข้าวทอดกระเทียม",
+          "en": "Garlic Fried Rice Bowl"
+        },
+        "description": {
+          "th": "ของทอดกรอบ เสิร์ฟกับข้าวสวย 200 กรัม และผักเคียง ผัดกระเทียมหอมกรุ่น",
+          "en": "Fragrant fried garlic over crispy fried meat with 200 g of rice and side vegetables."
+        },
+        "price": 87,
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Mu_thot_krathiam.jpg/960px-Mu_thot_krathiam.jpg",
+        "restaurant": {
+          "th": "ช.เจริญพาณิชย์ ข้าวหน้าของทอด",
+          "en": "Chor Charoen Phanich Fried Rice Bowls"
+        }
+      }
+    ]
+  },
+  {
+    "key": "marinated-shrimp-rice-bowl",
+    "photo": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Ganjang-saeu-jang.jpg/960px-Ganjang-saeu-jang.jpg",
+      "openverseId": "93c336b4-b3f5-4a40-be69-1fb10eec4c79",
+      "source": "wikimedia",
+      "title": "Ganjang-saeu-jang",
+      "creator": "eommina",
+      "creatorUrl": null,
+      "license": "cc0",
+      "licenseVersion": "1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en/",
+      "pageUrl": "https://commons.wikimedia.org/w/index.php?curid=61288737"
+    },
+    "limitation": "Illustrative raw soy-marinated shrimp with shells and heads; rice and restaurant toppings are not pictured.",
+    "menus": [
+      {
+        "id": "ctewm67i2xo91f7i5le300668",
+        "restaurantId": "ct02b5a9bjadbl9zcsrfnbvxq",
+        "foodTypeId": "cbdllxmb0sv247maiq26k5r9k",
+        "tasteIds": [
+          "c1spiyrw91ifmryner9y1bvb4",
+          "c12yme2yu2wne82ugvfce7wfw",
+          "cyymbgka0mellnr53f78fh44j"
+        ],
+        "name": {
+          "th": "ข้าวหน้ากุ้งดอง",
+          "en": "Marinated Shrimp Rice Bowl"
+        },
+        "description": {
+          "th": "กุ้งดองซอสหอมกระเทียมและพริก วางบนข้าว โรยสาหร่ายและไข่กุ้ง",
+          "en": "Soy-marinated shrimp with garlic and chili over rice, topped with seaweed and fish roe."
+        },
+        "price": 219,
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Ganjang-saeu-jang.jpg/960px-Ganjang-saeu-jang.jpg",
+        "restaurant": {
+          "th": "สเต็กลุงหยิกเชียงราย",
+          "en": "Lung Yik Steak Chiang Rai"
+        }
+      }
+    ]
+  }
+]

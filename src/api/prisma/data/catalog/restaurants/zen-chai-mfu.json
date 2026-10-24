@@ -1,0 +1,100 @@
+{
+  "slug": "zen-chai-mfu",
+  "zone": "kotchapol",
+  "name": {
+    "th": "เส้นไชย เจริญทรัพย์",
+    "en": "Zen Chai MFU"
+  },
+  "description": {
+    "th": "ร้านก๋วยเตี๋ยวในคชพล มีตัวเลือกเส้น น้ำซุป และเครื่อง",
+    "en": "A noodle shop in Kotchapol with a choice of noodles, broth and toppings."
+  },
+  "phone": null,
+  "source": {
+    "type": "admin",
+    "capturedOn": "2026-10-24",
+    "pricesInclude": "in-store"
+  },
+  "menuItems": [
+    {
+      "slug": "tom-yum-sliced-pork-noodles",
+      "name": {
+        "th": "เส้นเล็กต้มยำน้ำข้นหมูชิ้น ธรรมดา",
+        "en": "Creamy Tom Yum Rice Noodles with Sliced Pork"
+      },
+      "description": {
+        "th": "เส้นเล็กกับหมูชิ้นในน้ำต้มยำข้น ขนาดธรรมดา",
+        "en": "Regular thin rice noodles with sliced pork in creamy tom yum broth."
+      },
+      "price": 45,
+      "foodType": "noodles",
+      "tastes": ["spicy", "sour"],
+      "review": null,
+      "photo": "mfu-tom-yum-sliced-pork-noodles"
+    },
+    {
+      "slug": "tom-yum-minced-pork-noodles",
+      "name": {
+        "th": "เส้นเล็กต้มยำน้ำข้นหมูสับ ธรรมดา",
+        "en": "Creamy Tom Yum Rice Noodles with Minced Pork"
+      },
+      "description": {
+        "th": "เส้นเล็กกับหมูสับในน้ำต้มยำข้น ขนาดธรรมดา",
+        "en": "Regular thin rice noodles with minced pork in creamy tom yum broth."
+      },
+      "price": 45,
+      "foodType": "noodles",
+      "tastes": ["spicy", "sour"],
+      "review": null,
+      "photo": "mfu-tom-yum-minced-pork-noodles"
+    },
+    {
+      "slug": "tom-yum-pork-rib-noodles",
+      "name": {
+        "th": "เส้นเล็กต้มยำน้ำข้นกระดูกหมู ธรรมดา",
+        "en": "Creamy Tom Yum Rice Noodles with Pork Ribs"
+      },
+      "description": {
+        "th": "เส้นเล็กกับกระดูกหมูในน้ำต้มยำข้น ขนาดธรรมดา",
+        "en": "Regular thin rice noodles with pork ribs in creamy tom yum broth."
+      },
+      "price": 45,
+      "foodType": "noodles",
+      "tastes": ["spicy", "sour"],
+      "review": null,
+      "photo": "mfu-tom-yum-pork-rib-noodles"
+    },
+    {
+      "slug": "tom-yum-seafood-noodles",
+      "name": {
+        "th": "เส้นเล็กต้มยำน้ำข้นทะเล ธรรมดา",
+        "en": "Creamy Tom Yum Rice Noodles with Seafood"
+      },
+      "description": {
+        "th": "เส้นเล็กกับเครื่องทะเลในน้ำต้มยำข้น ขนาดธรรมดา",
+        "en": "Regular thin rice noodles with seafood in creamy tom yum broth."
+      },
+      "price": 55,
+      "foodType": "noodles",
+      "tastes": ["spicy", "sour"],
+      "review": null,
+      "photo": "mfu-tom-yum-seafood-noodles"
+    },
+    {
+      "slug": "clear-braised-pork-noodles",
+      "name": {
+        "th": "เส้นเล็กน้ำใสหมูตุ๋น ธรรมดา",
+        "en": "Clear Rice Noodle Soup with Braised Pork"
+      },
+      "description": {
+        "th": "เส้นเล็กน้ำใสใส่หมูตุ๋น ขนาดธรรมดา",
+        "en": "Regular thin rice noodles with braised pork in clear broth."
+      },
+      "price": 45,
+      "foodType": "noodles",
+      "tastes": ["savory"],
+      "review": null,
+      "photo": "mfu-clear-braised-pork-noodles"
+    }
+  ]
+}

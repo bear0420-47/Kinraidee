@@ -1,0 +1,116 @@
+{
+  "slug": "ho-jiak-mfu",
+  "zone": "kotchapol",
+  "name": {
+    "th": "หอเจี๊ยะ มฟล.",
+    "en": "Ho Jiak MFU"
+  },
+  "description": {
+    "th": "ร้านต้มเลือดหมู ปอเปี๊ยะสด ข้าวและบะหมี่หมูแดงหมูกรอบในคชพล",
+    "en": "Pork blood soup, fresh popiah, roast pork rice and noodles in Kotchapol."
+  },
+  "phone": null,
+  "source": {
+    "type": "admin",
+    "capturedOn": "2026-10-24",
+    "pricesInclude": "in-store"
+  },
+  "menuItems": [
+    {
+      "slug": "fresh-popiah-small",
+      "name": {
+        "th": "ปอเปี๊ยะสด ไซส์ S",
+        "en": "Fresh Popiah, Small"
+      },
+      "description": {
+        "th": "ปอเปี๊ยะสด ขนาดเล็กตามป้ายเมนู",
+        "en": "Small fresh popiah portion as listed on the menu."
+      },
+      "price": 45,
+      "foodType": "appetizers-snacks",
+      "tastes": ["savory"],
+      "review": null,
+      "photo": "mfu-fresh-popiah-small"
+    },
+    {
+      "slug": "crispy-pork-rice",
+      "name": {
+        "th": "ข้าวหมูกรอบ ธรรมดา",
+        "en": "Crispy Pork Rice, Regular"
+      },
+      "description": {
+        "th": "ข้าวหมูกรอบ ขนาดธรรมดา",
+        "en": "Regular rice plate with crispy pork."
+      },
+      "price": 65,
+      "foodType": "rice-dishes",
+      "tastes": ["crispy", "savory"],
+      "review": null,
+      "photo": "mfu-crispy-pork-rice"
+    },
+    {
+      "slug": "red-crispy-pork-rice",
+      "name": {
+        "th": "ข้าวหมูแดงหมูกรอบ ธรรมดา",
+        "en": "Red Roast Pork and Crispy Pork Rice"
+      },
+      "description": {
+        "th": "ข้าวกับหมูแดงและหมูกรอบ ขนาดธรรมดา",
+        "en": "Regular rice plate with red roast pork and crispy pork."
+      },
+      "price": 70,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "crispy"],
+      "review": null,
+      "photo": "mfu-red-crispy-pork-rice"
+    },
+    {
+      "slug": "crispy-pork-egg-noodles",
+      "name": {
+        "th": "บะหมี่หมูกรอบ ธรรมดา",
+        "en": "Crispy Pork Egg Noodles"
+      },
+      "description": {
+        "th": "บะหมี่กับหมูกรอบ ขนาดธรรมดา",
+        "en": "Regular egg noodles with crispy pork."
+      },
+      "price": 65,
+      "foodType": "noodles",
+      "tastes": ["savory", "crispy"],
+      "review": null,
+      "photo": "mfu-crispy-pork-egg-noodles"
+    },
+    {
+      "slug": "red-pork-egg-noodles",
+      "name": {
+        "th": "บะหมี่หมูแดง ธรรมดา",
+        "en": "Red Roast Pork Egg Noodles"
+      },
+      "description": {
+        "th": "บะหมี่กับหมูแดง ขนาดธรรมดา",
+        "en": "Regular egg noodles with red roast pork."
+      },
+      "price": 60,
+      "foodType": "noodles",
+      "tastes": ["savory"],
+      "review": null,
+      "photo": "mfu-red-pork-egg-noodles"
+    },
+    {
+      "slug": "pork-blood-soup",
+      "name": {
+        "th": "ต้มเลือดหมู ธรรมดา",
+        "en": "Pork Blood Soup, Regular"
+      },
+      "description": {
+        "th": "ต้มเลือดหมู ขนาดธรรมดา ชนิดผักอาจเปลี่ยนตามฤดูกาล",
+        "en": "Regular pork blood soup; vegetables may vary by season."
+      },
+      "price": 65,
+      "foodType": "curries-soups",
+      "tastes": ["savory"],
+      "review": null,
+      "photo": "mfu-pork-blood-soup"
+    }
+  ]
+}

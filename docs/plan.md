@@ -1,5 +1,49 @@
 # Implementation Plan
 
+## 2026-10-24 — Remaining menu photo matching
+
+Owner explicitly requested further free-photo searches and application to menus still missing images. This is data-only maintenance of F3/F8, B3/B8 and OA1 using the approved photo-pool workflow; no feature module, taxonomy, routes or schema changes. Start from 20 restaurants / 263 visible menus / 149 images. Search freely reusable sources, visually inspect dish/protein/preparation matches, reject people and mismatched sauces/sides, retain creator/license/source metadata and the illustrative label. Only fill previously empty pools; preserve all existing image mappings and menu fields. Do not infer permission from public availability or copy reference photos from Maps/Wongnai. Unknown matches stay empty. Regenerate catalog/credits and run appropriate build/test/lint checks; do not synchronize an unavailable database or deploy.
+
+## 2026-10-24 — Owner-authorized nearby catalog expansion
+
+Owner follow-up: the supplied https://maps.app.goo.gl/Br6kKXLtSs7kYXeaA confirms Kai Ka Beer MFU's current business pin. Assign `opposite-mfu` from its position on the university approach outside the Kotchapol project (editorial mapping to the existing zone, not a new boundary). The owner explicitly confirms Som Tam LA is in Kotchapol; this resolves which existing candidate to use without creating another LA record. Promote these two existing drafts (6 + 5 priced menus), clear their resolved review notes, and preserve channel-specific prices. For Kaprao Khokhun MFU, import only individually priced menu records; none is currently evidenced, so retain its one unpriced draft outside the build. Result target: 7 added restaurants / 41 menus, 20 total restaurants / 263 visible menus. This is authorized data maintenance; no feature/module, taxonomy, API or database model changes.
+
+The owner approved using the latest accessible menu evidence for the two remaining candidates and requested the same per-restaurant/menu format and photo mapping as the existing catalog. Curate bilingual names/descriptions, exact sourced prices, existing zone/food-type/taste slugs, source records, and reviewed free-photo pools. Expand the source catalog only for records with a known price and supported zone; retain ambiguous locations and unknown prices in pending evidence rather than inventing required fields. Split explicitly priced protein/size choices where that makes photo matching accurate. Historical prices retain their source dates in evidence. No new taxonomy or application feature is required.
+
+```txt
+Module: Offline catalog source data and existing photo-pool/generation workflow; no feature-module code changes
+Requirement/backlog ID: F3 / F8 / B3 / B8 / approved OA1; explicit owner instructions on 2026-10-24
+Legal requirement ID: LR7/LR8; rule.md minimization and image permission evidence; no personal-data or legal-applicability changes
+Design artifact: Existing menu display, illustrative-stock label and photo credits; no new UI/tokens/workflow
+API routes: N/A; existing API contracts unchanged
+Web pages: Existing catalog consumers unchanged
+Personal data: Public image-creator attribution only; no reviewer/account identifiers, precise coordinates or restaurant contacts retained
+Authorization: Owner-authorized local data maintenance; no production deployment or admin provisioning
+Tests: Catalog schema/build, duplicate and taxonomy checks, old-record preservation, reviewed image URLs/credits; existing API/web lint/test/build
+```
+
+Use the source type `admin` for manual curation of public sources, not `owner` or a fabricated screenshot provider. Evidence records source URLs, original menu/photo dates, channel-specific prices, classification assumptions and pending records. Existing source schema no longer contains ownerConsent (merged change a09f2b6); do not reintroduce it or claim owner permission. No unlicensed Maps/Wongnai/Facebook photo is used as a catalog asset. Previous approved plan and verification snapshots are in `evidence/archive/20261024-before-catalog-expansion/`; the starting source baseline is commit `1b683dc8655138270cd9bf693ee6820489611f1b` (13 restaurants, 222 visible menu items, 136 images). Retention remains the existing catalog/pool lifecycle. Local database sync may be attempted only without clearing existing records or touching administrator accounts; do not deploy.
+
+Photo-tooling deviation: Openverse searches repeatedly time out for known Commons files. Add native reviewed Wikimedia Commons metadata to the existing stock-photo union using its real numeric Commons page ID, validated image filename/host and source page ID. Commons now returns thumb.wikimedia.org thumbnail URLs; those returned HTTP 200 while rewriting them to upload.wikimedia.org returned HTTP 429. Preserve the API-provided host and retain the existing illustrative label through the stock-photo helper. Reuse the existing CC creator/license presentation; never fabricate an Openverse UUID. Add valid/invalid metadata, generated-credit and thumbnail-label tests. API and database contracts stay unchanged.
+
+## 2026-10-24 — Additional free photo sources
+
+User-authorized catalog maintenance: search other free image providers and apply reviewed matches. Extend the existing photo pool to accept manually reviewed Pexels images, with native source metadata and generated credits. Keep strict provider URL validation and the existing illustrative-photo label. Wikimedia/Flickr support remains unchanged. No API integration, provider credentials, new routes, API schemas, dependencies, pages or workflow steps are added.
+
+```txt
+Module: Catalog photo build tooling and existing stock-photo classification helper (no feature-module changes)
+Requirement/backlog ID: F8 / B8 / approved OA1 catalog maintenance; explicit owner request on 2026-10-24
+Legal requirement ID: LR7 (no secrets in logs); rule.md identifiable-photo minimization; provider license evidence retained
+Design artifact: Existing illustrative stock-image and credit presentation; no layout/token changes
+API routes: N/A — offline catalog build only, no API route changes
+Web pages: Existing photo consumers unchanged; shared helper recognizes the Pexels CDN
+Personal data: Public photographer attribution only; no new user fields; reject identifiable people in selected food photos
+Authorization: Owner-authorized local catalog maintenance; protected API permissions unchanged
+Tests: Pexels host/ID validation, generated seed/credits, and stock-image classification; existing API/web suites, lint and builds
+```
+
+Photo and credit retention follows the existing pool lifecycle. Only images with checked source permission and matching main ingredients may be applied; portions and plating remain illustrative. No production deployment or remote database mutation is authorized by this maintenance note. Previous plan/evidence snapshots are in `evidence/archive/20261024-before-other-free-photos/`.
+
 ## Status
 
 Approved — full-app build plan updated through 2026-09-28 decisions. Implementation work may begin from this plan; production deployment still requires separate approval.

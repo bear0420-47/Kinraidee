@@ -1,0 +1,116 @@
+{
+  "slug": "kai-ka-beer-mfu",
+  "zone": "opposite-mfu",
+  "name": {
+    "th": "ไก่กะเบียร์ สาขา มฟล.",
+    "en": "Kai Ka Beer MFU"
+  },
+  "description": {
+    "th": "ร้านไก่ทอดและข้าวไก่ สาขามหาวิทยาลัยแม่ฟ้าหลวง",
+    "en": "Fried chicken and chicken rice, Mae Fah Luang University branch."
+  },
+  "phone": null,
+  "source": {
+    "type": "admin",
+    "capturedOn": "2026-10-24",
+    "pricesInclude": "lineman-delivery-markup"
+  },
+  "menuItems": [
+    {
+      "slug": "two-sauce-chicken-bites-rice",
+      "name": {
+        "th": "ข้าวชิกเก้นไบท์คลุกซอส 2 รสชาติ",
+        "en": "Two-Sauce Chicken Bites with Rice"
+      },
+      "description": {
+        "th": "ไก่ชิ้นคลุกซอสสองรสชาติ เสิร์ฟกับข้าว",
+        "en": "Chicken bites with two chosen sauces, served with rice."
+      },
+      "price": 79,
+      "foodType": "rice-dishes",
+      "tastes": ["crispy"],
+      "review": null,
+      "photo": "mfu-two-sauce-chicken-bites-rice"
+    },
+    {
+      "slug": "original-chicken-bites",
+      "name": {
+        "th": "ชิกเก้นไบท์ซอสต้นตำรับ",
+        "en": "Original Sauce Chicken Bites"
+      },
+      "description": {
+        "th": "ไก่ชิ้นคลุกซอสต้นตำรับ",
+        "en": "Chicken bites tossed with original sauce."
+      },
+      "price": 89,
+      "foodType": "appetizers-snacks",
+      "tastes": ["crispy", "savory"],
+      "review": null,
+      "photo": "mfu-original-chicken-bites"
+    },
+    {
+      "slug": "gochujang-chicken-bites",
+      "name": {
+        "th": "ชิกเก้นไบท์ซอสโคชูจัง",
+        "en": "Gochujang Chicken Bites"
+      },
+      "description": {
+        "th": "ไก่ชิ้นคลุกซอสโคชูจัง",
+        "en": "Chicken bites tossed with gochujang sauce."
+      },
+      "price": 89,
+      "foodType": "appetizers-snacks",
+      "tastes": ["crispy", "spicy"],
+      "review": null,
+      "photo": "mfu-gochujang-chicken-bites"
+    },
+    {
+      "slug": "onion-chicken-bites",
+      "name": {
+        "th": "ชิกเก้นไบท์ซอสหัวหอม",
+        "en": "Onion Sauce Chicken Bites"
+      },
+      "description": {
+        "th": "ไก่ชิ้นคลุกซอสหัวหอม",
+        "en": "Chicken bites tossed with onion sauce."
+      },
+      "price": 99,
+      "foodType": "appetizers-snacks",
+      "tastes": ["crispy"],
+      "review": null,
+      "photo": "mfu-onion-chicken-bites"
+    },
+    {
+      "slug": "fried-chicken-drumstick",
+      "name": {
+        "th": "น่องไก่ทอด 1 ชิ้น",
+        "en": "Fried Chicken Drumstick, One Piece"
+      },
+      "description": {
+        "th": "น่องไก่ทอดหนึ่งชิ้น",
+        "en": "One fried chicken drumstick."
+      },
+      "price": 59,
+      "foodType": "appetizers-snacks",
+      "tastes": ["crispy", "savory"],
+      "review": null,
+      "photo": "mfu-fried-chicken-drumstick"
+    },
+    {
+      "slug": "sesame-fried-tofu",
+      "name": {
+        "th": "เต้าหู้ทอดน้ำมันงา",
+        "en": "Fried Tofu with Sesame Sauce"
+      },
+      "description": {
+        "th": "เต้าหู้ทอดกับซอสน้ำมันงา",
+        "en": "Fried tofu with sesame sauce."
+      },
+      "price": 99,
+      "foodType": "appetizers-snacks",
+      "tastes": ["savory"],
+      "review": null,
+      "photo": "mfu-sesame-fried-tofu"
+    }
+  ]
+}

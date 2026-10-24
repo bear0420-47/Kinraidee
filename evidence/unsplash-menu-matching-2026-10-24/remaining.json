@@ -1,0 +1,1070 @@
+[
+  {
+    "id": "cmy1m2wcshrjbzew3cgbgkafp",
+    "restaurant": "เจริญรส แซ่บทอด อาหารตามสั่ง",
+    "name": {
+      "th": "ข้าวยำไก่แซ่บ",
+      "en": "Spicy Fried Chicken Salad with Rice"
+    },
+    "description": {
+      "th": "ไก่ทอดกรอบคลุกยำรสแซ่บกับหอมแดงและสมุนไพร เสิร์ฟกับข้าวสวย",
+      "en": "Crispy fried chicken tossed in a spicy Thai herb salad with shallots, served with rice."
+    }
+  },
+  {
+    "id": "cy6ftid8vszlkckoh8vwdo6bf",
+    "restaurant": "เจริญรส แซ่บทอด อาหารตามสั่ง",
+    "name": {
+      "th": "ข้าวยำหมูทอดแซ่บ",
+      "en": "Spicy Fried Pork Salad with Rice"
+    },
+    "description": {
+      "th": "หมูทอดกรอบคลุกยำรสแซ่บกับหอมแดงและสมุนไพร เสิร์ฟกับข้าวสวย",
+      "en": "Crispy fried pork tossed in a spicy Thai herb salad with shallots, served with rice."
+    }
+  },
+  {
+    "id": "cxo6byzvcqnpaxno0ut4ww22w",
+    "restaurant": "เชฟต๋อย",
+    "name": {
+      "th": "ข้าว+ไก่กรอบสโนว์ไวท์",
+      "en": "Crispy Chicken with Snow White Sauce on Rice"
+    },
+    "description": {
+      "th": "ไก่ทอดกรอบราดซอสขาวครีมมี่ เสิร์ฟกับข้าวสวย",
+      "en": "Crispy fried chicken topped with a creamy white sauce, served with rice."
+    }
+  },
+  {
+    "id": "c6chb98r09anjf1xbg3hfq2v5",
+    "restaurant": "เชฟต๋อย",
+    "name": {
+      "th": "ข้าว+กะเพราปลาทู",
+      "en": "Thai Basil Mackerel on Rice"
+    },
+    "description": {
+      "th": "ปลาทูทอดราดกะเพรารสจัด เสิร์ฟกับข้าวสวย",
+      "en": "Fried mackerel topped with a spicy Thai basil sauce, served with rice."
+    }
+  },
+  {
+    "id": "c7tdhrpo8edvrot9pem8y2523",
+    "restaurant": "เชฟต๋อย",
+    "name": {
+      "th": "ข้าว+สะเต๊ะไก่กรอบ",
+      "en": "Crispy Chicken with Satay Sauce on Rice"
+    },
+    "description": {
+      "th": "ไก่ทอดกรอบราดซอสสะเต๊ะถั่วลิสงผสมพริกแกง เสิร์ฟกับข้าวสวย",
+      "en": "Crispy fried chicken in a peanut and curry satay sauce, served with rice."
+    }
+  },
+  {
+    "id": "ci846dh1fkoqfr8bdjyhcsir3",
+    "restaurant": "เชฟต๋อย",
+    "name": {
+      "th": "ข้าวผัดไก่กรอบสไปซ์ชีส",
+      "en": "Spicy Cheese Crispy Chicken Fried Rice"
+    },
+    "description": {
+      "th": "ข้าวผัดกับไก่ทอดกรอบซอสเผ็ด โรยชีส",
+      "en": "Fried rice with crispy chicken in a spicy sauce, finished with cheese."
+    }
+  },
+  {
+    "id": "cwywxthvj10tmeftacgzghacw",
+    "restaurant": "เชฟต๋อย",
+    "name": {
+      "th": "มาม่าดำมาเลย์หม่าล่าไก่กรอบ",
+      "en": "Black Malay Mala Mama Noodles with Crispy Chicken"
+    },
+    "description": {
+      "th": "มาม่าเส้นดำผัดซอสหม่าล่ารสเผ็ด ท็อปไก่ทอดกรอบ",
+      "en": "Black instant noodles stir-fried in spicy mala sauce, topped with crispy chicken."
+    }
+  },
+  {
+    "id": "cu199jskckn8iwuma4jmxaip8",
+    "restaurant": "เชฟต๋อย",
+    "name": {
+      "th": "ผัดมักกะโรนี",
+      "en": "Pan-fried Macaroni"
+    },
+    "description": {
+      "th": "มักกะโรนีผัดซอสมะเขือเทศกับผัก เลือกเนื้อสัตว์ได้ เช่น ไก่ ไก่กรอบ เบคอน หรือไส้กรอก",
+      "en": "Macaroni stir-fried in tomato sauce with vegetables and a choice of chicken, crispy chicken, bacon, or sausage."
+    }
+  },
+  {
+    "id": "cfp62vldn7ry2bsdpgk710mzn",
+    "restaurant": "เชฟต๋อย",
+    "name": {
+      "th": "สปาเกตตี้กะเพราหมูสับ",
+      "en": "Spicy Thai Basil Spaghetti with Ground Pork"
+    },
+    "description": {
+      "th": "สปาเกตตี้ผัดกะเพราหมูสับรสจัด หอมใบกะเพรา",
+      "en": "Spaghetti stir-fried with ground pork and holy basil, spicy and fragrant."
+    }
+  },
+  {
+    "id": "co1qzqvt9q33he28yqfifdyla",
+    "restaurant": "เชฟต๋อย",
+    "name": {
+      "th": "สปาเกตตี้หม่าล่าไก่กรอบ",
+      "en": "Mala Spaghetti with Crispy Chicken"
+    },
+    "description": {
+      "th": "สปาเกตตี้ผัดซอสหม่าล่ากับไก่ทอดกรอบ เลือกระดับความเผ็ดได้",
+      "en": "Spaghetti in mala sauce with crispy chicken, with a choice of spice level."
+    }
+  },
+  {
+    "id": "ccdqrpzoi4bz6l24gg46f3z7y",
+    "restaurant": "เชฟต๋อย",
+    "name": {
+      "th": "หมี่คลุกลูกชิ้นหมู",
+      "en": "Spicy Mixed Rice Vermicelli with Pork Balls"
+    },
+    "description": {
+      "th": "เส้นหมี่คลุกซอสรสจัดกับลูกชิ้นหมู เคียงไก่กรอบ โรยกากเจียว",
+      "en": "Rice vermicelli tossed in a hot sauce with pork balls, crispy chicken, and crispy pork rind."
+    }
+  },
+  {
+    "id": "c9uiaqoyrs2ylvs99h3g2dlkq",
+    "restaurant": "เชฟต๋อย",
+    "name": {
+      "th": "ผัดมาม่าต้มยำลูกชิ้นจัมโบ้",
+      "en": "Stir-fried Tom Yum Mama with Jumbo Pork Balls"
+    },
+    "description": {
+      "th": "มาม่าผัดแห้งรสต้มยำกับลูกชิ้นหมูจัมโบ้",
+      "en": "Dry stir-fried tom yum instant noodles with jumbo pork balls."
+    }
+  },
+  {
+    "id": "cejz69qvp8wt5o687qn4aj3i9",
+    "restaurant": "เชฟต๋อย",
+    "name": {
+      "th": "ก๋วยเตี๋ยวหมูสับซอสมะเขือเทศ",
+      "en": "Pan-fried Noodles with Minced Pork in Tomato Sauce"
+    },
+    "description": {
+      "th": "ก๋วยเตี๋ยวผัดราดซอสมะเขือเทศหมูสับรสเปรี้ยวหวาน",
+      "en": "Pan-fried noodles under a sweet and sour tomato sauce with minced pork."
+    }
+  },
+  {
+    "id": "coiztvdkzvoeqcxx3yvtvdnwe",
+    "restaurant": "เชฟต๋อย",
+    "name": {
+      "th": "ผัดมาม่าทรงเครื่องต้มยำ",
+      "en": "Stir-fried Tom Yum Mama with Crispy Pork"
+    },
+    "description": {
+      "th": "มาม่าผัดแห้งหอมเครื่องต้มยำกับหมูกรอบ",
+      "en": "Dry stir-fried instant noodles with tom yum herbs and crispy pork."
+    }
+  },
+  {
+    "id": "co2q6e995dhsy17a2ddcqfhco",
+    "restaurant": "เชฟต๋อย",
+    "name": {
+      "th": "ข้าวดาวเจียว",
+      "en": "Omelette and Fried Egg on Rice"
+    },
+    "description": {
+      "th": "ไข่เจียวต้นหอมและไข่ดาวบนข้าวหอมมะลิ เสิร์ฟพร้อมพริกน้ำปลา",
+      "en": "Spring onion omelette and a fried egg over jasmine rice, with chili fish sauce."
+    }
+  },
+  {
+    "id": "c1z3jhabjmobz47uo94h0fbdt",
+    "restaurant": "เชฟต๋อย",
+    "name": {
+      "th": "พริกแกงหมูกรอบ ราดข้าว",
+      "en": "Crispy Pork in Curry Paste on Rice"
+    },
+    "description": {
+      "th": "หมูกรอบผัดพริกแกงกับถั่วฝักยาว ราดข้าว",
+      "en": "Crispy pork belly stir-fried with red curry paste and long beans, over rice."
+    }
+  },
+  {
+    "id": "cj3ofojd0zblbrfh8jaewetgi",
+    "restaurant": "เชฟต๋อย",
+    "name": {
+      "th": "ข้าว+ไก่ผัดผงกะหรี่+ไข่ดาว",
+      "en": "Curry Powder Chicken with Fried Egg on Rice"
+    },
+    "description": {
+      "th": "ไก่ผัดผงกะหรี่ข้น ๆ ราดข้าวหอมมะลิ พร้อมไข่ดาว",
+      "en": "Chicken stir-fried in a thick curry powder sauce over jasmine rice, with a fried egg."
+    }
+  },
+  {
+    "id": "cycm0toegyx2ub2ifbjz8zjb4",
+    "restaurant": "เชฟต๋อย",
+    "name": {
+      "th": "คั่วเกลือไส้กรอกไก่ ราดข้าว",
+      "en": "Hot & Spicy Chicken Sausage on Rice"
+    },
+    "description": {
+      "th": "ไส้กรอกไก่คั่วพริกเกลือ เลือกระดับความเผ็ดได้ เสิร์ฟกับข้าว",
+      "en": "Chicken sausage tossed with salt and chili, with a choice of spice level, served with rice."
+    }
+  },
+  {
+    "id": "cmrhdghah9i8sd1kpnujxd1m1",
+    "restaurant": "เชฟต๋อย",
+    "name": {
+      "th": "พริกขิงไก่กรอบ ราดข้าว",
+      "en": "Prik Khing Crispy Chicken on Rice"
+    },
+    "description": {
+      "th": "ไก่ทอดกรอบผัดพริกแกงพริกขิง เผ็ดหวานกลมกล่อม เสิร์ฟกับข้าว",
+      "en": "Crispy chicken stir-fried in sweet-spicy prik khing curry paste, served with rice."
+    }
+  },
+  {
+    "id": "cspc2hg3qf5lmrm8chxpd7b7g",
+    "restaurant": "เชฟต๋อย",
+    "name": {
+      "th": "ข้าว+กะเพราลูกชิ้นหมูกากเจียว",
+      "en": "Thai Basil Pork Balls with Crackling on Rice"
+    },
+    "description": {
+      "th": "ลูกชิ้นหมูผัดกะเพรากับกากเจียวกรอบ ราดข้าว",
+      "en": "Pork balls stir-fried with holy basil and crispy pork rind, over rice."
+    }
+  },
+  {
+    "id": "cdip00nrint5zb73xy6t683im",
+    "restaurant": "เชฟต๋อย",
+    "name": {
+      "th": "ข้าว+หมูสับคั่วพริกเกลือ",
+      "en": "Spicy Salt & Chili Ground Pork on Rice"
+    },
+    "description": {
+      "th": "หมูสับคั่วพริกเกลือ ราดข้าว เปลี่ยนเป็นไก่สับได้",
+      "en": "Ground pork stir-fried with salt and chili over rice, or ground chicken on request."
+    }
+  },
+  {
+    "id": "c67qfsm4w8evk4qu4mo85wj82",
+    "restaurant": "เชฟต๋อย",
+    "name": {
+      "th": "ข้าว+หมูกรอบคั่วพริกเกลือ",
+      "en": "Spicy Salt & Chili Crispy Pork on Rice"
+    },
+    "description": {
+      "th": "หมูกรอบคั่วพริกเกลือ เลือกระดับความเผ็ดได้ ราดข้าว",
+      "en": "Crispy pork tossed with salt and chili, with a choice of spice level, over rice."
+    }
+  },
+  {
+    "id": "cgefqjgnx7yykmjyswltqgomm",
+    "restaurant": "เชฟต๋อย",
+    "name": {
+      "th": "ข้าวผัดหมูหวาน",
+      "en": "Fried Rice with Sweet Pork"
+    },
+    "description": {
+      "th": "ข้าวผัดกับหมูหวานรสกลมกล่อม",
+      "en": "Fried rice with sweet braised pork."
+    }
+  },
+  {
+    "id": "cnlm1sp0yrovjrlstaocu327j",
+    "restaurant": "เชฟต๋อย",
+    "name": {
+      "th": "ข้าวผัดรถไฟ",
+      "en": "Rot Fai Fried Rice"
+    },
+    "description": {
+      "th": "ข้าวผัดซอสสีน้ำตาลแบบรถไฟ เลือกหมูหรือไก่",
+      "en": "Train-style fried rice in brown sauce, with pork or chicken."
+    }
+  },
+  {
+    "id": "cnir0onlql575sehahng1yz5a",
+    "restaurant": "ช.เจริญพาณิชย์ ข้าวหน้าของทอด",
+    "name": {
+      "th": "ข้าวของทอด ราดซอสแม็กกี้",
+      "en": "Maggi Sauce Fried Rice Bowl"
+    },
+    "description": {
+      "th": "ของทอดกรอบ เสิร์ฟกับข้าวสวย 200 กรัม และผักเคียง ราดซอสแม็กกี้หอมเข้ม",
+      "en": "Savory Maggi seasoning sauce over crispy fried meat with 200 g of rice and side vegetables."
+    }
+  },
+  {
+    "id": "ch22fidi5d6f869kfgwoirooi",
+    "restaurant": "ช.เจริญพาณิชย์ ข้าวหน้าของทอด",
+    "name": {
+      "th": "ข้าวของทอด ราดซอสมะขาม",
+      "en": "Tamarind Sauce Fried Rice Bowl"
+    },
+    "description": {
+      "th": "ของทอดกรอบ เสิร์ฟกับข้าวสวย 200 กรัม และผักเคียง ราดซอสมะขามเปรี้ยวหวาน โรยหอมเจียว",
+      "en": "Sweet-sour tamarind sauce and fried shallots over crispy fried meat with 200 g of rice and side vegetables."
+    }
+  },
+  {
+    "id": "ck6jbli2xfzi51bbuv5l7lk4c",
+    "restaurant": "ช.เจริญพาณิชย์ ข้าวหน้าของทอด",
+    "name": {
+      "th": "ข้าวของทอด ราดซอสน้ำปลา",
+      "en": "Fish Sauce Fried Rice Bowl"
+    },
+    "description": {
+      "th": "ของทอดกรอบ เสิร์ฟกับข้าวสวย 200 กรัม และผักเคียง คลุกซอสน้ำปลากลมกล่อม",
+      "en": "Savory fish sauce glaze over crispy fried meat with 200 g of rice and side vegetables."
+    }
+  },
+  {
+    "id": "c2wu8jqya85w2zz7quk25jzyr",
+    "restaurant": "ช.เจริญพาณิชย์ ข้าวหน้าของทอด",
+    "name": {
+      "th": "ข้าวทอดกระเทียม",
+      "en": "Garlic Fried Rice Bowl"
+    },
+    "description": {
+      "th": "ของทอดกรอบ เสิร์ฟกับข้าวสวย 200 กรัม และผักเคียง ผัดกระเทียมหอมกรุ่น",
+      "en": "Fragrant fried garlic over crispy fried meat with 200 g of rice and side vegetables."
+    }
+  },
+  {
+    "id": "cze167zd31wjmvs7318gj8smk",
+    "restaurant": "ช.เจริญพาณิชย์ ข้าวหน้าของทอด",
+    "name": {
+      "th": "ข้าวไข่เจียว (2 ฟอง)",
+      "en": "Two-egg Omelette on Rice"
+    },
+    "description": {
+      "th": "ไข่เจียวไข่ 2 ฟอง บนข้าวสวยประมาณ 180–200 กรัม",
+      "en": "A two-egg omelette over about 180–200 g of rice."
+    }
+  },
+  {
+    "id": "cm485xb6e88vfo7hc1ksu7050",
+    "restaurant": "แฟมิลี่ เคบับ ฮาลาล",
+    "name": {
+      "th": "อดาน่าเคบับแรปเนื้อ",
+      "en": "Adana Beef Kebab Wrap"
+    },
+    "description": {
+      "th": "เนื้อบดปรุงเครื่องเทศแบบอดาน่า ย่างไฟแล้วห่อในแป้งพร้อมผักสด",
+      "en": "Spiced minced-beef Adana kebab, grilled and wrapped in flatbread with fresh vegetables."
+    }
+  },
+  {
+    "id": "c1g8tpxlkh8p6fkxjsxq788ln",
+    "restaurant": "แฟมิลี่ เคบับ ฮาลาล",
+    "name": {
+      "th": "ชิชเคบับแรปตับ",
+      "en": "Liver Shish Kebab Wrap"
+    },
+    "description": {
+      "th": "ตับเสียบไม้ย่างแบบชิชเคบับ ห่อในแป้งพร้อมผักและซอส",
+      "en": "Skewer-grilled liver wrapped in flatbread with vegetables and sauce."
+    }
+  },
+  {
+    "id": "cag93v5hzsr5iyg3p3k8g6t1t",
+    "restaurant": "แฟมิลี่ เคบับ ฮาลาล",
+    "name": {
+      "th": "แรปปลาซาบะย่าง",
+      "en": "Grilled Saba Fish Wrap"
+    },
+    "description": {
+      "th": "ปลาซาบะย่างหอม ๆ ห่อในแป้งพร้อมผักสดและซอส",
+      "en": "Grilled saba mackerel wrapped in flatbread with fresh vegetables and sauce."
+    }
+  },
+  {
+    "id": "c4im5qu7tba1pwpxwbf97yl2s",
+    "restaurant": "แฟมิลี่ เคบับ ฮาลาล",
+    "name": {
+      "th": "โคฟต้าไก่+ข้าว",
+      "en": "Chicken Kofta with Rice"
+    },
+    "description": {
+      "th": "โคฟต้าไก่บดปรุงเครื่องเทศย่าง เสิร์ฟพร้อมข้าว แป้งย่าง และสลัด",
+      "en": "Grilled spiced chicken meatballs served with rice, grilled flatbread, and salad."
+    }
+  },
+  {
+    "id": "cxpmxkmcknuncd7259kxxdb4h",
+    "restaurant": "กินดัง ข้าวหน้าของย่าง",
+    "name": {
+      "th": "ข้าวหน้าหมูย่างทูโทน (สามชั้น+สันคอ) ไซส์ L",
+      "en": "Two-tone Pork (Belly & Neck) Rice Bowl (L)"
+    },
+    "description": {
+      "th": "หมูสามชั้นและหมูสันคอย่างซอส ราดบนข้าวญี่ปุ่น โรยต้นหอม",
+      "en": "Grilled pork belly and pork neck in sauce, served over Japanese rice with spring onion."
+    }
+  },
+  {
+    "id": "cjidulezoh6jjgy6lw4w220d8",
+    "restaurant": "กินดัง ข้าวหน้าของย่าง",
+    "name": {
+      "th": "ข้าวหน้ากุ้งย่าง",
+      "en": "Grilled Shrimp Rice Bowl"
+    },
+    "description": {
+      "th": "กุ้งขาวแกะเปลือกย่างซอส ราดบนข้าวญี่ปุ่น โรยต้นหอม",
+      "en": "Peeled white shrimp grilled in sauce, served over Japanese rice with spring onion."
+    }
+  },
+  {
+    "id": "cqyincikm8pnlla6fkld80tus",
+    "restaurant": "กินดัง ข้าวหน้าของย่าง",
+    "name": {
+      "th": "ข้าวหน้าเนื้อใบพาย + ไข่ออนเซ็น พ่นไฟ ไซส์ L",
+      "en": "Fire Chili Flat Iron Beef Rice Bowl with Onsen Egg (L)"
+    },
+    "description": {
+      "th": "เนื้อใบพายมันน้อยย่างไฟ ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น เสิร์ฟพร้อมไข่ออนเซ็น 1 ฟอง",
+      "en": "Lean flat iron beef seared over fire, topped with fiery chili sauce over Japanese rice, with one onsen egg."
+    }
+  },
+  {
+    "id": "cgn378368vhadhmegee6zn16t",
+    "restaurant": "กินดัง ข้าวหน้าของย่าง",
+    "name": {
+      "th": "ข้าวหน้าเนื้อพรีเมี่ยม + ไข่ออนเซ็น พ่นไฟ ไซส์ L",
+      "en": "Fire Chili Premium Beef Rice Bowl with Onsen Egg (L)"
+    },
+    "description": {
+      "th": "เนื้อวัวสายมันย่างไฟ ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น เสิร์ฟพร้อมไข่ออนเซ็น 1 ฟอง",
+      "en": "Well-marbled premium beef seared over fire, topped with fiery chili sauce over Japanese rice, with one onsen egg."
+    }
+  },
+  {
+    "id": "c5e8lta27tfq0bxlirfv2xux2",
+    "restaurant": "กินดัง ข้าวหน้าของย่าง",
+    "name": {
+      "th": "ข้าวหน้าหมูย่างทูโทน (สามชั้น+สันคอ) พ่นไฟ ไซส์ L",
+      "en": "Fire Chili Two-tone Pork (Belly & Neck) Rice Bowl (L)"
+    },
+    "description": {
+      "th": "หมูสามชั้นและหมูสันคอย่างซอส ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น",
+      "en": "Grilled pork belly and pork neck in sauce, topped with fiery chili sauce over Japanese rice."
+    }
+  },
+  {
+    "id": "crq5457f4y94014pt9vq8yuyr",
+    "restaurant": "กินดัง ข้าวหน้าของย่าง",
+    "name": {
+      "th": "ข้าวหน้าหมูสามชั้น พ่นไฟ ไซส์ L",
+      "en": "Fire Chili Pork Belly Rice Bowl (L)"
+    },
+    "description": {
+      "th": "หมูสามชั้นหนากำลังดีย่างซอสจนหอม ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น",
+      "en": "Thick-cut pork belly grilled in sauce, topped with fiery chili sauce over Japanese rice."
+    }
+  },
+  {
+    "id": "cp563rg6362gf055bqpwyhq9u",
+    "restaurant": "กินดัง ข้าวหน้าของย่าง",
+    "name": {
+      "th": "ข้าวหน้าหมูสามชั้น พ่นไฟ ไซส์ M",
+      "en": "Fire Chili Pork Belly Rice Bowl (M)"
+    },
+    "description": {
+      "th": "หมูสามชั้นหนากำลังดีย่างซอสจนหอม ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น",
+      "en": "Thick-cut pork belly grilled in sauce, topped with fiery chili sauce over Japanese rice."
+    }
+  },
+  {
+    "id": "cqih2lu5xnga3oejz36md9aft",
+    "restaurant": "กินดัง ข้าวหน้าของย่าง",
+    "name": {
+      "th": "ข้าวหน้าแซลม่อนย่าง พ่นไฟ",
+      "en": "Fire Chili Grilled Salmon Rice Bowl"
+    },
+    "description": {
+      "th": "แซลม่อนย่างซอส ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น",
+      "en": "Salmon grilled in sauce, topped with fiery chili sauce over Japanese rice."
+    }
+  },
+  {
+    "id": "cz13u4e1jr8b7cq9lmyiapkc6",
+    "restaurant": "กินดัง ข้าวหน้าของย่าง",
+    "name": {
+      "th": "ข้าวหน้ากุ้งย่าง พ่นไฟ",
+      "en": "Fire Chili Grilled Shrimp Rice Bowl"
+    },
+    "description": {
+      "th": "กุ้งขาวแกะเปลือกย่างซอส ราดซอสพริกพ่นไฟรสเผ็ดแซ่บ บนข้าวญี่ปุ่น",
+      "en": "Peeled white shrimp grilled in sauce, topped with fiery chili sauce over Japanese rice."
+    }
+  },
+  {
+    "id": "cgylqxyubznzisvad9gc4b9xf",
+    "restaurant": "กินดัง ข้าวหน้าของย่าง",
+    "name": {
+      "th": "ข้าวหน้าหมูสามชั้น หม่าล่า",
+      "en": "Mala Pork Belly Rice Bowl"
+    },
+    "description": {
+      "th": "หมูสามชั้นหนากำลังดีย่างซอสจนหอม โรยผงหม่าล่าชาลิ้น บนข้าวญี่ปุ่น",
+      "en": "Thick-cut pork belly grilled in sauce, dusted with numbing mala spice over Japanese rice."
+    }
+  },
+  {
+    "id": "cqs9mudrvq6pxtg09uw2zsr1l",
+    "restaurant": "กินดัง ข้าวหน้าของย่าง",
+    "name": {
+      "th": "ข้าวหน้าหมูสันคอ หม่าล่า",
+      "en": "Mala Pork Neck Rice Bowl"
+    },
+    "description": {
+      "th": "หมูสันคอนุ่มฉ่ำย่างซอส โรยผงหม่าล่าชาลิ้น บนข้าวญี่ปุ่น",
+      "en": "Juicy grilled pork neck in sauce, dusted with numbing mala spice over Japanese rice."
+    }
+  },
+  {
+    "id": "chu5kknn1utcjdgzt3255oxqw",
+    "restaurant": "กินดัง ข้าวหน้าของย่าง",
+    "name": {
+      "th": "ข้าวหน้าปลาซาบะย่าง หม่าล่า",
+      "en": "Mala Grilled Saba Rice Bowl"
+    },
+    "description": {
+      "th": "ปลาซาบะชิ้นหนาย่างซอสจนผิวกรอบ โรยผงหม่าล่าชาลิ้น บนข้าวญี่ปุ่น",
+      "en": "Thick saba mackerel grilled until crisp, dusted with numbing mala spice over Japanese rice."
+    }
+  },
+  {
+    "id": "c39vqpolnbmg0pil6fgafszns",
+    "restaurant": "กินดัง ข้าวหน้าของย่าง",
+    "name": {
+      "th": "ข้าวหน้าเนื้อพรีเมี่ยม + ไข่ออนเซ็น หม่าล่า",
+      "en": "Mala Premium Beef Rice Bowl with Onsen Egg"
+    },
+    "description": {
+      "th": "เนื้อวัวสายมันย่างไฟ โรยผงหม่าล่าชาลิ้น บนข้าวญี่ปุ่น เสิร์ฟพร้อมไข่ออนเซ็น 1 ฟอง",
+      "en": "Well-marbled premium beef seared over fire, dusted with numbing mala spice over Japanese rice, with one onsen egg."
+    }
+  },
+  {
+    "id": "cphkuuz5g7o678tqprix0lpus",
+    "restaurant": "กินดัง ข้าวหน้าของย่าง",
+    "name": {
+      "th": "ข้าวหน้ากุ้งย่าง หม่าล่า",
+      "en": "Mala Grilled Shrimp Rice Bowl"
+    },
+    "description": {
+      "th": "กุ้งขาวแกะเปลือกย่างซอส โรยผงหม่าล่าชาลิ้น บนข้าวญี่ปุ่น",
+      "en": "Peeled white shrimp grilled in sauce, dusted with numbing mala spice over Japanese rice."
+    }
+  },
+  {
+    "id": "c5ddvl5pb25o2nf70ypu0itpy",
+    "restaurant": "กินดัง ข้าวหน้าของย่าง",
+    "name": {
+      "th": "ข้าวหน้าแซลม่อนย่าง หม่าล่า",
+      "en": "Mala Grilled Salmon Rice Bowl"
+    },
+    "description": {
+      "th": "แซลม่อนย่างซอส โรยผงหม่าล่าชาลิ้น บนข้าวญี่ปุ่น",
+      "en": "Salmon grilled in sauce, dusted with numbing mala spice over Japanese rice."
+    }
+  },
+  {
+    "id": "cy4enb2binf2zfr285p071h6v",
+    "restaurant": "เฮง เฮง สุกี้ มฟล.",
+    "name": {
+      "th": "ข้าวหน้าน้ำจิ้มสุกี้",
+      "en": "Suki Sauce Rice Bowl"
+    },
+    "description": {
+      "th": "เนื้อสัตว์ผัดกับไข่และน้ำจิ้มสุกี้สูตรร้าน ราดบนข้าวสวย เลือกเนื้อสัตว์ได้",
+      "en": "Your choice of meat stir-fried with egg and the house suki sauce, served over rice."
+    }
+  },
+  {
+    "id": "cuphvwt0q9tlq9vautflrvwe5",
+    "restaurant": "เฮง เฮง สุกี้ มฟล.",
+    "name": {
+      "th": "สุกี้แห้งผัก",
+      "en": "Dry Sukiyaki with Vegetables"
+    },
+    "description": {
+      "th": "วุ้นเส้นผัดผักกรอบกับน้ำจิ้มสุกี้สูตรร้าน หอมกลิ่นกระทะ ใส่ผักและเห็ดชิเมจิ ไม่มีเนื้อสัตว์",
+      "en": "Glass noodles wok-fried with crisp vegetables in the house suki sauce, with vegetables and shimeji mushrooms only, no meat."
+    }
+  },
+  {
+    "id": "cgkiocloz8s87qckyanh0xl1k",
+    "restaurant": "เฮง เฮง สุกี้ มฟล.",
+    "name": {
+      "th": "สุกี้แห้งไก่",
+      "en": "Dry Sukiyaki with Chicken"
+    },
+    "description": {
+      "th": "วุ้นเส้นผัดผักกรอบกับน้ำจิ้มสุกี้สูตรร้าน หอมกลิ่นกระทะ กับเนื้อไก่",
+      "en": "Glass noodles wok-fried with crisp vegetables in the house suki sauce, with chicken."
+    }
+  },
+  {
+    "id": "c74olzobuau30fdqteqkmi4av",
+    "restaurant": "เฮง เฮง สุกี้ มฟล.",
+    "name": {
+      "th": "สุกี้แห้งหมู",
+      "en": "Dry Sukiyaki with Pork"
+    },
+    "description": {
+      "th": "วุ้นเส้นผัดผักกรอบกับน้ำจิ้มสุกี้สูตรร้าน หอมกลิ่นกระทะ กับเนื้อหมู",
+      "en": "Glass noodles wok-fried with crisp vegetables in the house suki sauce, with pork."
+    }
+  },
+  {
+    "id": "c00639m76nqsy85vni19ujaje",
+    "restaurant": "เฮง เฮง สุกี้ มฟล.",
+    "name": {
+      "th": "สุกี้แห้งเบคอน",
+      "en": "Dry Sukiyaki with Bacon"
+    },
+    "description": {
+      "th": "วุ้นเส้นผัดผักกรอบกับน้ำจิ้มสุกี้สูตรร้าน หอมกลิ่นกระทะ กับเบคอน",
+      "en": "Glass noodles wok-fried with crisp vegetables in the house suki sauce, with bacon."
+    }
+  },
+  {
+    "id": "cgjzsnombse6sq93ua3ybr6qj",
+    "restaurant": "เฮง เฮง สุกี้ มฟล.",
+    "name": {
+      "th": "สุกี้แห้งหมึกกรอบ",
+      "en": "Dry Sukiyaki with Crispy Squid"
+    },
+    "description": {
+      "th": "วุ้นเส้นผัดผักกรอบกับน้ำจิ้มสุกี้สูตรร้าน หอมกลิ่นกระทะ กับหมึกกรอบ",
+      "en": "Glass noodles wok-fried with crisp vegetables in the house suki sauce, with crispy squid."
+    }
+  },
+  {
+    "id": "colggmo444izey9dmzxdr4bag",
+    "restaurant": "เฮง เฮง สุกี้ มฟล.",
+    "name": {
+      "th": "สุกี้แห้งทะเล",
+      "en": "Dry Sukiyaki with Seafood"
+    },
+    "description": {
+      "th": "วุ้นเส้นผัดผักกรอบกับน้ำจิ้มสุกี้สูตรร้าน หอมกลิ่นกระทะ กับกุ้งและปลาหมึก",
+      "en": "Glass noodles wok-fried with crisp vegetables in the house suki sauce, with shrimp and squid."
+    }
+  },
+  {
+    "id": "copv8hysn0o9q3tiijaaa9x61",
+    "restaurant": "เฮง เฮง สุกี้ มฟล.",
+    "name": {
+      "th": "สุกี้แห้งกุ้ง",
+      "en": "Dry Sukiyaki with Shrimp"
+    },
+    "description": {
+      "th": "วุ้นเส้นผัดผักกรอบกับน้ำจิ้มสุกี้สูตรร้าน หอมกลิ่นกระทะ กับกุ้ง 3–4 ตัวตามขนาด",
+      "en": "Glass noodles wok-fried with crisp vegetables in the house suki sauce, with 3 to 4 shrimp depending on size."
+    }
+  },
+  {
+    "id": "cdtkseh8f7dn9g1cdtslhf30f",
+    "restaurant": "เฮง เฮง สุกี้ มฟล.",
+    "name": {
+      "th": "สุกี้น้ำรวมมิตร",
+      "en": "Sukiyaki Soup with Mixed Meats"
+    },
+    "description": {
+      "th": "สุกี้น้ำสูตรร้าน วุ้นเส้นและผักในน้ำซุปน้ำจิ้มสุกี้ ทำสดใหม่ กับเนื้อสัตว์และทะเลรวมมิตร",
+      "en": "House suki soup with glass noodles and vegetables in a suki-sauce broth, made fresh, with mixed meats and seafood."
+    }
+  },
+  {
+    "id": "cyz4qmmsik7mytth7zucxpfxc",
+    "restaurant": "เฮง เฮง สุกี้ มฟล.",
+    "name": {
+      "th": "สุกี้น้ำหมึกกรอบ",
+      "en": "Sukiyaki Soup with Crispy Squid"
+    },
+    "description": {
+      "th": "สุกี้น้ำสูตรร้าน วุ้นเส้นและผักในน้ำซุปน้ำจิ้มสุกี้ ทำสดใหม่ กับหมึกกรอบ",
+      "en": "House suki soup with glass noodles and vegetables in a suki-sauce broth, made fresh, with crispy squid."
+    }
+  },
+  {
+    "id": "ctbjq420skvm3nncequbg2t60",
+    "restaurant": "เฮง เฮง สุกี้ มฟล.",
+    "name": {
+      "th": "สุกี้น้ำหมึก",
+      "en": "Sukiyaki Soup with Squid"
+    },
+    "description": {
+      "th": "สุกี้น้ำสูตรร้าน วุ้นเส้นและผักในน้ำซุปน้ำจิ้มสุกี้ ทำสดใหม่ กับปลาหมึก",
+      "en": "House suki soup with glass noodles and vegetables in a suki-sauce broth, made fresh, with squid."
+    }
+  },
+  {
+    "id": "ckwvbcv9alku11ld9zrx5iqca",
+    "restaurant": "เฮง เฮง สุกี้ มฟล.",
+    "name": {
+      "th": "สุกี้น้ำกุ้ง",
+      "en": "Sukiyaki Soup with Shrimp"
+    },
+    "description": {
+      "th": "สุกี้น้ำสูตรร้าน วุ้นเส้นและผักในน้ำซุปน้ำจิ้มสุกี้ ทำสดใหม่ กับกุ้ง",
+      "en": "House suki soup with glass noodles and vegetables in a suki-sauce broth, made fresh, with shrimp."
+    }
+  },
+  {
+    "id": "cnc1z93e7ryl76r27w6kl6dp8",
+    "restaurant": "จงหัวอาหมิง",
+    "name": {
+      "th": "สามชั้นทอดรสแซ่บ + เต้าหู้หมูสับ ราดข้าว",
+      "en": "Spicy Fried Pork Belly & Minced Pork Tofu on Rice"
+    },
+    "description": {
+      "th": "ข้าวสวยราดกับข้าวสองอย่าง หมูสามชั้นทอดคลุกพริกเกลือรสแซ่บ และเต้าหู้ผัดหมูสับ",
+      "en": "Rice topped with two dishes: crispy salt-and-chili pork belly and tofu stir-fried with minced pork."
+    }
+  },
+  {
+    "id": "c7rkdgsd01vle1huflw127alx",
+    "restaurant": "จงหัวอาหมิง",
+    "name": {
+      "th": "สามชั้นทอดรสแซ่บ + มะเขือเทศผัดไข่ ราดข้าว",
+      "en": "Spicy Fried Pork Belly & Tomato Egg on Rice"
+    },
+    "description": {
+      "th": "ข้าวสวยราดกับข้าวสองอย่าง หมูสามชั้นทอดคลุกพริกเกลือรสแซ่บ และมะเขือเทศผัดไข่",
+      "en": "Rice topped with two dishes: crispy salt-and-chili pork belly and tomato stir-fried with egg."
+    }
+  },
+  {
+    "id": "crppq0uczlm7414dh23upxy77",
+    "restaurant": "จงหัวอาหมิง",
+    "name": {
+      "th": "สามชั้นทอดรสแซ่บ + มะเขือยาวหมูสับ ราดข้าว",
+      "en": "Spicy Fried Pork Belly & Eggplant with Minced Pork on Rice"
+    },
+    "description": {
+      "th": "ข้าวสวยราดกับข้าวสองอย่าง หมูสามชั้นทอดคลุกพริกเกลือรสแซ่บ และมะเขือยาวผัดหมูสับ",
+      "en": "Rice topped with two dishes: crispy salt-and-chili pork belly and eggplant stir-fried with minced pork."
+    }
+  },
+  {
+    "id": "c348colnl1r3h4uwy8t4kraxg",
+    "restaurant": "จงหัวอาหมิง",
+    "name": {
+      "th": "สามชั้นทอดรสแซ่บ + มะระผัดไข่ ราดข้าว",
+      "en": "Spicy Fried Pork Belly & Bitter Melon Egg on Rice"
+    },
+    "description": {
+      "th": "ข้าวสวยราดกับข้าวสองอย่าง หมูสามชั้นทอดคลุกพริกเกลือรสแซ่บ และมะระผัดไข่",
+      "en": "Rice topped with two dishes: crispy salt-and-chili pork belly and bitter melon stir-fried with egg."
+    }
+  },
+  {
+    "id": "cy8gluiz4gg2bqg3mb3eufyc3",
+    "restaurant": "จงหัวอาหมิง",
+    "name": {
+      "th": "หมูทอดรสแซ่บ + ผัดผักบุ้ง ราดข้าว",
+      "en": "Spicy Fried Pork & Stir-fried Morning Glory on Rice"
+    },
+    "description": {
+      "th": "ข้าวสวยราดกับข้าวสองอย่าง หมูทอดคลุกพริกเกลือรสแซ่บ และผัดผักบุ้ง",
+      "en": "Rice topped with two dishes: crispy salt-and-chili fried pork and stir-fried morning glory."
+    }
+  },
+  {
+    "id": "c1po14h35brcxn4asjtg5v6on",
+    "restaurant": "จงหัวอาหมิง",
+    "name": {
+      "th": "หมูทอดรสแซ่บ + ผัดผักกาดขาว ราดข้าว",
+      "en": "Spicy Fried Pork & Stir-fried Napa Cabbage on Rice"
+    },
+    "description": {
+      "th": "ข้าวสวยราดกับข้าวสองอย่าง หมูทอดคลุกพริกเกลือรสแซ่บ และผัดผักกาดขาว",
+      "en": "Rice topped with two dishes: crispy salt-and-chili fried pork and stir-fried napa cabbage."
+    }
+  },
+  {
+    "id": "c9gxtvr1m84lbgq5tzg0rd9w6",
+    "restaurant": "จงหัวอาหมิง",
+    "name": {
+      "th": "มันฝรั่งผัดหมู ราดข้าว",
+      "en": "Shredded Potato with Pork on Rice"
+    },
+    "description": {
+      "th": "มันฝรั่งหั่นเส้นผัดกับหมูและพริก ราดบนข้าวสวย",
+      "en": "Shredded potato stir-fried with pork and chili, served over rice."
+    }
+  },
+  {
+    "id": "cercrb9brnwn0mqpbkkuwhyhi",
+    "restaurant": "จงหัวอาหมิง",
+    "name": {
+      "th": "ผักกาดดองผัดหมูสับ ราดข้าว",
+      "en": "Pickled Mustard Greens with Minced Pork on Rice"
+    },
+    "description": {
+      "th": "ผักกาดดองผัดหมูสับกับพริกแห้ง รสเปรี้ยวเค็มจัดจ้าน ราดบนข้าวสวย",
+      "en": "Pickled mustard greens stir-fried with minced pork and dried chili, served over rice."
+    }
+  },
+  {
+    "id": "cd57gg35rmea4334fy4m52fg9",
+    "restaurant": "จงหัวอาหมิง",
+    "name": {
+      "th": "สามชั้นทอดเห็ด ราดข้าว",
+      "en": "Fried Pork Belly with Mushroom on Rice"
+    },
+    "description": {
+      "th": "หมูสามชั้นทอดกับเห็ดคลุกพริกเกลือ ราดบนข้าวสวย",
+      "en": "Crispy pork belly fried with mushrooms in salt and chili, served over rice."
+    }
+  },
+  {
+    "id": "cq8ubpsmhvxiw2ky5xupmly4i",
+    "restaurant": "จงหัวอาหมิง",
+    "name": {
+      "th": "หมูทอดรสแซ่บ ราดข้าว",
+      "en": "Spicy Fried Pork on Rice"
+    },
+    "description": {
+      "th": "หมูทอดคลุกพริกเกลือรสแซ่บ ราดบนข้าวสวย",
+      "en": "Crispy pork fried with salt and chili, served over rice."
+    }
+  },
+  {
+    "id": "c4re4hhvw2dshpmizz372hmj4",
+    "restaurant": "จงหัวอาหมิง",
+    "name": {
+      "th": "ปีกไก่ทอดรสแซ่บ ราดข้าว",
+      "en": "Spicy Fried Chicken Wings on Rice"
+    },
+    "description": {
+      "th": "ปีกไก่ทอดคลุกพริกเกลือรสแซ่บ เสิร์ฟพร้อมข้าวสวย",
+      "en": "Crispy chicken wings tossed in salt and chili, served with rice."
+    }
+  },
+  {
+    "id": "cf2hygn4k8wkd4mjj6uszkof0",
+    "restaurant": "ลิตเติ้ลกรินทร์",
+    "name": {
+      "th": "มาม่าไก่กรอบเกาหลี",
+      "en": "Korean Crispy Chicken Mama Noodles"
+    },
+    "description": {
+      "th": "มาม่าผัดกับไก่ทอดกรอบซอสเกาหลีรสหวานเผ็ด โรยสาหร่าย",
+      "en": "Stir-fried Mama noodles with crispy chicken in a sweet-spicy Korean sauce, topped with seaweed."
+    }
+  },
+  {
+    "id": "cj3efov3fsrjkvr6347ljz71x",
+    "restaurant": "ลิตเติ้ลกรินทร์",
+    "name": {
+      "th": "ข้าวไก่กรอบเกาหลีมาโย",
+      "en": "Crispy Chicken Rice with Korean Sauce & Mayo"
+    },
+    "description": {
+      "th": "ไก่ทอดกรอบชิ้นพอดีคำราดซอสเกาหลีและมายองเนส โรยสาหร่าย วางบนข้าวสวย",
+      "en": "Bite-size crispy fried chicken with Korean sauce and mayonnaise, topped with seaweed, served over rice."
+    }
+  },
+  {
+    "id": "cofyxgtmvsxtelgow6a3lv9hb",
+    "restaurant": "ลิตเติ้ลกรินทร์",
+    "name": {
+      "th": "ข้าวไก่กรอบสไปซี่มาโย",
+      "en": "Crispy Chicken Rice with Spicy Mayo"
+    },
+    "description": {
+      "th": "ไก่ทอดกรอบชิ้นพอดีคำราดสไปซี่มาโย โรยสาหร่าย วางบนข้าวสวย",
+      "en": "Bite-size crispy fried chicken with spicy mayo, topped with seaweed, served over rice."
+    }
+  },
+  {
+    "id": "c3yg9i3kak4rwsh0g0u8g00sb",
+    "restaurant": "ลิตเติ้ลกรินทร์",
+    "name": {
+      "th": "ข้าวไก่กรอบชีส",
+      "en": "Crispy Chicken Rice with Cheese Sauce"
+    },
+    "description": {
+      "th": "ไก่ทอดกรอบชิ้นพอดีคำราดซอสชีสเข้มข้น โรยต้นหอม วางบนข้าวสวย",
+      "en": "Bite-size crispy fried chicken topped with rich cheese sauce and spring onion, served over rice."
+    }
+  },
+  {
+    "id": "cw5z2c2u5vp0r36yxpgk447es",
+    "restaurant": "ลิตเติ้ลกรินทร์",
+    "name": {
+      "th": "ข้าวไก่กรอบเกาหลี x ชีส",
+      "en": "Crispy Chicken Rice with Korean Sauce & Cheese"
+    },
+    "description": {
+      "th": "ไก่ทอดกรอบชิ้นพอดีคำราดซอสเกาหลีและซอสชีส โรยสาหร่าย วางบนข้าวสวย",
+      "en": "Bite-size crispy fried chicken with Korean sauce and cheese sauce, topped with seaweed, served over rice."
+    }
+  },
+  {
+    "id": "cl2xunh7dt7zxr3m0b4q1m589",
+    "restaurant": "ลิตเติ้ลกรินทร์",
+    "name": {
+      "th": "ข้าวไก่กรอบครีมหัวหอม",
+      "en": "Crispy Chicken Rice with Sour Cream & Onion Sauce"
+    },
+    "description": {
+      "th": "ไก่ทอดกรอบชิ้นพอดีคำราดซอสครีมหัวหอม โรยงาดำ วางบนข้าวสวย",
+      "en": "Bite-size crispy fried chicken topped with sour cream and onion sauce and black sesame, served over rice."
+    }
+  },
+  {
+    "id": "clrn4ehaqh61n20fny2a80xox",
+    "restaurant": "ลิตเติ้ลกรินทร์",
+    "name": {
+      "th": "ข้าวไก่กรอบครีมหัวหอม x ซอสเกาหลี",
+      "en": "Crispy Chicken Rice with Sour Cream & Onion and Korean Sauce"
+    },
+    "description": {
+      "th": "ไก่ทอดกรอบชิ้นพอดีคำราดซอสครีมหัวหอมคู่กับซอสเกาหลี วางบนข้าวสวย",
+      "en": "Bite-size crispy fried chicken with sour cream and onion sauce alongside Korean sauce, served over rice."
+    }
+  },
+  {
+    "id": "cd501rbibjwugagxf5ayqlfec",
+    "restaurant": "ลิตเติ้ลกรินทร์",
+    "name": {
+      "th": "ข้าวไก่กรอบผงวิงค์แซ่บ",
+      "en": "Crispy Chicken Rice with Spicy Wing Seasoning"
+    },
+    "description": {
+      "th": "ไก่ทอดกรอบชิ้นพอดีคำคลุกผงปรุงรสวิงค์แซ่บรสเผ็ด วางบนข้าวสวย",
+      "en": "Bite-size crispy fried chicken coated in a spicy wing seasoning, served over rice."
+    }
+  },
+  {
+    "id": "cpbc973floabzb8aizky1elj7",
+    "restaurant": "ลิตเติ้ลกรินทร์",
+    "name": {
+      "th": "ข้าวไก่กรอบโนริสาหร่าย",
+      "en": "Crispy Chicken Rice with Nori Seaweed"
+    },
+    "description": {
+      "th": "ไก่ทอดกรอบชิ้นพอดีคำคลุกผงสาหร่ายโนริ โรยสาหร่ายเส้น วางบนข้าวสวย",
+      "en": "Bite-size crispy fried chicken coated in nori seasoning and topped with shredded seaweed, served over rice."
+    }
+  },
+  {
+    "id": "ctewm67i2xo91f7i5le300668",
+    "restaurant": "สเต็กลุงหยิกเชียงราย",
+    "name": {
+      "th": "ข้าวหน้ากุ้งดอง",
+      "en": "Marinated Shrimp Rice Bowl"
+    },
+    "description": {
+      "th": "กุ้งดองซอสหอมกระเทียมและพริก วางบนข้าว โรยสาหร่ายและไข่กุ้ง",
+      "en": "Soy-marinated shrimp with garlic and chili over rice, topped with seaweed and fish roe."
+    }
+  },
+  {
+    "id": "cnimtx43oaygsuqq7n7xmlacm",
+    "restaurant": "สเต็กลุงหยิกเชียงราย",
+    "name": {
+      "th": "ข้าวไก่สไปซี่",
+      "en": "Spicy Chicken with Rice"
+    },
+    "description": {
+      "th": "ไก่หมักซอสสไปซี่ย่าง เสิร์ฟพร้อมข้าวสวย สลัดผัก และน้ำจิ้ม",
+      "en": "Grilled chicken in a spicy marinade, served with rice, salad, and sauce."
+    }
+  },
+  {
+    "id": "cqjcs54oz4romu6k1id6tr964",
+    "restaurant": "สเต็กลุงหยิกเชียงราย",
+    "name": {
+      "th": "ไวไวผัดฉ่าทะเล",
+      "en": "Stir-fried Wai Wai Noodles Pad Cha with Seafood"
+    },
+    "description": {
+      "th": "บะหมี่กึ่งสำเร็จรูปไวไวผัดฉ่ากับทะเล พริก และกระชาย",
+      "en": "Wai Wai instant noodles stir-fried pad cha style with seafood, chili, and aromatic herbs."
+    }
+  },
+  {
+    "id": "cutxp93opa4zz76ay49f5qwzi",
+    "restaurant": "แซนด์วิชไส้ทะลัก จูเซโย",
+    "name": {
+      "th": "แซนด์วิชไก่น้ำพริกเผา",
+      "en": "Chicken Chilli Paste Sandwich"
+    },
+    "description": {
+      "th": "แซนด์วิชเกาหลีไส้ไข่ข้น อกไก่ผัดน้ำพริกเผา ชีส และผักสด",
+      "en": "Korean-style sandwich with fluffy scrambled egg, chicken breast in Thai chilli paste, cheese, and fresh vegetables."
+    }
+  },
+  {
+    "id": "cmfjlp9gizholl7joow203xz0",
+    "restaurant": "แซนด์วิชไส้ทะลัก จูเซโย",
+    "name": {
+      "th": "แซนด์วิชเห็ดน้ำพริกเผา",
+      "en": "Mushroom Chilli Paste Sandwich"
+    },
+    "description": {
+      "th": "แซนด์วิชเกาหลีไส้ไข่ข้น เห็ดโคนขาวผัดน้ำพริกเผา ชีส และผักสด",
+      "en": "Korean-style sandwich with fluffy scrambled egg, mushrooms in Thai chilli paste, cheese, and fresh vegetables."
+    }
+  },
+  {
+    "id": "cr3i8dc5fxmaeo6bjqeu0suet",
+    "restaurant": "ย่างให้ MFU",
+    "name": {
+      "th": "ย่างให้หมูกระทะชากาเกาหลี",
+      "en": "Korean Sauce Moo Kratha Bowl"
+    },
+    "description": {
+      "th": "หมูกระทะย่างซอสเกาหลี เสิร์ฟพร้อมวุ้นเส้นและกิมจิ (หมูย่างแล้ว 150 กรัม)",
+      "en": "Thai BBQ pork grilled in Korean sauce with glass noodles and kimchi (150 g of grilled pork)."
+    }
+  },
+  {
+    "id": "cw0lxxlhve1xw7nk3nzea14x7",
+    "restaurant": "ย่างให้ MFU",
+    "name": {
+      "th": "ย่างให้หมูกระทะชากาเกาหลี ไซส์ M",
+      "en": "Korean Sauce Moo Kratha Bowl (M)"
+    },
+    "description": {
+      "th": "หมูกระทะย่างซอสเกาหลี เสิร์ฟพร้อมวุ้นเส้นและกิมจิ (หมูย่างแล้ว 230 กรัม)",
+      "en": "Thai BBQ pork grilled in Korean sauce with glass noodles and kimchi (230 g of grilled pork)."
+    }
+  },
+  {
+    "id": "c1qh139t0lvgzl7m73ie67lpn",
+    "restaurant": "ย่างให้ MFU",
+    "name": {
+      "th": "ย่างให้หมูกระทะหม่าล่าเสฉวน",
+      "en": "Sichuan Mala Moo Kratha Bowl"
+    },
+    "description": {
+      "th": "หมูกระทะคลุกซอสหม่าล่าเผ็ดร้อน เสิร์ฟพร้อมวุ้นเส้น (หมูย่างแล้ว 150 กรัม)",
+      "en": "Thai BBQ pork tossed in hot Sichuan mala sauce with glass noodles (150 g of grilled pork)."
+    }
+  },
+  {
+    "id": "ciod1aqh6gc96yf5lp2xjwiby",
+    "restaurant": "ย่างให้ MFU",
+    "name": {
+      "th": "ย่างให้หมูกระทะหม่าล่าเสฉวน ไซส์ M",
+      "en": "Sichuan Mala Moo Kratha Bowl (M)"
+    },
+    "description": {
+      "th": "หมูกระทะคลุกซอสหม่าล่าเผ็ดร้อน เสิร์ฟพร้อมวุ้นเส้น (หมูย่างแล้ว 230 กรัม)",
+      "en": "Thai BBQ pork tossed in hot Sichuan mala sauce with glass noodles (230 g of grilled pork)."
+    }
+  }
+]

@@ -1,0 +1,164 @@
+{
+  "slug": "aroi-jung-mfu",
+  "zone": "kotchapol",
+  "name": {
+    "th": "อร่อยจัง มฟล.",
+    "en": "Aroi Jung MFU"
+  },
+  "description": {
+    "th": "ร้านอาหารจานเดียวในโครงการคชพลแลนด์ มีเมนูข้าว ไข่ข้น และพาสต้า",
+    "en": "Rice plates, creamy eggs and pasta in the Kotchapol area."
+  },
+  "phone": null,
+  "source": {
+    "type": "admin",
+    "capturedOn": "2026-10-24",
+    "pricesInclude": "in-store"
+  },
+  "menuItems": [
+    {
+      "slug": "ham-cheese-creamy-eggs-rice",
+      "name": {
+        "th": "ข้าวไข่ข้นแฮมชีส",
+        "en": "Ham and Cheese Creamy Eggs on Rice"
+      },
+      "description": {
+        "th": "ไข่ข้นกับแฮมและชีส เสิร์ฟกับข้าว",
+        "en": "Creamy eggs with ham and cheese, served with rice."
+      },
+      "price": 60,
+      "foodType": "rice-dishes",
+      "tastes": ["creamy-rich", "savory"],
+      "review": null,
+      "photo": "mfu-ham-cheese-creamy-eggs-rice"
+    },
+    {
+      "slug": "tom-yum-pork-creamy-eggs-rice",
+      "name": {
+        "th": "ข้าวไข่ข้นต้มยำหมู",
+        "en": "Tom Yum Pork Creamy Eggs on Rice"
+      },
+      "description": {
+        "th": "ไข่ข้นรสต้มยำใส่หมู เสิร์ฟกับข้าว",
+        "en": "Tom yum flavored creamy eggs with pork, served with rice."
+      },
+      "price": 60,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "sour"],
+      "review": null,
+      "photo": "mfu-tom-yum-pork-creamy-eggs-rice"
+    },
+    {
+      "slug": "tom-yum-chicken-creamy-eggs-rice",
+      "name": {
+        "th": "ข้าวไข่ข้นต้มยำไก่",
+        "en": "Tom Yum Chicken Creamy Eggs on Rice"
+      },
+      "description": {
+        "th": "ไข่ข้นรสต้มยำใส่ไก่ เสิร์ฟกับข้าว",
+        "en": "Tom yum flavored creamy eggs with chicken, served with rice."
+      },
+      "price": 60,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "sour"],
+      "review": null,
+      "photo": "mfu-tom-yum-chicken-creamy-eggs-rice"
+    },
+    {
+      "slug": "tom-yum-shrimp-creamy-eggs-rice",
+      "name": {
+        "th": "ข้าวไข่ข้นต้มยำกุ้ง",
+        "en": "Tom Yum Shrimp Creamy Eggs on Rice"
+      },
+      "description": {
+        "th": "ไข่ข้นรสต้มยำใส่กุ้ง เสิร์ฟกับข้าว",
+        "en": "Tom yum flavored creamy eggs with shrimp, served with rice."
+      },
+      "price": 70,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "sour"],
+      "review": null,
+      "photo": "mfu-tom-yum-shrimp-creamy-eggs-rice"
+    },
+    {
+      "slug": "pork-fried-rice",
+      "name": {
+        "th": "ข้าวผัดหมู",
+        "en": "Pork Fried Rice"
+      },
+      "description": {
+        "th": "ข้าวผัดใส่หมู",
+        "en": "Fried rice with pork."
+      },
+      "price": 50,
+      "foodType": "rice-dishes",
+      "tastes": ["savory"],
+      "review": null,
+      "photo": "mfu-pork-fried-rice"
+    },
+    {
+      "slug": "chicken-fried-rice",
+      "name": {
+        "th": "ข้าวผัดไก่",
+        "en": "Chicken Fried Rice"
+      },
+      "description": {
+        "th": "ข้าวผัดใส่ไก่",
+        "en": "Fried rice with chicken."
+      },
+      "price": 50,
+      "foodType": "rice-dishes",
+      "tastes": ["savory"],
+      "review": null,
+      "photo": "mfu-chicken-fried-rice"
+    },
+    {
+      "slug": "curry-powder-pork-rice",
+      "name": {
+        "th": "ข้าวหมูผัดผงกะหรี่",
+        "en": "Curry Powder Pork on Rice"
+      },
+      "description": {
+        "th": "หมูผัดผงกะหรี่ เสิร์ฟกับข้าว",
+        "en": "Pork stir-fried with curry powder, served with rice."
+      },
+      "price": 60,
+      "foodType": "rice-dishes",
+      "tastes": ["creamy-rich", "spiced-smoky"],
+      "review": null,
+      "photo": "mfu-curry-powder-pork-rice"
+    },
+    {
+      "slug": "curry-powder-chicken-rice",
+      "name": {
+        "th": "ข้าวไก่ผัดผงกะหรี่",
+        "en": "Curry Powder Chicken on Rice"
+      },
+      "description": {
+        "th": "ไก่ผัดผงกะหรี่ เสิร์ฟกับข้าว",
+        "en": "Chicken stir-fried with curry powder, served with rice."
+      },
+      "price": 60,
+      "foodType": "rice-dishes",
+      "tastes": ["creamy-rich", "spiced-smoky"],
+      "review": null,
+      "photo": "mfu-curry-powder-chicken-rice"
+    },
+    {
+      "slug": "spaghetti-carbonara",
+      "name": {
+        "th": "สปาเก็ตตี้คาโบนาร่า",
+        "en": "Spaghetti Carbonara"
+      },
+      "description": {
+        "th": "สปาเก็ตตี้ซอสคาโบนาร่า",
+        "en": "Spaghetti with carbonara sauce."
+      },
+      "price": 60,
+      "foodType": "pasta",
+      "tastes": ["creamy-rich", "savory"],
+      "review": null,
+      "photo": "mfu-spaghetti-carbonara"
+    }
+  ]
+}
