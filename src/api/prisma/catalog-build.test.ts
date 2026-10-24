@@ -73,7 +73,6 @@ function restaurant(overrides: Record<string, unknown> = {}) {
       type: 'grab-screenshot',
       capturedOn: '2026-10-22',
       pricesInclude: 'grab-delivery-markup',
-      ownerConsent: { given: false, by: null, on: null },
     },
     menuItems: [
       {
