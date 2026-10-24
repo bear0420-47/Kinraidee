@@ -89,7 +89,7 @@ The numeric thresholds above are proposed acceptance thresholds and remain subje
 
 - Initial seed data may focus on Mae Fah Luang University area samples for demo, but the product must not hardcode MFU as the only supported area.
 - Manual `Zone` records are used for the first full-app pass; GPS is Won't have in the first release unless separately approved in a later scope.
-- Real restaurant/menu seed data must be team-collected or otherwise authorized, with source and verification date recorded in seed evidence. Ongoing catalog maintenance is owned by authorized administrators.
+- Real restaurant/menu seed data must record its source and verification date. For this educational project, restaurant names, menu names, and prices are treated as factual catalog data and do not require an owner-consent field. Third-party screenshots and images are not published, descriptions remain team-authored, and ongoing catalog maintenance is owned by authorized administrators.
 - Does the deployed service fall within Computer Crime Act Section 26 traffic-data obligations? This requires accountable legal confirmation.
 - THB 50–100 is a quick-select budget option because it appears frequently in survey evidence; it is not preselected by default.
 

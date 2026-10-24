@@ -73,7 +73,6 @@ function restaurant(overrides: Record<string, unknown> = {}) {
       type: 'grab-screenshot',
       capturedOn: '2026-10-22',
       pricesInclude: 'grab-delivery-markup',
-      ownerConsent: { given: false, by: null, on: null },
     },
     menuItems: [
       {
@@ -305,6 +304,27 @@ describe('buildCatalog', () => {
         problem.startsWith('restaurants/krua-pa-noi.json'),
       ),
     ).toBe(true)
+  })
+
+  it('rejects the retired ownerConsent source field', () => {
+    const data = restaurant()
+    ;(data.source as unknown as Record<string, unknown>).ownerConsent = {
+      given: false,
+      by: null,
+      on: null,
+    }
+
+    expect(
+      problemsOf(() =>
+        buildCatalog({
+          taxonomy,
+          restaurants: [file(data)],
+          photos: new Set(),
+        }),
+      ),
+    ).toEqual([
+      'restaurants/krua-pa-noi.json: source: Unrecognized key: "ownerConsent"',
+    ])
   })
 
   it('refuses to build while a review note is open, unless it is a draft', () => {

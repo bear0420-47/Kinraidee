@@ -12,6 +12,6 @@ Optional photos for the restaurants and menu items in `src/api/prisma/data/catal
 
 - Use only photos the project may publish: taken by the team, supplied by the restaurant owner, or otherwise licensed. Never save photos from Google Maps, Grab, LINE MAN, or Wongnai.
 - Check each photo for identifiable people before adding it (`rule.md`).
-- Record where each restaurant's data came from, and the owner's consent, in its `source` entry. Owner consent is required before a restaurant reaches production.
+- Record where each restaurant's data came from and when it was captured in its `source` entry. Restaurant names, menu names, and prices do not use an owner-consent field; third-party terms, image licences, trademark rules, and production approval remain separate checks.
 
 The previous starter catalog's photos and their authorization record are in `_archive/`, which the build ignores.

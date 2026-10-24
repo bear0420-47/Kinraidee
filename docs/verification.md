@@ -1466,3 +1466,29 @@ New seed tests:
 | Photo required for recommendation | `availableWhere` adds `imageUrl: { not: null }`; repository tests assert it for candidates and the suggestion pool, and removing it fails 3 tests. Against the local database, all 1,584 filter combinations returned either cards or a working suggestion (200 with cards, 1,384 suggestions, all suggestions returned cards), with 0 recommended cards without a photo. |
 | Browser (375 px) | Grilled salmon steak and ข้าวราดซอสเผ็ด x2 cards showed matching photos with the `ภาพประกอบ` label; a Creative Commons photo showed its `© creator · licence` credit on the card and in the confirmation dialog. |
 | `pnpm verify` | Pass after the change (see below). |
+
+## Catalog source owner-consent field removal - 2026-10-24
+
+### Scope
+
+- Removed `ownerConsent` from the restaurant catalog source schema and all 13 committed restaurant source files.
+- Preserved source type, capture date, and delivery-markup provenance.
+- Archived the previously approved intent and recorded the superseding human decision in `docs/05-log/20261024-log.md`.
+
+### Results
+
+| Command | Exit code | Result |
+|---|---:|---|
+| `pnpm --filter api catalog:build --check` | 0 | Pass: `catalog.seed.json` remains up to date after removing the source-only field. |
+| `NODE_OPTIONS=--no-experimental-webstorage pnpm --filter api exec vitest run prisma/catalog-build.test.ts prisma/catalog-seed.test.ts prisma/seed.test.ts` | 0 | Pass: 3 files/55 tests. |
+| `NODE_OPTIONS=--no-experimental-webstorage pnpm verify` | 0 | Pass: typecheck, lint, 598 API tests, 407 web tests, API build, OpenAPI generation, and web build. |
+| `git diff --check` | 0 | Pass. |
+| `pnpm format` | 1 | Existing generated-file formatting gap: only `src/api/prisma/data/catalog.seed.json` fails the current Prettier check; the generated file was not changed by this work and `catalog:build --check` requires its current generated form. |
+| `node tests/wireframe-requirements.test.cjs` | 1 | Existing prototype gaps: 20 passed and 4 failed for stale English navigation/admin expectations. No wireframe or wireframe test was changed. |
+
+### Safety checks
+
+- The source schema is strict and now rejects a reintroduced `ownerConsent` key.
+- Grab screenshots and Grab images remain excluded from the repository and published UI.
+- Licensed stock-photo attribution and identifiable-person review requirements are unchanged.
+- No database schema, migration, API route, web page, or production deployment changed.
