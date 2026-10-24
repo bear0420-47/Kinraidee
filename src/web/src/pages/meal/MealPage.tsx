@@ -47,9 +47,6 @@ import { ZoneStep } from './components/ZoneStep'
 const CONDITIONS_INTRO =
   'เลือกทีละข้ออย่างรวดเร็ว แล้วเราจะคัดเฉพาะตัวเลือกที่น่าสนใจ'
 
-const SESSION_NOTICE =
-  'ไม่ต้องเข้าสู่ระบบ คำตอบและเมนูที่ปฏิเสธจะอยู่เฉพาะในหน้าที่เปิดอยู่นี้'
-
 function previousStep(step: FlowStep): FlowStep {
   return flowSteps[Math.max(flowSteps.indexOf(step) - 1, 0)]!
 }
@@ -310,13 +307,6 @@ export function MealPage() {
         />
       ) : null}
 
-      {/* Only for signed-out users (`null`); hidden while the session loads so it never
-          flashes for a signed-in user. */}
-      {user === null ? (
-        <p className="rounded-sm border-2 border-dashed border-line-soft bg-cream p-3 text-small">
-          {SESSION_NOTICE}
-        </p>
-      ) : null}
     </PageShell>
   )
 }
