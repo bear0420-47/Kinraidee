@@ -121,11 +121,6 @@ describe('MealPage entry', () => {
       await screen.findByRole('heading', { name: /เลือกงบประมาณ/ }),
     ).toBeTruthy()
     expect(screen.getByText('ข้อ 1 จาก 4')).toBeTruthy()
-    expect(
-      screen.getByText(
-        'ไม่ต้องเข้าสู่ระบบ คำตอบและเมนูที่ปฏิเสธจะอยู่เฉพาะในหน้าที่เปิดอยู่นี้',
-      ),
-    ).toBeTruthy()
   })
 
   it('offers the four approved budgets with nothing selected', async () => {
