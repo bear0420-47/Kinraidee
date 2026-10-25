@@ -18,6 +18,8 @@ docs
 evidence
 tests
 wireframe.html
+firebase.json
+cloudbuild*.yaml
 
 src/web/*
 !src/web/package.json

@@ -1567,3 +1567,22 @@ New seed tests:
 | `pnpm format` | 1 | Existing generated-file gap remains: only `src/api/prisma/data/catalog.seed.json` fails the API Prettier check. |
 | `node tests/wireframe-requirements.test.cjs` | 1 | Existing historical result remains 20 passed/4 stale English navigation/admin assertions. No wireframe file or test changed. |
 | Local Docker/Cloud CLI execution | N/A | Docker and `gcloud` are not installed in this environment. The production package stages were reproduced locally; the first actual image build remains the controlled Cloud Build step after deployment approval. |
+
+## Firebase Hosting preparation - 2026-10-25
+
+### Scope
+
+- Added project-independent Firebase Hosting configuration for the Vite output under `src/web/dist`.
+- `/api/**` rewrites to Cloud Run service `kinraidee-api` in `asia-southeast1` before the catch-all `/index.html` SPA fallback.
+- Hashed Vite assets receive immutable one-year caching; `index.html` remains uncached. Baseline `nosniff`, frame-denial, and referrer-policy headers apply to Hosting responses.
+- No Firebase project association, preview channel, Hosting release, Cloud Run revision, or public URL was created.
+
+### Results
+
+| Command/check | Exit code | Result |
+|---|---:|---|
+| Firebase JSON structural assertion | 0 | Pass: `src/web/dist` is the public directory, `/api/**` is the first rewrite, the service/region match the approved plan, and `/index.html` is the final fallback. |
+| `VITE_API_BASE_URL=https://kinraidee-example.web.app pnpm --filter web build` | 0 | Pass: production Vite build completed and the configured same-origin Hosting URL was present in the generated JavaScript bundle. |
+| Hosting cache/security-header review | 0 | Pass: only `/assets/**` receives immutable caching; `/index.html` receives `no-cache`; baseline headers contain no secret or environment-specific value. |
+| `git diff --check` and focused Prettier checks | 0 | Pass for Firebase configuration, runbook, plan, log, and verification additions. |
+| `pnpm verify` | 0 | Pass: typecheck, lint, API 76 files/613 tests, web 38 files/409 tests, API build, OpenAPI generation, and web build. |
