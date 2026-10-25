@@ -42,5 +42,5 @@ export async function authCookie(
   id = `${role.toLowerCase()}_1`,
 ) {
   const { signAuthToken } = await import('@/lib/authSecurity')
-  return `kinraidee_auth=${await signAuthToken({ id, role })}`
+  return `__session=${await signAuthToken({ id, role })}`
 }

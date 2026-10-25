@@ -109,7 +109,7 @@ function createTestApp({
 
 async function authCookie(role: UserRole) {
   const token = await signAuthToken({ id: `${role.toLowerCase()}_1`, role })
-  return `kinraidee_auth=${token}`
+  return `__session=${token}`
 }
 
 describe('upload routes', () => {

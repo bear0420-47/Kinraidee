@@ -158,7 +158,7 @@ The five wireframe failures are in unmodified prototype areas and do not overlap
 - Registration always creates `USER`; strict request validation rejects supplied role fields.
 - Passwords use the approved environment-backed Argon2id parameters and never appear in API responses.
 - JWTs use `HS256` with an explicit verification allowlist and contain `sub`, `role`, `iat`, and `exp` claims with a 7-day lifetime.
-- The `kinraidee_auth` cookie is `HttpOnly`, `SameSite=Lax`, `Path=/`, and `Secure` in production. Logout clears the same cookie scope.
+- The `__session` cookie is `HttpOnly`, `SameSite=Lax`, `Path=/`, and `Secure` in production. Logout clears the same cookie scope; Firebase Hosting forwards this reserved cookie name to Cloud Run rewrites.
 - Missing, invalid, and expired authentication tokens return the same generic 401 response. Login does not expose whether an email exists and performs a dummy Argon2id verification for unknown emails to reduce timing differences.
 - Generated OpenAPI contains all four auth routes, the cookie security scheme, strict credentials, and the 8-character password minimum.
 - No session table, refresh token, password reset/change, email verification, OAuth, admin-management flow, or authentication UI was added.

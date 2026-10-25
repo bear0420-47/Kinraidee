@@ -9,7 +9,7 @@
       "cookieAuth": {
         "type": "apiKey",
         "in": "cookie",
-        "name": "kinraidee_auth"
+        "name": "__session"
       }
     },
     "schemas": {

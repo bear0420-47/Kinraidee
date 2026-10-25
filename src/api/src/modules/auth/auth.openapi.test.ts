@@ -33,7 +33,7 @@ describe('auth OpenAPI', () => {
     expect(document.components?.securitySchemes?.cookieAuth).toMatchObject({
       type: 'apiKey',
       in: 'cookie',
-      name: 'kinraidee_auth',
+      name: '__session',
     })
   })
 })

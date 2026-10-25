@@ -87,7 +87,7 @@ describe('auth routes', () => {
       password: 'password8',
     })
     expect(response.headers['set-cookie']?.[0]).toContain(
-      'kinraidee_auth=signed-token',
+      '__session=signed-token',
     )
     expect(response.headers['set-cookie']?.[0]).toContain('HttpOnly')
     expect(response.headers['set-cookie']?.[0]).toContain('SameSite=Lax')
@@ -131,7 +131,7 @@ describe('auth routes', () => {
     expect(response.status).toBe(200)
     expect(response.body).toEqual({ data: { user: safeUser } })
     expect(response.headers['set-cookie']?.[0]).toContain(
-      'kinraidee_auth=signed-token',
+      '__session=signed-token',
     )
     expect(response.headers['set-cookie']?.[0]).toContain('HttpOnly')
     expect(response.headers['set-cookie']?.[0]).toContain('SameSite=Lax')
@@ -142,7 +142,7 @@ describe('auth routes', () => {
     const response = await request(createTestApp()).post('/api/auth/logout')
 
     expect(response.status).toBe(204)
-    expect(response.headers['set-cookie']?.[0]).toContain('kinraidee_auth=;')
+    expect(response.headers['set-cookie']?.[0]).toContain('__session=;')
     expect(response.headers['set-cookie']?.[0]).toContain('HttpOnly')
     expect(response.headers['set-cookie']?.[0]).toContain('SameSite=Lax')
   })
@@ -153,7 +153,7 @@ describe('auth routes', () => {
 
     const response = await request(createTestApp())
       .get('/api/auth/me')
-      .set('Cookie', `kinraidee_auth=${token}`)
+      .set('Cookie', `__session=${token}`)
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual({ data: { user: safeUser } })
@@ -162,7 +162,7 @@ describe('auth routes', () => {
 
   it.each([
     ['missing cookie', undefined],
-    ['invalid cookie', 'kinraidee_auth=not-a-jwt'],
+    ['invalid cookie', '__session=not-a-jwt'],
   ])('returns 401 for %s', async (_case, cookie) => {
     const requestBuilder = request(createTestApp()).get('/api/auth/me')
     if (cookie) requestBuilder.set('Cookie', cookie)
@@ -183,7 +183,7 @@ describe('auth routes', () => {
 
     const response = await request(createTestApp())
       .get('/api/auth/me')
-      .set('Cookie', `kinraidee_auth=${expiredToken}`)
+      .set('Cookie', `__session=${expiredToken}`)
 
     expect(response.status).toBe(401)
     expect(response.body.error.code).toBe('UNAUTHENTICATED')

@@ -24,7 +24,7 @@ describe('MenuItems OpenAPI', () => {
     registry.registerComponent('securitySchemes', 'cookieAuth', {
       type: 'apiKey',
       in: 'cookie',
-      name: 'kinraidee_auth',
+      name: '__session',
     })
     registerMenuItemsOpenApi(registry)
     const document = generateDocument(registry)

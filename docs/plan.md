@@ -276,6 +276,7 @@ Tests: hard-filter invariants, max-six/one-call cost guard, strict AI response v
 - Provider restrictions: restrict the Places key to Places API and the Gemini key to its required API where Google supports the restriction. Configure quotas and budget alerts before production traffic.
 - Development/test image storage: internal ignored directory served from `/uploads`; uploads require an authenticated administrator, validate actual image type and size, and use generated filenames.
 - Production images: approved external image URLs only. Cloud Run local disk is ephemeral, so `LOCAL_UPLOADS_ENABLED=false`; the upload route and `/uploads` static serving remain unavailable in production.
+- Firebase Hosting auth cookie: production uses the reserved `__session` cookie name because Hosting forwards that cookie to Cloud Run rewrites while stripping other cookie names. Its approved `HttpOnly`, `Secure`, `SameSite=Lax`, `Path=/`, and seven-day lifetime remain unchanged.
 - Future durable object-storage integration must preserve the `imageKey`/`imageUrl` contract. Soft deletion keeps the referenced image; replacement removes a superseded internally owned object only after the database safely points to the new object.
 
 ## Deployment Sequence
