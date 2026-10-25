@@ -1655,3 +1655,28 @@ New seed tests:
 - Google Cloud budget-alert amount and provider quota thresholds still require an explicit owner choice.
 - Computer Crime Act Section 26 traffic-log applicability remains pending accountable human/legal review; this deployment does not claim the conditional requirement is inapplicable.
 - Mobile visual QA and destructive protected-admin mutation smoke tests were not run against production.
+
+## GitHub continuous deployment - 2026-10-26
+
+### Scope
+
+- Added production CD for pushes to `main`; the deployment job intentionally contains no lint or test stage.
+- Authentication uses Google Workload Identity Federation restricted to `bear0420-47/Kinraidee` and `refs/heads/main`. No service-account key or Firebase token is stored in GitHub.
+- The GitHub runner builds the API image and pushes it directly to Artifact Registry, applies Prisma migrations, deploys Cloud Run, builds the web, deploys Firebase Hosting, and performs read-only smoke checks.
+- Production seed execution remains manual and is never part of CD.
+
+### Results
+
+| Command/check | Exit code | Result |
+|---|---:|---|
+| `actionlint .github/workflows/deploy-production.yml .github/workflows/verify.yml` | 0 | Both workflow files pass GitHub Actions syntax and expression validation. |
+| GitHub Actions run `40226494466` | 0 | Every deployment step passed: OIDC, Docker authentication, image build/push, dependency install, migration, Cloud Run, web build, Firebase Hosting, and smoke tests. |
+| Immutable deployment tag | 0 | Deployed API image tag `e08f979182abc7df04844abdac0445a8cd632903`. |
+| Cloud Run revision check | 0 | Latest ready revision is `kinraidee-api-00003-5gz`. |
+| Git status after push | 0 | `main` and `origin/main` synchronized before this evidence-only commit. |
+
+### First-run correction
+
+- Two initial runs stopped before changing production because `gcloud builds submit` rejected the managed source bucket for the federated deployer.
+- Effective bucket and service-usage permissions were verified without exposing credentials. CD was simplified to build on the GitHub runner and push directly using repository-scoped `roles/artifactregistry.writer`.
+- Diagnostic bucket objects and temporary impersonation/Cloud Build permissions were removed after verification.
