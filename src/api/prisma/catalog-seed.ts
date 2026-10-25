@@ -261,6 +261,7 @@ export async function seedCatalog(
     ),
   )
 
+  const missingTasteLinks: { menuItemId: string; tasteId: string }[] = []
   for (const menuItem of catalog.menuItems) {
     for (const tasteId of menuItem.tasteIds) {
       const link = { menuItemId: menuItem.id, tasteId }
@@ -271,12 +272,15 @@ export async function seedCatalog(
       }
 
       increment(counts, 'created')
-      await transaction.menuItemTaste.upsert({
-        where: { menuItemId_tasteId: link },
-        create: link,
-        update: {},
-      })
+      missingTasteLinks.push(link)
     }
+  }
+
+  if (missingTasteLinks.length > 0) {
+    await transaction.menuItemTaste.createMany({
+      data: missingTasteLinks,
+      skipDuplicates: true,
+    })
   }
 
   return counts

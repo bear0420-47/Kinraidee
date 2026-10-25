@@ -114,6 +114,8 @@ export async function runSeed(
         )
         return { counts, retired }
       },
+      // Initial provisioning performs hundreds of sequential upserts over the remote DB.
+      { timeout: 120_000 },
     )
 
     writeSummary('Seeded 1 administrator account.')

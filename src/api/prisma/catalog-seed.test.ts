@@ -66,14 +66,15 @@ function createTasteLinkDelegate() {
           where.menuItemId.in.includes(menuItemId),
         ),
     ),
-    upsert: vi.fn(
-      async ({
-        create,
-      }: {
-        create: { menuItemId: string; tasteId: string }
-      }) => {
-        records.set(keyFor(create.menuItemId, create.tasteId), create)
-        return create
+    createMany: vi.fn(
+      async ({ data }: { data: { menuItemId: string; tasteId: string }[] }) => {
+        let count = 0
+        for (const link of data) {
+          const key = keyFor(link.menuItemId, link.tasteId)
+          if (!records.has(key)) count += 1
+          records.set(key, link)
+        }
+        return { count }
       },
     ),
     deleteMany: vi.fn(
