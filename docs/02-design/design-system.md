@@ -2,7 +2,7 @@
 
 ## Status
 
-Approved style baseline — 2026-09-28. Visual language, tokens, and component styling are extracted from `wireframe.html` only. Product scope, user flow, and feature behavior remain governed by the specification, backlog, journey, data model, and implementation plan.
+Approved style baseline — 2026-09-28. AI/Places result-card states were approved by the human project owner on 2026-10-24. Visual language, tokens, and component styling are extracted from `wireframe.html` only. Product scope, user flow, and feature behavior remain governed by the specification, backlog, journey, data model, and implementation plan.
 
 `wireframe.html` is a style reference, not a requirements source. Do not implement GPS/current-location, allergy/profile exclusions, group voting, wait-time display, or any other out-of-scope mock feature just because it appears in the wireframe.
 
@@ -162,6 +162,10 @@ Use slight asymmetric radii for doodle surfaces when practical, e.g. `6px 12px 5
 - Do not display wait time.
 - Do not invent missing values; show unavailable only when the spec allows the field to be absent.
 - Soft-deleted menu items may appear only in account history/favorites with an unavailable status, never in public recommendation results.
+- A card genuinely selected by Gemini shows a compact `AI เลือกให้` indicator and the provider-returned short reason. A deterministic result or fallback shows the current structured rationale and no AI indicator.
+- Revealing a mapped restaurant adds a Google Places evidence panel without delaying the card's menu details or actions. The panel has explicit loading, success, and unavailable/error states.
+- A successful Google Places panel may show rating, rating count, open status or opening hours, a Google Maps link, and available provider-returned reviews. Google branding and review-author attribution remain visible as required by the provider.
+- The Google Places panel does not show Google photos. Existing approved Unsplash, Openverse, restaurant, or team imagery remains the menu-card image source.
 
 - In the React flow, a card has four visible states, each stated in text and not by colour or motion alone: face-down (`การ์ดใบที่ {n}` with `ยังไม่เปิด`), revealed (menu details and actions), finding a replacement (`กำลังหาเมนูใหม่…`), and no more options (`ไม่มีตัวเลือกเพิ่มแล้ว`). The reveal animation runs only under `prefers-reduced-motion: no-preference`.
 - A revealed card's photo is a `160px` strip across the card top, cropped to fill (`object-cover`), and the price sits beside the menu name, so a revealed card fits on a laptop screen. Revealing, replacing, or restoring a card scrolls the whole card into view (smoothly, or instantly under reduced motion) so its actions are visible. A card without a photo, or whose photo cannot load, shows a same-size panel with the food-type icon and `ไม่มีรูปเมนู` / `โหลดรูปไม่ได้`, so every revealed card lines up.

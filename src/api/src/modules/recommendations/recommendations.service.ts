@@ -10,6 +10,8 @@ import {
   type RecommendationsRepository,
 } from './recommendations.repository'
 import { findSuggestion } from './recommendations.suggestion'
+import type { AiShortlistSelector } from './ai-shortlist-selector'
+import { geminiShortlistAdapter } from './gemini-shortlist.adapter'
 
 function invalidMasterDataError(fields: Record<string, string>) {
   return new HttpError({
@@ -23,6 +25,7 @@ function invalidMasterDataError(fields: Record<string, string>) {
 export function createRecommendationsService(
   repository: RecommendationsRepository = recommendationsRepository,
   random: () => number = Math.random,
+  aiSelector: AiShortlistSelector = geminiShortlistAdapter,
 ) {
   async function validateConditions(conditions: RecommendationConditions) {
     const [taste, foodType, zone] = await Promise.all([
@@ -61,6 +64,50 @@ export function createRecommendationsService(
       )
 
       if (candidates.length > 0) {
+        if (input.count === 3 && candidates.length > 3) {
+          const pool = selectDiverseCandidates(candidates, 6, random)
+          const selected = await aiSelector
+            .select({
+              conditions: input.conditions,
+              candidates: pool,
+              count: input.count,
+            })
+            .catch(() => null)
+          if (selected) {
+            const byId = new Map(
+              pool.map((candidate) => [candidate.id, candidate]),
+            )
+            const ids = selected.map(({ menuItemId }) => menuItemId)
+            const selectedCandidates = ids.map((id) => byId.get(id))
+            const uniqueIds = new Set(ids)
+            const uniqueRestaurants = new Set(
+              selectedCandidates.map((candidate) => candidate?.restaurantId),
+            )
+            const poolRestaurants = new Set(
+              pool.map((candidate) => candidate.restaurantId),
+            )
+            const validDiversity =
+              poolRestaurants.size < selected.length ||
+              uniqueRestaurants.size === selected.length
+            if (
+              selected.length <= input.count &&
+              uniqueIds.size === selected.length &&
+              selectedCandidates.every(Boolean) &&
+              validDiversity
+            ) {
+              return {
+                items: selected.map((selection) =>
+                  toRecommendationItem(
+                    byId.get(selection.menuItemId)!,
+                    input.conditions,
+                    { source: 'AI', reasonTh: selection.reasonTh },
+                  ),
+                ),
+              }
+            }
+          }
+        }
+
         return {
           items: selectDiverseCandidates(candidates, input.count, random).map(
             (candidate) => toRecommendationItem(candidate, input.conditions),

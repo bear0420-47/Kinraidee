@@ -75,6 +75,7 @@ export function recommendationItem(id: string, th: string): RecommendationItem {
       matchedFoodType: false,
       matchedZone: false,
     },
+    selection: { source: 'DETERMINISTIC', reasonTh: null },
   }
 }
 
@@ -105,7 +106,17 @@ export function fakeShuffleApi({
   const queue = [...results]
   const api = fakeAuthApi({
     currentUser,
-    ...(handle ? { handle } : {}),
+    handle: (method, url, body) => {
+      const custom = handle?.(method, url, body)
+      if (custom) return custom
+      if (
+        method === 'GET' &&
+        /^\/api\/restaurants\/[^/]+\/place-details$/.test(url.pathname)
+      ) {
+        return jsonResponse(200, { data: { details: null } })
+      }
+      return undefined
+    },
     responses: {
       ...masterDataResponses,
       'POST /api/recommendations': () => {

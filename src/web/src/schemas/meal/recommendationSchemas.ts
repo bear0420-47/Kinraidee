@@ -78,6 +78,10 @@ const recommendationItemSchema = z.object({
     matchedFoodType: z.boolean(),
     matchedZone: z.boolean(),
   }),
+  selection: z.object({
+    source: z.enum(['AI', 'DETERMINISTIC']),
+    reasonTh: z.string().max(120).nullable(),
+  }),
 }) satisfies z.ZodType<RecommendationItem>
 
 const cardSlotSchema = z

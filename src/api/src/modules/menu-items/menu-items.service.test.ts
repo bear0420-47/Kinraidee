@@ -30,6 +30,7 @@ const menuItem: MenuItemWithRelations = {
     phone: null,
     imageKey: null,
     imageUrl: null,
+    googlePlaceId: null,
     deletedAt: null,
     createdAt: now,
     updatedAt: now,

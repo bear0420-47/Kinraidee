@@ -2,7 +2,7 @@
 
 ## Status
 
-Human-approved product-flow contract — synchronized with the approved specification and confirmed on 2026-09-28. Visual style is approved separately in `design-system.md`.
+Human-approved product-flow contract — synchronized with the approved specification; AI/Places behavior was approved on 2026-10-24. Visual style is approved separately in `design-system.md`.
 
 ## Scope
 
@@ -18,8 +18,8 @@ One core workflow only: **Get a meal shortlist** (the core feature in `feature-l
 |---|---|---|---|
 | 1 | Opens Kinraidee and starts without signing in. | Home | F6, LR2 |
 | 2 | Chooses a budget, then a taste, then a food type, then a zone — one short step at a time. An invalid value is rejected inline, naming the field, and the user stays on this step. | Conditions | F1, NFR4 |
-| 3 | Submits the chosen conditions with the `สับการ์ดเมนู` action, then sees up to three face-down result cards. The API has already selected the complete filtered shortlist; revealing cards is presentation only. | Shortlist | F2, F3, F19, NFR3, NFR8 |
-| 4 | Reveals cards one by one, uses `เปิดทั้งหมด`, selects a revealed menu, or rejects a revealed choice and receives a different qualifying choice. Rejected choices do not come back this session. | Shortlist | F4, F5, NFR9, NFR12 |
+| 3 | Submits the chosen conditions with the `สับการ์ดเมนู` action. Mandatory filters and exclusions run first, then a restaurant-diverse pool of at most six is formed. When more than three candidates remain, Gemini selects and explains up to three; strict validation or deterministic fallback produces the final face-down cards. | Shortlist | F2, F3, F19, F20, NFR3, NFR8, NFR13, NFR14 |
+| 4 | Reveals cards one by one, uses `เปิดทั้งหมด`, selects a revealed menu, or rejects a revealed choice and receives a different qualifying choice. Revealing a mapped restaurant starts a non-blocking live Google Places details request. Rejected choices do not come back this session, and one-card replacement does not call Gemini. | Shortlist | F4, F5, F21, NFR9, NFR12, NFR13, NFR14 |
 | 5 | Selects a revealed menu, reviews its confirmation details, then confirms the choice, returns to the shortlist, or starts a new session. Logged-in history is written only after confirmation. | Shortlist → Confirmation | F7, F15 |
 
 ## The one decision that changes the flow
@@ -65,9 +65,15 @@ No-match actions:
 - Zone step lists admin-managed `Zone` master data sorted by `sortOrder`, plus a special `ที่ไหนก็ได้` option that is not a database `Zone` record. The user selects at most one zone and no zone is selected by default. GPS/current-location selection is not present in the first release.
 - Condition summary uses the primary CTA `สับการ์ดเมนู`. Loading copy is `กำลังสับการ์ดเมนู...`.
 - Shortlist presentation uses up to three face-down cards. Users can reveal cards individually or use `เปิดทั้งหมด`. A revealed card can be selected immediately without revealing the remaining cards.
-- Card reveal does not call the recommendation API again. It only reveals items already returned by the stateless recommendation response.
+- Card reveal does not call the recommendation API again. It reveals an item already returned by the stateless recommendation response, then may call `GET /api/restaurants/:restaurantId/place-details` for transient live Google Places evidence.
 - If fewer than three choices match, show only the returned card count. Do not render empty placeholder cards.
 - Initial shortlist and replacement both use the same stateless API contract, `POST /api/recommendations`. Initial requests ask for up to three cards; replacement requests ask for one card while sending rejected IDs and currently displayed IDs.
+- Initial three-card requests may call Gemini once only when more than three eligible candidates remain. The provider receives at most six compact candidates and returns selected IDs with short reasons. Pools of three or fewer and one-card replacement requests bypass Gemini.
+- The backend validates every AI-selected ID, count, duplicate, mandatory-filter invariant, and restaurant-diversity invariant. Timeout, provider failure, malformed output, or invalid selection uses the existing deterministic selection without blocking the flow.
+- Reloading a stored shortlist restores it from `sessionStorage`; it does not request another AI selection.
+- UI copy identifies `AI เลือกให้` only for a result genuinely selected by Gemini. Deterministic fallback uses the existing structured rationale and must not carry a false AI label.
+- Google Places details load only after reveal for restaurants with a stored Place ID. Loading, missing mapping, incomplete data, timeout, or provider error leaves the recommendation card usable and shows an explicit unavailable state.
+- Google ratings, opening information, Maps URI, and provider-returned reviews are transient and are not stored. Required Google and review-author attribution remains visible. Google photos are not used.
 - Recommendation items include menu, restaurant, zone, food-type, taste, price, image, and structured rationale data in one response. The web converts structured rationale flags into localized user-facing copy.
 - Valid no-match responses return `items: []` with a structured `suggestion` object or `suggestion: null`. The suggestion lists each change (field, from, to), the complete suggested conditions, and the result count; the web owns the localized explanation and action copy.
 - Rejecting a revealed card adds its `menuItemId` to the session rejected IDs and requests one non-duplicate replacement that excludes rejected IDs and menu items still displayed. The replacement enters the same card slot face-down.

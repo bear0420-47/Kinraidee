@@ -13,6 +13,7 @@ import { formatPrice } from '@/lib/formatPrice'
 import { toFavoriteMenuItem } from '@/schemas/favorites/favoriteSchemas'
 import type { RecommendationItem } from '@/schemas/meal/recommendationSchemas'
 import { chooseButtonId } from './MenuCard'
+import { AiSelectionReason } from './AiSelectionReason'
 import { MenuPhoto } from './MenuPhoto'
 import { RationaleList } from './RationaleList'
 import { RecommendationSuccess, successMessage } from './RecommendationSuccess'
@@ -104,6 +105,7 @@ export function ConfirmMenuDialog({
             {formatPrice(item.price)}
           </p>
           <RationaleList rationale={item.rationale} />
+          <AiSelectionReason selection={item.selection} />
           <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
             <Button ref={rethinkRef} variant="secondary" onClick={onCancel}>
               <ArrowCounterClockwise aria-hidden weight="bold" />

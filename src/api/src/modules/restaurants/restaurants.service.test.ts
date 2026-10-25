@@ -25,6 +25,7 @@ const restaurant: RestaurantWithZone = {
   phone: null,
   imageKey: null,
   imageUrl: null,
+  googlePlaceId: null,
   deletedAt: null,
   createdAt: new Date('2026-09-29T00:00:00.000Z'),
   updatedAt: new Date('2026-09-29T00:00:00.000Z'),

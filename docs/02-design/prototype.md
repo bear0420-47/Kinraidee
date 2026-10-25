@@ -2,7 +2,7 @@
 
 ## Status
 
-Visual style approved — 2026-09-28. Product flow and feature behavior shown inside `wireframe.html` are exploratory and are not approved by this status.
+Visual style approved — 2026-09-28. The AI/Places reveal pattern was approved by the human project owner on 2026-10-24. Product flow and feature behavior shown inside `wireframe.html` are exploratory and are not approved by this status.
 
 ## Artifact Role
 
@@ -63,7 +63,9 @@ Food-type visual options: render admin-managed `FoodType` records ordered by `so
 
 Zone visual options: render admin-managed `Zone` records ordered by `sortOrder`, plus a special `ที่ไหนก็ได้` option. `ที่ไหนก็ได้` is a UI filter choice, not a persisted `Zone` row. Do not show GPS/current-location controls in the first release.
 
-Recommendation reveal pattern: use a shuffle-card metaphor. The condition summary primary CTA is `สับการ์ดเมนู`; loading copy is `กำลังสับการ์ดเมนู...`; the result view shows up to three face-down cards. Users can reveal cards one by one, use `เปิดทั้งหมด`, or select an already revealed menu without revealing the rest. Revealing is a UI presentation state only; the API returns the complete filtered shortlist before any card is revealed.
+Recommendation reveal pattern: use a shuffle-card metaphor. The condition summary primary CTA is `สับการ์ดเมนู`; loading copy is `กำลังสับการ์ดเมนู...`; the result view shows up to three face-down cards. Users can reveal cards one by one, use `เปิดทั้งหมด`, or select an already revealed menu without revealing the rest. The recommendation API returns the complete filtered shortlist before reveal. An AI-selected card shows `AI เลือกให้` and its short reason; deterministic fallback keeps the current rationale without an AI label.
+
+Google Places evidence pattern: revealing a mapped restaurant begins a separate live-details request. Menu details and actions remain usable while the evidence panel loads. Success may show rating, rating count, opening information, a Maps link, and attributed provider-returned reviews. Missing mapping, timeout, provider error, or unavailable fields show a compact unavailable state and do not remove or replace the card. Google photos are not displayed.
 
 Reject/undo pattern: rejecting a revealed card replaces that slot with one new face-down card and shows a `เลิกทำ` toast. Undo restores the original card in the same slot and reveal state, removes the replacement, and removes the original menu ID from the session rejected IDs.
 
@@ -104,7 +106,7 @@ Registered-user and admin screens use the same tokens and component language, bu
 - Translate design tokens into Tailwind theme values or shared CSS variables.
 - Do not hardcode raw colours, radii, or shadows in individual screens.
 - Do not copy prototype mock data or client-side business logic into production code.
-- Do not call the recommendation API per card reveal; reveal state is client-side presentation for the already returned shortlist.
+- Do not call the recommendation API per card reveal; reveal state is client-side presentation for the already returned shortlist. A reveal may call the separate restaurant place-details route once for live evidence.
 - If the implementation needs a visual value or component state missing from `design-system.md`, add and approve it there first.
 - When `wireframe.html` conflicts with requirements or the data model, requirements and the data model win.
 

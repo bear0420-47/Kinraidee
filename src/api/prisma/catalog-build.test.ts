@@ -145,6 +145,7 @@ describe('buildCatalog', () => {
       {
         id: restaurantId,
         zoneId: 'c8gds70havtzwmks5lhd2caul',
+        googlePlaceId: null,
         name: { th: 'ครัวป้าน้อย', en: 'Krua Pa Noi' },
         description: null,
         phone: null,

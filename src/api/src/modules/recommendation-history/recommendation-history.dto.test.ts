@@ -47,6 +47,7 @@ function row({
         phone: '053-000-000',
         imageKey: 'restaurant/front.webp',
         imageUrl: null,
+        googlePlaceId: null,
         deletedAt: restaurantDeletedAt,
         createdAt: now,
         updatedAt: now,

@@ -13,8 +13,10 @@
     "prisma": "prisma",
     "catalog:build": "node --import tsx prisma/catalog-build.ts",
     "catalog:photos": "node --env-file-if-exists=.env --import tsx prisma/catalog-photos.ts",
+    "catalog:places": "node --env-file-if-exists=.env --import tsx prisma/catalog-places.ts",
     "openapi:generate": "node --import tsx src/openapi/generateOpenapi.ts",
     "recommendations:verify": "node --env-file-if-exists=.env --import tsx src/scripts/verifyRecommendations.ts",
+    "providers:verify": "node --env-file-if-exists=.env --import tsx src/scripts/verifyProviders.ts",
     "audit-logs:prune": "node --env-file-if-exists=.env --import tsx src/scripts/pruneAuditLogs.ts"
   },
   "dependencies": {

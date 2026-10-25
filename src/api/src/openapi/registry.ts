@@ -5,6 +5,7 @@ import { registerAuthOpenApi } from '@/modules/auth/auth.openapi'
 import { registerFavoritesOpenApi } from '@/modules/favorites/favorites.openapi'
 import { registerFoodTypesOpenApi } from '@/modules/food-types/food-types.openapi'
 import { registerMenuItemsOpenApi } from '@/modules/menu-items/menu-items.openapi'
+import { registerPlaceDetailsOpenApi } from '@/modules/place-details/place-details.openapi'
 import { registerPreferencesOpenApi } from '@/modules/preferences/preferences.openapi'
 import { registerRecommendationHistoryOpenApi } from '@/modules/recommendation-history/recommendation-history.openapi'
 import { registerRecommendationsOpenApi } from '@/modules/recommendations/recommendations.openapi'
@@ -20,6 +21,7 @@ registerUploadsOpenApi(registry)
 registerZonesOpenApi(registry)
 registerFoodTypesOpenApi(registry)
 registerTastesOpenApi(registry)
+registerPlaceDetailsOpenApi(registry)
 registerRestaurantsOpenApi(registry)
 registerMenuItemsOpenApi(registry)
 registerRecommendationsOpenApi(registry)

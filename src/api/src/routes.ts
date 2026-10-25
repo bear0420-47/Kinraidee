@@ -4,6 +4,7 @@ import { authRoutes } from '@/modules/auth/auth.routes'
 import { favoritesRoutes } from '@/modules/favorites/favorites.routes'
 import { foodTypesRoutes } from '@/modules/food-types/food-types.routes'
 import { menuItemsRoutes } from '@/modules/menu-items/menu-items.routes'
+import { placeDetailsRoutes } from '@/modules/place-details/place-details.routes'
 import { preferencesRoutes } from '@/modules/preferences/preferences.routes'
 import { recommendationHistoryRoutes } from '@/modules/recommendation-history/recommendation-history.routes'
 import { recommendationsRoutes } from '@/modules/recommendations/recommendations.routes'
@@ -23,6 +24,7 @@ routes.use('/uploads', uploadsStaticRoutes)
 routes.use('/api/zones', zonesRoutes)
 routes.use('/api/food-types', foodTypesRoutes)
 routes.use('/api/tastes', tastesRoutes)
+routes.use('/api/restaurants', placeDetailsRoutes)
 routes.use('/api/restaurants', restaurantsRoutes)
 routes.use('/api/menu-items', menuItemsRoutes)
 routes.use('/api/recommendations', recommendationsRoutes)

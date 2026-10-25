@@ -207,6 +207,7 @@
     {
       "id": "cl1af6jqp19exri6g9yujs1ly",
       "zoneId": "c8gds70havtzwmks5lhd2caul",
+      "googlePlaceId": null,
       "name": {
         "th": "เจริญรส แซ่บทอด อาหารตามสั่ง",
         "en": "Charoen Rot"
@@ -221,6 +222,7 @@
     {
       "id": "c9dbx37t3f8c0btmvrh4w3p8e",
       "zoneId": "c8gds70havtzwmks5lhd2caul",
+      "googlePlaceId": "ChIJox8CEymr1zARc6LtyiD09BU",
       "name": {
         "th": "เชฟต๋อย",
         "en": "Chef Toy"
@@ -235,6 +237,7 @@
     {
       "id": "cu1mjin51is7veravwiwxht9i",
       "zoneId": "c8gds70havtzwmks5lhd2caul",
+      "googlePlaceId": "ChIJqZC8G2MB1zAR2QE3tuCHWCY",
       "name": {
         "th": "ช.เจริญพาณิชย์ ข้าวหน้าของทอด",
         "en": "Chor Charoen Phanich Fried Rice Bowls"
@@ -249,6 +252,7 @@
     {
       "id": "cqzccxef6w73zq444unppwznw",
       "zoneId": "c8gds70havtzwmks5lhd2caul",
+      "googlePlaceId": "ChIJvwYMtgP_1jARPnhzDuv_fAg",
       "name": {
         "th": "แฟมิลี่ เคบับ ฮาลาล",
         "en": "Family Kebab Halal"
@@ -263,6 +267,7 @@
     {
       "id": "cz3k763rjulru887n4n0dyo40",
       "zoneId": "c8gds70havtzwmks5lhd2caul",
+      "googlePlaceId": "ChIJUwe-VLMB1zARLhbVxaTvMV4",
       "name": {
         "th": "กินดัง ข้าวหน้าของย่าง",
         "en": "GINDON"
@@ -277,6 +282,7 @@
     {
       "id": "czg1m84fbgwpcs5ikxfcke2t3",
       "zoneId": "cb1z0wkjoc2hbh34yrslm7unn",
+      "googlePlaceId": null,
       "name": {
         "th": "เฮง เฮง สุกี้ มฟล.",
         "en": "Heng Heng Suki"
@@ -291,6 +297,7 @@
     {
       "id": "cz3k1bjl5nyrj9sx3jx3uw73e",
       "zoneId": "c8gds70havtzwmks5lhd2caul",
+      "googlePlaceId": "ChIJT38LztMB1zARnIDSdp53a0w",
       "name": {
         "th": "จงหัวอาหมิง",
         "en": "Jong Hua A Ming"
@@ -305,6 +312,7 @@
     {
       "id": "cfqyo4y76g5p8wb6r1zzuv5ht",
       "zoneId": "cep3gqyzjntb4qr8w3mcnp5w6",
+      "googlePlaceId": null,
       "name": {
         "th": "ข้าง ม.ฟ.",
         "en": "Khang Mor Fah"
@@ -319,6 +327,7 @@
     {
       "id": "ciho03k7ugcws3xpocn5t3072",
       "zoneId": "c8gds70havtzwmks5lhd2caul",
+      "googlePlaceId": null,
       "name": {
         "th": "เลาต๋าหม่าล่า",
         "en": "Lao Ta Mala"
@@ -333,6 +342,7 @@
     {
       "id": "c59l37rkqr7yer3xl8bfbbmpu",
       "zoneId": "c8gds70havtzwmks5lhd2caul",
+      "googlePlaceId": null,
       "name": {
         "th": "ลิตเติ้ลกรินทร์",
         "en": "Little Grin"
@@ -347,6 +357,7 @@
     {
       "id": "ct02b5a9bjadbl9zcsrfnbvxq",
       "zoneId": "c8gds70havtzwmks5lhd2caul",
+      "googlePlaceId": "ChIJw_7716T_1jARMxSzVRVx7YU",
       "name": {
         "th": "สเต็กลุงหยิกเชียงราย",
         "en": "Lung Yik Steak Chiang Rai"
@@ -361,6 +372,7 @@
     {
       "id": "cf2ck82pt60ua01f4xmbde9cg",
       "zoneId": "c8gds70havtzwmks5lhd2caul",
+      "googlePlaceId": null,
       "name": {
         "th": "แซนด์วิชไส้ทะลัก จูเซโย",
         "en": "Sandwich Juseyo"
@@ -375,6 +387,7 @@
     {
       "id": "cvfrxd29drr65xp4w3zwd0thh",
       "zoneId": "c8gds70havtzwmks5lhd2caul",
+      "googlePlaceId": "ChIJG6HFiSP_1jARjJ9_KcHml-Y",
       "name": {
         "th": "ย่างให้ MFU",
         "en": "Yang Hai MFU"

@@ -162,6 +162,67 @@ describe('Revealing', () => {
     expect(api.recommendationBodies()).toHaveLength(1)
   })
 
+  it('labels a genuine AI selection and shows its Thai reason', async () => {
+    const aiItem = {
+      ...krapao,
+      selection: {
+        source: 'AI' as const,
+        reasonTh: 'ตรงกับงบและรสชาติที่เลือก',
+      },
+    }
+    fakeShuffleApi({ results: [{ items: [aiItem] }] })
+    const { user } = renderApp('/meal')
+    await shuffleCards(user)
+    await revealCard(user, 1)
+
+    expect(screen.getByText('AI เลือกให้')).toBeTruthy()
+    expect(screen.getByText('ตรงกับงบและรสชาติที่เลือก')).toBeTruthy()
+  })
+
+  it('loads attributed Google Places evidence only after reveal', async () => {
+    const api = fakeShuffleApi({
+      results: [{ items: [krapao] }],
+      handle: (method, url) =>
+        method === 'GET' && url.pathname.endsWith('/place-details')
+          ? jsonResponse(200, {
+              data: {
+                details: {
+                  rating: 4.6,
+                  userRatingCount: 42,
+                  openNow: true,
+                  weekdayDescriptions: ['วันจันทร์: 09:00–20:00'],
+                  googleMapsUri: 'https://maps.google.com/example',
+                  reviews: [
+                    {
+                      authorName: 'ผู้รีวิวตัวอย่าง',
+                      authorUri: 'https://example.com/reviewer',
+                      rating: 5,
+                      relativePublishTimeDescription: 'เดือนที่แล้ว',
+                      text: 'อาหารอร่อย',
+                      publishTime: null,
+                    },
+                  ],
+                },
+              },
+            })
+          : undefined,
+    })
+    const { user } = renderApp('/meal')
+    await shuffleCards(user)
+    expect(
+      api.requests.some((request) => request.path.endsWith('/place-details')),
+    ).toBe(false)
+
+    await revealCard(user, 1)
+
+    expect(await screen.findByText('4.6 จาก 42 คะแนน')).toBeTruthy()
+    expect(screen.getByText(/อาหารอร่อย/)).toBeTruthy()
+    expect(screen.getByRole('link', { name: 'ผู้รีวิวตัวอย่าง' })).toBeTruthy()
+    expect(
+      screen.getByRole('link', { name: /ดูร้านนี้บน Google Maps/ }),
+    ).toBeTruthy()
+  })
+
   it('scrolls the whole revealed card into view, instantly under reduced motion', async () => {
     fakeShuffleApi({ results: [{ items: [krapao, noodles] }] })
     const { user } = renderApp('/meal')
@@ -622,7 +683,7 @@ describe('Session and scope', () => {
     expect(sessionStorage.getItem(RECOMMENDATION_STORAGE_KEY)).toBeNull()
   })
 
-  it('calls no history or menu-detail endpoint', async () => {
+  it('calls place details only after reveal and never calls menu detail or history', async () => {
     const api = fakeShuffleApi({
       results: [{ items: [krapao, noodles] }, { items: [curry] }],
     })
@@ -640,6 +701,7 @@ describe('Session and scope', () => {
       '/api/auth/me',
       '/api/food-types',
       '/api/recommendations',
+      '/api/restaurants/r_1/place-details',
       '/api/tastes',
       '/api/zones',
     ])

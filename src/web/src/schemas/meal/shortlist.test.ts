@@ -47,6 +47,7 @@ function item(id: string): RecommendationItem {
       matchedFoodType: true,
       matchedZone: true,
     },
+    selection: { source: 'DETERMINISTIC', reasonTh: null },
   }
 }
 

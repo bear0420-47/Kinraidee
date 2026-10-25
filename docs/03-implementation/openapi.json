@@ -1036,6 +1036,10 @@
                     "type": "string",
                     "nullable": true
                   },
+                  "googlePlaceId": {
+                    "type": "string",
+                    "nullable": true
+                  },
                   "deletedAt": {
                     "type": "string",
                     "nullable": true,
@@ -1059,6 +1063,7 @@
                   "phone",
                   "imageKey",
                   "imageUrl",
+                  "googlePlaceId",
                   "deletedAt",
                   "createdAt",
                   "updatedAt"
@@ -1170,6 +1175,10 @@
                       "type": "string",
                       "nullable": true
                     },
+                    "googlePlaceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
                     "deletedAt": {
                       "type": "string",
                       "nullable": true,
@@ -1193,6 +1202,7 @@
                     "phone",
                     "imageKey",
                     "imageUrl",
+                    "googlePlaceId",
                     "deletedAt",
                     "createdAt",
                     "updatedAt"
@@ -2189,6 +2199,27 @@
                         "matchedFoodType",
                         "matchedZone"
                       ]
+                    },
+                    "selection": {
+                      "type": "object",
+                      "properties": {
+                        "source": {
+                          "type": "string",
+                          "enum": [
+                            "AI",
+                            "DETERMINISTIC"
+                          ]
+                        },
+                        "reasonTh": {
+                          "type": "string",
+                          "nullable": true,
+                          "maxLength": 120
+                        }
+                      },
+                      "required": [
+                        "source",
+                        "reasonTh"
+                      ]
                     }
                   },
                   "required": [
@@ -2201,7 +2232,8 @@
                     "zone",
                     "foodType",
                     "tastes",
-                    "rationale"
+                    "rationale",
+                    "selection"
                   ]
                 },
                 "maxItems": 3
@@ -3956,6 +3988,161 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/restaurants/{restaurantId}/place-details": {
+      "get": {
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "restaurantId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transient Google Places evidence, or null when unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "details": {
+                          "type": "object",
+                          "nullable": true,
+                          "properties": {
+                            "rating": {
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "userRatingCount": {
+                              "type": "integer",
+                              "nullable": true
+                            },
+                            "openNow": {
+                              "type": "boolean",
+                              "nullable": true
+                            },
+                            "weekdayDescriptions": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "googleMapsUri": {
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "reviews": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "authorName": {
+                                    "type": "string"
+                                  },
+                                  "authorUri": {
+                                    "type": "string",
+                                    "nullable": true
+                                  },
+                                  "rating": {
+                                    "type": "number",
+                                    "nullable": true
+                                  },
+                                  "relativePublishTimeDescription": {
+                                    "type": "string",
+                                    "nullable": true
+                                  },
+                                  "text": {
+                                    "type": "string",
+                                    "nullable": true
+                                  },
+                                  "publishTime": {
+                                    "type": "string",
+                                    "nullable": true
+                                  }
+                                },
+                                "required": [
+                                  "authorName",
+                                  "authorUri",
+                                  "rating",
+                                  "relativePublishTimeDescription",
+                                  "text",
+                                  "publishTime"
+                                ]
+                              }
+                            }
+                          },
+                          "required": [
+                            "rating",
+                            "userRatingCount",
+                            "openNow",
+                            "weekdayDescriptions",
+                            "googleMapsUri",
+                            "reviews"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "details"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Restaurant not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "requestId": {
+                          "type": "string"
+                        },
+                        "fields": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message",
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
                 }
               }
             }

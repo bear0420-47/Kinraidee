@@ -2,7 +2,7 @@
 
 ## Status
 
-Approved — implementation baseline approved by the human project owner on 2026-09-27.
+Approved — implementation baseline approved on 2026-09-27; F20, F21, amended NFR1, NFR13, NFR14, and NFR15 approved by the human project owner on 2026-10-24.
 
 ## Traceability
 
@@ -34,8 +34,14 @@ Approved — implementation baseline approved by the human project owner on 2026
 | F18 | As a meal seeker, I want to register, log in, and log out with email/password, so that I can access optional registered-user features. | Registration accepts a syntactically valid unique email without requiring email ownership verification; login uses the registered email/password; passwords are stored only as Argon2id hashes; JWT authentication uses an HTTP-only cookie; logout clears the cookie; anonymous F1–F7 remains available. Self-service password reset is deferred. | Should | Human-approved full-app scope, LR1, LR2, LR6, LR8 |
 | F19 | As a meal seeker, I want a shortlist diversified across restaurants, so that one restaurant does not dominate the available choices. | When qualifying menu items from enough distinct restaurants exist, fill the shortlist with at most one menu item per restaurant before adding another item from a restaurant already represented. Mandatory filters and rejected-item exclusions always take precedence. | Must | Charter §5.2, P3, P8 |
 | F16 | As a meal seeker, I want promotions, delivery costs, and ratings when reliable data exists, so that I can compare total value. | Each field identifies its source and freshness; missing or stale values are not presented as current facts. Wait-time data is not part of Kinraidee. | Could | P5, P7 |
+| F20 | As an undecided meal seeker, I want AI to select the initial shortlist from choices that already satisfy my conditions, so that the shortlist feels intentionally chosen without weakening mandatory rules. | The existing mandatory filters, soft-delete rules, photo requirement, rejected/displayed exclusions, and restaurant-diversity rule run before AI. For an initial three-card request with more than three eligible menus, the system constructs a restaurant-diverse pool of at most six compact candidates; Gemini returns strict JSON containing up to three candidate IDs and a short Thai reason for each. The backend accepts only IDs from that pool, rejects duplicates and invalid counts, limits reason length, rechecks mandatory-filter and F19 diversity invariants, and uses the existing deterministic selection when the provider times out, fails, or returns malformed or invalid JSON. One-card replacement and pools of three or fewer do not call Gemini. | Must | OA2, P1, P4, P8 |
+| F21 | As a meal seeker, I want current Google Places evidence for a revealed restaurant, so that I can assess the recommendation using recognizable external information. | Revealing a card for a mapped restaurant may show the current Google Places rating, rating count, opening status or hours, Google Maps URI, and provider-returned reviews. Google and review-author attribution required by the provider is visible. Only the Google Place ID is stored; ratings, hours, reviews, and provider response payloads are not persisted. A missing mapping, unavailable field, timeout, or provider failure shows an unavailable state without blocking recommendation, reveal, rejection, or confirmation. Google photos are not used. | Must | OA2, P7, F16 |
 
 `OA1` is an approved operational assumption that an authorized actor must maintain the recommendation dataset; it was approved by the human project owner because it was not established by the user survey.
+
+`OA2` is an approved operational assumption recorded from the human project owner's academic/demo direction on 2026-10-24: add genuine AI selection and recognizable live Google Places evidence to demonstrate intelligent and external-data support while keeping the existing catalog authoritative. OA2 is not survey evidence and does not claim that Gemini or Google supplied the stored restaurant/menu catalog.
+
+Approved architecture constraints: AI selection crosses an `AiShortlistSelector` interface with a production `GeminiAdapter` and a fake test adapter. Live place evidence crosses a separate `PlaceDetailsProvider` interface with a production `GooglePlacesAdapter` and a fake test adapter. Recommendation rules, response validation, and deterministic fallback remain inside Kinraidee modules rather than provider adapters.
 
 ## Legal requirements incorporated from `rule.md`
 
@@ -63,7 +69,7 @@ Approved — implementation baseline approved by the human project owner on 2026
 
 | ID | Measurable requirement | Verification |
 |---|---|---|
-| NFR1 | Warm recommendation API response time is at most 2 seconds at p95 against a test dataset of up to 500 non-deleted restaurant records in the defined test environment. Free-tier hosting cold-start latency is measured and reported separately. | Automated performance test records environment, dataset size, sample count, warm p95, and any observed cold-start latency separately. |
+| NFR1 | The deterministic warm recommendation path responds within 2 seconds at p95 against a test dataset of up to 500 non-deleted restaurant records. The AI-assisted path responds within 6 seconds at p95 in a reproducible test environment with mocked provider latency and configured timeout fallback. Free-tier hosting cold-start and uncontrolled external-provider latency are measured and reported separately. | Automated performance tests record environment, dataset size, sample count, provider-latency fixture, deterministic warm p95, AI-assisted p95, timeout behavior, and any observed cold-start latency separately. |
 | NFR2 | At least 80% of at least five target-user testers complete F1–F4 within 60 seconds without facilitator help. | Timed usability-test record with anonymized outcome counts. |
 | NFR3 | A recommendation round displays at most three choices unless fewer records match. | Unit/integration tests for 0, 1, 2, 3, and more than 3 matches. |
 | NFR4 | Every API input boundary has automated valid, invalid, and boundary-value tests. | Endpoint-to-test inventory has no missing endpoint; suite passes. |
@@ -75,6 +81,9 @@ Approved — implementation baseline approved by the human project owner on 2026
 | NFR10 | Build, test, and lint commands all exit with code 0 before implementation is reported complete. | Exact commands and results recorded in `docs/verification.md`. |
 | NFR11 | 100% of consent/agreement records contain subject identifier, purpose/type, content version, decision, and timestamp. | Schema constraints and integration tests. |
 | NFR12 | The complete F1–F7 workflow is operable using a keyboard without a blocking step. | Manual keyboard-only acceptance test recorded in verification evidence. |
+| NFR13 | Each eligible initial three-card request makes at most one Gemini call with at most six compact candidates and an output limit of 400 tokens. One-card replacements and candidate pools of three or fewer make zero Gemini calls. Reloading an existing shortlist from `sessionStorage` makes zero new calls. | Adapter-spy integration tests assert provider call count, candidate count, output configuration, replacement bypass, small-pool bypass, and reload behavior. |
+| NFR14 | Every Gemini and Google Places request has a configured timeout of at most 5 seconds. Provider timeout, error, malformed JSON, invalid IDs, or incomplete payload must not cause a provider-only 5xx; recommendation falls back deterministically and place evidence degrades to an unavailable state while NFR3, NFR8, NFR9, and F19 remain satisfied. | Fake-adapter and integration tests cover timeout, network error, malformed/invalid payload, missing mapping, partial provider data, deterministic fallback, and non-blocking place-detail failure. |
+| NFR15 | Gemini and Google Places credentials remain server-only and appear zero times in web bundles, API responses, application logs, test logs, and committed files. | Environment-schema tests, generated-bundle scan, response/log scan, and repository secret scan record zero exposures. |
 
 ## Primary use case
 
@@ -97,12 +106,16 @@ Approved — implementation baseline approved by the human project owner on 2026
 | Account email | Login identifier for optional account features: authentication, menu-item favorites, saved default recommendation preferences, and selected-menu history; ownership is not verified in the first full-app pass; account data is not used for advertising, unrelated profiling, or unrelated third-party disclosure | Required for F14, F15, F17, F18, and admin authentication; anonymous F1–F7 remains available without an account | Account owner and authentication flow only; catalog administrators do not receive user email lists in the first full-app pass | Retained while the account exists; account deletion physically deletes the user row and cascades favorites, preferences, and selected-menu history |
 | Consent/agreement evidence | Demonstrate choice and accepted version | Legal/compliance approval required | User and authorized compliance role | Approved evidence-retention schedule |
 | Restaurant/menu record | Supply recommendations | Assess identifiable-person fields/photos separately | Public read; authorized admin write | Available while `deletedAt = null`; normal admin deletion records `deletedAt`; personal fields follow the approved schedule |
+| Gemini transient request | Select and explain an initial shortlist from already eligible candidates | OA2 operational purpose; session conditions are minimized and used only for the current recommendation | Recommendation module through the server-side Gemini adapter | Not persisted and not written to logs; omit descriptions, images, Google data, account identifiers, and rejected-history beyond IDs needed for current eligibility |
+| Google Place ID | Map one stored restaurant to its Google Places record | OA2 operational purpose; stores an external catalog identifier only | Public place-details module reads; authorized setup/maintenance writes | Stored until mapping is corrected or removed; unique when present |
+| Google live place details and review attribution | Show current external evidence after card reveal | OA2 operational purpose; provider-returned reviewer display/profile information may be personal data and requires accountable review before public production | Public response for the revealed restaurant only | Processed transiently and not persisted or logged; required Google and author attribution remains visible in the response UI |
+| External-provider credentials | Authenticate server-to-server Gemini and Google Places requests | Operational security requirement | Server environment and provider adapters only | Never persisted by the application, logged, returned, or included in the web bundle |
 | Traffic/audit record | Legal traffic obligations or security accountability | Separate applicability/purpose decisions | Restricted operator/compliance role | Traffic ≥90 days only if LR10 applies; audit schedule separately approved |
 
 No persistent personal-data field may be implemented until its row has a final lawful basis, retention period, access role, and deletion behavior approved by an accountable human.
 
 ## Approval
 
-- Decision: Approved for implementation planning
+- Decision: Approved for implementation
 - Approved by: Human project owner
-- Date: 2026-09-27
+- Date: Baseline 2026-09-27; AI/Places amendment approved 2026-10-24

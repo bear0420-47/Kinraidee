@@ -61,6 +61,7 @@ const iconMasterDataSchema = z.object({
 const restaurantSchema = z.object({
   id: cuidSchema,
   zoneId: cuidSchema,
+  googlePlaceId: requiredTextSchema.nullable().default(null),
   name: localizationSchema,
   description: optionalLocalizationSchema,
   phone: z

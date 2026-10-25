@@ -33,7 +33,7 @@ export function shuffle<T>(items: readonly T[], random = Math.random): T[] {
 
 export function selectDiverseCandidates(
   candidates: readonly RecommendationCandidate[],
-  count: 1 | 3,
+  count: number,
   random = Math.random,
 ): RecommendationCandidate[] {
   const grouped = new Map<string, RecommendationCandidate[]>()

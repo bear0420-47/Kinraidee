@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from 'vitest'
 
 import type { RecommendationCandidate } from './recommendations.dto'
 import { createRecommendationsService } from './recommendations.service'
+import { disabledAiShortlistSelector } from './ai-shortlist-selector'
 
 const zone = {
   id: 'zone_1',
@@ -50,6 +51,7 @@ function buildCandidate(index: number): RecommendationCandidate {
       phone: null,
       imageKey: null,
       imageUrl: null,
+      googlePlaceId: null,
       deletedAt: null,
       createdAt: new Date('2026-09-30T00:00:00.000Z'),
       updatedAt: new Date('2026-09-30T00:00:00.000Z'),
@@ -72,7 +74,11 @@ describe('recommendation warm performance', () => {
       findCandidates: vi.fn().mockResolvedValue(candidates),
       findSuggestionPool: vi.fn(),
     }
-    const service = createRecommendationsService(repository as never)
+    const service = createRecommendationsService(
+      repository as never,
+      Math.random,
+      disabledAiShortlistSelector,
+    )
     const input = {
       conditions: {
         budget: 'BETWEEN_50_100' as const,

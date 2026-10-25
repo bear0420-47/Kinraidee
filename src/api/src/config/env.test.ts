@@ -38,6 +38,8 @@ describe('parseEnv', () => {
     expect(env.LOCAL_UPLOADS_ENABLED).toBe(true)
     expect(env.LOCAL_UPLOADS_DIRECTORY).toBe('.local/uploads')
     expect(env.LOCAL_UPLOAD_MAX_BYTES).toBe(2_097_152)
+    expect(env.GEMINI_MODEL).toBe('gemini-3.5-flash-lite')
+    expect(env.EXTERNAL_PROVIDER_TIMEOUT_MS).toBe(5_000)
   })
 
   it('uses the approved local web origin when the allowlist is omitted', () => {
@@ -67,6 +69,10 @@ describe('parseEnv', () => {
       { ...validEnv, NODE_ENV: 'production', LOCAL_UPLOADS_ENABLED: 'true' },
     ],
     ['invalid local-upload size', { ...validEnv, LOCAL_UPLOAD_MAX_BYTES: '0' }],
+    [
+      'provider timeout above the approved maximum',
+      { ...validEnv, EXTERNAL_PROVIDER_TIMEOUT_MS: '5001' },
+    ],
   ])('rejects %s', (_name, input) => {
     expect(() => parseEnv(input)).toThrow()
   })

@@ -3,7 +3,11 @@ import { performance } from 'node:perf_hooks'
 import request from 'supertest'
 
 import { createApp } from '@/app'
+import { env } from '@/config/env'
 import { prisma } from '@/lib/prisma'
+
+// This script measures the deterministic path; `providers:verify` covers one live AI call.
+delete env.GEMINI_API_KEY
 
 const activeRestaurantCount = 500
 const sampleCount = 30
@@ -129,6 +133,7 @@ async function seedFixture() {
       nameTh: `เมนูทดสอบ ${prefix} ${index}`,
       nameEn: `Test Menu ${prefix} ${index}`,
       price: 65,
+      imageUrl: `https://images.example.com/${prefix}/menu-${index}.webp`,
     }),
   )
   const boundaryMenus = [
@@ -151,6 +156,7 @@ async function seedFixture() {
     nameTh: `เมนูขอบเขต ${prefix} ${index}`,
     nameEn: `Boundary Menu ${prefix} ${index}`,
     price: Number(price),
+    imageUrl: `https://images.example.com/${prefix}/boundary-${index}.webp`,
   }))
   await prisma.menuItem.createMany({
     data: [
@@ -163,6 +169,7 @@ async function seedFixture() {
         nameTh: `เมนูหลายรส ${prefix}`,
         nameEn: `Multi Taste Menu ${prefix}`,
         price: 65,
+        imageUrl: `https://images.example.com/${prefix}/filter-active.webp`,
       },
       {
         id: id('filter_deleted_menu'),
@@ -171,6 +178,7 @@ async function seedFixture() {
         nameTh: `เมนูที่ลบ ${prefix}`,
         nameEn: `Deleted Menu ${prefix}`,
         price: 65,
+        imageUrl: `https://images.example.com/${prefix}/deleted-menu.webp`,
         deletedAt: new Date(),
       },
       {
@@ -180,6 +188,7 @@ async function seedFixture() {
         nameTh: `เมนูร้านที่ลบ ${prefix}`,
         nameEn: `Deleted Restaurant Menu ${prefix}`,
         price: 65,
+        imageUrl: `https://images.example.com/${prefix}/deleted-restaurant.webp`,
       },
     ],
   })

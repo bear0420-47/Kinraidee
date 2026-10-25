@@ -47,6 +47,7 @@ const menuItem: MenuItemWithRelations = {
     phone: '053-000-000',
     imageKey: null,
     imageUrl: null,
+    googlePlaceId: null,
     deletedAt: null,
     createdAt: new Date('2026-09-30T00:00:00.000Z'),
     updatedAt: new Date('2026-09-30T00:00:00.000Z'),

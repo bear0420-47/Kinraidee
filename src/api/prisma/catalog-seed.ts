@@ -179,6 +179,7 @@ export async function seedCatalog(
     const record = {
       id: restaurant.id,
       zoneId: restaurant.zoneId,
+      googlePlaceId: restaurant.googlePlaceId,
       nameTh: restaurant.name.th,
       nameEn: restaurant.name.en,
       descriptionTh: restaurant.description?.th ?? null,

@@ -21,11 +21,12 @@ async function chooseMenu(user: User, name: string) {
   return screen.findByRole('dialog', { name: 'เลือกเมนูนี้ใช่ไหม?' })
 }
 
-// Only the master data, the recommendation request, and (signed in) the favorites and saved
-// defaults reads may be called before confirming, and never a menu-detail endpoint.
+// Reveal also requests transient Google Places evidence; confirmation itself makes no extra
+// menu-detail or recommendation request.
 const anonymousCalls = [
   'GET /api/auth/me',
   'GET /api/food-types',
+  'GET /api/restaurants/r_1/place-details',
   'GET /api/tastes',
   'GET /api/zones',
   'POST /api/recommendations',

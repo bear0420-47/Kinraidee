@@ -2,7 +2,7 @@
 
 ## Status
 
-Approved — synchronized with specification `20260828-01-kinraidee-food-recommendation.md` and approved as the implementation-planning baseline on 2026-09-27.
+Approved — synchronized with specification `20260828-01-kinraidee-food-recommendation.md`; B25 and B26 were approved by the human project owner on 2026-10-24.
 
 ## MoSCoW prioritization
 
@@ -26,8 +26,10 @@ The priorities below use the MoSCoW method:
 | B7 | Edit conditions and start a new session | Must | F7; P1, P2 | F7 | Ready for review |
 | B8 | Authorize catalog administration | Must | F8; OA1; LR8 | F8, NFR4, NFR5 | Scope approved by human approver; covers zones, food types, tastes, restaurants, and menu items |
 | B9 | Apply purpose notice, minimization, and purpose limitation | Must | LR1, LR3, LR7, LR9 | LR1, LR3, LR7, LR9; NFR6 | Ready for review |
-| B10 | Define and verify quality thresholds | Must | NFR1, NFR2, NFR3, NFR4, NFR5, NFR6, NFR7, NFR8, NFR9, NFR10, NFR11, NFR12 | NFR1, NFR2, NFR3, NFR4, NFR5, NFR6, NFR7, NFR8, NFR9, NFR10, NFR11, NFR12 | NFR1 warm p95 and NFR2 usability thresholds approved |
+| B10 | Define and verify quality thresholds | Must | NFR1–NFR15 | NFR1–NFR15 | NFR1–NFR15 approved; provider-path verification added 2026-10-25 |
 | B24 | Diversify each shortlist across restaurants | Must | F19; Charter §5.2; P3, P8 | F19 | Scope approved by human approver |
+| B25 | Let AI select and explain the initial shortlist from eligible candidates | Must | F20; OA2; P1, P4, P8 | F20, NFR13, NFR14 | Approved 2026-10-24 |
+| B26 | Show live Google Places evidence for a revealed restaurant | Must | F21, F16; OA2; P7 | F21, NFR14, NFR15 | Approved 2026-10-24 |
 
 ### Must have — when activated
 
@@ -56,7 +58,7 @@ These are Must items only when the stated design or legal condition applies. The
 | ID | Backlog item | Priority | Traces to | Acceptance reference | Status |
 |---|---|---|---|---|---|
 | B18 | Create a shared voting room | Could | F13; P9 | F13 | Deferred |
-| B21 | Show reliable promotions, fees, and ratings | Could | F16; P5, P7 | F16 | External data source needed; wait-time data is out of product scope |
+| B21 | Show reliable promotions and delivery fees | Could | F16; P5, P7 | F16 | Deferred; ratings are covered by B26, and wait-time data is out of product scope |
 
 ### Won't have — first release
 
@@ -69,7 +71,7 @@ These are Must items only when the stated design or legal condition applies. The
 
 ## Traceability audit summary
 
-- Every Must product requirement F1–F8 and F19 has at least one backlog row.
+- Every approved Must product requirement F1–F8 and F19–F21 has at least one backlog row.
 - Every numbered legal requirement LR1–LR17 has at least one backlog row, either directly or as a grouped legal implementation item.
 - Every backlog row identifies a product requirement, legal requirement, NFR, research pain, or documented operational assumption.
 - Items depending on unresolved legal applicability, sensitive-data assessment, or operational ownership are explicitly marked rather than assumed.

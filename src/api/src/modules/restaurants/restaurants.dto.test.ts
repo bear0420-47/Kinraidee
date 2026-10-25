@@ -30,6 +30,7 @@ const restaurant: RestaurantWithZone = {
   phone: '053-123-456',
   imageKey: null,
   imageUrl: 'https://images.example.com/restaurant.webp',
+  googlePlaceId: null,
   deletedAt: null,
   createdAt: new Date('2026-09-29T00:00:00.000Z'),
   updatedAt: new Date('2026-09-29T00:00:00.000Z'),

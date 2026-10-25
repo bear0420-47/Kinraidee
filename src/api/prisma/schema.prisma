@@ -55,6 +55,7 @@ model Restaurant {
   phone         String?
   imageKey      String?
   imageUrl      String?
+  googlePlaceId String?    @unique
   zoneId        String
   deletedAt     DateTime?
   createdAt     DateTime   @default(now())

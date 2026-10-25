@@ -65,6 +65,15 @@ const envSchema = z
       .int()
       .positive()
       .default(2_097_152),
+    GEMINI_API_KEY: z.string().trim().min(1).optional(),
+    GEMINI_MODEL: z.string().trim().min(1).default('gemini-3.5-flash-lite'),
+    GOOGLE_PLACES_API_KEY: z.string().trim().min(1).optional(),
+    EXTERNAL_PROVIDER_TIMEOUT_MS: z.coerce
+      .number()
+      .int()
+      .min(1_000)
+      .max(5_000)
+      .default(5_000),
   })
   .superRefine((value, context) => {
     if (value.NODE_ENV === 'production' && value.LOCAL_UPLOADS_ENABLED) {

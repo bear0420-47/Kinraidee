@@ -81,6 +81,7 @@ const menuItemSourceSchema = z.strictObject({
 export const restaurantSourceSchema = z.strictObject({
   slug: slugSchema,
   zone: slugSchema,
+  googlePlaceId: textSchema.nullable().default(null),
   name: localizedSchema,
   description: optionalLocalizedSchema,
   phone: z
@@ -456,6 +457,7 @@ export function buildCatalog({
     seedRestaurants.push({
       id: restaurantId,
       zoneId: zoneBySlug.get(restaurant.zone)!.id,
+      googlePlaceId: restaurant.googlePlaceId,
       name: restaurant.name,
       description: restaurant.description,
       phone: restaurant.phone,

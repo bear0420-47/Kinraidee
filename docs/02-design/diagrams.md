@@ -2,7 +2,7 @@
 
 ## Status
 
-Approved — synchronized with the approved feature list, user journey, data model, and full-app scope on 2026-09-28. D1, D3 and D4 are Mermaid source so they stay diffable in version control. D2 is a hand-authored SVG under `assets/`, because Mermaid has no UML use case diagram type and the required notation (stick-figure actors, ovals in a system boundary, plain associations, dashed `«include»`) cannot be expressed in a flowchart.
+Approved — synchronized with the approved feature list, user journey, data model, and full-app scope. AI/Places changes to D1, D3, and D4 were approved by the human project owner on 2026-10-24. D1, D3 and D4 are Mermaid source so they stay diffable in version control. D2 is a hand-authored SVG under `assets/`, because Mermaid has no UML use case diagram type and the required notation (stick-figure actors, ovals in a system boundary, plain associations, dashed `«include»`) cannot be expressed in a flowchart.
 
 ## Label provenance
 
@@ -30,18 +30,22 @@ flowchart LR
 
   kinraidee(["<b>Kinraidee</b><br/>Food Decision Assistant"])
 
-  data[("Restaurant and menu data<br/><i>approved synthetic dataset</i>")]
+  data[("Restaurant/menu record<br/><i>existing authoritative catalog</i>")]
+  gemini["Gemini<br/><i>AI shortlist provider</i>"]
+  places["Google Places<br/><i>live restaurant evidence</i>"]
 
   seeker -->|"enters conditions, rejects, restarts"| kinraidee
   kinraidee -->|"returns up to three choices with rationale"| seeker
   admin -->|"creates, updates, soft-deletes records"| kinraidee
   kinraidee -->|"reads and writes"| data
+  kinraidee -->|"sends compact eligible pool; receives selected IDs and reasons"| gemini
+  kinraidee -->|"requests mapped live details and attributed reviews"| places
   approver -.->|"approves scope, thresholds, legal applicability"| kinraidee
 ```
 
-**Scope.** Inside the box: session conditions, filtering, shortlist, reject-and-replace, data administration. Outside and explicitly excluded: ordering, payment, delivery fulfillment, public reviews, medical dietary advice, certificate issuance.
+**Scope.** Inside the box: session conditions, filtering, shortlist, AI-assisted initial selection, live place-evidence presentation, reject-and-replace, and data administration. The existing catalog remains authoritative; neither Gemini nor Google Places supplies the stored menu catalog. Outside and explicitly excluded: ordering, payment, delivery fulfillment, publishing user reviews, medical dietary advice, certificate issuance, Google photos, and external catalog import.
 
-**Traces to:** F1–F8; B1–B8; OA1; intent scope section.
+**Traces to:** F1–F8, F20, F21; B1–B8, B25, B26; OA1, OA2; intent scope section.
 
 ---
 
@@ -82,11 +86,15 @@ flowchart LR
     api["REST API<br/>Express.js + TypeScript"]
     valid["Input validation<br/><i>every API boundary</i>"]
     rec["Recommendation logic<br/><i>rule-based filter, rank, diversify</i>"]
+    ai["AiShortlistSelector<br/><i>validate selection and fall back</i>"]
+    geminiAdapter["GeminiAdapter"]
+    place["PlaceDetailsProvider<br/><i>map transient live evidence</i>"]
+    placesAdapter["GooglePlacesAdapter"]
     authz["Authentication and authorization<br/><i>protected user and admin operations</i>"]
   end
 
   subgraph DATA["Data"]
-    db[("PostgreSQL<br/>users · favorites · history · preferences<br/>restaurants · menus · zones")]
+    db[("PostgreSQL<br/>users · favorites · history · preferences<br/>restaurants + Google Place ID · menus · zones")]
     audit[("Audit record<br/><i>minimized admin mutations</i>")]
     consent[("Consent / agreement record<br/><i>conditional — LR14, LR15, LR16</i>")]
     traffic[("Traffic log<br/><i>conditional — LR10, LR11, LR12, LR13; separate from audit</i>")]
@@ -97,12 +105,22 @@ flowchart LR
   adminui -->|"HTTPS — authenticated"| valid
   valid --> api
   api --> rec
+  rec -.->|"initial request with more than three candidates"| ai
+  ai --> geminiAdapter
+  ai -->|"validated selection or deterministic fallback"| rec
+  api --> place
+  place --> placesAdapter
   api --> authz
   rec -->|"filtered query"| db
   authz -->|"account data, favorites, preferences, history, admin mutations"| db
   authz --> audit
   api -.-> consent
   api -.-> traffic
+
+  gemini["Gemini"]
+  google["Google Places"]
+  geminiAdapter -->|"compact candidates; selected IDs + reasons"| gemini
+  placesAdapter -->|"Place ID; attributed live details"| google
 ```
 
 **Stack.** React + TypeScript, Express.js + TypeScript, PostgreSQL, per the project charter §5.3.
@@ -111,9 +129,13 @@ flowchart LR
 
 **Restaurant diversity.** F19/B24 require the recommendation logic to fill distinct restaurant slots first when enough qualifying restaurants exist, then allow repeated restaurants only when needed to complete the shortlist without violating filters or exclusions.
 
+**Provider seams.** The AI shortlist module has one small interface implemented by a production Gemini adapter and a fake adapter used by tests. The place-details module has a separate small interface implemented by a production Google Places adapter and a fake adapter. This keeps provider configuration, timeouts, payload mapping, and failures local while recommendation validation and fallback remain testable through the same interfaces.
+
+**Stored provider data.** PostgreSQL stores only the optional unique Google Place ID on a restaurant. Gemini prompts/responses and Google ratings, hours, reviews, and response payloads remain transient and are not persisted.
+
 **Conditional elements.** The consent record and the traffic log are drawn dashed because their activating conditions are unresolved: consent evidence applies only if consent or Terms are used (LR14, LR15, LR16), and the traffic log applies only if an accountable human confirms Computer Crime Act §26 applicability (LR10, LR11, LR12, LR13). Traffic logs are a separate store from application audit logs (LR13). No raw GPS coordinate is stored (NFR7) — no GPS store appears in this diagram.
 
-**Traces to:** F1, F2, F3, F4, F5, F6, F7, F8, F14, F15, F17, F18, F19; LR1, LR2, LR3, LR6, LR7, LR8, LR10, LR11, LR12, LR13, LR14, LR15, LR16; NFR1, NFR4, NFR5, NFR6, NFR7; B9, B15, B16, B17, B19, B20, B22, B23, B24.
+**Traces to:** F1, F2, F3, F4, F5, F6, F7, F8, F14, F15, F17, F18, F19, F20, F21; LR1, LR2, LR3, LR6, LR7, LR8, LR10, LR11, LR12, LR13, LR14, LR15, LR16; NFR1, NFR4, NFR5, NFR6, NFR7, NFR13, NFR14, NFR15; B9, B15, B16, B17, B19, B20, B22, B23, B24, B25, B26.
 
 ---
 
@@ -140,10 +162,19 @@ flowchart TD
   relax -->|"[no]"| manual["Show no-match state with manual edit only"]
   manual --> s2
 
-  q -->|"[yes]"| diversify["Fill distinct restaurant slots first<br/><i>repeat a restaurant only when necessary</i>"]
-  diversify --> s3["Show up to three face-down cards"]
+  q -->|"[yes]"| diversify["Preselect up to six diverse candidates<br/><i>repeat a restaurant only when necessary</i>"]
+  diversify --> more{"More than three candidates?"}
+  more -->|"[yes]"| aiSelect["Gemini selects up to three<br/>and writes short reasons"]
+  aiSelect --> validAi{"AI selection valid?"}
+  validAi -->|"[yes]"| s3["Show up to three face-down cards"]
+  validAi -->|"[no / timeout / failure]"| fallback["Use deterministic selection"]
+  more -->|"[no]"| fallback
+  fallback --> s3
   s3 --> reveal["Reveal one card or เปิดทั้งหมด"]
   reveal --> d{"Reject revealed card?"}
+  reveal -.-> mapped{"Mapped Google Place?"}
+  mapped -->|"[yes]"| live["Fetch and show attributed live place details"]
+  mapped -->|"[no / error]"| unavailable["Keep card usable; show place details unavailable"]
   d -->|"[yes]"| s4["Exclude it and request one replacement"]
   s4 --> replacement{"Replacement found?"}
   replacement -->|"[yes]"| slot["Put replacement in same slot face-down"]
@@ -163,9 +194,9 @@ flowchart TD
   home --> done(((" ")))
 ```
 
-Filled circle = initial node. Bullseye = final node. Diamonds are decisions; guards are in square brackets. Reject replacement sends rejected and displayed menu-item IDs to the stateless recommendation API, which is what enforces non-repetition (F5, NFR9).
+Filled circle = initial node. Bullseye = final node. Diamonds are decisions; guards are in square brackets. Reject replacement sends rejected and displayed menu-item IDs to the stateless recommendation API, which is what enforces non-repetition (F5, NFR9), and the one-card replacement path bypasses Gemini (F20, NFR13).
 
-**Traces to:** F1, F2, F3, F4, F5, F6, F7, F19; NFR3, NFR8, NFR9, NFR12; B1–B7, B24; journey steps 1–5.
+**Traces to:** F1, F2, F3, F4, F5, F6, F7, F19, F20, F21; NFR3, NFR8, NFR9, NFR12, NFR13, NFR14; B1–B7, B24, B25, B26; journey steps 1–5.
 
 ---
 
@@ -173,10 +204,11 @@ Filled circle = initial node. Bullseye = final node. Diamonds are decisions; gua
 
 | Requirement group | Covered by |
 |---|---|
-| F1, F2, F3, F4, F5, F6, F7, F19 core workflow | D1, D2, D3, D4 |
+| F1, F2, F3, F4, F5, F6, F7, F19, F20, F21 core workflow | D1, D2, D3, D4; D2 remains unchanged because AI selection and live evidence are internal behavior of the existing shortlist/reveal use case, not new user goals |
 | F8 administration | D1, D2, D3 |
 | F12 random from filtered | D2 |
-| F10, F11, F13, F16 | Not covered — deferred, see `feature-list.md` |
+| F10, F11, F13 | Not covered — deferred, see `feature-list.md` |
+| F16 | Ratings are covered through F21 in D1, D3, and D4; promotions and delivery fees remain deferred |
 | F9 | Not covered — Won't have in the first release; manual `Zone` selection is used instead |
 | F14, F15, F17 registered-user library | D3 covers the persistent data store and authentication seam; detailed account screens are outside D4's anonymous-first core journey |
 | LR2, LR8 | D2, D3 |
@@ -186,5 +218,5 @@ Filled circle = initial node. Bullseye = final node. Diamonds are decisions; gua
 | LR5 | Not covered — attaches to F9 GPS, which is Won't have in the first release |
 | LR6, LR9 | Covered structurally by registered account data in D3; exact account deletion and retention behavior remains an implementation-plan and issue-level concern |
 | LR17 | Not a diagram concern — no certificate issuance appears anywhere |
-| NFR1, NFR3–NFR9, NFR12 | D3, D4 |
+| NFR1, NFR3–NFR9, NFR12–NFR15 | D3, D4 |
 | NFR2, NFR10, NFR11 | Verification concerns, not structural — see the specification |

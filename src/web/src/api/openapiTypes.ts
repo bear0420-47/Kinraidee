@@ -1122,6 +1122,79 @@ export interface paths {
         };
         trace?: never;
     };
+    "/api/restaurants/{restaurantId}/place-details": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    restaurantId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Transient Google Places evidence, or null when unavailable */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            data: {
+                                details: {
+                                    rating: number | null;
+                                    userRatingCount: number | null;
+                                    openNow: boolean | null;
+                                    weekdayDescriptions: string[];
+                                    googleMapsUri: string | null;
+                                    reviews: {
+                                        authorName: string;
+                                        authorUri: string | null;
+                                        rating: number | null;
+                                        relativePublishTimeDescription: string | null;
+                                        text: string | null;
+                                        publishTime: string | null;
+                                    }[];
+                                } | null;
+                            };
+                        };
+                    };
+                };
+                /** @description Restaurant not found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                requestId: string;
+                                fields?: {
+                                    [key: string]: string;
+                                };
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/restaurants": {
         parameters: {
             query?: never;
@@ -2852,6 +2925,7 @@ export interface components {
                     phone: string | null;
                     imageKey: string | null;
                     imageUrl: string | null;
+                    googlePlaceId: string | null;
                     /** Format: date-time */
                     deletedAt: string | null;
                     /** Format: date-time */
@@ -2884,6 +2958,7 @@ export interface components {
                     phone: string | null;
                     imageKey: string | null;
                     imageUrl: string | null;
+                    googlePlaceId: string | null;
                     /** Format: date-time */
                     deletedAt: string | null;
                     /** Format: date-time */
@@ -3107,6 +3182,11 @@ export interface components {
                         matchedTaste: boolean;
                         matchedFoodType: boolean;
                         matchedZone: boolean;
+                    };
+                    selection: {
+                        /** @enum {string} */
+                        source: "AI" | "DETERMINISTIC";
+                        reasonTh: string | null;
                     };
                 }[];
                 /** @description No-match suggestion. Null only when no active, non-excluded menu item exists, and for one-card replacements. */

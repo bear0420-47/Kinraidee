@@ -71,6 +71,10 @@ export const recommendationItemSchema = z.object({
     matchedFoodType: z.boolean(),
     matchedZone: z.boolean(),
   }),
+  selection: z.object({
+    source: z.enum(['AI', 'DETERMINISTIC']),
+    reasonTh: z.string().max(120).nullable(),
+  }),
 })
 
 // A filter value in a no-match suggestion. `BUDGET_RANGE` uses a BudgetRange value as its
@@ -142,6 +146,10 @@ export function parseRecommendationRequest(input: unknown) {
 export function toRecommendationItem(
   item: RecommendationCandidate,
   conditions: RecommendationConditions,
+  selection: RecommendationItem['selection'] = {
+    source: 'DETERMINISTIC',
+    reasonTh: null,
+  },
 ): RecommendationItem {
   const tastes = item.tastes
     .map(({ taste }) => taste)
@@ -186,5 +194,6 @@ export function toRecommendationItem(
       matchedFoodType: conditions.foodTypeId !== null,
       matchedZone: conditions.zoneId !== null,
     },
+    selection,
   }
 }

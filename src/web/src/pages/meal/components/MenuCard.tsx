@@ -17,6 +17,8 @@ import type {
   Slot,
 } from '@/schemas/meal/recommendationSchemas'
 import { MenuPhoto } from './MenuPhoto'
+import { AiSelectionReason } from './AiSelectionReason'
+import { PlaceDetailsPanel } from './PlaceDetailsPanel'
 import { RationaleList } from './RationaleList'
 
 type MenuCardProps = {
@@ -180,6 +182,8 @@ function RevealedCard({
       ) : null}
 
       <RationaleList rationale={item.rationale} />
+      <AiSelectionReason selection={item.selection} />
+      <PlaceDetailsPanel restaurantId={item.restaurant.id} />
 
       <div className="mt-auto flex flex-col gap-2 pt-2">
         <Button

@@ -2,7 +2,7 @@
 
 ## Status
 
-Approved — schema decisions locked through 2026-09-28. This file is the source of truth for Prisma model shape until the actual `src/api/prisma/schema.prisma` is implemented.
+Approved — schema decisions include the optional `Restaurant.googlePlaceId` amendment approved by the human project owner on 2026-10-24.
 
 Business workflows, endpoint behavior, permissions, and deletion flows are intentionally not defined here. Capture those in implementation issues and module specs.
 
@@ -112,6 +112,7 @@ model Restaurant {
   phone         String?
   imageKey      String?
   imageUrl      String?
+  googlePlaceId String?  @unique
   zoneId        String
   deletedAt     DateTime?
   createdAt     DateTime @default(now())
@@ -134,6 +135,7 @@ Fields:
 - `phone` — optional public contact phone number.
 - `imageKey` — optional application-owned image key; `null` when an approved external image URL is used instead. Development/test keys reference the internal upload directory; a future production object store may reuse the same contract.
 - `imageUrl` — optional delivered URL or approved external image URL. Internal development/test uploads use `/uploads/<generated-file>`; production uses approved external URLs until durable object storage is implemented.
+- `googlePlaceId` — optional unique mapping to the restaurant's Google Places record. It is the only Google Places value stored by Kinraidee; ratings, rating counts, opening information, reviews, Maps URIs, photos, and provider response payloads remain transient.
 - `zoneId` — foreign key to `Zone`.
 - `deletedAt` — soft-delete timestamp; `null` means the restaurant is available for catalog queries and recommendations.
 - `createdAt` — creation timestamp.
@@ -151,6 +153,7 @@ type Restaurant = {
   phone: string | null
   imageKey: string | null
   imageUrl: string | null
+  googlePlaceId: string | null
   zoneId: string
   deletedAt: string | null
   createdAt: string
@@ -647,7 +650,7 @@ Do not add these fields to locked catalog schemas unless a later approved issue 
 - Restaurant latitude or longitude.
 - User GPS storage.
 - Database-backed auth session tables.
-- Delivery fee, rating, opening hours, calories, or external provider data.
+- Delivery fee, rating, opening hours, calories, reviews, or external provider response data. The only exception is the optional `Restaurant.googlePlaceId` mapping identifier.
 - Image binary/blob columns.
 
 Models store an application-owned image key and delivered URL, or an approved external URL, never binary image data.

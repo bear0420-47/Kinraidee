@@ -2,7 +2,7 @@
 
 ## Status
 
-Approved — full-app build plan updated through 2026-09-28 decisions. Implementation work may begin from this plan; production deployment still requires separate approval.
+Approved — the AI-assisted selection and Google Places amendment was approved on 2026-10-24. The Firebase Hosting, Cloud Run, and Neon deployment architecture was approved on 2026-10-25. Creating or exposing production resources still requires separate explicit approval.
 
 ## Build Boundary
 
@@ -12,15 +12,19 @@ Approved — full-app build plan updated through 2026-09-28 decisions. Implement
 - Authentication uses email/password, Argon2id password hashes, and a JWT stored in an HTTP-only cookie with a 7-day lifetime.
 - Administrators manage zones, food types, tastes, restaurants, and menu items through protected APIs and admin screens.
 - Catalog and account data are stored in PostgreSQL through Prisma.
-- The web application deploys to Cloudflare Pages as a static Vite React SPA.
-- The Express API deploys to Koyeb as a stateless web service.
-- The approved production PostgreSQL provider is Koyeb Serverless Postgres once production deployment is explicitly approved; Prisma migrations remain provider-neutral so the database can move to Neon or another PostgreSQL provider if production quota or reliability requires it.
+- The web application deploys to Firebase Hosting as a static Vite React SPA with SPA fallback. Hosting rewrites `/api/**` to Cloud Run so browser traffic stays on one origin.
+- The Express API deploys as a stateless container to Cloud Run in `asia-southeast1` (Singapore), with `min instances = 0`, `max instances = 2`, one CPU, 512 MiB memory, concurrency 20, and a 30-second request timeout unless verification proves a change is required.
+- The approved production PostgreSQL provider is Neon in or nearest to Singapore. Cloud Run uses a pooled runtime connection; Prisma migrations use a direct connection. Prisma migrations and application queries remain provider-neutral PostgreSQL.
+- Google Secret Manager stores database credentials, JWT secret, provider keys, and initial administrator credentials. Artifact Registry stores the Cloud Run image.
 - Restaurant and menu-item images accept approved external URLs in every environment. Development/test may also use the internal `/uploads` directory; PostgreSQL stores only image keys and delivered URLs, never image blobs. Production internal uploads remain disabled until durable object storage is implemented.
 - Recommendation conditions and rejected menu-item IDs remain in web `sessionStorage`; they are not persisted in PostgreSQL.
 - The recommendation API is stateless and receives current conditions and rejected menu-item IDs with each request.
 - Registered users can save menu-item favorites, one set of default zone, food type, taste, and budget preferences, and selected-menu history.
 - Persistent food exclusions and detailed recommendation telemetry remain pending their separate privacy, retention, and schema decisions.
-- GPS, latitude/longitude, ordering, payment, delivery fulfillment, public reviews, and external restaurant-provider data remain out of scope.
+- GPS, latitude/longitude, ordering, payment, delivery fulfillment, user-published public reviews, external restaurant/menu catalog import, Google photos, promotions, and delivery fees remain out of scope.
+- The existing 13 active restaurants and 222 active menu items remain the authoritative catalog; 130 currently have photos and are recommendable under the existing photo rule. This amendment does not add another restaurant/menu import pipeline.
+- Gemini may select the initial shortlist only after the existing mandatory rules produce a restaurant-diverse eligible pool. Its provider path is optional and always has deterministic fallback.
+- Google Places may enrich a revealed mapped restaurant with transient live details and provider-returned reviews. PostgreSQL stores only the optional unique Place ID, not live ratings, hours, reviews, Maps URIs, photos, or response payloads.
 - Schema decisions in `docs/03-implementation/data-model.md` are the source of truth for Prisma model implementation.
 
 ## Proposed Sequence
@@ -43,7 +47,24 @@ Approved — full-app build plan updated through 2026-09-28 decisions. Implement
 12. Add focused unit, integration, authorization, validation, recommendation, accessibility, and verification checks.
 13. Run build, test, lint, typecheck, format, and required design/requirement audits; record exact results in `docs/verification.md`.
 14. Complete `docs/REVIEW.md`, resolve findings, and request human approval for the pull request.
-15. Request production deployment approval separately before creating or exposing public Cloudflare Pages, Koyeb API, Koyeb Postgres, or future production object-storage resources.
+15. Request production deployment approval separately before creating or exposing Firebase Hosting, Cloud Run, Neon production data, Secret Manager secrets, Artifact Registry images, or future production object-storage resources.
+
+## AI And Google Places Amendment Sequence
+
+The amended requirements and this plan were approved separately on 2026-10-24. Application-code implementation may proceed; production deployment remains separately gated.
+
+1. Approve F20, F21, amended NFR1, NFR13, NFR14, NFR15, B25, and B26. Completed 2026-10-24.
+2. Approve this implementation-plan amendment separately from the requirements approval. Completed 2026-10-24.
+3. Extend server environment validation for `GEMINI_API_KEY`, `GEMINI_MODEL`, and `GOOGLE_PLACES_API_KEY`, with explicit disabled/fallback behavior and no client exposure.
+4. Add the optional unique `Restaurant.googlePlaceId`, its Prisma migration, contracts, and catalog-source support. Do not add rating, review, hours, Maps URI, or provider-payload columns.
+5. Add a one-time matcher for the existing 13 restaurants. Persist only unambiguous Place IDs; require human resolution for ambiguous or missing candidates.
+6. Create two provider seams with production and fake adapters: `AiShortlistSelector` with a Gemini adapter, and `PlaceDetailsProvider` with a Google Places adapter. Keep timeout, provider payload mapping, and provider errors inside the adapters.
+7. Deepen the recommendation module: run existing hard filters and exclusions, preselect at most six restaurant-diverse candidates, make at most one Gemini call for eligible initial three-card requests, strictly validate selected IDs/reasons, and use deterministic fallback for timeout, provider error, malformed output, invalid selection, pools of three or fewer, and one-card replacement.
+8. Add public `GET /api/restaurants/:restaurantId/place-details`. It reads the stored Place ID, requests current details only after reveal, returns a minimized attributed response, and degrades to an unavailable state without blocking the core flow.
+9. Update `/meal` cards and confirmation content to distinguish genuine AI selection from deterministic rationale and to show Google Places loading, success, and unavailable states without using Google photos.
+10. Add focused tests for hard-filter invariants, restaurant diversity, the max-six and one-call cost guard, strict AI response validation, deterministic fallback, replacement/small-pool bypass, Place ID mapping, live-details minimization, required attribution, timeout/error behavior, and secret/log/bundle scans.
+11. Run `pnpm verify`, `pnpm format`, `node tests/wireframe-requirements.test.cjs`, requirement/design audits, and review; record exact results and pre-existing failures in `docs/verification.md`.
+12. Keep production deployment behind its existing separate human approval, including accountable review of transient Google reviewer attribution before public production.
 
 ## Deferred Work
 
@@ -51,7 +72,8 @@ Approved — full-app build plan updated through 2026-09-28 decisions. Implement
 - Detailed recommendation telemetry, including displayed shortlists, rejected menu-item IDs, and full recommendation-session conditions.
 - GPS and distance-based recommendation.
 - Group voting.
-- Promotions, delivery fees, ratings, and external restaurant integrations. Wait-time data is outside the product scope.
+- Promotions and delivery fees. Ratings are covered by the Google Places amendment; wait-time data remains outside the product scope.
+- External restaurant/menu catalog import. Google Places is used only for mapped live enrichment of the existing catalog.
 - Consent evidence schemas unless an approved feature activates consent requirements.
 - Computer Crime Act traffic-retention schemas unless accountable legal review confirms applicability.
 - Self-service password reset, email delivery, and password-reset token flows.
@@ -60,6 +82,7 @@ Approved — full-app build plan updated through 2026-09-28 decisions. Implement
 
 ## Implementation Decisions
 
+- Gemini model update (2026-10-24): the configured `gemini-2.5-flash-lite` returned `404 NOT_FOUND` and Google's API stated that it is no longer available to new users. The implementation uses `gemini-3.5-flash-lite`, the replacement named by the provider response, while keeping the model environment-configurable and preserving the same one-call/token/fallback guards.
 - Issue #27 uses `supertest` as an API test-only development dependency. The human approver accepted this deviation from the initial preference to use existing packages because it removes custom HTTP server lifecycle helpers while leaving production code and runtime dependencies unchanged.
 - Issues #29 and #31 use a minimum password length of 8 characters after trimming leading and trailing whitespace. Passwords have no uppercase, lowercase, number, or symbol composition requirement. Seed provisioning, registration, and login must apply the same normalization before hashing or verification.
 - Issue #40 uses route-scoped Multer 2 memory storage and `file-type` magic-byte detection for development/test-only JPEG, PNG, and WebP uploads. Production keeps the upload/delete contract registered but returns `503 UPLOAD_STORAGE_UNAVAILABLE` before multipart processing; `/uploads/*` is not served in production.
@@ -218,6 +241,20 @@ Authorization: public; anonymous and authenticated users use the same stateless 
 Tests: request validation and normalization, master-data validation, mandatory filters, soft-delete exclusion, shortlist limits, restaurant diversity, randomization invariants, rejected/displayed exclusion, response minimization, no-match suggestion (originally single-field relaxation priority; see the no-match suggestion decision), replacement no-result behavior, public route, OpenAPI, and warm p95 measurement
 ```
 
+## AI And Google Places Implementation Note
+
+```txt
+Module: AI-assisted recommendation selection and live restaurant-place details
+Requirement/backlog ID: F20, F21; B25, B26; existing F1-F5, F19
+Legal requirement ID: LR1, LR3, LR7; provider attribution terms
+Design artifact: feature list; user journey steps 3-4; design-system result cards; prototype reveal pattern; D1, D3, D4
+API routes: POST /api/recommendations; GET /api/restaurants/:restaurantId/place-details
+Web pages: /meal
+Personal data: transient meal conditions sent to Gemini; transient Google reviewer attribution returned to the browser; neither is persisted or logged
+Authorization: public, using the existing anonymous core flow; provider credentials remain server-only
+Tests: hard-filter invariants, max-six/one-call cost guard, strict AI response validation, deterministic fallback, replacement and small-pool bypass, Place ID mapping, live-details minimization, attribution, timeout/error behavior, and secret/log/bundle scans
+```
+
 ## Local API environment loading
 
 - API development/start and maintenance scripts use Node's optional `--env-file-if-exists=.env`, so local commands load `src/api/.env` without a shell-specific `source` step while deployed environments can continue injecting variables.
@@ -226,21 +263,41 @@ Tests: request validation and normalization, master-data validation, mandatory f
 
 ## Deployment Decisions
 
-- Web hosting: Cloudflare Pages.
-- Reason: the web app is a static Vite React SPA, Cloudflare Pages has no runtime cold start for static assets, its free tier is generous for static requests and bandwidth, and it supports team Git workflows.
-- Web conditions: configure SPA fallback for React Router, set `VITE_API_BASE_URL` per environment, and do not use Pages Functions in the first full-app pass.
-- API hosting: Koyeb.
-- API conditions: deploy the Express API from Git or a reproducible container, keep it stateless, expose `/health`, store configuration in environment variables, do not depend on local disk persistence, and accept free-tier sleep/cold-start and resource limits until production requirements justify a paid deployment.
-- Database hosting: Koyeb Serverless Postgres for the approved production environment.
-- Database conditions: use the standard PostgreSQL connection string through Prisma, do not use Koyeb-specific database features in application code, commit all Prisma migrations, and reassess Neon or another PostgreSQL provider only if production quota, latency, capacity, or reliability becomes insufficient.
+- Google Cloud project: use the human-owned project with available credits. Enable billing alerts and quotas before public traffic.
+- Web hosting: Firebase Hosting in the same Google Cloud project. Deploy the Vite output as static assets, configure React Router SPA fallback, and rewrite `/api/**` to the Cloud Run API.
+- Same-origin contract: build production web with `VITE_API_BASE_URL` set to the Firebase Hosting origin. The Hosting rewrite preserves the current HTTP-only `SameSite=Lax` authentication design without exposing the Cloud Run URL to browser code as a separate origin.
+- API hosting: Cloud Run in `asia-southeast1` (Singapore). Deploy a reproducible container, keep the API stateless, expose `/health`, allow unauthenticated network access for public routes, and continue enforcing authentication and roles inside the application for protected routes.
+- Cloud Run cost guard: start with `min instances = 0`, `max instances = 2`, one CPU, 512 MiB memory, concurrency 20, and a 30-second request timeout. Revisit only from recorded load or memory evidence.
+- Database hosting: Neon PostgreSQL in or nearest to Singapore. Runtime uses a pooled SSL connection and migration/maintenance commands use a direct SSL connection. Do not run migrations or seed during normal API container startup.
+- Migration and seed: run `prisma migrate deploy` as a controlled deployment job. Run `prisma db seed` only for initial provisioning or an explicitly approved catalog update. Initial administrator credentials exist only in the job's secret environment.
+- Secrets: Google Secret Manager owns `DATABASE_URL`, the direct migration URL, `JWT_SECRET`, `GEMINI_API_KEY`, `GOOGLE_PLACES_API_KEY`, `SEED_ADMIN_EMAIL`, and `SEED_ADMIN_PASSWORD`. No provider key uses a `VITE_` variable or enters the web bundle.
+- Container registry: Artifact Registry stores the API image. Cloud Run deploys an immutable image revision and retains the previous healthy revision for rollback.
+- Provider restrictions: restrict the Places key to Places API and the Gemini key to its required API where Google supports the restriction. Configure quotas and budget alerts before production traffic.
 - Development/test image storage: internal ignored directory served from `/uploads`; uploads require an authenticated administrator, validate actual image type and size, and use generated filenames.
-- Production image storage before the deferred R2 issue: approved external image URLs only. The local upload route and `/uploads` static serving remain disabled because Koyeb local disk is not durable application storage.
+- Production images: approved external image URLs only. Cloud Run local disk is ephemeral, so `LOCAL_UPLOADS_ENABLED=false`; the upload route and `/uploads` static serving remain unavailable in production.
 - Future durable object-storage integration must preserve the `imageKey`/`imageUrl` contract. Soft deletion keeps the referenced image; replacement removes a superseded internally owned object only after the database safely points to the new object.
+
+## Deployment Sequence
+
+This sequence prepares production deployment but does not authorize creating public resources. The human must approve production deployment immediately before resource creation or public exposure.
+
+1. Add Neon direct-connection configuration while keeping the pooled runtime connection separate.
+2. Add a reproducible multi-stage API `Dockerfile`, `.dockerignore`, and Artifact Registry/Cloud Build commands.
+3. Add Firebase project configuration, static asset rules, SPA fallback, and `/api/**` rewrite to Cloud Run.
+4. Create the Neon database in or nearest to Singapore and store pooled/direct URLs only in approved secret stores.
+5. Create Google Secret Manager entries and a least-privilege Cloud Run runtime identity.
+6. Build and push the immutable API image to Artifact Registry.
+7. Run the controlled Prisma migration job, then the one-time seed job, and verify 13 active restaurants, 222 active menu items, and seven verified Place IDs.
+8. Deploy Cloud Run with the approved limits and verify `/health` before directing Hosting traffic to it.
+9. Build the web with the Firebase Hosting origin as `VITE_API_BASE_URL`, then deploy Hosting and its Cloud Run rewrite.
+10. Run production smoke tests for SPA refresh, anonymous recommendation, login/cookie behavior, protected administration, Gemini selection/fallback, Google Places success/unavailable states, mobile layout, and secret/log scans.
+11. Record exact commands, revisions, URLs without secrets, migration result, seed result, costs/quotas, and smoke-test evidence in `docs/verification.md`.
+12. If verification fails, route Cloud Run traffic to the previous healthy revision and roll Firebase Hosting back to its previous release. The nullable Place ID migration remains backward-compatible.
 
 ## Deployment Boundary
 
 - Development and verification run locally by default.
-- Creating or exposing Cloudflare Pages, Koyeb API, Koyeb Postgres, or future production object-storage resources is treated as public production deployment.
+- Creating or exposing Firebase Hosting, Cloud Run, Neon production data, Secret Manager secrets, Artifact Registry images, or future production object-storage resources is treated as public production deployment.
 - Do not deploy publicly until the human explicitly approves production deployment after verification, privacy review, and deployment review.
 - Production deployment is blocked until an accountable human/legal reviewer confirms whether Computer Crime Act Section 26 traffic-log duties apply.
 - Do not implement traffic-log storage before that confirmation. `AuditLog` is not a substitute for legal traffic logs.

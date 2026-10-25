@@ -26,6 +26,7 @@ const restaurant = {
   phone: null,
   imageKey: null,
   imageUrl: null,
+  googlePlaceId: null,
   deletedAt: null,
   createdAt: new Date('2026-09-30T00:00:00.000Z'),
   updatedAt: new Date('2026-09-30T00:00:00.000Z'),
@@ -87,6 +88,17 @@ const repository = {
   findCandidates: vi.fn(),
   findSuggestionPool: vi.fn(),
 }
+const aiSelector = { select: vi.fn() }
+
+function candidate(id: string, restaurantId: string): RecommendationCandidate {
+  return {
+    ...menuItem,
+    id,
+    restaurantId,
+    restaurant: { ...restaurant, id: restaurantId },
+    tastes: menuItem.tastes.map((link) => ({ ...link, menuItemId: id })),
+  }
+}
 
 beforeEach(() => {
   vi.resetAllMocks()
@@ -94,6 +106,7 @@ beforeEach(() => {
   repository.findFoodType.mockResolvedValue(foodType)
   repository.findZone.mockResolvedValue(zone)
   repository.findCandidates.mockResolvedValue([menuItem])
+  aiSelector.select.mockResolvedValue(null)
 })
 
 describe('recommendations service', () => {
@@ -259,5 +272,92 @@ describe('recommendations service', () => {
     await service.recommend(fullRequest)
 
     expect(repository.findSuggestionPool).not.toHaveBeenCalled()
+  })
+
+  it('uses one AI selection from a compact diverse pool for an initial request', async () => {
+    const candidates = Array.from({ length: 8 }, (_, index) =>
+      candidate(`menu_${index + 1}`, `restaurant_${index + 1}`),
+    )
+    repository.findCandidates.mockResolvedValue(candidates)
+    aiSelector.select.mockResolvedValue([
+      { menuItemId: 'menu_1', reasonTh: 'ตรงกับเงื่อนไขที่เลือก' },
+      { menuItemId: 'menu_2', reasonTh: 'เพิ่มความหลากหลายของร้าน' },
+      { menuItemId: 'menu_3', reasonTh: 'อยู่ในงบและเป็นรสชาติที่เลือก' },
+    ])
+    const service = createRecommendationsService(
+      repository as never,
+      () => 0.999,
+      aiSelector,
+    )
+
+    const result = await service.recommend(fullRequest)
+
+    expect(aiSelector.select).toHaveBeenCalledOnce()
+    expect(aiSelector.select.mock.calls[0]?.[0].candidates).toHaveLength(6)
+    expect(result.items.map((item) => item.selection.source)).toEqual([
+      'AI',
+      'AI',
+      'AI',
+    ])
+    expect(result.items[0]?.selection.reasonTh).toBe('ตรงกับเงื่อนไขที่เลือก')
+  })
+
+  it('falls back when AI returns an unknown candidate ID', async () => {
+    repository.findCandidates.mockResolvedValue([
+      candidate('menu_1', 'restaurant_1'),
+      candidate('menu_2', 'restaurant_2'),
+      candidate('menu_3', 'restaurant_3'),
+      candidate('menu_4', 'restaurant_4'),
+    ])
+    aiSelector.select.mockResolvedValue([
+      { menuItemId: 'not-in-pool', reasonTh: 'invalid' },
+    ])
+    const service = createRecommendationsService(
+      repository as never,
+      () => 0.999,
+      aiSelector,
+    )
+
+    const result = await service.recommend(fullRequest)
+
+    expect(result.items).toHaveLength(3)
+    expect(
+      result.items.every((item) => item.selection.source === 'DETERMINISTIC'),
+    ).toBe(true)
+  })
+
+  it('falls back when the AI adapter rejects', async () => {
+    repository.findCandidates.mockResolvedValue([
+      candidate('menu_1', 'restaurant_1'),
+      candidate('menu_2', 'restaurant_2'),
+      candidate('menu_3', 'restaurant_3'),
+      candidate('menu_4', 'restaurant_4'),
+    ])
+    aiSelector.select.mockRejectedValue(new Error('provider timeout'))
+    const service = createRecommendationsService(
+      repository as never,
+      () => 0.999,
+      aiSelector,
+    )
+
+    const result = await service.recommend(fullRequest)
+
+    expect(result.items).toHaveLength(3)
+    expect(
+      result.items.every((item) => item.selection.source === 'DETERMINISTIC'),
+    ).toBe(true)
+  })
+
+  it('bypasses AI for replacement and pools of three or fewer', async () => {
+    const service = createRecommendationsService(
+      repository as never,
+      Math.random,
+      aiSelector,
+    )
+
+    await service.recommend(fullRequest)
+    await service.recommend({ ...fullRequest, count: 1 })
+
+    expect(aiSelector.select).not.toHaveBeenCalled()
   })
 })

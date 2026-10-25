@@ -1492,3 +1492,34 @@ New seed tests:
 - Grab screenshots and Grab images remain excluded from the repository and published UI.
 - Licensed stock-photo attribution and identifiable-person review requirements are unchanged.
 - No database schema, migration, API route, web page, or production deployment changed.
+
+## AI shortlist selection and Google Places evidence - 2026-10-25
+
+### Scope
+
+- Gemini selects the initial shortlist from at most six already eligible, restaurant-diverse candidates and returns strict JSON IDs with short Thai reasons.
+- Invalid output, timeout, unavailable configuration, or provider error uses deterministic fallback. Replacement and pools of three or fewer bypass Gemini.
+- Revealed cards request transient Google Places evidence through a separate public route. Only `Restaurant.googlePlaceId` is persisted.
+- Seven of the 13 restaurants received human-reviewed Place ID mappings. Six ambiguous or missing search results remain unmapped and degrade to the unavailable state.
+
+### Results
+
+| Command/check | Exit code | Result |
+|---|---:|---|
+| `pnpm --filter api prisma migrate deploy` | 0 | Applied `20261024180000_add_google_place_id` to the local database. |
+| `node --env-file-if-exists=.env --import tsx prisma/seed.ts` | 0 | Seeded the current catalog; 7 restaurant records updated with verified Place IDs and 759 records/links unchanged. |
+| `pnpm --filter api providers:verify` | 0 | Live smoke test: Gemini received 6 candidates and returned 3 valid candidate IDs; Google Places returned live details with a rating and 4 reviews for a mapped restaurant. No secret values were printed. |
+| `NODE_ENV=test pnpm --filter api recommendations:verify` | 0 | Deterministic path against 500 restaurants: first request 57.22 ms; warm p95 33.22 ms across 30 samples. Live AI is verified separately to avoid repeated paid calls. |
+| `pnpm verify` | 0 | Final typecheck, lint, tests, and builds pass. API: 76 files/613 tests. Web: 38 files/409 tests. |
+| `pnpm --filter api catalog:build --check` | 0 | Generated catalog is synchronized with source files and the seven Place ID mappings. |
+| Secret/bundle scan | 0 | Actual Gemini and Google Places key values occur zero times in tracked files and the production web bundle; no `.env` file is tracked. |
+| `git diff --check` | 0 | Pass. |
+| `pnpm format` | 1 | Existing generated-file gap remains: only `src/api/prisma/data/catalog.seed.json` fails Prettier while `catalog:build --check` requires its generated form. All web files pass. |
+| `node tests/wireframe-requirements.test.cjs` | 1 | Existing historical prototype result remains 20 passed/4 stale failures for English navigation/admin expectations. No wireframe file or test was changed. |
+
+### Provider notes
+
+- `gemini-2.5-flash-lite` returned `404 NOT_FOUND` for this API account. The provider named `gemini-3.5-flash-lite` as its replacement, so the environment-configurable default and local configuration were updated.
+- External provider timeout is 5 seconds. A diagnostic run confirmed `gemini-3.1-flash-lite` exceeded that limit, while the configured model completed structured JSON within the approved path.
+- The production web build passed with the pre-existing Vite warning that its main JavaScript chunk exceeds 500 kB.
+- One full web-test run had an unrelated logout navigation test fail intermittently; it passed alone and the repeated complete web suite passed all 409 tests.
