@@ -281,17 +281,17 @@ Tests: hard-filter invariants, max-six/one-call cost guard, strict AI response v
 
 ## Deployment Sequence
 
-This sequence prepares production deployment but does not authorize creating public resources. The human must approve production deployment immediately before resource creation or public exposure.
+The human approved production deployment on 2026-10-26. Steps 1-9 completed that day; verification and operational follow-up remain recorded below.
 
 1. Add Neon direct-connection configuration while keeping the pooled runtime connection separate.
 2. Add a reproducible multi-stage API `Dockerfile`, `.dockerignore`, and Artifact Registry/Cloud Build commands. Completed in the repository on 2026-10-25; no cloud resource was created.
 3. Add Firebase project configuration, static asset rules, SPA fallback, and `/api/**` rewrite to Cloud Run. Completed in the repository on 2026-10-25; no Firebase resource or preview channel was created.
-4. Create the Neon database in or nearest to Singapore and store pooled/direct URLs only in approved secret stores.
-5. Create Google Secret Manager entries and a least-privilege Cloud Run runtime identity.
-6. Build and push the immutable API image to Artifact Registry.
-7. Run the controlled Prisma migration job, then the one-time seed job, and verify 13 active restaurants, 222 active menu items, and seven verified Place IDs.
-8. Deploy Cloud Run with the approved limits and verify `/health` before directing Hosting traffic to it.
-9. Build the web with the Firebase Hosting origin as `VITE_API_BASE_URL`, then deploy Hosting and its Cloud Run rewrite.
+4. Create the Neon database in or nearest to Singapore and store pooled/direct URLs only in approved secret stores. Completed 2026-10-26.
+5. Create Google Secret Manager entries and a least-privilege Cloud Run runtime identity. Completed 2026-10-26.
+6. Build and push the immutable API image to Artifact Registry. Completed 2026-10-26.
+7. Run the controlled Prisma migration job, then the one-time seed job, and verify 13 active restaurants, 222 active menu items, and seven verified Place IDs. Completed 2026-10-26.
+8. Deploy Cloud Run with the approved limits and verify `/health` before directing Hosting traffic to it. Completed 2026-10-26.
+9. Build the web with the Firebase Hosting origin as `VITE_API_BASE_URL`, then deploy Hosting and its Cloud Run rewrite. Completed 2026-10-26.
 10. Run production smoke tests for SPA refresh, anonymous recommendation, login/cookie behavior, protected administration, Gemini selection/fallback, Google Places success/unavailable states, mobile layout, and secret/log scans.
 11. Record exact commands, revisions, URLs without secrets, migration result, seed result, costs/quotas, and smoke-test evidence in `docs/verification.md`.
 12. If verification fails, route Cloud Run traffic to the previous healthy revision and roll Firebase Hosting back to its previous release. The nullable Place ID migration remains backward-compatible.
@@ -318,7 +318,7 @@ Tests: Prisma schema validation with separate pooled/direct URLs and local direc
 
 - Development and verification run locally by default.
 - Creating or exposing Firebase Hosting, Cloud Run, Neon production data, Secret Manager secrets, Artifact Registry images, or future production object-storage resources is treated as public production deployment.
-- Do not deploy publicly until the human explicitly approves production deployment after verification, privacy review, and deployment review.
-- Production deployment is blocked until an accountable human/legal reviewer confirms whether Computer Crime Act Section 26 traffic-log duties apply.
+- The human explicitly approved and executed the initial production deployment on 2026-10-26.
+- Computer Crime Act Section 26 traffic-log applicability remains pending accountable human/legal review. Deployment does not silently treat the conditional requirement as inapplicable.
 - Do not implement traffic-log storage before that confirmation. `AuditLog` is not a substitute for legal traffic logs.
 - If Section 26 applies, approve a separate traffic-log schema, required fields, access rules, security controls, and retention configuration before production deployment.

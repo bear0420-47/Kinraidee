@@ -1610,4 +1610,48 @@ New seed tests:
 
 ### Deployment gate
 
-- The container image exists only in Artifact Registry. Deploying it to Cloud Run, running production migrations or seed, and exposing a public endpoint remain separate human-approved actions.
+- This gate was approved and executed later on 2026-10-26; see the production deployment evidence below.
+
+## Production deployment - 2026-10-26
+
+### Scope
+
+- Applied all three Prisma migrations to Neon through the direct maintenance connection.
+- Seeded the initial administrator and approved catalog through the direct connection; runtime keeps the pooled connection.
+- Deployed the immutable API image to Cloud Run and the Vite application to Firebase Hosting.
+- Firebase Hosting serves the SPA and rewrites `/api/**` to the pinned current Cloud Run revision.
+
+### Production resources
+
+| Resource | Result |
+|---|---|
+| Firebase Hosting | `https://kinraidee-512615.web.app` |
+| Cloud Run service | `kinraidee-api`, region `asia-southeast1` |
+| Cloud Run revision | `kinraidee-api-00002-bgk`, 100% traffic |
+| API image | `kinraidee-api:1d1297c1e1933466bdd75adc5cfe258aaaa1a487` |
+| Image digest | `sha256:c17d5c8b3b785ce45f770ffa2eb0c0381fa3df957ccb5cd29dd8a5da778c9d9f` |
+| Runtime limits | min 0, max 2, CPU 1, memory 512 MiB, concurrency 20, timeout 30 seconds |
+| Runtime identity | `kinraidee-api-runtime@kinraidee-512615.iam.gserviceaccount.com` |
+
+### Results
+
+| Command/check | Exit code | Result |
+|---|---:|---|
+| `prisma migrate deploy` through `DIRECT_DATABASE_URL` | 0 | Applied `20260928172507_init`, `20261007120000_preference_any_choices`, and `20261024180000_add_google_place_id`. |
+| Initial seed through direct maintenance connection | 0 | Seeded one administrator and 766 catalog records/links. Production local uploads remained disabled. |
+| Production aggregate check | 0 | Verified 13 active restaurants, 222 active menu items, seven mapped restaurants, and one administrator. No personal record values were printed. |
+| Seed optimization focused tests | 0 | `prisma/catalog-seed.test.ts` and `prisma/seed.test.ts`: 2 files/26 tests passed. Taste links now use one duplicate-safe batch insert; the remote initial transaction timeout is 120 seconds. |
+| `pnpm verify` after Firebase cookie fix | 0 | API: 76 files/613 tests. Web: 38 files/409 tests. Typecheck, lint, tests, API build, OpenAPI generation, and web build passed. |
+| Cloud Run `/health` | 0 | Returned HTTP 200 with `{"data":{"ok":true}}`. |
+| Cloud Run database smoke | 0 | Public `/api/zones` returned HTTP 200 with the three production zones. |
+| Firebase Hosting `/` and `/meal` | 0 | Both returned HTTP 200; `/meal` verified SPA fallback. |
+| Firebase Hosting `/api/zones` | 0 | Returned HTTP 200 through the Hosting-to-Cloud Run rewrite. |
+| Authentication through Hosting | 0 | Login returned 200, set the reserved `__session` HTTP-only cookie, and `/api/auth/me` returned 200 with that cookie. Initial testing found Firebase stripped the old cookie name; revision `00002-bgk` contains the verified fix. |
+| Recommendation smoke | 0 | Returned three items through Hosting; all three reported selection source `AI`. |
+| Google Places smoke | 0 | A mapped restaurant returned live details with four provider reviews through Hosting. |
+
+### Remaining operational checks
+
+- Google Cloud budget-alert amount and provider quota thresholds still require an explicit owner choice.
+- Computer Crime Act Section 26 traffic-log applicability remains pending accountable human/legal review; this deployment does not claim the conditional requirement is inapplicable.
+- Mobile visual QA and destructive protected-admin mutation smoke tests were not run against production.

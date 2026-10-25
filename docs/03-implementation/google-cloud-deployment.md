@@ -2,7 +2,7 @@
 
 ## Status
 
-Prepared but not executed. Creating Artifact Registry, Cloud Build, Cloud Run, Firebase Hosting, Secret Manager, or Neon production resources requires separate explicit human approval.
+Executed with explicit human approval on 2026-10-26. Production runs at `https://kinraidee-512615.web.app`, rewriting `/api/**` to Cloud Run service `kinraidee-api` in `asia-southeast1`.
 
 ## API Container
 
