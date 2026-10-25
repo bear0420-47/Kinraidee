@@ -5,7 +5,11 @@ FROM node:22-bookworm-slim AS base
 ENV PNPM_HOME=/pnpm
 ENV PATH=$PNPM_HOME:$PATH
 
-RUN corepack enable && corepack prepare pnpm@12.4.2 --activate
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends ca-certificates openssl \
+    && rm -rf /var/lib/apt/lists/* \
+    && corepack enable \
+    && corepack prepare pnpm@12.4.2 --activate
 
 WORKDIR /workspace
 
@@ -26,6 +30,7 @@ COPY src/api ./src/api
 RUN DATABASE_URL=postgresql://build:build@localhost:5432/build \
     DIRECT_DATABASE_URL=postgresql://build:build@localhost:5432/build \
     pnpm --filter api prisma generate
+RUN mkdir -p docs/03-implementation
 RUN pnpm --filter api build
 RUN pnpm --filter api deploy --prod --legacy /output/api \
     && generated_client="$(find /workspace/node_modules/.pnpm -path '*/node_modules/.prisma/client' -type d -print -quit)" \
