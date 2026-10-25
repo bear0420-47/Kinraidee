@@ -1586,3 +1586,28 @@ New seed tests:
 | Hosting cache/security-header review | 0 | Pass: only `/assets/**` receives immutable caching; `/index.html` receives `no-cache`; baseline headers contain no secret or environment-specific value. |
 | `git diff --check` and focused Prettier checks | 0 | Pass for Firebase configuration, runbook, plan, log, and verification additions. |
 | `pnpm verify` | 0 | Pass: typecheck, lint, API 76 files/613 tests, web 38 files/409 tests, API build, OpenAPI generation, and web build. |
+
+## Artifact Registry and Cloud Build - 2026-10-26
+
+### Scope
+
+- Enabled Artifact Registry and Cloud Build for Google Cloud project `kinraidee-512615`.
+- Created Docker repository `kinraidee` in `asia-southeast1` and granted its Cloud Build service account repository-writer access.
+- Granted that service account object-viewer access only on the project Cloud Build source bucket.
+- Built and pushed the API image with an immutable full-commit tag. No Cloud Run service or public endpoint was created.
+
+### Results
+
+| Command/check | Exit code | Result |
+|---|---:|---|
+| `gcloud services enable artifactregistry.googleapis.com cloudbuild.googleapis.com` | 0 | Both APIs enabled successfully. |
+| Artifact Registry repository creation and IAM binding | 0 | Created Docker repository `kinraidee` in Singapore; Cloud Build can push images to it. |
+| Initial `gcloud builds submit` | 1 | Diagnosed missing `storage.objects.get` on the Cloud Build source archive; fixed with bucket-scoped `roles/storage.objectViewer`. |
+| First remote Docker build | 1 | Diagnosed missing `/workspace/docs/03-implementation` during OpenAPI generation and missing OpenSSL in the build stage. No image was pushed. |
+| Dockerfile correction | 0 | Build stages install OpenSSL and create the generated OpenAPI output directory before the API build. |
+| Cloud Build `386f3a6e-fdb1-4b64-bfdd-a26057e2348b` | 0 | Built and pushed `kinraidee-api:a98bcac9d8d7c35e5f8b99a2f09ddbe3be9e447a` in 2m44s. |
+| Artifact Registry image listing | 0 | Verified digest `sha256:0d30f52c255ecc28a7c4c3c30dbf482dc19c6aad6dcc2c46a5246e0400e25c49` with the expected immutable tag. |
+
+### Deployment gate
+
+- The container image exists only in Artifact Registry. Deploying it to Cloud Run, running production migrations or seed, and exposing a public endpoint remain separate human-approved actions.
