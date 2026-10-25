@@ -94,11 +94,6 @@ export const restaurantSourceSchema = z.strictObject({
     pricesInclude: z
       .enum(['in-store', 'grab-delivery-markup', 'lineman-delivery-markup'])
       .optional(),
-    ownerConsent: z.strictObject({
-      given: z.boolean(),
-      by: textSchema.nullable(),
-      on: z.iso.date().nullable(),
-    }),
   }),
   menuItems: z.array(menuItemSourceSchema).min(1),
 })
