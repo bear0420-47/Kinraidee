@@ -1523,3 +1523,24 @@ New seed tests:
 - External provider timeout is 5 seconds. A diagnostic run confirmed `gemini-3.1-flash-lite` exceeded that limit, while the configured model completed structured JSON within the approved path.
 - The production web build passed with the pre-existing Vite warning that its main JavaScript chunk exceeds 500 kB.
 - One full web-test run had an unrelated logout navigation test fail intermittently; it passed alone and the repeated complete web suite passed all 409 tests.
+
+## Neon pooled/direct connection configuration - 2026-10-25
+
+### Scope
+
+- Prisma Client keeps using pooled `DATABASE_URL` for application queries.
+- Prisma Migrate uses non-pooled `DIRECT_DATABASE_URL` through the schema `directUrl` setting.
+- Local Prisma commands fall back to `DATABASE_URL` when a separate direct URL is absent. Production migration jobs receive the direct URL separately; the Cloud Run runtime does not need that credential.
+- No Neon or Google Cloud production resource was created.
+
+### Results
+
+| Command/check | Exit code | Result |
+|---|---:|---|
+| `env -u DIRECT_DATABASE_URL pnpm --filter api prisma validate` | 0 | Pass: local fallback supplies the direct connection from `DATABASE_URL`. |
+| `DATABASE_URL=<pooled-test-url> DIRECT_DATABASE_URL=<direct-test-url> pnpm --filter api prisma validate` | 0 | Pass: Prisma accepts separate pooled and direct PostgreSQL URLs. No database connection was opened by schema validation. |
+| `env -u DIRECT_DATABASE_URL pnpm --filter api prisma generate` | 0 | Pass: Prisma Client 6.19.3 generated with the local fallback configuration. |
+| `pnpm verify` | 0 | Pass: typecheck, lint, API 76 files/613 tests, web 38 files/409 tests, API build, OpenAPI generation, and web build. |
+| `git diff --check` and focused Prettier checks | 0 | Pass for all Step 2 changes. Prisma's formatter passes for `schema.prisma`. |
+| `pnpm format` | 1 | Existing generated-file gap remains: only `src/api/prisma/data/catalog.seed.json` fails Prettier; this Step 2 did not change it. |
+| `node tests/wireframe-requirements.test.cjs` | 1 | Existing historical result remains 20 passed/4 stale failures for English navigation/admin expectations. Step 2 changed no wireframe file or test. |

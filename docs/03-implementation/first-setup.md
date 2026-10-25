@@ -101,6 +101,7 @@ Use the API origin from `src/api/src/config/env.ts`. The scaffold default API po
 
 ```txt
 DATABASE_URL=postgresql://postgres:postgres@localhost:5432/kinraidee
+DIRECT_DATABASE_URL=postgresql://postgres:postgres@localhost:5432/kinraidee
 JWT_SECRET=<generate-local-secret>
 ARGON2_MEMORY_COST=19456
 ARGON2_TIME_COST=2
@@ -116,6 +117,7 @@ LOCAL_UPLOAD_MAX_BYTES=2097152
 Set these values for the local machine:
 
 - `DATABASE_URL`: local PostgreSQL connection string. Use the existing local PostgreSQL URL if verified. Otherwise use the committed Docker Compose default.
+- `DIRECT_DATABASE_URL`: direct PostgreSQL connection used by Prisma migrations. Local development may use the same value as `DATABASE_URL`; Neon production uses its non-pooled connection string.
 - `JWT_SECRET`: random local secret with at least 32 characters. Generate it locally; do not ask the human to invent one.
 - `ARGON2_MEMORY_COST`, `ARGON2_TIME_COST`, `ARGON2_PARALLELISM`: Argon2id password-hashing cost settings. Use the defaults; they match the OWASP Password Storage Cheat Sheet minimum for Argon2id.
 - `SEED_ADMIN_EMAIL`: email for the one initial administrator. The seed trims and lowercases this value before storage.

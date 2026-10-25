@@ -117,6 +117,7 @@ The amended requirements and this plan were approved separately on 2026-10-24. A
   - The one-step undo record.
 
   It is validated on read like the conditions. A no-match result is not stored, so a reload shows the summary again. Leaving the cards through `แก้เงื่อนไข` clears the shortlist and the rejected IDs, which starts a new recommendation session (F7).
+
 - Issue #54 turns the structured rationale into Thai copy that never reads as a failed filter: `matchedBudget` → `อยู่ในงบที่เลือก`; a matched taste, food type, or zone → `ตรงกับรสชาติที่เลือก` / `ตรงกับประเภทอาหารที่เลือก` / `อยู่ในโซนที่เลือก`; an unrestricted one → `เปิดรับรสชาติได้หลากหลาย` / `เปิดรับอาหารได้ทุกประเภท` / `เปิดรับได้ทุกโซน`.
 - Until #55 adds confirmation, a revealed card's `เลือกเมนูนี้` is shown disabled with `การยืนยันเมนูจะเปิดใช้งานเร็ว ๆ นี้`, the same pattern the human approver chose for #53. The card component already exposes a typed `onChoose` callback for #55.
 - Issue #55 enables `เลือกเมนูนี้` (its accessible name is `เลือกเมนู {menu}`) and opens one two-stage dialog:
@@ -293,6 +294,24 @@ This sequence prepares production deployment but does not authorize creating pub
 10. Run production smoke tests for SPA refresh, anonymous recommendation, login/cookie behavior, protected administration, Gemini selection/fallback, Google Places success/unavailable states, mobile layout, and secret/log scans.
 11. Record exact commands, revisions, URLs without secrets, migration result, seed result, costs/quotas, and smoke-test evidence in `docs/verification.md`.
 12. If verification fails, route Cloud Run traffic to the previous healthy revision and roll Firebase Hosting back to its previous release. The nullable Place ID migration remains backward-compatible.
+
+## Neon Connection Implementation Note
+
+```txt
+Module: Prisma deployment connection configuration
+Requirement/backlog ID: B10; approved Deployment Sequence step 1
+Legal requirement ID: LR7
+Design artifact: N/A — deployment configuration only
+API routes: N/A
+Web pages: N/A
+Personal data: no new data; database credentials remain server-side secrets
+Authorization: migration jobs are operator-only; the Cloud Run runtime receives only the pooled runtime URL
+Tests: Prisma schema validation with separate pooled/direct URLs and local direct-URL fallback; full repository verification
+```
+
+- `DATABASE_URL` is the pooled runtime connection used by Prisma Client in Cloud Run.
+- `DIRECT_DATABASE_URL` is the non-pooled connection used by Prisma Migrate and controlled maintenance jobs. It is not required in the Cloud Run runtime secret set.
+- Local development falls back from `DIRECT_DATABASE_URL` to `DATABASE_URL`, because local PostgreSQL does not use a separate pooler endpoint.
 
 ## Deployment Boundary
 
