@@ -1544,3 +1544,26 @@ New seed tests:
 | `git diff --check` and focused Prettier checks | 0 | Pass for all Step 2 changes. Prisma's formatter passes for `schema.prisma`. |
 | `pnpm format` | 1 | Existing generated-file gap remains: only `src/api/prisma/data/catalog.seed.json` fails Prettier; this Step 2 did not change it. |
 | `node tests/wireframe-requirements.test.cjs` | 1 | Existing historical result remains 20 passed/4 stale failures for English navigation/admin expectations. Step 2 changed no wireframe file or test. |
+
+## API container and Cloud Build preparation - 2026-10-25
+
+### Scope
+
+- Added a multi-stage Node.js 22 API container, repository Docker ignore rules, Cloud Build configuration, and an Artifact Registry runbook.
+- The runtime image installs only production API dependencies, runs as non-root, listens on port 8080, keeps uploads disabled, and does not run migrations or seed during startup.
+- Compiled ESM imports are rewritten to explicit `.js` paths. The generated Prisma Client is copied into the production dependency tree after `pnpm deploy`.
+- No image was pushed and no Google Cloud or Neon production resource was created.
+
+### Results
+
+| Command/check | Exit code | Result |
+|---|---:|---|
+| Prisma generate with non-secret build URLs, then `pnpm --filter api build` | 0 | Pass: Prisma Client generated without a database connection; TypeScript and OpenAPI build completed. |
+| Production `pnpm deploy` package simulation | 0 | Pass: 157 production packages installed; Argon2 native installation completed. |
+| Compiled package runtime smoke | 0 | Pass after the ESM and Prisma packaging fixes: production-mode `node dist/server.js` started and `GET /health` returned `{"data":{"ok":true}}`. |
+| Container secret boundary review | 0 | `.dockerignore` excludes `.env`, local uploads, source assets, docs, evidence, tests, build output, and web source. Database/provider secrets are not Docker build arguments or image layers. |
+| `git diff --check` and focused Prettier checks | 0 | Pass for the container, Cloud Build, runbook, plan, log, and package-script changes. |
+| `pnpm verify` | 0 | Pass: typecheck, lint, API 76 files/613 tests, web 38 files/409 tests, API build, OpenAPI generation, and web build. |
+| `pnpm format` | 1 | Existing generated-file gap remains: only `src/api/prisma/data/catalog.seed.json` fails the API Prettier check. |
+| `node tests/wireframe-requirements.test.cjs` | 1 | Existing historical result remains 20 passed/4 stale English navigation/admin assertions. No wireframe file or test changed. |
+| Local Docker/Cloud CLI execution | N/A | Docker and `gcloud` are not installed in this environment. The production package stages were reproduced locally; the first actual image build remains the controlled Cloud Build step after deployment approval. |

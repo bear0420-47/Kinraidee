@@ -283,7 +283,7 @@ Tests: hard-filter invariants, max-six/one-call cost guard, strict AI response v
 This sequence prepares production deployment but does not authorize creating public resources. The human must approve production deployment immediately before resource creation or public exposure.
 
 1. Add Neon direct-connection configuration while keeping the pooled runtime connection separate.
-2. Add a reproducible multi-stage API `Dockerfile`, `.dockerignore`, and Artifact Registry/Cloud Build commands.
+2. Add a reproducible multi-stage API `Dockerfile`, `.dockerignore`, and Artifact Registry/Cloud Build commands. Completed in the repository on 2026-10-25; no cloud resource was created.
 3. Add Firebase project configuration, static asset rules, SPA fallback, and `/api/**` rewrite to Cloud Run.
 4. Create the Neon database in or nearest to Singapore and store pooled/direct URLs only in approved secret stores.
 5. Create Google Secret Manager entries and a least-privilege Cloud Run runtime identity.

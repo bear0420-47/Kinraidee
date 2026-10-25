@@ -1,0 +1,105 @@
+# Google Cloud Deployment Runbook
+
+## Status
+
+Prepared but not executed. Creating Artifact Registry, Cloud Build, Cloud Run, Firebase Hosting, Secret Manager, or Neon production resources requires separate explicit human approval.
+
+## API Container
+
+The repository-root build context is required because the API uses the workspace lockfile and shared TypeScript configuration.
+
+```sh
+docker build --target runtime --file src/api/Dockerfile --tag kinraidee-api:local .
+```
+
+The runtime image:
+
+- uses Node.js 22 on Debian;
+- contains production API dependencies and compiled output only;
+- generates Prisma Client during the build without connecting to a database;
+- rewrites compiled ESM imports to explicit `.js` paths so Node can start the output directly;
+- runs as the non-root `node` user;
+- listens on Cloud Run's default port `8080`;
+- does not run migrations or seed during startup;
+- keeps local uploads disabled.
+
+Run a local container with throwaway test configuration:
+
+```sh
+docker run --rm --publish 8080:8080 \
+  --env NODE_ENV=production \
+  --env PORT=8080 \
+  --env DATABASE_URL=postgresql://test:test@host.docker.internal:5432/kinraidee \
+  --env JWT_SECRET=replace-with-a-local-secret-at-least-32-characters \
+  --env CORS_ALLOWED_ORIGINS=http://localhost:5173 \
+  --env LOCAL_UPLOADS_ENABLED=false \
+  kinraidee-api:local
+```
+
+Then verify:
+
+```sh
+curl --fail http://localhost:8080/health
+```
+
+The health endpoint does not prove database connectivity. Database, migration, seed, authentication, Gemini, and Google Places checks remain separate deployment smoke tests.
+
+## Artifact Registry And Cloud Build
+
+Do not run this section until production resource creation is explicitly approved.
+
+Choose the non-secret identifiers:
+
+```sh
+GCP_PROJECT_ID=<google-cloud-project-id>
+GCP_REGION=asia-southeast1
+ARTIFACT_REPOSITORY=kinraidee
+IMAGE_NAME=kinraidee-api
+IMAGE_TAG=<full-git-commit-sha>
+```
+
+Authenticate and select the project:
+
+```sh
+gcloud auth login
+gcloud config set project "$GCP_PROJECT_ID"
+```
+
+Enable the required build and registry APIs:
+
+```sh
+gcloud services enable artifactregistry.googleapis.com cloudbuild.googleapis.com
+```
+
+Create the Docker repository once:
+
+```sh
+gcloud artifacts repositories create "$ARTIFACT_REPOSITORY" \
+  --repository-format=docker \
+  --location="$GCP_REGION" \
+  --description="Kinraidee deployment images"
+```
+
+Build and push an immutable commit-tagged image:
+
+```sh
+gcloud builds submit . \
+  --config=cloudbuild.api.yaml \
+  --substitutions=_REGION="$GCP_REGION",_REPOSITORY="$ARTIFACT_REPOSITORY",_IMAGE_NAME="$IMAGE_NAME",_IMAGE_TAG="$IMAGE_TAG"
+```
+
+Expected image reference:
+
+```txt
+asia-southeast1-docker.pkg.dev/<google-cloud-project-id>/kinraidee/kinraidee-api:<full-git-commit-sha>
+```
+
+Record the immutable image digest returned by Artifact Registry before Cloud Run deployment. Do not deploy the mutable `latest` tag.
+
+## Secrets And Database Boundary
+
+- Cloud Run runtime receives pooled `DATABASE_URL`, not `DIRECT_DATABASE_URL`.
+- The controlled migration job receives direct `DIRECT_DATABASE_URL`.
+- Neither connection string is a Docker build argument or image layer.
+- `JWT_SECRET`, `GEMINI_API_KEY`, and `GOOGLE_PLACES_API_KEY` enter only through Secret Manager at runtime.
+- Initial administrator credentials enter only the one-time seed job.
