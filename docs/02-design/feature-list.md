@@ -8,7 +8,7 @@ Approved — synchronized with the approved backlog; AI/Places additions were ap
 
 | Feature | Core | What it does | Traces to |
 |---|:--:|---|---|
-| **Get a meal shortlist** | ★ | Enter budget, taste, food type, and zone, then receive up to three qualifying choices with price, zone, available decision details, and a rationale. | F1, F2, F3; B1, B2, B3; P1, P3, P5, P6, P7, P8 |
+| **Get a meal shortlist** | ★ | Enter budget, taste, food type, and zone, then receive up to three qualifying choices, or immediately visible closest menus when none match; show price, zone, decision details, and each alternative's differences against the original filters. | F1, F2, F3; B1, B2, B3; OA3; P1, P3, P5, P6, P7, P8 |
 | Reject and replace | | Reject a choice and get a non-duplicate replacement; a rejected choice does not return in the same session. | F4, F5; B4, B5; P3, P4 |
 | Restart or edit the session | | Edit the conditions or start a new session, clearing rejected choices. | F7; B7; P1, P2 |
 | Use it without an account | | The whole core workflow runs with no sign-in and no optional personalization consent. | F6, LR2; B6; P1 |

@@ -1,4 +1,4 @@
-import { House } from '@phosphor-icons/react'
+import { ForkKnife, House } from '@phosphor-icons/react'
 import { Link, useLocation } from 'react-router'
 
 import { buttonClassName } from '@/components/Button'
@@ -35,11 +35,17 @@ export function SiteHeader() {
 
   return (
     <header className="border-b-2 border-paper bg-canvas">
-      <div className="mx-auto flex max-w-shell items-center justify-between gap-2 px-4 sm:gap-4 py-3">
+      <div className="mx-auto flex max-w-shell items-center justify-between gap-2 px-5 py-4 sm:gap-4">
         <Link
           to="/"
-          className="rounded-md font-brand text-card-title leading-none"
+          className="inline-flex shrink-0 items-center gap-2 rounded-md font-brand text-card-title leading-none max-sm:text-body sm:gap-3"
         >
+          <span
+            aria-hidden
+            className="grid size-9 place-items-center rounded-tl-sm rounded-tr-xs rounded-bl-xs rounded-br-md border-2 border-paper bg-peach shadow-sm max-sm:size-8"
+          >
+            <ForkKnife size={20} weight="bold" />
+          </span>
           Kinraidee
         </Link>
         {isPending ? null : (

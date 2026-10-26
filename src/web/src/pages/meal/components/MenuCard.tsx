@@ -12,9 +12,11 @@ import { FoodTypeIcon } from '@/lib/foodTypeIcons'
 import { formatPrice } from '@/lib/formatPrice'
 import { TasteIcon } from '@/lib/tasteIcons'
 import { toFavoriteMenuItem } from '@/schemas/favorites/favoriteSchemas'
-import type {
-  RecommendationItem,
-  Slot,
+import {
+  conditionDifferences,
+  type RecommendationConditions,
+  type RecommendationItem,
+  type Slot,
 } from '@/schemas/meal/recommendationSchemas'
 import { MenuPhoto } from './MenuPhoto'
 import { AiSelectionReason } from './AiSelectionReason'
@@ -25,6 +27,8 @@ type MenuCardProps = {
   // 1-based position, used in labels such as `การ์ดใบที่ 2`.
   position: number
   slot: Slot
+  // Original filters, supplied only for automatically shown closest alternatives.
+  comparisonConditions?: RecommendationConditions | undefined
   // A replacement for this card is being requested.
   replacing: boolean
   // Another request is in flight, so card actions wait.
@@ -43,7 +47,7 @@ export function chooseButtonId(menuItemId: string) {
 }
 
 const cardClassName =
-  'flex h-full flex-col gap-3 rounded-md border-2 border-paper p-4 shadow-md'
+  'flex h-full min-h-72 flex-col gap-3 rounded-xl border-2 border-paper p-4 shadow-md'
 
 // One shortlist card. Every state is named in text, so it never relies on colour or motion.
 export function MenuCard(props: MenuCardProps) {
@@ -55,7 +59,7 @@ export function MenuCard(props: MenuCardProps) {
         className={`${cardClassName} items-center justify-center bg-canvas-soft`}
       >
         <p role="status" className="font-bold">
-          กำลังหาเมนูใหม่…
+          กำลังหาเมนูใหม่ให้นะ…
         </p>
       </div>
     )
@@ -67,10 +71,10 @@ export function MenuCard(props: MenuCardProps) {
         className={`${cardClassName} justify-center bg-canvas-soft text-center`}
       >
         <p id={focusTargetId} tabIndex={-1} className="font-bold">
-          ไม่มีตัวเลือกเพิ่มแล้ว
+          รอบนี้ไม่มีเมนูเพิ่มแล้ว
         </p>
         <p className="text-small text-muted">
-          ไม่มีเมนูอื่นที่ตรงกับเงื่อนไขสำหรับการ์ดใบที่ {position}
+          รอบนี้ยังไม่มีเมนูอื่นมาแทน ลองเปลี่ยนตัวเลือกหรือเริ่มใหม่ได้นะ
         </p>
       </div>
     )
@@ -107,7 +111,11 @@ function RevealedCard({
   focusTargetId,
   onReject,
   onChoose,
+  comparisonConditions,
 }: MenuCardProps & { item: RecommendationItem }) {
+  const differences = comparisonConditions
+    ? conditionDifferences(item, comparisonConditions)
+    : []
   return (
     <article
       aria-labelledby={focusTargetId}
@@ -115,7 +123,10 @@ function RevealedCard({
     >
       {/* A short strip across the card top, so a revealed card fits on screen. */}
       <div className="relative -mx-4 -mt-4">
-        <MenuPhoto item={item} className="h-40 rounded-t-[10px] border-b-2" />
+        <MenuPhoto
+          item={item}
+          className="h-32 rounded-t-lg border-b-2 sm:h-40"
+        />
         <FavoriteButton
           menuItem={toFavoriteMenuItem(item)}
           className="absolute right-3 top-3"
@@ -137,9 +148,6 @@ function RevealedCard({
             {formatPrice(item.price)}
           </p>
         </div>
-        <p lang="en" className="text-small text-muted">
-          {item.name.en}
-        </p>
       </div>
 
       <ul className="flex flex-col gap-1 text-small">
@@ -147,18 +155,21 @@ function RevealedCard({
           <Storefront aria-hidden size={18} weight="bold" />
           {item.restaurant.name.th}
         </li>
-        <li className="flex items-center gap-2">
-          <MapPin aria-hidden size={18} weight="bold" />
-          {item.zone.name.th}
-        </li>
-        <li className="flex items-center gap-2">
-          <FoodTypeIcon
-            aria-hidden
-            icon={item.foodType.icon}
-            size={18}
-            weight="bold"
-          />
-          {item.foodType.name.th}
+        <li className="flex flex-wrap gap-x-3 gap-y-1">
+          <span className="flex items-center gap-2">
+            <MapPin aria-hidden size={18} weight="bold" className="shrink-0" />
+            {item.zone.name.th}
+          </span>
+          <span className="flex items-center gap-2">
+            <FoodTypeIcon
+              aria-hidden
+              icon={item.foodType.icon}
+              size={18}
+              weight="bold"
+              className="shrink-0"
+            />
+            {item.foodType.name.th}
+          </span>
         </li>
       </ul>
 
@@ -181,10 +192,14 @@ function RevealedCard({
         </ul>
       ) : null}
 
-      <RationaleList rationale={item.rationale} />
-      <AiSelectionReason selection={item.selection} />
-      <PlaceDetailsPanel restaurantId={item.restaurant.id} />
-
+      <RationaleList
+        compact
+        rationale={item.rationale}
+        differences={differences}
+      />
+      {!comparisonConditions ? (
+        <AiSelectionReason selection={item.selection} />
+      ) : null}
       <div className="mt-auto flex flex-col gap-2 pt-2">
         <Button
           id={chooseButtonId(item.id)}
@@ -198,13 +213,24 @@ function RevealedCard({
         <Button
           variant="secondary"
           disabled={busy}
-          aria-label={`ไม่เอาเมนู ${item.name.th}`}
+          aria-label={`ขอดูเมนูอื่นแทน ${item.name.th}`}
           onClick={onReject}
         >
           <ThumbsDown aria-hidden weight="bold" />
-          ไม่เอาเมนูนี้
+          ขอดูเมนูอื่น
         </Button>
       </div>
+      <details className="text-small">
+        <summary className="min-h-11 cursor-pointer rounded-xs py-3 font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper">
+          ดูรายละเอียดเมนูและร้าน
+        </summary>
+        <div className="flex flex-col gap-3 pt-2">
+          <p lang="en" className="text-small text-muted">
+            {item.name.en}
+          </p>
+          <PlaceDetailsPanel restaurantId={item.restaurant.id} />
+        </div>
+      </details>
     </article>
   )
 }

@@ -83,11 +83,16 @@ export function replaceCard(
   if (previous?.kind !== 'card') return shortlist
 
   return {
+    ...shortlist,
     slots: shortlist.slots.map((slot, index) =>
       index !== slotIndex
         ? slot
         : replacement
-          ? { kind: 'card', item: replacement, revealed: false }
+          ? {
+              kind: 'card',
+              item: replacement,
+              revealed: !!shortlist.closestConditions,
+            }
           : { kind: 'exhausted' },
     ),
     rejectedMenuItemIds: [...shortlist.rejectedMenuItemIds, previous.item.id],
@@ -102,6 +107,7 @@ export function undoReject(shortlist: Shortlist): Shortlist {
   if (!undo) return shortlist
 
   return {
+    ...shortlist,
     slots: shortlist.slots.map((slot, index) =>
       index === undo.slotIndex ? undo.previous : slot,
     ),

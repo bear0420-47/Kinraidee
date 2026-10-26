@@ -1,5 +1,9 @@
 # Kinraidee Visual Prototype Reference
 
+Choice-screen theme correction approved 2026-10-26: replace the rejected dark question band with a full-width ink heading on white, a small peach `ข้อ N จาก 4` label below it beside the hint, and cream option cards. Yellow remains reserved for checked choices. Keep existing fonts/icons/outlined paper treatment and all interaction behavior. This supersedes the earlier dark-band visual direction only.
+
+Compact meal presentation approved 2026-10-26: React questions use one grouped header-progress marker and concise pointer help with full accessible keyboard instructions. Result cards show the preserved original answers as editable chips, keep decision facts and closest differences visible, omit unrestricted rationale lines, and disclose English name/Google evidence through `ดูรายละเอียดเมนูและร้าน` after menu actions. Multi-card mobile rails expose the next edge and `ใบที่ N จาก M`; desktop remains a grid. Reuse existing tokens, native disclosure and summary-return editing. This supersedes earlier full-width mobile/progress/rationale presentation below without changing journey order or API behavior.
+
 ## Status
 
 Visual style approved — 2026-09-28. The AI/Places reveal pattern was approved by the human project owner on 2026-10-24. Product flow and feature behavior shown inside `wireframe.html` are exploratory and are not approved by this status.
@@ -18,6 +22,8 @@ Use it to understand:
 Do not use it as a source of product requirements, API contracts, persistence rules, or approved user-flow steps. Those come from the specification, backlog, `user-journey.md`, data model, and implementation issues.
 
 ## Approved Visual Language
+
+Condition-choice presentation (human theme correction, 2026-10-26): reuse ChoiceStep for all four questions, with a white body, full-width ink heading, small peach progress label, and cream ink-outlined choice cards with existing shadows. Selected cards show yellow and a check icon; keyboard focus remains explicit. Reuse existing type/spacing/color tokens and preserve copy, values, native radio behavior, pointer progression and keyboard Next. Result, Home and other screens retain their current appearance.
 
 The approved visual direction is:
 
@@ -55,7 +61,7 @@ Authenticated header decision: show `บัญชีของฉัน` for `USE
 
 Authentication navigation decision: use dedicated `/login` and `/register` pages, not modal forms. Preserve recommendation state in `sessionStorage` while navigating to authentication. Successful login returns to the safe internal page/step that initiated login; login started from Home returns Home.
 
-Budget visual options: show `ไม่เกิน ฿50`, `฿50–100`, `฿101–200`, and `มากกว่า ฿200` as quick-select chips/cards. No option is selected by default.
+Budget visual options: show `ต่ำกว่า ฿50`, `฿50–100`, `฿101–200`, and `มากกว่า ฿200` as quick-select chips/cards. No option is selected by default.
 
 Taste visual options: render admin-managed `Taste` records ordered by `sortOrder`, plus a special `อะไรก็ได้` option. `อะไรก็ได้` is a UI filter choice, not a persisted `Taste` row.
 
@@ -63,17 +69,19 @@ Food-type visual options: render admin-managed `FoodType` records ordered by `so
 
 Zone visual options: render admin-managed `Zone` records ordered by `sortOrder`, plus a special `ที่ไหนก็ได้` option. `ที่ไหนก็ได้` is a UI filter choice, not a persisted `Zone` row. Do not show GPS/current-location controls in the first release.
 
-Recommendation reveal pattern: use a shuffle-card metaphor. The condition summary primary CTA is `สับการ์ดเมนู`; loading copy is `กำลังสับการ์ดเมนู...`; the result view shows up to three face-down cards. Users can reveal cards one by one, use `เปิดทั้งหมด`, or select an already revealed menu without revealing the rest. The recommendation API returns the complete filtered shortlist before reveal. An AI-selected card shows `AI เลือกให้` and its short reason; deterministic fallback keeps the current rationale without an AI label.
+Recommendation reveal pattern: use a shuffle-card metaphor. The condition summary primary CTA is `หาเมนูกัน`; loading copy is `กำลังหาเมนูให้นะ…`; the result view shows up to three face-down cards. Users can reveal cards one by one, use `เปิดทั้งหมด`, or select an already revealed menu without revealing the rest. The recommendation API returns the complete filtered shortlist before reveal. An AI-selected card shows `AI เลือกให้` and its short reason; deterministic fallback keeps the current rationale without an AI label.
 
 Google Places evidence pattern: revealing a mapped restaurant begins a separate live-details request. Menu details and actions remain usable while the evidence panel loads. Success may show rating, rating count, opening information, a Maps link, and attributed provider-returned reviews. Missing mapping, timeout, provider error, or unavailable fields show a compact unavailable state and do not remove or replace the card. Google photos are not displayed.
 
-Reject/undo pattern: rejecting a revealed card replaces that slot with one new face-down card and shows a `เลิกทำ` toast. Undo restores the original card in the same slot and reveal state, removes the replacement, and removes the original menu ID from the session rejected IDs.
+Reject/undo pattern: rejecting a revealed card replaces that slot with one new face-down card and shows a `เอาเมนูเดิมกลับมา` toast. Undo restores the original card in the same slot and reveal state, removes the replacement, and removes the original menu ID from the session rejected IDs.
 
 Stock photo pattern: dish photos taken from Unsplash show a `ภาพประกอบ` label on the photo, and the cards view credits Unsplash below the cards (see `design-system.md`).
 
 Confirmation pattern: selecting a revealed card opens a two-stage dialog with menu name, restaurant, price, zone, image, and recommendation rationale. Stage 1 actions are `เอาเมนูนี้แหละ` and `ขอคิดอีกที`. `เอาเมนูนี้แหละ` confirms the decision and moves to a success state; `ขอคิดอีกที` returns to the same revealed-card state. The success state has one action, `กลับหน้าหลัก`, which clears the current flow and returns Home. Only confirmation by a logged-in user writes selected-menu history; revealing or opening a card does not.
 
-No-match pattern: when no menu satisfies all selected conditions, suggest the fewest filter changes that are proven to produce at least one result (see `user-journey.md`). The message names every change, such as `ถ้าเปลี่ยนพื้นที่จาก “คชพล” เป็น “ตลาดฟ้าไทย” จะพบ 4 เมนู`, joining several changes with `และ`. The panel has two actions only: `ใช้เงื่อนไขนี้แล้วสับใหม่` and `แก้เงื่อนไขเอง`. If no menu is available at all, explain that the current catalog has no matching menu and show only `แก้เงื่อนไขเอง`; Home remains reachable through the header. The cards view has `แก้เงื่อนไข` and `เริ่มใหม่`; `เริ่มใหม่` clears the flow and returns to question 1.
+No-match pattern: follow the OA3 closest-menu contract below. The former explicit suggested-filter apply step is superseded.
+
+Condition interaction refinement approved on 2026-10-26: pointer activation selects and advances immediately; keyboard arrow/Space selection stays on the question with explicit Next. Explain this before the choices. Saved defaults remain reviewable, and activating an already-selected choice also advances. An edit opened from the summary returns directly after committing with pointer activation or `ใช้คำตอบนี้`.
 
 ## Mock Elements That Are Not Requirements
 
@@ -87,6 +95,14 @@ The following elements currently appear in `wireframe.html` but must not be impl
 - Any account, password, or admin behavior not present in the approved specification and plan.
 
 These elements may remain in the HTML as exploratory mock content until the reference artifact is cleaned up. They do not override Won't-have or deferred decisions.
+
+## Closest menus — OA3, approved 2026-10-26
+
+Mobile browsing amendment (2026-10-26): below 640px, step 4 presents one existing card at a time in a native horizontal swipe/snap rail rather than vertically stacking all cards. A multi-card swipe hint and numbered navigation expose the available positions; keyboard/button navigation complements touch. Native vertical page scrolling remains possible. Swiping does not reveal, reject, select, or confirm a menu. Existing buttons retain those actions. One slot hides the redundant pager; desktop/tablet retains the grid. Result counts, recommendation rules and journey order are unchanged.
+
+Desktop/mobile presentation refinement (2026-10-26): the result heading is the page h1. Omit the condition-entry title and duplicate result-progress badge; retain the no-match status message. Choose/reject actions follow menu details and differences, before optional Google evidence. Use the same flow on phone and desktop with the existing responsive grid; no selection/ranking/API change.
+
+Journey step 3 tries exact conditions, then loads the existing minimal-change suggestion once if empty. Show up to three revealed cards under `เมนูใกล้เคียงที่น่าลอง`, announce `ยังไม่มีเมนูตรงทุกข้อ ลองดูเมนูใกล้เคียงพวกนี้นะ`, preserve original filters, and offer `เปลี่ยนตัวเลือก` as secondary. Cards and confirmation show actual differences including budget excess; alternate-request rationale/AI claims are hidden. Step 4 replacement/undo keeps the same comparison context and exclusions. Step 5 requires explicit menu confirmation. Empty/error paths remain recoverable.
 
 ## Core Visual Screens
 

@@ -10,7 +10,7 @@ import {
   type Shortlist,
   type StoredFlow,
 } from '@/schemas/meal/recommendationSchemas'
-import { startShortlist } from '@/schemas/meal/shortlist'
+import { revealAll, startShortlist } from '@/schemas/meal/shortlist'
 
 // Storage can be unavailable (private mode, blocked site data); the flow then lives in memory.
 function readStoredFlow(): StoredFlow {
@@ -62,10 +62,20 @@ export function useRecommendationFlow() {
     [],
   )
 
-  // A successful shuffle (or relaxed re-shuffle) starts a new shortlist with these conditions.
+  // Closest menus are immediately visible while the original answers remain unchanged.
   const showShortlist = useCallback(
-    (conditions: RecommendationConditions, items: RecommendationItem[]) =>
-      setFlow({ step: 'cards', conditions, shortlist: startShortlist(items) }),
+    (
+      conditions: RecommendationConditions,
+      items: RecommendationItem[],
+      closestConditions?: RecommendationConditions,
+    ) =>
+      setFlow({
+        step: 'cards',
+        conditions,
+        shortlist: closestConditions
+          ? { ...revealAll(startShortlist(items)), closestConditions }
+          : startShortlist(items),
+      }),
     [],
   )
 

@@ -143,8 +143,8 @@ export function fakeShuffleApi({
 export type User = ReturnType<typeof renderApp>['user']
 
 export async function shuffleCards(user: User) {
-  await user.click(await screen.findByRole('button', { name: 'สับการ์ดเมนู' }))
-  await screen.findByRole('heading', { name: 'เมนูที่น่าจะตรงใจ' })
+  await user.click(await screen.findByRole('button', { name: 'หาเมนูกัน' }))
+  await screen.findByRole('heading', { name: 'มีเมนูน่าลองมาให้แล้ว' })
 }
 
 // The top-level card slots, in order (each card also holds its own nested lists).

@@ -19,9 +19,10 @@ type FoodTypeStepProps = {
   foodTypes: UseQueryResult<FoodType[]>
   value: string | null | undefined
   headingRef: Ref<HTMLHeadingElement>
-  onChoose: (foodTypeId: string | null) => void
+  onChoose: (foodTypeId: string | null, advance?: boolean) => void
   onNext: () => void
   onBack: () => void
+  editing?: boolean
 }
 
 export function FoodTypeStep({
@@ -31,6 +32,7 @@ export function FoodTypeStep({
   onChoose,
   onNext,
   onBack,
+  editing = false,
 }: FoodTypeStepProps) {
   const icon = (key: string | null) => (
     <FoodTypeIcon aria-hidden icon={key} size={20} weight="bold" />
@@ -39,7 +41,7 @@ export function FoodTypeStep({
   return (
     <ChoiceStep
       number={3}
-      title="เลือกประเภทอาหาร"
+      title="อยากกินแนวไหน?"
       hint="เลือก 1 ข้อ"
       name="foodType"
       // Kept in API order (sortOrder), followed by the UI-only "any" choice.
@@ -56,9 +58,10 @@ export function FoodTypeStep({
       headingRef={headingRef}
       loadState={loadStateOf(foodTypes)}
       onRetry={() => void foodTypes.refetch()}
-      onChange={(choice) => onChoose(fromChoiceValue(choice))}
+      onChange={(choice, advance) => onChoose(fromChoiceValue(choice), advance)}
       onNext={onNext}
       onBack={onBack}
+      editing={editing}
     />
   )
 }

@@ -18,7 +18,7 @@ const withPhoto = { ...krapao, imageUrl: '/uploads/krapao.png' }
 
 async function chooseMenu(user: User, name: string) {
   await user.click(screen.getByRole('button', { name: `เลือกเมนู ${name}` }))
-  return screen.findByRole('dialog', { name: 'เลือกเมนูนี้ใช่ไหม?' })
+  return screen.findByRole('dialog', { name: 'มื้อนี้เอาเมนูนี้เลยไหม?' })
 }
 
 // Reveal also requests transient Google Places evidence; confirmation itself makes no extra
@@ -72,8 +72,8 @@ describe('Confirming a menu', () => {
     ).toEqual([
       'อยู่ในงบที่เลือก',
       'ตรงกับรสชาติที่เลือก',
-      'เปิดรับอาหารได้ทุกประเภท',
-      'เปิดรับได้ทุกโซน',
+      'อาหารแนวไหนก็ได้',
+      'โซนไหนก็ได้',
     ])
     expect(confirm.queryByText(/นาที|รอคิว/)).toBeNull()
     expect(api.recommendationBodies()).toHaveLength(1)
@@ -122,7 +122,7 @@ describe('Confirming a menu', () => {
     expect(document.activeElement).toBe(confirm)
     expect(
       screen
-        .getByRole('heading', { name: 'เมนูที่น่าจะตรงใจ', hidden: true })
+        .getByRole('heading', { name: 'มีเมนูน่าลองมาให้แล้ว', hidden: true })
         .closest('[inert]'),
     ).not.toBeNull()
   })
@@ -147,7 +147,7 @@ describe('Thinking again', () => {
       // A rejected card with a face-down replacement, one revealed card, and an undo record.
       await revealCard(user, 1)
       await user.click(
-        screen.getByRole('button', { name: 'ไม่เอาเมนู ผัดกะเพรา' }),
+        screen.getByRole('button', { name: 'ขอดูเมนูอื่นแทน ผัดกะเพรา' }),
       )
       await screen.findByRole('button', { name: 'เปิดการ์ดใบที่ 1' })
       await revealCard(user, 2)
@@ -164,7 +164,9 @@ describe('Thinking again', () => {
       expect(
         screen.getByRole('button', { name: 'เปิดการ์ดใบที่ 3' }),
       ).toBeTruthy()
-      expect(screen.getByRole('button', { name: 'เลิกทำ' })).toBeTruthy()
+      expect(
+        screen.getByRole('button', { name: 'เอาเมนูเดิมกลับมา' }),
+      ).toBeTruthy()
       expect(document.activeElement).toBe(
         screen.getByRole('button', { name: 'เลือกเมนู ก๋วยเตี๋ยว' }),
       )
@@ -190,7 +192,7 @@ describe('Reopening', () => {
     const { user } = renderApp('/meal')
 
     const dialog = await screen.findByRole('dialog', {
-      name: 'เลือกเมนูนี้ใช่ไหม?',
+      name: 'มื้อนี้เอาเมนูนี้เลยไหม?',
     })
     expect(within(dialog).getByText('ผัดกะเพรา')).toBeTruthy()
     await user.click(within(dialog).getByRole('button', { name: 'ขอคิดอีกที' }))
@@ -208,7 +210,7 @@ describe('Success', () => {
     await revealCard(user, 1)
     await chooseMenu(user, 'ผัดกะเพรา')
     await user.click(screen.getByRole('button', { name: 'เอาเมนูนี้แหละ' }))
-    return screen.findByRole('dialog', { name: 'ได้มื้อนี้แล้ว!' })
+    return screen.findByRole('dialog', { name: 'มื้อนี้ได้แล้ว!' })
   }
 
   it('announces the success state with กลับหน้าหลัก as its only action', async () => {
@@ -217,7 +219,7 @@ describe('Success', () => {
     const success = within(await confirmMenu(user))
 
     expect(success.getByRole('status').textContent).toBe(
-      'ขอให้อร่อยกับผัดกะเพรา ที่ครัวไทย',
+      'มื้อนี้ ผัดกะเพรา จาก ครัวไทย กินให้อร่อยนะ!',
     )
     const home = success.getByRole('button', { name: 'กลับหน้าหลัก' })
     expect(success.getAllByRole('button')).toEqual([home])
@@ -257,11 +259,11 @@ describe('Success', () => {
     await confirmMenu(user)
     await user.click(screen.getByRole('button', { name: 'กลับหน้าหลัก' }))
     await user.click(
-      await screen.findByRole('link', { name: 'ช่วยเลือกมื้อให้ฉัน' }),
+      await screen.findByRole('link', { name: 'ไปหาอะไรกินกัน' }),
     )
 
     expect(
-      await screen.findByRole('heading', { name: /เลือกงบประมาณ/ }),
+      await screen.findByRole('heading', { name: /มื้อนี้มีงบเท่าไหร่?/ }),
     ).toBeTruthy()
     expect(screen.getByText('ข้อ 1 จาก 4')).toBeTruthy()
     expect(

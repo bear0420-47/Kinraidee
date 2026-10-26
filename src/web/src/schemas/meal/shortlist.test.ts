@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import {
+  conditionDifferences,
   initialRequest,
   rationaleLines,
   replacementRequest,
@@ -57,6 +58,66 @@ const [a, b, c, d] = ['a', 'b', 'c', 'd'].map(item) as [
   RecommendationItem,
   RecommendationItem,
 ]
+
+describe('closest-menu differences', () => {
+  const open = { ...conditions, tasteId: null, foodTypeId: null, zoneId: null }
+
+  it.each([
+    ['UNDER_50', 49, []],
+    ['UNDER_50', 50, ['ราคา 50 บาท ไม่อยู่ในช่วงต่ำกว่า 50 บาท']],
+    ['UNDER_50', 60, ['เกินงบ 10 บาท']],
+    ['BETWEEN_50_100', 49, ['ราคาต่ำกว่าช่วงงบที่เลือก 1 บาท']],
+    ['BETWEEN_50_100', 50, []],
+    ['BETWEEN_50_100', 100, []],
+    ['BETWEEN_50_100', 101, ['เกินงบ 1 บาท']],
+    ['BETWEEN_101_200', 100, ['ราคาต่ำกว่าช่วงงบที่เลือก 1 บาท']],
+    ['BETWEEN_101_200', 101, []],
+    ['BETWEEN_101_200', 200, []],
+    ['BETWEEN_101_200', 201, ['เกินงบ 1 บาท']],
+    ['OVER_200', 200, ['ราคาต่ำกว่าช่วงงบที่เลือก 1 บาท']],
+    ['OVER_200', 201, []],
+  ] as const)(
+    'compares %s against actual price %i',
+    (budget, price, expected) => {
+      expect(
+        conditionDifferences({ ...a, price }, { ...open, budget }),
+      ).toEqual(expected)
+    },
+  )
+
+  it('does not reinterpret false API rationale as an unrestricted original preference', () => {
+    expect(conditionDifferences(a, conditions)).toEqual([
+      'รสชาติต่างจากที่เลือก: ไม่ระบุรสชาติ',
+      'ประเภทอาหารต่างจากที่เลือก: ข้าว',
+      'อยู่คนละพื้นที่: โซน',
+    ])
+    expect(conditionDifferences(a, open)).toEqual([])
+  })
+
+  it('requires complete valid alternate conditions without extra personal fields in session storage', () => {
+    const shortlist = {
+      ...revealAll(startShortlist([a])),
+      closestConditions: open,
+    }
+    const flow = { step: 'cards', conditions, shortlist }
+    expect(storedFlowSchema.parse(flow)).toEqual(flow)
+    expect(
+      storedFlowSchema.safeParse({
+        ...flow,
+        shortlist: {
+          ...shortlist,
+          closestConditions: { ...open, allergy: 'nuts' },
+        },
+      }).success,
+    ).toBe(false)
+    expect(
+      storedFlowSchema.safeParse({
+        ...flow,
+        shortlist: { ...shortlist, closestConditions: { budget: 'UNDER_50' } },
+      }).success,
+    ).toBe(false)
+  })
+})
 
 describe('request builders', () => {
   it('asks for three cards with no exclusions first', () => {
@@ -120,7 +181,7 @@ describe('rationaleLines', () => {
   it('describes unrestricted choices as openness, never as a failed filter', () => {
     expect(rationaleLines(a.rationale)).toEqual([
       'อยู่ในงบที่เลือก',
-      'เปิดรับรสชาติได้หลากหลาย',
+      'รสไหนก็ได้',
       'ตรงกับประเภทอาหารที่เลือก',
       'อยู่ในโซนที่เลือก',
     ])

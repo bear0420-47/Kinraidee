@@ -551,6 +551,8 @@ type RecommendationHistory = {
 
 ## Recommendation Session State
 
+OA3 refinement (approved 2026-10-26): the existing browser shortlist may include optional `closestConditions` (the complete server-suggested condition set used to retrieve alternatives). Original user conditions remain unchanged. This metadata survives reload/login in the same validated sessionStorage record, is used for replacement requests, and is cleared with the shortlist on edit/reset/finish. It creates no database entity, durable profile, or telemetry. Missing metadata means the existing exact-match flow.
+
 Recommendation-session state is not persisted in PostgreSQL.
 
 - Anonymous and logged-in users use the same session-only recommendation flow.

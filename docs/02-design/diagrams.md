@@ -150,16 +150,17 @@ flowchart TD
   s2 --> v{"Conditions valid?"}
   v -->|"[no]"| e1["Show the field-level error<br/><i>journey step 2</i>"]
   e1 --> s2
-  v -->|"[yes]"| cta["Submit with สับการ์ดเมนู"]
+  v -->|"[yes]"| cta["Submit with หาเมนูกัน"]
   cta --> q{"Any qualifying choice left?"}
 
   q -->|"[no]"| relax{"Any menu available after changing filters?"}
-  relax -->|"[yes]"| none["Suggest the fewest filter changes that have results"]
-  none --> noMatchAction{"User action?"}
-  noMatchAction -->|"Use suggested conditions"| useRelax["Apply the suggested conditions and shuffle again"]
-  useRelax --> cta
-  noMatchAction -->|"Edit conditions manually"| s2
-  relax -->|"[no]"| manual["Show no-match state with manual edit only"]
+  relax -->|"[yes]"| nearest["Automatically retrieve closest menus once"]
+  nearest --> closest{"Closest menus available?"}
+  closest -->|"[yes]"| alternatives["Show closest menus revealed with original-filter differences"]
+  alternatives --> reveal
+  alternatives -->|"เปลี่ยนตัวเลือก"| s2
+  closest -->|"[no]"| manual["Show empty summary with answer editing"]
+  relax -->|"[no]"| manual
   manual --> s2
 
   q -->|"[yes]"| diversify["Preselect up to six diverse candidates<br/><i>repeat a restaurant only when necessary</i>"]
@@ -170,16 +171,16 @@ flowchart TD
   validAi -->|"[no / timeout / failure]"| fallback["Use deterministic selection"]
   more -->|"[no]"| fallback
   fallback --> s3
-  s3 --> reveal["Reveal one card or เปิดทั้งหมด"]
+  s3 --> reveal["Review revealed cards or reveal face-down cards"]
   reveal --> d{"Reject revealed card?"}
   reveal -.-> mapped{"Mapped Google Place?"}
   mapped -->|"[yes]"| live["Fetch and show attributed live place details"]
   mapped -->|"[no / error]"| unavailable["Keep card usable; show place details unavailable"]
   d -->|"[yes]"| s4["Exclude it and request one replacement"]
   s4 --> replacement{"Replacement found?"}
-  replacement -->|"[yes]"| slot["Put replacement in same slot face-down"]
+  replacement -->|"[yes]"| slot["Put replacement in same slot; reveal alternatives immediately"]
   slot --> undo{"Undo rejection?"}
-  undo -->|"[yes] เลิกทำ"| restore["Restore original card, slot, reveal state, and rejected IDs"]
+  undo -->|"[yes] เอาเมนูเดิมกลับมา"| restore["Restore original card, slot, reveal state, and rejected IDs"]
   restore --> reveal
   undo -->|"[no]"| reveal
   replacement -->|"[no]"| emptySlot["Mark slot as no more choices"]

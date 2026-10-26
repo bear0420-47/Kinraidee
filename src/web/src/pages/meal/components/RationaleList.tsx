@@ -1,4 +1,4 @@
-import { CheckCircle } from '@phosphor-icons/react'
+import { CheckCircle, WarningCircle } from '@phosphor-icons/react'
 
 import {
   rationaleLines,
@@ -8,17 +8,34 @@ import {
 // Why this menu was recommended, in the localized copy from `rationaleLines`.
 export function RationaleList({
   rationale,
+  differences = [],
+  compact = false,
 }: {
   rationale: RecommendationItem['rationale']
+  differences?: string[]
+  compact?: boolean
 }) {
+  const alternative = differences.length > 0
+  const Icon = alternative ? WarningCircle : CheckCircle
   return (
-    <ul aria-label="เหตุผลที่แนะนำ" className="flex flex-col gap-1 text-small">
-      {rationaleLines(rationale).map((line) => (
-        <li key={line} className="flex items-center gap-2">
-          <CheckCircle aria-hidden size={18} weight="bold" />
-          {line}
-        </li>
-      ))}
+    <ul
+      aria-label={alternative ? 'ต่างจากเงื่อนไขที่เลือก' : 'เหตุผลที่แนะนำ'}
+      className={
+        'flex text-small ' +
+        (compact && !alternative
+          ? 'flex-wrap gap-x-3 gap-y-1'
+          : 'flex-col gap-1') +
+        (alternative ? ' text-rust' : '')
+      }
+    >
+      {(alternative ? differences : rationaleLines(rationale, compact)).map(
+        (line) => (
+          <li key={line} className="flex items-center gap-2">
+            <Icon aria-hidden size={18} weight="bold" className="shrink-0" />
+            {line}
+          </li>
+        ),
+      )}
     </ul>
   )
 }

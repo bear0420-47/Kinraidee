@@ -1655,3 +1655,282 @@ New seed tests:
 - Google Cloud budget-alert amount and provider quota thresholds still require an explicit owner choice.
 - Computer Crime Act Section 26 traffic-log applicability remains pending accountable human/legal review; this deployment does not claim the conditional requirement is inapplicable.
 - Mobile visual QA and destructive protected-admin mutation smoke tests were not run against production.
+
+## React UI Draft Alignment — 2026-10-26
+
+### Scope and authorization
+
+- The human requested UI alignment and explicitly confirmed `src/web` against `wireframe.html`. The module scope check is recorded in `docs/plan.md`; the superseded plan is archived under `evidence/archive/20261026-ui-draft-alignment/`.
+- Home now follows the two-column hero and illustrative food mood board, reusing the exact four existing local prototype assets through Vite imports. Narrow layouts stack the board below the primary action. The images are illustrative and do not claim catalog availability.
+- Reused the shared header, Phosphor icons, Button, PageShell, ChoiceStep, summary, and menu cards. Updated the brand mark, asymmetric control corners, paper borders/shadows, choice grids, question-number badge, Thai heading spacing, and face-down card height. The meal page uses an unframed PageShell instead of nesting paper cards.
+- No application dependency, API, schema, recommendation, provider, storage, or persistence behavior was changed. Logout retains its existing Home destination and cache-clearing contract, with synchronous navigation to prevent a regression. No test assertion or expectation was edited; the shared render helper supplies the same React DOM flush implementation as production. No commit, push, or deployment was performed.
+
+### Local verification
+
+The pnpm launcher attempted package-manager bootstrapping and stalled. Both launcher attempts were cancelled; their incidental lockfile content was restored from HEAD. Existing installed package scripts were then invoked with npm. Sandbox runs could not resolve esbuild's parent directories or ESLint's installed `ajv`; the same checks were repeated outside the sandbox.
+
+| Command / check                                                                                                                                                                                                                           | Exit | Result                                                                                                                                                                                                                                               |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm --prefix src/web run typecheck`                                                                                                                                                                                                      |    0 | Web TypeScript passes.                                                                                                                                                                                                                               |
+| `npm --prefix src/web run build` (outside sandbox)                                                                                                                                                                                        |    0 | TypeScript and Vite production build pass; all four mood-board images are emitted as hashed assets. Existing Zod annotation and JavaScript chunk-size warnings remain.                                                                               |
+| `npm --prefix src/web run lint` (outside sandbox)                                                                                                                                                                                         |    0 | Web ESLint passes.                                                                                                                                                                                                                                   |
+| `npm --prefix src/api run lint` (outside sandbox)                                                                                                                                                                                         |    0 | API ESLint passes.                                                                                                                                                                                                                                   |
+| `npm --prefix src/web test -- --reporter=dot` (outside sandbox)                                                                                                                                                                           |    1 | 38 files: 34 passed, 4 failed; 409 tests: 405 passed, 4 failed. The meal-flow suites pass. Failures concern logout navigation in router, favorites, history, and preferences tests.                                                                  |
+| `npm --prefix src/web test -- src/router.test.tsx src/pages/account/favorites/FavoritesPage.test.tsx src/pages/account/history/HistoryPage.test.tsx src/pages/account/preferences/PreferencesPage.test.tsx --maxWorkers=1 --reporter=dot` |    1 | 51 tests: 47 passed, 4 failed; failures remain in logout scenarios, including a duplicate-banner assertion during navigation.                                                                                                                        |
+| Original HEAD comparison in `.tmp/ui-draft-baseline/`, same four files with `--maxWorkers=1 --reporter=json --outputFile=baseline-results.json`                                                                                           |    0 | All 51 tests pass with the nine changed UI source files restored to HEAD in the isolated copy. This established a UI regression rather than labelling the failures pre-existing.                                                                     |
+| `npm --prefix src/api test -- --reporter=dot` (outside sandbox)                                                                                                                                                                           |    1 | 76 files: 75 passed, 1 failed; 613 tests: 612 passed, 1 failed. The invalid-startup child-process test did not receive its expected `JWT_SECRET` error.                                                                                              |
+| `npm --prefix src/api test -- src/config/env.test.ts --maxWorkers=1 --reporter=dot`                                                                                                                                                       |    0 | All 15 environment tests pass when repeated separately.                                                                                                                                                                                              |
+| Initial `npm --prefix src/api run build` and `npm --prefix src/api run typecheck`                                                                                                                                                         |    1 | The installed Prisma Client was stale and lacked the existing `Restaurant.googlePlaceId` field.                                                                                                                                                      |
+| From `src/api`: `prisma generate`; `npm run typecheck`; `tsc -p tsconfig.json`; `tsc-alias -p tsconfig.json --resolve-full-paths --resolve-full-extension .js`; `npm run openapi:generate` (installed local binaries, outside sandbox)    |    0 | Regenerated Prisma Client 6.19.3 from the unchanged schema, using dummy build-only database URLs without connecting to a database. API typecheck, compilation, alias rewriting, and OpenAPI generation pass. Generated OpenAPI has no semantic diff. |
+| `npm --prefix src/web run format`; `npm --prefix src/api run format`                                                                                                                                                                      |    1 | Existing formatting warnings remain in unchanged files (232 API files reported). No repository-wide reformat was applied.                                                                                                                            |
+| Installed `prettier --check` over the nine changed TSX files and `docs/plan.md`                                                                                                                                                           |    0 | Every changed implementation file and the active plan pass. The archived plan intentionally preserves its original bytes.                                                                                                                            |
+| `node tests/wireframe-requirements.test.cjs`                                                                                                                                                                                              |    1 | Historical prototype result: 20 passed, 4 failed on stale English header/admin expectations. Prototype and tests are unchanged.                                                                                                                      |
+| Impeccable `detect --json` over the nine changed TSX files                                                                                                                                                                                |    0 | Two warnings inspected: the Home title underline and the menu-photo bottom divider. These implement the approved reference treatment rather than an accent border on a card.                                                                         |
+| `git diff --check`                                                                                                                                                                                                                        |    0 | No whitespace errors.                                                                                                                                                                                                                                |
+
+### Final delivered web checks
+
+- `npm --prefix src/web test -- --reporter=json --outputFile=../../.tmp/ui-draft-web-final.json` (outside sandbox): exit 0; all 38 files and all 409 tests pass, including logout and account-cache cleanup.
+- `npm --prefix src/web run build` followed by `npm --prefix src/web run lint` (outside sandbox): exit 0. The final production bundle includes the UI and synchronous logout correction. Build includes TypeScript checking; existing dependency annotation and chunk-size warnings remain.
+- Installed `prettier --check` over all 12 changed web source/helper files, `docs/plan.md`, and the decision log: exit 0. `git diff --check`: exit 0.
+
+### Source conformance review
+
+- F1-F7/B1-B7 still map to the approved anonymous core workflow and P1-P8 evidence. The change adds no requirement or personal-data processing, and does not activate conditional legal requirements.
+- The five design artifacts still describe one core feature. Journey order, D4, typed API calls, session-only rejection/undo, provider attribution, account guards, and confirmation/history boundaries remain unchanged.
+- Existing design-system colors, font stacks, corner tokens, outlined shadows, and Phosphor icons are reused. Prototype-only GPS, exclusions, voting, and wait-time controls were not carried into React.
+- Regression diagnosis: logout awaited the router navigation promise, then cleared the user, but the Home React transition could still be uncommitted and the protected route could redirect to login. Installed React DOM can also suspend commits for eager images. Making the illustrative Home images lazy alone was insufficient (48/51 targeted tests passed). The final fix supplies React DOM's flush implementation to the existing RouterProvider in production and the shared render helper, and uses the installed `flushSync` navigation option in the existing logout hook. Home commits before user/account caches are cleared. Guards, destinations, cookie/API behavior, and test expectations remain unchanged.
+- Intermediate verification rejected importing RouterProvider from `react-router/dom`: Vitest loaded a separate router context (169/409 tests passed, with context errors). Keeping the original `react-router` provider and supplying its supported flush prop resolved that context error; the router/logout suite passed all 21 tests. Typecheck also caught the installed prop's `undefined` return requirement, so a callback discards React DOM's generic return value. These rejected intermediate states were not delivered.
+
+### Verification limits
+
+- Browser inventory was empty and opening an in-app browser returned `Browser is not available: iab`. No desktop/mobile screenshots, visual comparison, or authenticated browser acceptance check was possible in this session. Responsive classes and component tests do not establish visual parity.
+- The complete test/format gate is not green. The scoped UI implementation is present, but these results do not establish full release readiness or production verification.
+
+## Fewer UX Actions And Inline No-Match Recovery — 2026-10-26
+
+### Scope and resulting behavior
+
+- Implemented the human-requested action reduction and no-match recovery refinement recorded in `docs/plan.md`. Previous plan/design artifacts are archived under `evidence/archive/20261026-ux-actions/`.
+- Reused ChoiceStep and its existing wrappers: pointer activation selects and advances, including an already-selected option; native keyboard arrow/Space selection stays on the question. Explicit Next accepts a keyboard selection or saved default. A summary edit returns directly after committing one answer, preserving the others; Back from an edit also returns to the summary.
+- Reused ConditionSummary and NoMatchPanel: no-match guidance appears inline above the existing four editable answer rows. There is no separate manual-edit gateway or extra page. The single primary action explicitly applies the named, server-proven suggestion. Without a suggestion, the answers remain editable and there is no retry action. Pending requests disable edits and repeated submissions; failed retries retain original conditions and expose an error with recovery controls.
+- The initial pointer path removes four required Next presses: 13 to 9 presses through confirmation, assuming a fresh flow, no errors/rejections, and revealing one card. This is a source action count, not a measured usability result. Card reveal, confirmation, history timing, undo, API filters, provider behavior, account permissions, and session retention are unchanged.
+- No dependency, API, schema, or deployment changes. Existing unrelated work is preserved. Tests were updated for the authorized interaction changes and extended with regression coverage; validation/filter expectations were not weakened.
+
+### Exact checks
+
+| Command / check | Exit | Result |
+|---|---:|---|
+| `npm --prefix src/web test -- src/pages/meal/MealPage.test.tsx src/pages/meal/MealPreferences.test.tsx src/pages/meal/ShuffleCards.test.tsx --reporter=json --outputFile=../../.tmp/ux-actions-focused-final.json` | 0 | 3 files, 51 tests pass. Covers pointer progression, keyboard operation, defaults/reselection, direct edit return, preserved answers, explicit single/multiple-change suggestion application, stale-suggestion clearing, null suggestions, duplicate-submit blocking, and retry errors. |
+| `npm --prefix src/web test -- --reporter=json --outputFile=../../.tmp/ux-actions-web-final.json` | 0 | All 38 files and 413 tests pass. |
+| `npm --prefix src/web run typecheck` | 0 | Web TypeScript passes. |
+| `npm --prefix src/web run build` | 0 | Production TypeScript/Vite build passes; existing Zod annotation and JavaScript chunk-size warnings remain. |
+| `npm --prefix src/web run lint` | 0 | Web ESLint passes. |
+| Installed `prettier --check` over the 8 affected meal implementation files, 3 affected test files, and active plan | 0 | All checked files pass. |
+| `npm --prefix src/web run format` | 1 | Existing formatting warnings in 174 unchanged web files; no repository-wide reformat applied. |
+| `node tests/wireframe-requirements.test.cjs` | 1 | Historical prototype result remains 20 passed, 4 failed on stale English header/admin expectations. Prototype HTML and its tests are unchanged. |
+| Impeccable `detect --json` over the 8 affected meal implementation files | 0 | Empty findings list. |
+| `git diff --check` | 0 | No whitespace errors. |
+
+Local build/test commands used the installed package scripts through npm because the pnpm launcher had stalled on package-manager bootstrapping earlier in this session. Build/tests ran outside the sandbox to avoid the already established esbuild parent-directory permission failure. These checks do not access a real database or external recommendation providers.
+
+### Source conformance and limitations
+
+- Reviewed F1/F2/F3/F6/F7 and B1/B2/B3/B6/B7 against the current specification, backlog, and design artifacts. No new product requirement, permission, sensitive field, or conditional legal activation is introduced. The five design artifacts retain one core workflow; D4's condition/recovery/submit ordering is unchanged. The affected journey, design-system interaction rules, and prototype contract are synchronized.
+- Browser inventory still returned no apps or browsers. No real desktop/mobile, touch-device, screen-reader, or timed usability verification was possible. Component keyboard tests and native radio semantics are automated evidence only; they do not establish browser or assistive-technology acceptance.
+- Full-repository formatting and historical prototype tests remain outside a green release gate. No commit, push, PR approval, or deployment was performed.
+
+## Immediate closest menus — 2026-10-26
+
+### Scope
+
+Human-approved OA3 replaces the suggested-filter apply step with immediately visible closest cards. The web reuses the API minimal-change suggestion and makes at most one automatic follow-up. Original answers remain unchanged; alternate retrieval conditions live only in the existing validated session shortlist and survive reload/login for consistent replacement/exclusions/undo. Differences use actual menu fields and original answers on both cards and confirmation. Empty catalog, stale suggestions, failures/retry, pending edits/duplicate guards, and unchanged normal matching behavior are covered.
+
+### Exact checks
+
+| Command/check | Exit | Result |
+|---|---:|---|
+| `npm --prefix src/web test -- src/pages/meal/ShuffleCards.test.tsx src/schemas/meal/shortlist.test.ts` (first attempt) | 1 | Shortlist 27 passed; UI test parse failed because a PowerShell pipe converted Thai text to question marks. Rewrote the scoped test/doc text with explicit UTF-8 and scanned for repeated question marks; the final full suite below supersedes this attempt. |
+| `npm --prefix src/web test` (outside sandbox) | 0 | All 430 tests pass in 38 files. Includes seven no-match UI scenarios and 15 difference/storage boundary cases, as well as normal reveal, confirmation, auth, history, favorites, replacement, and session regressions. |
+| `npm --prefix src/web run build` (outside sandbox) | 0 | TypeScript and Vite production build pass; existing Zod annotation/chunk-size warnings remain. Initial build failed on the test encoding issue above; final build passed. |
+| `npm --prefix src/web run lint` (outside sandbox, final run) | 0 | Entire web lint passes. The sandbox attempt could not resolve ajv; no dependency was changed. |
+| `.\node_modules\.bin\prettier.cmd --check src/web/src/hooks/meal/useRecommendationFlow.ts src/web/src/pages/meal/MealPage.tsx src/web/src/pages/meal/ShuffleCards.test.tsx src/web/src/pages/meal/components/MenuCard.tsx src/web/src/pages/meal/components/ConfirmMenuDialog.tsx src/web/src/pages/meal/components/ShuffleCardGrid.tsx src/web/src/pages/meal/components/RationaleList.tsx src/web/src/schemas/meal/recommendationSchemas.ts src/web/src/schemas/meal/shortlist.ts src/web/src/schemas/meal/shortlist.test.ts` | 0 | All ten changed implementation/test files pass formatting. No repository-wide reformat. |
+| `C:/Users/User/.codex/skills/impeccable/scripts/impeccable.cmd detect --json` with the five changed meal UI targets | 0 | One warning on the existing MenuPhoto border-b-2 divider in MenuCard. Unchanged in this refinement; no new token/layout value was introduced. |
+| `node tests/wireframe-requirements.test.cjs` | 1 | 20 pass/4 existing failures: stale English header and Admin prototype expectations, previously recorded in this file. Neither historical HTML nor its tests changed. |
+| `git diff --check` | 0 | Whitespace check passes; Windows LF/CRLF notices only. |
+| `/audit-backlog` and `/audit-design` scoped review | — | No blocking finding for OA3. See docs/05-log/20261026-closest-menu-review.md. |
+| Real browser on `http://localhost:5173/meal` | — | Budget screen and pointer progression observed. Taste options fail because `/api/tastes` returns 500; `/health` returns 200 and PostgreSQL localhost:5433 is closed. A normal dev API launch also failed to resolve the existing pino-pretty transport; NODE_ENV=test enabled the API for diagnosis without changing source/config. No database was started, migrated, or seeded. Closest-menu visual/mobile acceptance remains unverified. |
+
+### Limits
+
+This is web component/contract/build evidence, not live database, actual provider, device, or timed usability evidence. No API contract/source, database schema, dependency, permanent data, or deployment change. The project-wide formatting and historical prototype gaps recorded above remain; this is not a green production release gate.
+
+Final full-web formatting check: `npm --prefix src/web run format` exits 1 with existing style warnings in 167 files outside the ten formatted implementation/test targets. No repository-wide reformat was applied. Final `git -c core.safecrlf=false diff --check` exits 0; the repeated-question-mark scan found no corrupt text in the updated requirements, design artifacts, review note, or no-match UI tests.
+
+### Local runtime started for human flow review — 2026-10-26
+
+- Human requested running the app to try the flow. Started Docker Desktop and the existing `kinraidee-postgres` container on 127.0.0.1:5433; no container or volume was replaced.
+- Existing local catalog had 3 restaurants/9 menus and zero menu photos, so current recommendation eligibility produced no suggestion. Saved a pg_dump backup to ignored `.tmp/kinraidee-before-local-flow-20261026.dump` (33,808 bytes) before local data changes.
+- `prisma migrate status` found the existing approved `20261024180000_add_google_place_id` pending; `prisma migrate deploy` applied it to localhost:5433 successfully. Used existing loadCatalogSeed/seedCatalog/retireArchivedCatalog helpers in a single transaction, guarded to that local host/port, to load the approved current catalog. The configured local environment has no seed-admin credentials; no administrator or user account was created, reset, or changed. Seed result: 753 created, 3 updated, 10 unchanged catalog records/links; archived 3 old restaurants and 9 old menus were soft-deleted using the approved helper.
+- Read-only database counts: 13 active restaurants, 222 active menus, 130 active menus with photos.
+- Web `npm --prefix src/web run dev -- --host localhost` listens at http://localhost:5173. API `NODE_ENV=test node --env-file-if-exists=.env --import tsx src/server.ts` listens at http://localhost:3000; test mode avoids the missing existing pino-pretty dependency without code/config edits. In this codebase test mode silences logs and retains the same local auth cookie behavior.
+- Web `/`, API `/health`, and public master-data lists return HTTP 200. An initial UNDER_50 request with other conditions unrestricted returns HTTP 200 with zero exact items and a suggestion. Following that suggestion returns HTTP 200 with three real catalog menu items.
+- Opera observed the current closest-menu view with already revealed actual catalog cards and original-budget difference text, including the exact 50-baht boundary. Left the browser tab open for the human, along with web/API/database processes. No claim of completed human acceptance or timed usability.
+- Local provider keys are not configured: Gemini and Google Places integrations remain unavailable; rule-based recommendation/fallback and explicit Places unavailable UI operate normally. No production resource or deployment was touched.
+
+## Desktop/mobile meal-result presentation — 2026-10-26
+
+The human prioritized UX/UI on both desktop web and mobile, deferring multi-taste selection. Reused PageShell, MealPage, ShuffleCardGrid and MenuCard. Result screens now have one primary h1 instead of the condition-entry title plus result heading; the duplicate result-progress badge is omitted. Menu choose/reject controls precede optional Google evidence. Other shell titles, condition steps, all recommendation conditions/ranking/counts, confirmation, history, and provider behavior remain unchanged. Previous plan/design artifacts are archived under `evidence/archive/20261026-responsive-meal/`.
+
+| Check | Result |
+|---|---|
+| `npm --prefix src/web test` (outside sandbox) | Exit 0; all 430 tests pass in 38 files. No test was added or weakened for this presentation-only refinement. |
+| `npm --prefix src/web run build` (outside sandbox) | Exit 0; TypeScript and Vite production build pass. Existing annotation/chunk-size warnings remain. |
+| `npm --prefix src/web run lint` (outside sandbox) | Exit 0. |
+| `.\node_modules\.bin\prettier.cmd --check` with PageShell.tsx, MealPage.tsx, ShuffleCardGrid.tsx and MenuCard.tsx | Exit 0; all four pass. |
+| `impeccable.cmd detect --json` with the same four targets | Exit 0; one existing border-b-2 warning on the unchanged MenuPhoto divider. |
+| `git -c core.safecrlf=false diff --check` | Exit 0. |
+| Opera responsive viewport 1366×900 | Three grid columns (~362.7px each), one h1, no horizontal overflow, minimum button height 44px. Real local catalog and API; primary actions precede Google evidence. |
+| Opera responsive viewport 390×844 | One h1, no horizontal overflow, minimum button height 44px. Removing redundant heading/status content brings the first menu and primary action higher on the phone screen. The retained final phone screenshot shows the first choose action within the viewport. Immediate viewport-change coordinates were not used as timing/usability evidence because some browser captures lagged layout updates. |
+| Opera responsive viewport 320×740 | No horizontal overflow; one h1; minimum button height 44px. |
+| Mobile confirmation interaction | Opened a real closest menu; dialog bounds left 16px/right 360px at a 390px viewport (344px wide). Budget difference remains visible. Confirmation/cancel buttons are 48px high; favorite is 44px. Cancel returns to the same cards. No selection was confirmed or history recorded. |
+
+Scoped /audit-backlog and /audit-design review: no new requirement, workflow, personal field, storage surface, API, or unresolved legal activation. F2/F3/F4/F7 and NFR12 remain mapped to B2/B3/B4/B7. Updated existing result-card/prototype guidance and active implementation note; journey and D4 ordering remain unchanged.
+
+Evidence is from Opera/Chromium viewport emulation and mouse/keyboard interactions, not physical iPhone/Android touch or Safari acceptance. Some captures taken immediately after viewport changes lagged the DOM; retained final artifacts `.tmp/meal-responsive-refinement.jpg` at default sizing and `.tmp/meal-responsive-mobile.jpg` after the 390px layout settled. Temporary viewport overrides are reset. Existing project-wide formatting/prototype gaps remain documented above. No commit, push, or deployment. Local web/API/database remain running for human review.
+
+## Mobile horizontal card browsing — 2026-10-26
+
+The human requested a Tinder-like horizontal mobile browsing feel instead of vertically stacked menu cards. Reused the existing ShuffleCardGrid ul/li, cards, Button, scrollIntoView, reduced-motion helper, and shortlist slots. Below the existing sm/640px breakpoint, the list is now a native horizontal scroll-snap rail with one full-width card at a time. Multiple slots show a swipe hint and numbered controls with aria-current; one slot omits those controls. Desktop/tablet retains the grid. No custom touch interception, gesture library, dependency, new storage, request contract, or recommendation/filter change. Swiping/browsing does not reveal, reject, choose, confirm, or write history.
+
+Prior affected plan/design documents were archived under `evidence/archive/20261026-mobile-card-swipe/`. Scoped /audit-backlog and /audit-design review confirms F2/F3/F4/F5/F7 and B2/B3/B4/B5/B7 remain covered; this is presentation within journey step 4 and does not alter D4 ordering or any legal activation.
+
+| Check | Result |
+|---|---|
+| `npm --prefix src/web test` (outside sandbox) | Exit 0; all 433 tests pass in 38 files. Three new tests verify presentation-only numbered browsing and reduced motion, native-scroll active-position updates without session/request changes, and one-card guidance omission. Existing normal/closest replacement, exhausted-slot, undo, confirmation, auth and history coverage also passes. |
+| `npm --prefix src/web run build` (outside sandbox) | Exit 0; TypeScript and production bundle pass with existing annotation/chunk-size warnings. |
+| `npm --prefix src/web run lint` (outside sandbox) | Exit 0. |
+| Prettier check for ShuffleCardGrid.tsx and ShuffleCards.test.tsx | Exit 0; both pass. |
+| `impeccable.cmd detect --json src/web/src/pages/meal/components/ShuffleCardGrid.tsx` | Exit 0; empty findings. |
+| `git -c core.safecrlf=false diff --check` | Exit 0. |
+| Opera 390×844 viewport, real local catalog | Rail display flex, scroll-snap-type x mandatory, client width 352px, scroll width 1056px, three 336px cards at the same vertical coordinate; no root horizontal overflow. Numbered control moved to card 2 and aria-current updated. |
+| Horizontal gesture via documented browser scroll API | Scrolling right at a coordinate inside card 2 moved scrollLeft from 352px to 704px and active indicator from 2 to 3. No dialog opened. An initial attempt using an AX list index timed out; coordinate-based scrolling after a fresh screenshot succeeded. |
+| Vertical scrolling across the card | Page scrollY increased from 180px to ~300.8px; active card remained 3 and no dialog opened. Native vertical scrolling is not intercepted. |
+| Opera 320×740 viewport | No root overflow; 282px rail, three 266px cards; numbered buttons are 44px tall. |
+| Opera 1366×900 viewport | Existing three-column grid (~362.7px columns), numbered mobile nav display none, no root overflow. |
+
+Evidence uses Opera/Chromium resized viewports, mouse/button interaction and a native horizontal scroll gesture from the browser tool. It does not establish physical touch, synthesized touch events, iOS/Safari, or physical Android acceptance. Browser capabilities expose no touch injection. Native browser scrolling is used rather than custom touch handlers. Final screenshot is saved under ignored `.tmp/meal-mobile-swipe.jpg`; viewport overrides are reset afterward. Existing project-wide formatting/prototype gaps remain documented above. No commit, push, seed, migration, or deployment for this refinement; the local servers remain running.
+
+## Friendly student-to-student meal copy — 2026-10-26
+
+Human request: make wording feel like university friends talking. Refined the public Home-to-meal copy using existing components/functions only: conversational questions, CTA `หาเมนูกัน`, loading/validation/error/empty recovery, closest-menu explanation and swipe help, `ขอดูเมนูอื่น`, `เอาเมนูเดิมกลับมา`, confirmation and success. Budget values/labels/differences, catalog names/prices, image licensing, provider attribution and notices retain their factual meaning. No behavior, style tokens, API, data shape, permission, session/history persistence, provider call, or ranking change. Single-taste and mobile swipe behavior remain as approved.
+
+Archived the preceding plan and four affected design artifacts under `evidence/archive/20261026-friendly-meal-copy/`. Updated the active voice guide, prototype/journey literals and D4 action labels consistently. Scoped /audit-backlog and /audit-design review: same one core workflow, same five steps and F1-F7/F15/F19-F21 acceptance criteria; B1-B7/B20/B24-B26 coverage unchanged. No new claim or conditional legal activation.
+
+| Check | Result |
+|---|---|
+| `npm --prefix src/web test` (outside sandbox) | Exit 0; all 433 tests pass across 38 files. Updated only copy selectors/expected strings, retaining state, request, validation, keyboard, replacement, auth, history, and persistence assertions. No tests removed or weakened. |
+| `npm --prefix src/web run build` (outside sandbox) | Exit 0; TypeScript and production build pass. Existing Zod annotation/chunk-size warnings remain. |
+| `npm --prefix src/web run lint` (outside sandbox) | Exit 0. |
+| `.\node_modules\.bin\prettier.cmd --check` over code/test paths in `.tmp/friendly-copy-changed-files.txt` | Exit 0 after formatting the changed summary-helper line. No repository-wide formatting. |
+| `impeccable.cmd detect --json` over the changed TSX UI targets | Exit 1; two existing warnings only: Home border-t-4 underline and MenuPhoto border-b-2 divider. Their classes are unchanged; this refinement changes text only. |
+| `git -c core.safecrlf=false diff --check` | Exit 0. |
+| Repeated-question-mark encoding scan over changed public UI/design paths | No corrupt text found. Used explicit UTF-8 for source edits. |
+| Opera 390×844, real local UI/API | Home CTA `ไปหาอะไรกินกัน`, all four condition steps, `เช็กก่อนหาเมนู`/`หาเมนูกัน`, closest heading/banner/swipe hint, and confirmation title `มื้อนี้เอาเมนูนี้เลยไหม?` observed. Original budget excess remained visible. No horizontal overflow; mobile pager targets remain 44px. Confirmation was cancelled; no history was written. |
+| Opera 1366×900 | New result copy fits desktop layout with no root horizontal overflow. |
+| Opera 320×740 | New budget question fits without root horizontal overflow. |
+
+Physical phone/Safari and user comprehension/usability are not proven by resized Chromium viewports. Final sample screenshot is `.tmp/friendly-meal-copy.jpg`; temporary viewport overrides are reset after capture. Existing full-repository formatting/historical prototype gaps remain documented above. No commit, push, migration, seed, or deployment. Local servers remain running for human review.
+
+## Stronger condition-choice presentation and follow-up review — 2026-10-26
+
+The human requested stronger visual weight on the four condition questions. Only the existing ChoiceStep implementation changed in this refinement: cream panel, paper/cream question band, yellow step badge, existing section typography, white outlined/shadowed option cards, yellow checked state with CheckCircle, and existing-size icons. Removed an unnecessary same-colour header border after the detector flagged it. Native radios, copy, option values, pointer advance, keyboard Next, validation and all other pages remain unchanged. Prior plan/design artifacts are archived under `evidence/archive/20261026-bold-choice-steps/`.
+
+| Check | Result |
+|---|---|
+| `npm --prefix src/web test` (first run) | Exit 1; 432/433 pass. Unchanged router test `admin font area` observed dataset.area undefined immediately after an admin heading appeared. No meal test failed. |
+| `npm --prefix src/web test -- src/router.test.tsx --maxWorkers=1` | Exit 0; 21/21 pass without code or assertion changes. AdminArea uses a passive useEffect, while this test immediately checks its side effect after heading visibility; timing is a plausible explanation, not a proven regression caused by ChoiceStep. |
+| `npm --prefix src/web test -- --maxWorkers=2` | Exit 0; all 433 tests pass in 38 files. No tests changed for this visual refinement or for the router failure. |
+| `npm --prefix src/web run build` (final source) | Exit 0; TypeScript and production build pass; existing annotation/chunk-size warnings remain. |
+| `npm --prefix src/web run lint` (final source) | Exit 0. |
+| Prettier check on ChoiceStep.tsx | Exit 0. |
+| `impeccable.cmd detect --json src/web/src/pages/meal/components/ChoiceStep.tsx` (final source) | Exit 0; no findings after removing the redundant header border. |
+| `git -c core.safecrlf=false diff --check` | Exit 0. |
+| Opera mobile/desktop | 390px budget selection using Space remains on question 1, shows checked/yellow/checkmark and keyboard focus; explicit Next advances to taste. The key command reported a timeout but its resulting checked state and successful Next were observed. 390px taste has nine native radios and 24px icons; 320px food type has zero overflowing choice cards; area question also has no root overflow. 1366px question heading is 32px and root does not overflow. |
+| Contrast using actual computed token colours | Cream text on paper header 10.66:1; paper on yellow selected fill 6.21:1; paper on white 11.34:1; muted on cream 5.81:1. All exceed 4.5:1. |
+
+Physical touch/mobile Safari acceptance remains unverified. Saved illustrative desktop/mobile screenshots under ignored `.tmp/choice-steps-bold-desktop.jpg` and `.tmp/choice-steps-bold-mobile.jpg`; viewport overrides were reset. Scoped requirement/design review keeps the same F1/F6/F7, B1/B6/B7, NFR12 and core journey. No dependency, new token, API, personal field, migration, seed, commit, push or deployment.
+
+The human then requested a worktree change review. Review found a reproducible carousel keyboard issue in the earlier swipe changes: after choosing card 2 and waiting until scrollLeft ~366.4 / aria-current 2, Tab through the remaining pager button focuses `เปิดการ์ดใบที่ 1`, resets the visible card to 1 and scrollLeft to 0. browseCard scrolls but the offscreen slides retain their tab stops. No code fix was applied during this review. Also noted the pre-existing UNDER_50 UI label (`ไม่เกิน ฿50`) conflicts with the API lt:50 rule; the new difference copy exposes that contradiction for a 50-baht menu. These findings are separate from the latest ChoiceStep visual change.
+
+## Reviewed carousel focus and budget wording fixes — 2026-10-26
+
+The human authorized fixing both review findings. Reused the existing focusSlot effect for numbered card browsing: focus moves to the selected card's reveal button or revealed heading before subsequent Tab actions. Scrolling targets the existing card slot; native swipe remains browsing only. Updated the existing UNDER_50 label to `ต่ำกว่า ฿50` in web and API suggestion labels, saved-preference expectations and active design guidance. Numerical bounds, API enums and recommendation rules are unchanged. Prior affected plan/design artifacts are archived under `evidence/archive/20261026-carousel-focus-budget-label/`.
+
+| Check | Result |
+|---|---|
+| `npm --prefix src/web test -- src/pages/meal/ShuffleCards.test.tsx src/schemas/meal/recommendationSchemas.test.ts src/schemas/meal/shortlist.test.ts src/pages/account/preferences/PreferencesPage.test.tsx --maxWorkers=2` | Exit 0; 82/82 tests in four files, 50.55s. Added two meaningful focus regressions for initially face-down and revealed cards; retained request, rejection and confirmation assertions. |
+| `npm --prefix src/api test -- src/modules/recommendations --maxWorkers=2` | Exit 0; 53/53 tests in eight files, 8.12s. Existing 49/50 boundary test also asserts the matching Thai/English label. |
+| `npm --prefix src/web test -- --maxWorkers=2` | Exit 0; 435/435 tests in 38 files, 227.55s. |
+| `npm --prefix src/web run build` | Exit 0; TypeScript and Vite build pass with existing annotation/chunk-size warnings. |
+| API build: local `tsc -p tsconfig.json`, `tsc-alias -p tsconfig.json --resolve-full-paths --resolve-full-extension .js`, `npm run openapi:generate` in src/api | Exit 0. Generated OpenAPI has no content diff; response shapes are unchanged. |
+| `npm --prefix src/web run lint` and `npm --prefix src/api run lint` | Both exit 0. |
+| Prettier check on the nine changed source/test files | Exit 0. |
+| `impeccable.cmd detect --json src/web/src/pages/meal/components/ShuffleCardGrid.tsx` | Exit 0; empty findings. |
+| `git -c core.safecrlf=false diff --check` and scoped old-label scan | Whitespace check exits 0; no old budget label remains in active web/recommendation source or current design guidance. |
+| Opera 390×844 with real local catalog | Numbered control 2 focuses reveal button 2; Enter reveals it and focuses its heading; Tab focuses `เลือกเมนู สลัดอกไก่ต้ม` while aria-current remains 2. No menu was confirmed or history recorded. Budget screen visibly shows `ต่ำกว่า ฿50`. |
+| Live local API, UNDER_50 with other conditions unrestricted | HTTP 200, zero exact items; suggestion label is `ต่ำกว่า ฿50 -> ฿50–100`. |
+
+Saved browser evidence under ignored `.tmp/review-fixes-budget.jpg` and `.tmp/review-fixes-carousel.jpg`; temporary viewport override reset. This is automated and Opera viewport/keyboard evidence, not physical mobile/Safari acceptance. Scoped requirement/design review retains the same workflow and strict UNDER_50 rule. Existing repository-wide formatting/prototype gaps remain as documented above. No dependency, schema, migration, seed, account, commit, push or deployment change. Local web/API/database remain running for human review.
+
+## Compact meal decisions and clearer browsing — 2026-10-26
+
+The human approved the four proposed UI refinements. Reused seven existing implementation files and one existing test file: ConditionSummary has a compact variant using its original rows/labels; MealPage enters its existing summary-return editor from a result chip and clears the old shortlist; ShuffleCardGrid shows the adjacent mobile card edge/current position and retains explicit focus/start alignment; MenuCard combines metadata and discloses English name/Google evidence after primary actions; RationaleList and its existing formatter omit unrestricted reasons only in compact mode; ChoiceStep owns the single question-progress group with concise pointer help and full accessible keyboard instructions. Original conditions, closest differences, genuine AI reasons, confirmation, provider fetching/attribution, session permissions and all API contracts remain unchanged. Prior plan/design guidance was archived under `evidence/archive/20261026-compact-meal-ui/`.
+
+| Check | Result |
+|---|---|
+| First focused web run inside sandbox | Runner did not start: esbuild could not access ancestor directory/configuration. Retried outside sandbox without dependency/configuration edits. |
+| Focused three-file web run outside sandbox | 67/68 passed; one new assertion incorrectly assumed JSDOM models the accessibility exclusion of closed native details. Replaced that unsupported visibility inference with assertions that the attributed link is inside the closed disclosure, then opens through its summary. Existing attribution and request assertions remain. Real-browser visibility checked separately. |
+| `npm --prefix src/web test -- --maxWorkers=2` | Exit 0; all 441 tests pass in 38 files, 238.43s. Six new regressions cover each original-condition chip, edit-after-rejection with preserved answers/fresh exclusions, and replacement-pending edit protection. Existing tests now also check compact rationale, current position, explicit start alignment and disclosure/attribution. |
+| `npm --prefix src/web run typecheck` | Exit 0. |
+| `npm --prefix src/web run build` outside sandbox, final source | Exit 0; TypeScript and Vite production build pass, 18.09s for Vite; existing annotation/chunk-size warnings remain. Final CSS adjustment prevents an expanded mobile card stretching neighboring cards; confirmed in browser. |
+| `npm --prefix src/web run lint` outside sandbox, final source | Exit 0. Initial sandbox attempt could not resolve installed ajv; no dependency edit. |
+| Prettier check on the eight changed source/test files | Exit 0. |
+| `npm --prefix src/web run format` | Exit 1; existing whole-web formatting warnings in 158 files. No repository-wide reformat. |
+| Root `pnpm verify` and `pnpm format` | Both exit 1 before running workspace scripts: `[ERROR] fetch failed` in the package-manager launcher. Scoped web checks above ran through the existing installed npm/local binaries; this is not a passing root/release gate. |
+| `node tests/wireframe-requirements.test.cjs` | 20 passed / 4 existing failures in English header/Admin prototype expectations; prototype HTML and these tests are unchanged. |
+| Scoped Impeccable detector on the five changed TSX meal components | Exit 1; one existing warning for unchanged MenuPhoto border-b-2 divider. No new finding. |
+| Final `git -c core.safecrlf=false diff --check` | Exit 0. |
+| Opera 390×844, real local catalog | Multi-card rail is 352px wide with 304px slots, a visible neighboring edge and no page overflow. Final slot aligns at left 20/right 324 with scrollLeft 640=max. Key facts and difference warnings remain outside closed details; English/Google unavailable state appear when opened. |
+| Opera 320×740 | No root/card overflow; card width 233.6px, all condition chips 44px high, current-position text and difference warning visible. Native horizontal scroll moves active card 2 -> 3 without opening a dialog; vertical scroll changes page Y 554.4 -> 714.4 with active card still 3. |
+| Opera 1366×900 | Three grid columns of about 362.7px; mobile navigation hidden; no root overflow; photo strip retains larger-screen size. |
+| Original-answer edit and confirmation, Opera | Budget chip opens budget question with previous value selected; choosing UNDER_50 returns directly to summary with the other three answers preserved. Subsequent search shows closest cards with original UNDER_50 chip and actual over-budget differences. Pager 2 -> heading 2 -> Tab focuses choose 2; Enter opens confirmation with the same difference, safe cancel returns focus to choose 2. No selection was confirmed/history written. |
+
+Saved screenshots under ignored `.tmp/compact-meal-question-mobile.jpg`, `.tmp/compact-meal-mobile.jpg` and `.tmp/compact-meal-desktop.jpg`; reset temporary viewport override. Evidence covers Opera/Chromium resized layouts, keyboard and native scroll through the browser tool, not physical touch or iOS/Safari. No new API/database work or provider/live review success claim; local Google provider is unavailable. Scoped backlog/design review keeps F1-F7/F20-F21, B1-B7/B25-B26, NFR12 and the same five-step core journey; feature-list/diagrams remain consistent without changes. No new token, dependency, persistent field, account action, migration, seed, commit, push or deployment. Local web/API/database remain running for human review.
+
+## Light condition-question theme correction — 2026-10-26
+
+The human found the dark question band outside the site's theme and requested another approach. Changed only ChoiceStep implementation: white panel, full-width ink question, small peach progress label below the question, cream option cards and the retained yellow checked state. Hierarchy now comes from typography, spacing and outlined choices rather than a large dark colour block. Prior plan/design artifacts are archived under `evidence/archive/20261026-light-choice-theme/`. No handlers, option values, native radio behavior, accessible help, result UI or API change. No tests added or modified for this presentation-only refinement.
+
+| Check | Result |
+|---|---|
+| `npm --prefix src/web test -- src/pages/meal/MealPage.test.tsx src/pages/meal/MealPreferences.test.tsx --maxWorkers=2` outside sandbox | Exit 0; 25/25 existing tests in two files, 28.73s. Covers condition keyboard/pointer progression, validation, edit return, saved defaults and session behavior. This is scoped condition-flow evidence; full 441-test result above predates this presentation correction. |
+| `npm --prefix src/web run build` outside sandbox | Exit 0; TypeScript and production build pass; Vite 18.88s, existing annotation/chunk-size warnings remain. |
+| `npm --prefix src/web run lint` outside sandbox | Exit 0. |
+| Prettier check and Impeccable detector on ChoiceStep.tsx | Both exit 0; no detector findings. |
+| `git -c core.safecrlf=false diff --check` | Exit 0. |
+| Opera 390×844 | Budget Space selects and retains question 1, focus ring/checkmark and yellow fill; explicit Next advances to taste. White panel, transparent header, ink heading, cream unselected choices and peach progress confirmed through computed styles and screenshots. |
+| Opera 1366×900 | Nine taste radios fit the existing three-column layout, no option/root overflow, full-width question and complete footer visible. |
+| Opera 320×740 | Food-type screen with long labels has zero overflowing option cards/root overflow; question 27px, one progress label `ข้อ 3 จาก 4`. |
+| Contrast using actual computed colours | Ink/white 11.34:1, ink/cream 10.66:1, ink/peach 7.78:1, ink/yellow 6.21:1. |
+
+Saved `.tmp/light-choice-budget-mobile.jpg`, `.tmp/light-choice-taste-mobile.jpg` and `.tmp/light-choice-taste-desktop.jpg`; viewport reset. Evidence is Opera/Chromium viewport and keyboard inspection, not physical-mobile/Safari acceptance or human theme approval. Scoped requirements/design review retains F1/F6/F7, B1/B6/B7, NFR12 and the existing journey; only current style guidance/prototype and plan change. Previously recorded root package-manager, repository-wide format and historical prototype limitations remain; this is not a passing release gate. Local runtime remains available. No dependency, token, schema, migration, seed, history write, commit, push or deployment.
+
+## Local UX/UI commit preflight — 2026-10-26
+
+The human authorized cleanup and a local commit after the readiness review. Removed exactly the reviewed 183-line pnpm launcher metadata prefix from pnpm-lock.yaml, guarded by comparison with HEAD; the original application lock content matches HEAD after newline normalization. Saved an ignored backup under `.tmp/pnpm-lock-before-ui-commit.yaml`. No application dependency change is included.
+
+- Final `npm --prefix src/web test -- --maxWorkers=2` outside sandbox: exit 0, 38/38 files and **441/441 tests**, 418.90s, start 20:36:30 local time. This verifies the final light-theme source as well as the accumulated meal-flow work; the prior scoped-only limitation for the theme correction is superseded by this run.
+- The final-source build/TypeScript and lint results immediately above remain valid: no implementation file changed afterward. Existing API-label recommendation checks remain 53/53, with no subsequent API source change.
+- Explicit manifest/staged review: 97 changed files — 36 web, 2 API label/test, 15 current docs/review notes, and 44 archived preceding documents. No tracked-unstaged or untracked file remained after staging. Staged whitespace check passes. pnpm-lock.yaml, unchanged generated OpenAPI, temporary screenshots, database dump, cleanup backup and commit helpers are excluded.
+- Local commit authorization is distinct from PR approval, push and deployment. Existing whole-web formatting warnings, historical prototype failures, root pnpm launcher fetch failure and physical-device acceptance gaps remain documented; this does not assert a passing production/release gate.

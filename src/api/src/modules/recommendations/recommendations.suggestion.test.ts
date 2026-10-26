@@ -5,6 +5,7 @@ import type {
   RecommendationConditions,
 } from './recommendations.dto'
 import {
+  budgetLabels,
   findSuggestion,
   matchesConditions,
   nearestBudgetRanges,
@@ -63,6 +64,10 @@ function suggest(
 
 describe('budget helpers', () => {
   it('matches the same integer bounds as the database filter', () => {
+    expect(budgetLabels.UNDER_50).toEqual({
+      th: 'ต่ำกว่า ฿50',
+      en: 'Under ฿50',
+    })
     expect(priceInBudget(49, 'UNDER_50')).toBe(true)
     expect(priceInBudget(50, 'UNDER_50')).toBe(false)
     expect(priceInBudget(50, 'BETWEEN_50_100')).toBe(true)

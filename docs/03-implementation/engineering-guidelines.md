@@ -1,5 +1,7 @@
 # Engineering Guidelines
 
+Meal UI refinement approved 2026-10-26: reuse ConditionSummary rows for editable original-condition result chips; result-chip edits clear the old shortlist via editConditions and enter the existing return-to-summary editor. Keep edits disabled during replacement. Reuse native details for English name and Google evidence; fetching, provider states and attribution remain unchanged. Compact rationale omits unrestricted lines only on cards, never closest differences or full confirmation rationale. Native scroll-snap uses explicit start alignment and trailing room for the final partial-width card; no touch interception or per-device JavaScript. Keep accessible keyboard help/Next with the single visible question-progress group.
+
 This file is the implementation guardrail for Kinraidee. It records approved stack decisions and coding rules so AI agents implement planned work consistently instead of inventing structure or dependencies.
 
 Before adding or changing any feature module, follow `docs/03-implementation/module-implementation-checklist.md`. Before adding or changing Prisma models, read `docs/03-implementation/data-model.md`. That checklist is the required module gate; this file defines the general engineering rules only.
@@ -341,6 +343,8 @@ Error responses use an error envelope:
 
 ### Recommendation API Contract
 
+OA3 web orchestration (approved 2026-10-26): after an empty initial response with a suggestion, the web may automatically make one follow-up using `suggestion.conditions` through the same typed query hook. API filter and rationale semantics remain unchanged. Preserve original user conditions; keep the alternate retrieval conditions only as optional `shortlist.closestConditions` in existing validated session state. Compare actual returned fields against the originals for alternative-card and confirmation copy, and suppress exact-request rationale/AI claims on alternatives. Do not recurse if the follow-up is empty or fails. Replacement uses the retrieval conditions with normal rejected/displayed exclusions.
+
 Use one stateless endpoint for both initial shortlist and replacement requests:
 
 ```http
@@ -612,7 +616,7 @@ API Zod schemas
 - Logged-in users record selected-menu history when they explicitly select a menu item; anonymous users do not write history to PostgreSQL.
 - Users must be able to clear selected-menu history. Do not add a separate history opt-in toggle in the first full-app pass.
 - Favorites and selected-menu history keep soft-deleted menu items visible with an unavailable status, but public catalog and recommendation flows must exclude `deletedAt != null` records.
-- Budget quick-select ranges are `ไม่เกิน ฿50`, `฿50–100`, `฿101–200`, and `มากกว่า ฿200`. The system must not preselect a budget by default.
+- Budget quick-select ranges are `ต่ำกว่า ฿50`, `฿50–100`, `฿101–200`, and `มากกว่า ฿200`. The system must not preselect a budget by default.
 - Taste filter options come from admin-managed `Taste` master data sorted by `sortOrder`, plus special UI option `อะไรก็ได้`. Do not persist `อะไรก็ได้` as a `Taste` row.
 - Food-type filter options come from admin-managed `FoodType` master data sorted by `sortOrder`, plus special UI option `อะไรก็ได้`. Do not persist `อะไรก็ได้` as a `FoodType` row.
 - Zone filter options come from admin-managed `Zone` master data sorted by `sortOrder`, plus special UI option `ที่ไหนก็ได้`. Do not persist `ที่ไหนก็ได้` as a `Zone` row. Do not implement GPS/current-location controls in the first release.

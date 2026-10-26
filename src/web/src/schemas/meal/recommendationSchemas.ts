@@ -20,7 +20,7 @@ export const budgetValues = [
 ] as const satisfies readonly Budget[]
 
 export const budgetLabels: Record<Budget, string> = {
-  UNDER_50: 'ไม่เกิน ฿50',
+  UNDER_50: 'ต่ำกว่า ฿50',
   BETWEEN_50_100: '฿50–100',
   BETWEEN_101_200: '฿101–200',
   OVER_200: 'มากกว่า ฿200',
@@ -50,13 +50,21 @@ export const conditionFields = {
 } as const satisfies Record<ConditionStep, keyof RecommendationConditions>
 
 export const missingChoiceMessages: Record<ConditionStep, string> = {
-  budget: 'กรุณาเลือกงบประมาณ',
-  taste: 'กรุณาเลือกรสชาติ',
-  foodType: 'กรุณาเลือกประเภทอาหาร',
-  zone: 'กรุณาเลือกพื้นที่',
+  budget: 'เลือกงบมื้อนี้ก่อนนะ',
+  taste: 'เลือกรสที่อยากกินก่อนนะ',
+  foodType: 'เลือกแนวอาหารก่อนนะ',
+  zone: 'เลือกโซนก่อนนะ',
 }
 
 const masterDataId = z.string().min(1).nullable()
+const conditionsSchema = z
+  .object({
+    budget: z.enum(budgetValues),
+    tasteId: masterDataId,
+    foodTypeId: masterDataId,
+    zoneId: masterDataId,
+  })
+  .strict()
 const localization = z.object({ th: z.string(), en: z.string() })
 const namedRecord = z.object({ id: z.string().min(1), name: localization })
 const iconRecord = namedRecord.extend({ icon: z.string().nullable() })
@@ -121,6 +129,8 @@ const shortlistSchema = z
     chosenMenuItemId: z.string().min(1).optional(),
     // The chosen card was confirmed with `เอาเมนูนี้แหละ`; its history is already recorded.
     confirmed: z.literal(true).optional(),
+    // Retrieval conditions for closest menus; the user's original answers stay in flow.conditions.
+    closestConditions: conditionsSchema.optional(),
   })
   .strict()
 
@@ -128,15 +138,7 @@ const shortlistSchema = z
 export const storedFlowSchema = z
   .object({
     step: z.enum([...flowSteps, 'cards']),
-    conditions: z
-      .object({
-        budget: z.enum(budgetValues),
-        tasteId: masterDataId,
-        foodTypeId: masterDataId,
-        zoneId: masterDataId,
-      })
-      .partial()
-      .strict(),
+    conditions: conditionsSchema.partial(),
     shortlist: shortlistSchema.optional(),
   })
   .strict()
@@ -211,7 +213,7 @@ export function replacementRequest(
     throw new Error('Only a displayed card can be replaced.')
   }
   return {
-    conditions,
+    conditions: shortlist.closestConditions ?? conditions,
     rejectedMenuItemIds: [...shortlist.rejectedMenuItemIds, rejected.item.id],
     displayedMenuItemIds: shortlist.slots.flatMap((slot, index) =>
       slot.kind === 'card' && index !== slotIndex ? [slot.item.id] : [],
@@ -240,17 +242,72 @@ export function suggestionMessage({ changes, resultCount }: Suggestion) {
   return `ถ้าเปลี่ยน${parts.join(' และ')} จะพบ ${resultCount} เมนู`
 }
 
+// Compare actual menu data to the original answers, never the alternate request's rationale.
+export function conditionDifferences(
+  item: RecommendationItem,
+  conditions: RecommendationConditions,
+): string[] {
+  const differences: string[] = []
+  // UNDER_50 excludes 50; keep that exact boundary explicit in the explanation below.
+  const bounds: Record<Budget, [number, number]> = {
+    UNDER_50: [0, 50],
+    BETWEEN_50_100: [50, 100],
+    BETWEEN_101_200: [101, 200],
+    OVER_200: [201, Infinity],
+  }
+  const [minimum, maximum] = bounds[conditions.budget]
+  if (item.price > maximum) {
+    differences.push('เกินงบ ' + (item.price - maximum) + ' บาท')
+  } else if (item.price < minimum) {
+    differences.push(
+      'ราคาต่ำกว่าช่วงงบที่เลือก ' + (minimum - item.price) + ' บาท',
+    )
+  } else if (conditions.budget === 'UNDER_50' && item.price === 50) {
+    differences.push('ราคา 50 บาท ไม่อยู่ในช่วงต่ำกว่า 50 บาท')
+  }
+  if (
+    conditions.tasteId !== null &&
+    !item.tastes.some(({ id }) => id === conditions.tasteId)
+  ) {
+    differences.push(
+      'รสชาติต่างจากที่เลือก: ' +
+        (item.tastes.map(({ name }) => name.th).join(', ') || 'ไม่ระบุรสชาติ'),
+    )
+  }
+  if (
+    conditions.foodTypeId !== null &&
+    item.foodType.id !== conditions.foodTypeId
+  ) {
+    differences.push('ประเภทอาหารต่างจากที่เลือก: ' + item.foodType.name.th)
+  }
+  if (conditions.zoneId !== null && item.zone.id !== conditions.zoneId) {
+    differences.push('อยู่คนละพื้นที่: ' + item.zone.name.th)
+  }
+  return differences
+}
+
 // Structured rationale as Thai copy. A false flag means the user chose "any", never that a
 // mandatory filter failed, so it reads as openness rather than a miss.
-export function rationaleLines({
-  matchedTaste,
-  matchedFoodType,
-  matchedZone,
-}: RecommendationItem['rationale']) {
+export function rationaleLines(
+  {
+    matchedTaste,
+    matchedFoodType,
+    matchedZone,
+  }: RecommendationItem['rationale'],
+  compact = false,
+) {
   return [
     'อยู่ในงบที่เลือก',
-    matchedTaste ? 'ตรงกับรสชาติที่เลือก' : 'เปิดรับรสชาติได้หลากหลาย',
-    matchedFoodType ? 'ตรงกับประเภทอาหารที่เลือก' : 'เปิดรับอาหารได้ทุกประเภท',
-    matchedZone ? 'อยู่ในโซนที่เลือก' : 'เปิดรับได้ทุกโซน',
+    ...(matchedTaste
+      ? ['ตรงกับรสชาติที่เลือก']
+      : compact
+        ? []
+        : ['รสไหนก็ได้']),
+    ...(matchedFoodType
+      ? ['ตรงกับประเภทอาหารที่เลือก']
+      : compact
+        ? []
+        : ['อาหารแนวไหนก็ได้']),
+    ...(matchedZone ? ['อยู่ในโซนที่เลือก'] : compact ? [] : ['โซนไหนก็ได้']),
   ]
 }

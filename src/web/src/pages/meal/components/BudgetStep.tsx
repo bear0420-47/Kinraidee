@@ -10,8 +10,10 @@ import { ChoiceStep } from './ChoiceStep'
 type BudgetStepProps = {
   value: Budget | undefined
   headingRef: Ref<HTMLHeadingElement>
-  onChoose: (budget: Budget) => void
+  onChoose: (budget: Budget, advance?: boolean) => void
   onNext: () => void
+  onBack?: (() => void) | undefined
+  editing?: boolean
 }
 
 export function BudgetStep({
@@ -19,19 +21,23 @@ export function BudgetStep({
   headingRef,
   onChoose,
   onNext,
+  onBack,
+  editing = false,
 }: BudgetStepProps) {
   return (
     <ChoiceStep
       number={1}
-      title="เลือกงบประมาณ"
-      hint="ต่อหนึ่งมื้อ"
+      title="มื้อนี้มีงบเท่าไหร่?"
+      hint="งบต่อมื้อ"
       name="budget"
       options={budgetOptions}
       value={value}
       missingMessage={missingChoiceMessages.budget}
       headingRef={headingRef}
-      onChange={(budget) => onChoose(budget as Budget)}
+      onChange={(budget, advance) => onChoose(budget as Budget, advance)}
       onNext={onNext}
+      onBack={onBack}
+      editing={editing}
     />
   )
 }

@@ -55,12 +55,10 @@ describe('Shuffling', () => {
     const api = fakeShuffleApi({ results: [pending] })
     const { user } = renderApp('/meal')
 
-    await user.click(
-      await screen.findByRole('button', { name: 'สับการ์ดเมนู' }),
-    )
+    await user.click(await screen.findByRole('button', { name: 'หาเมนูกัน' }))
     expect(
       screen
-        .getAllByText('กำลังสับการ์ดเมนู...')
+        .getAllByText('กำลังหาเมนูให้นะ…')
         .some((element) => element.closest('[role="status"]')),
     ).toBe(true)
     release(
@@ -70,7 +68,7 @@ describe('Shuffling', () => {
     )
 
     const heading = await screen.findByRole('heading', {
-      name: 'เมนูที่น่าจะตรงใจ',
+      name: 'มีเมนูน่าลองมาให้แล้ว',
     })
     await waitFor(() => expect(document.activeElement).toBe(heading))
     expect(api.recommendationBodies()).toEqual([
@@ -118,15 +116,221 @@ describe('Shuffling', () => {
     fakeShuffleApi({ results: [errorResponse(500, 'INTERNAL_SERVER_ERROR')] })
     const { user } = renderApp('/meal')
 
-    await user.click(
-      await screen.findByRole('button', { name: 'สับการ์ดเมนู' }),
-    )
+    await user.click(await screen.findByRole('button', { name: 'หาเมนูกัน' }))
 
     expect(
-      await screen.findByText('สับการ์ดเมนูไม่สำเร็จ กรุณาลองใหม่อีกครั้ง'),
+      await screen.findByText('หาเมนูไม่สำเร็จ ลองอีกครั้งนะ'),
     ).toBeTruthy()
+    expect(screen.getByRole('heading', { name: 'เช็กก่อนหาเมนู' })).toBeTruthy()
+  })
+})
+
+describe('Result condition editing', () => {
+  it.each([
+    ['งบประมาณ: ฿50–100', 'มื้อนี้มีงบเท่าไหร่?', '฿50–100'],
+    ['รสชาติ: เผ็ด', 'วันนี้อยากกินรสไหน?', 'เผ็ด'],
+    ['ประเภทอาหาร: อะไรก็ได้', 'อยากกินแนวไหน?', 'อะไรก็ได้'],
+    ['พื้นที่: ที่ไหนก็ได้', 'แถวไหนดี?', 'ที่ไหนก็ได้'],
+  ])(
+    'opens the selected original condition directly: %s',
+    async (label, question, answer) => {
+      const api = fakeShuffleApi({ results: [{ items: [krapao] }] })
+      const { user } = renderApp('/meal')
+      await shuffleCards(user)
+      await user.click(screen.getByRole('button', { name: `แก้ไข${label}` }))
+      expect(screen.getByRole('heading', { name: question })).toBeTruthy()
+      expect(
+        screen.getByRole<HTMLInputElement>('radio', { name: answer }).checked,
+      ).toBe(true)
+      expect(storedShortlist()).toBeUndefined()
+      await user.click(screen.getByRole('button', { name: 'ย้อนกลับ' }))
+      await screen.findByRole('heading', { name: 'เช็กก่อนหาเมนู' })
+      expect(
+        screen.getAllByRole('definition').map((row) => row.textContent),
+      ).toEqual(['฿50–100', 'เผ็ด', 'อะไรก็ได้', 'ที่ไหนก็ได้'])
+      expect(api.recommendationBodies()).toHaveLength(1)
+      expect(screen.queryByRole('dialog')).toBeNull()
+    },
+  )
+
+  it('edits one condition after a rejection and searches afresh only after submission', async () => {
+    const api = fakeShuffleApi({
+      results: [
+        { items: [krapao, noodles] },
+        { items: [somtam] },
+        { items: [curry] },
+      ],
+    })
+    const { user } = renderApp('/meal')
+    await shuffleCards(user)
+    await revealCard(user, 1)
+    await user.click(
+      screen.getByRole('button', { name: 'ขอดูเมนูอื่นแทน ผัดกะเพรา' }),
+    )
+    await screen.findByRole('button', { name: 'เปิดการ์ดใบที่ 1' })
+    expect(storedShortlist()?.rejectedMenuItemIds).toEqual([krapao.id])
+    await user.click(
+      screen.getByRole('button', { name: 'แก้ไขงบประมาณ: ฿50–100' }),
+    )
+    await user.click(screen.getByRole('radio', { name: '฿101–200' }))
+    await screen.findByRole('heading', { name: 'เช็กก่อนหาเมนู' })
     expect(
-      screen.getByRole('heading', { name: 'สรุปมื้อที่ต้องการ' }),
+      screen.getAllByRole('definition').map((row) => row.textContent),
+    ).toEqual(['฿101–200', 'เผ็ด', 'อะไรก็ได้', 'ที่ไหนก็ได้'])
+    expect(storedShortlist()).toBeUndefined()
+    expect(api.recommendationBodies()).toHaveLength(2)
+    await shuffleCards(user)
+    expect(api.recommendationBodies()[2]).toEqual({
+      conditions: { ...conditions, budget: 'BETWEEN_101_200' },
+      rejectedMenuItemIds: [],
+      displayedMenuItemIds: [],
+      count: 3,
+    })
+  })
+
+  it('disables result-condition edits while replacement is pending', async () => {
+    let release: (response: Response) => void = () => undefined
+    const pending = new Promise<Response>((resolve) => {
+      release = resolve
+    })
+    const api = fakeShuffleApi({ results: [{ items: [krapao] }, pending] })
+    const { user } = renderApp('/meal')
+    await shuffleCards(user)
+    await revealCard(user, 1)
+    await user.click(
+      screen.getByRole('button', { name: 'ขอดูเมนูอื่นแทน ผัดกะเพรา' }),
+    )
+    const edits = within(
+      screen.getByRole('navigation', { name: 'ตัวเลือกมื้อนี้' }),
+    ).getAllByRole<HTMLButtonElement>('button')
+    expect(edits).toHaveLength(4)
+    expect(edits.every((button) => button.disabled)).toBe(true)
+    await user.click(edits[0]!)
+    expect(
+      screen.queryByRole('heading', { name: 'มื้อนี้มีงบเท่าไหร่?' }),
+    ).toBeNull()
+    release(jsonResponse(200, { data: { items: [somtam], suggestion: null } }))
+    await screen.findByRole('button', { name: 'เปิดการ์ดใบที่ 1' })
+    expect(edits.every((button) => !button.disabled)).toBe(true)
+    expect(api.recommendationBodies()).toHaveLength(2)
+  })
+})
+
+describe('Mobile card browsing', () => {
+  it('browses by numbered controls without revealing, rejecting, selecting or requesting menus', async () => {
+    const api = fakeShuffleApi({
+      results: [{ items: [krapao, noodles, curry] }],
+    })
+    const { user } = renderApp('/meal')
+    await shuffleCards(user)
+    const before = storedShortlist()
+    const scroll = vi.mocked(Element.prototype.scrollIntoView)
+    scroll.mockClear()
+
+    await user.click(screen.getByRole('button', { name: 'ดูการ์ดใบที่ 2' }))
+    expect(screen.getByText('ใบที่ 2 จาก 3')).toBeTruthy()
+    expect(scroll.mock.contexts.at(-1)).toBe(cards()[1])
+    expect(scroll).toHaveBeenLastCalledWith({
+      block: 'nearest',
+      inline: 'start',
+      behavior: 'smooth',
+    })
+    expect(
+      screen
+        .getByRole('button', { name: 'ดูการ์ดใบที่ 2' })
+        .getAttribute('aria-current'),
+    ).toBe('true')
+    expect(
+      screen
+        .getByRole('button', { name: 'ดูการ์ดใบที่ 1' })
+        .getAttribute('aria-current'),
+    ).toBeNull()
+    expect(screen.getAllByText('ยังไม่เปิด')).toHaveLength(3)
+    expect(storedShortlist()).toEqual(before)
+    expect(api.recommendationBodies()).toHaveLength(1)
+    expect(screen.queryByRole('dialog')).toBeNull()
+
+    vi.mocked(window.matchMedia).mockReturnValueOnce({
+      matches: true,
+    } as MediaQueryList)
+    await user.click(screen.getByRole('button', { name: 'ดูการ์ดใบที่ 3' }))
+    expect(scroll).toHaveBeenLastCalledWith({
+      block: 'nearest',
+      inline: 'start',
+      behavior: 'auto',
+    })
+  })
+
+  it.each([false, true])(
+    'keeps keyboard actions on card 2 after paging (already revealed: %s)',
+    async (alreadyRevealed) => {
+      const api = fakeShuffleApi({
+        results: [{ items: [krapao, noodles, curry] }],
+      })
+      const { user } = renderApp('/meal')
+      await shuffleCards(user)
+      if (alreadyRevealed) {
+        await user.click(screen.getByRole('button', { name: 'เปิดทั้งหมด' }))
+      }
+      await user.click(screen.getByRole('button', { name: 'ดูการ์ดใบที่ 2' }))
+      if (!alreadyRevealed) {
+        expect(document.activeElement).toBe(
+          screen.getByRole('button', { name: 'เปิดการ์ดใบที่ 2' }),
+        )
+        await user.keyboard('{Enter}')
+      }
+      const heading = await screen.findByRole('heading', { name: 'ก๋วยเตี๋ยว' })
+      await waitFor(() => expect(document.activeElement).toBe(heading))
+      await user.tab()
+      expect(document.activeElement).toBe(
+        screen.getByRole('button', { name: 'เลือกเมนู ก๋วยเตี๋ยว' }),
+      )
+      expect(
+        screen
+          .getByRole('button', { name: 'ดูการ์ดใบที่ 2' })
+          .getAttribute('aria-current'),
+      ).toBe('true')
+      expect(screen.queryByRole('dialog')).toBeNull()
+      expect(api.recommendationBodies()).toHaveLength(1)
+      expect(storedShortlist()?.rejectedMenuItemIds).toEqual([])
+    },
+  )
+
+  it('updates the visible position from native rail scrolling without changing session data', async () => {
+    const api = fakeShuffleApi({
+      results: [{ items: [krapao, noodles, curry] }],
+    })
+    const { user } = renderApp('/meal')
+    await shuffleCards(user)
+    const before = storedShortlist()
+    const rail = screen.getByRole('list', { name: 'การ์ดเมนู' })
+    vi.spyOn(rail, 'getBoundingClientRect').mockReturnValue({
+      left: 0,
+    } as DOMRect)
+    cards().forEach((card, index) => {
+      vi.spyOn(card, 'getBoundingClientRect').mockReturnValue({
+        left: (index - 1) * 350,
+      } as DOMRect)
+    })
+    fireEvent.scroll(rail)
+    expect(screen.getByText('ใบที่ 2 จาก 3')).toBeTruthy()
+    expect(
+      screen
+        .getByRole('button', { name: 'ดูการ์ดใบที่ 2' })
+        .getAttribute('aria-current'),
+    ).toBe('true')
+    expect(storedShortlist()).toEqual(before)
+    expect(api.recommendationBodies()).toHaveLength(1)
+  })
+
+  it('omits swipe guidance and navigation when only one card exists', async () => {
+    fakeShuffleApi({ results: [{ items: [krapao] }] })
+    const { user } = renderApp('/meal')
+    await shuffleCards(user)
+    expect(screen.queryByRole('navigation', { name: 'ดูการ์ดเมนู' })).toBeNull()
+    expect(screen.queryByText('ปัดซ้าย–ขวา ดูเมนูอื่นได้เลย')).toBeNull()
+    expect(
+      screen.getByRole('button', { name: 'เปิดการ์ดใบที่ 1' }),
     ).toBeTruthy()
   })
 })
@@ -149,12 +353,7 @@ describe('Revealing', () => {
       within(within(card).getByRole('list', { name: 'เหตุผลที่แนะนำ' }))
         .getAllByRole('listitem')
         .map((line) => line.textContent),
-    ).toEqual([
-      'อยู่ในงบที่เลือก',
-      'ตรงกับรสชาติที่เลือก',
-      'เปิดรับอาหารได้ทุกประเภท',
-      'เปิดรับได้ทุกโซน',
-    ])
+    ).toEqual(['อยู่ในงบที่เลือก', 'ตรงกับรสชาติที่เลือก'])
     // The second card stays face-down, and revealing made no request.
     expect(
       screen.getByRole('button', { name: 'เปิดการ์ดใบที่ 2' }),
@@ -217,6 +416,20 @@ describe('Revealing', () => {
 
     expect(await screen.findByText('4.6 จาก 42 คะแนน')).toBeTruthy()
     expect(screen.getByText(/อาหารอร่อย/)).toBeTruthy()
+    const disclosure = screen
+      .getByText('ดูรายละเอียดเมนูและร้าน')
+      .closest('details')!
+    expect(disclosure.open).toBe(false)
+    // JSDOM does not model the accessibility exclusion of closed details contents.
+    expect(
+      screen.getByRole('link', { name: 'ผู้รีวิวตัวอย่าง' }).closest('details'),
+    ).toBe(disclosure)
+    expect(
+      screen.getByRole('button', { name: 'เลือกเมนู ผัดกะเพรา' }),
+    ).toBeTruthy()
+    await user.click(screen.getByText('ดูรายละเอียดเมนูและร้าน'))
+    expect(disclosure.open).toBe(true)
+    expect(screen.getByText(krapao.name.en)).toBeTruthy()
     expect(screen.getByRole('link', { name: 'ผู้รีวิวตัวอย่าง' })).toBeTruthy()
     expect(
       screen.getByRole('link', { name: /ดูร้านนี้บน Google Maps/ }),
@@ -234,6 +447,7 @@ describe('Revealing', () => {
     expect(scroll.mock.contexts).toEqual([cards()[0]])
     expect(scroll).toHaveBeenLastCalledWith({
       block: 'nearest',
+      inline: 'start',
       behavior: 'smooth',
     })
     expect(document.activeElement).toBe(
@@ -247,6 +461,7 @@ describe('Revealing', () => {
     expect(scroll.mock.contexts.at(-1)).toBe(cards()[1])
     expect(scroll).toHaveBeenLastCalledWith({
       block: 'nearest',
+      inline: 'start',
       behavior: 'auto',
     })
   })
@@ -356,7 +571,7 @@ describe('Rejecting and undo', () => {
     await showRevealedCards(user)
 
     await user.click(
-      screen.getByRole('button', { name: 'ไม่เอาเมนู ก๋วยเตี๋ยว' }),
+      screen.getByRole('button', { name: 'ขอดูเมนูอื่นแทน ก๋วยเตี๋ยว' }),
     )
 
     const replacement = await screen.findByRole('button', {
@@ -376,7 +591,7 @@ describe('Rejecting and undo', () => {
     // The rejection is announced through a live region.
     expect(
       screen
-        .getAllByText('ไม่เอา ก๋วยเตี๋ยว แล้ว')
+        .getAllByText('ข้าม ก๋วยเตี๋ยว แล้ว')
         .some((element) => element.getAttribute('role') === 'status'),
     ).toBe(true)
     expect(storedShortlist()?.rejectedMenuItemIds).toEqual(['menu_2'])
@@ -385,7 +600,7 @@ describe('Rejecting and undo', () => {
     expect(screen.getByRole('heading', { name: 'ส้มตำ' })).toBeTruthy()
   })
 
-  it('shows ไม่มีตัวเลือกเพิ่มแล้ว when no replacement exists, without suggesting a filter change', async () => {
+  it('shows รอบนี้ไม่มีเมนูเพิ่มแล้ว when no replacement exists, without suggesting a filter change', async () => {
     fakeShuffleApi({
       results: [{ items: [krapao, noodles] }, { items: [], suggestion: null }],
     })
@@ -393,10 +608,12 @@ describe('Rejecting and undo', () => {
     await showRevealedCards(user)
 
     await user.click(
-      screen.getByRole('button', { name: 'ไม่เอาเมนู ผัดกะเพรา' }),
+      screen.getByRole('button', { name: 'ขอดูเมนูอื่นแทน ผัดกะเพรา' }),
     )
 
-    expect(within(cards()[0]!).getByText('ไม่มีตัวเลือกเพิ่มแล้ว')).toBeTruthy()
+    expect(
+      within(cards()[0]!).getByText('รอบนี้ไม่มีเมนูเพิ่มแล้ว'),
+    ).toBeTruthy()
     expect(screen.queryByText('ใช้เงื่อนไขนี้แล้วสับใหม่')).toBeNull()
   })
 
@@ -411,11 +628,11 @@ describe('Rejecting and undo', () => {
     const { user } = renderApp('/meal')
     await showRevealedCards(user)
     await user.click(
-      screen.getByRole('button', { name: 'ไม่เอาเมนู ผัดกะเพรา' }),
+      screen.getByRole('button', { name: 'ขอดูเมนูอื่นแทน ผัดกะเพรา' }),
     )
     await screen.findByRole('button', { name: 'เปิดการ์ดใบที่ 1' })
 
-    await user.click(screen.getByRole('button', { name: 'เลิกทำ' }))
+    await user.click(screen.getByRole('button', { name: 'เอาเมนูเดิมกลับมา' }))
 
     const restored = screen.getByRole('heading', { name: 'ผัดกะเพรา' })
     await waitFor(() => expect(document.activeElement).toBe(restored))
@@ -423,12 +640,14 @@ describe('Rejecting and undo', () => {
       within(cards()[0]!).getByText('การ์ดใบที่ 1 · เปิดแล้ว'),
     ).toBeTruthy()
     expect(screen.queryByText('ส้มตำ')).toBeNull()
-    expect(screen.queryByRole('button', { name: 'เลิกทำ' })).toBeNull()
+    expect(
+      screen.queryByRole('button', { name: 'เอาเมนูเดิมกลับมา' }),
+    ).toBeNull()
     expect(storedShortlist()?.rejectedMenuItemIds).toEqual([])
 
     // A later rejection no longer carries the undone ID.
     await user.click(
-      screen.getByRole('button', { name: 'ไม่เอาเมนู ก๋วยเตี๋ยว' }),
+      screen.getByRole('button', { name: 'ขอดูเมนูอื่นแทน ก๋วยเตี๋ยว' }),
     )
     await screen.findByRole('button', { name: 'เปิดการ์ดใบที่ 2' })
     expect(api.recommendationBodies()[2]?.rejectedMenuItemIds).toEqual([
@@ -447,172 +666,264 @@ describe('Rejecting and undo', () => {
     await showRevealedCards(user)
 
     await user.click(
-      screen.getByRole('button', { name: 'ไม่เอาเมนู ผัดกะเพรา' }),
+      screen.getByRole('button', { name: 'ขอดูเมนูอื่นแทน ผัดกะเพรา' }),
     )
 
     expect(
-      await screen.findByText('หาเมนูใหม่ไม่สำเร็จ กรุณาลองใหม่อีกครั้ง'),
+      await screen.findByText('หาเมนูใหม่ไม่สำเร็จ ลองอีกครั้งนะ'),
     ).toBeTruthy()
     expect(screen.getByRole('heading', { name: 'ผัดกะเพรา' })).toBeTruthy()
     expect(storedShortlist()?.rejectedMenuItemIds).toEqual([])
-    expect(screen.queryByRole('button', { name: 'เลิกทำ' })).toBeNull()
+    expect(
+      screen.queryByRole('button', { name: 'เอาเมนูเดิมกลับมา' }),
+    ).toBeNull()
   })
 })
 
 describe('No match', () => {
-  const budgetChange = (
-    from: Suggestion['conditions']['budget'],
-    to: Suggestion['conditions']['budget'],
-    th: [string, string],
-  ): Suggestion['changes'][number] => ({
-    field: 'budget',
-    from: { type: 'BUDGET_RANGE', id: from, label: { th: th[0], en: th[0] } },
-    to: { type: 'BUDGET_RANGE', id: to, label: { th: th[1], en: th[1] } },
-  })
+  const strict = { ...conditions, budget: 'UNDER_50' as const }
+  const suggested = { ...strict, budget: 'BETWEEN_50_100' as const }
+  const suggestion: Suggestion = {
+    changes: [
+      {
+        field: 'budget',
+        from: {
+          type: 'BUDGET_RANGE',
+          id: 'UNDER_50',
+          label: { th: 'ต่ำกว่า ฿50', en: 'Under 50' },
+        },
+        to: {
+          type: 'BUDGET_RANGE',
+          id: 'BETWEEN_50_100',
+          label: { th: '฿50–100', en: '50–100' },
+        },
+      },
+    ],
+    conditions: suggested,
+    resultCount: 4,
+  }
+  const empty = { items: [], suggestion }
+  const storedFlow = () =>
+    JSON.parse(sessionStorage.getItem(RECOMMENDATION_STORAGE_KEY)!)
+  const start = async (user: User) =>
+    user.click(await screen.findByRole('button', { name: 'หาเมนูกัน' }))
+  const closestHeading = () =>
+    screen.findByRole('heading', { name: 'เมนูใกล้เคียงที่น่าลอง' })
 
-  it('explains a single suggested change and shuffles with its conditions', async () => {
-    const strict = { ...conditions, budget: 'UNDER_50' as const }
-    const suggested = { ...strict, budget: 'BETWEEN_50_100' as const }
+  it('automatically shows three closest menus revealed while preserving original filters', async () => {
     const api = fakeShuffleApi({
       stored: strict,
-      results: [
-        {
-          items: [],
-          suggestion: {
-            changes: [
-              budgetChange('UNDER_50', 'BETWEEN_50_100', [
-                'ไม่เกิน ฿50',
-                '฿50–100',
-              ]),
-            ],
-            conditions: suggested,
-            resultCount: 4,
-          },
-        },
-        { items: [krapao] },
-      ],
+      results: [empty, { items: [krapao, noodles, curry] }],
     })
     const { user } = renderApp('/meal')
-
-    await user.click(
-      await screen.findByRole('button', { name: 'สับการ์ดเมนู' }),
-    )
-    const heading = await screen.findByRole('heading', {
-      name: 'ไม่พบเมนูที่ตรงทุกเงื่อนไข',
-    })
+    await start(user)
+    const heading = await closestHeading()
     await waitFor(() => expect(document.activeElement).toBe(heading))
-    const explanation = screen.getByText(
-      'ถ้าเปลี่ยนงบประมาณจาก “ไม่เกิน ฿50” เป็น “฿50–100” จะพบ 4 เมนู',
-    )
-    expect(explanation.getAttribute('role')).toBe('status')
-    expect(screen.queryByRole('button', { name: /หน้าหลัก/ })).toBeNull()
-
-    await user.click(
-      screen.getByRole('button', { name: 'ใช้เงื่อนไขนี้แล้วสับใหม่' }),
-    )
-    await screen.findByRole('heading', { name: 'เมนูที่น่าจะตรงใจ' })
-
-    const [first, second] = api.recommendationBodies()
-    expect(first?.conditions).toEqual(strict)
-    expect(second?.conditions).toEqual(suggested)
+    expect(
+      screen
+        .getByText('ยังไม่มีเมนูตรงทุกข้อ ลองดูเมนูใกล้เคียงพวกนี้นะ')
+        .getAttribute('role'),
+    ).toBe('status')
+    expect(cards()).toHaveLength(3)
+    expect(screen.getAllByText('เกินงบ 10 บาท')).toHaveLength(3)
+    expect(screen.queryByRole('button', { name: 'เปิดทั้งหมด' })).toBeNull()
+    expect(
+      screen.queryByRole('button', { name: 'ใช้เงื่อนไขนี้แล้วสับใหม่' }),
+    ).toBeNull()
+    expect(screen.queryByText('อยู่ในงบที่เลือก')).toBeNull()
+    expect(
+      api.recommendationBodies().map(({ conditions }) => conditions),
+    ).toEqual([strict, suggested])
+    await waitFor(() => expect(storedFlow().conditions).toEqual(strict))
+    expect(storedFlow().shortlist.closestConditions).toEqual(suggested)
+    expect(
+      storedFlow().shortlist.slots.every(
+        (slot: { revealed: boolean }) => slot.revealed,
+      ),
+    ).toBe(true)
   })
 
-  it('names every change when several are needed and applies them all at once', async () => {
-    const strict = {
-      ...conditions,
-      budget: 'UNDER_50' as const,
-      zoneId: 'zone_1',
-    }
-    const suggested = {
-      ...strict,
-      budget: 'BETWEEN_101_200' as const,
+  it('shows actual differences from original choices on cards and confirmation, then allows selection', async () => {
+    const original = { ...strict, zoneId: 'zone_1', foodTypeId: 'food_1' }
+    const alternate = {
+      ...suggested,
       zoneId: 'zone_2',
       tasteId: 'taste_2',
+      foodTypeId: 'food_2',
     }
-    const api = fakeShuffleApi({
-      stored: strict,
+    const dish = {
+      ...krapao,
+      zone: { id: 'zone_2', name: { th: 'ตลาด', en: 'Market' } },
+      tastes: [
+        { id: 'taste_2', name: { th: 'กลมกล่อม', en: 'Savory' }, icon: null },
+      ],
+      foodType: {
+        id: 'food_2',
+        name: { th: 'เส้น', en: 'Noodles' },
+        icon: null,
+      },
+      selection: { source: 'AI' as const, reasonTh: 'อยู่ในงบที่เลือก' },
+    }
+    fakeShuffleApi({
+      stored: original,
       results: [
-        {
-          items: [],
-          suggestion: {
-            changes: [
-              {
-                field: 'zone',
-                from: {
-                  type: 'ZONE',
-                  id: 'zone_1',
-                  label: { th: 'หน้ามอ', en: 'Front Gate' },
-                },
-                to: {
-                  type: 'ZONE',
-                  id: 'zone_2',
-                  label: { th: 'ตลาด', en: 'Market' },
-                },
-              },
-              budgetChange('UNDER_50', 'BETWEEN_101_200', [
-                'ไม่เกิน ฿50',
-                '฿101–200',
-              ]),
-              {
-                field: 'taste',
-                from: {
-                  type: 'TASTE',
-                  id: 'taste_1',
-                  label: { th: 'เผ็ด', en: 'Spicy' },
-                },
-                to: {
-                  type: 'TASTE',
-                  id: 'taste_2',
-                  label: { th: 'กลมกล่อม', en: 'Savory' },
-                },
-              },
-            ],
-            conditions: suggested,
-            resultCount: 2,
-          },
-        },
-        { items: [krapao] },
+        { ...empty, suggestion: { ...suggestion, conditions: alternate } },
+        { items: [dish] },
       ],
     })
     const { user } = renderApp('/meal')
-
+    await start(user)
+    await closestHeading()
+    const differences = [
+      'เกินงบ 10 บาท',
+      'รสชาติต่างจากที่เลือก: กลมกล่อม',
+      'ประเภทอาหารต่างจากที่เลือก: เส้น',
+      'อยู่คนละพื้นที่: ตลาด',
+    ]
+    for (const difference of differences)
+      expect(screen.getByText(difference)).toBeTruthy()
+    expect(screen.queryByText('AI เลือกให้')).toBeNull()
+    expect(screen.queryByText('อยู่ในงบที่เลือก')).toBeNull()
     await user.click(
-      await screen.findByRole('button', { name: 'สับการ์ดเมนู' }),
+      screen.getByRole('button', { name: 'เลือกเมนู ผัดกะเพรา' }),
+    )
+    const dialog = screen.getByRole('dialog')
+    for (const difference of differences)
+      expect(within(dialog).getByText(difference)).toBeTruthy()
+    expect(within(dialog).queryByText('AI เลือกให้')).toBeNull()
+    await user.click(
+      within(dialog).getByRole('button', { name: 'เอาเมนูนี้แหละ' }),
     )
     expect(
-      await screen.findByText(
-        'ถ้าเปลี่ยนพื้นที่จาก “หน้ามอ” เป็น “ตลาด” และงบประมาณจาก “ไม่เกิน ฿50” เป็น “฿101–200” และรสชาติจาก “เผ็ด” เป็น “กลมกล่อม” จะพบ 2 เมนู',
-      ),
+      await screen.findByRole('heading', { name: 'มื้อนี้ได้แล้ว!' }),
     ).toBeTruthy()
-
-    await user.click(
-      screen.getByRole('button', { name: 'ใช้เงื่อนไขนี้แล้วสับใหม่' }),
-    )
-
-    await waitFor(() => expect(api.recommendationBodies()).toHaveLength(2))
-    expect(api.recommendationBodies()[1]?.conditions).toEqual(suggested)
+    expect(storedFlow().conditions).toEqual(original)
   })
 
-  it('offers only manual editing when no menu is available, keeping every selection', async () => {
-    fakeShuffleApi({ results: [{ items: [], suggestion: null }] })
+  it('restores alternatives on reload and returns to original filters when editing', async () => {
+    const api = fakeShuffleApi({
+      stored: strict,
+      results: [empty, { items: [krapao] }],
+    })
     const { user } = renderApp('/meal')
-
-    await user.click(
-      await screen.findByRole('button', { name: 'สับการ์ดเมนู' }),
+    await start(user)
+    await closestHeading()
+    cleanup()
+    const restored = renderApp('/meal')
+    await screen.findByRole('heading', { name: 'ผัดกะเพรา' })
+    expect(screen.getByText('เกินงบ 10 บาท')).toBeTruthy()
+    await restored.user.click(
+      screen.getByRole('button', { name: 'เปลี่ยนตัวเลือก' }),
     )
+    await screen.findByRole('heading', { name: 'เช็กก่อนหาเมนู' })
+    expect(
+      screen.getAllByRole('definition').map((value) => value.textContent),
+    ).toEqual(['ต่ำกว่า ฿50', 'เผ็ด', 'อะไรก็ได้', 'ที่ไหนก็ได้'])
+    expect(storedFlow().shortlist).toBeUndefined()
+    expect(api.recommendationBodies()).toHaveLength(2)
+  })
+
+  it('replaces alternatives with correct exclusions and preserves context through undo and exhaustion', async () => {
+    const api = fakeShuffleApi({
+      stored: strict,
+      results: [
+        empty,
+        { items: [krapao, noodles] },
+        { items: [curry] },
+        { items: [], suggestion: null },
+      ],
+    })
+    const { user } = renderApp('/meal')
+    await start(user)
+    await closestHeading()
+    await user.click(
+      screen.getByRole('button', { name: 'ขอดูเมนูอื่นแทน ผัดกะเพรา' }),
+    )
+    await screen.findByRole('heading', { name: 'แกงเขียวหวาน' })
+    expect(api.recommendationBodies()[2]).toEqual({
+      conditions: suggested,
+      count: 1,
+      rejectedMenuItemIds: [krapao.id],
+      displayedMenuItemIds: [noodles.id],
+    })
+    expect(storedFlow().shortlist.closestConditions).toEqual(suggested)
+    await user.click(screen.getByRole('button', { name: 'เอาเมนูเดิมกลับมา' }))
+    await screen.findByRole('heading', { name: 'ผัดกะเพรา' })
+    expect(storedFlow().shortlist.closestConditions).toEqual(suggested)
+    expect(storedFlow().shortlist.rejectedMenuItemIds).toEqual([])
+    await user.click(
+      screen.getByRole('button', { name: 'ขอดูเมนูอื่นแทน ผัดกะเพรา' }),
+    )
+    await screen.findByText('รอบนี้ไม่มีเมนูเพิ่มแล้ว')
+    expect(api.recommendationBodies()[3]?.conditions).toEqual(suggested)
+    expect(storedFlow().conditions).toEqual(strict)
+  })
+
+  it('blocks editing and duplicates during fallback, preserves answers on failure, and retries originals', async () => {
+    let release: (response: Response) => void = () => undefined
+    const pending = new Promise<Response>((resolve) => {
+      release = resolve
+    })
+    const api = fakeShuffleApi({
+      stored: strict,
+      results: [empty, pending, { items: [krapao] }],
+    })
+    const { user } = renderApp('/meal')
+    await start(user)
+    await waitFor(() => expect(api.recommendationBodies()).toHaveLength(2))
+    const retry = screen.getByRole<HTMLButtonElement>('button', {
+      name: 'กำลังหาเมนูให้นะ…',
+    })
+    expect(retry.disabled).toBe(true)
+    expect(
+      screen
+        .getAllByRole<HTMLButtonElement>('button', { name: /^แก้ไข/ })
+        .every((button) => button.disabled),
+    ).toBe(true)
+    await user.click(retry)
+    expect(api.recommendationBodies()).toHaveLength(2)
+    release(errorResponse(500, 'INTERNAL_SERVER_ERROR'))
+    await screen.findByRole('alert')
+    expect(storedFlow().conditions).toEqual(strict)
+    expect(
+      screen.getByRole<HTMLButtonElement>('button', { name: 'แก้ไขงบประมาณ' })
+        .disabled,
+    ).toBe(false)
+    await start(user)
+    await screen.findByRole('heading', { name: 'มีเมนูน่าลองมาให้แล้ว' })
+    expect(api.recommendationBodies()[2]?.conditions).toEqual(strict)
+  })
+
+  it('stops after one automatic fallback when suggested menus become unavailable', async () => {
+    const api = fakeShuffleApi({ stored: strict, results: [empty, empty] })
+    const { user } = renderApp('/meal')
+    await start(user)
+    await screen.findByRole('heading', { name: 'ยังไม่มีเมนูตรงที่เลือกเลย' })
+    expect(api.recommendationBodies()).toHaveLength(2)
+    expect(storedFlow().conditions).toEqual(strict)
+    expect(
+      screen.queryByRole('heading', { name: 'เมนูใกล้เคียงที่น่าลอง' }),
+    ).toBeNull()
+  })
+
+  it('offers manual editing only when no menu is available, preserving selections', async () => {
+    const api = fakeShuffleApi({ results: [{ items: [], suggestion: null }] })
+    const { user } = renderApp('/meal')
+    await start(user)
     await screen.findByText(
-      'ตอนนี้ยังไม่มีเมนูในระบบที่ตรงกับเงื่อนไขนี้ ลองแก้เงื่อนไขดูอีกครั้ง',
+      'ตอนนี้ยังไม่มีเมนูที่พร้อมแนะนำ กลับมาลองใหม่ทีหลังนะ',
     )
     expect(
       screen.queryByRole('button', { name: 'ใช้เงื่อนไขนี้แล้วสับใหม่' }),
     ).toBeNull()
-
-    await user.click(screen.getByRole('button', { name: 'แก้เงื่อนไขเอง' }))
-
-    await screen.findByRole('heading', { name: 'สรุปมื้อที่ต้องการ' })
+    expect(screen.queryByRole('button', { name: 'หาเมนูกัน' })).toBeNull()
     expect(
       screen.getAllByRole('definition').map((value) => value.textContent),
     ).toEqual(['฿50–100', 'เผ็ด', 'อะไรก็ได้', 'ที่ไหนก็ได้'])
+    await user.click(screen.getByRole('button', { name: 'แก้ไขงบประมาณ' }))
+    await user.click(screen.getByRole('radio', { name: '฿101–200' }))
+    await screen.findByRole('heading', { name: 'เช็กก่อนหาเมนู' })
+    expect(api.recommendationBodies()).toHaveLength(1)
   })
 })
 
@@ -625,7 +936,7 @@ describe('Session and scope', () => {
     await shuffleCards(user)
     await revealCard(user, 2)
     await user.click(
-      screen.getByRole('button', { name: 'ไม่เอาเมนู ก๋วยเตี๋ยว' }),
+      screen.getByRole('button', { name: 'ขอดูเมนูอื่นแทน ก๋วยเตี๋ยว' }),
     )
     await screen.findByRole('button', { name: 'เปิดการ์ดใบที่ 2' })
 
@@ -653,7 +964,9 @@ describe('Session and scope', () => {
     expect(
       screen.getByRole('button', { name: 'เปิดการ์ดใบที่ 1' }),
     ).toBeTruthy()
-    expect(screen.getByRole('button', { name: 'เลิกทำ' })).toBeTruthy()
+    expect(
+      screen.getByRole('button', { name: 'เอาเมนูเดิมกลับมา' }),
+    ).toBeTruthy()
   })
 
   it('clears the shortlist and rejected IDs when conditions are edited from the cards', async () => {
@@ -661,9 +974,9 @@ describe('Session and scope', () => {
     const { user } = renderApp('/meal')
     await shuffleCards(user)
 
-    await user.click(screen.getByRole('button', { name: 'แก้เงื่อนไข' }))
+    await user.click(screen.getByRole('button', { name: 'เปลี่ยนตัวเลือก' }))
 
-    await screen.findByRole('heading', { name: 'สรุปมื้อที่ต้องการ' })
+    await screen.findByRole('heading', { name: 'เช็กก่อนหาเมนู' })
     expect(storedShortlist()).toBeUndefined()
   })
 
@@ -674,7 +987,7 @@ describe('Session and scope', () => {
 
     await user.click(screen.getByRole('button', { name: 'เริ่มใหม่' }))
 
-    await screen.findByRole('heading', { name: /เลือกงบประมาณ/ })
+    await screen.findByRole('heading', { name: /มื้อนี้มีงบเท่าไหร่?/ })
     expect(
       screen
         .getAllByRole('radio')
@@ -691,10 +1004,10 @@ describe('Session and scope', () => {
     await shuffleCards(user)
     await user.click(screen.getByRole('button', { name: 'เปิดทั้งหมด' }))
     await user.click(
-      screen.getByRole('button', { name: 'ไม่เอาเมนู ผัดกะเพรา' }),
+      screen.getByRole('button', { name: 'ขอดูเมนูอื่นแทน ผัดกะเพรา' }),
     )
     await screen.findByRole('button', { name: 'เปิดการ์ดใบที่ 1' })
-    await user.click(screen.getByRole('button', { name: 'เลิกทำ' }))
+    await user.click(screen.getByRole('button', { name: 'เอาเมนูเดิมกลับมา' }))
 
     const paths = new Set(api.requests.map((request) => request.path))
     expect([...paths].sort()).toEqual([

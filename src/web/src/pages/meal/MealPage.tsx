@@ -15,13 +15,14 @@ import {
 import { usePreference } from '@/hooks/preferences/usePreference'
 import { useRecordHistory } from '@/hooks/recommendation-history/useRecommendationHistory'
 import {
-  conditionSteps,
+  conditionDifferences,
   firstOpenStep,
   flowSteps,
   initialRequest,
   isCompleteConditions,
   withKnownIds,
   type ConditionDraft,
+  type ConditionStep,
   type FlowStep,
   type MealStep,
   type RecommendationConditions,
@@ -39,13 +40,11 @@ import { BudgetStep } from './components/BudgetStep'
 import { ConditionSummary } from './components/ConditionSummary'
 import { ConfirmMenuDialog } from './components/ConfirmMenuDialog'
 import { FoodTypeStep } from './components/FoodTypeStep'
-import { NoMatchPanel } from './components/NoMatchPanel'
 import { ShuffleCardGrid } from './components/ShuffleCardGrid'
 import { TasteStep } from './components/TasteStep'
 import { ZoneStep } from './components/ZoneStep'
 
-const CONDITIONS_INTRO =
-  'เลือกทีละข้ออย่างรวดเร็ว แล้วเราจะคัดเฉพาะตัวเลือกที่น่าสนใจ'
+const CONDITIONS_INTRO = 'เลือกที่อยากกินมา เดี๋ยวช่วยหาเมนูให้'
 
 function previousStep(step: FlowStep): FlowStep {
   return flowSteps[Math.max(flowSteps.indexOf(step) - 1, 0)]!
@@ -56,8 +55,8 @@ function nextStep(step: FlowStep): FlowStep {
 }
 
 // Home → budget → taste → food type → zone → summary → shuffle cards → confirmation, one
-// short step at a time. A shuffle that finds nothing shows the no-match panel instead of
-// cards. Confirming a menu clears the flow and returns Home. A signed-in user's saved
+// short step at a time. No exact match loads closest menus once, preserving original answers.
+// Confirming a menu clears the flow and returns Home. A signed-in user's saved
 // defaults are shown as each step's selection until the user answers it.
 export function MealPage() {
   const navigate = useNavigate()
@@ -75,6 +74,9 @@ export function MealPage() {
     suggestion: Suggestion | null
   } | null>(null)
   const [shuffleError, setShuffleError] = useState<string | null>(null)
+  const [shuffling, setShuffling] = useState(false)
+  const shuffleInFlight = useRef(false)
+  const [editing, setEditing] = useState(false)
   const headingRef = useRef<HTMLHeadingElement>(null)
   const shownView = useRef<string | null>(null)
 
@@ -124,6 +126,29 @@ export function MealPage() {
     flow.goTo(target)
   }
 
+  function editAnswer(target: ConditionStep) {
+    if (step === 'cards') flow.editConditions()
+    setEditing(true)
+    go(target)
+  }
+
+  function choose<Field extends keyof RecommendationConditions>(
+    field: Field,
+    value: RecommendationConditions[Field],
+    advance = false,
+  ) {
+    flow.choose(field, value)
+    if (advance) {
+      go(editing ? 'summary' : nextStep(step as FlowStep))
+      setEditing(false)
+    }
+  }
+
+  function back(from: FlowStep) {
+    go(editing ? 'summary' : previousStep(from))
+    setEditing(false)
+  }
+
   // `ถัดไป` on a step still showing a saved default commits it, like any other answer.
   function next<Field extends keyof ConditionDraft>(
     field: Field,
@@ -133,11 +158,15 @@ export function MealPage() {
     if (conditions[field] === undefined && value !== undefined) {
       flow.choose(field, value as RecommendationConditions[Field])
     }
-    go(nextStep(from))
+    go(editing ? 'summary' : nextStep(from))
+    setEditing(false)
   }
   const optionsFailed = tastes.isError || foodTypes.isError || zones.isError
 
   async function shuffle(target: RecommendationConditions) {
+    if (shuffleInFlight.current) return
+    shuffleInFlight.current = true
+    setShuffling(true)
     setShuffleError(null)
     try {
       const { items, suggestion } = await recommend.mutateAsync(
@@ -146,23 +175,38 @@ export function MealPage() {
       if (items.length > 0) {
         setNoMatch(null)
         flow.showShortlist(target, items)
+      } else if (suggestion) {
+        // Reuse the server's minimal-change search without changing the user's answers.
+        const closest = await recommend.mutateAsync(
+          initialRequest(suggestion.conditions),
+        )
+        if (closest.items.length > 0) {
+          setNoMatch(null)
+          flow.showShortlist(target, closest.items, suggestion.conditions)
+        } else {
+          setNoMatch({ suggestion: null })
+        }
       } else {
-        flow.setConditions(target)
-        setNoMatch({ suggestion })
+        setNoMatch({ suggestion: null })
       }
     } catch (error) {
       setNoMatch(null)
       setShuffleError(recommendationErrorMessage(error))
+    } finally {
+      shuffleInFlight.current = false
+      setShuffling(false)
     }
   }
 
   function editConditions() {
+    setEditing(false)
     setNoMatch(null)
     flow.editConditions()
   }
 
   // `เริ่มใหม่` clears every answer and the shortlist, then asks question 1 again.
   function startOver() {
+    setEditing(false)
     setNoMatch(null)
     flow.finish()
   }
@@ -181,26 +225,34 @@ export function MealPage() {
 
   return (
     <PageShell
-      title="บอกมื้อที่อยากได้แบบคร่าว ๆ"
+      appearance="plain"
       // The intro is about answering questions, so the cards view drops it.
-      {...(view === 'cards' ? {} : { description: CONDITIONS_INTRO })}
+      {...(view === 'cards'
+        ? {}
+        : {
+            title: 'มื้อนี้กินอะไรดี?',
+            description: CONDITIONS_INTRO,
+          })}
       // Three cards need more room than a single question.
       width={view === 'cards' ? 'wide' : 'medium'}
     >
-      <p role="status" className="font-bold">
-        {step === 'cards'
-          ? 'สับการ์ดเมนูแล้ว'
-          : step === 'summary'
-            ? 'ตอบครบทั้ง 4 ข้อแล้ว'
-            : `ข้อ ${flowSteps.indexOf(step) + 1} จาก ${conditionSteps.length}`}
-      </p>
+      {step === 'summary' ? (
+        <p
+          role="status"
+          className="self-start rounded-sm border-2 border-paper bg-cream px-3 py-1 text-small font-extrabold"
+        >
+          เลือกครบ 4 ข้อแล้ว!
+        </p>
+      ) : null}
 
       {step === 'budget' ? (
         <BudgetStep
           value={shown.budget}
           headingRef={headingRef}
-          onChoose={(budget) => flow.choose('budget', budget)}
+          onChoose={(budget, advance) => choose('budget', budget, advance)}
           onNext={() => next('budget', step)}
+          onBack={editing ? () => back(step) : undefined}
+          editing={editing}
         />
       ) : null}
       {step === 'taste' ? (
@@ -208,9 +260,10 @@ export function MealPage() {
           tastes={tastes}
           value={shown.tasteId}
           headingRef={headingRef}
-          onChoose={(tasteId) => flow.choose('tasteId', tasteId)}
+          onChoose={(tasteId, advance) => choose('tasteId', tasteId, advance)}
           onNext={() => next('tasteId', step)}
-          onBack={() => go(previousStep(step))}
+          onBack={() => back(step)}
+          editing={editing}
         />
       ) : null}
       {step === 'foodType' ? (
@@ -218,9 +271,12 @@ export function MealPage() {
           foodTypes={foodTypes}
           value={shown.foodTypeId}
           headingRef={headingRef}
-          onChoose={(foodTypeId) => flow.choose('foodTypeId', foodTypeId)}
+          onChoose={(foodTypeId, advance) =>
+            choose('foodTypeId', foodTypeId, advance)
+          }
           onNext={() => next('foodTypeId', step)}
-          onBack={() => go(previousStep(step))}
+          onBack={() => back(step)}
+          editing={editing}
         />
       ) : null}
       {step === 'zone' ? (
@@ -228,17 +284,18 @@ export function MealPage() {
           zones={zones}
           value={shown.zoneId}
           headingRef={headingRef}
-          onChoose={(zoneId) => flow.choose('zoneId', zoneId)}
+          onChoose={(zoneId, advance) => choose('zoneId', zoneId, advance)}
           onNext={() => next('zoneId', step)}
-          onBack={() => go(previousStep(step))}
+          onBack={() => back(step)}
+          editing={editing}
         />
       ) : null}
-      {view === 'summary' && !optionsLoaded ? (
+      {(view === 'summary' || view === 'noMatch') && !optionsLoaded ? (
         // The summary names every choice, so it waits for all three lists.
         optionsFailed ? (
           <div role="alert" className="flex flex-col items-start gap-3">
             <p className="font-bold text-rust">
-              โหลดตัวเลือกไม่สำเร็จ กรุณาลองใหม่อีกครั้ง
+              โหลดตัวเลือกไม่สำเร็จ ลองอีกครั้งนะ
             </p>
             <Button
               variant="secondary"
@@ -252,40 +309,35 @@ export function MealPage() {
             </Button>
           </div>
         ) : (
-          <p role="status">กำลังโหลดตัวเลือก…</p>
+          <p role="status">กำลังโหลดตัวเลือกให้นะ…</p>
         )
       ) : null}
-      {view === 'summary' && optionsLoaded && complete ? (
+      {(view === 'summary' || view === 'noMatch') &&
+      optionsLoaded &&
+      complete ? (
         <ConditionSummary
           conditions={conditions}
           tastes={tastes.data}
           foodTypes={foodTypes.data}
           zones={zones.data}
           headingRef={headingRef}
-          shuffling={recommend.isPending}
+          shuffling={shuffling}
           shuffleError={shuffleError}
-          onEdit={go}
+          noMatch={noMatch}
+          onEdit={editAnswer}
           onBack={() => go(previousStep('summary'))}
           onShuffle={() => void shuffle(conditions)}
-        />
-      ) : null}
-      {view === 'noMatch' && noMatch && complete ? (
-        <NoMatchPanel
-          suggestion={noMatch.suggestion}
-          shuffling={recommend.isPending}
-          headingRef={headingRef}
-          // The suggestion carries the complete conditions, every change already applied.
-          onApplySuggestion={() => {
-            if (noMatch.suggestion) {
-              void shuffle(noMatch.suggestion.conditions)
-            }
-          }}
-          onEditConditions={editConditions}
         />
       ) : null}
       {view === 'cards' && flow.shortlist && complete ? (
         <ShuffleCardGrid
           conditions={conditions}
+          conditionOptions={{
+            tastes: tastes.data ?? [],
+            foodTypes: foodTypes.data ?? [],
+            zones: zones.data ?? [],
+          }}
+          onEditCondition={editAnswer}
           shortlist={flow.shortlist}
           headingRef={headingRef}
           onUpdate={flow.updateShortlist}
@@ -299,6 +351,11 @@ export function MealPage() {
       {view === 'cards' && chosen ? (
         <ConfirmMenuDialog
           item={chosen}
+          differences={
+            flow.shortlist?.closestConditions && complete
+              ? conditionDifferences(chosen, conditions)
+              : []
+          }
           confirmed={flow.shortlist?.confirmed === true}
           historyFailed={recordHistory.isError}
           onConfirm={() => confirm(chosen)}

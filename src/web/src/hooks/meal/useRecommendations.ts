@@ -25,7 +25,7 @@ export function useRequestRecommendations() {
 // A 400 means a stored condition no longer matches the catalog, such as a deleted zone.
 export function recommendationErrorMessage(error: unknown) {
   if (error instanceof ApiError && error.status === 400) {
-    return 'เงื่อนไขบางข้อไม่มีในระบบแล้ว กรุณาแก้เงื่อนไขแล้วลองใหม่'
+    return 'ตัวเลือกบางข้อเปลี่ยนไปแล้ว ลองเลือกใหม่อีกทีนะ'
   }
-  return 'สับการ์ดเมนูไม่สำเร็จ กรุณาลองใหม่อีกครั้ง'
+  return 'หาเมนูไม่สำเร็จ ลองอีกครั้งนะ'
 }
