@@ -195,8 +195,10 @@ describe('recommendations service', () => {
     expect(repository.findZone).not.toHaveBeenCalled()
   })
 
-  it('suggests a filter change from the pool when nothing matches', async () => {
-    repository.findCandidates.mockResolvedValue([])
+  it('applies a filter adjustment and returns items in the same request', async () => {
+    repository.findCandidates
+      .mockResolvedValueOnce([])
+      .mockResolvedValueOnce([menuItem])
     const market = {
       id: 'zone_2',
       nameTh: 'ตลาด',
@@ -222,9 +224,14 @@ describe('recommendations service', () => {
       'menu_9',
       'menu_8',
     ])
+    expect(repository.findCandidates).toHaveBeenNthCalledWith(
+      2,
+      { ...fullRequest.conditions, zoneId: 'zone_2' },
+      ['menu_9', 'menu_8'],
+    )
     expect(result).toEqual({
-      items: [],
-      suggestion: {
+      items: [expect.objectContaining({ id: 'menu_1' })],
+      adjustment: {
         changes: [
           {
             field: 'zone',
@@ -246,32 +253,70 @@ describe('recommendations service', () => {
     })
   })
 
-  it('returns a null suggestion only when no item is available', async () => {
+  it('returns a null adjustment only when no item is available', async () => {
     repository.findCandidates.mockResolvedValue([])
     repository.findSuggestionPool.mockResolvedValue([])
     const service = createRecommendationsService(repository as never)
 
     await expect(service.recommend(fullRequest)).resolves.toEqual({
       items: [],
-      suggestion: null,
+      adjustment: null,
     })
   })
 
-  it('never suggests a change for replacement requests', async () => {
+  it('never adjusts conditions for replacement requests', async () => {
     repository.findCandidates.mockResolvedValue([])
     const service = createRecommendationsService(repository as never)
 
     await expect(
       service.recommend({ ...fullRequest, count: 1 }),
-    ).resolves.toEqual({ items: [], suggestion: null })
+    ).resolves.toEqual({ items: [], adjustment: null })
     expect(repository.findSuggestionPool).not.toHaveBeenCalled()
   })
 
-  it('does not load the suggestion pool when items match', async () => {
+  it('does not load the adjustment pool when items match', async () => {
     const service = createRecommendationsService(repository as never)
     await service.recommend(fullRequest)
 
     expect(repository.findSuggestionPool).not.toHaveBeenCalled()
+  })
+
+  it('uses at most one AI call after automatically adjusting conditions', async () => {
+    const adjusted = Array.from({ length: 4 }, (_, index) =>
+      candidate(`menu_${index + 1}`, `restaurant_${index + 1}`),
+    )
+    repository.findCandidates
+      .mockResolvedValueOnce([])
+      .mockResolvedValueOnce(adjusted)
+    repository.findSuggestionPool.mockResolvedValue([
+      {
+        price: 65,
+        zone: { ...zone, id: 'zone_2', nameTh: 'ตลาด', nameEn: 'Market' },
+        foodType: { ...foodType },
+        tastes: [{ ...taste }],
+      },
+    ])
+    aiSelector.select.mockResolvedValue([
+      { menuItemId: 'menu_1', reasonTh: 'ตรงกับเงื่อนไขใหม่' },
+      { menuItemId: 'menu_2', reasonTh: 'เพิ่มความหลากหลายของร้าน' },
+      { menuItemId: 'menu_3', reasonTh: 'อยู่ในงบที่ปรับแล้ว' },
+    ])
+    const service = createRecommendationsService(
+      repository as never,
+      () => 0.999,
+      aiSelector,
+    )
+
+    const result = await service.recommend(fullRequest)
+
+    expect(aiSelector.select).toHaveBeenCalledOnce()
+    expect(aiSelector.select).toHaveBeenCalledWith(
+      expect.objectContaining({
+        conditions: { ...fullRequest.conditions, zoneId: 'zone_2' },
+      }),
+    )
+    expect(result.items).toHaveLength(3)
+    expect(result.adjustment?.conditions.zoneId).toBe('zone_2')
   })
 
   it('uses one AI selection from a compact diverse pool for an initial request', async () => {

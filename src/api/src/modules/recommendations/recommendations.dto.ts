@@ -77,44 +77,44 @@ export const recommendationItemSchema = z.object({
   }),
 })
 
-// A filter value in a no-match suggestion. `BUDGET_RANGE` uses a BudgetRange value as its
+// A filter value in an automatic adjustment. `BUDGET_RANGE` uses a BudgetRange value as its
 // `id`; the others use their record ID.
-export const suggestionValueSchema = z.object({
+export const adjustmentValueSchema = z.object({
   type: z.enum(['BUDGET_RANGE', 'TASTE', 'FOOD_TYPE', 'ZONE']),
   id: z.string(),
   label: localizationSchema,
 })
 
-export const suggestionFieldSchema = z.enum([
+export const adjustmentFieldSchema = z.enum([
   'zone',
   'budget',
   'taste',
   'foodType',
 ])
 
-export const suggestionChangeSchema = z.object({
-  field: suggestionFieldSchema,
-  from: suggestionValueSchema,
-  to: suggestionValueSchema,
+export const adjustmentChangeSchema = z.object({
+  field: adjustmentFieldSchema,
+  from: adjustmentValueSchema,
+  to: adjustmentValueSchema,
 })
 
 // The fewest filter changes that leave at least one item. `conditions` has every change
-// applied, so the client can send it back as-is; `resultCount` counts the items it matches
+// applied and is used for the returned shortlist; `resultCount` counts the items it matches
 // with the same exclusions.
-export const recommendationSuggestionSchema = z
+export const recommendationAdjustmentSchema = z
   .object({
-    changes: z.array(suggestionChangeSchema).min(1).max(4),
+    changes: z.array(adjustmentChangeSchema).min(1).max(4),
     conditions: recommendationConditionsSchema,
     resultCount: z.number().int().positive(),
   })
   .describe(
-    'No-match suggestion. Null only when no active, non-excluded menu item exists, and for one-card replacements.',
+    'Automatic changes applied to an initial no-match. Null when no adjustment was needed or possible, and for one-card replacements.',
   )
 
 export const recommendationEnvelopeSchema = z.object({
   data: z.object({
     items: z.array(recommendationItemSchema).max(3),
-    suggestion: recommendationSuggestionSchema.nullable().optional(),
+    adjustment: recommendationAdjustmentSchema.nullable().optional(),
   }),
 })
 
@@ -134,10 +134,10 @@ export type RecommendationCandidate = Prisma.MenuItemGetPayload<
   typeof recommendationCandidate
 >
 export type RecommendationItem = z.infer<typeof recommendationItemSchema>
-export type RecommendationSuggestion = z.infer<
-  typeof recommendationSuggestionSchema
+export type RecommendationAdjustment = z.infer<
+  typeof recommendationAdjustmentSchema
 >
-export type SuggestionField = z.infer<typeof suggestionFieldSchema>
+export type AdjustmentField = z.infer<typeof adjustmentFieldSchema>
 
 export function parseRecommendationRequest(input: unknown) {
   return parseWithSchema(recommendationRequestSchema, input)

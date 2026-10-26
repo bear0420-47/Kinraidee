@@ -26,7 +26,6 @@ import {
   type MealStep,
   type RecommendationConditions,
   type RecommendationItem,
-  type Suggestion,
 } from '@/schemas/meal/recommendationSchemas'
 import {
   chooseCard,
@@ -70,10 +69,8 @@ export function MealPage() {
   const preference = usePreference()
   const { data: user } = useCurrentUser()
   const recordHistory = useRecordHistory()
-  // The last shuffle found nothing. Kept in memory only, so a reload shows the summary.
-  const [noMatch, setNoMatch] = useState<{
-    suggestion: Suggestion | null
-  } | null>(null)
+  // A true catalog no-match is kept in memory only, so a reload shows the summary.
+  const [noMatch, setNoMatch] = useState(false)
   const [shuffleError, setShuffleError] = useState<string | null>(null)
   const headingRef = useRef<HTMLHeadingElement>(null)
   const shownView = useRef<string | null>(null)
@@ -120,7 +117,7 @@ export function MealPage() {
   }, [view])
 
   const go = (target: FlowStep) => {
-    setNoMatch(null)
+    setNoMatch(false)
     flow.goTo(target)
   }
 
@@ -140,30 +137,30 @@ export function MealPage() {
   async function shuffle(target: RecommendationConditions) {
     setShuffleError(null)
     try {
-      const { items, suggestion } = await recommend.mutateAsync(
+      const { items, adjustment } = await recommend.mutateAsync(
         initialRequest(target),
       )
       if (items.length > 0) {
-        setNoMatch(null)
-        flow.showShortlist(target, items)
+        setNoMatch(false)
+        flow.showShortlist(adjustment?.conditions ?? target, items, adjustment)
       } else {
         flow.setConditions(target)
-        setNoMatch({ suggestion })
+        setNoMatch(true)
       }
     } catch (error) {
-      setNoMatch(null)
+      setNoMatch(false)
       setShuffleError(recommendationErrorMessage(error))
     }
   }
 
   function editConditions() {
-    setNoMatch(null)
+    setNoMatch(false)
     flow.editConditions()
   }
 
   // `เริ่มใหม่` clears every answer and the shortlist, then asks question 1 again.
   function startOver() {
-    setNoMatch(null)
+    setNoMatch(false)
     flow.finish()
   }
 
@@ -271,15 +268,7 @@ export function MealPage() {
       ) : null}
       {view === 'noMatch' && noMatch && complete ? (
         <NoMatchPanel
-          suggestion={noMatch.suggestion}
-          shuffling={recommend.isPending}
           headingRef={headingRef}
-          // The suggestion carries the complete conditions, every change already applied.
-          onApplySuggestion={() => {
-            if (noMatch.suggestion) {
-              void shuffle(noMatch.suggestion.conditions)
-            }
-          }}
           onEditConditions={editConditions}
         />
       ) : null}

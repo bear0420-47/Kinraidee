@@ -108,7 +108,7 @@ describe('recommendation warm performance', () => {
     expect(p95).toBeLessThanOrEqual(2_000)
   })
 
-  it('keeps the worst-case no-match suggestion p95 below two seconds for 500 items', async () => {
+  it('keeps the worst-case automatic adjustment p95 below two seconds for 500 items', async () => {
     // Every chosen filter misses the whole pool, so the search tries all 15 field sets.
     const option = (prefix: string, index: number) => ({
       id: `${prefix}_${index}`,
@@ -123,11 +123,16 @@ describe('recommendation warm performance', () => {
       tastes: [option('taste', index % 8), option('taste', (index + 3) % 8)],
     }))
     const missing = { id: 'missing', nameTh: 'ไม่มี', nameEn: 'None' }
+    let directQuery = true
     const repository = {
       findTaste: vi.fn().mockResolvedValue(missing),
       findFoodType: vi.fn().mockResolvedValue(missing),
       findZone: vi.fn().mockResolvedValue(missing),
-      findCandidates: vi.fn().mockResolvedValue([]),
+      findCandidates: vi.fn().mockImplementation(() => {
+        const result = directQuery ? [] : [buildCandidate(1)]
+        directQuery = !directQuery
+        return Promise.resolve(result)
+      }),
       findSuggestionPool: vi.fn().mockResolvedValue(pool),
     }
     const service = createRecommendationsService(repository as never)
@@ -144,7 +149,7 @@ describe('recommendation warm performance', () => {
     }
 
     const first = await service.recommend(input)
-    expect(first.suggestion?.changes).toHaveLength(4)
+    expect(first.adjustment?.changes).toHaveLength(4)
     const samples: number[] = []
     for (let sample = 0; sample < 30; sample += 1) {
       const startedAt = performance.now()
@@ -156,7 +161,7 @@ describe('recommendation warm performance', () => {
 
     expect(p95).toBeDefined()
     console.info(
-      `Recommendation no-match suggestion p95: ${p95?.toFixed(2)} ms (30 samples, 500 items)`,
+      `Recommendation automatic adjustment p95: ${p95?.toFixed(2)} ms (30 samples, 500 items)`,
     )
     expect(p95).toBeLessThanOrEqual(2_000)
   })

@@ -37,7 +37,7 @@ beforeEach(() => {
 
 describe('recommendation route', () => {
   it('is public and returns the service result in the success envelope', async () => {
-    service.recommend.mockResolvedValue({ items: [], suggestion: null })
+    service.recommend.mockResolvedValue({ items: [], adjustment: null })
 
     const response = await request(app)
       .post('/api/recommendations')
@@ -45,7 +45,7 @@ describe('recommendation route', () => {
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual({
-      data: { items: [], suggestion: null },
+      data: { items: [], adjustment: null },
     })
     expect(service.recommend).toHaveBeenCalledWith(validBody)
   })

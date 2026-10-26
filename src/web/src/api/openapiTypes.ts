@@ -2111,7 +2111,7 @@ export interface paths {
                 };
             };
             responses: {
-                /** @description Stateless recommendation shortlist or no-match result */
+                /** @description Stateless shortlist with optional automatic adjustment, or a true no-match result */
                 200: {
                     headers: {
                         [name: string]: unknown;
@@ -3189,8 +3189,8 @@ export interface components {
                         reasonTh: string | null;
                     };
                 }[];
-                /** @description No-match suggestion. Null only when no active, non-excluded menu item exists, and for one-card replacements. */
-                suggestion?: {
+                /** @description Automatic changes applied to an initial no-match. Null when no adjustment was needed or possible, and for one-card replacements. */
+                adjustment?: {
                     changes: {
                         /** @enum {string} */
                         field: "zone" | "budget" | "taste" | "foodType";

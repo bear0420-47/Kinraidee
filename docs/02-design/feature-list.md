@@ -2,7 +2,7 @@
 
 ## Status
 
-Approved — synchronized with the approved backlog; AI/Places additions were approved by the human project owner on 2026-10-24. Exactly one core feature is marked with `★`.
+Approved — synchronized with the approved backlog; AI/Places additions were approved by the human project owner on 2026-10-24 and automatic no-match adjustment was approved on 2026-10-26. Exactly one core feature is marked with `★`.
 
 ## Core release features
 
@@ -16,6 +16,7 @@ Approved — synchronized with the approved backlog; AI/Places additions were ap
 | Restaurant-diverse shortlist | | Fill distinct restaurant slots first when enough qualifying restaurants exist, then allow repeated restaurants only when necessary. | F19; B24; P3, P8 |
 | AI-assisted shortlist selection | | After mandatory rules create a diverse eligible pool of at most six, Gemini selects and briefly explains the initial shortlist; strict validation and deterministic fallback preserve the existing rules. | F20; B25; OA2; NFR13, NFR14 |
 | Live Google Places evidence | | Revealing a mapped restaurant can show current rating, rating count, opening information, Maps link, and attributed provider-returned reviews without storing the live payload. | F21, F16; B26; OA2; NFR14, NFR15 |
+| Automatic no-match adjustment | | If an initial condition set has no menu, apply the fewest proven concrete changes in the same request, show the resulting shortlist immediately, and state every change. | F22; B27; OA3; P1, P4, P8; NFR8 |
 | Authorized data administration | | Create, update, and soft-delete restaurant and menu records behind authentication, role checks, and a minimized audit event. Soft-deleted records are excluded from public catalog and recommendation results. | F8, LR8; B8; OA1 |
 | Registered user library | | Users can register, log in, save menu-item favorites, view selected-menu history, and save one set of default recommendation settings without blocking anonymous use. | F14, F15, F17, F18; B19, B20, B22, B23; LR1, LR2, LR3, LR6 |
 | Privacy and legal controls | | Purpose notice, data minimization, purpose limitation, log hygiene, and the conditional consent, retention, and traffic-log duties. | LR1, LR3, LR6, LR7, LR9, LR13, LR14, LR15, LR16, LR17; B9, B15, B16, B17 |

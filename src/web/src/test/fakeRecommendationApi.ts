@@ -3,10 +3,11 @@ import { screen } from '@testing-library/react'
 import type { CurrentUser } from '@/hooks/auth/useCurrentUser'
 import {
   RECOMMENDATION_STORAGE_KEY,
+  type Adjustment,
   type RecommendationConditions,
   type RecommendationItem,
   type RecommendationRequest,
-  type Suggestion,
+  type Shortlist,
 } from '@/schemas/meal/recommendationSchemas'
 import {
   fakeAuthApi,
@@ -84,18 +85,20 @@ export const noodles = recommendationItem('menu_2', 'ก๋วยเตี๋ย
 export const curry = recommendationItem('menu_3', 'แกงเขียวหวาน')
 export const somtam = recommendationItem('menu_4', 'ส้มตำ')
 
-type Result = { items: RecommendationItem[]; suggestion?: Suggestion | null }
+type Result = { items: RecommendationItem[]; adjustment?: Adjustment | null }
 
 // Answers each recommendation request in turn with the next queued result.
 export function fakeShuffleApi({
   results,
   currentUser = null,
   stored = conditions,
+  masterData = {},
   handle,
 }: {
   results: (Result | Response | Promise<Response>)[]
   currentUser?: CurrentUser | null
   stored?: RecommendationConditions
+  masterData?: FakeApiOptions['responses']
   // Answers other routes, such as favorites.
   handle?: FakeApiOptions['handle']
 }) {
@@ -119,13 +122,14 @@ export function fakeShuffleApi({
     },
     responses: {
       ...masterDataResponses,
+      ...masterData,
       'POST /api/recommendations': () => {
         const next = queue.shift()
         if (!next) throw new Error('Unexpected recommendation request.')
         return next instanceof Response || next instanceof Promise
           ? next
           : jsonResponse(200, {
-              data: { suggestion: null, ...next },
+              data: { adjustment: null, ...next },
             })
       },
     },
@@ -157,8 +161,15 @@ export function cards() {
 export function storedShortlist() {
   const stored = JSON.parse(
     sessionStorage.getItem(RECOMMENDATION_STORAGE_KEY)!,
-  ) as { shortlist?: { rejectedMenuItemIds: string[] } }
+  ) as { shortlist?: Shortlist }
   return stored.shortlist
+}
+
+export function storedConditions() {
+  const stored = JSON.parse(
+    sessionStorage.getItem(RECOMMENDATION_STORAGE_KEY)!,
+  ) as { conditions: RecommendationConditions }
+  return stored.conditions
 }
 
 export async function revealCard(user: User, position: number) {

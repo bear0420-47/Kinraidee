@@ -43,9 +43,9 @@ flowchart LR
   approver -.->|"approves scope, thresholds, legal applicability"| kinraidee
 ```
 
-**Scope.** Inside the box: session conditions, filtering, shortlist, AI-assisted initial selection, live place-evidence presentation, reject-and-replace, and data administration. The existing catalog remains authoritative; neither Gemini nor Google Places supplies the stored menu catalog. Outside and explicitly excluded: ordering, payment, delivery fulfillment, publishing user reviews, medical dietary advice, certificate issuance, Google photos, and external catalog import.
+**Scope.** Inside the box: session conditions, filtering, automatic initial no-match adjustment, shortlist, AI-assisted initial selection, live place-evidence presentation, reject-and-replace, and data administration. The existing catalog remains authoritative; neither Gemini nor Google Places supplies the stored menu catalog. Outside and explicitly excluded: ordering, payment, delivery fulfillment, publishing user reviews, medical dietary advice, certificate issuance, Google photos, and external catalog import.
 
-**Traces to:** F1–F8, F20, F21; B1–B8, B25, B26; OA1, OA2; intent scope section.
+**Traces to:** F1–F8, F20, F21, F22; B1–B8, B25, B26, B27; OA1, OA2, OA3; intent scope section.
 
 ---
 
@@ -68,7 +68,7 @@ Source: [`assets/d2-use-case.svg`](assets/d2-use-case.svg) — hand-authored UML
 
 The core meal-shortlist use case does not require an account (F6, LR2). Registered-user library and administrator use cases require authentication but do not block anonymous recommendation use.
 
-**Traces to:** F1, F2, F4, F5, F7, F8, F12, LR2, LR8; B1–B8, B14.
+**Traces to:** F1, F2, F4, F5, F7, F8, F12, F22, LR2, LR8; B1–B8, B14, B27; OA3.
 
 ---
 
@@ -135,7 +135,7 @@ flowchart LR
 
 **Conditional elements.** The consent record and the traffic log are drawn dashed because their activating conditions are unresolved: consent evidence applies only if consent or Terms are used (LR14, LR15, LR16), and the traffic log applies only if an accountable human confirms Computer Crime Act §26 applicability (LR10, LR11, LR12, LR13). Traffic logs are a separate store from application audit logs (LR13). No raw GPS coordinate is stored (NFR7) — no GPS store appears in this diagram.
 
-**Traces to:** F1, F2, F3, F4, F5, F6, F7, F8, F14, F15, F17, F18, F19, F20, F21; LR1, LR2, LR3, LR6, LR7, LR8, LR10, LR11, LR12, LR13, LR14, LR15, LR16; NFR1, NFR4, NFR5, NFR6, NFR7, NFR13, NFR14, NFR15; B9, B15, B16, B17, B19, B20, B22, B23, B24, B25, B26.
+**Traces to:** F1, F2, F3, F4, F5, F6, F7, F8, F14, F15, F17, F18, F19, F20, F21, F22; LR1, LR2, LR3, LR6, LR7, LR8, LR10, LR11, LR12, LR13, LR14, LR15, LR16; NFR1, NFR4, NFR5, NFR6, NFR7, NFR8, NFR13, NFR14, NFR15; B9, B15, B16, B17, B19, B20, B22, B23, B24, B25, B26, B27; OA3.
 
 ---
 
@@ -154,11 +154,9 @@ flowchart TD
   cta --> q{"Any qualifying choice left?"}
 
   q -->|"[no]"| relax{"Any menu available after changing filters?"}
-  relax -->|"[yes]"| none["Suggest the fewest filter changes that have results"]
-  none --> noMatchAction{"User action?"}
-  noMatchAction -->|"Use suggested conditions"| useRelax["Apply the suggested conditions and shuffle again"]
-  useRelax --> cta
-  noMatchAction -->|"Edit conditions manually"| s2
+  relax -->|"[yes]"| applyRelax["Apply the fewest proven filter changes automatically"]
+  applyRelax --> changed["Return effective conditions and an announced change notice"]
+  changed --> diversify
   relax -->|"[no]"| manual["Show no-match state with manual edit only"]
   manual --> s2
 
@@ -196,7 +194,7 @@ flowchart TD
 
 Filled circle = initial node. Bullseye = final node. Diamonds are decisions; guards are in square brackets. Reject replacement sends rejected and displayed menu-item IDs to the stateless recommendation API, which is what enforces non-repetition (F5, NFR9), and the one-card replacement path bypasses Gemini (F20, NFR13).
 
-**Traces to:** F1, F2, F3, F4, F5, F6, F7, F19, F20, F21; NFR3, NFR8, NFR9, NFR12, NFR13, NFR14; B1–B7, B24, B25, B26; journey steps 1–5.
+**Traces to:** F1, F2, F3, F4, F5, F6, F7, F19, F20, F21, F22; NFR3, NFR8, NFR9, NFR12, NFR13, NFR14; B1–B7, B24, B25, B26, B27; OA3; journey steps 1–5.
 
 ---
 
@@ -204,7 +202,7 @@ Filled circle = initial node. Bullseye = final node. Diamonds are decisions; gua
 
 | Requirement group | Covered by |
 |---|---|
-| F1, F2, F3, F4, F5, F6, F7, F19, F20, F21 core workflow | D1, D2, D3, D4; D2 remains unchanged because AI selection and live evidence are internal behavior of the existing shortlist/reveal use case, not new user goals |
+| F1, F2, F3, F4, F5, F6, F7, F19, F20, F21, F22 core workflow | D1, D2, D3, D4; D2 remains unchanged because AI selection, automatic adjustment, and live evidence are internal behavior of the existing shortlist/reveal use case, not new user goals |
 | F8 administration | D1, D2, D3 |
 | F12 random from filtered | D2 |
 | F10, F11, F13 | Not covered — deferred, see `feature-list.md` |

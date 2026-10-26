@@ -24,7 +24,7 @@ vi.mock('@/generated/photoCredits.json', () => ({
 
 import {
   RECOMMENDATION_STORAGE_KEY,
-  type Suggestion,
+  type Adjustment,
 } from '@/schemas/meal/recommendationSchemas'
 import {
   cards,
@@ -36,6 +36,7 @@ import {
   revealCard,
   shuffleCards,
   somtam,
+  storedConditions,
   storedShortlist,
   type User,
 } from '@/test/fakeRecommendationApi'
@@ -65,7 +66,7 @@ describe('Shuffling', () => {
     ).toBe(true)
     release(
       jsonResponse(200, {
-        data: { items: [krapao, noodles, curry], suggestion: null },
+        data: { items: [krapao, noodles, curry], adjustment: null },
       }),
     )
 
@@ -387,7 +388,7 @@ describe('Rejecting and undo', () => {
 
   it('shows ไม่มีตัวเลือกเพิ่มแล้ว when no replacement exists, without suggesting a filter change', async () => {
     fakeShuffleApi({
-      results: [{ items: [krapao, noodles] }, { items: [], suggestion: null }],
+      results: [{ items: [krapao, noodles] }, { items: [], adjustment: null }],
     })
     const { user } = renderApp('/meal')
     await showRevealedCards(user)
@@ -459,26 +460,26 @@ describe('Rejecting and undo', () => {
   })
 })
 
-describe('No match', () => {
+describe('Automatic adjustment and true no match', () => {
   const budgetChange = (
-    from: Suggestion['conditions']['budget'],
-    to: Suggestion['conditions']['budget'],
+    from: Adjustment['conditions']['budget'],
+    to: Adjustment['conditions']['budget'],
     th: [string, string],
-  ): Suggestion['changes'][number] => ({
+  ): Adjustment['changes'][number] => ({
     field: 'budget',
     from: { type: 'BUDGET_RANGE', id: from, label: { th: th[0], en: th[0] } },
     to: { type: 'BUDGET_RANGE', id: to, label: { th: th[1], en: th[1] } },
   })
 
-  it('explains a single suggested change and shuffles with its conditions', async () => {
+  it('shows cards immediately and explains one automatic change', async () => {
     const strict = { ...conditions, budget: 'UNDER_50' as const }
     const suggested = { ...strict, budget: 'BETWEEN_50_100' as const }
     const api = fakeShuffleApi({
       stored: strict,
       results: [
         {
-          items: [],
-          suggestion: {
+          items: [krapao],
+          adjustment: {
             changes: [
               budgetChange('UNDER_50', 'BETWEEN_50_100', [
                 'ไม่เกิน ฿50',
@@ -489,7 +490,7 @@ describe('No match', () => {
             resultCount: 4,
           },
         },
-        { items: [krapao] },
+        { items: [], adjustment: null },
       ],
     })
     const { user } = renderApp('/meal')
@@ -497,27 +498,25 @@ describe('No match', () => {
     await user.click(
       await screen.findByRole('button', { name: 'สับการ์ดเมนู' }),
     )
-    const heading = await screen.findByRole('heading', {
-      name: 'ไม่พบเมนูที่ตรงทุกเงื่อนไข',
-    })
-    await waitFor(() => expect(document.activeElement).toBe(heading))
+    await screen.findByRole('heading', { name: 'เมนูที่น่าจะตรงใจ' })
     const explanation = screen.getByText(
-      'ถ้าเปลี่ยนงบประมาณจาก “ไม่เกิน ฿50” เป็น “฿50–100” จะพบ 4 เมนู',
+      'ไม่พบเมนูตรงทุกข้อ ระบบจึงเปลี่ยนงบประมาณจาก “ไม่เกิน ฿50” เป็น “฿50–100” แล้วสับให้ทันทีจาก 4 เมนูที่ตรงเงื่อนไขใหม่',
     )
     expect(explanation.getAttribute('role')).toBe('status')
-    expect(screen.queryByRole('button', { name: /หน้าหลัก/ })).toBeNull()
+    expect(api.recommendationBodies()).toHaveLength(1)
+    expect(api.recommendationBodies()[0]?.conditions).toEqual(strict)
+    expect(storedConditions()).toEqual(suggested)
+    expect(storedShortlist()?.adjustment?.conditions).toEqual(suggested)
 
+    await revealCard(user, 1)
     await user.click(
-      screen.getByRole('button', { name: 'ใช้เงื่อนไขนี้แล้วสับใหม่' }),
+      screen.getByRole('button', { name: 'ไม่เอาเมนู ผัดกะเพรา' }),
     )
-    await screen.findByRole('heading', { name: 'เมนูที่น่าจะตรงใจ' })
-
-    const [first, second] = api.recommendationBodies()
-    expect(first?.conditions).toEqual(strict)
-    expect(second?.conditions).toEqual(suggested)
+    await waitFor(() => expect(api.recommendationBodies()).toHaveLength(2))
+    expect(api.recommendationBodies()[1]?.conditions).toEqual(suggested)
   })
 
-  it('names every change when several are needed and applies them all at once', async () => {
+  it('names every automatic change and persists it across reload', async () => {
     const strict = {
       ...conditions,
       budget: 'UNDER_50' as const,
@@ -531,10 +530,50 @@ describe('No match', () => {
     }
     const api = fakeShuffleApi({
       stored: strict,
+      masterData: {
+        'GET /api/tastes': () =>
+          jsonResponse(200, {
+            data: {
+              items: [
+                {
+                  id: 'taste_1',
+                  name: { th: 'เผ็ด', en: 'Spicy' },
+                  icon: 'flame',
+                  sortOrder: 1,
+                },
+                {
+                  id: 'taste_2',
+                  name: { th: 'กลมกล่อม', en: 'Savory' },
+                  icon: null,
+                  sortOrder: 2,
+                },
+              ],
+            },
+          }),
+        'GET /api/zones': () =>
+          jsonResponse(200, {
+            data: {
+              items: [
+                {
+                  id: 'zone_1',
+                  name: { th: 'หน้ามอ', en: 'Front Gate' },
+                  description: null,
+                  sortOrder: 1,
+                },
+                {
+                  id: 'zone_2',
+                  name: { th: 'ตลาด', en: 'Market' },
+                  description: null,
+                  sortOrder: 2,
+                },
+              ],
+            },
+          }),
+      },
       results: [
         {
-          items: [],
-          suggestion: {
+          items: [krapao],
+          adjustment: {
             changes: [
               {
                 field: 'zone',
@@ -571,7 +610,6 @@ describe('No match', () => {
             resultCount: 2,
           },
         },
-        { items: [krapao] },
       ],
     })
     const { user } = renderApp('/meal')
@@ -581,27 +619,29 @@ describe('No match', () => {
     )
     expect(
       await screen.findByText(
-        'ถ้าเปลี่ยนพื้นที่จาก “หน้ามอ” เป็น “ตลาด” และงบประมาณจาก “ไม่เกิน ฿50” เป็น “฿101–200” และรสชาติจาก “เผ็ด” เป็น “กลมกล่อม” จะพบ 2 เมนู',
+        'ไม่พบเมนูตรงทุกข้อ ระบบจึงเปลี่ยนพื้นที่จาก “หน้ามอ” เป็น “ตลาด” และงบประมาณจาก “ไม่เกิน ฿50” เป็น “฿101–200” และรสชาติจาก “เผ็ด” เป็น “กลมกล่อม” แล้วสับให้ทันทีจาก 2 เมนูที่ตรงเงื่อนไขใหม่',
       ),
     ).toBeTruthy()
 
-    await user.click(
-      screen.getByRole('button', { name: 'ใช้เงื่อนไขนี้แล้วสับใหม่' }),
-    )
-
-    await waitFor(() => expect(api.recommendationBodies()).toHaveLength(2))
-    expect(api.recommendationBodies()[1]?.conditions).toEqual(suggested)
+    expect(api.recommendationBodies()).toHaveLength(1)
+    cleanup()
+    renderApp('/meal')
+    expect(
+      await screen.findByText(
+        'ไม่พบเมนูตรงทุกข้อ ระบบจึงเปลี่ยนพื้นที่จาก “หน้ามอ” เป็น “ตลาด” และงบประมาณจาก “ไม่เกิน ฿50” เป็น “฿101–200” และรสชาติจาก “เผ็ด” เป็น “กลมกล่อม” แล้วสับให้ทันทีจาก 2 เมนูที่ตรงเงื่อนไขใหม่',
+      ),
+    ).toBeTruthy()
   })
 
   it('offers only manual editing when no menu is available, keeping every selection', async () => {
-    fakeShuffleApi({ results: [{ items: [], suggestion: null }] })
+    fakeShuffleApi({ results: [{ items: [], adjustment: null }] })
     const { user } = renderApp('/meal')
 
     await user.click(
       await screen.findByRole('button', { name: 'สับการ์ดเมนู' }),
     )
     await screen.findByText(
-      'ตอนนี้ยังไม่มีเมนูในระบบที่ตรงกับเงื่อนไขนี้ ลองแก้เงื่อนไขดูอีกครั้ง',
+      'ตอนนี้ยังไม่มีเมนูในระบบที่สามารถนำมาแนะนำได้ ลองแก้เงื่อนไขดูอีกครั้ง',
     )
     expect(
       screen.queryByRole('button', { name: 'ใช้เงื่อนไขนี้แล้วสับใหม่' }),

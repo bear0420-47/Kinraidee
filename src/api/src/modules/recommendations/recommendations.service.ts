@@ -63,12 +63,15 @@ export function createRecommendationsService(
         excludedIds,
       )
 
-      if (candidates.length > 0) {
-        if (input.count === 3 && candidates.length > 3) {
-          const pool = selectDiverseCandidates(candidates, 6, random)
+      async function selectItems(
+        eligible: typeof candidates,
+        conditions: RecommendationConditions,
+      ) {
+        if (input.count === 3 && eligible.length > 3) {
+          const pool = selectDiverseCandidates(eligible, 6, random)
           const selected = await aiSelector
             .select({
-              conditions: input.conditions,
+              conditions,
               candidates: pool,
               count: input.count,
             })
@@ -95,33 +98,45 @@ export function createRecommendationsService(
               selectedCandidates.every(Boolean) &&
               validDiversity
             ) {
-              return {
-                items: selected.map((selection) =>
-                  toRecommendationItem(
-                    byId.get(selection.menuItemId)!,
-                    input.conditions,
-                    { source: 'AI', reasonTh: selection.reasonTh },
-                  ),
+              return selected.map((selection) =>
+                toRecommendationItem(
+                  byId.get(selection.menuItemId)!,
+                  conditions,
+                  { source: 'AI', reasonTh: selection.reasonTh },
                 ),
-              }
+              )
             }
           }
         }
 
-        return {
-          items: selectDiverseCandidates(candidates, input.count, random).map(
-            (candidate) => toRecommendationItem(candidate, input.conditions),
-          ),
-        }
+        return selectDiverseCandidates(eligible, input.count, random).map(
+          (candidate) => toRecommendationItem(candidate, conditions),
+        )
       }
 
-      // A one-card replacement leaves the slot empty instead of suggesting new filters.
-      if (input.count === 1) return { items: [], suggestion: null }
+      if (candidates.length > 0) {
+        return { items: await selectItems(candidates, input.conditions) }
+      }
+
+      // A one-card replacement never weakens the effective shortlist conditions.
+      if (input.count === 1) return { items: [], adjustment: null }
 
       const pool = await repository.findSuggestionPool(excludedIds)
+      const adjustment = findSuggestion(pool, input.conditions, records)
+      if (!adjustment) return { items: [], adjustment: null }
+
+      const adjustedCandidates = await repository.findCandidates(
+        adjustment.conditions,
+        excludedIds,
+      )
+      // Catalog changes between the pool and candidate queries degrade to a true no-match.
+      if (adjustedCandidates.length === 0) {
+        return { items: [], adjustment: null }
+      }
+
       return {
-        items: [],
-        suggestion: findSuggestion(pool, input.conditions, records),
+        items: await selectItems(adjustedCandidates, adjustment.conditions),
+        adjustment,
       }
     },
   }

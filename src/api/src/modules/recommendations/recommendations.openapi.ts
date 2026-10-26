@@ -25,7 +25,8 @@ export function registerRecommendationsOpenApi(registry: OpenAPIRegistry) {
     },
     responses: {
       200: {
-        description: 'Stateless recommendation shortlist or no-match result',
+        description:
+          'Stateless shortlist with optional automatic adjustment, or a true no-match result',
         content: { 'application/json': { schema: response } },
       },
       400: {

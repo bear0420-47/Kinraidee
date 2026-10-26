@@ -11,6 +11,7 @@ import { FormAlert } from '@/components/FormAlert'
 import { useRequestRecommendations } from '@/hooks/meal/useRecommendations'
 import { prefersReducedMotion } from '@/lib/motion'
 import {
+  adjustmentMessage,
   replacementRequest,
   type RecommendationConditions,
   type RecommendationItem,
@@ -115,6 +116,14 @@ export function ShuffleCardGrid({
 
   return (
     <section className="flex flex-col gap-4">
+      {shortlist.adjustment ? (
+        <p
+          role="status"
+          className="rounded-md border-2 border-paper bg-surface p-4 font-bold shadow-sm"
+        >
+          {adjustmentMessage(shortlist.adjustment)}
+        </p>
+      ) : null}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div className="flex flex-col gap-1">
           <h2

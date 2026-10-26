@@ -2,7 +2,7 @@
 
 ## Status
 
-Human-approved product-flow contract — synchronized with the approved specification; AI/Places behavior was approved on 2026-10-24. Visual style is approved separately in `design-system.md`.
+Human-approved product-flow contract — synchronized with the approved specification; AI/Places behavior was approved on 2026-10-24 and automatic no-match behavior was approved on 2026-10-26. Visual style is approved separately in `design-system.md`.
 
 ## Scope
 
@@ -18,7 +18,7 @@ One core workflow only: **Get a meal shortlist** (the core feature in `feature-l
 |---|---|---|---|
 | 1 | Opens Kinraidee and starts without signing in. | Home | F6, LR2 |
 | 2 | Chooses a budget, then a taste, then a food type, then a zone — one short step at a time. An invalid value is rejected inline, naming the field, and the user stays on this step. | Conditions | F1, NFR4 |
-| 3 | Submits the chosen conditions with the `สับการ์ดเมนู` action. Mandatory filters and exclusions run first, then a restaurant-diverse pool of at most six is formed. When more than three candidates remain, Gemini selects and explains up to three; strict validation or deterministic fallback produces the final face-down cards. | Shortlist | F2, F3, F19, F20, NFR3, NFR8, NFR13, NFR14 |
+| 3 | Submits the chosen conditions with the `สับการ์ดเมนู` action. Filters and exclusions run first. If none match, the backend automatically applies the fewest proven concrete condition changes and continues in the same request. A restaurant-diverse pool of at most six is then formed. When more than three candidates remain, Gemini selects and explains up to three; strict validation or deterministic fallback produces the final face-down cards. If conditions changed, an announced notice names every change above the cards. | Shortlist | F2, F3, F19, F20, F22, NFR3, NFR8, NFR13, NFR14 |
 | 4 | Reveals cards one by one, uses `เปิดทั้งหมด`, selects a revealed menu, or rejects a revealed choice and receives a different qualifying choice. Revealing a mapped restaurant starts a non-blocking live Google Places details request. Rejected choices do not come back this session, and one-card replacement does not call Gemini. | Shortlist | F4, F5, F21, NFR9, NFR12, NFR13, NFR14 |
 | 5 | Selects a revealed menu, reviews its confirmation details, then confirms the choice, returns to the shortlist, or starts a new session. Logged-in history is written only after confirmation. | Shortlist → Confirmation | F7, F15 |
 
@@ -27,11 +27,11 @@ One core workflow only: **Get a meal shortlist** (the core feature in `feature-l
 At step 3, **are there any qualifying choices left?**
 
 - **Yes** → show up to three and continue to step 4.
-- **No** → suggest a filter change that is guaranteed to produce at least one result, or say that no menu is available at all. Never invent a result and never break mandatory filters silently (NFR8).
+- **No** → find and apply the fewest filter changes guaranteed to produce at least one result, then return the shortlist and an explicit change notice in the same response. If no available menu remains, show the true no-match state with manual editing. Never invent a result or change a condition silently (F22, NFR8).
 
-No-match suggestion (human approver's decision, 2026-10-06):
+Automatic no-match adjustment (human approver's decision, 2026-10-26; algorithm retained from the approved 2026-10-06 suggestion):
 
-- The API suggests the fewest filter changes that produce at least one result. It tries every single-field change before any two-field change, and so on.
+- The API finds and applies the fewest filter changes that produce at least one result within the original initial-shortlist request. It tries every single-field change before any two-field change, and so on.
 - Fields are tried in this priority, which keeps personal intent such as taste and food type stable before more flexible constraints:
   1. `Zone`
   2. `Budget`
@@ -41,13 +41,14 @@ No-match suggestion (human approver's decision, 2026-10-06):
   - Budget moves to the nearest range that has results, trying one range up, then one down, then further out.
   - Zone, taste, and food type move to the specific option with the most results. Ties go to the record's display order.
 - A field the user left as `อะไรก็ได้` / `ที่ไหนก็ได้` is never changed, because it cannot get any wider.
-- A suggestion always exists while at least one active menu item is not excluded. It is absent only when the catalog has none left (for example, every item was rejected), and for one-card replacement requests.
+- An adjustment exists while at least one active photographed menu item is not excluded. It is absent only when the catalog has none left. One-card replacement requests never adjust conditions.
 
-No-match actions:
+Automatic-adjustment and true no-match presentation:
 
-- Primary: `ใช้เงื่อนไขนี้แล้วสับใหม่` applies every suggested change at once (the suggestion's complete conditions) and calls the recommendation API again.
-- Secondary: `แก้เงื่อนไขเอง` returns to the condition summary with all current selections preserved.
-- Do not add a third Home action inside the no-match panel; Home remains reachable through the header's `หน้าแรก` link and the Kinraidee brand.
+- When adjustment succeeds, there is no confirmation action and no second recommendation request. The cards appear immediately with an announced sentence naming every changed field and its previous and effective value.
+- The effective conditions replace the submitted conditions for the shortlist, subsequent one-card replacements, session storage, rationale, and condition editing.
+- `แก้เงื่อนไข` remains available from the cards view.
+- When no adjustment is possible because no available menu remains, show the no-match state with `แก้เงื่อนไขเอง`; Home remains reachable through the header.
 
 ## Notes
 
@@ -75,7 +76,7 @@ No-match actions:
 - Google Places details load only after reveal for restaurants with a stored Place ID. Loading, missing mapping, incomplete data, timeout, or provider error leaves the recommendation card usable and shows an explicit unavailable state.
 - Google ratings, opening information, Maps URI, and provider-returned reviews are transient and are not stored. Required Google and review-author attribution remains visible. Google photos are not used.
 - Recommendation items include menu, restaurant, zone, food-type, taste, price, image, and structured rationale data in one response. The web converts structured rationale flags into localized user-facing copy.
-- Valid no-match responses return `items: []` with a structured `suggestion` object or `suggestion: null`. The suggestion lists each change (field, from, to), the complete suggested conditions, and the result count; the web owns the localized explanation and action copy.
+- A successful automatic adjustment returns non-empty `items` with structured `adjustment` metadata containing each change (field, from, to), the complete effective conditions, and the matching-result count. The web owns the localized explanation copy and persists the adjustment with the shortlist. A true no-match returns `items: []` with `adjustment: null`.
 - Rejecting a revealed card adds its `menuItemId` to the session rejected IDs and requests one non-duplicate replacement that excludes rejected IDs and menu items still displayed. The replacement enters the same card slot face-down.
 - Reject feedback offers `เลิกทำ`. Undo removes the original ID from rejected IDs, removes the replacement, and restores the original card in its previous slot and reveal state.
 - Confirmation shows menu name, restaurant, price, zone, image, and recommendation rationale. It does not show wait time.

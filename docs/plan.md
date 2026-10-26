@@ -2,7 +2,7 @@
 
 ## Status
 
-Approved — the AI-assisted selection and Google Places amendment was approved on 2026-10-24. The Firebase Hosting, Cloud Run, and Neon deployment architecture was approved on 2026-10-25. Creating or exposing production resources still requires separate explicit approval.
+Approved — the AI-assisted selection and Google Places amendment was approved on 2026-10-24. The Firebase Hosting, Cloud Run, and Neon deployment architecture was approved on 2026-10-25. F22/OA3/B27 requirements and their automatic no-match implementation plan were approved separately by the human project owner on 2026-10-26. Creating or exposing production resources still requires separate explicit approval.
 
 ## Build Boundary
 
@@ -18,7 +18,7 @@ Approved — the AI-assisted selection and Google Places amendment was approved 
 - Google Secret Manager stores database credentials, JWT secret, provider keys, and initial administrator credentials. Artifact Registry stores the Cloud Run image.
 - Restaurant and menu-item images accept approved external URLs in every environment. Development/test may also use the internal `/uploads` directory; PostgreSQL stores only image keys and delivered URLs, never image blobs. Production internal uploads remain disabled until durable object storage is implemented.
 - Recommendation conditions and rejected menu-item IDs remain in web `sessionStorage`; they are not persisted in PostgreSQL.
-- The recommendation API is stateless and receives current conditions and rejected menu-item IDs with each request.
+- The recommendation API is stateless and receives current conditions and rejected menu-item IDs with each request. Under approved F22, an impossible initial request is completed with the smallest proven automatic condition adjustment and returns the effective conditions and adjustment metadata in the same response.
 - Registered users can save menu-item favorites, one set of default zone, food type, taste, and budget preferences, and selected-menu history.
 - Persistent food exclusions and detailed recommendation telemetry remain pending their separate privacy, retention, and schema decisions.
 - GPS, latitude/longitude, ordering, payment, delivery fulfillment, user-published public reviews, external restaurant/menu catalog import, Google photos, promotions, and delivery fees remain out of scope.
@@ -171,12 +171,14 @@ The amended requirements and this plan were approved separately on 2026-10-24. A
   - The preferences zone select is labelled `พื้นที่`, matching the meal flow.
   - Audit-log action and record types use Thai labels. The actor's email stays out of the audit log, as #49 requires.
   - Restaurant and MenuItem admin filters are kept in the URL, so they survive a reload.
-- No-match suggestion (human approver's decision, 2026-10-06). It replaces #54's single-field `relaxation` with a guaranteed `suggestion`:
-  - When nothing matches, `POST /api/recommendations` returns the fewest filter changes that produce at least one result, as `suggestion: { changes, conditions, resultCount }`. Single changes come before pairs, and so on, in field priority zone, budget, taste, food type.
+- Automatic no-match adjustment (requirement and implementation plan approved separately by the human approver, 2026-10-26). It reuses the approved 2026-10-06 guaranteed-suggestion algorithm but removes the user-confirmation round trip:
+  - When an initial three-card request has no match, `POST /api/recommendations` finds and applies the fewest filter changes that produce at least one result, then selects and returns the cards within the same request. Single changes come before pairs, and so on, in field priority zone, budget, taste, food type.
   - Budget moves to the nearest range in either direction, trying up first. Zone, taste, and food type move to the specific option with the most results, not to "any". A field the user left as "any" is never changed.
-  - The suggestion is `null` only when no active, non-excluded menu item exists, and for one-card replacements.
-  - The web shows every change in one sentence, and `ใช้เงื่อนไขนี้แล้วสับใหม่` shuffles with the suggested `conditions`.
-  - The API computes the suggestion in memory from one query of every active, non-excluded item, rather than one count query per option.
+  - A successful response returns non-empty `items` plus `adjustment: { changes, conditions, resultCount }`; `conditions` is the effective condition set used for filtering, rationale, AI selection, session storage, editing, and later replacements.
+  - One-card replacement never changes conditions and continues to return an empty item list when no qualifying replacement remains.
+  - A true initial no-match returns `items: []` and `adjustment: null` only when no active, photographed, non-excluded menu remains or no valid adjustment can be produced.
+  - The web goes directly to the cards, announces every automatic change in one sentence, and stores the adjustment with the shortlist so a reload preserves the explanation. It does not show `ใช้เงื่อนไขนี้แล้วสับใหม่` or make a second recommendation request.
+  - The API continues computing the adjustment in memory from one query of every active, photographed, non-excluded item, then performs one candidate query using the effective conditions. Candidate selection is shared with the ordinary path so restaurant diversity, AI validation, one-call limits, and deterministic fallback remain identical.
 - Seeded catalog photos (human approver's decision, 2026-10-06). It replaces #30's rule that seeded images stay `null`:
   - Each restaurant and menu item in `catalog.seed.json` has an `image` entry: its photo in `assets/catalog/` and a fixed generated upload key.
   - When local uploads are on (development and test, never production), the seed copies the 12 photos into `LOCAL_UPLOADS_DIRECTORY` before its transaction and stores `imageKey` plus `/uploads/<key>`. A missing photo stops the seed before any write, and fixed keys keep repeated runs unchanged.
@@ -254,6 +256,22 @@ Web pages: /meal
 Personal data: transient meal conditions sent to Gemini; transient Google reviewer attribution returned to the browser; neither is persisted or logged
 Authorization: public, using the existing anonymous core flow; provider credentials remain server-only
 Tests: hard-filter invariants, max-six/one-call cost guard, strict AI response validation, deterministic fallback, replacement and small-pool bypass, Place ID mapping, live-details minimization, attribution, timeout/error behavior, and secret/log/bundle scans
+```
+
+## Automatic No-Match Adjustment Implementation Note
+
+```txt
+Module: automatic initial-condition adjustment in stateless meal recommendations
+Requirement/backlog ID: F22, B27, OA3; amended F2, F12, F20, NFR8
+Legal requirement ID: LR1, LR3, LR7; no new persistence or provider disclosure
+Design artifact: feature list; user journey step 3; design-system shortlist status notice; prototype automatic-adjustment pattern; D4
+API routes: POST /api/recommendations
+Web pages: /meal
+Personal data: existing transient meal conditions and exclusion IDs only; adjustment metadata is stored only in browser sessionStorage with the shortlist
+Authorization: public; anonymous and authenticated users use the same stateless endpoint
+API contract: replace the interactive no-match `suggestion` result with optional `adjustment`; successful adjustment returns cards and complete effective conditions, while a true no-match returns no cards and `adjustment: null`
+Implementation: extract shared shortlist selection from the current matching path; reuse `findSuggestion` as the adjustment calculator; query candidates with its effective conditions; run the shared AI/deterministic selector once; persist effective conditions and adjustment in the web shortlist; remove the suggestion-confirmation branch
+Tests: unchanged strict match, one-field adjustment, multi-field adjustment, field priority and budget proximity, active/photo/exclusion invariants, AI one-call limit after adjustment, deterministic fallback, one-card replacement bypass, true no-match, response/OpenAPI validation, browser direct-to-cards behavior, adjustment announcement, reload persistence, and subsequent replacement using effective conditions
 ```
 
 ## Local API environment loading

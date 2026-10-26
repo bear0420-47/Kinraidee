@@ -1680,3 +1680,31 @@ New seed tests:
 - Two initial runs stopped before changing production because `gcloud builds submit` rejected the managed source bucket for the federated deployer.
 - Effective bucket and service-usage permissions were verified without exposing credentials. CD was simplified to build on the GitHub runner and push directly using repository-scoped `roles/artifactregistry.writer`.
 - Diagnostic bucket objects and temporary impersonation/Cloud Build permissions were removed after verification.
+
+## Automatic initial no-match adjustment - 2026-10-26
+
+### Scope
+
+- An initial three-card request that has no direct match now reuses the approved smallest-change algorithm, applies its effective conditions, and returns the shortlist in the same API response.
+- The response contract replaces interactive `suggestion` data with optional `adjustment` metadata containing every changed field, complete effective conditions, and matching-result count.
+- The web opens the cards immediately, announces the automatic changes, persists the explanation with the shortlist in `sessionStorage`, and uses the effective conditions for later replacements.
+- One-card replacement remains strict and never changes conditions automatically. A true catalog no-match still offers manual editing.
+
+### Results
+
+| Command/check | Exit code | Result |
+|---|---:|---|
+| Focused API recommendation tests | 0 | Recommendation service, adjustment calculator, OpenAPI, and performance: 4 files/29 tests passed. |
+| Focused recommendation route test | 0 | Public route/envelope and boundary parsing: 1 file/3 tests passed outside the socket-restricted sandbox. |
+| Focused web recommendation tests | 0 | Automatic adjustment, direct-to-cards behavior, reload persistence, effective-condition replacement, true no-match, and shortlist helpers passed. Final focused regression run: 3 files/49 tests. |
+| `pnpm verify` | 0 | Typecheck, lint, all tests, and both builds passed. API: 76 files/614 tests. Web: 38 files/409 tests. OpenAPI was regenerated during the API build. |
+| `git diff --check` | 0 | Pass. |
+| `pnpm format` | 0 | API and web formatting checks passed. The API package now explicitly ignores generator-owned `prisma/data/catalog.seed.json`; `catalog:build --check` separately verifies that artifact. |
+| `node tests/wireframe-requirements.test.cjs` | 0 | 24/24 prototype requirements passed after stale English navigation/admin assertions were synchronized with the approved Thai prototype and current role-aware access behavior. |
+| `pnpm --filter api catalog:build --check` | 0 | Confirmed `catalog.seed.json` exactly matches generator output. |
+| Automatic-adjustment state regression | 0 | Shortlist transition coverage confirms adjustment metadata survives reject, replacement, and undo, so its disclosure remains visible for the active shortlist. |
+
+### Build notes
+
+- The web build keeps the existing warning that the main JavaScript chunk exceeds 500 kB.
+- Rollup keeps the existing non-blocking warnings about comment annotations inside Zod dependencies.

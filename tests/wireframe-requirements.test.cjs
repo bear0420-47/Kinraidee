@@ -129,9 +129,10 @@ test("header offers meal selection, Profile, and Admin pages", () => {
   const nav = html.match(/<nav aria-label="Main navigation">([\s\S]*?)<\/nav>/)[1];
   assert.equal((nav.match(/<button\b/g) || []).length, 3);
   assert.equal((nav.match(/<a\b/g) || []).length, 0);
-  assert.match(nav, />Start choosing<\/button>/);
-  assert.match(nav, /id="profile-open"[^>]+aria-controls="profile-page"[^>]*>Profile<\/button>/);
-  assert.match(nav, /id="admin-open"[^>]+aria-controls="admin-page"[^>]*>Admin<\/button>/);
+  assert.match(nav, /id="start-choosing"[^>]*>เลือกมื้อ<\/button>/);
+  assert.match(nav, /id="profile-open"[^>]+aria-controls="profile-page"[^>]*>แพ้อาหาร<\/button>/);
+  assert.match(nav, /id="admin-open"[^>]+aria-controls="access-page"[^>]*>เข้าสู่ระบบ<\/button>/);
+  assert.match(appScript, /prototypeRole === "ADMIN" \? "admin-page" : "access-page"/);
   assert.match(html, /<main id="profile-page"[^>]+hidden>/);
   assert.match(html, /<main id="admin-page"[^>]+hidden>/);
 });
@@ -163,17 +164,17 @@ test("admin page supports protected create, update, retire, validation, and audi
   ]) {
     assert.match(html, new RegExp('id="' + id + '"'));
   }
-  assert.match(html, /Data administrator/);
-  assert.match(appScript, /Record not saved\. Check the highlighted required field\./);
-  assert.match(appScript, /addAdminAudit\("Retired", record\)/);
+  assert.match(html, /พื้นที่ผู้ดูแล/);
+  assert.match(appScript, /กรุณากรอกชื่อทั้งสองภาษา/);
+  assert.match(appScript, /addAdminAudit\(softDelete \? "นำออก" : "ลบ",record,before\)/);
 });
 
 test("admin records use and update the main recommendation catalog", () => {
-  assert.match(appScript, /const adminRecordsData = menuCatalog\.map/);
-  assert.match(appScript, /function syncCatalogFromAdmin\(record\)/);
-  assert.match(appScript, /menuCatalog\.unshift\(item\)/);
-  assert.match(appScript, /item\.status !== "Hidden"/);
-  assert.match(appScript, /syncCatalogFromAdmin\(record\);/);
+  assert.match(appScript, /adminData\.menus = menuCatalog\.map/);
+  assert.match(appScript, /function syncCatalogFromAdmin\(\)/);
+  assert.match(appScript, /menuCatalog\.splice\(0,menuCatalog\.length,\.\.\./);
+  assert.match(appScript, /status:"Active"/);
+  assert.match(appScript, /syncCatalogFromAdmin\(\);/);
 });
 
 test("admin record list is paginated and search returns to page one", () => {
@@ -182,7 +183,7 @@ test("admin record list is paginated and search returns to page one", () => {
   }
   assert.match(appScript, /const adminPageSize = 6/);
   assert.match(appScript, /filteredRecords\.slice\(firstRecord, firstRecord \+ adminPageSize\)/);
-  assert.match(appScript, /adminCurrentPage = 1;\s*renderAdminRecords\(event\.target\.value\)/);
+  assert.match(appScript, /document\.getElementById\("admin-search"\)\.addEventListener\("input", \(\) => \{ adminCurrentPage = 1; renderAdminRecords\(\); \}\)/);
 });
 
 test("whole-baht budget boundaries belong to exactly one range", () => {

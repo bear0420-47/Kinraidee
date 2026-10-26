@@ -5,6 +5,7 @@ import {
   RECOMMENDATION_STORAGE_KEY,
   storedFlowSchema,
   type FlowStep,
+  type Adjustment,
   type RecommendationConditions,
   type RecommendationItem,
   type Shortlist,
@@ -62,10 +63,18 @@ export function useRecommendationFlow() {
     [],
   )
 
-  // A successful shuffle (or relaxed re-shuffle) starts a new shortlist with these conditions.
+  // A successful shuffle starts a shortlist with the effective conditions and any adjustment.
   const showShortlist = useCallback(
-    (conditions: RecommendationConditions, items: RecommendationItem[]) =>
-      setFlow({ step: 'cards', conditions, shortlist: startShortlist(items) }),
+    (
+      conditions: RecommendationConditions,
+      items: RecommendationItem[],
+      adjustment: Adjustment | null,
+    ) =>
+      setFlow({
+        step: 'cards',
+        conditions,
+        shortlist: startShortlist(items, adjustment),
+      }),
     [],
   )
 
@@ -79,7 +88,7 @@ export function useRecommendationFlow() {
     [],
   )
 
-  // Commits a full set of conditions, such as an applied suggestion, without showing cards.
+  // Commits a full set of conditions without showing cards.
   const setConditions = useCallback(
     (conditions: RecommendationConditions) =>
       setFlow((current) => ({ ...current, conditions })),

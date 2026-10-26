@@ -2,7 +2,7 @@
 
 ## Status
 
-Approved — synchronized with specification `20260828-01-kinraidee-food-recommendation.md`; B25 and B26 were approved by the human project owner on 2026-10-24.
+Approved — synchronized with specification `20260828-01-kinraidee-food-recommendation.md`; B25 and B26 were approved by the human project owner on 2026-10-24; B27 was approved by the human project owner on 2026-10-26.
 
 ## MoSCoW prioritization
 
@@ -30,6 +30,7 @@ The priorities below use the MoSCoW method:
 | B24 | Diversify each shortlist across restaurants | Must | F19; Charter §5.2; P3, P8 | F19 | Scope approved by human approver |
 | B25 | Let AI select and explain the initial shortlist from eligible candidates | Must | F20; OA2; P1, P4, P8 | F20, NFR13, NFR14 | Approved 2026-10-24 |
 | B26 | Show live Google Places evidence for a revealed restaurant | Must | F21, F16; OA2; P7 | F21, NFR14, NFR15 | Approved 2026-10-24 |
+| B27 | Automatically apply the smallest proven condition adjustment on an initial no-match and disclose it with the shortlist | Must | F22; OA3; P1, P4, P8 | F2, F12, F20, F22, NFR8 | Approved 2026-10-26 |
 
 ### Must have — when activated
 
@@ -71,7 +72,7 @@ These are Must items only when the stated design or legal condition applies. The
 
 ## Traceability audit summary
 
-- Every approved Must product requirement F1–F8 and F19–F21 has at least one backlog row.
+- Every approved Must product requirement F1–F8 and F19–F22 has at least one backlog row.
 - Every numbered legal requirement LR1–LR17 has at least one backlog row, either directly or as a grouped legal implementation item.
 - Every backlog row identifies a product requirement, legal requirement, NFR, research pain, or documented operational assumption.
 - Items depending on unresolved legal applicability, sensitive-data assessment, or operational ownership are explicitly marked rather than assumed.
