@@ -11,7 +11,7 @@ import {
 describe('budgetOptions', () => {
   it('maps the approved labels to the API values in order', () => {
     expect(budgetOptions).toEqual([
-      { value: 'UNDER_50', label: 'ไม่เกิน ฿50' },
+      { value: 'UNDER_50', label: 'ต่ำกว่า ฿50' },
       { value: 'BETWEEN_50_100', label: '฿50–100' },
       { value: 'BETWEEN_101_200', label: '฿101–200' },
       { value: 'OVER_200', label: 'มากกว่า ฿200' },

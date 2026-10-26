@@ -18,7 +18,7 @@ The priorities below use the MoSCoW method:
 | ID | Backlog item | Priority | Traces to | Acceptance reference | Status |
 |---|---|---|---|---|---|
 | B1 | Capture short meal conditions | Must | F1; P1, P2, P5, P6, P7 | F1, NFR4 | Ready for review |
-| B2 | Return a shortlist of up to three qualifying choices | Must | F2; P1, P3, P8 | F2, NFR1, NFR3, NFR8 | Ready for review |
+| B2 | Return up to three exact choices, or immediately visible closest alternatives with original-filter differences when none match | Must | F2; P1, P3, P8, OA3 | F2, NFR1, NFR3, NFR8 | Closest-alternative refinement approved 2026-10-26 |
 | B3 | Display useful decision details and rationale | Must | F3; P4, P5, P6, P7 | F3 | Ready for review |
 | B4 | Reject a choice and receive a replacement | Must | F4; P4 | F4, NFR9 | Ready for review |
 | B5 | Prevent rejected-choice repetition within a session | Must | F5; P3, P4 | F5, NFR9 | Ready for review |

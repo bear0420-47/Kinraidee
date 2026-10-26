@@ -96,7 +96,6 @@ describe('Saved defaults in the meal flow', () => {
         .filter((input) => input.checked),
     ).toEqual([])
     await user.click(radio('ข้าว'))
-    await next(user)
 
     expect(
       (await screen.findByRole<HTMLInputElement>('radio', { name: 'หน้ามอ' }))
@@ -104,7 +103,7 @@ describe('Saved defaults in the meal flow', () => {
     ).toBe(true)
     await next(user)
 
-    await screen.findByRole('heading', { name: 'สรุปมื้อที่ต้องการ' })
+    await screen.findByRole('heading', { name: 'เช็กก่อนหาเมนู' })
     expect(storedConditions()).toEqual({
       budget: 'BETWEEN_50_100',
       tasteId: 'taste_1',
@@ -134,10 +133,23 @@ describe('Saved defaults in the meal flow', () => {
     const { user } = renderApp('/meal')
     await screen.findByRole('radio', { name: '฿50–100', checked: true })
 
-    await user.click(radio('ไม่เกิน ฿50'))
-    await next(user)
+    await user.click(radio('ต่ำกว่า ฿50'))
+
+    await screen.findByText('ข้อ 2 จาก 4')
 
     expect(storedConditions().budget).toBe('UNDER_50')
+  })
+
+  it('accepts a preselected default with one pointer activation', async () => {
+    startFlow()
+    const { user } = renderApp('/meal')
+    const budget = await screen.findByRole('radio', {
+      name: '฿50–100',
+      checked: true,
+    })
+    await user.click(budget)
+    await screen.findByText('ข้อ 2 จาก 4')
+    expect(storedConditions()).toEqual({ budget: 'BETWEEN_50_100' })
   })
 
   it('keeps an answer the user already gave, even "any"', async () => {
@@ -176,7 +188,7 @@ describe('Saved defaults in the meal flow', () => {
 
     // The step is unanswered, so ถัดไป asks for a choice instead of saving the missing ID.
     await next(user)
-    expect(screen.getByText('กรุณาเลือกพื้นที่')).toBeTruthy()
+    expect(screen.getByText('เลือกโซนก่อนนะ')).toBeTruthy()
     expect(screen.getByText('ข้อ 4 จาก 4')).toBeTruthy()
     expect(storedConditions()).not.toHaveProperty('zoneId')
   })

@@ -42,12 +42,12 @@ async function openConfirmation(user: User) {
   await shuffleCards(user)
   await revealCard(user, 1)
   await user.click(screen.getByRole('button', { name: 'เลือกเมนู ผัดกะเพรา' }))
-  return screen.findByRole('dialog', { name: 'เลือกเมนูนี้ใช่ไหม?' })
+  return screen.findByRole('dialog', { name: 'มื้อนี้เอาเมนูนี้เลยไหม?' })
 }
 
 async function confirm(user: User) {
   await user.click(screen.getByRole('button', { name: 'เอาเมนูนี้แหละ' }))
-  return screen.findByRole('dialog', { name: 'ได้มื้อนี้แล้ว!' })
+  return screen.findByRole('dialog', { name: 'มื้อนี้ได้แล้ว!' })
 }
 
 describe('History in the meal flow', () => {
@@ -92,7 +92,7 @@ describe('History in the meal flow', () => {
     const success = within(await confirm(user))
 
     expect((await success.findByRole('alert')).textContent).toBe(
-      'เลือกเมนูสำเร็จ แต่บันทึกประวัติไม่สำเร็จ',
+      'ได้เมนูแล้ว แต่บันทึกประวัติไม่สำเร็จนะ',
     )
     expect(success.getByRole('button', { name: 'กลับหน้าหลัก' })).toBeTruthy()
   })
@@ -116,7 +116,7 @@ describe('History in the meal flow', () => {
     renderApp('/meal')
 
     expect(
-      await screen.findByRole('dialog', { name: 'ได้มื้อนี้แล้ว!' }),
+      await screen.findByRole('dialog', { name: 'มื้อนี้ได้แล้ว!' }),
     ).toBeTruthy()
     expect(historyCalls(reloaded.api)).toEqual([])
     expect(writesBefore).toBe(1)

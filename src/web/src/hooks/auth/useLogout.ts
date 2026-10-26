@@ -20,7 +20,7 @@ export function useLogout() {
     // Leave the protected page before clearing the user so no guard sends us to /login.
     // Account data (favorites, saved defaults, history) leaves the cache with the user.
     onSuccess: async () => {
-      await navigate('/', { replace: true })
+      await navigate('/', { replace: true, flushSync: true })
       queryClient.setQueryData(currentUserQueryKey, null)
       queryClient.removeQueries({ queryKey: favoritesQueryKey })
       queryClient.removeQueries({ queryKey: preferencesQueryKey })

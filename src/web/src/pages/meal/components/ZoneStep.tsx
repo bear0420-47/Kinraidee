@@ -18,9 +18,10 @@ type ZoneStepProps = {
   zones: UseQueryResult<Zone[]>
   value: string | null | undefined
   headingRef: Ref<HTMLHeadingElement>
-  onChoose: (zoneId: string | null) => void
+  onChoose: (zoneId: string | null, advance?: boolean) => void
   onNext: () => void
   onBack: () => void
+  editing?: boolean
 }
 
 // Zones are chosen by hand; there is no GPS or current-location option.
@@ -31,12 +32,13 @@ export function ZoneStep({
   onChoose,
   onNext,
   onBack,
+  editing = false,
 }: ZoneStepProps) {
   return (
     <ChoiceStep
       number={4}
-      title="เลือกพื้นที่"
-      hint="เลือกด้วยตัวเอง"
+      title="แถวไหนดี?"
+      hint="โซนที่สะดวก"
       name="zone"
       // Kept in API order (sortOrder), followed by the UI-only "anywhere" choice.
       options={[
@@ -51,9 +53,10 @@ export function ZoneStep({
       headingRef={headingRef}
       loadState={loadStateOf(zones)}
       onRetry={() => void zones.refetch()}
-      onChange={(choice) => onChoose(fromChoiceValue(choice))}
+      onChange={(choice, advance) => onChoose(fromChoiceValue(choice), advance)}
       onNext={onNext}
       onBack={onBack}
+      editing={editing}
     />
   )
 }

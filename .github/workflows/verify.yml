@@ -59,14 +59,14 @@ jobs:
           test "$fences" -ge 3             || { echo "Expected 3 mermaid diagrams (D1, D3, D4), found $fences"; exit 1; }
           test -f docs/02-design/assets/d2-use-case.svg             || { echo "Missing the D2 use case diagram SVG"; exit 1; }
           grep -q 'assets/d2-use-case.svg' docs/02-design/diagrams.md             || { echo "diagrams.md does not reference the D2 SVG"; exit 1; }
-          core=$(grep -c '★' docs/02-design/feature-list.md || true)
+          core=$(awk -F '|' '$1 ~ /^[[:space:]]*$/ && $3 ~ /^[[:space:]]*★[[:space:]]*$/ { count++ } END { print count+0 }' docs/02-design/feature-list.md)
           test "$core" -eq 1 || { echo "feature-list.md must mark exactly one core feature, found $core"; exit 1; }
           grep -q 'Traces to' docs/02-design/diagrams.md
           d3=$(sed -n '/## D3/,/^## D4/p' docs/02-design/diagrams.md)
           for part in "Web app" "REST API" "Recommendation logic"                       "Session state" "PostgreSQL" "Admin interface"; do
             printf '%s' "$d3" | grep -q "$part"               || { echo "D3 is missing charter 5.2 component: $part"; exit 1; }
           done
-          grep -q 'Not yet covered' docs/02-design/prototype.md
+          grep -Eq '^## (Not yet covered|Mock Elements That Are Not Requirements)' docs/02-design/prototype.md
           test -f wireframe.html || { echo "Missing prototype artifact wireframe.html"; exit 1; }
 
       - name: Validate Claude agent and skill frontmatter
@@ -111,16 +111,28 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
       - name: Install dependencies
-        run: if [ -f package-lock.json ]; then npm ci; else npm install; fi
+        run: pnpm install --frozen-lockfile
+      - name: Generate Prisma client
+        env:
+          DATABASE_URL: postgresql://build:build@localhost:5432/build
+          DIRECT_DATABASE_URL: postgresql://build:build@localhost:5432/build
+        run: pnpm --filter api prisma generate
       - name: Build
-        run: npm run build --if-present
+        run: pnpm build
       - name: Test
-        run: npm test --if-present
+        env:
+          NODE_ENV: test
+          DATABASE_URL: postgresql://test:test@localhost:5432/kinraidee_test
+          JWT_SECRET: ci-test-secret-that-is-at-least-32-characters
+        run: pnpm test
       - name: Lint
-        run: npm run lint --if-present
+        run: pnpm lint

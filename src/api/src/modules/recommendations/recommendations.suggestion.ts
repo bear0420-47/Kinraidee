@@ -35,7 +35,7 @@ export type CurrentRecords = Record<
 >
 
 export const budgetLabels: Record<BudgetRange, Localization> = {
-  UNDER_50: { th: 'ไม่เกิน ฿50', en: 'Under ฿50' },
+  UNDER_50: { th: 'ต่ำกว่า ฿50', en: 'Under ฿50' },
   BETWEEN_50_100: { th: '฿50–100', en: '฿50–100' },
   BETWEEN_101_200: { th: '฿101–200', en: '฿101–200' },
   OVER_200: { th: 'มากกว่า ฿200', en: 'Over ฿200' },

@@ -21,6 +21,7 @@ import { RecommendationSuccess, successMessage } from './RecommendationSuccess'
 type ConfirmMenuDialogProps = {
   // The chosen card's menu, exactly as the recommendation response returned it.
   item: RecommendationItem
+  differences?: string[]
   // `เอาเมนูนี้แหละ` was pressed; kept with the shortlist, so a reload stays on success.
   confirmed: boolean
   // Recording the selection in history failed (signed-in users only).
@@ -37,6 +38,7 @@ type ConfirmMenuDialogProps = {
 // comes from the recommendation response, so opening it makes no request.
 export function ConfirmMenuDialog({
   item,
+  differences = [],
   confirmed,
   historyFailed,
   onConfirm,
@@ -54,7 +56,7 @@ export function ConfirmMenuDialog({
 
   return (
     <Dialog
-      title={confirmed ? 'ได้มื้อนี้แล้ว!' : 'เลือกเมนูนี้ใช่ไหม?'}
+      title={confirmed ? 'มื้อนี้ได้แล้ว!' : 'มื้อนี้เอาเมนูนี้เลยไหม?'}
       // Escape follows the stage's own way out: back to the cards, or Home once confirmed.
       onClose={confirmed ? onFinish : onCancel}
       // The favorite button comes first, but opening should land on the safe action.
@@ -104,8 +106,10 @@ export function ConfirmMenuDialog({
           <p className="text-card-title font-extrabold">
             {formatPrice(item.price)}
           </p>
-          <RationaleList rationale={item.rationale} />
-          <AiSelectionReason selection={item.selection} />
+          <RationaleList rationale={item.rationale} differences={differences} />
+          {differences.length === 0 ? (
+            <AiSelectionReason selection={item.selection} />
+          ) : null}
           <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
             <Button ref={rethinkRef} variant="secondary" onClick={onCancel}>
               <ArrowCounterClockwise aria-hidden weight="bold" />

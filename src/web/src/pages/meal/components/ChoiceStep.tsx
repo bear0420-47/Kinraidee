@@ -1,7 +1,8 @@
-import { ArrowRight } from '@phosphor-icons/react'
+import { ArrowRight, CheckCircle } from '@phosphor-icons/react'
 import { useId, useState, type ReactNode, type Ref } from 'react'
 
 import { Button } from '@/components/Button'
+import { conditionSteps } from '@/schemas/meal/recommendationSchemas'
 import { StepFooter } from './StepFooter'
 
 export type ChoiceOption = {
@@ -40,15 +41,16 @@ type ChoiceStepProps = {
   // Master data for the step is still loading or failed to load.
   loadState?: 'loading' | 'error' | 'ready'
   onRetry?: () => void
-  onChange: (value: string) => void
+  onChange: (value: string, advance?: boolean) => void
   onNext: () => void
-  onBack?: () => void
+  onBack?: (() => void) | undefined
+  editing?: boolean
 }
 
 const chipClassName = [
-  'inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-pill border-2 border-paper bg-surface px-4 font-bold',
-  'transition motion-reduce:transition-none hover:bg-peach-deep',
-  'peer-checked:bg-yellow peer-checked:shadow-sm',
+  'relative inline-flex h-full w-full min-h-20 cursor-pointer items-center justify-center gap-2 rounded-tl-xs rounded-tr-md rounded-bl-md rounded-br-xs border-2 border-paper bg-cream px-3 py-3 text-center font-bold shadow-sm',
+  'transition motion-reduce:transition-none hover:bg-peach hover:shadow-md motion-safe:hover:-translate-y-0.5',
+  'peer-checked:bg-yellow peer-checked:shadow-md peer-checked:hover:bg-yellow',
   // The radio itself is visually hidden, so its focus ring is drawn on the chip.
   'peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-paper peer-focus-visible:ring-4 peer-focus-visible:ring-focus',
 ].join(' ')
@@ -69,6 +71,7 @@ export function ChoiceStep({
   onChange,
   onNext,
   onBack,
+  editing = false,
 }: ChoiceStepProps) {
   const headingId = useId()
   // The `-error` suffix matches the form fields' error ids.
@@ -87,40 +90,59 @@ export function ChoiceStep({
   }
 
   return (
-    <section className="flex flex-col gap-4 rounded-md border-2 border-paper bg-glass p-5 shadow-md">
-      <div className="flex items-baseline justify-between gap-3">
+    <section className="flex flex-col gap-5 rounded-lg border-2 border-paper bg-surface p-4 shadow-lg sm:p-6">
+      <div className="flex flex-col gap-3">
         <h2
           id={headingId}
           ref={headingRef}
           tabIndex={-1}
-          className="flex items-baseline gap-3 font-display text-card-title leading-tight"
+          className="min-w-0 pt-1 font-display text-section-mobile leading-snug sm:text-section"
         >
-          <span aria-hidden className="text-small font-body font-extrabold">
-            {String(number).padStart(2, '0')}
-          </span>
           {title}
         </h2>
-        <span className="shrink-0 text-small text-muted">{hint}</span>
+        <div className="flex flex-wrap items-center justify-between gap-3 text-small">
+          <span className="text-muted">{hint}</span>
+          <span
+            role="status"
+            className="rounded-pill bg-peach px-3 py-1 font-bold text-paper"
+          >
+            ข้อ {number} จาก {conditionSteps.length}
+          </span>
+        </div>
       </div>
 
       {/* A shared minimum height keeps the footer in place as option counts change. */}
       <div className="min-h-44">
         {loadState === 'loading' ? (
-          <p role="status">กำลังโหลดตัวเลือก…</p>
+          <p role="status">กำลังโหลดตัวเลือกให้นะ…</p>
         ) : loadState === 'error' ? (
           <div role="alert" className="flex flex-col items-start gap-3">
             <p className="font-bold text-rust">
-              โหลดตัวเลือกไม่สำเร็จ กรุณาลองใหม่อีกครั้ง
+              โหลดตัวเลือกไม่สำเร็จ ลองอีกครั้งนะ
             </p>
             <Button variant="secondary" onClick={onRetry}>
               ลองใหม่
             </Button>
           </div>
         ) : (
-          <fieldset aria-labelledby={headingId} className="flex flex-col gap-2">
-            <div className="flex flex-wrap gap-3">
+          <fieldset
+            aria-labelledby={headingId}
+            aria-describedby={`${name}-advance-hint`}
+            className="flex flex-col gap-3"
+          >
+            <p aria-hidden className="text-small text-muted">
+              {editing ? 'แตะคำตอบเพื่อกลับไปดูสรุป' : 'แตะคำตอบเพื่อไปต่อ'}
+            </p>
+            <p id={`${name}-advance-hint`} className="sr-only">
+              {editing
+                ? 'แตะคำตอบแล้วกลับไปดูสรุปได้เลย หรือกดใช้คำตอบนี้'
+                : 'แตะคำตอบแล้วไปต่อได้เลย ถ้าใช้คีย์บอร์ดให้กดถัดไป'}
+            </p>
+            <div
+              className={`grid gap-3 ${name === 'budget' ? 'grid-cols-1 min-[360px]:grid-cols-2' : 'grid-cols-2 sm:grid-cols-3'}`}
+            >
               {options.map((option, index) => (
-                <label key={option.value} className="flex">
+                <label key={option.value} className="flex min-w-0">
                   <input
                     ref={index === 0 ? setFirstInput : undefined}
                     type="radio"
@@ -131,10 +153,29 @@ export function ChoiceStep({
                     aria-invalid={error ? true : undefined}
                     className="peer sr-only"
                     onChange={() => onChange(option.value)}
+                    onClick={(event) => {
+                      // Keep native keyboard selection in the group; pointer activation
+                      // also advances, including an already-checked option.
+                      if (event.detail > 0) onChange(option.value, true)
+                    }}
                   />
-                  <span className={chipClassName}>
-                    {option.icon}
+                  <span
+                    className={`${chipClassName} ${option.icon ? 'flex-col' : ''} ${name === 'budget' ? 'font-display text-card-title' : 'text-body'}`}
+                  >
+                    {option.icon ? (
+                      <span aria-hidden className="[&_svg]:size-6">
+                        {option.icon}
+                      </span>
+                    ) : null}
                     {option.label}
+                    {value === option.value ? (
+                      <CheckCircle
+                        aria-hidden
+                        weight="fill"
+                        size={16}
+                        className="absolute top-2 right-2 text-paper"
+                      />
+                    ) : null}
                   </span>
                 </label>
               ))}
@@ -150,7 +191,7 @@ export function ChoiceStep({
 
       <StepFooter onBack={onBack}>
         <Button disabled={loadState !== 'ready'} onClick={next}>
-          ถัดไป
+          {editing ? 'ใช้คำตอบนี้' : 'ถัดไป'}
           <ArrowRight aria-hidden weight="bold" />
         </Button>
       </StepFooter>

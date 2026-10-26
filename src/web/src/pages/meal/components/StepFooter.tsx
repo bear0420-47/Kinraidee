@@ -8,7 +8,7 @@ type StepFooterProps = {
   onBack?: (() => void) | undefined
   // A request is in flight, so going back waits too.
   backDisabled?: boolean
-  // The forward action, such as `ถัดไป` or `สับการ์ดเมนู`.
+  // The forward action, such as `ถัดไป` or `หาเมนูกัน`.
   children: ReactNode
 }
 

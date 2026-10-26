@@ -70,7 +70,7 @@ describe('PreferencesPage', () => {
     // Budget has no "any": the meal flow always asks for a budget range.
     expect(optionsOf('งบประมาณ')).toEqual([
       'ไม่ตั้งค่า',
-      'ไม่เกิน ฿50',
+      'ต่ำกว่า ฿50',
       '฿50–100',
       '฿101–200',
       'มากกว่า ฿200',

@@ -38,7 +38,7 @@ Reduce the time and mental effort needed to choose a meal by accepting a few ses
 ### Proposed success criteria
 
 - At least 80% of a usability-test group of at least five target users completes the core workflow within 60 seconds without facilitator help.
-- Each recommendation round returns no more than three choices unless fewer than three records satisfy the mandatory filters.
+- Each recommendation round returns no more than three choices. Exact choices satisfy mandatory filters; if none match, clearly identified closest alternatives may be shown immediately with differences against the preserved original conditions (human-approved OA3, 2026-10-26).
 - A user can reject a choice, receive a replacement, edit conditions, and start a new session without creating an account.
 - Every product backlog item traces to a research pain, legal requirement, or documented operational assumption.
 - Build, test, lint, privacy, and authorization checks must pass before implementation is reported complete.

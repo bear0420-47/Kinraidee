@@ -96,14 +96,15 @@ async function next(user: User) {
 // Answers every step: budget ฿50–100, taste "any", food type "any", zone "anywhere".
 async function answerAll(user: User) {
   await user.click(screen.getByRole('radio', { name: '฿50–100' }))
-  await next(user)
   await user.click(await screen.findByRole('radio', { name: 'อะไรก็ได้' }))
-  await next(user)
   await user.click(await screen.findByRole('radio', { name: 'อะไรก็ได้' }))
-  await next(user)
   await user.click(await screen.findByRole('radio', { name: 'ที่ไหนก็ได้' }))
-  await next(user)
-  await screen.findByRole('heading', { name: 'สรุปมื้อที่ต้องการ' })
+  await screen.findByRole('heading', { name: 'เช็กก่อนหาเมนู' })
+}
+
+async function selectWithKeyboard(user: User, name: string) {
+  screen.getByRole<HTMLInputElement>('radio', { name }).focus()
+  await user.keyboard('[Space]')
 }
 
 describe('MealPage entry', () => {
@@ -114,11 +115,11 @@ describe('MealPage entry', () => {
     expect(
       await screen.findByRole('heading', { name: 'วันนี้กินอะไรดี?' }),
     ).toBeTruthy()
-    await user.click(screen.getByRole('link', { name: 'ช่วยเลือกมื้อให้ฉัน' }))
+    await user.click(screen.getByRole('link', { name: 'ไปหาอะไรกินกัน' }))
 
     expect(currentPath(router)).toBe('/meal')
     expect(
-      await screen.findByRole('heading', { name: /เลือกงบประมาณ/ }),
+      await screen.findByRole('heading', { name: /มื้อนี้มีงบเท่าไหร่?/ }),
     ).toBeTruthy()
     expect(screen.getByText('ข้อ 1 จาก 4')).toBeTruthy()
   })
@@ -127,9 +128,9 @@ describe('MealPage entry', () => {
     fakeMealApi()
     renderApp('/meal')
 
-    await screen.findByRole('heading', { name: /เลือกงบประมาณ/ })
-    expect(choiceLabels('เลือกงบประมาณ')).toEqual([
-      'ไม่เกิน ฿50',
+    await screen.findByRole('heading', { name: /มื้อนี้มีงบเท่าไหร่?/ })
+    expect(choiceLabels('มื้อนี้มีงบเท่าไหร่?')).toEqual([
+      'ต่ำกว่า ฿50',
       '฿50–100',
       '฿101–200',
       'มากกว่า ฿200',
@@ -148,10 +149,10 @@ describe('MealPage condition steps', () => {
     const { user } = renderApp('/meal')
 
     const steps = [
-      ['เลือกงบประมาณ', 'กรุณาเลือกงบประมาณ', 'ไม่เกิน ฿50'],
-      ['วันนี้อยากได้รสชาติแบบไหน', 'กรุณาเลือกรสชาติ', 'เผ็ด'],
-      ['เลือกประเภทอาหาร', 'กรุณาเลือกประเภทอาหาร', 'ข้าว'],
-      ['เลือกพื้นที่', 'กรุณาเลือกพื้นที่', 'หน้ามอ'],
+      ['มื้อนี้มีงบเท่าไหร่?', 'เลือกงบมื้อนี้ก่อนนะ', 'ต่ำกว่า ฿50'],
+      ['วันนี้อยากกินรสไหน?', 'เลือกรสที่อยากกินก่อนนะ', 'เผ็ด'],
+      ['อยากกินแนวไหน?', 'เลือกแนวอาหารก่อนนะ', 'ข้าว'],
+      ['แถวไหนดี?', 'เลือกโซนก่อนนะ', 'หน้ามอ'],
     ] as const
 
     for (const [title, message, choice] of steps) {
@@ -166,35 +167,31 @@ describe('MealPage condition steps', () => {
       expect(document.activeElement).toBe(first)
       await user.click(screen.getByRole('radio', { name: choice }))
       expect(screen.queryByText(message)).toBeNull()
-      await next(user)
     }
 
-    await screen.findByRole('heading', { name: 'สรุปมื้อที่ต้องการ' })
+    await screen.findByRole('heading', { name: 'เช็กก่อนหาเมนู' })
   })
 
   it('loads tastes, food types, and zones from the public endpoints in API order', async () => {
     const api = fakeMealApi()
     const { user } = renderApp('/meal')
 
-    await user.click(await screen.findByRole('radio', { name: 'ไม่เกิน ฿50' }))
-    await next(user)
+    await user.click(await screen.findByRole('radio', { name: 'ต่ำกว่า ฿50' }))
     await screen.findByRole('radio', { name: 'เผ็ด' })
-    expect(choiceLabels('วันนี้อยากได้รสชาติแบบไหน')).toEqual([
+    expect(choiceLabels('วันนี้อยากกินรสไหน?')).toEqual([
       'เผ็ด',
       'หวาน',
       'อะไรก็ได้',
     ])
     await user.click(screen.getByRole('radio', { name: 'หวาน' }))
-    await next(user)
     // An unknown icon key still renders, with the approved fallback icon.
-    expect(choiceLabels('เลือกประเภทอาหาร')).toEqual([
+    expect(choiceLabels('อยากกินแนวไหน?')).toEqual([
       'ข้าว',
       'เส้น',
       'อะไรก็ได้',
     ])
     await user.click(screen.getByRole('radio', { name: 'เส้น' }))
-    await next(user)
-    expect(choiceLabels('เลือกพื้นที่')).toEqual([
+    expect(choiceLabels('แถวไหนดี?')).toEqual([
       'หน้ามอ',
       'หลังมอ',
       'ที่ไหนก็ได้',
@@ -227,9 +224,9 @@ describe('MealPage condition steps', () => {
       screen.getAllByRole('definition').map((value) => value.textContent),
     ).toEqual(['฿50–100', 'อะไรก็ได้', 'อะไรก็ได้', 'ที่ไหนก็ได้'])
 
-    // Summarising makes no recommendation request; only `สับการ์ดเมนู` does (#54).
+    // Summarising makes no recommendation request; only `หาเมนูกัน` does (#54).
     expect(
-      screen.getByRole<HTMLButtonElement>('button', { name: 'สับการ์ดเมนู' })
+      screen.getByRole<HTMLButtonElement>('button', { name: 'หาเมนูกัน' })
         .disabled,
     ).toBe(false)
     expect(
@@ -244,13 +241,9 @@ describe('MealPage condition steps', () => {
     const { user } = renderApp('/meal')
 
     await user.click(screen.getByRole('radio', { name: 'มากกว่า ฿200' }))
-    await next(user)
     await user.click(await screen.findByRole('radio', { name: 'เผ็ด' }))
-    await next(user)
     await user.click(await screen.findByRole('radio', { name: 'ข้าว' }))
-    await next(user)
     await user.click(await screen.findByRole('radio', { name: 'หลังมอ' }))
-    await next(user)
 
     expect(
       screen.getAllByRole('definition').map((value) => value.textContent),
@@ -260,9 +253,7 @@ describe('MealPage condition steps', () => {
     const spicy = screen.getByRole<HTMLInputElement>('radio', { name: 'เผ็ด' })
     expect(spicy.checked).toBe(true)
     await user.click(screen.getByRole('radio', { name: 'หวาน' }))
-    await next(user)
-    await next(user)
-    await next(user)
+    await screen.findByRole('heading', { name: 'เช็กก่อนหาเมนู' })
 
     expect(storedFlow()).toEqual({
       step: 'summary',
@@ -281,13 +272,38 @@ describe('MealPage condition steps', () => {
     const { user } = renderApp('/meal')
 
     await user.click(screen.getByRole('radio', { name: '฿101–200' }))
-    await next(user)
     await screen.findByRole('radio', { name: 'เผ็ด' })
     await user.click(screen.getByRole('button', { name: 'ย้อนกลับ' }))
 
     expect(
       screen.getByRole<HTMLInputElement>('radio', { name: '฿101–200' }).checked,
     ).toBe(true)
+    // Activating the already-selected option also progresses, without changing its value.
+    await user.click(screen.getByRole('radio', { name: '฿101–200' }))
+    expect(await screen.findByText('ข้อ 2 จาก 4')).toBeTruthy()
+  })
+
+  it('commits a keyboard edit directly to the summary and can leave an edit without repeating questions', async () => {
+    fakeMealApi()
+    const { user } = renderApp('/meal')
+    await answerAll(user)
+
+    await user.click(screen.getByRole('button', { name: 'แก้ไขงบประมาณ' }))
+    await selectWithKeyboard(user, '฿101–200')
+    expect(
+      screen.getByRole('heading', { name: 'มื้อนี้มีงบเท่าไหร่?' }),
+    ).toBeTruthy()
+    await user.click(screen.getByRole('button', { name: 'ใช้คำตอบนี้' }))
+    await screen.findByRole('heading', { name: 'เช็กก่อนหาเมนู' })
+    expect(
+      screen.getAllByRole('definition').map((value) => value.textContent),
+    ).toEqual(['฿101–200', 'อะไรก็ได้', 'อะไรก็ได้', 'ที่ไหนก็ได้'])
+
+    await user.click(screen.getByRole('button', { name: 'แก้ไขงบประมาณ' }))
+    await user.click(screen.getByRole('button', { name: 'ย้อนกลับ' }))
+    expect(
+      await screen.findByRole('heading', { name: 'เช็กก่อนหาเมนู' }),
+    ).toBeTruthy()
   })
 
   it('explains a master-data load failure and retries', async () => {
@@ -302,11 +318,10 @@ describe('MealPage condition steps', () => {
     })
     const { user } = renderApp('/meal')
 
-    await user.click(screen.getByRole('radio', { name: 'ไม่เกิน ฿50' }))
-    await next(user)
+    await user.click(screen.getByRole('radio', { name: 'ต่ำกว่า ฿50' }))
 
     expect(
-      await screen.findByText('โหลดตัวเลือกไม่สำเร็จ กรุณาลองใหม่อีกครั้ง'),
+      await screen.findByText('โหลดตัวเลือกไม่สำเร็จ ลองอีกครั้งนะ'),
     ).toBeTruthy()
     expect(
       screen.getByRole<HTMLButtonElement>('button', { name: 'ถัดไป' }).disabled,
@@ -321,9 +336,9 @@ describe('MealPage session state', () => {
     fakeMealApi()
     const { router, user } = renderApp('/meal')
 
-    await user.click(screen.getByRole('radio', { name: 'ไม่เกิน ฿50' }))
-    await next(user)
-    await user.click(await screen.findByRole('radio', { name: 'หวาน' }))
+    await user.click(screen.getByRole('radio', { name: 'ต่ำกว่า ฿50' }))
+    await screen.findByRole('radio', { name: 'หวาน' })
+    await selectWithKeyboard(user, 'หวาน')
     await user.click(screen.getByRole('link', { name: 'Kinraidee' }))
     await screen.findByRole('heading', { name: 'วันนี้กินอะไรดี?' })
     await router.navigate('/meal')
@@ -340,8 +355,8 @@ describe('MealPage session state', () => {
     const { router, user } = renderApp('/meal')
 
     await user.click(screen.getByRole('radio', { name: '฿50–100' }))
-    await next(user)
-    await user.click(await screen.findByRole('radio', { name: 'เผ็ด' }))
+    await screen.findByRole('radio', { name: 'เผ็ด' })
+    await selectWithKeyboard(user, 'เผ็ด')
 
     await user.click(screen.getByRole('link', { name: 'เข้าสู่ระบบ' }))
     expect(currentPath(router)).toBe('/login?returnTo=%2Fmeal')
@@ -385,7 +400,7 @@ describe('MealPage session state', () => {
     renderApp('/meal')
 
     expect(
-      await screen.findByRole('heading', { name: /เลือกงบประมาณ/ }),
+      await screen.findByRole('heading', { name: /มื้อนี้มีงบเท่าไหร่?/ }),
     ).toBeTruthy()
     // A fresh flow has nothing to keep, so the bad value is removed rather than rewritten.
     await waitFor(() => expect(storedFlow()).toBeNull())
@@ -409,7 +424,7 @@ describe('MealPage session state', () => {
 
     expect(
       await screen.findByRole('heading', {
-        name: /วันนี้อยากได้รสชาติแบบไหน/,
+        name: /วันนี้อยากกินรสไหน?/,
       }),
     ).toBeTruthy()
     expect(
@@ -447,9 +462,9 @@ describe('MealPage scope and accessibility', () => {
     fakeMealApi()
     const { user } = renderApp('/meal')
 
-    await screen.findByRole('heading', { name: /เลือกงบประมาณ/ })
+    await screen.findByRole('heading', { name: /มื้อนี้มีงบเท่าไหร่?/ })
     // Tab past the header links into the unselected radio group.
-    const firstBudget = screen.getByRole('radio', { name: 'ไม่เกิน ฿50' })
+    const firstBudget = screen.getByRole('radio', { name: 'ต่ำกว่า ฿50' })
     for (let i = 0; i < 5 && document.activeElement !== firstBudget; i++) {
       await user.tab()
     }
@@ -466,7 +481,7 @@ describe('MealPage scope and accessibility', () => {
     await user.keyboard('{Enter}')
 
     const heading = await screen.findByRole('heading', {
-      name: /วันนี้อยากได้รสชาติแบบไหน/,
+      name: /วันนี้อยากกินรสไหน?/,
     })
     await waitFor(() => expect(document.activeElement).toBe(heading))
   })

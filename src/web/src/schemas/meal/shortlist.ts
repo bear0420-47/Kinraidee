@@ -93,7 +93,11 @@ export function replaceCard(
       index !== slotIndex
         ? slot
         : replacement
-          ? { kind: 'card', item: replacement, revealed: false }
+          ? {
+              kind: 'card',
+              item: replacement,
+              revealed: false,
+            }
           : { kind: 'exhausted' },
     ),
     rejectedMenuItemIds: [...shortlist.rejectedMenuItemIds, previous.item.id],

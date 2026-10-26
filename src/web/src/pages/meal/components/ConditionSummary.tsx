@@ -11,6 +11,7 @@ import {
   type RecommendationConditions,
 } from '@/schemas/meal/recommendationSchemas'
 import { StepFooter } from './StepFooter'
+import { NoMatchPanel } from './NoMatchPanel'
 
 type NamedRecord = { id: string; name: { th: string } }
 
@@ -19,33 +20,29 @@ type ConditionSummaryProps = {
   tastes: NamedRecord[]
   foodTypes: NamedRecord[]
   zones: NamedRecord[]
-  headingRef: Ref<HTMLHeadingElement>
   // A shuffle request is in flight.
   shuffling: boolean
-  // Why the last shuffle failed, if it did.
-  shuffleError: string | null
   onEdit: (step: ConditionStep) => void
-  onBack: () => void
-  onShuffle: () => void
-}
+} & (
+  | { compact: true }
+  | {
+      compact?: false
+      headingRef: Ref<HTMLHeadingElement>
+      // Why the last shuffle failed, if it did.
+      shuffleError: string | null
+      noMatch?: boolean
+      onBack: () => void
+      onShuffle: () => void
+    }
+)
 
 function nameOf(records: NamedRecord[], id: string | null, anyLabel: string) {
   if (id === null) return anyLabel
   return records.find((record) => record.id === id)?.name.th ?? anyLabel
 }
 
-export function ConditionSummary({
-  conditions,
-  tastes,
-  foodTypes,
-  zones,
-  headingRef,
-  shuffling,
-  shuffleError,
-  onEdit,
-  onBack,
-  onShuffle,
-}: ConditionSummaryProps) {
+export function ConditionSummary(props: ConditionSummaryProps) {
+  const { conditions, tastes, foodTypes, zones, shuffling, onEdit } = props
   const rows: { step: ConditionStep; label: string; value: string }[] = [
     {
       step: 'budget',
@@ -69,20 +66,45 @@ export function ConditionSummary({
     },
   ]
 
+  if (props.compact) {
+    return (
+      <nav aria-label="ตัวเลือกมื้อนี้" className="flex flex-wrap gap-2">
+        {rows.map(({ step, label, value }) => (
+          <Button
+            key={step}
+            variant="ghost"
+            size="compact"
+            className="min-h-11 max-w-full text-left text-small"
+            aria-label={`แก้ไข${label}: ${value}`}
+            disabled={shuffling}
+            onClick={() => onEdit(step)}
+          >
+            <span className="min-w-0 break-words">
+              <span className="text-muted">{label}: </span>
+              {value}
+            </span>
+            <PencilSimple aria-hidden weight="bold" className="shrink-0" />
+          </Button>
+        ))}
+      </nav>
+    )
+  }
+
+  const { headingRef, shuffleError, noMatch = false, onBack, onShuffle } = props
   return (
-    <section className="flex flex-col gap-4 rounded-md border-2 border-paper bg-glass p-5 shadow-md">
+    <section className="flex flex-col gap-5 rounded-lg border-2 border-paper bg-glass p-4 shadow-lg sm:p-6">
       <div className="flex flex-col gap-1">
         <h2
           ref={headingRef}
           tabIndex={-1}
-          className="font-display text-card-title leading-tight"
+          className="pt-1 font-display text-card-title leading-snug"
         >
-          สรุปมื้อที่ต้องการ
+          {noMatch ? 'ยังไม่มีเมนูตรงที่เลือกเลย' : 'เช็กก่อนหาเมนู'}
         </h2>
-        <p className="text-small text-muted">
-          ตรวจคำตอบทั้ง 4 ข้อก่อนสับการ์ดเมนู
-        </p>
+        <p className="text-small text-muted">ถ้าโอเคแล้ว ไปหาเมนูกันเลย</p>
       </div>
+
+      {noMatch ? <NoMatchPanel /> : null}
 
       <dl className="flex flex-col divide-y-2 divide-line-soft rounded-sm border-2 border-line-soft">
         {rows.map(({ step, label, value }) => (
@@ -99,6 +121,7 @@ export function ConditionSummary({
               size="compact"
               aria-label={`แก้ไข${label}`}
               onClick={() => onEdit(step)}
+              disabled={shuffling}
             >
               <PencilSimple aria-hidden weight="bold" />
               แก้ไข
@@ -109,15 +132,24 @@ export function ConditionSummary({
 
       {shuffleError ? <FormAlert message={shuffleError} /> : null}
       <p role="status" className="sr-only">
-        {shuffling ? 'กำลังสับการ์ดเมนู...' : ''}
+        {shuffling ? 'กำลังหาเมนูให้นะ…' : ''}
       </p>
 
-      <StepFooter onBack={onBack} backDisabled={shuffling}>
-        <Button disabled={shuffling} aria-busy={shuffling} onClick={onShuffle}>
-          <Shuffle aria-hidden weight="bold" />
-          {shuffling ? 'กำลังสับการ์ดเมนู...' : 'สับการ์ดเมนู'}
-        </Button>
-      </StepFooter>
+      {!noMatch ? (
+        <StepFooter
+          onBack={noMatch ? undefined : onBack}
+          backDisabled={shuffling}
+        >
+          <Button
+            disabled={shuffling}
+            aria-busy={shuffling}
+            onClick={onShuffle}
+          >
+            <Shuffle aria-hidden weight="bold" />
+            {shuffling ? 'กำลังหาเมนูให้นะ…' : 'หาเมนูกัน'}
+          </Button>
+        </StepFooter>
+      ) : null}
     </section>
   )
 }

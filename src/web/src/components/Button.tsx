@@ -12,7 +12,7 @@ const variantClassNames: Record<ButtonVariant, string> = {
 }
 
 const sizeClassNames: Record<ButtonSize, string> = {
-  default: 'min-h-11 gap-2 px-5',
+  default: 'min-h-12 gap-2 px-5 sm:min-h-11',
   // Row actions in dense admin tables.
   compact: 'min-h-10 gap-1.5 px-4',
 }
@@ -22,7 +22,7 @@ export function buttonClassName(
   size: ButtonSize = 'default',
 ) {
   return [
-    'inline-flex items-center justify-center rounded-pill border-2 border-paper',
+    'inline-flex items-center justify-center rounded-tl-xs rounded-tr-md rounded-bl-md rounded-br-xs border-2 border-paper',
     'font-extrabold text-paper transition motion-reduce:transition-none',
     'disabled:cursor-not-allowed disabled:opacity-60',
     sizeClassNames[size],

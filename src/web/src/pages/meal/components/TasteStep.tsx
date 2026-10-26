@@ -19,9 +19,10 @@ type TasteStepProps = {
   tastes: UseQueryResult<Taste[]>
   value: string | null | undefined
   headingRef: Ref<HTMLHeadingElement>
-  onChoose: (tasteId: string | null) => void
+  onChoose: (tasteId: string | null, advance?: boolean) => void
   onNext: () => void
   onBack: () => void
+  editing?: boolean
 }
 
 export function TasteStep({
@@ -31,6 +32,7 @@ export function TasteStep({
   onChoose,
   onNext,
   onBack,
+  editing = false,
 }: TasteStepProps) {
   const icon = (key: string | null) => (
     <TasteIcon aria-hidden icon={key} size={20} weight="bold" />
@@ -39,7 +41,7 @@ export function TasteStep({
   return (
     <ChoiceStep
       number={2}
-      title="วันนี้อยากได้รสชาติแบบไหน"
+      title="วันนี้อยากกินรสไหน?"
       hint="เลือก 1 ข้อ"
       name="taste"
       // Kept in API order (sortOrder), followed by the UI-only "any" choice.
@@ -56,9 +58,10 @@ export function TasteStep({
       headingRef={headingRef}
       loadState={loadStateOf(tastes)}
       onRetry={() => void tastes.refetch()}
-      onChange={(choice) => onChoose(fromChoiceValue(choice))}
+      onChange={(choice, advance) => onChoose(fromChoiceValue(choice), advance)}
       onNext={onNext}
       onBack={onBack}
+      editing={editing}
     />
   )
 }

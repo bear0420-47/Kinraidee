@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { createMemoryRouter, RouterProvider } from 'react-router'
+import { flushSync } from 'react-dom'
 import { vi } from 'vitest'
 
 import type { CurrentUser } from '@/hooks/auth/useCurrentUser'
@@ -119,7 +120,12 @@ export function renderApp(path: string) {
 
   render(
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+      <RouterProvider
+        router={router}
+        flushSync={(callback) => {
+          flushSync(callback)
+        }}
+      />
     </QueryClientProvider>,
   )
 

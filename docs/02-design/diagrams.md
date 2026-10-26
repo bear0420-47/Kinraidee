@@ -150,7 +150,7 @@ flowchart TD
   s2 --> v{"Conditions valid?"}
   v -->|"[no]"| e1["Show the field-level error<br/><i>journey step 2</i>"]
   e1 --> s2
-  v -->|"[yes]"| cta["Submit with สับการ์ดเมนู"]
+  v -->|"[yes]"| cta["Submit with หาเมนูกัน"]
   cta --> q{"Any qualifying choice left?"}
 
   q -->|"[no]"| relax{"Any menu available after changing filters?"}
@@ -168,16 +168,16 @@ flowchart TD
   validAi -->|"[no / timeout / failure]"| fallback["Use deterministic selection"]
   more -->|"[no]"| fallback
   fallback --> s3
-  s3 --> reveal["Reveal one card or เปิดทั้งหมด"]
+  s3 --> reveal["Review revealed cards or reveal face-down cards"]
   reveal --> d{"Reject revealed card?"}
   reveal -.-> mapped{"Mapped Google Place?"}
   mapped -->|"[yes]"| live["Fetch and show attributed live place details"]
   mapped -->|"[no / error]"| unavailable["Keep card usable; show place details unavailable"]
   d -->|"[yes]"| s4["Exclude it and request one replacement"]
   s4 --> replacement{"Replacement found?"}
-  replacement -->|"[yes]"| slot["Put replacement in same slot face-down"]
+  replacement -->|"[yes]"| slot["Put replacement in same slot; reveal alternatives immediately"]
   slot --> undo{"Undo rejection?"}
-  undo -->|"[yes] เลิกทำ"| restore["Restore original card, slot, reveal state, and rejected IDs"]
+  undo -->|"[yes] เอาเมนูเดิมกลับมา"| restore["Restore original card, slot, reveal state, and rejected IDs"]
   restore --> reveal
   undo -->|"[no]"| reveal
   replacement -->|"[no]"| emptySlot["Mark slot as no more choices"]

@@ -15,6 +15,7 @@ import {
   replacementRequest,
   type RecommendationConditions,
   type RecommendationItem,
+  type ConditionStep,
   type Shortlist,
 } from '@/schemas/meal/recommendationSchemas'
 import {
@@ -25,9 +26,16 @@ import {
   undoReject,
 } from '@/schemas/meal/shortlist'
 import { MenuCard } from './MenuCard'
+import { ConditionSummary } from './ConditionSummary'
 
 type ShuffleCardGridProps = {
   conditions: RecommendationConditions
+  conditionOptions: {
+    tastes: { id: string; name: { th: string } }[]
+    foodTypes: { id: string; name: { th: string } }[]
+    zones: { id: string; name: { th: string } }[]
+  }
+  onEditCondition: (step: ConditionStep) => void
   shortlist: Shortlist
   headingRef: Ref<HTMLHeadingElement>
   onUpdate: (update: (shortlist: Shortlist) => Shortlist) => void
@@ -51,6 +59,8 @@ const gridColumns = [
 // rejecting a card asks the API again, for one replacement in the same slot.
 export function ShuffleCardGrid({
   conditions,
+  conditionOptions,
+  onEditCondition,
   shortlist,
   headingRef,
   onUpdate,
@@ -59,13 +69,14 @@ export function ShuffleCardGrid({
   onChoose,
 }: ShuffleCardGridProps) {
   const request = useRequestRecommendations()
+  const [activeCard, setActiveCard] = useState(0)
   const [replacingSlot, setReplacingSlot] = useState<number | null>(null)
   const [error, setError] = useState<string | null>(null)
   // Focus follows the card an action changed, once it has re-rendered.
   const [focusSlot, setFocusSlot] = useState<number | null>(null)
   const busy = replacingSlot !== null
   const { undo } = shortlist
-  const undoMessage = undo ? `ไม่เอา ${undo.previous.item.name.th} แล้ว` : ''
+  const undoMessage = undo ? `ข้าม ${undo.previous.item.name.th} แล้ว` : ''
 
   useEffect(() => {
     if (focusSlot === null) return
@@ -73,8 +84,9 @@ export function ShuffleCardGrid({
     // Bring the whole card into view, not just its heading, so its actions are visible
     // without scrolling. A card taller than the screen is aligned to its top.
     target?.focus({ preventScroll: true })
-    target?.closest('li')?.scrollIntoView({
+    document.getElementById(`meal-card-slot-${focusSlot}`)?.scrollIntoView({
       block: 'nearest',
+      inline: 'start',
       behavior: prefersReducedMotion() ? 'auto' : 'smooth',
     })
     setFocusSlot(null)
@@ -101,7 +113,7 @@ export function ShuffleCardGrid({
       setFocusSlot(slotIndex)
     } catch {
       // Nothing changes: the card stays and is not added to the rejected IDs.
-      setError('หาเมนูใหม่ไม่สำเร็จ กรุณาลองใหม่อีกครั้ง')
+      setError('หาเมนูใหม่ไม่สำเร็จ ลองอีกครั้งนะ')
       setFocusSlot(slotIndex)
     } finally {
       setReplacingSlot(null)
@@ -114,8 +126,13 @@ export function ShuffleCardGrid({
     setFocusSlot(undo.slotIndex)
   }
 
+  function browseCard(index: number) {
+    setActiveCard(index)
+    setFocusSlot(index)
+  }
+
   return (
-    <section className="flex flex-col gap-4">
+    <section className="flex min-w-0 flex-col gap-4">
       {shortlist.adjustment ? (
         <p
           role="status"
@@ -126,15 +143,15 @@ export function ShuffleCardGrid({
       ) : null}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div className="flex flex-col gap-1">
-          <h2
+          <h1
             ref={headingRef}
             tabIndex={-1}
             className="font-display text-card-title leading-tight"
           >
-            เมนูที่น่าจะตรงใจ
-          </h2>
+            มีเมนูน่าลองมาให้แล้ว
+          </h1>
           <p className="text-small text-muted">
-            เปิดการ์ดทีละใบ หรือเปิดทั้งหมดพร้อมกัน
+            ลองเปิดดูทีละใบ หรือเปิดทั้งหมดก็ได้
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -146,7 +163,7 @@ export function ShuffleCardGrid({
           ) : null}
           <Button variant="ghost" disabled={busy} onClick={onEditConditions}>
             <PencilSimple aria-hidden weight="bold" />
-            แก้เงื่อนไข
+            เปลี่ยนตัวเลือก
           </Button>
           <Button variant="ghost" disabled={busy} onClick={onStartOver}>
             <ArrowsClockwise aria-hidden weight="bold" />
@@ -155,15 +172,68 @@ export function ShuffleCardGrid({
         </div>
       </div>
 
+      <ConditionSummary
+        compact
+        conditions={conditions}
+        {...conditionOptions}
+        shuffling={busy}
+        onEdit={onEditCondition}
+      />
+
       {error ? <FormAlert message={error} /> : null}
+
+      {shortlist.slots.length > 1 ? (
+        <nav aria-label="ดูการ์ดเมนู" className="flex flex-col gap-2 sm:hidden">
+          <div className="flex flex-wrap items-center justify-between gap-2 text-small">
+            <p className="text-muted">ปัดซ้าย–ขวา ดูเมนูอื่นได้เลย</p>
+            <p aria-live="polite" aria-atomic="true" className="font-bold">
+              ใบที่ {activeCard + 1} จาก {shortlist.slots.length}
+            </p>
+          </div>
+          <div className="flex gap-2">
+            {shortlist.slots.map((_, index) => (
+              <Button
+                key={index}
+                variant={index === activeCard ? 'secondary' : 'ghost'}
+                size="compact"
+                className="min-h-11 min-w-11"
+                aria-label={`ดูการ์ดใบที่ ${index + 1}`}
+                aria-controls={`meal-card-slot-${index}`}
+                aria-current={index === activeCard ? 'true' : undefined}
+                onClick={() => browseCard(index)}
+              >
+                {index + 1}
+              </Button>
+            ))}
+          </div>
+        </nav>
+      ) : null}
 
       {/* Only the returned cards are shown; there are no empty placeholders. */}
       <ul
         aria-label="การ์ดเมนู"
-        className={`grid grid-cols-1 gap-4 ${gridColumns[shortlist.slots.length - 1] ?? ''}`}
+        className={`-mx-2 flex min-w-0 items-start snap-x snap-mandatory scroll-px-2 gap-4 overflow-x-auto overscroll-x-contain px-2 pt-1 pb-3 motion-safe:scroll-smooth sm:mx-0 sm:grid sm:items-stretch sm:snap-none sm:overflow-visible sm:p-0 ${shortlist.slots.length > 1 ? "after:w-4 after:shrink-0 after:content-[''] sm:after:hidden" : ''} ${gridColumns[shortlist.slots.length - 1] ?? ''}`}
+        onScroll={(event) => {
+          const rail = event.currentTarget
+          const left = rail.getBoundingClientRect().left
+          let nearest = 0
+          let distance = Infinity
+          Array.from(rail.children).forEach((card, index) => {
+            const offset = Math.abs(card.getBoundingClientRect().left - left)
+            if (offset < distance) {
+              nearest = index
+              distance = offset
+            }
+          })
+          setActiveCard(nearest)
+        }}
       >
         {shortlist.slots.map((slot, index) => (
-          <li key={index} className="[perspective:800px]">
+          <li
+            key={index}
+            id={`meal-card-slot-${index}`}
+            className={`${shortlist.slots.length > 1 ? 'w-[calc(100%_-_2rem)]' : 'w-full'} min-w-0 shrink-0 snap-start [perspective:800px] sm:w-auto`}
+          >
             <MenuCard
               position={index + 1}
               slot={slot}
@@ -192,7 +262,7 @@ export function ShuffleCardGrid({
             onClick={restore}
           >
             <ArrowCounterClockwise aria-hidden weight="bold" />
-            เลิกทำ
+            เอาเมนูเดิมกลับมา
           </Button>
         </div>
       ) : null}

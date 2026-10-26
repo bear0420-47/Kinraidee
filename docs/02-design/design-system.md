@@ -125,6 +125,10 @@ Use slight asymmetric radii for doodle surfaces when practical, e.g. `6px 12px 5
 
 ## Component Style Rules
 
+### Voice and meal copy
+
+Human-requested tone (2026-10-26): friendly, conversational Thai as university friends choosing a meal together. Ask short everyday questions and keep actions clear: `มื้อนี้มีงบเท่าไหร่?`, `หาเมนูกัน`, `ขอดูเมนูอื่น`. Prefer `ลองอีกครั้งนะ` over bureaucratic recovery wording, while retaining what failed and the next available action. Keep numerical budget/price differences, catalog names, attribution, legal/privacy notices and provider facts precise. Avoid forced slang, invented claims, jokes about errors, or timing promises. Apply the same voice to visible help, status/error/empty/success copy and accessible names on desktop and mobile. Previous literal UI labels below are superseded by this copy refinement where applicable; behavior is unchanged.
+
 ### Buttons
 
 - Primary buttons use peach/yellow fills, dark ink border, and offset shadow.
@@ -136,6 +140,10 @@ Use slight asymmetric radii for doodle surfaces when practical, e.g. `6px 12px 5
 
 ### Choice Chips
 
+- Budget wording correction (2026-10-26): UNDER_50 displays `ต่ำกว่า ฿50`, matching the approved strict price < 50 rule. A 50-baht menu belongs to ฿50–100. Questionnaire, summary, saved preferences and API suggestion labels use the same meaning; no filter/value change.
+
+- Theme correction (human request, 2026-10-26): condition options use cream paper cards with ink borders and the existing small shadow, against a white/surface step panel. Hover uses peach and medium shadow; any hover lift is motion-safe only. Checked options use yellow, medium shadow and a noninteractive aria-hidden CheckCircle, so selection is visible through shape as well as colour. Preserve native radio semantics and the existing keyboard focus ring. Budget labels may use text-card-title; other labels remain text-body. Existing taste/food icons use size-6 consistently on both phone and desktop. No new palette/token/font or option value.
+
 - Chips are pill or asymmetric rounded cards with `2px` ink border.
 - Selected chips use `--yellow` fill, `--paper` border, and `--shadow-sm`.
 - Each choice group is visually distinct with icon/shape/card layout, but all share the same selected-state language.
@@ -143,16 +151,32 @@ Use slight asymmetric radii for doodle surfaces when practical, e.g. `6px 12px 5
 
 ### Step Cards
 
+- Compact progress and light theme (human-approved 2026-10-26): ChoiceStep owns the only question-progress display, a small peach label `ข้อ {n} จาก 4` below the full-width question, beside the contextual hint. Omit the separate page badge for questions; keep the completed-summary status. Show one short pointer hint (`แตะคำตอบเพื่อไปต่อ` or edit-return wording), while aria-describedby retains complete keyboard/Next instructions.
+
+- Condition questions use paper/ink text on a white/surface panel, without a large filled header band. Full-width question type uses section-mobile on phones and section on larger screens, with existing comfortable leading for Thai marks. Use spacing, outlined cream options and a small peach progress accent for hierarchy. Existing footer/actions remain. This theme correction applies only to ChoiceStep, not results, summaries, Home or account/admin screens.
+
 - Step cards are paper panels with ink borders and offset shadows.
 - Show one decision step at a time for the core recommendation flow.
 - Completed steps show a clear picked/completed state, not colour alone.
 - Progress indicators are supportive; they do not replace field-level validation.
 - Condition choices are native radio buttons styled as choice chips, so arrow keys move the selection and exactly one option can be chosen. A step heading receives focus when the step changes, and the progress copy reads `ข้อ {n} จาก 4`.
+- Interaction refinement approved by the human on 2026-10-26: pointer activation selects and advances immediately, including an already-selected option. Explain this before the choices. Keyboard arrow/Space selection stays on the question; Next accepts it or a saved default. An edit opened from the summary returns directly after committing, preserving other answers; Back also returns to the summary. Its keyboard forward action is `ใช้คำตอบนี้`.
 - Every step ends with the same footer: a divider, then `ย้อนกลับ` on the left and the forward action on the right. The choices area has a shared minimum height, so the footer stays in the same place from step to step.
 - Large Thai display headings need extra room above them for tone marks; do not set them with `leading-none`.
 - A primary action that is not yet available stays visible but disabled, with a short note that explains why.
+- No-match recovery (OA3, approved 2026-10-26): show the existing menu cards already revealed, headed `เมนูใกล้เคียงที่น่าลอง`, with the status `ยังไม่มีเมนูตรงทุกข้อ ลองดูเมนูใกล้เคียงพวกนี้นะ`. Keep original filters and make `เปลี่ยนตัวเลือก` secondary. On every card and its confirmation reuse the rationale-list pattern, with WarningCircle, text-rust, and explicit differences such as `เกินงบ 10 บาท`, actual taste/type, or a different named area. Do not show checkmarked rationale or AI reasons computed against alternate retrieval conditions. Use existing tokens only. Normal exact cards still start face-down. No available menu uses the existing empty summary; failures retain original filters and retry. Disable edits and duplicate submissions throughout both requests. Automatic retrieval must never overwrite original answers.
 
 ### Result Cards
+
+- Compact decision surface (human-approved 2026-10-26): use existing 128px mobile / 160px larger-screen photo heights; combine zone and food type in a wrapping metadata row. Keep name/price/restaurant/zone/taste tags, genuine AI reasons and all closest-condition differences visible. Exact rationale omits unrestricted-condition lines and wraps compactly. After choose/reject, native `details` with `ดูรายละเอียดเมนูและร้าน` contains English name and existing Google evidence; all provider states/attribution stay intact inside it. Confirmation retains its full rationale.
+- Result-condition chips reuse the summary's original budget/taste/type/zone labels and values, use existing ghost/compact buttons at least 44px tall, wrap on small screens, and have explicit edit labels. Selecting one enters that question with the existing return-to-summary behavior, preserves other answers and clears the previous shortlist/exclusions. Edits wait during replacement.
+- Mobile swipe affordance supersedes full-width multi-card slots: below sm/640px, multiple slots use calc(100% - 32px), the existing 32px spacing token, to expose the adjacent edge; a single slot stays full-width. Include `ใบที่ N จาก M` with the existing numbered navigation. Align scroll to slot start explicitly, including the final card; retain native vertical scrolling, reduced motion and desktop grid.
+
+- Carousel keyboard fix (2026-10-26): activating a numbered mobile control focuses that card's existing reveal button or revealed heading, then Tab continues into its actions. Reuse existing focus/scroll and reduced-motion handling. Native swipe does not move focus. Loading slots remain scrollable before their action target is available.
+
+- Mobile card browsing (human request, 2026-10-26): below sm/640px show the existing slots as a horizontal native scroll-snap rail, one full-width card at a time, using existing spacing/gutter tokens. At sm and above retain the existing responsive grid. Use scroll-snap-type x mandatory and snap-start slots; keep page vertical scrolling and browser pinch zoom enabled through native touch behavior. With multiple slots show `ปัดซ้าย–ขวา ดูเมนูอื่นได้เลย` and numbered Button navigation (`ดูการ์ดใบที่ N`) with aria-current for the visible slot. Buttons remain at least 44px. Keyboard focus/scroll and reduced motion remain supported. Swiping only browses; choose/reject/confirmation stays explicit. One slot has no unnecessary swipe hint/pager, and exhausted slots remain navigable.
+
+- Desktop/mobile refinement (2026-10-26): the result grid supplies the page's single visible h1; omit the condition-entry title and repeated progress badge on results. Keep the no-match status explanation. Menu details and differences lead to choose/reject actions before optional Google evidence, so primary decisions remain easier to reach on phones. Use the existing single-column phone and multi-column desktop grid and existing touch-target tokens. Condition pages and their progress copy retain their existing layout.
 
 - Result cards use large food imagery, a paper surface, dark ink border, and offset shadow.
 - Each card shows menu name, restaurant, price, zone, and a one-line reason/rationale.
@@ -168,7 +192,7 @@ Use slight asymmetric radii for doodle surfaces when practical, e.g. `6px 12px 5
 - A successful Google Places panel may show rating, rating count, open status or opening hours, a Google Maps link, and available provider-returned reviews. Google branding and review-author attribution remain visible as required by the provider.
 - The Google Places panel does not show Google photos. Existing approved Unsplash, Openverse, restaurant, or team imagery remains the menu-card image source.
 
-- In the React flow, a card has four visible states, each stated in text and not by colour or motion alone: face-down (`การ์ดใบที่ {n}` with `ยังไม่เปิด`), revealed (menu details and actions), finding a replacement (`กำลังหาเมนูใหม่…`), and no more options (`ไม่มีตัวเลือกเพิ่มแล้ว`). The reveal animation runs only under `prefers-reduced-motion: no-preference`.
+- In the React flow, a card has four visible states, each stated in text and not by colour or motion alone: face-down (`การ์ดใบที่ {n}` with `ยังไม่เปิด`), revealed (menu details and actions), finding a replacement (`กำลังหาเมนูใหม่ให้นะ…`), and no more options (`รอบนี้ไม่มีเมนูเพิ่มแล้ว`). The reveal animation runs only under `prefers-reduced-motion: no-preference`.
 - A revealed card's photo is a `160px` strip across the card top, cropped to fill (`object-cover`), and the price sits beside the menu name, so a revealed card fits on a laptop screen. Revealing, replacing, or restoring a card scrolls the whole card into view (smoothly, or instantly under reduced motion) so its actions are visible. A card without a photo, or whose photo cannot load, shows a same-size panel with the food-type icon and `ไม่มีรูปเมนู` / `โหลดรูปไม่ได้`, so every revealed card lines up.
 
 ### Dialogs And Overlays
@@ -178,7 +202,7 @@ Use slight asymmetric radii for doodle surfaces when practical, e.g. `6px 12px 5
 - Non-dialog page content must be inert while a modal dialog is open.
 - Selected-menu confirmation shows menu name, restaurant, price, zone, image, and rationale. It never shows wait time.
 - Confirmation uses playful Thai actions. Stage 1 provides `เอาเมนูนี้แหละ` as the primary action and `ขอคิดอีกที` as the secondary action. The success state provides only `กลับหน้าหลัก`.
-- In the React flow both stages share one dialog. Stage 1 (`เลือกเมนูนี้ใช่ไหม?`) shows the photo, or the card's fallback panel, at a `16:10` ratio (so the dialog fits a 1366×768 laptop without scrolling), framed with the default radius. The success stage (`ได้มื้อนี้แล้ว!`) shows a Phosphor `Confetti` icon and the message, announced in a status region, and moves focus to `กลับหน้าหลัก`. Escape closes stage 1 like `ขอคิดอีกที`, and on the success stage acts as `กลับหน้าหลัก`.
+- In the React flow both stages share one dialog. Stage 1 (`มื้อนี้เอาเมนูนี้เลยไหม?`) shows the photo, or the card's fallback panel, at a `16:10` ratio (so the dialog fits a 1366×768 laptop without scrolling), framed with the default radius. The success stage (`มื้อนี้ได้แล้ว!`) shows a Phosphor `Confetti` icon and the message, announced in a status region, and moves focus to `กลับหน้าหลัก`. Escape closes stage 1 like `ขอคิดอีกที`, and on the success stage acts as `กลับหน้าหลัก`.
 
 ### Favorites
 
@@ -199,7 +223,7 @@ Use slight asymmetric radii for doodle surfaces when practical, e.g. `6px 12px 5
 
 - `/account/history` uses the same menu row as favorites (photo, names, Restaurant, price, and the `เมนูนี้ไม่พร้อมใช้งานแล้ว` pill when unavailable), plus a `เลือกเมื่อ {date}` line in Thai locale. The list is newest first and paged with the shared pagination controls.
 - `ล้างประวัติทั้งหมด` is always shown, disabled with nothing to clear, and asks `ล้างประวัติทั้งหมด?` with `การล้างประวัติจะลบรายการที่คุณเคยเลือกทั้งหมด` before deleting. The result `ล้างประวัติแล้ว` is announced.
-- When saving history fails after `เอาเมนูนี้แหละ`, the success stage still shows, with `เลือกเมนูสำเร็จ แต่บันทึกประวัติไม่สำเร็จ` as an announced warning under the message.
+- When saving history fails after `เอาเมนูนี้แหละ`, the success stage still shows, with `ได้เมนูแล้ว แต่บันทึกประวัติไม่สำเร็จนะ` as an announced warning under the message.
 
 ### Admin Tables And Bulk Selection
 

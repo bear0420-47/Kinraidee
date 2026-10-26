@@ -1,5 +1,7 @@
 # Kinraidee Core User Journey
 
+Presentation refinement approved 2026-10-26: within the existing question and result steps, consolidate progress into the question header, expose a neighboring card edge and current position on mobile, and shorten card content through native details while keeping key facts and closest differences visible. Original-condition chips on results open the existing edit-question -> summary path, preserving other answers and clearing the previous shortlist before a new search. No journey step, confirmation, account requirement or recommendation rule changes.
+
 ## Status
 
 Human-approved product-flow contract — synchronized with the approved specification; AI/Places behavior was approved on 2026-10-24 and automatic no-match behavior was approved on 2026-10-26. Visual style is approved separately in `design-system.md`.
@@ -52,6 +54,8 @@ Automatic-adjustment and true no-match presentation:
 
 ## Notes
 
+- Mobile presentation (human request, 2026-10-26): step 4 uses native horizontal swipe/snap browsing below 640px, showing one card at a time with a hint and numbered navigation for multiple slots. Swiping changes only the visible card. Existing reveal, choose, reject, undo and confirmation actions remain explicit, and desktop/tablet uses the existing grid. This is presentation within step 4, not a new journey step.
+
 - Public pages show `เข้าสู่ระบบ` as a secondary/ghost action at the top-right of the header. Anonymous users can ignore it and start the core flow. After login, the same header slot becomes the account/admin entry point.
 - `เข้าสู่ระบบ` navigates to a dedicated `/login` page; account creation uses a dedicated `/register` page. Do not use authentication modals in the first release.
 - Authentication navigation preserves the current recommendation state in `sessionStorage` and includes a safe internal return target. After successful login, return the user to the page/step that initiated login; when login starts from Home, return Home.
@@ -59,12 +63,13 @@ Automatic-adjustment and true no-match presentation:
 - Every page except Home shows a visible `หน้าแรก` link in the header (icon only at phone width, with the same accessible name), so Home never depends on recognising the brand as a link. `บัญชีของฉัน` also links `กลับหน้าแรก` (human approver's decision, 2026-10-07).
 - Administrator management routes use `/admin`, `/admin/zones`, `/admin/food-types`, `/admin/tastes`, `/admin/restaurants`, `/admin/menu-items`, and `/admin/audit-logs`.
 - Anonymous access to `/admin/*` redirects to `/login` with a validated internal `returnTo`. Authenticated `USER` access redirects to `/account` with `บัญชีนี้ไม่มีสิทธิ์จัดการระบบ`. An authenticated `ADMIN` returns to the requested `/admin/*` route after login.
-- Budget step uses quick ranges with no default selection: `ไม่เกิน ฿50`, `฿50–100`, `฿101–200`, and `มากกว่า ฿200`.
+- Budget step uses quick ranges with no default selection: `ต่ำกว่า ฿50`, `฿50–100`, `฿101–200`, and `มากกว่า ฿200`.
 - Budget API values are `UNDER_50`, `BETWEEN_50_100`, `BETWEEN_101_200`, and `OVER_200`. The first release does not provide a custom min/max budget input.
 - Taste step lists admin-managed `Taste` master data sorted by `sortOrder`, plus a special `อะไรก็ได้` option that is not a database `Taste` record. The user selects at most one taste and no taste is selected by default.
 - Food-type step lists admin-managed `FoodType` master data sorted by `sortOrder`, showing icons when available, plus a special `อะไรก็ได้` option that is not a database `FoodType` record. The user selects at most one food type and no food type is selected by default.
 - Zone step lists admin-managed `Zone` master data sorted by `sortOrder`, plus a special `ที่ไหนก็ได้` option that is not a database `Zone` record. The user selects at most one zone and no zone is selected by default. GPS/current-location selection is not present in the first release.
-- Condition summary uses the primary CTA `สับการ์ดเมนู`. Loading copy is `กำลังสับการ์ดเมนู...`.
+- Condition summary uses the primary CTA `หาเมนูกัน`. Loading copy is `กำลังหาเมนูให้นะ…`.
+- Pointer activation selects a condition and advances immediately, with an explanatory hint; keyboard arrow/Space selection stays on the question and explicit Next remains available for keyboard users and saved defaults. An edit opened from the summary returns directly after committing with pointer activation or `ใช้คำตอบนี้`.
 - Shortlist presentation uses up to three face-down cards. Users can reveal cards individually or use `เปิดทั้งหมด`. A revealed card can be selected immediately without revealing the remaining cards.
 - Card reveal does not call the recommendation API again. It reveals an item already returned by the stateless recommendation response, then may call `GET /api/restaurants/:restaurantId/place-details` for transient live Google Places evidence.
 - If fewer than three choices match, show only the returned card count. Do not render empty placeholder cards.

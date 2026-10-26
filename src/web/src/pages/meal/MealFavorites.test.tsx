@@ -73,7 +73,7 @@ describe('Favorites on recommendation cards', () => {
     await user.click(screen.getByRole('button', { name: 'เข้าสู่ระบบ' }))
 
     // Back on the same cards, with the same reveal state, and nothing saved.
-    await screen.findByRole('heading', { name: 'เมนูที่น่าจะตรงใจ' })
+    await screen.findByRole('heading', { name: 'มีเมนูน่าลองมาให้แล้ว' })
     expect(currentPath(router)).toBe('/meal')
     expect(sessionStorage.getItem(RECOMMENDATION_STORAGE_KEY)).toBe(stored)
     expect(
@@ -114,7 +114,7 @@ describe('Favorites on recommendation cards', () => {
 
     // The same menu's dialog is open again, unsaved, with focus on the safe action.
     const reopened = await screen.findByRole('dialog', {
-      name: 'เลือกเมนูนี้ใช่ไหม?',
+      name: 'มื้อนี้เอาเมนูนี้เลยไหม?',
     })
     expect(currentPath(router)).toBe('/meal')
     expect(within(reopened).getByText('ผัดกะเพรา')).toBeTruthy()

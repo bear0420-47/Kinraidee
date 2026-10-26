@@ -1,5 +1,187 @@
 # Implementation Plan
 
+## Light condition questions within the existing theme — 2026-10-26
+
+The human rejected the large dark question band as outside the site's theme and requested another approach. Reuse ChoiceStep only: let full-width dark-on-white question typography and spacing establish hierarchy, use the existing peach for a small progress label below the question, and use cream option surfaces with yellow checked states. No large filled header band or extra progress indicator. Prior affected artifacts are archived under `evidence/archive/20261026-light-choice-theme/`.
+
+```txt
+Module: existing ChoiceStep presentation only
+Requirement/backlog ID: F1, F6, F7; B1, B6, B7; NFR2, NFR12
+Legal requirement ID: LR2, LR3; no data or permission changes
+Design artifact: design-system choice/step rules and prototype guidance
+API routes: unchanged
+Web pages: /meal, budget/taste/type/zone on desktop and mobile
+Personal data: unchanged inputs, storage, provider requests, logs and retention
+Authorization: unchanged anonymous/account boundaries
+Tests: existing condition-flow keyboard/pointer/default/edit tests; build, lint, scoped formatting/detector and mobile/desktop visual inspection
+```
+
+Scope checklist complete. Preserve the existing palette, fonts, question scale, icon system, outline/shadows, touch targets, checked mark, native radios, accessible instructions and all handlers. Progress remains a single `ข้อ N จาก 4` label, now visible below the heading beside its hint. No new component, dependency, token, asset, copy change beyond progress display, behavior, result-card or API work.
+
+## Compact meal decisions and clearer browsing — 2026-10-26
+
+The human approved all four proposed UX refinements: shorter menu cards, clearer horizontal browsing, directly editable original-condition chips on results, and one compact question-progress display. Reuse existing meal components, native disclosure, focus targets, Button, condition labels and edit-return flow. Previous affected documents are archived under `evidence/archive/20261026-compact-meal-ui/`.
+
+```txt
+Module: existing MealPage, ChoiceStep, ConditionSummary, ShuffleCardGrid, MenuCard and rationale formatting
+Requirement/backlog ID: F1-F7, F20-F21; B1-B7, B25-B26; P1, P3, P5-P8; NFR2, NFR12
+Legal requirement ID: LR2, LR3, LR7; existing public/data/provider boundaries unchanged
+Design artifact: existing choice/progress, result-card, prototype and journey guidance
+API routes: unchanged recommendations and place details
+Web pages: /meal, desktop and mobile
+Personal data: unchanged session state, storage, provider requests and retention
+Authorization: unchanged anonymous/account permissions and explicit confirmation/history rules
+Tests: direct result-chip editing preserves other answers and clears prior shortlist; compact rationale omits unrestricted reasons; disclosure retains provider attribution; existing keyboard/paging/replacement/closest differences/confirmation; full web tests, build, lint and mobile/desktop browser checks
+```
+
+Scope checklist complete. On cards, retain price/name/restaurant/zone, visible taste tags, genuine AI reasons and every closest-condition difference; combine metadata and omit unrestricted rationale lines. Put English menu name and existing Google evidence in native details after choose/reject. Use the existing 128px image size on phones and 160px on larger screens. Multiple phone cards use width calc(100% - 32px) to show the next edge and a `ใบที่ N จาก M` position; one card remains full-width and desktop retains its grid. Result chips reuse ConditionSummary's labels/rows and original answers; editing follows the existing summary-return path and makes no recommendation request until the user submits. Disable editing during replacement. Keep one visible question-progress group inside ChoiceStep and one concise pointer hint; retain full accessible keyboard instructions and explicit Next. No new dependency, endpoint, model, token, preference contract or multi-taste expansion.
+
+## Fix reviewed carousel focus and budget wording — 2026-10-26
+
+The human approved fixing both review findings. Selecting a numbered carousel control must focus the chosen card's existing reveal button or revealed heading so subsequent keyboard input operates on that card. Reuse the existing focusSlot effect instead of maintaining separate browse scrolling. Keep native swipe presentation-only. Update the Thai UNDER_50 label to `ต่ำกว่า ฿50` in web/API copy; retain price < 50, its enum and all numeric comparisons. Prior affected artifacts are archived under `evidence/archive/20261026-carousel-focus-budget-label/`.
+
+```txt
+Module: existing ShuffleCardGrid focus behavior and recommendation budget labels
+Requirement/backlog ID: F1-F7; B1-B7; NFR4, NFR8, NFR12
+Legal requirement ID: LR2, LR3; no permission or data changes
+Design artifact: mobile card navigation, budget options, prototype and journey
+API routes: unchanged POST /api/recommendations; label text only in suggestions
+Web pages: /meal and existing budget-label consumers including saved preferences
+Personal data: no change to inputs, persistence, providers or logs
+Authorization: existing public/account boundaries unchanged
+Tests: keyboard paging into face-down/revealed card 2; Tab/action stays on card 2 without extra requests; budget labels and 49/50 boundaries; web/API recommendation tests, builds, lint and browser reproduction
+```
+
+Scope checklist complete. Reuse card IDs, focus targets, scroll effect and reduced motion. Scroll the existing slot even when replacement is loading and has no action target. No per-device JavaScript, offscreen-card hiding, gesture change or new focus system. Numbered navigation explicitly focuses the chosen card; native swipe does not steal focus. Questionnaire, summary, preferences and API labels gain accurate wording; filters, amount differences and the existing 50-baht boundary explanation stay unchanged. Preserve all other worktree changes.
+
+## Stronger condition-choice presentation — 2026-10-26
+
+The human reported that each condition-choice screen looks washed out. Amplify only the existing shared ChoiceStep using the established notebook palette, typography, shadows and Phosphor icons. Earlier affected plan/design artifacts are archived under `evidence/archive/20261026-bold-choice-steps/`.
+
+```txt
+Module: existing ChoiceStep used by budget, taste, food type and zone
+Requirement/backlog ID: F1, F6, F7; B1, B6, B7; NFR2, NFR12
+Legal requirement ID: LR2, LR3; no data/permission changes
+Design artifact: design-system choice-chip/step-card rules and prototype
+API routes: unchanged
+Web pages: /meal condition questions on desktop and mobile
+Personal data: no changes to inputs, session state, storage, providers or logs
+Authorization: existing anonymous flow unchanged
+Tests: full web regression/build/lint; keyboard selection/focus and checked state; mobile/desktop layout, colour contrast and reduced-motion review
+```
+
+Scope checklist complete. Reuse the one ChoiceStep component and existing native radios; no wrapper, theme token, asset, font, dependency or module is added. Use cream for the step panel, paper/cream for a high-contrast question band, a yellow number badge, existing section typography for the question, white outlined option cards with existing small shadows, stronger existing hover/selected fills and a checked-state Phosphor mark. Budget labels use existing card-title typography; other option labels retain body size. Keep keyboard focus indicators, validation, pointer auto-advance, explicit keyboard Next, edit return, friendly copy, responsive grids and all values unchanged. No new tests that only mirror CSS; run the existing interaction regression and inspect actual browser layout/states.
+
+## Friendly student-to-student meal copy — 2026-10-26
+
+The human requested wording that sounds like university friends talking. Apply concise, conversational Thai across the existing Home-to-meal path on desktop and mobile, including condition headings/help, primary actions/loading, empty/error recovery, swipe guidance, menu rejection/undo, confirmation and success. Preserve factual wording for prices, budget differences, catalog data, image licences, provider attribution and privacy. Previous affected plan/design artifacts are archived under `evidence/archive/20261026-friendly-meal-copy/`.
+
+```txt
+Module: existing Home and meal presentation, recommendation copy helpers
+Requirement/backlog ID: F1-F7, F15, F19-F21; B1-B7, B20, B24-B26; NFR2, NFR12
+Legal requirement ID: LR2, LR3, LR7; existing notices and attribution unchanged
+Design artifact: design-system voice guidance, prototype, journey, existing D4 labels
+API routes: unchanged
+Web pages: / and /meal on desktop and mobile
+Personal data: no changes to inputs, storage, logs, providers, or retention
+Authorization: existing anonymous/account behavior unchanged
+Tests: update copy assertions only while preserving behavior assertions; full web regression, build, lint, scoped formatting and desktop/mobile copy inspection
+```
+
+Scope checklist complete. Reuse all existing components and copy functions; change text only. Use everyday questions such as `มื้อนี้มีงบเท่าไหร่?`, CTA `หาเมนูกัน`, rejection `ขอดูเมนูอื่น`, and friendly recovery without inventing causes or timing promises. Keep actions explicit, keyboard instructions complete, and accessible labels aligned with visible wording. Do not add slang that obscures meaning, new product claims, multi-taste input, broader recommendations, or changes to swipe/reveal/replacement/confirmation behavior. Updated assertion text reflects the requested copy; no test behavior is removed or relaxed.
+
+## Swipe between meal cards on mobile — 2026-10-26
+
+The human explicitly requested horizontal mobile card browsing with a Tinder-like feel instead of a vertical menu list. Use one card at a time in the existing result list on small screens, with native horizontal scrolling and snap points. Desktop/tablet keeps its existing grid. Previous plan/design artifacts are archived under `evidence/archive/20261026-mobile-card-swipe/`.
+
+```txt
+Module: existing ShuffleCardGrid presentation and browsing controls
+Requirement/backlog ID: F2, F3, F4, F5, F7; B2, B3, B4, B5, B7; NFR2, NFR12
+Legal requirement ID: LR2, LR3; existing data and provider boundaries unchanged
+Design artifact: result cards, prototype, journey step 4; existing design tokens
+API routes: unchanged recommendations and place details
+Web pages: /meal
+Personal data: no change to session data, logging, providers, or retention
+Authorization: existing anonymous, account, and history permissions unchanged
+Tests: browsing changes no conditions/reveal/rejection/selection or requests; native scroll updates active position; one-card and exhausted slots; existing full web regression/build/lint; mobile horizontal and vertical scrolling plus desktop grid checks
+```
+
+Scope checklist complete. Reuse the result ul/li, cards, scrollIntoView, reduced-motion helper, Button, and existing list slots. Below the existing sm breakpoint (640px), use a full-width horizontal flex rail with native overflow, scroll snap, existing gap/gutter tokens, and no vertical list of menu cards. Show a swipe hint and accessible numbered navigation when more than one slot exists; keyboard and button navigation remains available. Native scrolling keeps vertical page scrolling and pinch zoom available; no custom touch interception, gesture library, dependency, or new storage. Browsing only changes the visible card; selection/rejection remains explicit through existing buttons. No swipe direction is interpreted as consent, confirmation, or rejection. One card has no useless swipe hint/pager. Exhausted slots stay in the same rail and existing undo/replacement behavior remains. Desktop remains the existing grid; result count, ranking, and single-taste behavior are unchanged.
+
+## Desktop and mobile meal results — 2026-10-26
+
+The human asked to prioritize UX/UI on both web and mobile, deferring multiple-taste behavior. Browser inspection at 1366×900 and 390×844 showed the condition-entry title and repeated progress badge consuming result-screen space; optional Google evidence preceded primary menu actions. Refine only presentation using the existing shell, grid, and cards. Previous affected plan/design artifacts are archived under `evidence/archive/20261026-responsive-meal/`.
+
+```txt
+Module: existing meal result presentation and PageShell
+Requirement/backlog ID: F2, F3, F4, F7; B2, B3, B4, B7; NFR2, NFR12
+Legal requirement ID: LR2, LR3; existing provider attribution stays visible
+Design artifact: existing result-card and mobile layout rules; journey steps 3-5 unchanged
+API routes: unchanged POST /api/recommendations and existing place details
+Web pages: /meal; all other PageShell callers retain their existing title
+Personal data: no changes to session state, storage, logs, providers, or retention
+Authorization: existing anonymous and account permissions unchanged
+Tests: full web regression, build/TypeScript, lint, changed-code formatting; browser layout checks at desktop, phone, and 320px; card selection and confirmation
+```
+
+Scope checklist complete. Allow the existing shell's title to be omitted when its child supplies the page heading. The result grid owns one h1 and receives focus as before; condition pages retain their existing heading/progress. Remove the redundant result badge, retain the no-match status explanation, and place existing menu actions before optional Google evidence. Preserve single-taste selection, current result count and ranking, all filters, explicit confirmation, replacement/undo, provider attribution, and responsive grid behavior. This does not implement all-catalog alternatives or native apps.
+
+## Show closest menus immediately — 2026-10-26
+
+The human approved the proposed no-match experience with “ลองปรับตามนั้นดู”: display up to three closest menus immediately, name differences on each card, preserve the original filters, and keep condition editing secondary. This supersedes the explicit suggestion-apply step below. Prior approved artifacts are preserved under `evidence/archive/20261026-closest-menus/`.
+
+```txt
+Module: existing meal no-match orchestration, shortlist, cards, and confirmation
+Requirement/backlog ID: F1-F7, F19-F21; B1-B7, B24-B26; OA3; NFR3, NFR8, NFR9, NFR12
+Legal requirement ID: LR1, LR2, LR3, LR7
+Design artifact: all five artifacts in docs/02-design; journey steps 3-5
+API routes: reuse unchanged POST /api/recommendations and existing public place details
+Web pages: /meal
+Personal data: existing session-only conditions and shortlist; optional closestConditions in the same sessionStorage record; no database, logs, or telemetry change
+Authorization: existing anonymous flow and account/history permissions unchanged
+Tests: automatic bounded fallback, immediately revealed cards, per-menu differences and budget boundaries, original filters across edit/reload/login, confirmation, replacement/exclusions/undo, empty catalog, stale suggestion, failure and duplicate-request guards; full build/test/lint
+```
+
+Scope checklist complete. Reuse the API's approved minimal-change suggestion and existing shortlist request, with at most one automatic follow-up after an empty initial result. Closest means fewest changed fields, then the existing zone/budget/taste/food-type priority and nearest budget range; it does not claim geographic distance or semantic food similarity. Preserve the original answers and store only the server-suggested retrieval conditions with the existing shortlist for consistent replacements and reloads. Open alternative cards immediately and compare their actual fields/prices against the original answers on cards and confirmation; hide rationale/AI copy calculated against alternate retrieval conditions. Normal matching cards retain their current reveal behavior. Replacement/undo retains the alternative context and reveals replacements immediately. A missing suggestion or a now-empty follow-up shows the existing empty state; failures preserve the original answers and offer retry without recursive fallback. Pending state covers both requests. No API, database, dependency, production deployment, or new persistent storage surface is needed.
+
+## Fewer UX Actions — 2026-10-26
+
+The human requested fewer required actions, then explicitly asked to apply the refinement to no-match recovery as well. Implement the reviewed pointer progression and direct summary-edit return together with inline no-match recovery. This supersedes the former separate no-match panel with an extra manual-edit action. The preceding plan and affected approved design artifacts are preserved in `evidence/archive/20261026-ux-actions/`.
+
+```txt
+Module: existing meal conditions, summary editing, and no-match recovery
+Requirement/backlog ID: F1, F2, F3, F6, F7; B1, B2, B3, B6, B7; NFR2, NFR8, NFR12
+Legal requirement ID: LR2, LR3, LR7
+Design artifact: journey step 2 and no-match recovery; existing ChoiceStep, summary, and no-match patterns
+API routes: unchanged POST /api/recommendations and public master-data queries
+Web pages: /meal
+Personal data: unchanged transient session conditions; no new fields, telemetry, storage, or retention
+Authorization: existing public flow, account permissions, and provider credentials unchanged
+Tests: pointer progression; keyboard arrows and explicit Next; existing/prefilled choice activation; direct edit return; no-match inline edit, explicit suggestion apply, null suggestion, pending controls, request errors, retries, and unchanged filter/confirmation boundaries
+```
+
+Scope checklist complete: reuse ChoiceStep, its four wrappers, MealPage, ConditionSummary, NoMatchPanel, existing session state, and validated server suggestions. Pointer activation selects and advances; keyboard arrow selection stays on the question with explicit Next. Summary edits return directly to the summary. A no-match response keeps the existing answer rows editable and shows its explanation inline, with one primary retry using the explicitly named server suggestion. It never applies a suggestion automatically. When no suggestion exists, answer editing remains available without a useless retry action. No backend, schema, dependency, or deployment change is required.
+
+## UI Draft Alignment — 2026-10-26
+
+The human project owner requested that the React web UI follow `wireframe.html` and explicitly confirmed that target on 2026-10-26. This authorizes the existing Home mood board and food imagery, superseding the earlier Home implementation decision to omit food photos. The previous plan is preserved in `evidence/archive/20261026-ui-draft-alignment/plan.md`.
+
+```txt
+Module: existing public web presentation and shared navigation/buttons
+Requirement/backlog ID: F1-F7, F18; B1-B7, B23; existing approved visual artifacts
+Legal requirement ID: LR2, LR3, LR7, LR8
+Design artifact: prototype.md approved visual language; design-system.md tokens; wireframe.html Home, choice panels, and result cards; user-journey.md unchanged
+API routes: existing routes unchanged; no new requests or provider calls
+Web pages: / and /meal; shared header/button styling on existing account/admin pages
+Personal data: no new fields or processing; existing sessionStorage lifetime, account data, and deletion rules unchanged
+Authorization: public core workflow remains anonymous; existing account/admin guards and header visibility unchanged
+Tests: existing route/auth, conditions, shortlist/reveal/reject/undo, confirmation, and account suites; repository verify, format, and historical prototype suite; browser visual review if a browser is available
+```
+
+Scope checklist completed before implementation: reuse HomePage, SiteHeader, Button, PageShell, ChoiceStep, and MenuCard; reuse the four existing prototype food assets as illustrative imagery; use approved tokens and Phosphor icons; preserve keyboard behavior, workflow order, data ownership, permissions, API contracts, and session retention. No feature, schema, dependency, or production deployment changes are required. The meal page uses the existing PageShell with an unframed appearance to avoid nesting choice/result cards inside another paper card.
+
+Regression correction: the original HEAD comparison passed all 51 logout/account tests, while the changed Home exposed logout clearing the user before the Home transition committed. Preserve the existing logout contract by supplying React DOM's `flushSync` to the existing RouterProvider and using the installed `flushSync` navigation option to commit Home before clearing account caches. The shared test-render helper supplies that same implementation; no test assertion or expectation changes. This is a necessary compatibility fix for the updated Home, not a new authentication flow.
+
 ## Status
 
 Approved — the AI-assisted selection and Google Places amendment was approved on 2026-10-24. The Firebase Hosting, Cloud Run, and Neon deployment architecture was approved on 2026-10-25. F22/OA3/B27 requirements and their automatic no-match implementation plan were approved separately by the human project owner on 2026-10-26. Creating or exposing production resources still requires separate explicit approval.
@@ -259,6 +441,8 @@ Tests: hard-filter invariants, max-six/one-call cost guard, strict AI response v
 ```
 
 ## Automatic No-Match Adjustment Implementation Note
+
+Merge reconciliation (2026-10-26): F22/B27 supersedes the earlier two-request closest-menu retrieval and original-condition comparison behavior above. Keep the current compact cards, carousel focus, direct condition editing, friendly copy, and inline true-no-match summary. Reuse the existing strict conditions schema for adjustment storage; effective conditions drive summary chips, editing, confirmation rationale, and replacements. No new module, persistence surface, permission, or dependency is introduced.
 
 ```txt
 Module: automatic initial-condition adjustment in stateless meal recommendations
