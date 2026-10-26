@@ -1,4 +1,5 @@
 import type {
+  Adjustment,
   CardSlot,
   RecommendationItem,
   Shortlist,
@@ -6,11 +7,15 @@ import type {
 
 // Pure shortlist transitions. Revealing is presentation only: it never asks the API again.
 
-export function startShortlist(items: RecommendationItem[]): Shortlist {
+export function startShortlist(
+  items: RecommendationItem[],
+  adjustment: Adjustment | null = null,
+): Shortlist {
   return {
     slots: items.map((item) => ({ kind: 'card', item, revealed: false })),
     rejectedMenuItemIds: [],
     undo: null,
+    ...(adjustment ? { adjustment } : {}),
   }
 }
 
@@ -91,7 +96,7 @@ export function replaceCard(
           ? {
               kind: 'card',
               item: replacement,
-              revealed: !!shortlist.closestConditions,
+              revealed: false,
             }
           : { kind: 'exhausted' },
     ),

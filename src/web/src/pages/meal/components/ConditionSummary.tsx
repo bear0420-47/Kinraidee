@@ -9,7 +9,6 @@ import {
   budgetLabels,
   type ConditionStep,
   type RecommendationConditions,
-  type Suggestion,
 } from '@/schemas/meal/recommendationSchemas'
 import { StepFooter } from './StepFooter'
 import { NoMatchPanel } from './NoMatchPanel'
@@ -31,7 +30,7 @@ type ConditionSummaryProps = {
       headingRef: Ref<HTMLHeadingElement>
       // Why the last shuffle failed, if it did.
       shuffleError: string | null
-      noMatch?: { suggestion: Suggestion | null } | null
+      noMatch?: boolean
       onBack: () => void
       onShuffle: () => void
     }
@@ -91,7 +90,7 @@ export function ConditionSummary(props: ConditionSummaryProps) {
     )
   }
 
-  const { headingRef, shuffleError, noMatch = null, onBack, onShuffle } = props
+  const { headingRef, shuffleError, noMatch = false, onBack, onShuffle } = props
   return (
     <section className="flex flex-col gap-5 rounded-lg border-2 border-paper bg-glass p-4 shadow-lg sm:p-6">
       <div className="flex flex-col gap-1">
@@ -105,7 +104,7 @@ export function ConditionSummary(props: ConditionSummaryProps) {
         <p className="text-small text-muted">ถ้าโอเคแล้ว ไปหาเมนูกันเลย</p>
       </div>
 
-      {noMatch ? <NoMatchPanel suggestion={noMatch.suggestion} /> : null}
+      {noMatch ? <NoMatchPanel /> : null}
 
       <dl className="flex flex-col divide-y-2 divide-line-soft rounded-sm border-2 border-line-soft">
         {rows.map(({ step, label, value }) => (
@@ -136,7 +135,7 @@ export function ConditionSummary(props: ConditionSummaryProps) {
         {shuffling ? 'กำลังหาเมนูให้นะ…' : ''}
       </p>
 
-      {!noMatch || noMatch.suggestion ? (
+      {!noMatch ? (
         <StepFooter
           onBack={noMatch ? undefined : onBack}
           backDisabled={shuffling}
@@ -147,11 +146,7 @@ export function ConditionSummary(props: ConditionSummaryProps) {
             onClick={onShuffle}
           >
             <Shuffle aria-hidden weight="bold" />
-            {shuffling
-              ? 'กำลังหาเมนูให้นะ…'
-              : noMatch
-                ? 'ใช้เงื่อนไขนี้แล้วสับใหม่'
-                : 'หาเมนูกัน'}
+            {shuffling ? 'กำลังหาเมนูให้นะ…' : 'หาเมนูกัน'}
           </Button>
         </StepFooter>
       ) : null}

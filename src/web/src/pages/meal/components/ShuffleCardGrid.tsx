@@ -11,6 +11,7 @@ import { FormAlert } from '@/components/FormAlert'
 import { useRequestRecommendations } from '@/hooks/meal/useRecommendations'
 import { prefersReducedMotion } from '@/lib/motion'
 import {
+  adjustmentMessage,
   replacementRequest,
   type RecommendationConditions,
   type RecommendationItem,
@@ -132,6 +133,14 @@ export function ShuffleCardGrid({
 
   return (
     <section className="flex min-w-0 flex-col gap-4">
+      {shortlist.adjustment ? (
+        <p
+          role="status"
+          className="rounded-md border-2 border-paper bg-surface p-4 font-bold shadow-sm"
+        >
+          {adjustmentMessage(shortlist.adjustment)}
+        </p>
+      ) : null}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div className="flex flex-col gap-1">
           <h1
@@ -139,14 +148,10 @@ export function ShuffleCardGrid({
             tabIndex={-1}
             className="font-display text-card-title leading-tight"
           >
-            {shortlist.closestConditions
-              ? 'เมนูใกล้เคียงที่น่าลอง'
-              : 'มีเมนูน่าลองมาให้แล้ว'}
+            มีเมนูน่าลองมาให้แล้ว
           </h1>
           <p className="text-small text-muted">
-            {shortlist.closestConditions
-              ? 'ดูราคาและข้อที่ต่าง แล้วเลือกเมนูที่โอเคได้เลย'
-              : 'ลองเปิดดูทีละใบ หรือเปิดทั้งหมดก็ได้'}
+            ลองเปิดดูทีละใบ หรือเปิดทั้งหมดก็ได้
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -174,15 +179,6 @@ export function ShuffleCardGrid({
         shuffling={busy}
         onEdit={onEditCondition}
       />
-
-      {shortlist.closestConditions ? (
-        <p
-          role="status"
-          className="rounded-sm border-2 border-dashed border-line-soft bg-cream p-4"
-        >
-          ยังไม่มีเมนูตรงทุกข้อ ลองดูเมนูใกล้เคียงพวกนี้นะ
-        </p>
-      ) : null}
 
       {error ? <FormAlert message={error} /> : null}
 
@@ -241,9 +237,6 @@ export function ShuffleCardGrid({
             <MenuCard
               position={index + 1}
               slot={slot}
-              comparisonConditions={
-                shortlist.closestConditions ? conditions : undefined
-              }
               replacing={replacingSlot === index}
               busy={busy}
               focusTargetId={focusTargetId(index)}

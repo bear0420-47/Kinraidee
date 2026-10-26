@@ -2,14 +2,14 @@ import { toLocalization, type Localization } from '@/shared/localization'
 import type {
   BudgetRange,
   RecommendationConditions,
-  RecommendationSuggestion,
-  SuggestionField,
+  AdjustmentField,
+  RecommendationAdjustment,
 } from './recommendations.dto'
 
-// The no-match suggestion: the fewest filter changes that still leave at least one menu
+// The automatic-adjustment calculator: the fewest filter changes that still leave a menu
 // item, computed in memory from every active, non-excluded item (`SuggestionPoolItem`).
 //
-// Why a suggestion always exists while the pool is not empty: take an item whose set of
+// Why an adjustment always exists while the pool is not empty: take an item whose set of
 // failing fields S is smallest. Every item that matches the fields outside S fails all of S
 // (otherwise it would fail fewer fields), so each greedy pick for a field in S has a
 // candidate, and trying S succeeds. Sets are tried smallest first, so S is reached.
@@ -49,14 +49,14 @@ const budgetOrder: readonly BudgetRange[] = [
 ]
 
 // Approved priority: flexible constraints change before personal intent.
-const fieldPriority: readonly SuggestionField[] = [
+const fieldPriority: readonly AdjustmentField[] = [
   'zone',
   'budget',
   'taste',
   'foodType',
 ]
 
-type RecordField = Exclude<SuggestionField, 'budget'>
+type RecordField = Exclude<AdjustmentField, 'budget'>
 
 const conditionKeys = {
   zone: 'zoneId',
@@ -103,7 +103,7 @@ function optionsOf(item: SuggestionPoolItem, field: RecordField) {
 
 function matchesField(
   item: SuggestionPoolItem,
-  field: SuggestionField,
+  field: AdjustmentField,
   conditions: RecommendationConditions,
 ) {
   if (field === 'budget') return priceInBudget(item.price, conditions.budget)
@@ -163,13 +163,13 @@ function bestOption(
   return best?.option ?? null
 }
 
-type Change = RecommendationSuggestion['changes'][number]
+type Change = RecommendationAdjustment['changes'][number]
 
 // Picks a new value for one field and returns the change, or null when the remaining items
 // leave no other value.
 function pickChange(
   items: readonly SuggestionPoolItem[],
-  field: SuggestionField,
+  field: AdjustmentField,
   conditions: RecommendationConditions,
   current: CurrentRecords,
 ): { change: Change; conditions: RecommendationConditions } | null {
@@ -221,7 +221,7 @@ export function findSuggestion(
   pool: readonly SuggestionPoolItem[],
   conditions: RecommendationConditions,
   current: CurrentRecords,
-): RecommendationSuggestion | null {
+): RecommendationAdjustment | null {
   if (pool.length === 0) return null
 
   // A field left as "any" is already as wide as it can be, so only chosen fields change.

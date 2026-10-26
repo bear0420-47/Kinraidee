@@ -70,7 +70,7 @@ export const recommendationsRepository = {
     })
   },
 
-  // Every available item with only what the no-match suggestion matches on.
+  // Every available item with only what the automatic adjustment matches on.
   async findSuggestionPool(excludedIds: string[]) {
     const items = await prisma.menuItem.findMany({
       where: {

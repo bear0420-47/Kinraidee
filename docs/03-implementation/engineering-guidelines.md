@@ -460,13 +460,15 @@ Successful shortlist and replacement responses use the same shape:
 - A rationale boolean is `true` when the user supplied that specific constraint and the returned item matched it.
 - A rationale boolean is `false` when that condition was unrestricted (`อะไรก็ได้` / `ที่ไหนก็ได้`). It must never mean that the API returned an item that violated a supplied mandatory filter.
 
-No-match responses remain successful `200` responses because the request is valid and the empty result is a normal recommendation outcome:
+When an initial request has no direct match but an automatic adjustment exists, the same successful `200` response contains the selected items and adjustment metadata:
 
 ```json
 {
   "data": {
-    "items": [],
-    "suggestion": {
+    "items": [
+      { "id": "menu_1" }
+    ],
+    "adjustment": {
       "changes": [
         {
           "field": "zone",
@@ -494,18 +496,18 @@ No-match responses remain successful `200` responses because the request is vali
 }
 ```
 
-If no active, non-excluded menu item exists at all (or for a one-card replacement request):
+If no active, photographed, non-excluded menu item exists at all:
 
 ```json
 {
   "data": {
     "items": [],
-    "suggestion": null
+    "adjustment": null
   }
 }
 ```
 
-- `suggestion.changes` holds one to four changes, in field priority order (`zone`, `budget`, `taste`, `foodType`). It has more than one only when no single change produces a result.
+- `adjustment.changes` holds one to four changes, in field priority order (`zone`, `budget`, `taste`, `foodType`). It has more than one only when no single change produces a result.
 - `field` possible values are `zone`, `budget`, `taste`, and `foodType`.
 - `from` and `to` are structured values with a type, an ID, and a localized label.
   - `type` accepts only `BUDGET_RANGE`, `TASTE`, `FOOD_TYPE`, and `ZONE`.
@@ -514,10 +516,11 @@ If no active, non-excluded menu item exists at all (or for a one-card replacemen
 - Choosing the new value:
   - Budget moves to the nearest range with results, trying one up, then one down, then further out.
   - Zone, taste, and food type move to the specific option with the most results; ties go to display order, then the Thai name.
-- `conditions` is the complete request conditions with every change applied. Sending it back unchanged, with the same exclusions, returns at least one item.
+- `conditions` is the complete effective condition set with every change applied. The returned items and their rationale satisfy these conditions; subsequent replacements use them unchanged.
 - `resultCount` is the number of qualifying menu items for `conditions`, still excluding rejected and displayed IDs.
-- A suggestion always exists while at least one active, non-excluded menu item exists. The web owns the localized explanatory sentence and action labels.
-- The API chooses the first relaxation that produces results using the approved priority. The web owns the localized explanatory sentence and action labels.
+- An adjustment exists for an initial request while at least one active, photographed, non-excluded menu item exists and a valid change set can be produced. The API applies it and selects the items in the same request.
+- The web owns the localized explanatory sentence, stores the adjustment with the shortlist, and does not ask the user to approve it.
+- One-card replacement requests never adjust conditions and return `items: []` with `adjustment: null` when no replacement remains.
 - Do not return `404` for a valid no-match recommendation request.
 
 Recommendation request validation and normalization:
@@ -530,12 +533,12 @@ Recommendation request validation and normalization:
 
 Recommendation selection rules:
 
-- Apply mandatory filters and exclusions before randomization.
+- Apply submitted filters and exclusions before randomization. For an initial no-match, apply F22's smallest proven adjustment and then apply the effective filters before randomization.
 - A menu item matches a selected taste when at least one of its linked tastes has the selected `tasteId`; additional linked tastes do not disqualify it.
 - Randomize each request without accepting a client seed.
 - Fill slots from distinct restaurants first. Only use another menu from an already represented restaurant when there are not enough qualifying distinct restaurants.
-- Tests assert invariants rather than fixed menu IDs: every item satisfies supplied filters, excluded IDs never return, item IDs do not repeat, distinct restaurants are preferred, and the result count never exceeds the request count.
-- A replacement request with no remaining eligible menu returns HTTP 200 with `items: []` and `relaxation: null`. The web marks that slot as having no more choices; replacement requests never trigger condition-relaxation suggestions.
+- Tests assert invariants rather than fixed menu IDs: every item satisfies effective filters, every automatic change is disclosed, excluded IDs never return, item IDs do not repeat, distinct restaurants are preferred, and the result count never exceeds the request count.
+- A replacement request with no remaining eligible menu returns HTTP 200 with `items: []` and `adjustment: null`. The web marks that slot as having no more choices; replacement requests never trigger automatic condition adjustment.
 
 Rules:
 

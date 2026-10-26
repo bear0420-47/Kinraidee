@@ -8,8 +8,8 @@ import {
   storedFlowSchema,
   type RecommendationConditions,
   type RecommendationItem,
-  type Suggestion,
-  suggestionMessage,
+  type Adjustment,
+  adjustmentMessage,
 } from './recommendationSchemas'
 import {
   chooseCard,
@@ -29,6 +29,26 @@ const conditions: RecommendationConditions = {
   tasteId: 'taste_1',
   foodTypeId: 'food_1',
   zoneId: 'zone_1',
+}
+
+const adjustment: Adjustment = {
+  changes: [
+    {
+      field: 'zone',
+      from: {
+        type: 'ZONE',
+        id: 'zone_original',
+        label: { th: 'หน้ามอ', en: 'Front Gate' },
+      },
+      to: {
+        type: 'ZONE',
+        id: conditions.zoneId!,
+        label: { th: 'ตลาด', en: 'Market' },
+      },
+    },
+  ],
+  conditions,
+  resultCount: 2,
 }
 
 function item(id: string): RecommendationItem {
@@ -94,10 +114,29 @@ describe('closest-menu differences', () => {
     expect(conditionDifferences(a, open)).toEqual([])
   })
 
-  it('requires complete valid alternate conditions without extra personal fields in session storage', () => {
+  it('requires complete valid adjustment conditions without extra personal fields in session storage', () => {
+    const adjustment = {
+      changes: [
+        {
+          field: 'budget',
+          from: {
+            type: 'BUDGET_RANGE',
+            id: 'UNDER_50',
+            label: { th: 'ต่ำกว่า ฿50', en: 'Under 50' },
+          },
+          to: {
+            type: 'BUDGET_RANGE',
+            id: 'BETWEEN_50_100',
+            label: { th: '฿50–100', en: '50–100' },
+          },
+        },
+      ],
+      conditions: open,
+      resultCount: 1,
+    }
     const shortlist = {
       ...revealAll(startShortlist([a])),
-      closestConditions: open,
+      adjustment,
     }
     const flow = { step: 'cards', conditions, shortlist }
     expect(storedFlowSchema.parse(flow)).toEqual(flow)
@@ -106,14 +145,20 @@ describe('closest-menu differences', () => {
         ...flow,
         shortlist: {
           ...shortlist,
-          closestConditions: { ...open, allergy: 'nuts' },
+          adjustment: {
+            ...adjustment,
+            conditions: { ...open, allergy: 'nuts' },
+          },
         },
       }).success,
     ).toBe(false)
     expect(
       storedFlowSchema.safeParse({
         ...flow,
-        shortlist: { ...shortlist, closestConditions: { budget: 'UNDER_50' } },
+        shortlist: {
+          ...shortlist,
+          adjustment: { ...adjustment, conditions: { budget: 'UNDER_50' } },
+        },
       }).success,
     ).toBe(false)
   })
@@ -140,12 +185,12 @@ describe('request builders', () => {
   })
 })
 
-describe('suggestionMessage', () => {
+describe('adjustmentMessage', () => {
   const change = (
-    field: Suggestion['changes'][number]['field'],
+    field: Adjustment['changes'][number]['field'],
     from: string,
     to: string,
-  ): Suggestion['changes'][number] => ({
+  ): Adjustment['changes'][number] => ({
     field,
     from: { type: 'ZONE', id: from, label: { th: from, en: from } },
     to: { type: 'ZONE', id: to, label: { th: to, en: to } },
@@ -153,17 +198,19 @@ describe('suggestionMessage', () => {
 
   it('names one change with the result count', () => {
     expect(
-      suggestionMessage({
+      adjustmentMessage({
         changes: [change('zone', 'คชพล', 'ตลาดฟ้าไทย')],
         conditions,
         resultCount: 4,
       }),
-    ).toBe('ถ้าเปลี่ยนพื้นที่จาก “คชพล” เป็น “ตลาดฟ้าไทย” จะพบ 4 เมนู')
+    ).toBe(
+      'ไม่พบเมนูตรงทุกข้อ ระบบจึงเปลี่ยนพื้นที่จาก “คชพล” เป็น “ตลาดฟ้าไทย” แล้วสับให้ทันทีจาก 4 เมนูที่ตรงเงื่อนไขใหม่',
+    )
   })
 
   it('joins several changes with และ in the order given', () => {
     expect(
-      suggestionMessage({
+      adjustmentMessage({
         changes: [
           change('budget', '฿50–100', '฿101–200'),
           change('foodType', 'ข้าว', 'เส้น'),
@@ -172,7 +219,7 @@ describe('suggestionMessage', () => {
         resultCount: 1,
       }),
     ).toBe(
-      'ถ้าเปลี่ยนงบประมาณจาก “฿50–100” เป็น “฿101–200” และประเภทอาหารจาก “ข้าว” เป็น “เส้น” จะพบ 1 เมนู',
+      'ไม่พบเมนูตรงทุกข้อ ระบบจึงเปลี่ยนงบประมาณจาก “฿50–100” เป็น “฿101–200” และประเภทอาหารจาก “ข้าว” เป็น “เส้น” แล้วสับให้ทันทีจาก 1 เมนูที่ตรงเงื่อนไขใหม่',
     )
   })
 })
@@ -201,7 +248,7 @@ describe('shortlist transitions', () => {
   })
 
   it('replaces a rejected card in place and undoes exactly that step', () => {
-    const revealed = revealAll(startShortlist([a, b]))
+    const revealed = revealAll(startShortlist([a, b], adjustment))
     const replaced = replaceCard(revealed, 0, d)
 
     expect(replaced.slots[0]).toEqual({
@@ -218,6 +265,7 @@ describe('shortlist transitions', () => {
 
     const undone = undoReject(replaced)
     expect(undone).toEqual(revealed)
+    expect(undone.adjustment).toEqual(adjustment)
     expect(undoReject(undone)).toBe(undone)
   })
 

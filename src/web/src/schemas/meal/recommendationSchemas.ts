@@ -9,7 +9,7 @@ export type RecommendationConditions = RecommendationRequest['conditions']
 type RecommendationResult =
   components['schemas']['RecommendationEnvelope']['data']
 export type RecommendationItem = RecommendationResult['items'][number]
-export type Suggestion = NonNullable<RecommendationResult['suggestion']>
+export type Adjustment = NonNullable<RecommendationResult['adjustment']>
 export type Budget = RecommendationConditions['budget']
 
 export const budgetValues = [
@@ -68,6 +68,28 @@ const conditionsSchema = z
 const localization = z.object({ th: z.string(), en: z.string() })
 const namedRecord = z.object({ id: z.string().min(1), name: localization })
 const iconRecord = namedRecord.extend({ icon: z.string().nullable() })
+const adjustmentSchema = z.object({
+  changes: z
+    .array(
+      z.object({
+        field: z.enum(['zone', 'budget', 'taste', 'foodType']),
+        from: z.object({
+          type: z.enum(['BUDGET_RANGE', 'TASTE', 'FOOD_TYPE', 'ZONE']),
+          id: z.string(),
+          label: localization,
+        }),
+        to: z.object({
+          type: z.enum(['BUDGET_RANGE', 'TASTE', 'FOOD_TYPE', 'ZONE']),
+          id: z.string(),
+          label: localization,
+        }),
+      }),
+    )
+    .min(1)
+    .max(4),
+  conditions: conditionsSchema,
+  resultCount: z.number().int().positive(),
+}) satisfies z.ZodType<Adjustment>
 
 // A returned item exactly as the cards display it; checked again when read from storage.
 const recommendationItemSchema = z.object({
@@ -114,6 +136,7 @@ const shortlistSchema = z
   .object({
     slots: z.array(slotSchema).min(1).max(MAX_CARDS),
     rejectedMenuItemIds: z.array(z.string().min(1)).max(500),
+    adjustment: adjustmentSchema.optional(),
     undo: z
       .object({
         slotIndex: z
@@ -129,8 +152,6 @@ const shortlistSchema = z
     chosenMenuItemId: z.string().min(1).optional(),
     // The chosen card was confirmed with `เอาเมนูนี้แหละ`; its history is already recorded.
     confirmed: z.literal(true).optional(),
-    // Retrieval conditions for closest menus; the user's original answers stay in flow.conditions.
-    closestConditions: conditionsSchema.optional(),
   })
   .strict()
 
@@ -213,7 +234,7 @@ export function replacementRequest(
     throw new Error('Only a displayed card can be replaced.')
   }
   return {
-    conditions: shortlist.closestConditions ?? conditions,
+    conditions,
     rejectedMenuItemIds: [...shortlist.rejectedMenuItemIds, rejected.item.id],
     displayedMenuItemIds: shortlist.slots.flatMap((slot, index) =>
       slot.kind === 'card' && index !== slotIndex ? [slot.item.id] : [],
@@ -222,8 +243,8 @@ export function replacementRequest(
   }
 }
 
-export const suggestionFieldLabels: Record<
-  Suggestion['changes'][number]['field'],
+export const adjustmentFieldLabels: Record<
+  Adjustment['changes'][number]['field'],
   string
 > = {
   budget: 'งบประมาณ',
@@ -232,14 +253,13 @@ export const suggestionFieldLabels: Record<
   zone: 'พื้นที่',
 }
 
-// One sentence naming every suggested change, e.g. "ถ้าเปลี่ยนพื้นที่จาก “คชพล” เป็น
-// “ตลาดฟ้าไทย” และรสชาติจาก “เผ็ด” เป็น “กลมกล่อม” จะพบ 4 เมนู".
-export function suggestionMessage({ changes, resultCount }: Suggestion) {
+// One sentence naming every condition the backend changed before returning the shortlist.
+export function adjustmentMessage({ changes, resultCount }: Adjustment) {
   const parts = changes.map(
     ({ field, from, to }) =>
-      `${suggestionFieldLabels[field]}จาก “${from.label.th}” เป็น “${to.label.th}”`,
+      `${adjustmentFieldLabels[field]}จาก “${from.label.th}” เป็น “${to.label.th}”`,
   )
-  return `ถ้าเปลี่ยน${parts.join(' และ')} จะพบ ${resultCount} เมนู`
+  return `ไม่พบเมนูตรงทุกข้อ ระบบจึงเปลี่ยน${parts.join(' และ')} แล้วสับให้ทันทีจาก ${resultCount} เมนูที่ตรงเงื่อนไขใหม่`
 }
 
 // Compare actual menu data to the original answers, never the alternate request's rationale.

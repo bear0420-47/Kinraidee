@@ -15,7 +15,6 @@ import {
 import { usePreference } from '@/hooks/preferences/usePreference'
 import { useRecordHistory } from '@/hooks/recommendation-history/useRecommendationHistory'
 import {
-  conditionDifferences,
   firstOpenStep,
   flowSteps,
   initialRequest,
@@ -27,7 +26,6 @@ import {
   type MealStep,
   type RecommendationConditions,
   type RecommendationItem,
-  type Suggestion,
 } from '@/schemas/meal/recommendationSchemas'
 import {
   chooseCard,
@@ -55,7 +53,7 @@ function nextStep(step: FlowStep): FlowStep {
 }
 
 // Home → budget → taste → food type → zone → summary → shuffle cards → confirmation, one
-// short step at a time. No exact match loads closest menus once, preserving original answers.
+// short step at a time. The API returns effective conditions and any automatic adjustment in one request.
 // Confirming a menu clears the flow and returns Home. A signed-in user's saved
 // defaults are shown as each step's selection until the user answers it.
 export function MealPage() {
@@ -69,10 +67,8 @@ export function MealPage() {
   const preference = usePreference()
   const { data: user } = useCurrentUser()
   const recordHistory = useRecordHistory()
-  // The last shuffle found nothing. Kept in memory only, so a reload shows the summary.
-  const [noMatch, setNoMatch] = useState<{
-    suggestion: Suggestion | null
-  } | null>(null)
+  // A true catalog no-match is kept in memory only, so a reload shows the summary.
+  const [noMatch, setNoMatch] = useState(false)
   const [shuffleError, setShuffleError] = useState<string | null>(null)
   const [shuffling, setShuffling] = useState(false)
   const shuffleInFlight = useRef(false)
@@ -122,7 +118,7 @@ export function MealPage() {
   }, [view])
 
   const go = (target: FlowStep) => {
-    setNoMatch(null)
+    setNoMatch(false)
     flow.goTo(target)
   }
 
@@ -169,28 +165,18 @@ export function MealPage() {
     setShuffling(true)
     setShuffleError(null)
     try {
-      const { items, suggestion } = await recommend.mutateAsync(
+      const { items, adjustment } = await recommend.mutateAsync(
         initialRequest(target),
       )
       if (items.length > 0) {
-        setNoMatch(null)
-        flow.showShortlist(target, items)
-      } else if (suggestion) {
-        // Reuse the server's minimal-change search without changing the user's answers.
-        const closest = await recommend.mutateAsync(
-          initialRequest(suggestion.conditions),
-        )
-        if (closest.items.length > 0) {
-          setNoMatch(null)
-          flow.showShortlist(target, closest.items, suggestion.conditions)
-        } else {
-          setNoMatch({ suggestion: null })
-        }
+        setNoMatch(false)
+        flow.showShortlist(adjustment?.conditions ?? target, items, adjustment)
       } else {
-        setNoMatch({ suggestion: null })
+        flow.setConditions(target)
+        setNoMatch(true)
       }
     } catch (error) {
-      setNoMatch(null)
+      setNoMatch(false)
       setShuffleError(recommendationErrorMessage(error))
     } finally {
       shuffleInFlight.current = false
@@ -200,14 +186,14 @@ export function MealPage() {
 
   function editConditions() {
     setEditing(false)
-    setNoMatch(null)
+    setNoMatch(false)
     flow.editConditions()
   }
 
   // `เริ่มใหม่` clears every answer and the shortlist, then asks question 1 again.
   function startOver() {
     setEditing(false)
-    setNoMatch(null)
+    setNoMatch(false)
     flow.finish()
   }
 
@@ -351,11 +337,6 @@ export function MealPage() {
       {view === 'cards' && chosen ? (
         <ConfirmMenuDialog
           item={chosen}
-          differences={
-            flow.shortlist?.closestConditions && complete
-              ? conditionDifferences(chosen, conditions)
-              : []
-          }
           confirmed={flow.shortlist?.confirmed === true}
           historyFailed={recordHistory.isError}
           onConfirm={() => confirm(chosen)}

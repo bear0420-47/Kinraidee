@@ -2238,7 +2238,7 @@
                 },
                 "maxItems": 3
               },
-              "suggestion": {
+              "adjustment": {
                 "type": "object",
                 "nullable": true,
                 "properties": {
@@ -2393,7 +2393,7 @@
                   "conditions",
                   "resultCount"
                 ],
-                "description": "No-match suggestion. Null only when no active, non-excluded menu item exists, and for one-card replacements."
+                "description": "Automatic changes applied to an initial no-match. Null when no adjustment was needed or possible, and for one-card replacements."
               }
             },
             "required": [
@@ -5197,7 +5197,7 @@
         },
         "responses": {
           "200": {
-            "description": "Stateless recommendation shortlist or no-match result",
+            "description": "Stateless shortlist with optional automatic adjustment, or a true no-match result",
             "content": {
               "application/json": {
                 "schema": {

@@ -4,7 +4,7 @@ Presentation refinement approved 2026-10-26: within the existing question and re
 
 ## Status
 
-Human-approved product-flow contract — synchronized with the approved specification; AI/Places behavior was approved on 2026-10-24. Visual style is approved separately in `design-system.md`.
+Human-approved product-flow contract — synchronized with the approved specification; AI/Places behavior was approved on 2026-10-24 and automatic no-match behavior was approved on 2026-10-26. Visual style is approved separately in `design-system.md`.
 
 ## Scope
 
@@ -20,8 +20,8 @@ One core workflow only: **Get a meal shortlist** (the core feature in `feature-l
 |---|---|---|---|
 | 1 | Opens Kinraidee and starts without signing in. | Home | F6, LR2 |
 | 2 | Chooses a budget, then a taste, then a food type, then a zone — one short step at a time. An invalid value is rejected inline, naming the field, and the user stays on this step. | Conditions | F1, NFR4 |
-| 3 | Submits the chosen conditions with the `หาเมนูกัน` action. Mandatory filters and exclusions run first, then a restaurant-diverse pool of at most six is formed. When more than three candidates remain, Gemini selects and explains up to three; strict validation or deterministic fallback produces the final face-down cards. If none match, automatically retrieve closest menus once and show them already revealed, with original filters preserved (OA3). | Shortlist | F2, F3, F19, F20, NFR3, NFR8, NFR13, NFR14 |
-| 4 | Reviews closest menus already revealed, or reveals exact cards one by one or with `เปิดทั้งหมด`; selects a revealed menu or rejects a choice and receives a non-duplicate replacement. Revealed mapped restaurants start non-blocking live Google Places details requests. Rejected choices do not come back this session, and one-card replacement does not call Gemini. | Shortlist | F4, F5, F21, NFR9, NFR12, NFR13, NFR14 |
+| 3 | Submits the chosen conditions with the `สับการ์ดเมนู` action. Filters and exclusions run first. If none match, the backend automatically applies the fewest proven concrete condition changes and continues in the same request. A restaurant-diverse pool of at most six is then formed. When more than three candidates remain, Gemini selects and explains up to three; strict validation or deterministic fallback produces the final face-down cards. If conditions changed, an announced notice names every change above the cards. | Shortlist | F2, F3, F19, F20, F22, NFR3, NFR8, NFR13, NFR14 |
+| 4 | Reveals cards one by one, uses `เปิดทั้งหมด`, selects a revealed menu, or rejects a revealed choice and receives a different qualifying choice. Revealing a mapped restaurant starts a non-blocking live Google Places details request. Rejected choices do not come back this session, and one-card replacement does not call Gemini. | Shortlist | F4, F5, F21, NFR9, NFR12, NFR13, NFR14 |
 | 5 | Selects a revealed menu, reviews its confirmation details, then confirms the choice, returns to the shortlist, or starts a new session. Logged-in history is written only after confirmation. | Shortlist → Confirmation | F7, F15 |
 
 ## The one decision that changes the flow
@@ -29,11 +29,11 @@ One core workflow only: **Get a meal shortlist** (the core feature in `feature-l
 At step 3, **are there any qualifying choices left?**
 
 - **Yes** → show up to three and continue to step 4.
-- **No** → automatically retrieve closest menus once using the existing minimal-change suggestion. Show `เมนูใกล้เคียงที่น่าลอง` and `ยังไม่มีเมนูตรงทุกข้อ ลองดูเมนูใกล้เคียงพวกนี้นะ`, preserving original filters and naming actual differences on cards and confirmation. If none are available, show the empty summary. API filters remain mandatory per request (NFR8).
+- **No** → find and apply the fewest filter changes guaranteed to produce at least one result, then return the shortlist and an explicit change notice in the same response. If no available menu remains, show the true no-match state with manual editing. Never invent a result or change a condition silently (F22, NFR8).
 
-No-match suggestion (human approver's decision, 2026-10-06):
+Automatic no-match adjustment (human approver's decision, 2026-10-26; algorithm retained from the approved 2026-10-06 suggestion):
 
-- The API suggests the fewest filter changes that produce at least one result. It tries every single-field change before any two-field change, and so on.
+- The API finds and applies the fewest filter changes that produce at least one result within the original initial-shortlist request. It tries every single-field change before any two-field change, and so on.
 - Fields are tried in this priority, which keeps personal intent such as taste and food type stable before more flexible constraints:
   1. `Zone`
   2. `Budget`
@@ -43,18 +43,14 @@ No-match suggestion (human approver's decision, 2026-10-06):
   - Budget moves to the nearest range that has results, trying one range up, then one down, then further out.
   - Zone, taste, and food type move to the specific option with the most results. Ties go to the record's display order.
 - A field the user left as `อะไรก็ได้` / `ที่ไหนก็ได้` is never changed, because it cannot get any wider.
-- A suggestion always exists while at least one active menu item is not excluded. It is absent only when the catalog has none left (for example, every item was rejected), and for one-card replacement requests.
+- An adjustment exists while at least one active photographed menu item is not excluded. It is absent only when the catalog has none left. One-card replacement requests never adjust conditions.
 
-Closest-menu actions (OA3, approved by the human on 2026-10-26):
+Automatic-adjustment and true no-match presentation:
 
-- Automatically load the suggestion once with the existing hook; never loop on an empty follow-up. Cards start revealed and are selectable immediately.
-- Original filters remain unchanged. Store alternate retrieval conditions only in the existing session shortlist for reload/login and replacements. `เปลี่ยนตัวเลือก` returns to the original summary and clears the shortlist.
-- Cards and confirmation name actual differences, including `เกินงบ N บาท`, actual taste/type, or a different named area. Suppress rationale and AI reasons calculated against alternate retrieval conditions.
-- Replacement uses the alternate retrieval conditions and normal exclusions; its card starts revealed. Undo restores the card and alternative context.
-- Pending state spans both requests and blocks duplicate submissions and editing. Failure preserves original answers and offers retry; no suggestion or an empty follow-up shows the existing empty summary with answer editing.
-- Normal exact cards retain the existing reveal and confirmation flow. Home remains reachable through the header.
-
-D4 branch labels for this same flow are `Automatically retrieve closest menus once`, `Closest menus available?`, `Show closest menus revealed with original-filter differences`, and `Show empty summary with answer editing`. Step 4 is `Review revealed cards or reveal face-down cards`; replacements `Put replacement in same slot; reveal alternatives immediately`.
+- When adjustment succeeds, there is no confirmation action and no second recommendation request. The cards appear immediately with an announced sentence naming every changed field and its previous and effective value.
+- The effective conditions replace the submitted conditions for the shortlist, subsequent one-card replacements, session storage, rationale, and condition editing.
+- `แก้เงื่อนไข` remains available from the cards view.
+- When no adjustment is possible because no available menu remains, show the no-match state with `แก้เงื่อนไขเอง`; Home remains reachable through the header.
 
 ## Notes
 
@@ -85,9 +81,9 @@ D4 branch labels for this same flow are `Automatically retrieve closest menus on
 - Google Places details load only after reveal for restaurants with a stored Place ID. Loading, missing mapping, incomplete data, timeout, or provider error leaves the recommendation card usable and shows an explicit unavailable state.
 - Google ratings, opening information, Maps URI, and provider-returned reviews are transient and are not stored. Required Google and review-author attribution remains visible. Google photos are not used.
 - Recommendation items include menu, restaurant, zone, food-type, taste, price, image, and structured rationale data in one response. The web converts structured rationale flags into localized user-facing copy.
-- Valid no-match responses return `items: []` with a structured `suggestion` object or `suggestion: null`. The suggestion lists each change (field, from, to), the complete suggested conditions, and the result count; the web owns the localized explanation and action copy.
-- Rejecting a revealed card adds its `menuItemId` to the session rejected IDs and requests one non-duplicate replacement that excludes rejected IDs and menu items still displayed. The replacement enters the same card slot face-down for exact matches, or revealed for closest alternatives.
-- Reject feedback offers `เอาเมนูเดิมกลับมา`. Undo removes the original ID from rejected IDs, removes the replacement, and restores the original card in its previous slot and reveal state.
+- A successful automatic adjustment returns non-empty `items` with structured `adjustment` metadata containing each change (field, from, to), the complete effective conditions, and the matching-result count. The web owns the localized explanation copy and persists the adjustment with the shortlist. A true no-match returns `items: []` with `adjustment: null`.
+- Rejecting a revealed card adds its `menuItemId` to the session rejected IDs and requests one non-duplicate replacement that excludes rejected IDs and menu items still displayed. The replacement enters the same card slot face-down.
+- Reject feedback offers `เลิกทำ`. Undo removes the original ID from rejected IDs, removes the replacement, and restores the original card in its previous slot and reveal state.
 - Confirmation shows menu name, restaurant, price, zone, image, and recommendation rationale. It does not show wait time.
 - Confirmation has two stages. Stage 1 actions are `เอาเมนูนี้แหละ` and `ขอคิดอีกที`.
 - `เอาเมนูนี้แหละ` writes `RecommendationHistory` only for logged-in users and moves to the success state. Anonymous confirmation never writes history to PostgreSQL. Merely revealing or opening a card never writes history.

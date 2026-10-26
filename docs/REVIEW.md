@@ -1,5 +1,38 @@
 # Review Report
 
+## Automatic initial no-match adjustment
+
+### Status
+
+Automated standards and specification review complete on 2026-10-26. No unresolved findings remain. The human project owner approved the requirements, implementation plan, and direct `main` push.
+
+### Findings
+
+| ID | Severity | Category | Finding | Status |
+|---|---|---|---|---|
+| ANM-001 | Medium | Client state | `undoReject()` rebuilt the shortlist without carrying the automatic-adjustment metadata, so the disclosure disappeared after reject and undo. The transition now preserves the complete shortlist and a regression assertion covers the adjustment. | Resolved |
+| ANM-002 | Low | Verification | API package Prettier checked the generator-owned catalog although the root ignore already excluded it; historical wireframe assertions still expected obsolete English/admin behavior. Added the package-local generated-file ignore, retained `catalog:build --check`, and synchronized the assertions with the approved prototype. | Resolved |
+
+### Standards review
+
+No documented-standard violations remain. The API validates the unchanged request boundary, keeps database access in the repository, reuses the pure smallest-change calculator, and returns structured adjustment data rather than presentation copy. The web owns the Thai explanation, stores only session-scoped recommendation state, and uses the effective conditions for replacements. No new personal data, persistent fields, permissions, secrets, or provider calls were introduced.
+
+### Specification review
+
+F22, OA3, B27, and the related F2, F12, F20, NFR8, journey, design, contract, and plan changes agree. Initial three-card no-match requests adjust and return results in one request; direct matches remain unchanged; one-card replacements never adjust; true catalog no-match offers manual editing; all changed fields are disclosed and persist with the shortlist.
+
+### Review scope
+
+- Working tree diff against `HEAD` for requirements, design, plan, API contract/service/tests, web flow/state/tests, generated OpenAPI types, and verification evidence.
+- Standards sources: `AGENTS.md`, `rule.md`, `docs/plan.md`, `docs/03-implementation/engineering-guidelines.md`, `docs/03-implementation/data-model.md`, and `docs/03-implementation/module-implementation-checklist.md`.
+- Checked: minimal adjustment behavior, effective-condition filtering and rationale, AI/deterministic selection, exclusions, replacement isolation, storage validation, reject/undo transitions, accessibility copy, generated artifacts, formatting, tests, and builds.
+
+### Approval
+
+Human reviewer: Project owner
+Decision: Approved for direct commit and push to `main`
+Date: 2026-10-26
+
 ## Status
 
 Issue #27 review complete on 2026-09-29. Human pull-request approval remains pending.

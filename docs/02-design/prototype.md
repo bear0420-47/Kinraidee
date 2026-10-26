@@ -6,7 +6,7 @@ Compact meal presentation approved 2026-10-26: React questions use one grouped h
 
 ## Status
 
-Visual style approved — 2026-09-28. The AI/Places reveal pattern was approved by the human project owner on 2026-10-24. Product flow and feature behavior shown inside `wireframe.html` are exploratory and are not approved by this status.
+Visual style approved — 2026-09-28. The AI/Places reveal pattern was approved by the human project owner on 2026-10-24 and the automatic-adjustment presentation was approved on 2026-10-26. Product flow and feature behavior shown inside `wireframe.html` are exploratory and are not approved by this status.
 
 ## Artifact Role
 
@@ -79,9 +79,7 @@ Stock photo pattern: dish photos taken from Unsplash show a `ภาพประ�
 
 Confirmation pattern: selecting a revealed card opens a two-stage dialog with menu name, restaurant, price, zone, image, and recommendation rationale. Stage 1 actions are `เอาเมนูนี้แหละ` and `ขอคิดอีกที`. `เอาเมนูนี้แหละ` confirms the decision and moves to a success state; `ขอคิดอีกที` returns to the same revealed-card state. The success state has one action, `กลับหน้าหลัก`, which clears the current flow and returns Home. Only confirmation by a logged-in user writes selected-menu history; revealing or opening a card does not.
 
-No-match pattern: follow the OA3 closest-menu contract below. The former explicit suggested-filter apply step is superseded.
-
-Condition interaction refinement approved on 2026-10-26: pointer activation selects and advances immediately; keyboard arrow/Space selection stays on the question with explicit Next. Explain this before the choices. Saved defaults remain reviewable, and activating an already-selected choice also advances. An edit opened from the summary returns directly after committing with pointer activation or `ใช้คำตอบนี้`.
+Automatic-adjustment pattern: when no menu satisfies all submitted conditions but an adjustment exists, skip the confirmation panel and show the resulting cards immediately. Above the cards, show an announced compact notice naming every automatic change, such as `ไม่พบเมนูตรงทุกข้อ ระบบจึงเปลี่ยนพื้นที่จาก “คชพล” เป็น “ตลาดฟ้าไทย” แล้วสับให้ทันที`, joining several changes with `และ`. The notice has no accept button because the backend already applied the effective conditions. The cards view keeps `แก้เงื่อนไข` and `เริ่มใหม่`. If no menu is available at all, show the true no-match state with only `แก้เงื่อนไขเอง`; Home remains reachable through the header.
 
 ## Mock Elements That Are Not Requirements
 
@@ -112,7 +110,7 @@ The first public visual implementation is expected to need these screen categori
 2. Condition entry.
 3. Recommendation shortlist.
 4. Selected-menu confirmation.
-5. Empty/no-match state.
+5. Automatic-adjustment notice or empty/no-match state.
 
 Registered-user and admin screens use the same tokens and component language, but require their own implementation issues and screen specifications.
 

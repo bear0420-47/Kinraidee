@@ -1,5 +1,24 @@
 # Verification Report
 
+## Merge conflict reconciliation — 2026-10-26
+
+Resolved five unmerged web files against approved F22/B27 automatic adjustment, retaining compact cards, carousel focus, direct editing, friendly copy, pending-request protection and inline true-no-match recovery. Effective conditions drive storage, editing and replacements. Reused the existing strict conditions schema; the updated storage test rejects incomplete conditions and extra personal fields.
+
+| Check | Result |
+|---|---|
+| API Vitest, installed entrypoint | 76 files / 614 tests passed. |
+| Final web Vitest, `--exclude 'dist/**' --maxWorkers=2` | 38 files / 437 tests passed. |
+| Focused ShuffleCards regression | 35/35 passed. |
+| Web TypeScript, `tsc -b src/web --pretty false` | Exit 0. |
+| Web Vite production build | Exit 0; existing Zod annotation and chunk-size warnings remain. |
+| API build: TypeScript, tsc-alias, OpenAPI generation | Each exited 0; generated OpenAPI matches the staged artifact. |
+| Full API and web ESLint | Both exited 0; final changed web files also pass scoped lint. |
+| Package-wide Prettier | Default checks flag CRLF endings in 230 API and 163 web files; both pass with `--end-of-line auto`. Changed web files pass default formatting. |
+| `node tests/wireframe-requirements.test.cjs` | 24/24 passed. |
+| Git conflict and whitespace checks | No unmerged paths or conflict markers; staged and worktree whitespace checks pass. |
+
+The initial full web run passed 435/437: an obsolete closestConditions storage assertion was updated for the approved adjustment contract without relaxing validation, and an unrelated restaurant-image timeout passed on rerun. The final full web run passes all tests. The pnpm launcher failed fetching its package-manager version, so checks used installed tool entrypoints; its incidental lockfile change was reverted. Sandbox-only config/dependency/type errors disappeared on authorized reruns outside the sandbox. No browser/device acceptance, commit, push or deployment occurred. Resolution is staged for human review.
+
 ## Status
 
 Structural and scaffold verification run after adding the pnpm web/API workspace and updating pnpm to 12.4.2 on 2026-09-18. Security/compliance review remains pending before implementation is reported complete.
@@ -1680,3 +1699,31 @@ New seed tests:
 - Two initial runs stopped before changing production because `gcloud builds submit` rejected the managed source bucket for the federated deployer.
 - Effective bucket and service-usage permissions were verified without exposing credentials. CD was simplified to build on the GitHub runner and push directly using repository-scoped `roles/artifactregistry.writer`.
 - Diagnostic bucket objects and temporary impersonation/Cloud Build permissions were removed after verification.
+
+## Automatic initial no-match adjustment - 2026-10-26
+
+### Scope
+
+- An initial three-card request that has no direct match now reuses the approved smallest-change algorithm, applies its effective conditions, and returns the shortlist in the same API response.
+- The response contract replaces interactive `suggestion` data with optional `adjustment` metadata containing every changed field, complete effective conditions, and matching-result count.
+- The web opens the cards immediately, announces the automatic changes, persists the explanation with the shortlist in `sessionStorage`, and uses the effective conditions for later replacements.
+- One-card replacement remains strict and never changes conditions automatically. A true catalog no-match still offers manual editing.
+
+### Results
+
+| Command/check | Exit code | Result |
+|---|---:|---|
+| Focused API recommendation tests | 0 | Recommendation service, adjustment calculator, OpenAPI, and performance: 4 files/29 tests passed. |
+| Focused recommendation route test | 0 | Public route/envelope and boundary parsing: 1 file/3 tests passed outside the socket-restricted sandbox. |
+| Focused web recommendation tests | 0 | Automatic adjustment, direct-to-cards behavior, reload persistence, effective-condition replacement, true no-match, and shortlist helpers passed. Final focused regression run: 3 files/49 tests. |
+| `pnpm verify` | 0 | Typecheck, lint, all tests, and both builds passed. API: 76 files/614 tests. Web: 38 files/409 tests. OpenAPI was regenerated during the API build. |
+| `git diff --check` | 0 | Pass. |
+| `pnpm format` | 0 | API and web formatting checks passed. The API package now explicitly ignores generator-owned `prisma/data/catalog.seed.json`; `catalog:build --check` separately verifies that artifact. |
+| `node tests/wireframe-requirements.test.cjs` | 0 | 24/24 prototype requirements passed after stale English navigation/admin assertions were synchronized with the approved Thai prototype and current role-aware access behavior. |
+| `pnpm --filter api catalog:build --check` | 0 | Confirmed `catalog.seed.json` exactly matches generator output. |
+| Automatic-adjustment state regression | 0 | Shortlist transition coverage confirms adjustment metadata survives reject, replacement, and undo, so its disclosure remains visible for the active shortlist. |
+
+### Build notes
+
+- The web build keeps the existing warning that the main JavaScript chunk exceeds 500 kB.
+- Rollup keeps the existing non-blocking warnings about comment annotations inside Zod dependencies.

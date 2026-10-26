@@ -556,7 +556,7 @@ OA3 refinement (approved 2026-10-26): the existing browser shortlist may include
 Recommendation-session state is not persisted in PostgreSQL.
 
 - Anonymous and logged-in users use the same session-only recommendation flow.
-- The web client keeps current conditions and rejected menu-item IDs in session memory.
+- The web client keeps current effective conditions, the displayed shortlist, rejected menu-item IDs, and any automatic-adjustment explanation in session memory.
 - Closing the tab may discard the current recommendation state.
 - Each recommendation request sends its conditions and rejected menu-item IDs to the API.
 - The recommendation API remains stateless and does not create anonymous session records.
