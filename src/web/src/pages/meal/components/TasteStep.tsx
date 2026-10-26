@@ -41,17 +41,19 @@ export function TasteStep({
   return (
     <ChoiceStep
       number={2}
-      title="วันนี้อยากกินรสไหน?"
-      hint="เลือก 1 ข้อ"
+      title="มื้อนี้อยากกินแบบไหน?"
+      hint="เลือกรสหรือสัมผัสที่อยากได้ที่สุด 1 ข้อ"
       name="taste"
-      // Kept in API order (sortOrder), followed by the UI-only "any" choice.
+      previewCount={6}
+      moreOptionsLabel="ดูรสชาติอื่น"
+      // Any comes first; master-data records retain API sortOrder.
       options={[
+        { value: ANY_CHOICE, label: ANY_LABEL, icon: icon(null) },
         ...(tastes.data ?? []).map((taste) => ({
           value: taste.id,
           label: taste.name.th,
           icon: icon(taste.icon),
         })),
-        { value: ANY_CHOICE, label: ANY_LABEL, icon: icon(null) },
       ]}
       value={toChoiceValue(value)}
       missingMessage={missingChoiceMessages.taste}

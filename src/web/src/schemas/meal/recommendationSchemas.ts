@@ -247,7 +247,7 @@ export const adjustmentFieldLabels: Record<
   Adjustment['changes'][number]['field'],
   string
 > = {
-  budget: 'งบประมาณ',
+  budget: 'งบ',
   taste: 'รสชาติ',
   foodType: 'ประเภทอาหาร',
   zone: 'พื้นที่',
@@ -259,7 +259,7 @@ export function adjustmentMessage({ changes, resultCount }: Adjustment) {
     ({ field, from, to }) =>
       `${adjustmentFieldLabels[field]}จาก “${from.label.th}” เป็น “${to.label.th}”`,
   )
-  return `ไม่พบเมนูตรงทุกข้อ ระบบจึงเปลี่ยน${parts.join(' และ')} แล้วสับให้ทันทีจาก ${resultCount} เมนูที่ตรงเงื่อนไขใหม่`
+  return `ยังไม่มีเมนูตรงที่เลือกเลย เลยลองปรับ${parts.join(' และ')} ให้แล้ว เจอ ${resultCount} เมนูที่เข้ากัน ลองดูการ์ดข้างล่างได้เลย`
 }
 
 // Compare actual menu data to the original answers, never the alternate request's rationale.

@@ -1,4 +1,4 @@
-import { screen, waitFor, within } from '@testing-library/react'
+import { cleanup, screen, waitFor, within } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
 import type { FoodType } from '@/schemas/admin/food-types/foodTypeSchemas'
@@ -150,7 +150,7 @@ describe('MealPage condition steps', () => {
 
     const steps = [
       ['มื้อนี้มีงบเท่าไหร่?', 'เลือกงบมื้อนี้ก่อนนะ', 'ต่ำกว่า ฿50'],
-      ['วันนี้อยากกินรสไหน?', 'เลือกรสที่อยากกินก่อนนะ', 'เผ็ด'],
+      ['มื้อนี้อยากกินแบบไหน?', 'เลือกรสที่อยากกินก่อนนะ', 'เผ็ด'],
       ['อยากกินแนวไหน?', 'เลือกแนวอาหารก่อนนะ', 'ข้าว'],
       ['แถวไหนดี?', 'เลือกโซนก่อนนะ', 'หน้ามอ'],
     ] as const
@@ -178,18 +178,20 @@ describe('MealPage condition steps', () => {
 
     await user.click(await screen.findByRole('radio', { name: 'ต่ำกว่า ฿50' }))
     await screen.findByRole('radio', { name: 'เผ็ด' })
-    expect(choiceLabels('วันนี้อยากกินรสไหน?')).toEqual([
+    expect(choiceLabels('มื้อนี้อยากกินแบบไหน?')).toEqual([
+      'อะไรก็ได้',
       'เผ็ด',
       'หวาน',
-      'อะไรก็ได้',
     ])
+    expect(screen.queryByText(/ดูรสชาติอื่นอีก/)).toBeNull()
     await user.click(screen.getByRole('radio', { name: 'หวาน' }))
     // An unknown icon key still renders, with the approved fallback icon.
     expect(choiceLabels('อยากกินแนวไหน?')).toEqual([
+      'อะไรก็ได้',
       'ข้าว',
       'เส้น',
-      'อะไรก็ได้',
     ])
+    expect(screen.queryByText(/ดูประเภทอื่นอีก/)).toBeNull()
     await user.click(screen.getByRole('radio', { name: 'เส้น' }))
     expect(choiceLabels('แถวไหนดี?')).toEqual([
       'หน้ามอ',
@@ -424,7 +426,7 @@ describe('MealPage session state', () => {
 
     expect(
       await screen.findByRole('heading', {
-        name: /วันนี้อยากกินรสไหน?/,
+        name: /มื้อนี้อยากกินแบบไหน?/,
       }),
     ).toBeTruthy()
     expect(
@@ -433,6 +435,131 @@ describe('MealPage session state', () => {
         .some((radio) => radio.checked),
     ).toBe(false)
   })
+})
+
+describe('Progressive taste and food-type choices', () => {
+  const manyTastes = Array.from({ length: 8 }, (_, index) => ({
+    ...tastes[0]!,
+    id: `taste_many_${index}`,
+    name: { th: `รสตัวเลือก ${index + 1}`, en: `Taste ${index + 1}` },
+    sortOrder: index,
+  }))
+  const manyFoodTypes = Array.from({ length: 10 }, (_, index) => ({
+    ...foodTypes[0]!,
+    id: `food_many_${index}`,
+    name: { th: `ประเภทตัวเลือก ${index + 1}`, en: `Type ${index + 1}` },
+    sortOrder: index,
+  }))
+
+  const cases = [
+    {
+      step: 'taste',
+      field: 'tasteId',
+      label: 'ดูรสชาติอื่นอีก 3 ตัวเลือก',
+      items: manyTastes,
+      next: 'อยากกินแนวไหน?',
+    },
+    {
+      step: 'foodType',
+      field: 'foodTypeId',
+      label: 'ดูประเภทอื่นอีก 5 ตัวเลือก',
+      items: manyFoodTypes,
+      next: 'แถวไหนดี?',
+    },
+  ] as const
+
+  function start(step: string, field: string, selected?: string) {
+    const api = fakeMealApi({
+      overrides: {
+        'GET /api/tastes': () =>
+          jsonResponse(200, { data: { items: manyTastes } }),
+        'GET /api/food-types': () =>
+          jsonResponse(200, { data: { items: manyFoodTypes } }),
+      },
+    })
+    sessionStorage.setItem(
+      RECOMMENDATION_STORAGE_KEY,
+      JSON.stringify({
+        step,
+        conditions: { budget: 'BETWEEN_50_100', [field]: selected },
+      }),
+    )
+    return api
+  }
+
+  it.each(cases)(
+    'keeps any first and reveals every $step choice without committing an answer',
+    async ({ step, field, label, items, next: nextHeading }) => {
+      const api = start(step, field)
+      const { user } = renderApp('/meal')
+      const disclosure = await screen.findByLabelText(label)
+      // jsdom's role queries include inputs inside closed native details.
+      expect(disclosure.closest('details')?.open).toBe(false)
+      const radios = screen
+        .getAllByRole<HTMLInputElement>('radio')
+        .filter((radio) => !radio.closest('details'))
+      expect(radios).toHaveLength(6)
+      expect(radios[0]?.value).toBe('')
+      expect(radios.every((radio) => !radio.checked)).toBe(true)
+      expect(radios.slice(1).map((radio) => radio.value)).toEqual(
+        items.slice(0, 5).map((item) => item.id),
+      )
+
+      const before = storedFlow()
+      await user.click(disclosure)
+      expect(disclosure.closest('details')?.open).toBe(true)
+      expect(storedFlow()).toEqual(before)
+      expect(screen.getAllByRole('radio')).toHaveLength(items.length + 1)
+      expect(
+        api.requests.some((request) => request.path === '/api/recommendations'),
+      ).toBe(false)
+
+      // Keyboard selection remains on this question until explicit Next.
+      const last = items[items.length - 1]!
+      await selectWithKeyboard(user, last.name.th)
+      expect(screen.getByLabelText(label)).toBeTruthy()
+      expect(
+        screen.getByRole<HTMLInputElement>('radio', { name: last.name.th })
+          .checked,
+      ).toBe(true)
+      await next(user)
+      await screen.findByRole('heading', { name: nextHeading })
+      expect(storedFlow()).toMatchObject({ conditions: { [field]: last.id } })
+
+      // Returning opens the additional group with its selected answer visible.
+      await user.click(screen.getByRole('button', { name: 'ย้อนกลับ' }))
+      expect(
+        (await screen.findByLabelText(label)).closest('details')?.open,
+      ).toBe(true)
+      await user.click(screen.getByRole('radio', { name: last.name.th }))
+      await screen.findByRole('heading', { name: nextHeading })
+    },
+  )
+
+  it.each(cases)(
+    'restores an additional $step answer visibly after reload',
+    async ({ step, field, label, items }) => {
+      const last = items[items.length - 1]!
+      start(step, field, last.id)
+      renderApp('/meal')
+      expect(
+        (await screen.findByLabelText(label)).closest('details')?.open,
+      ).toBe(true)
+      expect(
+        screen.getByRole<HTMLInputElement>('radio', { name: last.name.th })
+          .checked,
+      ).toBe(true)
+      cleanup()
+      renderApp('/meal')
+      expect(
+        (await screen.findByLabelText(label)).closest('details')?.open,
+      ).toBe(true)
+      expect(
+        screen.getByRole<HTMLInputElement>('radio', { name: last.name.th })
+          .checked,
+      ).toBe(true)
+    },
+  )
 })
 
 describe('MealPage scope and accessibility', () => {
@@ -481,7 +608,7 @@ describe('MealPage scope and accessibility', () => {
     await user.keyboard('{Enter}')
 
     const heading = await screen.findByRole('heading', {
-      name: /วันนี้อยากกินรสไหน?/,
+      name: /มื้อนี้อยากกินแบบไหน?/,
     })
     await waitFor(() => expect(document.activeElement).toBe(heading))
   })

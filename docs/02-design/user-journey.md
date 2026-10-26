@@ -1,5 +1,7 @@
 # Kinraidee Core User Journey
 
+Presentation refinement approved 2026-10-27: within step 2, taste and food type show `อะไรก็ได้` followed by five API-ordered options; `ดูรสชาติอื่นอีก N ตัวเลือก` / `ดูประเภทอื่นอีก N ตัวเลือก` reveals every remaining option without committing or advancing. Previously chosen additional answers open visibly when returning/editing/restoring. The taste question is `มื้อนี้อยากกินแบบไหน?` with `เลือกรสหรือสัมผัสที่อยากได้ที่สุด 1 ข้อ`. Single selection, pointer advance, explicit keyboard Next and all five journey steps remain unchanged.
+
 Presentation refinement approved 2026-10-26: within the existing question and result steps, consolidate progress into the question header, expose a neighboring card edge and current position on mobile, and shorten card content through native details while keeping key facts and closest differences visible. Original-condition chips on results open the existing edit-question -> summary path, preserving other answers and clearing the previous shortlist before a new search. No journey step, confirmation, account requirement or recommendation rule changes.
 
 ## Status
