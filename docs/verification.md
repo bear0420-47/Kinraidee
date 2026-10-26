@@ -1,5 +1,16 @@
 # Verification Report
 
+## CI test environment follow-up — 2026-10-27
+
+Hosted run `40366222412` at commit `4ab40812d37b6126e174a0ca1e3a0cb1b6658596` confirms the previous workflow repair: evidence validation, dependency installation, Prisma generation and both builds passed. The Test step then failed loading `recommendations.service.test.ts` and `recommendations.performance.test.ts`: importing the Gemini adapter imports config, whose required `DATABASE_URL` and `JWT_SECRET` were absent. The other 74 API suites passed (599 tests); web testing was cancelled and lint was skipped after the failure.
+
+Added `NODE_ENV=test`, a local placeholder database URL and a non-secret JWT value of sufficient length to the workflow's Test step only. No production credentials, migrations, application-code changes or assertion changes are needed.
+
+- Importing `src/config/env.ts` directly in a child process with the required variables removed reproduces both validation errors. Importing with the exact workflow Test environment exits 0.
+- Full API suite with the workflow Test environment and two workers: 75/76 files, 613/614 tests passed. Both CI-failing recommendation suites loaded and passed. The unrelated local port-collision startup test again exceeded its 5-second child-process limit with empty stderr. Rerunning both recommendation suites plus the complete environment suite with one worker passed all 3 files / 30 tests, including port-collision startup; assertions and timeouts remain unchanged.
+- Workflow YAML parses without errors. Workflow Prettier check and `git diff --check` pass.
+- Local checks use Windows/Node 24; hosted Ubuntu/Node 22 success requires a new commit and push. No commit, push or hosted rerun was performed here.
+
 ## PR verification workflow repair — 2026-10-26
 
 GitHub Actions run `40362870138` for PR #97 failed before application checks: setup-node requested an npm lockfile in a pnpm workspace, and the design check counted the explanatory star as a second core feature. Updated `.github/workflows/verify.yml` to set up the package.json-pinned pnpm before Node caching, cache `pnpm-lock.yaml`, install with `--frozen-lockfile`, generate Prisma using non-production placeholder URLs, and run the existing pnpm build/test/lint scripts without optional-script bypasses. The core counter now checks only the Core table cell. The prototype boundary check also accepts the existing `Mock Elements That Are Not Requirements` heading.

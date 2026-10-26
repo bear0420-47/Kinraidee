@@ -129,6 +129,10 @@ jobs:
       - name: Build
         run: pnpm build
       - name: Test
+        env:
+          NODE_ENV: test
+          DATABASE_URL: postgresql://test:test@localhost:5432/kinraidee_test
+          JWT_SECRET: ci-test-secret-that-is-at-least-32-characters
         run: pnpm test
       - name: Lint
         run: pnpm lint
