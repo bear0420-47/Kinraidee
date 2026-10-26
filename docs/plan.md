@@ -1,5 +1,45 @@
 # Implementation Plan
 
+## Friendly automatic-adjustment notice — 2026-10-27
+
+The human requested friendlier student-to-student wording for the stiff automatic-adjustment sentence while the choice-list work was in progress. Reuse adjustmentMessage only: explain that nothing matched, name every original-to-effective field change in server order, use `งบ` in this notice, retain the proven matching-result count and invite the user to inspect the cards. Keep the existing live status, stored adjustment/reload behavior, API labels, recommendation rules and provider behavior.
+
+```txt
+Module: existing web adjustmentMessage formatter
+Requirement/backlog ID: F2, F3, F22; B2, B3, B27; NFR8, NFR12
+Legal requirement ID: LR2, LR3, LR7; no additional data or permission
+Design artifact: existing voice guidance and prototype automatic-adjustment notice
+API routes: unchanged
+Web pages: /meal results and reloaded adjustment notice
+Personal data: unchanged session-only adjustment metadata
+Authorization: unchanged public/account flow
+Tests: existing one/multiple-change/count/order and rendered/reloaded disclosure assertions; full verification
+```
+
+Scope checklist complete. Copy-only amendment approved by the user's wording request; no schema, API, database, dependency, logging or deployment change.
+
+
+## Shorter taste and food-type choices — 2026-10-27
+
+Follow-up styling request: the human asked that the disclosure be more minimal and doodle-like. Replace its full-width outlined button look with an inline handwritten action, dashed underline, small peach count and rotating 16px caret. Expanded additional options reuse the same radio renderer as compact wrapping dashed-outline chips, with size-4 icons and an inline selected checkmark. Keep native details/summary behavior, a 44px target and full descriptive accessible name; no new component or token.
+
+The human requested implementation after reviewing the long taste/type lists. Reuse ChoiceStep and the existing native disclosure pattern: place the explicit any option first; show it plus the first five master-data options in the existing API sortOrder; put all remaining options behind a labelled native details/summary. The first five are presentation order, not a popularity claim. Never merge/remove master-data values or silently select any. A saved/edited answer in the additional options opens that disclosure automatically. Keep one radio group, pointer progression, keyboard selection plus explicit Next, summary edit-return, loading/error handling and all API/session contracts. Clarify the taste question to cover the existing taste/texture options. Budget and zone presentation remain unchanged.
+
+```txt
+Module: existing ChoiceStep, TasteStep and FoodTypeStep presentation
+Requirement/backlog ID: F1, F6, F7; B1, B6, B7; P1, P3, P4, P6, P8; NFR2, NFR12
+Legal requirement ID: LR2, LR3; no data, consent or permission change
+Design artifact: choice/disclosure rules, prototype and journey step 2
+API routes: unchanged public master data and recommendations
+Web pages: /meal taste and food-type questions on desktop/mobile
+Personal data: existing session-only answers; no added persistence, logs or providers
+Authorization: anonymous/account behavior unchanged
+Tests: any first and null mapping, bounded initial options, reveal without selection/navigation/request, all IDs reachable, keyboard explicit Next and pointer advance, overflow default/edit/reload visibility, loading/error/empty/small lists; web regression, build/lint/format, prototype tests and browser desktop/mobile checks
+```
+
+Scope checklist complete. Use the existing palette, typography, focus rings, icons, radio input handlers and native disclosure; compact taste/type options use inline icons and a 64px minimum height (above the 44px touch target). Add no component, dependency, database/API change or multi-taste contract. Prior approved artifacts are archived under `evidence/archive/20261027-choice-disclosure/`.
+
+
 ## Light condition questions within the existing theme — 2026-10-26
 
 The human rejected the large dark question band as outside the site's theme and requested another approach. Reuse ChoiceStep only: let full-width dark-on-white question typography and spacing establish hierarchy, use the existing peach for a small progress label below the question, and use cream option surfaces with yellow checked states. No large filled header band or extra progress indicator. Prior affected artifacts are archived under `evidence/archive/20261026-light-choice-theme/`.

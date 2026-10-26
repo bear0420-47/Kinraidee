@@ -9,7 +9,7 @@ import {
 import type { Preference } from '@/schemas/preferences/preferenceSchemas'
 import { fakePreferences } from '@/test/fakePreferencesApi'
 import { fakeShuffleApi, type User } from '@/test/fakeRecommendationApi'
-import { renderApp, testUser } from '@/test/renderApp'
+import { jsonResponse, renderApp, testUser } from '@/test/renderApp'
 
 const saved: Preference = {
   budget: 'BETWEEN_50_100',
@@ -71,6 +71,39 @@ async function next(user: User) {
 }
 
 describe('Saved defaults in the meal flow', () => {
+  it('opens additional choices when a saved taste default is outside the preview', async () => {
+    const items = Array.from({ length: 6 }, (_, index) => ({
+      id: index === 5 ? saved.tasteId! : `taste_other_${index}`,
+      name: {
+        th: index === 5 ? 'เผ็ด' : `รสอื่น ${index + 1}`,
+        en: `Taste ${index + 1}`,
+      },
+      icon: 'flame',
+      sortOrder: index,
+    }))
+    fakeShuffleApi({
+      results: [],
+      currentUser: testUser,
+      handle: fakePreferences({ saved }).handle,
+      masterData: {
+        'GET /api/tastes': () => jsonResponse(200, { data: { items } }),
+      },
+    })
+    sessionStorage.clear()
+    const { user, queryClient } = renderApp('/meal')
+    await preferenceLoaded(queryClient)
+    await next(user)
+    const disclosure = await screen.findByLabelText(
+      'ดูรสชาติอื่นอีก 1 ตัวเลือก',
+    )
+    expect(disclosure.closest('details')?.open).toBe(true)
+    expect(radio('เผ็ด').checked).toBe(true)
+    // Merely showing a saved choice does not commit it.
+    expect(storedConditions().tasteId).toBeUndefined()
+    await next(user)
+    expect(storedConditions().tasteId).toBe(saved.tasteId)
+  })
+
   it('shows each saved default, commits it on ถัดไป, and leaves a field without one unanswered', async () => {
     startFlow()
     const { user } = renderApp('/meal')

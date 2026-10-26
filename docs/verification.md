@@ -1,5 +1,19 @@
 # Verification Report
 
+## Compact choices and friendly adjustment notice — 2026-10-27
+
+Scope: approved taste/type list simplification in existing ChoiceStep/TasteStep/FoodTypeStep, plus the human-requested friendly adjustmentMessage wording. Existing option IDs, API/filter semantics, one-taste selection, pointer progression, keyboard explicit Next, edit-return and session boundaries are preserved. Prior design/plan artifacts are archived under `evidence/archive/20261027-choice-disclosure/`.
+
+- Choice regression: added coverage for six initial options with any first and no default selection, disclosure without committing/navigation/recommendation requests, all IDs reachable in API order, keyboard selection with explicit Next, pointer progression, additional answers visibly restored on return/reload, small lists without pointless disclosure, and additional saved defaults.
+- Copy regression: existing formatter and rendered/reload tests assert one/multiple changes, original/effective labels, server change order and result count with the friendlier text. The notice's `role=status` remains unchanged.
+- Browser: local Vite preview with a temporary same-origin proxy for public production GET data, inspected in Opera desktop and 390x844 viewport. Taste starts with 6 of 9 options, food type 6 of 11; any and both more-options controls are visible. Opening disclosure did not advance or select. Space selected an additional taste without advancing; Next advanced. Pointer selection of an additional food type advanced; Back and a fresh reload showed the additional selected radio with its disclosure open. Viewport override reset. No recommendation POST, confirmation or server mutation was submitted. Preview server stopped; no production deployment tested.
+- Scoped Impeccable detector: one run over all three modified choice components, exit 0, JSON `[]`.
+- `node tests/wireframe-requirements.test.cjs`: 24/24 passed. This is prototype evidence, separate from React/browser verification.
+- `pnpm verify` through Corepack/process-local pinned-pnpm shim: TypeScript and both ESLint packages passed. Parallel tests stopped at four existing API timeout/process-start assertions (610/614 API tests); web was cancelled. No tests were relaxed. Package suites are rerun sequentially with bounded workers below.
+- `pnpm format`: exit 1 due existing CRLF endings in 160 web and 230 API files. Both package-wide checks pass with `--end-of-line auto`; changed-code default Prettier check passes. Unrelated files were not reformatted.
+- Focused MealPage rerun: 22/22 passed. An initial test harness incorrectly counted radios inside closed native details as visible; assertions now check native open state and the initial group because jsdom role queries include closed-details descendants. Real-browser accessibility snapshots show only six initial radios. The temporary preview first started from the repository root could not find Tailwind's theme; restarting from the web package fixed this without changing configuration files.
+
+
 ## CI test environment follow-up — 2026-10-27
 
 Hosted run `40366222412` at commit `4ab40812d37b6126e174a0ca1e3a0cb1b6658596` confirms the previous workflow repair: evidence validation, dependency installation, Prisma generation and both builds passed. The Test step then failed loading `recommendations.service.test.ts` and `recommendations.performance.test.ts`: importing the Gemini adapter imports config, whose required `DATABASE_URL` and `JWT_SECRET` were absent. The other 74 API suites passed (599 tests); web testing was cancelled and lint was skipped after the failure.

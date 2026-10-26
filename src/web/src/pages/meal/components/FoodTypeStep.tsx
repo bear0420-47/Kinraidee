@@ -44,14 +44,16 @@ export function FoodTypeStep({
       title="อยากกินแนวไหน?"
       hint="เลือก 1 ข้อ"
       name="foodType"
-      // Kept in API order (sortOrder), followed by the UI-only "any" choice.
+      previewCount={6}
+      moreOptionsLabel="ดูประเภทอื่น"
+      // Any comes first; master-data records retain API sortOrder.
       options={[
+        { value: ANY_CHOICE, label: ANY_LABEL, icon: icon(null) },
         ...(foodTypes.data ?? []).map((foodType) => ({
           value: foodType.id,
           label: foodType.name.th,
           icon: icon(foodType.icon),
         })),
-        { value: ANY_CHOICE, label: ANY_LABEL, icon: icon(null) },
       ]}
       value={toChoiceValue(value)}
       missingMessage={missingChoiceMessages.foodType}
