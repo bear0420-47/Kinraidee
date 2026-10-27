@@ -52,7 +52,7 @@ Automatic no-match adjustment (human approver's decision, 2026-10-26; algorithm 
 
 Automatic-adjustment and true no-match presentation:
 
-- When adjustment succeeds, there is no confirmation action and no second recommendation request. The cards appear immediately with an announced sentence naming every changed field and its previous and effective value.
+- When adjustment succeeds, there is no confirmation action and no second recommendation request. The cards appear immediately with one friendly notice that the offered menus differ from the submitted choices. Existing result-condition controls show the effective choices; a screen-reader status announces every original and effective value. The extra adjusted-field/count line and disclosure are omitted.
 - The effective conditions replace the submitted conditions for the shortlist, subsequent one-card replacements, session storage, rationale, and condition editing.
 - `แก้เงื่อนไข` remains available from the cards view.
 - When no adjustment is possible because no available menu remains, show the no-match state with `แก้เงื่อนไขเอง`; Home remains reachable through the header.

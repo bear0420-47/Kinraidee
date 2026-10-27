@@ -1,5 +1,16 @@
 # Kinraidee Design System
 
+Single-message adjustment notice approved 2026-10-27: retain only `เอ๊ะ ยังไม่มีเมนูที่ตรงกับที่เลือก ลองเมนูที่เราเจอก่อนไหม?` in the cream/ink notice. Use 16px body text on phones, 21px card-title text from sm, compact vertical padding and the existing doodle shadow. Remove the visible adjusted-field/count line and `ดูการปรับตัวเลือก` disclosure. Existing result-condition controls show effective choices and the full screen-reader status names every change. This supersedes the previous notice treatments below.
+
+Friendly adjustment notice approved 2026-10-27: lead with `เอ๊ะ ยังไม่มีเมนูที่ตรงกับที่เลือก ลองเมนูที่เราเจอก่อนไหม?` in bold card-title type. Use cream fill, ink border and the existing doodle shadow to distinguish it from the results controls. The second line says `เราปรับพื้นที่ให้แล้ว เจอ 1 เมนู` for one field or `เราปรับ N ตัวเลือกให้แล้ว เจอ M เมนู` for several. Preserve `ดูการปรับตัวเลือก` and the complete screen-reader announcement. This supersedes the terse visible count below.
+
+Compact automatic-adjustment notice approved 2026-10-27: show `ปรับพื้นที่แล้ว เจอ 1 เมนู` for one changed field, or `ปรับ N ตัวเลือกแล้ว เจอ M เมนู` for several. Use native details labelled `ดูการปรับตัวเลือก` for every original → effective value; the full explanation remains a screen-reader status announcement. This supersedes the long visible sentence below.
+
+Menu-details button refinement 2026-10-27: show a full-width, outlined ghost Button with the existing Info icon beneath the primary and replacement actions. Preserve the Dialog, focus return and stable card height.
+
+
+Result-card layout correction 2026-10-27: menu/restaurant details open in the existing scrollable Dialog, with a visible Close button and Escape/focus-return behavior. Opening details leaves all card dimensions unchanged. Stretch cards within each mobile rail/desktop row to equal height without clipping full menu names. Supersedes inline menu/restaurant details disclosure only; provider data and requests remain unchanged.
+
 Balanced result actions approved 2026-10-27: use a content-sized grid with two equal columns and gap-2 for Change conditions and Start over. Neither fills the remaining screen width. Preserve the single row, complete labels, outlined buttons and existing mobile/desktop typography, padding and touch heights. Supersedes the flexible first-button rule below.
 
 Mobile result actions approved 2026-10-27: keep the two outlined ghost buttons on one non-wrapping row. Below sm use text-small and px-3 with the existing 48px height; Change conditions fills remaining width and Start over keeps natural width. Keep labels unbroken and complete, gap-2 and icons. From sm restore text-body/px-5 and natural widths. This supersedes wrapping for these two result actions only.

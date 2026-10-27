@@ -1,5 +1,97 @@
 # Implementation Plan
 
+## Single-message adjustment notice — 2026-10-27
+
+Human removed the visible adjusted-field/count line and its disclosure from the results notice. Retain only the friendly prompt, reduce vertical padding, and scale its type for phone/desktop widths. The effective choices remain visible in the existing result-condition controls, and the complete adjustment explanation remains in the screen-reader status. Recommendation data and behavior stay unchanged. Previous requirement, plan, design and verification artifacts archived under evidence/archive/20261027-single-line-adjustment-notice/.
+
+```txt
+Module: existing ShuffleCardGrid adjustment notice
+Requirement/backlog ID: F2, F22; B2, B27; NFR8, NFR12
+Legal requirement ID: LR2, LR3; unchanged data handling
+Design artifact: single friendly result notice above existing effective-condition controls
+API routes: unchanged
+Web pages: /meal results
+Personal data: unchanged
+Authorization: unchanged
+Tests: focused adjustment tests, typecheck/build/lint/format and local phone/desktop layout
+```
+
+Scope checklist complete; the user's explicit removal updates the approved presentation decision.
+
+## Friendly and prominent adjustment notice — 2026-10-27
+
+Human requested an inviting message instead of the terse adjustment count. Reuse the current results notice and existing cream, ink, shadow and type tokens. Lead with `เอ๊ะ ยังไม่มีเมนูที่ตรงกับที่เลือก ลองเมนูที่เราเจอก่อนไหม?`, then state the field or number of fields adjusted and the result count. Preserve the existing native disclosure of old and new values and the complete screen-reader announcement. No recommendation, persistence or API change. Previous plan, design and verification archived under evidence/archive/20261027-friendly-adjustment-notice/.
+
+```txt
+Module: existing ShuffleCardGrid adjustment notice
+Requirement/backlog ID: F2, F22; B2, B27; NFR8, NFR12
+Legal requirement ID: LR2, LR3; unchanged data handling
+Design artifact: highlighted friendly results notice and native disclosure
+API routes: unchanged
+Web pages: /meal results
+Personal data: unchanged
+Authorization: unchanged
+Tests: focused adjustment tests, typecheck/build/lint/format, local browser layout and disclosure
+```
+
+Scope checklist complete; the user's copy and emphasis correction approves this presentation change.
+
+## Compact automatic-adjustment notice — 2026-10-27
+
+Human requested a shorter results notice. Show the changed field for one change, or the number of changed fields for several, alongside the result count. Put every original-to-effective value in a native details disclosure. Keep the complete change explanation in a screen-reader status announcement. Reuse existing adjustment metadata and labels; recommendation behavior, requests and persistence remain unchanged. Previous approved documents archived under evidence/archive/20261027-compact-adjustment-notice/.
+
+```txt
+Module: existing ShuffleCardGrid adjustment notice
+Requirement/backlog ID: F2, F22; B2, B27; NFR8, NFR12
+Legal requirement ID: LR2, LR3; unchanged data handling
+Design artifact: compact results notice and native details disclosure
+API routes: unchanged
+Web pages: /meal results
+Personal data: unchanged
+Authorization: unchanged
+Tests: single and multiple changes, disclosure, restore, web build/typecheck/lint/format, live layout
+```
+
+Scope checklist complete. User request approves the presentation change; every changed value remains available and announced.
+
+## Visible menu details button ? 2026-10-27
+
+Human requested a clearer menu-details action. Reuse the shared Button's outlined ghost variant, full card width and existing Info icon. Keep the Dialog, content, API calls and card layout unchanged. Previous plan, design and verification archived under evidence/archive/20261027-visible-menu-details-button/.
+
+```txt
+Module: existing MenuCard presentation
+Requirement/backlog ID: F3, F21; B3, B26; NFR2, NFR12
+Legal requirement ID: LR2, LR3, LR7; existing boundaries
+Design artifact: shared outlined Button within result card
+API routes: unchanged
+Web pages: /meal results
+Personal data: unchanged
+Authorization: unchanged
+Tests: focused card regression, web TypeScript, formatting and live local browser interaction
+```
+
+Scope checklist complete; request authorizes the visible-control refinement under the approved baseline.
+
+
+## Stable menu-card details ? 2026-10-27
+
+Human requested fixing expanding/unequal result cards. Reuse existing Dialog for menu/restaurant details instead of inline expansion; stretch cards equally within the mobile rail as on desktop. Preserve full titles, actions, existing tokens and Places request/cache behavior. No new component or dependency.
+
+```txt
+Module: existing MenuCard and ShuffleCardGrid presentation
+Requirement/backlog ID: F3, F21; B3, B26; NFR2, NFR12
+Legal requirement ID: LR2, LR3, LR7; existing data boundaries
+Design artifact: existing result cards and Dialog
+API routes: unchanged
+Web pages: /meal results
+Personal data: unchanged session and provider data; no added persistence
+Authorization: existing anonymous/account behavior
+Tests: existing meal regressions plus details open/close; repository verify/format and wireframe checks
+```
+
+Scope checklist complete; user request authorizes this scoped layout correction under the approved requirements and plan baseline. Previous artifacts archived under evidence/archive/20261027-stable-menu-card-details/.
+
+
 ## Balanced compact result buttons — 2026-10-27
 
 Human requested similarly sized buttons without the first button stretching across the remaining phone width. Reuse the same outlined buttons in a content-sized two-column grid; equal column widths, gap-2, full labels, existing mobile typography/padding and touch height. Preserve the single row. Previous plan/report/design artifacts archived under evidence/archive/20261027-balanced-result-buttons/.

@@ -48,6 +48,31 @@ import {
 } from '@/test/renderApp'
 
 describe('Shuffling', () => {
+  it('opens menu details outside the card and returns focus on Escape', async () => {
+    fakeShuffleApi({ results: [{ items: [krapao, noodles] }] })
+    const { user } = renderApp('/meal')
+    await shuffleCards(user)
+
+    const card = within(cards()[0]!).getByRole('article')
+    const opener = within(card).getByRole('button', {
+      name: 'ดูรายละเอียดเมนูและร้าน',
+    })
+    await user.click(opener)
+    const dialog = screen.getByRole('dialog', { name: krapao.name.th })
+    expect(card.contains(dialog)).toBe(false)
+    expect(within(dialog).getByText(krapao.name.en)).toBeTruthy()
+    await user.keyboard('{Escape}')
+    expect(screen.queryByRole('dialog')).toBeNull()
+    expect(document.activeElement).toBe(opener)
+
+    await user.click(opener)
+    await user.click(
+      within(screen.getByRole('dialog')).getByRole('button', { name: 'ปิด' }),
+    )
+    expect(screen.queryByRole('dialog')).toBeNull()
+    expect(document.activeElement).toBe(opener)
+  })
+
   it('shows every returned menu immediately after loading without reveal controls', async () => {
     let release: (response: Response) => void = () => undefined
     const pending = new Promise<Response>((resolve) => {
@@ -402,24 +427,19 @@ describe('Revealing', () => {
 
     await shownCard(1)
 
-    expect(await screen.findByText('4.6 จาก 42 คะแนน')).toBeTruthy()
-    expect(
-      api.requests.filter((request) => request.path.endsWith('/place-details')),
-    ).toHaveLength(1)
-    expect(screen.getByText(/อาหารอร่อย/)).toBeTruthy()
-    const disclosure = screen
-      .getByText('ดูรายละเอียดเมนูและร้าน')
-      .closest('details')!
-    expect(disclosure.open).toBe(false)
-    // JSDOM does not model the accessibility exclusion of closed details contents.
-    expect(
-      screen.getByRole('link', { name: 'ผู้รีวิวตัวอย่าง' }).closest('details'),
-    ).toBe(disclosure)
-    expect(
-      screen.getByRole('button', { name: 'เลือกเมนู ผัดกะเพรา' }),
-    ).toBeTruthy()
-    await user.click(screen.getByText('ดูรายละเอียดเมนูและร้าน'))
-    expect(disclosure.open).toBe(true)
+    await waitFor(() =>
+      expect(
+        api.requests.filter((request) =>
+          request.path.endsWith('/place-details'),
+        ),
+      ).toHaveLength(1),
+    )
+    expect(screen.queryByRole('dialog')).toBeNull()
+    await user.click(
+      within(cards()[0]!).getByRole('button', {
+        name: 'ดูรายละเอียดเมนูและร้าน',
+      }),
+    )
     expect(screen.getByText(krapao.name.en)).toBeTruthy()
     expect(screen.getByRole('link', { name: 'ผู้รีวิวตัวอย่าง' })).toBeTruthy()
     expect(
@@ -705,10 +725,20 @@ describe('Automatic adjustment and true no match', () => {
 
     await user.click(await screen.findByRole('button', { name: 'หาเมนูกัน' }))
     await screen.findByRole('heading', { name: 'มีเมนูน่าลองมาให้แล้ว' })
-    const explanation = screen.getByText(
-      'ยังไม่เจอเมนูที่ตรงครบทุกข้อ เลยปรับงบจาก “ต่ำกว่า ฿50” เป็น “฿50–100” ให้แล้ว เจอ 4 เมนูแล้ว ลองดูการ์ดด้านล่างได้เลย',
-    )
-    expect(explanation.getAttribute('role')).toBe('status')
+    expect(
+      screen.getByText(
+        'เอ๊ะ ยังไม่มีเมนูที่ตรงกับที่เลือก ลองเมนูที่เราเจอก่อนไหม?',
+      ),
+    ).toBeTruthy()
+    expect(screen.queryByText('เราปรับงบให้แล้ว เจอ 4 เมนู')).toBeNull()
+    expect(
+      screen
+        .getAllByRole('status')
+        .some((status) =>
+          status.textContent?.includes('งบจาก “ต่ำกว่า ฿50” เป็น “฿50–100”'),
+        ),
+    ).toBe(true)
+    expect(screen.queryByText('ดูการปรับตัวเลือก')).toBeNull()
     expect(api.recommendationBodies()).toHaveLength(1)
     expect(api.recommendationBodies()[0]?.conditions).toEqual(strict)
     expect(storedConditions()).toEqual(suggested)
@@ -823,18 +853,19 @@ describe('Automatic adjustment and true no match', () => {
     await user.click(await screen.findByRole('button', { name: 'หาเมนูกัน' }))
     expect(
       await screen.findByText(
-        'ยังไม่เจอเมนูที่ตรงครบทุกข้อ เลยปรับพื้นที่จาก “หน้ามอ” เป็น “ตลาด” และงบจาก “ต่ำกว่า ฿50” เป็น “฿101–200” และรสชาติจาก “เผ็ด” เป็น “กลมกล่อม” ให้แล้ว เจอ 2 เมนูแล้ว ลองดูการ์ดด้านล่างได้เลย',
+        'เอ๊ะ ยังไม่มีเมนูที่ตรงกับที่เลือก ลองเมนูที่เราเจอก่อนไหม?',
       ),
     ).toBeTruthy()
-
+    expect(screen.queryByText('ดูการปรับตัวเลือก')).toBeNull()
     expect(api.recommendationBodies()).toHaveLength(1)
     cleanup()
     renderApp('/meal')
     expect(
       await screen.findByText(
-        'ยังไม่เจอเมนูที่ตรงครบทุกข้อ เลยปรับพื้นที่จาก “หน้ามอ” เป็น “ตลาด” และงบจาก “ต่ำกว่า ฿50” เป็น “฿101–200” และรสชาติจาก “เผ็ด” เป็น “กลมกล่อม” ให้แล้ว เจอ 2 เมนูแล้ว ลองดูการ์ดด้านล่างได้เลย',
+        'เอ๊ะ ยังไม่มีเมนูที่ตรงกับที่เลือก ลองเมนูที่เราเจอก่อนไหม?',
       ),
     ).toBeTruthy()
+    expect(screen.queryByText('ดูการปรับตัวเลือก')).toBeNull()
   })
 
   it('offers only manual editing when no menu is available, keeping every selection', async () => {

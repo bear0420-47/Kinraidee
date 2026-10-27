@@ -1,5 +1,16 @@
-import { Check, MapPin, Storefront, ThumbsDown } from '@phosphor-icons/react'
+import {
+  Check,
+  Info,
+  MapPin,
+  Storefront,
+  ThumbsDown,
+  X,
+} from '@phosphor-icons/react'
 
+import { useState } from 'react'
+
+import { Dialog } from '@/components/Dialog'
+import { usePlaceDetails } from '@/hooks/meal/usePlaceDetails'
 import { Button } from '@/components/Button'
 import { FavoriteButton } from '@/components/FavoriteButton'
 import { FoodTypeIcon } from '@/lib/foodTypeIcons'
@@ -85,6 +96,8 @@ function RevealedCard({
   onChoose,
   comparisonConditions,
 }: MenuCardProps & { item: RecommendationItem }) {
+  const [detailsOpen, setDetailsOpen] = useState(false)
+  usePlaceDetails(item.restaurant.id)
   const differences = comparisonConditions
     ? conditionDifferences(item, comparisonConditions)
     : []
@@ -190,17 +203,27 @@ function RevealedCard({
           ขอดูเมนูอื่น
         </Button>
       </div>
-      <details className="text-small">
-        <summary className="min-h-11 cursor-pointer rounded-xs py-3 font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper">
-          ดูรายละเอียดเมนูและร้าน
-        </summary>
-        <div className="flex flex-col gap-3 pt-2">
+      <Button
+        variant="ghost"
+        aria-haspopup="dialog"
+        onClick={() => setDetailsOpen(true)}
+        className="w-full text-small"
+      >
+        <Info aria-hidden weight="bold" />
+        ดูรายละเอียดเมนูและร้าน
+      </Button>
+      {detailsOpen ? (
+        <Dialog title={item.name.th} onClose={() => setDetailsOpen(false)}>
           <p lang="en" className="text-small text-muted">
             {item.name.en}
           </p>
           <PlaceDetailsPanel restaurantId={item.restaurant.id} />
-        </div>
-      </details>
+          <Button variant="secondary" onClick={() => setDetailsOpen(false)}>
+            <X aria-hidden weight="bold" />
+            ปิด
+          </Button>
+        </Dialog>
+      ) : null}
     </article>
   )
 }
