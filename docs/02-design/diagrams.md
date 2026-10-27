@@ -1,5 +1,8 @@
 # Kinraidee Required Diagrams (D1–D4)
 
+Immediate-results amendment approved 2026-10-27: initial, replacement, restored and undone menu results are visible immediately; no face-down state, reveal action or Reveal all step. This supersedes historical reveal descriptions below. Existing edit/reset, direct condition edits, mobile paging, confirm-only history and all filtering remain. Existing non-blocking Places hooks run when a returned restaurant is displayed. The same five journey steps apply; steps 3-4 now show and compare menus directly.
+
+
 ## Status
 
 Approved — synchronized with the approved feature list, user journey, data model, and full-app scope. AI/Places changes to D1, D3, and D4 were approved by the human project owner on 2026-10-24. D1, D3 and D4 are Mermaid source so they stay diffable in version control. D2 is a hand-authored SVG under `assets/`, because Mermaid has no UML use case diagram type and the required notation (stick-figure actors, ovals in a system boundary, plain associations, dashed `«include»`) cannot be expressed in a flowchart.
@@ -164,12 +167,12 @@ flowchart TD
   diversify --> more{"More than three candidates?"}
   more -->|"[yes]"| aiSelect["Gemini selects up to three<br/>and writes short reasons"]
   aiSelect --> validAi{"AI selection valid?"}
-  validAi -->|"[yes]"| s3["Show up to three face-down cards"]
+  validAi -->|"[yes]"| s3["Show up to three menu choices"]
   validAi -->|"[no / timeout / failure]"| fallback["Use deterministic selection"]
   more -->|"[no]"| fallback
   fallback --> s3
-  s3 --> reveal["Review revealed cards or reveal face-down cards"]
-  reveal --> d{"Reject revealed card?"}
+  s3 --> reveal["Compares immediately visible menus"]
+  reveal --> d{"Reject a choice?"}
   reveal -.-> mapped{"Mapped Google Place?"}
   mapped -->|"[yes]"| live["Fetch and show attributed live place details"]
   mapped -->|"[no / error]"| unavailable["Keep card usable; show place details unavailable"]
@@ -182,7 +185,7 @@ flowchart TD
   undo -->|"[no]"| reveal
   replacement -->|"[no]"| emptySlot["Mark slot as no more choices"]
   emptySlot --> reveal
-  d -->|"[no]"| pick{"Select revealed menu?"}
+  d -->|"[no]"| pick{"Select a menu?"}
   pick -->|"[no]"| reveal
   pick -->|"[yes]"| conf["Show confirmation details"]
   conf --> final{"เอาเมนูนี้แหละ?"}

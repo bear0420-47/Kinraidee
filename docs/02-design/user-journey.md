@@ -1,5 +1,8 @@
 # Kinraidee Core User Journey
 
+Immediate-results amendment approved 2026-10-27: initial, replacement, restored and undone menu results are visible immediately; no face-down state, reveal action or Reveal all step. This supersedes historical reveal descriptions below. Existing edit/reset, direct condition edits, mobile paging, confirm-only history and all filtering remain. Existing non-blocking Places hooks run when a returned restaurant is displayed. The same five journey steps apply; steps 3-4 now show and compare menus directly.
+
+
 Presentation refinement approved 2026-10-27: within step 2, taste and food type show `อะไรก็ได้` followed by five API-ordered options; `ดูรสชาติอื่นอีก N ตัวเลือก` / `ดูประเภทอื่นอีก N ตัวเลือก` reveals every remaining option without committing or advancing. Previously chosen additional answers open visibly when returning/editing/restoring. The taste question is `มื้อนี้อยากกินแบบไหน?` with `เลือกรสหรือสัมผัสที่อยากได้ที่สุด 1 ข้อ`. Single selection, pointer advance, explicit keyboard Next and all five journey steps remain unchanged.
 
 Presentation refinement approved 2026-10-26: within the existing question and result steps, consolidate progress into the question header, expose a neighboring card edge and current position on mobile, and shorten card content through native details while keeping key facts and closest differences visible. Original-condition chips on results open the existing edit-question -> summary path, preserving other answers and clearing the previous shortlist before a new search. No journey step, confirmation, account requirement or recommendation rule changes.
@@ -22,8 +25,8 @@ One core workflow only: **Get a meal shortlist** (the core feature in `feature-l
 |---|---|---|---|
 | 1 | Opens Kinraidee and starts without signing in. | Home | F6, LR2 |
 | 2 | Chooses a budget, then a taste, then a food type, then a zone — one short step at a time. An invalid value is rejected inline, naming the field, and the user stays on this step. | Conditions | F1, NFR4 |
-| 3 | Submits the chosen conditions with the `สับการ์ดเมนู` action. Filters and exclusions run first. If none match, the backend automatically applies the fewest proven concrete condition changes and continues in the same request. A restaurant-diverse pool of at most six is then formed. When more than three candidates remain, Gemini selects and explains up to three; strict validation or deterministic fallback produces the final face-down cards. If conditions changed, an announced notice names every change above the cards. | Shortlist | F2, F3, F19, F20, F22, NFR3, NFR8, NFR13, NFR14 |
-| 4 | Reveals cards one by one, uses `เปิดทั้งหมด`, selects a revealed menu, or rejects a revealed choice and receives a different qualifying choice. Revealing a mapped restaurant starts a non-blocking live Google Places details request. Rejected choices do not come back this session, and one-card replacement does not call Gemini. | Shortlist | F4, F5, F21, NFR9, NFR12, NFR13, NFR14 |
+| 3 | Submits the chosen conditions with the `สับการ์ดเมนู` action. Filters and exclusions run first. If none match, the backend automatically applies the fewest proven concrete condition changes and continues in the same request. A restaurant-diverse pool of at most six is then formed. When more than three candidates remain, Gemini selects and explains up to three; strict validation or deterministic fallback produces the final immediately visible menu cards. If conditions changed, an announced notice names every change above the cards. | Shortlist | F2, F3, F19, F20, F22, NFR3, NFR8, NFR13, NFR14 |
+| 4 | Compares immediately visible menus, selects a menu, or rejects a choice and receives a different qualifying choice. Displaying a mapped restaurant starts a non-blocking live Google Places details request. Rejected choices do not come back this session, and one-card replacement does not call Gemini. | Shortlist | F4, F5, F21, NFR9, NFR12, NFR13, NFR14 |
 | 5 | Selects a revealed menu, reviews its confirmation details, then confirms the choice, returns to the shortlist, or starts a new session. Logged-in history is written only after confirmation. | Shortlist → Confirmation | F7, F15 |
 
 ## The one decision that changes the flow
@@ -56,7 +59,7 @@ Automatic-adjustment and true no-match presentation:
 
 ## Notes
 
-- Mobile presentation (human request, 2026-10-26): step 4 uses native horizontal swipe/snap browsing below 640px, showing one card at a time with a hint and numbered navigation for multiple slots. Swiping changes only the visible card. Existing reveal, choose, reject, undo and confirmation actions remain explicit, and desktop/tablet uses the existing grid. This is presentation within step 4, not a new journey step.
+- Mobile presentation (human request, 2026-10-26): step 4 uses native horizontal swipe/snap browsing below 640px, showing one card at a time with a hint and numbered navigation for multiple slots. Swiping changes only the visible card. Existing choose, reject, undo and confirmation actions remain explicit, and desktop/tablet uses the existing grid. This is presentation within step 4, not a new journey step.
 
 - Public pages show `เข้าสู่ระบบ` as a secondary/ghost action at the top-right of the header. Anonymous users can ignore it and start the core flow. After login, the same header slot becomes the account/admin entry point.
 - `เข้าสู่ระบบ` navigates to a dedicated `/login` page; account creation uses a dedicated `/register` page. Do not use authentication modals in the first release.

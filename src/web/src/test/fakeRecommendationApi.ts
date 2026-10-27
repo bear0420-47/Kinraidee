@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react'
+import { screen, within } from '@testing-library/react'
 
 import type { CurrentUser } from '@/hooks/auth/useCurrentUser'
 import {
@@ -172,8 +172,6 @@ export function storedConditions() {
   return stored.conditions
 }
 
-export async function revealCard(user: User, position: number) {
-  await user.click(
-    screen.getByRole('button', { name: `เปิดการ์ดใบที่ ${position}` }),
-  )
+export async function shownCard(position: number) {
+  return within(cards()[position - 1]!).findByRole('article')
 }

@@ -9,7 +9,7 @@ import {
   fakeShuffleApi,
   krapao,
   noodles,
-  revealCard,
+  shownCard,
   shuffleCards,
   type User,
 } from '@/test/fakeRecommendationApi'
@@ -39,7 +39,7 @@ function favoriteWrites(api: ReturnType<typeof fakeShuffleApi>) {
 
 async function showRevealedCard(user: User) {
   await shuffleCards(user)
-  await revealCard(user, 1)
+  await shownCard(1)
   return cards()[0]!
 }
 
@@ -83,9 +83,7 @@ describe('Favorites on recommendation cards', () => {
       }),
     ).toBeTruthy()
     expect(favoriteWrites(api)).toEqual([])
-    expect(
-      screen.getByRole('button', { name: 'เปิดการ์ดใบที่ 2' }),
-    ).toBeTruthy()
+    expect(within(cards()[2 - 1]!).getByRole('article')).toBeTruthy()
 
     // No credential or token is kept in browser storage.
     const kept = JSON.stringify({ ...localStorage, ...sessionStorage })

@@ -1,5 +1,7 @@
 # Kinraidee Product Backlog
 
+Human-approved presentation amendment — 2026-10-27: B2/B3 show all returned menus immediately, including replacements, restored sessions and undo. Manual card reveal and Reveal all are removed; B26's existing non-blocking evidence starts on menu display. B4/B5 exclusions, B7 edit/reset and confirm-only history remain unchanged. See the specification and active plan; prior backlog archived under evidence/archive/20261027-immediate-results/.
+
 ## Status
 
 Approved — synchronized with specification `20260828-01-kinraidee-food-recommendation.md`; B25 and B26 were approved by the human project owner on 2026-10-24; B27 was approved by the human project owner on 2026-10-26.

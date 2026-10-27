@@ -1,5 +1,5 @@
 import { ArrowRight, CaretDown, CheckCircle } from '@phosphor-icons/react'
-import { useId, useState, type ReactNode, type Ref } from 'react'
+import { useId, useRef, useState, type ReactNode, type Ref } from 'react'
 
 import { Button } from '@/components/Button'
 import { conditionSteps } from '@/schemas/meal/recommendationSchemas'
@@ -78,6 +78,7 @@ export function ChoiceStep({
   editing = false,
 }: ChoiceStepProps) {
   const headingId = useId()
+  const pointerChoice = useRef<string | undefined>(undefined)
   // The `-error` suffix matches the form fields' error ids.
   const errorId = `${name}-choice-error`
   const [showError, setShowError] = useState(false)
@@ -90,7 +91,19 @@ export function ChoiceStep({
   function renderOption(option: ChoiceOption, index: number) {
     const additional = index >= visibleCount
     return (
-      <label key={option.value} className="flex min-w-0 max-w-full">
+      <label
+        key={option.value}
+        className="flex min-w-0 max-w-full"
+        onPointerDownCapture={() => {
+          pointerChoice.current = option.value
+        }}
+        onPointerCancelCapture={() => {
+          pointerChoice.current = undefined
+        }}
+        onKeyDownCapture={() => {
+          pointerChoice.current = undefined
+        }}
+      >
         <input
           ref={index === 0 ? setFirstInput : undefined}
           type="radio"
@@ -103,7 +116,11 @@ export function ChoiceStep({
           onChange={() => onChange(option.value)}
           onClick={(event) => {
             // Keyboard selection stays in the group; pointer activation also advances.
-            if (event.detail > 0) onChange(option.value, true)
+            // A label-forwarded click can have detail 0 even after a real tap.
+            const advance =
+              pointerChoice.current === option.value || event.detail > 0
+            pointerChoice.current = undefined
+            if (advance) onChange(option.value, true)
           }}
         />
         <span

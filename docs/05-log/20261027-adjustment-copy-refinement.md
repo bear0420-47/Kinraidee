@@ -1,0 +1,3 @@
+# Automatic-adjustment copy refinement — 2026-10-27
+
+Human requested refining the long automatic-adjustment sentence. Reuse adjustmentMessage and replace its surrounding text with `ยังไม่เจอเมนูที่ตรงครบทุกข้อ เลยปรับ…ให้แล้ว เจอ N เมนูแล้ว ลองดูการ์ดด้านล่างได้เลย`. Preserve every original/replacement label, server order, count and the existing announced/reloaded notice. No recommendation behavior or data contract changes. Update existing formatter and rendered/reload assertions, design guidance and prototype together. Previous approved plan, verification and affected design artifacts are archived under evidence/archive/20261027-adjustment-copy-refinement/. Verification is recorded in docs/verification.md.

@@ -1,0 +1,3 @@
+# Single-row result buttons — 2026-10-27
+
+Human requested that the two outlined result actions stay on one row on mobile. Reuse existing buttons with non-wrapping layout, full unbroken labels, 48px phone height, text-small and px-3. First button takes remaining width; second keeps natural width. Restore desktop text/padding/sizing at sm. Existing edit/reset actions, busy state and focus remain. Plan/design synchronized and previous versions archived. Result regression 35/35, build/typecheck/lint/format and Opera geometry at 320px/390px/1440px passed; exact evidence in docs/verification.md. No deployment.

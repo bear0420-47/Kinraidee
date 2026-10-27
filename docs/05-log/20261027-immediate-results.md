@@ -1,0 +1,5 @@
+# Immediately visible results — 2026-10-27
+
+Human approved showing returned menus directly instead of requiring card opening. Reuse the existing revealed-card presentation, shortlist transitions and legacy normalization helper. Initial and replacement results are visible; old session/undo hidden flags normalize on restore. Remove face-down UI and Reveal all, preserve edit/reset, four compact direct edits, paging/focus, exclusions, automatic-adjustment disclosure, selection and confirmation. Existing non-blocking Places hooks now run on result display and retain query caching/deduplication. Rendering does not create history; only explicit confirmation does.
+
+Requirements, backlog, plan and all five design artifacts updated under the user's authorization; previous versions archived. No API/schema/dependency/storage-surface change. Exact verification (including initial test-import failure and passing affected-suite rerun), local synthetic screenshot and remaining acceptance limits are recorded in docs/verification.md. No commit/push/deployment.

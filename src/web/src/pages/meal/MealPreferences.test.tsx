@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
 import { preferencesQueryKey } from '@/hooks/preferences/usePreference'
@@ -71,6 +71,40 @@ async function next(user: User) {
 }
 
 describe('Saved defaults in the meal flow', () => {
+  it.each(['mouse', 'touch', 'pen'])(
+    'advances a saved answer after a %s label tap with a zero-detail click',
+    async (pointerType) => {
+      startFlow()
+      renderApp('/meal')
+      const budget = await screen.findByRole('radio', {
+        name: '฿50–100',
+        checked: true,
+      })
+      const chip = budget.closest('label')!.querySelector('span')!
+      fireEvent.pointerDown(chip, { pointerType })
+      fireEvent.pointerUp(chip, { pointerType })
+      fireEvent.click(chip, { detail: 0 })
+      await screen.findByText('ข้อ 2 จาก 4')
+      expect(storedConditions()).toEqual({ budget: 'BETWEEN_50_100' })
+    },
+  )
+
+  it.each(['pointerCancel', 'keyDown'] as const)(
+    'clears pointer activation on %s before a keyboard-style click',
+    async (interruption) => {
+      startFlow({ signedIn: false })
+      renderApp('/meal')
+      const budget = await screen.findByRole('radio', { name: '฿50–100' })
+      fireEvent.pointerDown(budget)
+      if (interruption === 'pointerCancel') fireEvent.pointerCancel(budget)
+      else fireEvent.keyDown(budget, { key: ' ' })
+      fireEvent.click(budget, { detail: 0 })
+      expect((budget as HTMLInputElement).checked).toBe(true)
+      expect(screen.getByText('ข้อ 1 จาก 4')).toBeTruthy()
+      expect(storedConditions().budget).toBe('BETWEEN_50_100')
+    },
+  )
+
   it('opens additional choices when a saved taste default is outside the preview', async () => {
     const items = Array.from({ length: 6 }, (_, index) => ({
       id: index === 5 ? saved.tasteId! : `taste_other_${index}`,

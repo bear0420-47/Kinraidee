@@ -1,5 +1,88 @@
 # Verification Report
 
+## Balanced compact result buttons — 2026-10-27
+
+Human requested similarly sized buttons without stretching the first button. Changed only the existing result action layout to a content-sized, two equal-column grid; retained outlined buttons, single-line labels, gap-2 and existing responsive typography/touch height. Previous artifacts archived under evidence/archive/20261027-balanced-result-buttons/.
+
+- Existing ShuffleCards tests: 35/35 passed. Web TypeScript/build/ESLint and changed-file Prettier passed; existing >500 kB build warning remains. Scoped Impeccable detector `[]`; `git diff --check` passed.
+- Opera local harness with actual ShuffleCardGrid and synthetic menu data: at both 320px and 390px, each button measured 129.41px wide and 48px high. At 320px they shared top 79.375px and each scrollWidth equaled clientWidth (no label clipping). At 390px their combined row measured 266.83px instead of filling the screen. Screenshot: evidence/balanced-result-buttons-mobile.jpg.
+- Viewport reset; temporary harness removed and server stopped. No physical-device/deployed-site verification, API change, commit, push or deployment.
+
+## Single-row mobile result actions — 2026-10-27
+
+Human requested keeping the restored outlined Change conditions and Start over buttons on one mobile row. Reused their existing Button instances with non-wrapping layout, phone text-small/px-3, first-button flexible width and second-button natural width. Desktop retains text-body/px-5. Previous artifacts archived under evidence/archive/20261027-single-row-result-buttons/.
+
+- ShuffleCards regression: 35/35 passed. Web TypeScript, production build, ESLint and changed-file Prettier passed; existing >500 kB build warning remains.
+- Opera local harness using actual ShuffleCardGrid and synthetic menu data: at 320px both buttons had top 79.375px and height 48px, and scrollWidth equaled clientWidth for each (no label overflow); document width 306px with the scrollbar. At 390px both tops were 79.375px and document width was 390px. At desktop 1440px both tops matched and default 16px text / 20px horizontal padding were restored.
+- Synthetic local screenshot: evidence/single-row-result-buttons-mobile.jpg. No physical-device or deployed-site verification. Viewport reset; temporary harness removed and server stopped.
+- Scoped Impeccable detector returned `[]`; `git diff --check` passed. No new tests mirroring CSS, API changes, commit, push or deployment.
+
+## Restore original result buttons — 2026-10-27
+
+Human requested original outlined buttons for Change conditions and Start over. Removed compact/borderless overrides from the existing Button instances and restored gap-2 wrapping. Immediate results and compact condition edits remain unchanged. Prior documents archived under evidence/archive/20261027-restore-result-buttons/.
+
+- ShuffleCards regression: 35/35 passed, including edit/reset and busy behavior.
+- Web TypeScript, production build and ESLint: passed. Existing >500 kB chunk warning remains.
+- Changed-file Prettier initially requested JSX reflow; applied formatting and reran check successfully.
+- Scoped Impeccable detector: exit 0, JSON `[]`; `git diff --check` passed.
+- Reused the established outlined Button style; no browser/physical-device rerun, API changes, commit, push or deployment.
+
+## Immediately visible menu results — 2026-10-27
+
+Human approved removing manual card opening. Initial/replacement shortlist transitions now mark menus visible immediately; stored legacy hidden cards and undo snapshots normalize through the existing revealAll helper on read. MenuCard no longer renders a face-down branch; result header omits Reveal all and uses direct-selection guidance. Edit/reset, compact conditions, mobile paging, adjustment metadata, exclusions, undo and confirm-only history remain. Specification/backlog and all five design artifacts synchronized; previous versions archived under evidence/archive/20261027-immediate-results/.
+
+- Full web run: 38 files, 445 passed / 2 failed of 447. Both failures were an omitted `cards` import in the updated confirmation test, not application failures; corrected the import without relaxing assertions. Reran affected ShuffleCards, ConfirmMenu and shortlist-transition suites after that fix and the final legacy-session case: 3 files, 73/73 passed. The earlier 37 passing files cover all other suites; no final single full-run pass is claimed.
+- Added explicit legacy-session regression: all stored false reveal flags display immediately, undo restores a visible original menu, and neither path sends a recommendation/history write. Updated existing initial/replacement/paging/Places/favorite/confirmation tests to assert immediate details rather than clicking reveal controls. Existing API exclusions, provider non-blocking behavior and confirm-only writes remain covered.
+- Web TypeScript, Vite production build and ESLint passed. Default Prettier check on all ten changed code/test files passed. Build retains the existing >500 kB warning.
+- Prototype requirements: 24/24 passed; separate evidence for the standalone reference, not React behavior. No backend change; API suite not repeated.
+- Browser: actual ShuffleCardGrid/MenuCard and startShortlist rendered in a temporary local-only Vite/MemoryRouter harness with two synthetic menu items, missing-photo placeholders and no real provider data. Opera 390x844 showed menu titles, prices and choose/reject actions immediately, with no reveal button; DOM confirmed both menus and no page overflow. At 1440x900 both visible menu cards used the desktop grid. Synthetic mobile screenshot: evidence/immediate-results-mobile.jpg. This harness has no-op confirmation/edit callbacks; those behaviors are proven by regressions, not this visual check.
+- Scoped Impeccable detector reported one existing MenuCard photo `border-b-2` warning. Retained the approved ink photo separator; no new border style was introduced. `git diff --check` passed. Temporary viewport reset, harness removed and server stopped. No physical-device/live-provider/deployed-site verification, commit, push or deployment.
+
+## Short result-condition controls — 2026-10-27
+
+User requested focusing on the four editable conditions and making them shorter. Only compact ConditionSummary changed: omit repeated visible field labels, keep single-line values with ellipsis, subtle dashed underlines and pencils. Full field/value names remain in aria-label/title and in the existing edit question. The three top actions are unchanged in this follow-up; no removal was confirmed. Previous artifacts archived under evidence/archive/20261027-short-result-conditions/.
+
+- Existing ShuffleCards/MealPage regression: 2 files, 57/57 tests passed.
+- Web `tsc -b`, `vite build`, ESLint and default changed-file Prettier: passed. Existing >500 kB build warning remains.
+- Local Opera harness using actual ConditionSummary and synthetic long labels: inspected 390px and 320px; four targets remained 44px high with full accessible names. At 390px, navigation height was 88px and document width 390px; desktop 1440px navigation height was 44px. Single-line values and ellipsis visible in the mobile screenshot. Initial screenshot capture timed out; a bounded visual retry succeeded, but screenshot export timed out and no image artifact was saved.
+- Scoped Impeccable detector: exit 0, JSON `[]`; `git diff --check` passed. Viewport reset and temporary harness removed/stopped. No physical-device or production verification; no API change, commit, push or deployment.
+
+## Lighter result toolbar and condition controls — 2026-10-27
+
+Human requested reducing the bulky result action/condition blocks shown in a screenshot, particularly on mobile. Reused ShuffleCardGrid, compact ConditionSummary and Button. Only Reveal all remains outlined; secondary actions are compact borderless controls. Four directly editable conditions use borderless two-column phone/four-column sm presentation with full wrapping labels/values. Existing pre-submit summary, actions, busy disabling and accessible names remain unchanged. Previous artifacts archived under evidence/archive/20261027-results-toolbar/.
+
+- Existing ShuffleCards and MealPage regression suites: 2 files, 57/57 tests passed, including direct condition editing, reveal/reset, summary return and busy states. No CSS-mirroring tests added.
+- Web TypeScript, production build, ESLint and default Prettier check on both modified components passed. Build retains the existing large-chunk warning. Final responsive spacing adjustment was rechecked with build/lint/format.
+- Browser: actual components rendered in a temporary local Vite harness with synthetic three-card data and the screenshot's long condition names. Inspected Opera at 390x844, 320x740 and 1440x900. Conditions had zero border width, full wrapped text and >=44px targets; at 320px all three actions shared one row with height 44px and document width 320px. At 390px document width was 390px. Desktop showed four condition columns. Existing keyboard/edit behavior is covered by regression tests, not by this visual harness's no-op edit callbacks.
+- Local synthetic mobile screenshot: evidence/results-toolbar-mobile.png. Temporary viewport override reset, harness files removed and preview stopped. This is responsive browser evidence, not physical touch or deployed-site acceptance.
+- Scoped Impeccable detector: exit 0, JSON `[]`. `git diff --check` passed. No API changes, commit, push or deployment.
+
+## Automatic-adjustment wording refinement — 2026-10-27
+
+Human requested shortening and clarifying the automatic-adjustment notice. Reused adjustmentMessage and synchronized its single/multiple-change and rendered/reload assertions with design-system/prototype copy. All original/replacement field labels, server order and matching-result counts remain unchanged. Previous report and affected artifacts are archived under evidence/archive/20261027-adjustment-copy-refinement/.
+
+- Web Vitest, `run --exclude 'dist/**' --maxWorkers=2`: 38 files, 447/447 tests passed, including formatter and rendered/reload notice assertions.
+- Web `tsc -b`, ESLint `.` and `vite build`: passed. Build retains dependency annotation and >500 kB chunk warnings.
+- Default Prettier check on all three changed TypeScript files: passed. Existing package-wide format baseline is recorded below; unrelated files were not reformatted.
+- `node tests/wireframe-requirements.test.cjs`: 24/24 passed.
+- Scoped Impeccable detector: exit 0, JSON `[]`; `git diff --check` passed.
+- No API changes; API tests were not repeated for this copy-only change. No browser/physical-device or deployed-site verification; no commit, push or deployment.
+
+## Reliable tap/click choice progression — 2026-10-27
+
+Human requested fixing devices that require Next after tapping a condition. ChoiceStep now remembers pointer activation on the existing label and consumes it on the radio click, including label-forwarded clicks with detail 0. Keyboard input and pointer cancellation clear that marker. Existing keyboard Next, saved defaults, values and edit-return are preserved. Previous report archived under evidence/archive/20261027-choice-pointer-fix/verification.md.
+
+- Targeted MealPreferences regression: 13/13 passed, including new mouse/touch/pen zero-detail label clicks on a checked default and cancellation/keyboard reset cases. These are jsdom synthetic input tests, not physical-device evidence.
+- Full web regression: 38 files, 447/447 tests passed.
+- API rerun with `pnpm --filter api test -- --maxWorkers=1`: 76 files, 614/614 tests passed, including all parallel-run failures. This confirms the suites pass with bounded concurrency; the initial combined verify still failed as recorded below.
+- `pnpm verify`: both package typechecks and lint passed. Combined tests stopped at API failures: 599 passed, 4 failed, 11 skipped, plus app.test.ts hook timeout (3 failed files). Failures concern catalog child-process timeout and environment/port-startup assertions with empty stderr. Combined web run was canceled; the standalone full web run above passed. No assertions or timeouts were relaxed.
+- `pnpm build`: API and web builds passed; Vite retains the existing >500 kB chunk warning.
+- `pnpm format`: failed with style warnings in 160 web / 230 API files, consistent with the prior recorded baseline. Default Prettier check on both changed TypeScript files passed. Unrelated files were not reformatted.
+- `node tests/wireframe-requirements.test.cjs`: 24/24 passed.
+- Scoped Impeccable detector on ChoiceStep: exit 0, JSON `[]`; `git diff --check` passed.
+- Initial sandbox checks could not read a parent directory; permitted checks ran outside the sandbox. pnpm initially failed fetching its pinned version, then resolved 12.4.2. Verification-induced lockfile/generated OpenAPI changes were restored.
+- Browser/physical touch and the deployed site were not verified in this change. No commit, push or deployment.
+
 ## Compact choices and friendly adjustment notice — 2026-10-27
 
 Scope: approved taste/type list simplification in existing ChoiceStep/TasteStep/FoodTypeStep, plus the human-requested friendly adjustmentMessage wording. Existing option IDs, API/filter semantics, one-taste selection, pointer progression, keyboard explicit Next, edit-return and session boundaries are preserved. Prior design/plan artifacts are archived under `evidence/archive/20261027-choice-disclosure/`.

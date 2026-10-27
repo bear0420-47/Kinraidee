@@ -12,7 +12,7 @@ export function startShortlist(
   adjustment: Adjustment | null = null,
 ): Shortlist {
   return {
-    slots: items.map((item) => ({ kind: 'card', item, revealed: false })),
+    slots: items.map((item) => ({ kind: 'card', item, revealed: true })),
     rejectedMenuItemIds: [],
     undo: null,
     ...(adjustment ? { adjustment } : {}),
@@ -38,7 +38,15 @@ export function revealCard(shortlist: Shortlist, slotIndex: number) {
 }
 
 export function revealAll(shortlist: Shortlist) {
-  return mapCard(shortlist, (slot) => ({ ...slot, revealed: true }))
+  return {
+    ...mapCard(shortlist, (slot) => ({ ...slot, revealed: true })),
+    undo: shortlist.undo
+      ? {
+          ...shortlist.undo,
+          previous: { ...shortlist.undo.previous, revealed: true },
+        }
+      : null,
+  }
 }
 
 // Opens confirmation for a revealed card. Only its ID is kept; the item comes from its slot.
@@ -77,7 +85,7 @@ export function hasFaceDownCard(shortlist: Shortlist) {
   return shortlist.slots.some((slot) => slot.kind === 'card' && !slot.revealed)
 }
 
-// Rejects the card in `slotIndex` and puts its replacement there face-down, or marks the slot
+// Rejects the card in `slotIndex` and shows its replacement immediately, or marks the slot
 // as having no more options. Only this latest rejection can be undone.
 export function replaceCard(
   shortlist: Shortlist,
@@ -96,7 +104,7 @@ export function replaceCard(
           ? {
               kind: 'card',
               item: replacement,
-              revealed: false,
+              revealed: true,
             }
           : { kind: 'exhausted' },
     ),

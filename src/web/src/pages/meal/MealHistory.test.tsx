@@ -8,7 +8,7 @@ import {
   fakeShuffleApi,
   krapao,
   noodles,
-  revealCard,
+  shownCard,
   shuffleCards,
   type User,
 } from '@/test/fakeRecommendationApi'
@@ -40,7 +40,7 @@ function startFlow({
 
 async function openConfirmation(user: User) {
   await shuffleCards(user)
-  await revealCard(user, 1)
+  await shownCard(1)
   await user.click(screen.getByRole('button', { name: 'เลือกเมนู ผัดกะเพรา' }))
   return screen.findByRole('dialog', { name: 'มื้อนี้เอาเมนูนี้เลยไหม?' })
 }
