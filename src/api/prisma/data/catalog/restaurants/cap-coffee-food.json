@@ -1,0 +1,461 @@
+{
+  "slug": "cap-coffee-food",
+  "zone": "opposite-mfu",
+  "name": {
+    "th": "แคป คอฟฟี่ แอนด์ ฟู้ด ท่าสุด",
+    "en": "CAP Coffee & Food - Tha Sut"
+  },
+  "description": {
+    "th": "ร้านกาแฟและอาหารย่านท่าสุด มีชาบูต้มให้ ข้าวแกงกะหรี่ ข้าวทงคัตสึ ข้าวผัด สลัด สปาเกตตี้ และแซนด์วิช",
+    "en": "Coffee and food shop in Tha Sut serving cooked shabu, Japanese curry rice, katsu rice, fried rice, salads, spaghetti and sandwiches."
+  },
+  "phone": null,
+  "source": {
+    "type": "grab-screenshot",
+    "capturedOn": "2026-10-27",
+    "pricesInclude": "grab-delivery-markup"
+  },
+  "menuItems": [
+    {
+      "slug": "shabu-set",
+      "name": { "th": "ชาบูต้มให้", "en": "Cooked Shabu Set" },
+      "description": {
+        "th": "หมูสไลซ์และผักรวมต้มแบบชาบู ทางร้านต้มมาให้พร้อมทาน",
+        "en": "Sliced pork and mixed vegetables cooked shabu-style by the shop, ready to eat."
+      },
+      "price": 99,
+      "foodType": "hotpot-bbq",
+      "tastes": ["savory", "fresh-light"],
+      "review": null,
+      "photo": "shabu-set"
+    },
+    {
+      "slug": "shrimp-fried-rice",
+      "name": { "th": "ข้าวผัดกุ้ง", "en": "Shrimp Fried Rice" },
+      "description": {
+        "th": "ข้าวผัดหอมกระทะกับกุ้งสด",
+        "en": "Wok-fried rice with fresh shrimp."
+      },
+      "price": 79,
+      "foodType": "rice-dishes",
+      "tastes": ["savory"],
+      "review": null,
+      "photo": "shrimp-fried-rice"
+    },
+    {
+      "slug": "fried-chicken-wings-rice",
+      "name": { "th": "ข้าวไก่ทอด", "en": "Fried Chicken Wings with Rice" },
+      "description": {
+        "th": "ปีกบนและปีกกลางไก่ทอดอย่างละ 2 ชิ้น เสิร์ฟกับข้าวสวย",
+        "en": "Two fried drumettes and two fried mid-wings, served with rice."
+      },
+      "price": 79,
+      "foodType": "rice-dishes",
+      "tastes": ["crispy", "savory"],
+      "review": null,
+      "photo": "fried-chicken-wings-rice"
+    },
+    {
+      "slug": "soft-egg-rice",
+      "name": { "th": "ข้าวไข่ข้น", "en": "Rice with Soft Scrambled Egg" },
+      "description": {
+        "th": "ข้าวสวยท็อปไข่ข้นนุ่ม ๆ",
+        "en": "Rice topped with soft, creamy scrambled egg."
+      },
+      "price": 45,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "creamy-rich"],
+      "review": null,
+      "photo": "soft-egg-rice"
+    },
+    {
+      "slug": "thai-basil-chicken-dried-chili-rice",
+      "name": {
+        "th": "กะเพราไก่พริกแห้ง",
+        "en": "Thai Basil Chicken with Dried Chilli on Rice"
+      },
+      "description": {
+        "th": "ไก่ผัดกะเพรากับพริกแห้ง เผ็ดหอม เสิร์ฟกับข้าวสวย",
+        "en": "Chicken stir-fried with holy basil and dried chillies, served with rice."
+      },
+      "price": 60,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "savory"],
+      "review": null,
+      "photo": "thai-basil-chicken-rice"
+    },
+    {
+      "slug": "thai-basil-minced-pork-dried-chili-rice",
+      "name": {
+        "th": "กะเพราหมูสับผัดพริกแห้ง",
+        "en": "Thai Basil Minced Pork with Dried Chilli on Rice"
+      },
+      "description": {
+        "th": "หมูสับผัดกะเพรากับพริกแห้ง เสิร์ฟกับข้าวสวย",
+        "en": "Minced pork stir-fried with holy basil and dried chillies, served with rice."
+      },
+      "price": 60,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "savory"],
+      "review": null,
+      "photo": "thai-basil-minced-pork-rice"
+    },
+    {
+      "slug": "fish-katsu-curry-rice",
+      "name": { "th": "ข้าวแกงกะหรี่ปลา", "en": "Japanese Curry Rice with Fried Fish" },
+      "description": {
+        "th": "ข้าวแกงกะหรี่ญี่ปุ่นกับปลาชุบเกล็ดขนมปังทอด",
+        "en": "Japanese curry rice with a breaded fried fish fillet."
+      },
+      "price": 89,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "crispy"],
+      "review": null,
+      "photo": "fish-katsu-curry-rice"
+    },
+    {
+      "slug": "chicken-katsu-curry-rice",
+      "name": {
+        "th": "ข้าวแกงกะหรี่ทงคัตสึไก่",
+        "en": "Japanese Curry Rice with Chicken Katsu"
+      },
+      "description": {
+        "th": "ข้าวแกงกะหรี่ญี่ปุ่นกับไก่ทงคัตสึทอดกรอบ",
+        "en": "Japanese curry rice with a crispy chicken katsu cutlet."
+      },
+      "price": 89,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "crispy", "spiced-smoky"],
+      "review": null,
+      "photo": "chicken-katsu-curry-rice"
+    },
+    {
+      "slug": "tonkatsu-curry-rice",
+      "name": {
+        "th": "ข้าวแกงกะหรี่หมูทงคัตสึ",
+        "en": "Japanese Curry Rice with Pork Tonkatsu"
+      },
+      "description": {
+        "th": "ข้าวแกงกะหรี่ญี่ปุ่นกับหมูทงคัตสึทอดกรอบ",
+        "en": "Japanese curry rice with a crispy pork tonkatsu cutlet."
+      },
+      "price": 89,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "crispy", "spiced-smoky"],
+      "review": null,
+      "photo": "tonkatsu-curry-rice"
+    },
+    {
+      "slug": "chicken-curry-rice",
+      "name": { "th": "ข้าวแกงกะหรี่ไก่ชิ้น", "en": "Japanese Chicken Curry Rice" },
+      "description": {
+        "th": "ไก่ชิ้นนุ่มในแกงกะหรี่ญี่ปุ่นเข้มข้น เสิร์ฟกับข้าวหอม",
+        "en": "Tender chicken pieces in thick Japanese curry, served with jasmine rice."
+      },
+      "price": 65,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "spiced-smoky"],
+      "review": null,
+      "photo": "chicken-curry-rice"
+    },
+    {
+      "slug": "pork-curry-rice",
+      "name": { "th": "ข้าวแกงกะหรี่หมูชิ้น", "en": "Japanese Pork Curry Rice" },
+      "description": {
+        "th": "หมูชิ้นในแกงกะหรี่ญี่ปุ่น เสิร์ฟกับข้าวหอมมะลิ",
+        "en": "Pork pieces in Japanese curry, served with jasmine rice."
+      },
+      "price": 65,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "spiced-smoky"],
+      "review": null,
+      "photo": "pork-curry-rice"
+    },
+    {
+      "slug": "salt-chili-stir-fry-rice",
+      "name": { "th": "ผัดพริกเกลือราดข้าว", "en": "Salt and Chilli Stir-fry on Rice" },
+      "description": {
+        "th": "เนื้อสัตว์ผัดพริกเกลือ เลือกเนื้อสัตว์ได้ ราดบนข้าวสวย",
+        "en": "Your choice of meat stir-fried with salt and chilli, served over rice."
+      },
+      "price": 45,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "savory"],
+      "review": null,
+      "photo": "salt-chili-stir-fry-rice"
+    },
+    {
+      "slug": "fish-katsu-rice",
+      "name": { "th": "ข้าวหน้าปลาทอด", "en": "Fried Fish Katsu on Rice" },
+      "description": {
+        "th": "ปลาชุบเกล็ดขนมปังทอดกรอบสไตล์ทงคัตสึ เสิร์ฟกับข้าว",
+        "en": "A breaded, katsu-style fried fish fillet served with rice."
+      },
+      "price": 65,
+      "foodType": "rice-dishes",
+      "tastes": ["crispy", "savory"],
+      "review": null,
+      "photo": "fish-katsu-rice"
+    },
+    {
+      "slug": "chicken-katsu-rice",
+      "name": { "th": "ข้าวหน้าทงคัตสึไก่", "en": "Chicken Katsu on Rice" },
+      "description": {
+        "th": "สันในไก่ชุบเกล็ดขนมปังทอดกรอบ เสิร์ฟบนข้าว",
+        "en": "Breaded fried chicken tenderloin served on rice."
+      },
+      "price": 65,
+      "foodType": "rice-dishes",
+      "tastes": ["crispy", "savory"],
+      "review": null,
+      "photo": "fried-chicken-rice"
+    },
+    {
+      "slug": "tonkatsu-rice",
+      "name": { "th": "ข้าวหน้าหมูทงคัตสึ", "en": "Pork Tonkatsu on Rice" },
+      "description": {
+        "th": "หมูทงคัตสึทอดกรอบ เสิร์ฟบนข้าว",
+        "en": "Crispy pork tonkatsu served on rice."
+      },
+      "price": 65,
+      "foodType": "rice-dishes",
+      "tastes": ["crispy", "savory"],
+      "review": null,
+      "photo": "tonkatsu-rice"
+    },
+    {
+      "slug": "egg-fried-rice",
+      "name": { "th": "ข้าวผัดไข่", "en": "Egg Fried Rice" },
+      "description": {
+        "th": "ข้าวผัดไข่หอมกระทะ เสิร์ฟพร้อมผักสด",
+        "en": "Wok-fried rice with egg, served with fresh vegetables."
+      },
+      "price": 45,
+      "foodType": "rice-dishes",
+      "tastes": ["savory"],
+      "review": null,
+      "photo": "egg-fried-rice"
+    },
+    {
+      "slug": "fried-rice-fried-chicken",
+      "name": { "th": "ข้าวผัดหน้าไก่ทอด", "en": "Fried Rice Topped with Fried Chicken" },
+      "description": {
+        "th": "ข้าวผัดไข่ท็อปไก่ทอดไม่มีกระดูก",
+        "en": "Egg fried rice topped with boneless fried chicken."
+      },
+      "price": 79,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "crispy"],
+      "review": null,
+      "photo": "fried-rice-fried-chicken"
+    },
+    {
+      "slug": "omelette-rice",
+      "name": { "th": "ข้าวไข่เจียว", "en": "Thai Omelette on Rice" },
+      "description": {
+        "th": "ไข่เจียวฟูขอบกรอบ เสิร์ฟกับข้าวสวย",
+        "en": "A fluffy, crisp-edged Thai omelette served with rice."
+      },
+      "price": 45,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "crispy"],
+      "review": null,
+      "photo": "omelette-rice"
+    },
+    {
+      "slug": "fried-fish-salad",
+      "name": { "th": "สลัดปลาทอด", "en": "Fried Fish Salad" },
+      "description": {
+        "th": "ผักสลัดรวมท็อปปลาทอดกรอบ เสิร์ฟพร้อมน้ำสลัด",
+        "en": "Mixed salad topped with crispy fried fish, served with dressing."
+      },
+      "price": 120,
+      "foodType": "salads-yum-somtam",
+      "tastes": ["fresh-light", "crispy"],
+      "review": null,
+      "photo": "fried-fish-salad"
+    },
+    {
+      "slug": "fried-chicken-salad",
+      "name": { "th": "สลัดไก่ทอด", "en": "Fried Chicken Salad" },
+      "description": {
+        "th": "ผักสลัดรวม ไก่ทอด ชีสพาร์เมซาน ไข่ และน้ำสลัดฮันนี่มัสตาร์ด",
+        "en": "Mixed greens with fried chicken, parmesan, egg and honey mustard dressing."
+      },
+      "price": 120,
+      "foodType": "salads-yum-somtam",
+      "tastes": ["fresh-light", "crispy", "savory"],
+      "review": null,
+      "photo": "fried-chicken-salad"
+    },
+    {
+      "slug": "grilled-chicken-salad",
+      "name": { "th": "สลัดไก่ย่าง", "en": "Grilled Chicken Salad" },
+      "description": {
+        "th": "ผักสลัดรวม ไก่ย่าง ชีสพาร์เมซาน ไข่ และน้ำสลัดฮันนี่มัสตาร์ด",
+        "en": "Mixed greens with grilled chicken, parmesan, egg and honey mustard dressing."
+      },
+      "price": 120,
+      "foodType": "salads-yum-somtam",
+      "tastes": ["fresh-light", "savory"],
+      "review": null,
+      "photo": "grilled-chicken-salad"
+    },
+    {
+      "slug": "bacon-salad",
+      "name": { "th": "สลัดเบคอน", "en": "Bacon Salad" },
+      "description": {
+        "th": "ผักสลัดรวม เบคอน ชีสพาร์เมซาน และน้ำสลัดฮันนี่มัสตาร์ด",
+        "en": "Mixed greens with bacon, parmesan and honey mustard dressing."
+      },
+      "price": 120,
+      "foodType": "salads-yum-somtam",
+      "tastes": ["fresh-light", "savory"],
+      "review": null,
+      "photo": "bacon-salad"
+    },
+    {
+      "slug": "dried-chili-spaghetti",
+      "name": { "th": "สปาเก็ตตี้ผัดพริกแห้ง", "en": "Dried Chilli Spaghetti" },
+      "description": {
+        "th": "สปาเก็ตตี้ผัดพริกแห้งกับไส้กรอก เผ็ดหอม",
+        "en": "Spaghetti stir-fried with dried chillies and sausage."
+      },
+      "price": 99,
+      "foodType": "pasta",
+      "tastes": ["spicy", "savory"],
+      "review": null,
+      "photo": "dried-chili-spaghetti"
+    },
+    {
+      "slug": "carbonara",
+      "name": { "th": "สปาเก็ตตี้คาโบนาร่า", "en": "Spaghetti Carbonara" },
+      "description": {
+        "th": "สปาเก็ตตี้ซอสครีมนุ่ม ๆ",
+        "en": "Spaghetti in a smooth cream sauce."
+      },
+      "price": 99,
+      "foodType": "pasta",
+      "tastes": ["creamy-rich", "savory"],
+      "review": null,
+      "photo": "carbonara"
+    },
+    {
+      "slug": "club-sandwich",
+      "name": { "th": "คลับแซนด์วิช", "en": "Club Sandwich" },
+      "description": {
+        "th": "แซนด์วิชไข่ แฮม และไก่ทอด เสิร์ฟพร้อมเฟรนช์ฟรายและน้ำสลัด",
+        "en": "A club sandwich with egg, ham and fried chicken, served with fries and dressing."
+      },
+      "price": 123,
+      "foodType": "burgers-sandwiches-wraps",
+      "tastes": ["savory", "crispy"],
+      "review": null,
+      "photo": "club-sandwich"
+    },
+    {
+      "slug": "tuna-sandwich",
+      "name": { "th": "แซนด์วิชทูน่า", "en": "Tuna Sandwich" },
+      "description": {
+        "th": "ทูน่าผสมผักสดในขนมปังปิ้ง",
+        "en": "A toasted sandwich of tuna mixed with fresh vegetables."
+      },
+      "price": 69,
+      "foodType": "burgers-sandwiches-wraps",
+      "tastes": ["savory", "fresh-light"],
+      "review": null,
+      "photo": "tuna-sandwich"
+    },
+    {
+      "slug": "bacon-sandwich",
+      "name": { "th": "แซนด์วิชเบคอน", "en": "Bacon Sandwich" },
+      "description": {
+        "th": "แซนด์วิชเบคอนหอม ๆ",
+        "en": "A simple sandwich with fragrant bacon."
+      },
+      "price": 45,
+      "foodType": "burgers-sandwiches-wraps",
+      "tastes": ["savory"],
+      "review": null,
+      "photo": "bacon-sandwich"
+    },
+    {
+      "slug": "ham-sandwich",
+      "name": { "th": "แซนด์วิชแฮม", "en": "Ham Sandwich" },
+      "description": {
+        "th": "แซนด์วิชแฮมกับผักกาดในขนมปังปิ้ง",
+        "en": "A toasted ham and lettuce sandwich."
+      },
+      "price": 45,
+      "foodType": "burgers-sandwiches-wraps",
+      "tastes": ["savory"],
+      "review": null,
+      "photo": "ham-sandwich"
+    },
+    {
+      "slug": "grilled-cheese-sandwich",
+      "name": { "th": "แซนด์วิชชีส", "en": "Grilled Cheese Sandwich" },
+      "description": {
+        "th": "ขนมปังปิ้งสอดไส้ชีสละลาย",
+        "en": "Toasted bread with melted cheese inside."
+      },
+      "price": 40,
+      "foodType": "burgers-sandwiches-wraps",
+      "tastes": ["savory", "creamy-rich"],
+      "review": null,
+      "photo": "grilled-cheese-sandwich"
+    },
+    {
+      "slug": "sauced-chicken-wings",
+      "name": { "th": "ไก่คลุกซอส", "en": "Sauced Chicken Wings" },
+      "description": {
+        "th": "ปีกไก่คลุกซอส 6 ชิ้น เสิร์ฟพร้อมผักสด",
+        "en": "Six chicken wings tossed in sauce, served with fresh vegetables."
+      },
+      "price": 119,
+      "foodType": "appetizers-snacks",
+      "tastes": ["savory", "creamy-rich"],
+      "review": null,
+      "photo": "sauced-chicken-wings"
+    },
+    {
+      "slug": "banoffee",
+      "name": { "th": "บานอฟฟี่", "en": "Banoffee" },
+      "description": {
+        "th": "กล้วยหอมกับครีมบนฐานบิสกิต",
+        "en": "Banana and cream on a biscuit base."
+      },
+      "price": 55,
+      "foodType": "desserts",
+      "tastes": ["sweet", "creamy-rich"],
+      "review": null,
+      "photo": "banoffee"
+    },
+    {
+      "slug": "tiramisu",
+      "name": { "th": "ทีรามิสุ", "en": "Tiramisu" },
+      "description": {
+        "th": "เค้กนุ่มสลับชั้นครีมชีส กาแฟ และผงโกโก้",
+        "en": "Soft cake layered with cream cheese, coffee and cocoa."
+      },
+      "price": 55,
+      "foodType": "desserts",
+      "tastes": ["sweet", "creamy-rich"],
+      "review": null,
+      "photo": "tiramisu"
+    },
+    {
+      "slug": "toast-with-topping",
+      "name": { "th": "ขนมปังปิ้ง", "en": "Toast with Topping" },
+      "description": {
+        "th": "ขนมปังปิ้ง เลือกหน้าได้",
+        "en": "Toast with a topping of your choice."
+      },
+      "price": 30,
+      "foodType": "desserts",
+      "tastes": ["sweet"],
+      "review": null,
+      "photo": "toast-with-topping"
+    }
+  ]
+}

@@ -1,4 +1,37 @@
 ﻿restaurant,menuItem,nameTh,nameEn,foodType,expectedPath,status,photoKey,photoSource
+cap-coffee-food,shabu-set,ชาบูต้มให้,Cooked Shabu Set,hotpot-bbq,assets/catalog/cap-coffee-food/menus/shabu-set.png,missing,shabu-set,none
+cap-coffee-food,shrimp-fried-rice,ข้าวผัดกุ้ง,Shrimp Fried Rice,rice-dishes,assets/catalog/cap-coffee-food/menus/shrimp-fried-rice.png,missing,shrimp-fried-rice,stock
+cap-coffee-food,fried-chicken-wings-rice,ข้าวไก่ทอด,Fried Chicken Wings with Rice,rice-dishes,assets/catalog/cap-coffee-food/menus/fried-chicken-wings-rice.png,missing,fried-chicken-wings-rice,none
+cap-coffee-food,soft-egg-rice,ข้าวไข่ข้น,Rice with Soft Scrambled Egg,rice-dishes,assets/catalog/cap-coffee-food/menus/soft-egg-rice.png,missing,soft-egg-rice,none
+cap-coffee-food,thai-basil-chicken-dried-chili-rice,กะเพราไก่พริกแห้ง,Thai Basil Chicken with Dried Chilli on Rice,rice-dishes,assets/catalog/cap-coffee-food/menus/thai-basil-chicken-dried-chili-rice.png,missing,thai-basil-chicken-rice,none
+cap-coffee-food,thai-basil-minced-pork-dried-chili-rice,กะเพราหมูสับผัดพริกแห้ง,Thai Basil Minced Pork with Dried Chilli on Rice,rice-dishes,assets/catalog/cap-coffee-food/menus/thai-basil-minced-pork-dried-chili-rice.png,missing,thai-basil-minced-pork-rice,none
+cap-coffee-food,fish-katsu-curry-rice,ข้าวแกงกะหรี่ปลา,Japanese Curry Rice with Fried Fish,rice-dishes,assets/catalog/cap-coffee-food/menus/fish-katsu-curry-rice.png,missing,fish-katsu-curry-rice,none
+cap-coffee-food,chicken-katsu-curry-rice,ข้าวแกงกะหรี่ทงคัตสึไก่,Japanese Curry Rice with Chicken Katsu,rice-dishes,assets/catalog/cap-coffee-food/menus/chicken-katsu-curry-rice.png,missing,chicken-katsu-curry-rice,none
+cap-coffee-food,tonkatsu-curry-rice,ข้าวแกงกะหรี่หมูทงคัตสึ,Japanese Curry Rice with Pork Tonkatsu,rice-dishes,assets/catalog/cap-coffee-food/menus/tonkatsu-curry-rice.png,missing,tonkatsu-curry-rice,none
+cap-coffee-food,chicken-curry-rice,ข้าวแกงกะหรี่ไก่ชิ้น,Japanese Chicken Curry Rice,rice-dishes,assets/catalog/cap-coffee-food/menus/chicken-curry-rice.png,missing,chicken-curry-rice,none
+cap-coffee-food,pork-curry-rice,ข้าวแกงกะหรี่หมูชิ้น,Japanese Pork Curry Rice,rice-dishes,assets/catalog/cap-coffee-food/menus/pork-curry-rice.png,missing,pork-curry-rice,none
+cap-coffee-food,salt-chili-stir-fry-rice,ผัดพริกเกลือราดข้าว,Salt and Chilli Stir-fry on Rice,rice-dishes,assets/catalog/cap-coffee-food/menus/salt-chili-stir-fry-rice.png,missing,salt-chili-stir-fry-rice,none
+cap-coffee-food,fish-katsu-rice,ข้าวหน้าปลาทอด,Fried Fish Katsu on Rice,rice-dishes,assets/catalog/cap-coffee-food/menus/fish-katsu-rice.png,missing,fish-katsu-rice,none
+cap-coffee-food,chicken-katsu-rice,ข้าวหน้าทงคัตสึไก่,Chicken Katsu on Rice,rice-dishes,assets/catalog/cap-coffee-food/menus/chicken-katsu-rice.png,missing,fried-chicken-rice,stock
+cap-coffee-food,tonkatsu-rice,ข้าวหน้าหมูทงคัตสึ,Pork Tonkatsu on Rice,rice-dishes,assets/catalog/cap-coffee-food/menus/tonkatsu-rice.png,missing,tonkatsu-rice,none
+cap-coffee-food,egg-fried-rice,ข้าวผัดไข่,Egg Fried Rice,rice-dishes,assets/catalog/cap-coffee-food/menus/egg-fried-rice.png,missing,egg-fried-rice,none
+cap-coffee-food,fried-rice-fried-chicken,ข้าวผัดหน้าไก่ทอด,Fried Rice Topped with Fried Chicken,rice-dishes,assets/catalog/cap-coffee-food/menus/fried-rice-fried-chicken.png,missing,fried-rice-fried-chicken,none
+cap-coffee-food,omelette-rice,ข้าวไข่เจียว,Thai Omelette on Rice,rice-dishes,assets/catalog/cap-coffee-food/menus/omelette-rice.png,missing,omelette-rice,none
+cap-coffee-food,fried-fish-salad,สลัดปลาทอด,Fried Fish Salad,salads-yum-somtam,assets/catalog/cap-coffee-food/menus/fried-fish-salad.png,missing,fried-fish-salad,none
+cap-coffee-food,fried-chicken-salad,สลัดไก่ทอด,Fried Chicken Salad,salads-yum-somtam,assets/catalog/cap-coffee-food/menus/fried-chicken-salad.png,missing,fried-chicken-salad,none
+cap-coffee-food,grilled-chicken-salad,สลัดไก่ย่าง,Grilled Chicken Salad,salads-yum-somtam,assets/catalog/cap-coffee-food/menus/grilled-chicken-salad.png,missing,grilled-chicken-salad,none
+cap-coffee-food,bacon-salad,สลัดเบคอน,Bacon Salad,salads-yum-somtam,assets/catalog/cap-coffee-food/menus/bacon-salad.png,missing,bacon-salad,none
+cap-coffee-food,dried-chili-spaghetti,สปาเก็ตตี้ผัดพริกแห้ง,Dried Chilli Spaghetti,pasta,assets/catalog/cap-coffee-food/menus/dried-chili-spaghetti.png,missing,dried-chili-spaghetti,none
+cap-coffee-food,carbonara,สปาเก็ตตี้คาโบนาร่า,Spaghetti Carbonara,pasta,assets/catalog/cap-coffee-food/menus/carbonara.png,missing,carbonara,stock
+cap-coffee-food,club-sandwich,คลับแซนด์วิช,Club Sandwich,burgers-sandwiches-wraps,assets/catalog/cap-coffee-food/menus/club-sandwich.png,missing,club-sandwich,none
+cap-coffee-food,tuna-sandwich,แซนด์วิชทูน่า,Tuna Sandwich,burgers-sandwiches-wraps,assets/catalog/cap-coffee-food/menus/tuna-sandwich.png,missing,tuna-sandwich,none
+cap-coffee-food,bacon-sandwich,แซนด์วิชเบคอน,Bacon Sandwich,burgers-sandwiches-wraps,assets/catalog/cap-coffee-food/menus/bacon-sandwich.png,missing,bacon-sandwich,none
+cap-coffee-food,ham-sandwich,แซนด์วิชแฮม,Ham Sandwich,burgers-sandwiches-wraps,assets/catalog/cap-coffee-food/menus/ham-sandwich.png,missing,ham-sandwich,none
+cap-coffee-food,grilled-cheese-sandwich,แซนด์วิชชีส,Grilled Cheese Sandwich,burgers-sandwiches-wraps,assets/catalog/cap-coffee-food/menus/grilled-cheese-sandwich.png,missing,grilled-cheese-sandwich,none
+cap-coffee-food,sauced-chicken-wings,ไก่คลุกซอส,Sauced Chicken Wings,appetizers-snacks,assets/catalog/cap-coffee-food/menus/sauced-chicken-wings.png,missing,sauced-chicken-wings,none
+cap-coffee-food,banoffee,บานอฟฟี่,Banoffee,desserts,assets/catalog/cap-coffee-food/menus/banoffee.png,hidden,banoffee,none
+cap-coffee-food,tiramisu,ทีรามิสุ,Tiramisu,desserts,assets/catalog/cap-coffee-food/menus/tiramisu.png,hidden,tiramisu,none
+cap-coffee-food,toast-with-topping,ขนมปังปิ้ง,Toast with Topping,desserts,assets/catalog/cap-coffee-food/menus/toast-with-topping.png,hidden,toast-with-topping,none
 charoen-rot,fried-chicken-rice-jaew,ข้าวไก่ทอด น้ำจิ้มแจ่ว,Fried Chicken Rice with Jaew Dip,rice-dishes,assets/catalog/charoen-rot/menus/fried-chicken-rice-jaew.png,missing,fried-chicken-rice-jaew,stock
 charoen-rot,fried-pork-rice-jaew,ข้าวหมูทอด น้ำจิ้มแจ่ว,Fried Pork Rice with Jaew Dip,rice-dishes,assets/catalog/charoen-rot/menus/fried-pork-rice-jaew.png,missing,fried-pork-rice-jaew,stock
 charoen-rot,fried-chicken-rice-sauce,ข้าวไก่ทอด ราดซอส,Fried Chicken Rice with Sauce,rice-dishes,assets/catalog/charoen-rot/menus/fried-chicken-rice-sauce.png,missing,fried-chicken-rice-sauce,stock
