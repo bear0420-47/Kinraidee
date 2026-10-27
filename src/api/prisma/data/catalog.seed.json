@@ -340,6 +340,21 @@
       "imageUrl": null
     },
     {
+      "id": "ca75x49i9c1znux9vf0vc9cy4",
+      "zoneId": "c8gds70havtzwmks5lhd2caul",
+      "googlePlaceId": null,
+      "name": {
+        "th": "เจิ้งซิน ชิคเก้นสเต็ก ถนนพหลโยธิน",
+        "en": "Jing Sin Chicken Steak - Phahonyothin Road"
+      },
+      "description": {
+        "th": "ร้านไก่ทอดสไตล์ไต้หวันริมถนนพหลโยธิน มีข้าวสเต็กไก่ ข้าวยำไก่แซ่บ เบอร์เกอร์ไก่ และแร็พไก่",
+        "en": "Taiwanese-style fried chicken shop on Phahonyothin Road serving chicken steak rice, spicy chicken rice salad, chicken burgers and wraps."
+      },
+      "phone": null,
+      "imageUrl": null
+    },
+    {
       "id": "cz3k1bjl5nyrj9sx3jx3uw73e",
       "zoneId": "c8gds70havtzwmks5lhd2caul",
       "googlePlaceId": "ChIJT38LztMB1zARnIDSdp53a0w",
@@ -4906,6 +4921,164 @@
       "imageUrl": null
     },
     {
+      "id": "cmm2v1s22n84oo1zt7yy3tfsw",
+      "restaurantId": "ca75x49i9c1znux9vf0vc9cy4",
+      "foodTypeId": "cbdllxmb0sv247maiq26k5r9k",
+      "tasteIds": [
+        "c12yme2yu2wne82ugvfce7wfw",
+        "c6c7oshlpa0xsaq9jiz3vnjdq",
+        "c1spiyrw91ifmryner9y1bvb4"
+      ],
+      "name": {
+        "th": "ข้าวสเต็กไก่สไปซี่",
+        "en": "Spicy Chicken Steak Rice"
+      },
+      "description": {
+        "th": "สเต็กไก่ทอดรสเผ็ดหั่นชิ้น เสิร์ฟบนข้าวกับบรอกโคลี",
+        "en": "Sliced spicy fried chicken steak on rice with broccoli."
+      },
+      "price": 69,
+      "imageUrl": null
+    },
+    {
+      "id": "cgmy38s27rkpfmyuqs5mhtecw",
+      "restaurantId": "ca75x49i9c1znux9vf0vc9cy4",
+      "foodTypeId": "cbdllxmb0sv247maiq26k5r9k",
+      "tasteIds": [
+        "c6c7oshlpa0xsaq9jiz3vnjdq",
+        "c1spiyrw91ifmryner9y1bvb4"
+      ],
+      "name": {
+        "th": "ข้าวสเต็กไก่กรอบ",
+        "en": "Crispy Chicken Steak Rice"
+      },
+      "description": {
+        "th": "สเต็กไก่ทอดกรอบหั่นชิ้น เสิร์ฟบนข้าวกับบรอกโคลี",
+        "en": "Sliced crispy fried chicken steak on rice with broccoli."
+      },
+      "price": 69,
+      "imageUrl": "https://images.unsplash.com/photo-1723208841184-3d91ba244c60?ixid=M3wxMTExMTcwfDB8MXxzZWFyY2h8Mnx8Y2hpY2tlbiUyMGthdHN1JTIwcmljZXxlbnwxfDB8fHwxNzkyNzY1NDg2fDA&ixlib=rb-4.1.0&w=800&q=75&fit=crop&auto=format"
+    },
+    {
+      "id": "cf9efewtfr1qu444tqxy1gash",
+      "restaurantId": "ca75x49i9c1znux9vf0vc9cy4",
+      "foodTypeId": "cbdllxmb0sv247maiq26k5r9k",
+      "tasteIds": [
+        "c12yme2yu2wne82ugvfce7wfw",
+        "cwbpp7dp3egmhn6vrhx2fi0se",
+        "c6c7oshlpa0xsaq9jiz3vnjdq"
+      ],
+      "name": {
+        "th": "ข้าวยำไก่แซ่บทอดกรอบ",
+        "en": "Spicy Crispy Chicken Salad with Rice"
+      },
+      "description": {
+        "th": "ไก่ทอดกรอบคลุกน้ำยำรสแซ่บกับหอมใหญ่และต้นหอม เสิร์ฟกับข้าว",
+        "en": "Crispy fried chicken tossed in a spicy Thai salad dressing with onion and spring onion, served with rice."
+      },
+      "price": 99,
+      "imageUrl": null
+    },
+    {
+      "id": "cbkuc6rlxd9zdmfcw45h9splj",
+      "restaurantId": "ca75x49i9c1znux9vf0vc9cy4",
+      "foodTypeId": "cebaq98hdcaj27drszj1uzz4r",
+      "tasteIds": [
+        "c6c7oshlpa0xsaq9jiz3vnjdq",
+        "c1spiyrw91ifmryner9y1bvb4",
+        "cahxbgiqa0hxlfer1dw6itmz1"
+      ],
+      "name": {
+        "th": "แร็พไก่ มายองเนส",
+        "en": "Fried Chicken Wrap with Mayonnaise"
+      },
+      "description": {
+        "th": "ไก่ทอดกรอบห่อแป้งตอร์ติญ่ากับผักสดและมายองเนส",
+        "en": "Crispy fried chicken wrapped in a tortilla with fresh vegetables and mayonnaise."
+      },
+      "price": 85,
+      "imageUrl": null
+    },
+    {
+      "id": "cj5mgtruf64y1s71jm27q3hjt",
+      "restaurantId": "ca75x49i9c1znux9vf0vc9cy4",
+      "foodTypeId": "cebaq98hdcaj27drszj1uzz4r",
+      "tasteIds": [
+        "c6c7oshlpa0xsaq9jiz3vnjdq",
+        "c1spiyrw91ifmryner9y1bvb4",
+        "cahxbgiqa0hxlfer1dw6itmz1"
+      ],
+      "name": {
+        "th": "แร็พไก่ ชีส",
+        "en": "Fried Chicken Wrap with Cheese"
+      },
+      "description": {
+        "th": "ไก่ทอดกรอบห่อแป้งตอร์ติญ่ากับผักสดและชีส",
+        "en": "Crispy fried chicken wrapped in a tortilla with fresh vegetables and cheese."
+      },
+      "price": 95,
+      "imageUrl": null
+    },
+    {
+      "id": "cyfzeq5gy2lmdp5kriwn570us",
+      "restaurantId": "ca75x49i9c1znux9vf0vc9cy4",
+      "foodTypeId": "cebaq98hdcaj27drszj1uzz4r",
+      "tasteIds": [
+        "c6c7oshlpa0xsaq9jiz3vnjdq",
+        "c1spiyrw91ifmryner9y1bvb4"
+      ],
+      "name": {
+        "th": "เบอร์เกอร์สเต็กไก่กรอบ",
+        "en": "Crispy Chicken Steak Burger"
+      },
+      "description": {
+        "th": "เบอร์เกอร์สเต็กไก่ทอดกรอบกับผักกาดและซอสมายองเนส",
+        "en": "A crispy fried chicken steak burger with lettuce and mayonnaise."
+      },
+      "price": 72,
+      "imageUrl": null
+    },
+    {
+      "id": "c33wiapvz6nq50rbghkzy3ge4",
+      "restaurantId": "ca75x49i9c1znux9vf0vc9cy4",
+      "foodTypeId": "cebaq98hdcaj27drszj1uzz4r",
+      "tasteIds": [
+        "c12yme2yu2wne82ugvfce7wfw",
+        "c6c7oshlpa0xsaq9jiz3vnjdq",
+        "c1spiyrw91ifmryner9y1bvb4"
+      ],
+      "name": {
+        "th": "เบอร์เกอร์สเต็กไก่สไปซี่",
+        "en": "Spicy Chicken Steak Burger"
+      },
+      "description": {
+        "th": "เบอร์เกอร์สเต็กไก่ทอดรสเผ็ดกับผักกาด",
+        "en": "A spicy fried chicken steak burger with lettuce."
+      },
+      "price": 72,
+      "imageUrl": null
+    },
+    {
+      "id": "cl1dco78fp265u9bu8skaya0b",
+      "restaurantId": "ca75x49i9c1znux9vf0vc9cy4",
+      "foodTypeId": "cebaq98hdcaj27drszj1uzz4r",
+      "tasteIds": [
+        "c12yme2yu2wne82ugvfce7wfw",
+        "c6c7oshlpa0xsaq9jiz3vnjdq",
+        "c1spiyrw91ifmryner9y1bvb4"
+      ],
+      "name": {
+        "th": "เบอร์เกอร์น่องไก่สไปซี่",
+        "en": "Spicy Chicken Thigh Burger"
+      },
+      "description": {
+        "th": "เบอร์เกอร์น่องไก่ทอดกรอบรสเผ็ด กับผักและซอส",
+        "en": "A burger with a crunchy spicy fried chicken thigh, vegetables and sauce."
+      },
+      "price": 72,
+      "imageUrl": null
+    },
+    {
       "id": "cnc1z93e7ryl76r27w6kl6dp8",
       "restaurantId": "cz3k1bjl5nyrj9sx3jx3uw73e",
       "foodTypeId": "cbdllxmb0sv247maiq26k5r9k",
@@ -6305,7 +6478,7 @@
         "en": "Crispy breaded fried chicken, served with rice, salad, and sauce."
       },
       "price": 139,
-      "imageUrl": "https://images.unsplash.com/photo-1723208841184-3d91ba244c60?ixid=M3wxMTExMTcwfDB8MXxzZWFyY2h8Mnx8Y2hpY2tlbiUyMGthdHN1JTIwcmljZXxlbnwxfDB8fHwxNzkyNzY1NDg2fDA&ixlib=rb-4.1.0&w=800&q=75&fit=crop&auto=format"
+      "imageUrl": "https://images.unsplash.com/photo-1693129361452-f9a777fe625e?ixid=M3wxMTExMTcwfDB8MXxzZWFyY2h8MTB8fGNoaWNrZW4lMjBrYXRzdSUyMHJpY2V8ZW58MXwwfHx8MTc5Mjc2NTQ4Nnww&ixlib=rb-4.1.0&w=800&q=75&fit=crop&auto=format"
     },
     {
       "id": "cx4viby6zs8ubqe73ycdtm1i4",
