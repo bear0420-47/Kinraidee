@@ -1,0 +1,678 @@
+{
+  "slug": "shogun-steak",
+  "zone": "kotchapol",
+  "googlePlaceId": null,
+  "name": {
+    "th": "โชกุน สเต็ก - ถนนคชพลแลนด์",
+    "en": "Shogun Steak - Kotchapol Land Road"
+  },
+  "description": {
+    "th": "ร้านสเต็กสไตล์ตะวันตกย่านคชพลแลนด์ เสิร์ฟสเต็กหมู ไก่ เนื้อ และปลา พร้อมเฟรนฟรายและสลัด มีพาสต้า ของทานเล่น และส้มตำให้เลือก",
+    "en": "Western steakhouse on Kotchapol Land Road serving pork, chicken, beef and fish steaks with fries and salad, plus pasta, snacks and papaya salads."
+  },
+  "phone": null,
+  "source": {
+    "type": "grab-screenshot",
+    "capturedOn": "2026-10-27",
+    "pricesInclude": "grab-delivery-markup"
+  },
+  "menuItems": [
+    {
+      "slug": "spicy-pork-steak",
+      "name": {
+        "th": "สเต็กหมูสไปซี่",
+        "en": "Spicy Pork Steak"
+      },
+      "description": {
+        "th": "หมูหมักซอสสไปซี่รสเผ็ดย่าง เสิร์ฟพร้อมเฟรนฟรายและสลัดผัก",
+        "en": "Spicy-sauce marinated pork, grilled and served with fries and a side salad."
+      },
+      "price": 99,
+      "foodType": "grills-steaks",
+      "tastes": [
+        "spicy",
+        "savory",
+        "spiced-smoky"
+      ],
+      "review": null,
+      "photo": "spicy-pork-steak"
+    },
+    {
+      "slug": "bbq-pork-steak",
+      "name": {
+        "th": "สเต็กหมูบาร์บีคิว",
+        "en": "BBQ Pork Steak"
+      },
+      "description": {
+        "th": "หมูหมักซอสบาร์บีคิวย่างหอม ๆ เสิร์ฟพร้อมเฟรนฟรายและสลัดผัก",
+        "en": "Pork grilled in a smoky barbecue marinade, served with fries and a side salad."
+      },
+      "price": 99,
+      "foodType": "grills-steaks",
+      "tastes": [
+        "savory",
+        "sweet",
+        "spiced-smoky"
+      ],
+      "review": null,
+      "photo": "bbq-pork-steak"
+    },
+    {
+      "slug": "fried-pork-sausage-set",
+      "name": {
+        "th": "ไส้กรอกหมูทอด",
+        "en": "Fried Pork Sausage Set"
+      },
+      "description": {
+        "th": "ไส้กรอกหมูทอดหอมกรุ่น เสิร์ฟพร้อมเฟรนฟรายและสลัดผัก",
+        "en": "Fried pork sausages served with fries and a side salad."
+      },
+      "price": 89,
+      "foodType": "grills-steaks",
+      "tastes": [
+        "savory",
+        "crispy"
+      ],
+      "review": null,
+      "photo": "fried-pork-sausage-set"
+    },
+    {
+      "slug": "fried-dory-fish-steak",
+      "name": {
+        "th": "สเต็กปลาดอลลี่ทอด",
+        "en": "Fried Dory Fish Steak"
+      },
+      "description": {
+        "th": "เนื้อปลาดอลลี่ชุบเกล็ดขนมปังทอดกรอบ เสิร์ฟพร้อมเฟรนฟรายและสลัดผัก",
+        "en": "Breaded dory fish fried until crisp, served with fries and a side salad."
+      },
+      "price": 109,
+      "foodType": "grills-steaks",
+      "tastes": [
+        "crispy",
+        "savory"
+      ],
+      "review": null,
+      "photo": "fried-dory-fish-steak"
+    },
+    {
+      "slug": "fried-chicken-steak",
+      "name": {
+        "th": "สเต็กไก่ทอด",
+        "en": "Fried Chicken Steak"
+      },
+      "description": {
+        "th": "ไก่ชุบเกล็ดขนมปังทอดกรอบ เสิร์ฟพร้อมเฟรนฟรายและสลัดผัก",
+        "en": "Breaded chicken fried until golden, served with fries and a side salad."
+      },
+      "price": 79,
+      "foodType": "grills-steaks",
+      "tastes": [
+        "crispy",
+        "savory"
+      ],
+      "review": null,
+      "photo": "fried-chicken-steak"
+    },
+    {
+      "slug": "pork-chop",
+      "name": {
+        "th": "พอร์คชอพ",
+        "en": "Pork Chop"
+      },
+      "description": {
+        "th": "พอร์คชอปหมูย่างสุกกำลังดี เสิร์ฟพร้อมเฟรนฟรายและสลัดผัก",
+        "en": "Grilled pork chop served with fries and a side salad."
+      },
+      "price": 159,
+      "foodType": "grills-steaks",
+      "tastes": [
+        "savory",
+        "spiced-smoky"
+      ],
+      "review": null,
+      "photo": "pork-chop"
+    },
+    {
+      "slug": "black-pepper-beef-steak",
+      "name": {
+        "th": "สเต็กเนื้อพริกไทยดำ",
+        "en": "Black Pepper Beef Steak"
+      },
+      "description": {
+        "th": "เนื้อวัวย่างราดซอสพริกไทยดำ เสิร์ฟพร้อมเฟรนฟรายและสลัดผัก",
+        "en": "Grilled beef steak with black pepper sauce, served with fries and a side salad."
+      },
+      "price": 129,
+      "foodType": "grills-steaks",
+      "tastes": [
+        "savory",
+        "spiced-smoky"
+      ],
+      "review": null,
+      "photo": "black-pepper-beef-steak"
+    },
+    {
+      "slug": "ribeye-steak",
+      "name": {
+        "th": "ริบอายสเต็ก",
+        "en": "Ribeye Steak"
+      },
+      "description": {
+        "th": "สเต็กเนื้อริบอายนุ่ม ๆ ย่าง เสิร์ฟพร้อมเฟรนฟรายและสลัดผัก",
+        "en": "Tender grilled ribeye steak served with fries and a side salad."
+      },
+      "price": 169,
+      "foodType": "grills-steaks",
+      "tastes": [
+        "savory",
+        "spiced-smoky"
+      ],
+      "review": null,
+      "photo": "ribeye-steak"
+    },
+    {
+      "slug": "pork-collar-steak",
+      "name": {
+        "th": "สเต็กสันคอหมู",
+        "en": "Pork Collar Steak"
+      },
+      "description": {
+        "th": "สันคอหมูหมักย่างเนื้อนุ่ม เสิร์ฟพร้อมเฟรนฟรายและสลัดผัก",
+        "en": "Grilled marinated pork collar, tender and juicy, served with fries and a side salad."
+      },
+      "price": 169,
+      "foodType": "grills-steaks",
+      "tastes": [
+        "savory",
+        "spiced-smoky"
+      ],
+      "review": null,
+      "photo": "pork-collar-steak"
+    },
+    {
+      "slug": "t-bone-steak",
+      "name": {
+        "th": "ทีโบนสเต็กเนื้อโคขุน",
+        "en": "Thai Grain-Fed Beef T-Bone Steak"
+      },
+      "description": {
+        "th": "ทีโบนสเต็กจากเนื้อโคขุนไทยย่าง เสิร์ฟพร้อมเฟรนฟรายและสลัดผัก",
+        "en": "A grilled T-bone steak cut from Thai grain-fed beef, served with fries and a side salad."
+      },
+      "price": 209,
+      "foodType": "grills-steaks",
+      "tastes": [
+        "savory",
+        "spiced-smoky"
+      ],
+      "review": null,
+      "photo": "t-bone-steak"
+    },
+    {
+      "slug": "giant-mixed-steak",
+      "name": {
+        "th": "สเต็กยักษ์",
+        "en": "Giant Mixed Steak"
+      },
+      "description": {
+        "th": "สเต็กชุดใหญ่รวมหมู ไก่ และปลาดอลลี่ทอด เสิร์ฟพร้อมเฟรนฟรายและสลัดผัก",
+        "en": "A large plate of pork, chicken and fried dory fish steaks with fries and a side salad."
+      },
+      "price": 269,
+      "foodType": "grills-steaks",
+      "tastes": [
+        "crispy",
+        "savory"
+      ],
+      "review": null,
+      "photo": "giant-mixed-steak"
+    },
+    {
+      "slug": "australian-ribeye-steak",
+      "name": {
+        "th": "ริบอายออสเตรเลีย",
+        "en": "Australian Ribeye Steak"
+      },
+      "description": {
+        "th": "ริบอายเนื้อออสเตรเลียย่าง เสิร์ฟพร้อมเฟรนฟรายและสลัดผัก",
+        "en": "Grilled Australian ribeye steak served with fries and a side salad."
+      },
+      "price": 259,
+      "foodType": "grills-steaks",
+      "tastes": [
+        "savory",
+        "spiced-smoky"
+      ],
+      "review": null,
+      "photo": "australian-ribeye-steak"
+    },
+    {
+      "slug": "australian-sirloin-steak",
+      "name": {
+        "th": "สันนอกออสเตรเลีย",
+        "en": "Australian Sirloin Steak"
+      },
+      "description": {
+        "th": "สันนอกเนื้อออสเตรเลียย่าง เสิร์ฟพร้อมเฟรนฟรายและสลัดผัก",
+        "en": "Grilled Australian sirloin steak served with fries and a side salad."
+      },
+      "price": 259,
+      "foodType": "grills-steaks",
+      "tastes": [
+        "savory",
+        "spiced-smoky"
+      ],
+      "review": null,
+      "photo": "australian-sirloin-steak"
+    },
+    {
+      "slug": "pork-ribs-plate",
+      "name": {
+        "th": "ซี่โครงหมู",
+        "en": "Pork Ribs Plate"
+      },
+      "description": {
+        "th": "ซี่โครงหมู 400 กรัม อบซอส เสิร์ฟพร้อมเฟรนฟรายและสลัดผัก",
+        "en": "A 400-gram plate of saucy pork ribs served with fries and a side salad."
+      },
+      "price": 259,
+      "foodType": "grills-steaks",
+      "tastes": [
+        "savory",
+        "sweet",
+        "spiced-smoky"
+      ],
+      "review": null,
+      "photo": "pork-ribs"
+    },
+    {
+      "slug": "carbonara",
+      "name": {
+        "th": "สปาเก็ตตี้คาโบนาร่า",
+        "en": "Spaghetti Carbonara"
+      },
+      "description": {
+        "th": "สปาเก็ตตี้คลุกซอสครีมเข้มข้นกับเบคอน เสิร์ฟร้อน ๆ",
+        "en": "Spaghetti tossed in a thick cream sauce with bacon, served hot."
+      },
+      "price": 89,
+      "foodType": "pasta",
+      "tastes": [
+        "creamy-rich",
+        "savory"
+      ],
+      "review": null,
+      "photo": "carbonara"
+    },
+    {
+      "slug": "tomato-spaghetti",
+      "name": {
+        "th": "สปาเก็ตตี้ซอสแดง",
+        "en": "Spaghetti with Tomato Sauce"
+      },
+      "description": {
+        "th": "สปาเก็ตตี้ราดซอสมะเขือเทศรสกลมกล่อม",
+        "en": "Spaghetti with a mellow tomato sauce."
+      },
+      "price": 89,
+      "foodType": "pasta",
+      "tastes": [
+        "savory"
+      ],
+      "review": null,
+      "photo": "tomato-spaghetti"
+    },
+    {
+      "slug": "fried-chicken-wings",
+      "name": {
+        "th": "ปีกกลางไก่ทอด",
+        "en": "Fried Chicken Wings"
+      },
+      "description": {
+        "th": "ปีกกลางไก่ทอด 5 ชิ้น",
+        "en": "Five fried mid-joint chicken wings."
+      },
+      "price": 89,
+      "foodType": "appetizers-snacks",
+      "tastes": [
+        "crispy",
+        "savory"
+      ],
+      "review": null,
+      "photo": "fried-chicken-wings"
+    },
+    {
+      "slug": "baked-chicken-wings",
+      "name": {
+        "th": "ปีกไก่อบ",
+        "en": "Baked Chicken Wings"
+      },
+      "description": {
+        "th": "ปีกไก่อบ 5 ปีก เนื้อนุ่มหอม",
+        "en": "Five oven-baked chicken wings."
+      },
+      "price": 89,
+      "foodType": "appetizers-snacks",
+      "tastes": [
+        "savory",
+        "spiced-smoky"
+      ],
+      "review": null,
+      "photo": "grilled-chicken-wings"
+    },
+    {
+      "slug": "vegetable-salad",
+      "name": {
+        "th": "สลัดผัก",
+        "en": "Vegetable Salad"
+      },
+      "description": {
+        "th": "ผักสลัดสดหลายชนิดราดน้ำสลัด",
+        "en": "Mixed fresh salad leaves with dressing."
+      },
+      "price": 69,
+      "foodType": "salads-yum-somtam",
+      "tastes": [
+        "fresh-light"
+      ],
+      "review": null,
+      "photo": "vegetable-salad"
+    },
+    {
+      "slug": "grilled-chicken-salad",
+      "name": {
+        "th": "สลัดไก่ย่าง",
+        "en": "Grilled Chicken Salad"
+      },
+      "description": {
+        "th": "ผักสลัดสดกับไก่ย่างหั่นชิ้น",
+        "en": "Fresh salad leaves topped with sliced grilled chicken."
+      },
+      "price": 89,
+      "foodType": "salads-yum-somtam",
+      "tastes": [
+        "fresh-light",
+        "savory"
+      ],
+      "review": null,
+      "photo": "grilled-chicken-salad"
+    },
+    {
+      "slug": "boiled-chicken-salad",
+      "name": {
+        "th": "สลัดไก่ต้ม",
+        "en": "Boiled Chicken Salad"
+      },
+      "description": {
+        "th": "ผักสลัดสดกับไก่ต้ม รสกลมกล่อม",
+        "en": "Fresh salad leaves with poached chicken, mellow and light."
+      },
+      "price": 89,
+      "foodType": "salads-yum-somtam",
+      "tastes": [
+        "fresh-light",
+        "savory"
+      ],
+      "review": null,
+      "photo": "boiled-chicken-breast-salad"
+    },
+    {
+      "slug": "fried-chicken-salad",
+      "name": {
+        "th": "สลัดไก่ทอด",
+        "en": "Fried Chicken Salad"
+      },
+      "description": {
+        "th": "สลัดผักสดท็อปไก่ทอดกรอบ ราดซอสหวาน",
+        "en": "Fresh salad topped with crispy fried chicken and a sweet dressing."
+      },
+      "price": 89,
+      "foodType": "salads-yum-somtam",
+      "tastes": [
+        "fresh-light",
+        "crispy"
+      ],
+      "review": null,
+      "photo": "fried-chicken-salad"
+    },
+    {
+      "slug": "tuna-salad",
+      "name": {
+        "th": "สลัดทูน่า",
+        "en": "Tuna Salad"
+      },
+      "description": {
+        "th": "สลัดผักสดกับทูน่าเน้น ๆ",
+        "en": "Fresh salad leaves with a generous topping of tuna."
+      },
+      "price": 99,
+      "foodType": "salads-yum-somtam",
+      "tastes": [
+        "fresh-light",
+        "savory"
+      ],
+      "review": null,
+      "photo": "tuna-salad"
+    },
+    {
+      "slug": "papaya-salad-pla-ra",
+      "name": {
+        "th": "ตำปลาร้า",
+        "en": "Papaya Salad with Pla Ra"
+      },
+      "description": {
+        "th": "ส้มตำรสจัดจ้านปรุงด้วยน้ำปลาร้า",
+        "en": "Shredded papaya salad dressed with fermented fish sauce."
+      },
+      "price": 49,
+      "foodType": "salads-yum-somtam",
+      "tastes": [
+        "spicy",
+        "sour",
+        "savory"
+      ],
+      "review": null,
+      "photo": "papaya-salad-pla-ra"
+    },
+    {
+      "slug": "thai-papaya-salad",
+      "name": {
+        "th": "ตำไทย",
+        "en": "Thai Papaya Salad"
+      },
+      "description": {
+        "th": "ส้มตำไทยรสเปรี้ยวหวานเค็ม เผ็ดกำลังดี",
+        "en": "Classic Thai papaya salad, sour, sweet and mildly spicy."
+      },
+      "price": 49,
+      "foodType": "salads-yum-somtam",
+      "tastes": [
+        "spicy",
+        "sour",
+        "sweet"
+      ],
+      "review": null,
+      "photo": "thai-papaya-salad"
+    },
+    {
+      "slug": "papaya-salad-with-crab",
+      "name": {
+        "th": "ตำไทยปู",
+        "en": "Thai Papaya Salad with Crab"
+      },
+      "description": {
+        "th": "ส้มตำไทยใส่ปู รสเค็มมันกลมกล่อม",
+        "en": "Thai papaya salad mixed with crab."
+      },
+      "price": 49,
+      "foodType": "salads-yum-somtam",
+      "tastes": [
+        "spicy",
+        "sour",
+        "savory"
+      ],
+      "review": null,
+      "photo": "papaya-salad-with-crab"
+    },
+    {
+      "slug": "papaya-salad-salted-egg",
+      "name": {
+        "th": "ตำไทย ไข่เค็ม",
+        "en": "Thai Papaya Salad with Salted Egg"
+      },
+      "description": {
+        "th": "ส้มตำไทยใส่ไข่เค็ม เพิ่มรสเค็มมัน",
+        "en": "Thai papaya salad with salted egg for an extra savoury richness."
+      },
+      "price": 60,
+      "foodType": "salads-yum-somtam",
+      "tastes": [
+        "spicy",
+        "sour",
+        "savory"
+      ],
+      "review": null,
+      "photo": "papaya-salad-salted-egg"
+    },
+    {
+      "slug": "papaya-salad-pla-ra-salted-egg",
+      "name": {
+        "th": "ตำปลาร้า ไข่เค็ม",
+        "en": "Papaya Salad with Pla Ra and Salted Egg"
+      },
+      "description": {
+        "th": "ส้มตำปลาร้าใส่ไข่เค็ม รสเข้มข้นถึงเครื่อง",
+        "en": "Fermented-fish papaya salad with salted egg, bold and full-flavoured."
+      },
+      "price": 60,
+      "foodType": "salads-yum-somtam",
+      "tastes": [
+        "spicy",
+        "sour",
+        "savory"
+      ],
+      "review": null,
+      "photo": "papaya-salad-pla-ra-salted-egg"
+    },
+    {
+      "slug": "lao-papaya-salad",
+      "name": {
+        "th": "ตำซั่ว",
+        "en": "Lao-Style Papaya Salad"
+      },
+      "description": {
+        "th": "ตำสไตล์ลาวรสจัดจ้าน กลมกล่อมแบบอีสาน",
+        "en": "Lao-style papaya salad with a punchy, sour Isan flavour."
+      },
+      "price": 55,
+      "foodType": "salads-yum-somtam",
+      "tastes": [
+        "spicy",
+        "sour",
+        "savory"
+      ],
+      "review": null,
+      "photo": "lao-papaya-salad"
+    },
+    {
+      "slug": "papaya-salad-rice-noodles",
+      "name": {
+        "th": "ตำเส้นเล็ก",
+        "en": "Papaya Salad with Thin Rice Noodles"
+      },
+      "description": {
+        "th": "ส้มตำคลุกเส้นเล็ก เพิ่มความอิ่มในจานเดียว",
+        "en": "Papaya salad tossed with thin rice noodles for a more filling plate."
+      },
+      "price": 60,
+      "foodType": "salads-yum-somtam",
+      "tastes": [
+        "spicy",
+        "sour"
+      ],
+      "review": null,
+      "photo": "papaya-salad-rice-noodles"
+    },
+    {
+      "slug": "papaya-salad-instant-noodles",
+      "name": {
+        "th": "ตำมาม่า",
+        "en": "Papaya Salad with Instant Noodles"
+      },
+      "description": {
+        "th": "ส้มตำคลุกบะหมี่กึ่งสำเร็จรูป เพิ่มความกรุบกรอบ",
+        "en": "Papaya salad tossed with crushed instant noodles for extra crunch."
+      },
+      "price": 55,
+      "foodType": "salads-yum-somtam",
+      "tastes": [
+        "spicy",
+        "sour",
+        "crispy"
+      ],
+      "review": null,
+      "photo": "papaya-salad-instant-noodles"
+    },
+    {
+      "slug": "long-bean-salad",
+      "name": {
+        "th": "ตำถั่วฝักยาว",
+        "en": "Long Bean Salad"
+      },
+      "description": {
+        "th": "ตำถั่วฝักยาวสด ตำรวมเครื่องรสเปรี้ยวเผ็ด",
+        "en": "Fresh long beans pounded with a sour and spicy dressing."
+      },
+      "price": 49,
+      "foodType": "salads-yum-somtam",
+      "tastes": [
+        "spicy",
+        "sour",
+        "fresh-light"
+      ],
+      "review": null,
+      "photo": "long-bean-salad"
+    },
+    {
+      "slug": "cucumber-salad",
+      "name": {
+        "th": "ตำแตง",
+        "en": "Cucumber Salad"
+      },
+      "description": {
+        "th": "ตำแตงกวาสด กรุบกรอบ รสเปรี้ยวเผ็ด",
+        "en": "Pounded cucumber salad, crunchy with a sour and spicy dressing."
+      },
+      "price": 49,
+      "foodType": "salads-yum-somtam",
+      "tastes": [
+        "spicy",
+        "sour",
+        "fresh-light"
+      ],
+      "review": null,
+      "photo": "cucumber-salad"
+    },
+    {
+      "slug": "papaya-salad-pork-sausage",
+      "name": {
+        "th": "ตำไทยหมูยอ",
+        "en": "Thai Papaya Salad with Pork Sausage"
+      },
+      "description": {
+        "th": "ส้มตำไทยใส่หมูยอหั่นชิ้น",
+        "en": "Thai papaya salad with sliced pork sausage."
+      },
+      "price": 60,
+      "foodType": "salads-yum-somtam",
+      "tastes": [
+        "spicy",
+        "sour",
+        "savory"
+      ],
+      "review": null,
+      "photo": "papaya-salad-pork-sausage"
+    }
+  ]
+}

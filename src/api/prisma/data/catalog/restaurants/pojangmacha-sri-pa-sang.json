@@ -1,0 +1,463 @@
+{
+  "slug": "pojangmacha-sri-pa-sang",
+  "zone": "opposite-mfu",
+  "name": {
+    "th": "โพจังมาจา หมู่บ้านศรีป่าซาง",
+    "en": "Pojangmacha - Sri Pa Sang Village"
+  },
+  "description": {
+    "th": "ร้านอาหารเกาหลีและญี่ปุ่นในหมู่บ้านศรีป่าซาง มีกิมบับ บิบิมบับ อุด้ง ข้าวหน้าเทอริยากิ สลัด และสปาเกตตี้",
+    "en": "Korean and Japanese food in Sri Pa Sang Village: gimbap, bibimbap, udon, teriyaki rice bowls, salads and spaghetti."
+  },
+  "phone": null,
+  "source": {
+    "type": "grab-screenshot",
+    "capturedOn": "2026-10-27",
+    "pricesInclude": "grab-delivery-markup"
+  },
+  "menuItems": [
+    {
+      "slug": "fish-cake-udon",
+      "name": {
+        "th": "อุด้งปลาแผ่น",
+        "en": "Fish Cake Udon"
+      },
+      "description": {
+        "th": "อุด้งในน้ำซุปใส ท็อปปลาแผ่นและต้นหอม",
+        "en": "Udon in a clear broth topped with fish cake and spring onion."
+      },
+      "price": 139,
+      "foodType": "noodles",
+      "tastes": [
+        "savory",
+        "fresh-light"
+      ],
+      "review": null,
+      "photo": "fish-cake-udon"
+    },
+    {
+      "slug": "pork-ball-udon",
+      "name": {
+        "th": "อุด้งหมูเด้ง",
+        "en": "Pork Ball Udon"
+      },
+      "description": {
+        "th": "อุด้งน้ำกับลูกชิ้นหมูเด้ง ไข่ยางมะตูม เห็ด และผัก",
+        "en": "Udon soup with bouncy pork balls, a soft-boiled egg, mushrooms and greens."
+      },
+      "price": 139,
+      "foodType": "noodles",
+      "tastes": [
+        "savory",
+        "fresh-light"
+      ],
+      "review": null,
+      "photo": "pork-ball-udon"
+    },
+    {
+      "slug": "fried-chicken-noodles",
+      "name": {
+        "th": "บะหมี่ไก่ทอด",
+        "en": "Noodles with Fried Chicken"
+      },
+      "description": {
+        "th": "บะหมี่แห้งท็อปไก่ทอดกรอบ ต้นหอม และผักกวางตุ้ง",
+        "en": "Dry egg noodles topped with crispy fried chicken, spring onion and bok choy."
+      },
+      "price": 119,
+      "foodType": "noodles",
+      "tastes": [
+        "savory",
+        "crispy"
+      ],
+      "review": null,
+      "photo": "teriyaki-crispy-chicken-noodles"
+    },
+    {
+      "slug": "kimchi-stir-fried-udon",
+      "name": {
+        "th": "อุด้งผัดกิมจิ",
+        "en": "Kimchi Stir-fried Udon"
+      },
+      "description": {
+        "th": "อุด้งผัดกิมจิรสเผ็ดเปรี้ยว โรยสาหร่ายและงา",
+        "en": "Udon stir-fried with kimchi, spicy and tangy, topped with seaweed and sesame."
+      },
+      "price": 129,
+      "foodType": "noodles",
+      "tastes": [
+        "spicy",
+        "sour",
+        "savory"
+      ],
+      "review": null,
+      "photo": "kimchi-stir-fried-udon"
+    },
+    {
+      "slug": "chicken-curry-soba-poached-egg",
+      "name": {
+        "th": "โซบะแกงกะหรี่ไก่ไข่ลวก",
+        "en": "Chicken Curry Noodles with Poached Egg"
+      },
+      "description": {
+        "th": "เส้นในน้ำแกงกะหรี่ญี่ปุ่นกับไก่และผัก ท็อปไข่ลวก",
+        "en": "Noodles in Japanese curry broth with chicken and vegetables, topped with a poached egg."
+      },
+      "price": 149,
+      "foodType": "noodles",
+      "tastes": [
+        "savory",
+        "spiced-smoky",
+        "creamy-rich"
+      ],
+      "review": null,
+      "photo": "curry-udon"
+    },
+    {
+      "slug": "shrimp-shiitake-stir-fried-udon",
+      "name": {
+        "th": "อุด้งผัดกุ้งเห็ดหอมสด",
+        "en": "Stir-fried Udon with Shrimp and Shiitake"
+      },
+      "description": {
+        "th": "อุด้งผัดกับกุ้ง เห็ดหอมสด และผัก",
+        "en": "Udon stir-fried with shrimp, fresh shiitake and vegetables."
+      },
+      "price": 159,
+      "foodType": "noodles",
+      "tastes": [
+        "savory"
+      ],
+      "review": null,
+      "photo": "shrimp-shiitake-stir-fried-udon"
+    },
+    {
+      "slug": "dried-chili-spaghetti",
+      "name": {
+        "th": "สปาเก็ตตี้ผัดพริกแห้ง",
+        "en": "Dried Chilli Spaghetti"
+      },
+      "description": {
+        "th": "สปาเก็ตตี้ผัดพริกแห้งกับไส้กรอกและต้นหอม",
+        "en": "Spaghetti stir-fried with dried chillies, sausage and spring onion."
+      },
+      "price": 159,
+      "foodType": "pasta",
+      "tastes": [
+        "spicy",
+        "savory"
+      ],
+      "review": null,
+      "photo": "dried-chili-spaghetti"
+    },
+    {
+      "slug": "carbonara",
+      "name": {
+        "th": "สปาเก็ตตี้คาโบนาร่า",
+        "en": "Spaghetti Carbonara"
+      },
+      "description": {
+        "th": "สปาเก็ตตี้ซอสครีมกับแฮม",
+        "en": "Spaghetti in a cream sauce with ham."
+      },
+      "price": 159,
+      "foodType": "pasta",
+      "tastes": [
+        "creamy-rich",
+        "savory"
+      ],
+      "review": null,
+      "photo": "carbonara"
+    },
+    {
+      "slug": "spicy-tuna-salad",
+      "name": {
+        "th": "ยำทูน่า ผักสด",
+        "en": "Spicy Tuna Salad with Fresh Vegetables"
+      },
+      "description": {
+        "th": "ยำทูน่ากับหอมแดง มะเขือเทศ พริก และต้นหอม เสิร์ฟพร้อมไข่ต้มและผักสด",
+        "en": "Spicy-sour tuna salad with shallot, tomato, chilli and spring onion, served with boiled egg and fresh vegetables."
+      },
+      "price": 89,
+      "foodType": "salads-yum-somtam",
+      "tastes": [
+        "spicy",
+        "sour",
+        "fresh-light"
+      ],
+      "review": null,
+      "photo": "spicy-tuna-salad"
+    },
+    {
+      "slug": "fried-chicken-salad",
+      "name": {
+        "th": "สลัดไก่ทอด",
+        "en": "Fried Chicken Salad"
+      },
+      "description": {
+        "th": "ผักสลัดสดท็อปไก่ทอดกรอบ",
+        "en": "Fresh salad greens topped with crispy fried chicken."
+      },
+      "price": 89,
+      "foodType": "salads-yum-somtam",
+      "tastes": [
+        "fresh-light",
+        "crispy"
+      ],
+      "review": null,
+      "photo": "fried-chicken-salad"
+    },
+    {
+      "slug": "tuna-egg-salad",
+      "name": {
+        "th": "สลัดทูน่าไข่ต้ม",
+        "en": "Tuna Salad with Boiled Egg"
+      },
+      "description": {
+        "th": "ผักสลัดสดกับทูน่าและไข่ต้ม",
+        "en": "Fresh salad greens with tuna and boiled egg."
+      },
+      "price": 99,
+      "foodType": "salads-yum-somtam",
+      "tastes": [
+        "fresh-light",
+        "savory"
+      ],
+      "review": null,
+      "photo": "tuna-salad"
+    },
+    {
+      "slug": "grilled-chicken-breast-salad",
+      "name": {
+        "th": "สลัดอกไก่ย่าง",
+        "en": "Grilled Chicken Breast Salad"
+      },
+      "description": {
+        "th": "ผักสลัดสดกับอกไก่ย่างหั่นชิ้น มะเขือเทศ และแตงกวา",
+        "en": "Fresh salad with sliced grilled chicken breast, tomato and cucumber."
+      },
+      "price": 89,
+      "foodType": "salads-yum-somtam",
+      "tastes": [
+        "fresh-light",
+        "savory"
+      ],
+      "review": null,
+      "photo": "grilled-chicken-salad"
+    },
+    {
+      "slug": "fried-shrimp-salad",
+      "name": {
+        "th": "สลัดกุ้งทอด",
+        "en": "Fried Shrimp Salad"
+      },
+      "description": {
+        "th": "ผักสลัดสดกับกุ้งชุบเกล็ดขนมปังทอดและน้ำสลัด",
+        "en": "Fresh salad with breaded fried shrimp and dressing."
+      },
+      "price": 99,
+      "foodType": "salads-yum-somtam",
+      "tastes": [
+        "fresh-light",
+        "crispy"
+      ],
+      "review": null,
+      "photo": "fried-shrimp-salad"
+    },
+    {
+      "slug": "pork-belly-kimchi-stew-rice",
+      "name": {
+        "th": "แกงกิมจิหมูสามชั้น ข้าวญี่ปุ่น",
+        "en": "Pork Belly Kimchi Stew with Japanese Rice"
+      },
+      "description": {
+        "th": "แกงกิมจิเกาหลีกับหมูสามชั้น เสิร์ฟกับข้าวญี่ปุ่น",
+        "en": "Korean kimchi stew with pork belly, served with Japanese rice."
+      },
+      "price": 100,
+      "foodType": "curries-soups",
+      "tastes": [
+        "spicy",
+        "sour",
+        "savory"
+      ],
+      "review": null,
+      "photo": "kimchi-stew"
+    },
+    {
+      "slug": "gimbap-crispy-chicken",
+      "name": {
+        "th": "กิมบับ ไก่กรอบ",
+        "en": "Gimbap with Crispy Chicken"
+      },
+      "description": {
+        "th": "ข้าวห่อสาหร่ายแบบเกาหลี เสิร์ฟคู่ไก่ทอดกรอบราดซอส",
+        "en": "Korean seaweed rice rolls served with sauced crispy fried chicken."
+      },
+      "price": 120,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "savory",
+        "crispy",
+        "sweet"
+      ],
+      "review": null,
+      "photo": "gimbap-fried-chicken"
+    },
+    {
+      "slug": "folded-gimbap",
+      "name": {
+        "th": "กิมบับพับ",
+        "en": "Folded Gimbap"
+      },
+      "description": {
+        "th": "สาหร่ายห่อข้าวแบบพับ ไส้กิมจิ ไข่ดาว หมูสามชั้นย่าง และชีส",
+        "en": "Folded seaweed rice wrap filled with kimchi, fried egg, grilled pork belly and cheese."
+      },
+      "price": 109,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "savory",
+        "spicy"
+      ],
+      "review": null,
+      "photo": "folded-gimbap"
+    },
+    {
+      "slug": "spicy-samyang-omelette",
+      "name": {
+        "th": "ไข่ห่อมาม่าเกาหลีเผ็ด",
+        "en": "Spicy Samyang Omelette"
+      },
+      "description": {
+        "th": "บะหมี่เกาหลีเผ็ดผัดแล้วห่อไข่ ใส่ชีสและไส้กรอก",
+        "en": "Spicy Korean instant noodles wrapped in an omelette with cheese and sausage."
+      },
+      "price": 129,
+      "foodType": "noodles",
+      "tastes": [
+        "spicy",
+        "savory",
+        "creamy-rich"
+      ],
+      "review": null,
+      "photo": "samyang-omelette"
+    },
+    {
+      "slug": "chicken-katsu-rice-set",
+      "name": {
+        "th": "เซ็ตข้าวหน้าไก่ทอดทงคัตสึ",
+        "en": "Chicken Katsu Rice Bowl Set"
+      },
+      "description": {
+        "th": "ข้าวหน้าไก่ทอดทงคัตสึ ไข่ต้ม ข้าวโพด และผักต้ม",
+        "en": "Chicken katsu rice bowl with boiled egg, corn and steamed vegetables."
+      },
+      "price": 129,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "crispy",
+        "savory"
+      ],
+      "review": null,
+      "photo": "fried-chicken-rice"
+    },
+    {
+      "slug": "shrimp-katsu-rice-set",
+      "name": {
+        "th": "เซ็ตข้าวหน้ากุ้งทอดทงคัตสึ",
+        "en": "Fried Shrimp Rice Bowl Set"
+      },
+      "description": {
+        "th": "ข้าวหน้ากุ้งชุบเกล็ดขนมปังทอด ไข่ต้ม ข้าวโพด และผักต้ม",
+        "en": "Breaded fried shrimp on rice with boiled egg, corn and steamed vegetables."
+      },
+      "price": 139,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "crispy",
+        "savory"
+      ],
+      "review": null,
+      "photo": "fried-shrimp-rice-bowl"
+    },
+    {
+      "slug": "tuna-rice-balls",
+      "name": {
+        "th": "ทูน่าซูชิบอล",
+        "en": "Tuna Rice Balls"
+      },
+      "description": {
+        "th": "ข้าวปั้นไส้ทูน่าและแตงกวา ปรุงรสสูตรร้าน 5 ลูก",
+        "en": "Five rice balls filled with seasoned tuna and cucumber."
+      },
+      "price": 89,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "savory",
+        "fresh-light"
+      ],
+      "review": null,
+      "photo": "tuna-rice-balls"
+    },
+    {
+      "slug": "tuna-bibimbap",
+      "name": {
+        "th": "บิบิมบับทูน่า",
+        "en": "Tuna Bibimbap"
+      },
+      "description": {
+        "th": "ข้าวยำเกาหลีหน้าทูน่า กิมจิ แครอท กะหล่ำ แตงกวา และเห็ด พร้อมซอสและไข่แดง",
+        "en": "Korean mixed rice topped with tuna, kimchi, carrot, cabbage, cucumber and mushrooms, with sauce and egg yolk."
+      },
+      "price": 149,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "spicy",
+        "savory",
+        "fresh-light"
+      ],
+      "review": null,
+      "photo": "bibimbap"
+    },
+    {
+      "slug": "teriyaki-pork-rice-bowl",
+      "name": {
+        "th": "ข้าวหน้าหมูเทอริยากิ",
+        "en": "Teriyaki Pork Rice Bowl"
+      },
+      "description": {
+        "th": "ข้าวหน้าหมูซอสเทอริยากิสูตรร้าน พร้อมไข่ดาว",
+        "en": "Rice topped with pork in the shop's teriyaki sauce and a fried egg."
+      },
+      "price": 79,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "savory",
+        "sweet"
+      ],
+      "review": null,
+      "photo": "teriyaki-pork-rice"
+    },
+    {
+      "slug": "teriyaki-grilled-chicken-rice-bowl",
+      "name": {
+        "th": "ข้าวหน้าไก่ย่างเทอริยากิ",
+        "en": "Teriyaki Grilled Chicken Rice Bowl"
+      },
+      "description": {
+        "th": "ไก่หมักซอสเทอริยากิย่าง บนข้าว พร้อมไข่ดาว",
+        "en": "Teriyaki-marinated grilled chicken on rice with a fried egg."
+      },
+      "price": 79,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "savory",
+        "sweet"
+      ],
+      "review": null,
+      "photo": "teriyaki-chicken-rice"
+    }
+  ]
+}

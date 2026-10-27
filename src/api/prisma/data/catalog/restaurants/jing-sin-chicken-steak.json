@@ -1,0 +1,124 @@
+{
+  "slug": "jing-sin-chicken-steak",
+  "zone": "opposite-mfu",
+  "name": {
+    "th": "เจิ้งซิน ชิคเก้นสเต็ก ถนนพหลโยธิน",
+    "en": "Jing Sin Chicken Steak - Phahonyothin Road"
+  },
+  "description": {
+    "th": "ร้านไก่ทอดสไตล์ไต้หวันริมถนนพหลโยธิน มีข้าวสเต็กไก่ ข้าวยำไก่แซ่บ เบอร์เกอร์ไก่ และแร็พไก่",
+    "en": "Taiwanese-style fried chicken shop on Phahonyothin Road serving chicken steak rice, spicy chicken rice salad, chicken burgers and wraps."
+  },
+  "phone": null,
+  "source": {
+    "type": "grab-screenshot",
+    "capturedOn": "2026-10-27",
+    "pricesInclude": "grab-delivery-markup"
+  },
+  "menuItems": [
+    {
+      "slug": "spicy-chicken-steak-rice",
+      "name": { "th": "ข้าวสเต็กไก่สไปซี่", "en": "Spicy Chicken Steak Rice" },
+      "description": {
+        "th": "สเต็กไก่ทอดรสเผ็ดหั่นชิ้น เสิร์ฟบนข้าวกับบรอกโคลี",
+        "en": "Sliced spicy fried chicken steak on rice with broccoli."
+      },
+      "price": 69,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "crispy", "savory"],
+      "review": null,
+      "photo": "spicy-chicken-steak-rice"
+    },
+    {
+      "slug": "crispy-chicken-steak-rice",
+      "name": { "th": "ข้าวสเต็กไก่กรอบ", "en": "Crispy Chicken Steak Rice" },
+      "description": {
+        "th": "สเต็กไก่ทอดกรอบหั่นชิ้น เสิร์ฟบนข้าวกับบรอกโคลี",
+        "en": "Sliced crispy fried chicken steak on rice with broccoli."
+      },
+      "price": 69,
+      "foodType": "rice-dishes",
+      "tastes": ["crispy", "savory"],
+      "review": null,
+      "photo": "fried-chicken-rice"
+    },
+    {
+      "slug": "spicy-fried-chicken-yum-rice",
+      "name": { "th": "ข้าวยำไก่แซ่บทอดกรอบ", "en": "Spicy Crispy Chicken Salad with Rice" },
+      "description": {
+        "th": "ไก่ทอดกรอบคลุกน้ำยำรสแซ่บกับหอมใหญ่และต้นหอม เสิร์ฟกับข้าว",
+        "en": "Crispy fried chicken tossed in a spicy Thai salad dressing with onion and spring onion, served with rice."
+      },
+      "price": 99,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "sour", "crispy"],
+      "review": null,
+      "photo": "spicy-fried-chicken-yum-rice"
+    },
+    {
+      "slug": "chicken-wrap-mayo",
+      "name": { "th": "แร็พไก่ มายองเนส", "en": "Fried Chicken Wrap with Mayonnaise" },
+      "description": {
+        "th": "ไก่ทอดกรอบห่อแป้งตอร์ติญ่ากับผักสดและมายองเนส",
+        "en": "Crispy fried chicken wrapped in a tortilla with fresh vegetables and mayonnaise."
+      },
+      "price": 85,
+      "foodType": "burgers-sandwiches-wraps",
+      "tastes": ["crispy", "savory", "creamy-rich"],
+      "review": null,
+      "photo": "fried-chicken-wrap"
+    },
+    {
+      "slug": "chicken-wrap-cheese",
+      "name": { "th": "แร็พไก่ ชีส", "en": "Fried Chicken Wrap with Cheese" },
+      "description": {
+        "th": "ไก่ทอดกรอบห่อแป้งตอร์ติญ่ากับผักสดและชีส",
+        "en": "Crispy fried chicken wrapped in a tortilla with fresh vegetables and cheese."
+      },
+      "price": 95,
+      "foodType": "burgers-sandwiches-wraps",
+      "tastes": ["crispy", "savory", "creamy-rich"],
+      "review": null,
+      "photo": "fried-chicken-wrap"
+    },
+    {
+      "slug": "crispy-chicken-steak-burger",
+      "name": { "th": "เบอร์เกอร์สเต็กไก่กรอบ", "en": "Crispy Chicken Steak Burger" },
+      "description": {
+        "th": "เบอร์เกอร์สเต็กไก่ทอดกรอบกับผักกาดและซอสมายองเนส",
+        "en": "A crispy fried chicken steak burger with lettuce and mayonnaise."
+      },
+      "price": 72,
+      "foodType": "burgers-sandwiches-wraps",
+      "tastes": ["crispy", "savory"],
+      "review": null,
+      "photo": "fried-chicken-burger"
+    },
+    {
+      "slug": "spicy-chicken-steak-burger",
+      "name": { "th": "เบอร์เกอร์สเต็กไก่สไปซี่", "en": "Spicy Chicken Steak Burger" },
+      "description": {
+        "th": "เบอร์เกอร์สเต็กไก่ทอดรสเผ็ดกับผักกาด",
+        "en": "A spicy fried chicken steak burger with lettuce."
+      },
+      "price": 72,
+      "foodType": "burgers-sandwiches-wraps",
+      "tastes": ["spicy", "crispy", "savory"],
+      "review": null,
+      "photo": "spicy-chicken-burger"
+    },
+    {
+      "slug": "spicy-chicken-thigh-burger",
+      "name": { "th": "เบอร์เกอร์น่องไก่สไปซี่", "en": "Spicy Chicken Thigh Burger" },
+      "description": {
+        "th": "เบอร์เกอร์น่องไก่ทอดกรอบรสเผ็ด กับผักและซอส",
+        "en": "A burger with a crunchy spicy fried chicken thigh, vegetables and sauce."
+      },
+      "price": 72,
+      "foodType": "burgers-sandwiches-wraps",
+      "tastes": ["spicy", "crispy", "savory"],
+      "review": null,
+      "photo": "spicy-chicken-burger"
+    }
+  ]
+}

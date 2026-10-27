@@ -1,0 +1,395 @@
+{
+  "slug": "wan-duean-pi-breakfast",
+  "zone": "opposite-mfu",
+  "name": {
+    "th": "วัน เดือน ปี เบรกฟาสต์แอนด์มัทฉะ ท่าสุด",
+    "en": "Wan Duean Pi Breakfast & Matcha - Tha Sut"
+  },
+  "description": {
+    "th": "ร้านอาหารเช้าทั้งวันย่านท่าสุด มีไข่กระทะ ข้าวไข่ดาว ออมุไรซ์ โทสต์ มาม่าไข่ข้น แพนเค้ก และมัทฉะ",
+    "en": "All-day breakfast shop in Tha Sut serving pan eggs, fried-egg rice, omurice, toast boxes, creamy-egg instant noodles, pancakes and matcha."
+  },
+  "phone": null,
+  "source": {
+    "type": "grab-screenshot",
+    "capturedOn": "2026-10-27",
+    "pricesInclude": "grab-delivery-markup"
+  },
+  "menuItems": [
+    {
+      "slug": "pan-eggs-bacon-sausage",
+      "name": {
+        "th": "ไข่กระทะ",
+        "en": "Pan-cooked Eggs with Bacon and Sausage"
+      },
+      "description": {
+        "th": "ไข่กระทะเสิร์ฟพร้อมไส้กรอก เบคอน และชีส",
+        "en": "Eggs cooked in a small pan, served with sausage, bacon and cheese."
+      },
+      "price": 79,
+      "foodType": "appetizers-snacks",
+      "tastes": [
+        "savory",
+        "creamy-rich"
+      ],
+      "review": null,
+      "photo": "pan-eggs"
+    },
+    {
+      "slug": "crispy-fried-egg-rice",
+      "name": {
+        "th": "ข้าวไข่ดาวกรอบ",
+        "en": "Crispy Fried Egg on Rice"
+      },
+      "description": {
+        "th": "ข้าวไข่ดาวกรอบ ท็อปไส้กรอก เบคอน และชีส",
+        "en": "Rice with a crispy fried egg, topped with sausage, bacon and cheese."
+      },
+      "price": 79,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "savory",
+        "crispy"
+      ],
+      "review": null,
+      "photo": "fried-eggs-rice"
+    },
+    {
+      "slug": "omurice",
+      "name": {
+        "th": "ข้าวห่อไข่ ออมุไรซ์",
+        "en": "Omurice"
+      },
+      "description": {
+        "th": "ไข่ออมเล็ตนุ่มห่อข้าวผัด ราดซอสหวานกลมกล่อม",
+        "en": "A soft omelette over seasoned rice with a sweet-savoury sauce."
+      },
+      "price": 89,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "savory",
+        "sweet",
+        "creamy-rich"
+      ],
+      "review": null,
+      "photo": "omurice"
+    },
+    {
+      "slug": "toast-soft-boiled-eggs",
+      "name": {
+        "th": "ปังปิ้งไข่ลวก",
+        "en": "Toast with Soft-boiled Eggs"
+      },
+      "description": {
+        "th": "ขนมปังปิ้งกรอบนอกนุ่มใน ทานคู่ไข่ลวก",
+        "en": "Toast, crisp outside and soft inside, served with soft-boiled eggs."
+      },
+      "price": 59,
+      "foodType": "appetizers-snacks",
+      "tastes": [
+        "savory",
+        "sweet"
+      ],
+      "review": null,
+      "photo": "toast-soft-boiled-eggs"
+    },
+    {
+      "slug": "cheese-omelette",
+      "name": {
+        "th": "ไข่ห่อชีส",
+        "en": "Cheese Omelette"
+      },
+      "description": {
+        "th": "ไข่ออมเล็ตห่อชีสละลาย",
+        "en": "An omelette folded around melted cheese."
+      },
+      "price": 89,
+      "foodType": "appetizers-snacks",
+      "tastes": [
+        "savory",
+        "creamy-rich"
+      ],
+      "review": null,
+      "photo": "cheese-omelette"
+    },
+    {
+      "slug": "diy-breakfast-box",
+      "name": {
+        "th": "กล่องอาหารเช้าเลือกเอง",
+        "en": "DIY Breakfast Box"
+      },
+      "description": {
+        "th": "กล่องอาหารเช้าที่เลือกเครื่องเองได้ เช่น ขนมปัง ไข่ เบคอน และผัก",
+        "en": "A breakfast box you build yourself, such as toast, eggs, bacon and greens."
+      },
+      "price": 79,
+      "foodType": "appetizers-snacks",
+      "tastes": [
+        "savory"
+      ],
+      "review": null,
+      "photo": "breakfast-box"
+    },
+    {
+      "slug": "bacon-pancake",
+      "name": {
+        "th": "แพนเค้กเบคอน",
+        "en": "Bacon Pancake with Maple Syrup"
+      },
+      "description": {
+        "th": "แพนเค้กนุ่มหอมเนย ท็อปเบคอนกรอบ ราดเมเปิลไซรัป",
+        "en": "Soft buttery pancakes topped with crispy bacon and maple syrup."
+      },
+      "price": 99,
+      "foodType": "appetizers-snacks",
+      "tastes": [
+        "sweet",
+        "savory"
+      ],
+      "review": null,
+      "photo": "bacon-pancake"
+    },
+    {
+      "slug": "sausage-scrambled-egg-toast",
+      "name": {
+        "th": "ไส้กรอกไข่สครัมเบิลโทสต์",
+        "en": "Sausage and Scrambled Egg Toast"
+      },
+      "description": {
+        "th": "ไข่สครัมเบิลกับไส้กรอกบนขนมปังปิ้ง",
+        "en": "Scrambled eggs and sausages on toast."
+      },
+      "price": 79,
+      "foodType": "appetizers-snacks",
+      "tastes": [
+        "savory"
+      ],
+      "review": null,
+      "photo": "sausage-scrambled-egg-toast"
+    },
+    {
+      "slug": "bacon-cheese-scrambled-egg-toast",
+      "name": {
+        "th": "โทสต์เบคอนชีสไข่สครัมเบิล",
+        "en": "Bacon, Cheese and Scrambled Egg Toast"
+      },
+      "description": {
+        "th": "ขนมปังโทสต์ท็อปเบคอนและไข่สครัมเบิลนุ่ม",
+        "en": "Toast topped with bacon, cheese and soft scrambled eggs."
+      },
+      "price": 99,
+      "foodType": "appetizers-snacks",
+      "tastes": [
+        "savory",
+        "creamy-rich"
+      ],
+      "review": null,
+      "photo": "bacon-scrambled-egg-toast"
+    },
+    {
+      "slug": "mama-soft-egg",
+      "name": {
+        "th": "มาม่าไข่ข้น",
+        "en": "Instant Noodles with Creamy Egg"
+      },
+      "description": {
+        "th": "บะหมี่กึ่งสำเร็จรูปคลุกไข่ข้นเนียนนุ่ม รสเข้มข้น",
+        "en": "Instant noodles cooked with silky, creamy egg."
+      },
+      "price": 59,
+      "foodType": "noodles",
+      "tastes": [
+        "savory",
+        "creamy-rich"
+      ],
+      "review": null,
+      "photo": "mama-soft-egg"
+    },
+    {
+      "slug": "mama-signature",
+      "name": {
+        "th": "มาม่าซิกเนเจอร์",
+        "en": "Signature Instant Noodles"
+      },
+      "description": {
+        "th": "มาม่าไข่ข้นเลือกรสได้ พร้อมไส้กรอก ไข่ดาว และชีส",
+        "en": "Creamy-egg instant noodles in your choice of flavour, with sausage, fried egg and cheese."
+      },
+      "price": 99,
+      "foodType": "noodles",
+      "tastes": [
+        "savory",
+        "creamy-rich"
+      ],
+      "review": null,
+      "photo": "mama-signature"
+    },
+    {
+      "slug": "mama-omelette",
+      "name": {
+        "th": "มาม่าไข่ห่อ",
+        "en": "Omelette-wrapped Instant Noodles"
+      },
+      "description": {
+        "th": "มาม่าห่อไข่ เลือกท็อปปิ้งได้อย่างน้อย 2 อย่าง",
+        "en": "Instant noodles wrapped in an omelette with at least two toppings of your choice."
+      },
+      "price": 99,
+      "foodType": "noodles",
+      "tastes": [
+        "savory"
+      ],
+      "review": null,
+      "photo": "mama-omelette"
+    },
+    {
+      "slug": "fresh-fruit-cup",
+      "name": {
+        "th": "ผลไม้รวมหั่นสด",
+        "en": "Fresh Mixed Fruit Cup"
+      },
+      "description": {
+        "th": "ผลไม้สดหั่นรวม เช่น แก้วมังกร กล้วย กีวี บลูเบอร์รี่ องุ่น แตงโม ส้ม และแอปเปิ้ล",
+        "en": "Freshly cut mixed fruit such as dragon fruit, banana, kiwi, blueberries, grapes, watermelon, orange and apple."
+      },
+      "price": 129,
+      "foodType": "desserts",
+      "tastes": [
+        "fresh-light",
+        "sweet"
+      ],
+      "review": null,
+      "photo": "fresh-fruit-cup"
+    },
+    {
+      "slug": "fruit-yogurt",
+      "name": {
+        "th": "โยเกิร์ตผลไม้",
+        "en": "Fruit Yogurt"
+      },
+      "description": {
+        "th": "โยเกิร์ตไม่หวาน ท็อปผลไม้สด",
+        "en": "Unsweetened yogurt topped with fresh fruit."
+      },
+      "price": 89,
+      "foodType": "desserts",
+      "tastes": [
+        "fresh-light",
+        "sour"
+      ],
+      "review": null,
+      "photo": "fruit-yogurt"
+    },
+    {
+      "slug": "yogurt-fresh-cream",
+      "name": {
+        "th": "โยเกิร์ตเฟรชครีม",
+        "en": "Yogurt with Fresh Cream"
+      },
+      "description": {
+        "th": "โยเกิร์ตสลับชั้นครีมสด ท็อปซีเรียลและผลไม้",
+        "en": "Yogurt layered with fresh cream, topped with cereal and fruit."
+      },
+      "price": 99,
+      "foodType": "desserts",
+      "tastes": [
+        "sweet",
+        "creamy-rich"
+      ],
+      "review": null,
+      "photo": "yogurt-fresh-cream"
+    },
+    {
+      "slug": "butter-pancake",
+      "name": {
+        "th": "แพนเค้กเนยสด",
+        "en": "Butter Pancake"
+      },
+      "description": {
+        "th": "แพนเค้กนุ่มท็อปเนยสด",
+        "en": "Soft pancake topped with butter."
+      },
+      "price": 69,
+      "foodType": "desserts",
+      "tastes": [
+        "sweet"
+      ],
+      "review": null,
+      "photo": "butter-pancake"
+    },
+    {
+      "slug": "dark-chocolate-pancake",
+      "name": {
+        "th": "แพนเค้กดาร์กช็อกโกแลต",
+        "en": "Dark Chocolate Pancake"
+      },
+      "description": {
+        "th": "แพนเค้กช็อกโกแลตเข้มข้น",
+        "en": "Rich chocolate pancake."
+      },
+      "price": 79,
+      "foodType": "desserts",
+      "tastes": [
+        "sweet"
+      ],
+      "review": null,
+      "photo": "chocolate-pancake"
+    },
+    {
+      "slug": "cream-pancake",
+      "name": {
+        "th": "แพนเค้กครีม",
+        "en": "Cream Pancake"
+      },
+      "description": {
+        "th": "แพนเค้กครีมเนื้อเนียนนุ่ม",
+        "en": "Soft pancake filled with smooth cream."
+      },
+      "price": 89,
+      "foodType": "desserts",
+      "tastes": [
+        "sweet",
+        "creamy-rich"
+      ],
+      "review": null,
+      "photo": "cream-pancake"
+    },
+    {
+      "slug": "pure-matcha",
+      "name": {
+        "th": "เพียวมัทฉะ",
+        "en": "Pure Iced Matcha"
+      },
+      "description": {
+        "th": "มัทฉะเย็นรสชาเขียวเข้ม หอมสดชื่น",
+        "en": "Iced pure matcha with a fresh green-tea aroma."
+      },
+      "price": 65,
+      "foodType": "drinks",
+      "tastes": [
+        "fresh-light"
+      ],
+      "review": null,
+      "photo": "iced-matcha"
+    },
+    {
+      "slug": "matcha-latte",
+      "name": {
+        "th": "มัทฉะลาเต้",
+        "en": "Iced Matcha Latte"
+      },
+      "description": {
+        "th": "มัทฉะลาเต้เย็น เข้มข้นกลมกล่อม",
+        "en": "Iced matcha latte, rich and smooth."
+      },
+      "price": 70,
+      "foodType": "drinks",
+      "tastes": [
+        "sweet",
+        "creamy-rich"
+      ],
+      "review": null,
+      "photo": "matcha-latte"
+    }
+  ]
+}
