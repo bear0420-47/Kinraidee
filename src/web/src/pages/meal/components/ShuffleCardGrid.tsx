@@ -117,12 +117,14 @@ export function ShuffleCardGrid({
   return (
     <section className="flex min-w-0 flex-col gap-4">
       {shortlist.adjustment ? (
-        <p
-          role="status"
-          className="rounded-md border-2 border-paper bg-surface p-4 font-bold shadow-sm"
-        >
-          {adjustmentMessage(shortlist.adjustment)}
-        </p>
+        <div className="rounded-md border-2 border-paper bg-cream px-4 py-3 shadow-md">
+          <p role="status" className="sr-only">
+            {adjustmentMessage(shortlist.adjustment)}
+          </p>
+          <p className="text-body font-extrabold leading-snug sm:text-card-title">
+            เอ๊ะ ยังไม่มีเมนูที่ตรงกับที่เลือก ลองเมนูที่เราเจอก่อนไหม?
+          </p>
+        </div>
       ) : null}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div className="flex flex-col gap-1">
@@ -199,7 +201,7 @@ export function ShuffleCardGrid({
       {/* Only the returned cards are shown; there are no empty placeholders. */}
       <ul
         aria-label="การ์ดเมนู"
-        className={`-mx-2 flex min-w-0 items-start snap-x snap-mandatory scroll-px-2 gap-4 overflow-x-auto overscroll-x-contain px-2 pt-1 pb-3 motion-safe:scroll-smooth sm:mx-0 sm:grid sm:items-stretch sm:snap-none sm:overflow-visible sm:p-0 ${shortlist.slots.length > 1 ? "after:w-4 after:shrink-0 after:content-[''] sm:after:hidden" : ''} ${gridColumns[shortlist.slots.length - 1] ?? ''}`}
+        className={`-mx-2 flex min-w-0 items-stretch snap-x snap-mandatory scroll-px-2 gap-4 overflow-x-auto overscroll-x-contain px-2 pt-1 pb-3 motion-safe:scroll-smooth sm:mx-0 sm:grid sm:items-stretch sm:snap-none sm:overflow-visible sm:p-0 ${shortlist.slots.length > 1 ? "after:w-4 after:shrink-0 after:content-[''] sm:after:hidden" : ''} ${gridColumns[shortlist.slots.length - 1] ?? ''}`}
         onScroll={(event) => {
           const rail = event.currentTarget
           const left = rail.getBoundingClientRect().left
