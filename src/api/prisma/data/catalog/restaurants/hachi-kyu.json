@@ -1,0 +1,665 @@
+{
+  "slug": "hachi-kyu",
+  "zone": "kotchapol",
+  "name": {
+    "th": "ฮา จิ คิว",
+    "en": "Hachi Kyu"
+  },
+  "description": {
+    "th": "ร้านอาหารญี่ปุ่นในโครงการคชพลแลนด์ เด่นเรื่องข้าวแกงกะหรี่ ราเมงและอุด้งแกงกะหรี่ คัตสึด้ง และซอสสูตรของร้าน",
+    "en": "Japanese shop in Kotchapol Land known for curry rice, curry ramen and udon, katsudon and its own house sauce."
+  },
+  "phone": null,
+  "source": {
+    "type": "grab-screenshot",
+    "capturedOn": "2026-10-27",
+    "pricesInclude": "grab-delivery-markup"
+  },
+  "menuItems": [
+    {
+      "slug": "curry-fried-rice-pork-katsu",
+      "name": {
+        "th": "ข้าวผัดแกงกะหรี่ญี่ปุ่น",
+        "en": "Japanese Curry Fried Rice with Pork Katsu"
+      },
+      "description": {
+        "th": "ข้าวผัดแกงกะหรี่ญี่ปุ่น ท็อปหมูทอดชุบเกล็ดขนมปังหั่นชิ้น",
+        "en": "Rice stir-fried with Japanese curry, topped with a sliced breaded pork cutlet."
+      },
+      "price": 82,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "savory",
+        "crispy",
+        "spiced-smoky"
+      ],
+      "review": null,
+      "photo": "curry-fried-rice"
+    },
+    {
+      "slug": "mala-katsudon",
+      "name": {
+        "th": "คัตสึด้ง หม่าล่าซอส",
+        "en": "Mala Katsudon"
+      },
+      "description": {
+        "th": "ข้าวหน้าหมูทอดราดไข่ โรยผงหม่าล่าเผ็ดชา",
+        "en": "Katsudon of breaded pork and egg on rice, seasoned with numbing-spicy mala."
+      },
+      "price": 76,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "spicy",
+        "savory",
+        "crispy"
+      ],
+      "review": null,
+      "photo": "mala-katsudon"
+    },
+    {
+      "slug": "hachi-sauce-fried-chicken-rice",
+      "name": {
+        "th": "ข้าวไก่ทอดราดซอสฮาจิคิว",
+        "en": "Fried Chicken Rice with Hachi Kyu Sauce"
+      },
+      "description": {
+        "th": "ไก่ชุบเกล็ดขนมปังทอด ราดซอสสูตรของร้าน โรยสาหร่าย เสิร์ฟบนข้าว",
+        "en": "Breaded fried chicken with the shop's own sauce and shredded nori, on rice."
+      },
+      "price": 71,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "savory",
+        "sweet",
+        "crispy"
+      ],
+      "review": null,
+      "photo": "hachi-sauce-katsu-rice"
+    },
+    {
+      "slug": "hachi-sauce-fried-pork-rice",
+      "name": {
+        "th": "ข้าวหมูทอดราดซอสฮาจิคิว",
+        "en": "Fried Pork Rice with Hachi Kyu Sauce"
+      },
+      "description": {
+        "th": "หมูชุบเกล็ดขนมปังทอด ราดซอสสูตรของร้าน โรยสาหร่าย เสิร์ฟบนข้าว",
+        "en": "Breaded fried pork with the shop's own sauce and shredded nori, on rice."
+      },
+      "price": 71,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "savory",
+        "sweet",
+        "crispy"
+      ],
+      "review": null,
+      "photo": "hachi-sauce-katsu-rice"
+    },
+    {
+      "slug": "hachi-sauce-fried-fish-rice",
+      "name": {
+        "th": "ข้าวปลาทอดราดซอสฮาจิคิว",
+        "en": "Fried Fish Rice with Hachi Kyu Sauce"
+      },
+      "description": {
+        "th": "ปลาชุบเกล็ดขนมปังทอด ราดซอสสูตรของร้าน โรยสาหร่าย เสิร์ฟบนข้าว",
+        "en": "Breaded fried fish with the shop's own sauce and shredded nori, on rice."
+      },
+      "price": 71,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "savory",
+        "sweet",
+        "crispy"
+      ],
+      "review": null,
+      "photo": "hachi-sauce-katsu-rice"
+    },
+    {
+      "slug": "chicken-katsu-curry-rice",
+      "name": {
+        "th": "ข้าวแกงกะหรี่ญี่ปุ่นไก่ทอด",
+        "en": "Japanese Curry Rice with Fried Chicken"
+      },
+      "description": {
+        "th": "ข้าวแกงกะหรี่ญี่ปุ่นกับไก่ชุบเกล็ดขนมปังทอด",
+        "en": "Japanese curry rice with a breaded fried chicken cutlet."
+      },
+      "price": 78,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "savory",
+        "crispy",
+        "spiced-smoky"
+      ],
+      "review": null,
+      "photo": "chicken-katsu-curry-rice"
+    },
+    {
+      "slug": "tonkatsu-curry-rice",
+      "name": {
+        "th": "ข้าวแกงกะหรี่ญี่ปุ่นหมูทอด",
+        "en": "Japanese Curry Rice with Pork Tonkatsu"
+      },
+      "description": {
+        "th": "ข้าวแกงกะหรี่ญี่ปุ่นกับหมูทงคัตสึทอดกรอบ",
+        "en": "Japanese curry rice with a crispy pork tonkatsu cutlet."
+      },
+      "price": 78,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "savory",
+        "crispy",
+        "spiced-smoky"
+      ],
+      "review": null,
+      "photo": "tonkatsu-curry-rice"
+    },
+    {
+      "slug": "fish-katsu-curry-rice",
+      "name": {
+        "th": "ข้าวแกงกะหรี่ญี่ปุ่นปลาทอด",
+        "en": "Japanese Curry Rice with Fried Fish"
+      },
+      "description": {
+        "th": "ข้าวแกงกะหรี่ญี่ปุ่นกับปลาชุบเกล็ดขนมปังทอด",
+        "en": "Japanese curry rice with breaded fried fish."
+      },
+      "price": 78,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "savory",
+        "crispy",
+        "spiced-smoky"
+      ],
+      "review": null,
+      "photo": "fish-katsu-curry-rice"
+    },
+    {
+      "slug": "lava-egg-pork-curry-rice",
+      "name": {
+        "th": "ข้าวแกงกะหรี่ญี่ปุ่นไข่ลาวาหมู",
+        "en": "Japanese Pork Curry Rice with Lava Egg"
+      },
+      "description": {
+        "th": "ข้าวแกงกะหรี่ญี่ปุ่นกับหมูชิ้น ท็อปไข่ลาวานุ่ม",
+        "en": "Japanese pork curry rice topped with a soft, runny lava egg."
+      },
+      "price": 78,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "savory",
+        "creamy-rich",
+        "spiced-smoky"
+      ],
+      "review": null,
+      "photo": "lava-egg-curry-rice"
+    },
+    {
+      "slug": "lava-egg-chicken-curry-rice",
+      "name": {
+        "th": "ข้าวแกงกะหรี่ญี่ปุ่นไข่ลาวาไก่",
+        "en": "Japanese Chicken Curry Rice with Lava Egg"
+      },
+      "description": {
+        "th": "ข้าวแกงกะหรี่ญี่ปุ่นกับไก่ชิ้น ท็อปไข่ลาวานุ่ม",
+        "en": "Japanese chicken curry rice topped with a soft, runny lava egg."
+      },
+      "price": 78,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "savory",
+        "creamy-rich",
+        "spiced-smoky"
+      ],
+      "review": null,
+      "photo": "lava-egg-curry-rice"
+    },
+    {
+      "slug": "chicken-curry-rice",
+      "name": {
+        "th": "ข้าวแกงกะหรี่ญี่ปุ่นไก่",
+        "en": "Japanese Chicken Curry Rice"
+      },
+      "description": {
+        "th": "ไก่ชิ้นในแกงกะหรี่ญี่ปุ่นกับแครอทและมันฝรั่ง เสิร์ฟกับข้าว",
+        "en": "Chicken pieces in Japanese curry with carrot and potato, served with rice."
+      },
+      "price": 74,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "savory",
+        "spiced-smoky"
+      ],
+      "review": null,
+      "photo": "chicken-curry-rice"
+    },
+    {
+      "slug": "pork-curry-rice",
+      "name": {
+        "th": "ข้าวแกงกะหรี่ญี่ปุ่นหมู",
+        "en": "Japanese Pork Curry Rice"
+      },
+      "description": {
+        "th": "หมูชิ้นในแกงกะหรี่ญี่ปุ่นกับแครอทและมันฝรั่ง เสิร์ฟกับข้าว",
+        "en": "Pork pieces in Japanese curry with carrot and potato, served with rice."
+      },
+      "price": 74,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "savory",
+        "spiced-smoky"
+      ],
+      "review": null,
+      "photo": "pork-curry-rice"
+    },
+    {
+      "slug": "boiled-egg-curry-rice",
+      "name": {
+        "th": "ข้าวแกงกะหรี่ญี่ปุ่นไข่ต้ม",
+        "en": "Japanese Curry Rice with Boiled Egg"
+      },
+      "description": {
+        "th": "ข้าวแกงกะหรี่ญี่ปุ่นกับไข่ต้มผ่าซีก",
+        "en": "Japanese curry rice with halved boiled eggs."
+      },
+      "price": 64,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "savory",
+        "spiced-smoky"
+      ],
+      "review": null,
+      "photo": "boiled-egg-curry-rice"
+    },
+    {
+      "slug": "curry-ramen-fried-chicken",
+      "name": {
+        "th": "ราเมงแกงกะหรี่ไก่ทอด",
+        "en": "Curry Ramen with Fried Chicken"
+      },
+      "description": {
+        "th": "เส้นราเมงในน้ำแกงกะหรี่ญี่ปุ่น ท็อปไก่ทอดชุบเกล็ดขนมปัง",
+        "en": "Ramen noodles in Japanese curry broth, topped with breaded fried chicken."
+      },
+      "price": 83,
+      "foodType": "noodles",
+      "tastes": [
+        "savory",
+        "crispy",
+        "spiced-smoky"
+      ],
+      "review": null,
+      "photo": "curry-ramen-katsu"
+    },
+    {
+      "slug": "curry-ramen-fried-pork",
+      "name": {
+        "th": "ราเมงแกงกะหรี่หมูทอด",
+        "en": "Curry Ramen with Fried Pork"
+      },
+      "description": {
+        "th": "เส้นราเมงในน้ำแกงกะหรี่ญี่ปุ่น ท็อปหมูทอดชุบเกล็ดขนมปัง",
+        "en": "Ramen noodles in Japanese curry broth, topped with a breaded pork cutlet."
+      },
+      "price": 83,
+      "foodType": "noodles",
+      "tastes": [
+        "savory",
+        "crispy",
+        "spiced-smoky"
+      ],
+      "review": null,
+      "photo": "curry-ramen-katsu"
+    },
+    {
+      "slug": "curry-ramen-fried-fish",
+      "name": {
+        "th": "ราเมงแกงกะหรี่ปลาทอด",
+        "en": "Curry Ramen with Fried Fish"
+      },
+      "description": {
+        "th": "เส้นราเมงในน้ำแกงกะหรี่ญี่ปุ่น ท็อปปลาทอดชุบเกล็ดขนมปัง",
+        "en": "Ramen noodles in Japanese curry broth, topped with breaded fried fish."
+      },
+      "price": 83,
+      "foodType": "noodles",
+      "tastes": [
+        "savory",
+        "crispy",
+        "spiced-smoky"
+      ],
+      "review": null,
+      "photo": "curry-ramen-katsu"
+    },
+    {
+      "slug": "curry-ramen-chicken",
+      "name": {
+        "th": "ราเมงแกงกะหรี่ไก่",
+        "en": "Chicken Curry Ramen"
+      },
+      "description": {
+        "th": "เส้นราเมงในน้ำแกงกะหรี่ญี่ปุ่นกับไก่ชิ้น",
+        "en": "Ramen noodles in Japanese curry broth with chicken pieces."
+      },
+      "price": 77,
+      "foodType": "noodles",
+      "tastes": [
+        "savory",
+        "spiced-smoky"
+      ],
+      "review": null,
+      "photo": "curry-ramen"
+    },
+    {
+      "slug": "curry-ramen-pork",
+      "name": {
+        "th": "ราเมงแกงกะหรี่หมู",
+        "en": "Pork Curry Ramen"
+      },
+      "description": {
+        "th": "เส้นราเมงในน้ำแกงกะหรี่ญี่ปุ่นกับหมูชิ้น",
+        "en": "Ramen noodles in Japanese curry broth with pork pieces."
+      },
+      "price": 77,
+      "foodType": "noodles",
+      "tastes": [
+        "savory",
+        "spiced-smoky"
+      ],
+      "review": null,
+      "photo": "curry-ramen"
+    },
+    {
+      "slug": "curry-udon-fried-chicken",
+      "name": {
+        "th": "อุด้งแกงกะหรี่ไก่ทอด",
+        "en": "Curry Udon with Fried Chicken"
+      },
+      "description": {
+        "th": "เส้นอุด้งในน้ำแกงกะหรี่ญี่ปุ่น ท็อปไก่ทอดชุบเกล็ดขนมปัง",
+        "en": "Udon noodles in Japanese curry broth, topped with breaded fried chicken."
+      },
+      "price": 97,
+      "foodType": "noodles",
+      "tastes": [
+        "savory",
+        "crispy",
+        "spiced-smoky"
+      ],
+      "review": null,
+      "photo": "curry-udon-katsu"
+    },
+    {
+      "slug": "curry-udon-fried-pork",
+      "name": {
+        "th": "อุด้งแกงกะหรี่หมูทอด",
+        "en": "Curry Udon with Fried Pork"
+      },
+      "description": {
+        "th": "เส้นอุด้งในน้ำแกงกะหรี่ญี่ปุ่น ท็อปหมูทอดชุบเกล็ดขนมปัง",
+        "en": "Udon noodles in Japanese curry broth, topped with a breaded pork cutlet."
+      },
+      "price": 97,
+      "foodType": "noodles",
+      "tastes": [
+        "savory",
+        "crispy",
+        "spiced-smoky"
+      ],
+      "review": null,
+      "photo": "curry-udon-katsu"
+    },
+    {
+      "slug": "curry-udon-fried-fish",
+      "name": {
+        "th": "อุด้งแกงกะหรี่ปลาชุบแป้งทอด",
+        "en": "Curry Udon with Fried Fish"
+      },
+      "description": {
+        "th": "เส้นอุด้งในน้ำแกงกะหรี่ญี่ปุ่น ท็อปปลาชุบแป้งทอด",
+        "en": "Udon noodles in Japanese curry broth, topped with battered fried fish."
+      },
+      "price": 97,
+      "foodType": "noodles",
+      "tastes": [
+        "savory",
+        "crispy",
+        "spiced-smoky"
+      ],
+      "review": null,
+      "photo": "curry-udon-katsu"
+    },
+    {
+      "slug": "curry-udon-chicken",
+      "name": {
+        "th": "อุด้งแกงกะหรี่ไก่ชิ้น",
+        "en": "Chicken Curry Udon"
+      },
+      "description": {
+        "th": "เส้นอุด้งในน้ำแกงกะหรี่ญี่ปุ่นกับไก่ชิ้น",
+        "en": "Udon noodles in Japanese curry broth with chicken pieces."
+      },
+      "price": 93,
+      "foodType": "noodles",
+      "tastes": [
+        "savory",
+        "spiced-smoky"
+      ],
+      "review": null,
+      "photo": "curry-udon"
+    },
+    {
+      "slug": "curry-udon-pork",
+      "name": {
+        "th": "อุด้งแกงกะหรี่หมูชิ้น",
+        "en": "Pork Curry Udon"
+      },
+      "description": {
+        "th": "เส้นอุด้งในน้ำแกงกะหรี่ญี่ปุ่นกับหมูชิ้น",
+        "en": "Udon noodles in Japanese curry broth with pork pieces."
+      },
+      "price": 93,
+      "foodType": "noodles",
+      "tastes": [
+        "savory",
+        "spiced-smoky"
+      ],
+      "review": null,
+      "photo": "curry-udon"
+    },
+    {
+      "slug": "katsudon",
+      "name": {
+        "th": "ข้าวหน้าคัตสึด้ง",
+        "en": "Katsudon (Pork Cutlet and Egg Rice Bowl)"
+      },
+      "description": {
+        "th": "หมูทอดชุบเกล็ดขนมปังเคี่ยวกับไข่และซอสหวานเค็ม บนข้าว",
+        "en": "Breaded pork cutlet simmered with egg in a sweet-savoury sauce over rice."
+      },
+      "price": 78,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "savory",
+        "sweet"
+      ],
+      "review": null,
+      "photo": "katsudon"
+    },
+    {
+      "slug": "chicken-katsudon",
+      "name": {
+        "th": "คัตสึด้งไก่ทอด",
+        "en": "Chicken Katsudon"
+      },
+      "description": {
+        "th": "ไก่ทอดชุบเกล็ดขนมปังเคี่ยวกับไข่และซอส บนข้าว",
+        "en": "Breaded fried chicken simmered with egg and sauce over rice."
+      },
+      "price": 78,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "savory",
+        "sweet"
+      ],
+      "review": null,
+      "photo": "chicken-katsudon"
+    },
+    {
+      "slug": "fish-katsudon",
+      "name": {
+        "th": "คัตสึด้งปลาทอด",
+        "en": "Fish Katsudon"
+      },
+      "description": {
+        "th": "ปลาทอดชุบเกล็ดขนมปังเคี่ยวกับไข่และซอส บนข้าว",
+        "en": "Breaded fried fish simmered with egg and sauce over rice."
+      },
+      "price": 78,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "savory",
+        "sweet"
+      ],
+      "review": null,
+      "photo": "fish-katsudon"
+    },
+    {
+      "slug": "bibimbap",
+      "name": {
+        "th": "ข้าวยำซอสเกาหลี",
+        "en": "Korean Mixed Rice (Bibimbap)"
+      },
+      "description": {
+        "th": "ข้าวหน้าผักต่าง ๆ หมูสับ และสาหร่าย ราดซอสโคชูจัง คลุกก่อนทาน",
+        "en": "Rice topped with vegetables, minced pork and seaweed with gochujang sauce, mixed before eating."
+      },
+      "price": 75,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "spicy",
+        "savory",
+        "fresh-light"
+      ],
+      "review": null,
+      "photo": "bibimbap"
+    },
+    {
+      "slug": "teriyaki-chicken-stir-fry-rice",
+      "name": {
+        "th": "ข้าวไก่ผัดซอสเทอริยากิ",
+        "en": "Teriyaki Chicken Stir-fry with Rice"
+      },
+      "description": {
+        "th": "ไก่ผัดซอสเทอริยากิกับหอมใหญ่ เสิร์ฟกับข้าว",
+        "en": "Chicken stir-fried with onion in teriyaki sauce, served with rice."
+      },
+      "price": 75,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "savory",
+        "sweet"
+      ],
+      "review": null,
+      "photo": "teriyaki-chicken-rice"
+    },
+    {
+      "slug": "teriyaki-pork-stir-fry-rice",
+      "name": {
+        "th": "ข้าวหมูผัดซอสเทอริยากิ",
+        "en": "Teriyaki Pork Stir-fry on Rice"
+      },
+      "description": {
+        "th": "หมูสไลซ์ผัดซอสเทอริยากิ โรยงา บนข้าว",
+        "en": "Sliced pork stir-fried in teriyaki sauce with sesame, on rice."
+      },
+      "price": 75,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "savory",
+        "sweet"
+      ],
+      "review": null,
+      "photo": "teriyaki-pork-rice"
+    },
+    {
+      "slug": "oyakodon",
+      "name": {
+        "th": "ข้าวหน้าไก่",
+        "en": "Oyakodon (Chicken and Egg Rice Bowl)"
+      },
+      "description": {
+        "th": "ไก่เคี่ยวกับไข่และหอมใหญ่ในซอสหวานเค็ม บนข้าว",
+        "en": "Chicken simmered with egg and onion in a sweet-savoury sauce over rice."
+      },
+      "price": 78,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "savory",
+        "sweet"
+      ],
+      "review": null,
+      "photo": "oyakodon"
+    },
+    {
+      "slug": "pork-egg-rice-bowl",
+      "name": {
+        "th": "ข้าวหน้าหมู",
+        "en": "Pork and Egg Rice Bowl"
+      },
+      "description": {
+        "th": "หมูเคี่ยวกับไข่และหอมใหญ่ในซอสหวานเค็ม บนข้าว",
+        "en": "Pork simmered with egg and onion in a sweet-savoury sauce over rice."
+      },
+      "price": 78,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "savory",
+        "sweet"
+      ],
+      "review": null,
+      "photo": "pork-egg-rice-bowl"
+    },
+    {
+      "slug": "pork-gyudon",
+      "name": {
+        "th": "ข้าวหน้ากิ๊วด้ง (หมู)",
+        "en": "Gyudon-style Pork Rice Bowl"
+      },
+      "description": {
+        "th": "หมูสไลซ์เคี่ยวซอสสไตล์กิ๊วด้ง ท็อปไข่และสาหร่าย บนข้าว",
+        "en": "Gyudon-style simmered sliced pork with egg and nori over rice."
+      },
+      "price": 78,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "savory",
+        "sweet"
+      ],
+      "review": null,
+      "photo": "pork-gyudon"
+    },
+    {
+      "slug": "kimchi-chicken-rice",
+      "name": {
+        "th": "ข้าวไก่ผัดกิมจิ",
+        "en": "Kimchi Chicken Stir-fry with Rice"
+      },
+      "description": {
+        "th": "ไก่ผัดกิมจิรสเผ็ดเปรี้ยว เสิร์ฟกับข้าว",
+        "en": "Chicken stir-fried with kimchi, spicy and tangy, served with rice."
+      },
+      "price": 77,
+      "foodType": "rice-dishes",
+      "tastes": [
+        "spicy",
+        "sour",
+        "savory"
+      ],
+      "review": null,
+      "photo": "kimchi-chicken-rice"
+    }
+  ]
+}

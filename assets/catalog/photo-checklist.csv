@@ -189,6 +189,39 @@ gindon,premium-beef-rice-bowl-mala,ข้าวหน้าเนื้อพร
 gindon,flat-iron-beef-rice-bowl-mala,ข้าวหน้าเนื้อใบพาย + ไข่ออนเซ็น หม่าล่า,Mala Flat Iron Beef Rice Bowl with Onsen Egg,rice-dishes,assets/catalog/gindon/menus/flat-iron-beef-rice-bowl-mala.png,missing,flat-iron-beef-rice-bowl-mala,stock
 gindon,shrimp-rice-bowl-mala,ข้าวหน้ากุ้งย่าง หม่าล่า,Mala Grilled Shrimp Rice Bowl,rice-dishes,assets/catalog/gindon/menus/shrimp-rice-bowl-mala.png,missing,shrimp-rice-bowl-mala,none
 gindon,salmon-rice-bowl-mala,ข้าวหน้าแซลม่อนย่าง หม่าล่า,Mala Grilled Salmon Rice Bowl,rice-dishes,assets/catalog/gindon/menus/salmon-rice-bowl-mala.png,missing,salmon-rice-bowl-mala,none
+hachi-kyu,curry-fried-rice-pork-katsu,ข้าวผัดแกงกะหรี่ญี่ปุ่น,Japanese Curry Fried Rice with Pork Katsu,rice-dishes,assets/catalog/hachi-kyu/menus/curry-fried-rice-pork-katsu.png,missing,curry-fried-rice,none
+hachi-kyu,mala-katsudon,คัตสึด้ง หม่าล่าซอส,Mala Katsudon,rice-dishes,assets/catalog/hachi-kyu/menus/mala-katsudon.png,missing,mala-katsudon,none
+hachi-kyu,hachi-sauce-fried-chicken-rice,ข้าวไก่ทอดราดซอสฮาจิคิว,Fried Chicken Rice with Hachi Kyu Sauce,rice-dishes,assets/catalog/hachi-kyu/menus/hachi-sauce-fried-chicken-rice.png,missing,hachi-sauce-katsu-rice,none
+hachi-kyu,hachi-sauce-fried-pork-rice,ข้าวหมูทอดราดซอสฮาจิคิว,Fried Pork Rice with Hachi Kyu Sauce,rice-dishes,assets/catalog/hachi-kyu/menus/hachi-sauce-fried-pork-rice.png,missing,hachi-sauce-katsu-rice,none
+hachi-kyu,hachi-sauce-fried-fish-rice,ข้าวปลาทอดราดซอสฮาจิคิว,Fried Fish Rice with Hachi Kyu Sauce,rice-dishes,assets/catalog/hachi-kyu/menus/hachi-sauce-fried-fish-rice.png,missing,hachi-sauce-katsu-rice,none
+hachi-kyu,chicken-katsu-curry-rice,ข้าวแกงกะหรี่ญี่ปุ่นไก่ทอด,Japanese Curry Rice with Fried Chicken,rice-dishes,assets/catalog/hachi-kyu/menus/chicken-katsu-curry-rice.png,missing,chicken-katsu-curry-rice,none
+hachi-kyu,tonkatsu-curry-rice,ข้าวแกงกะหรี่ญี่ปุ่นหมูทอด,Japanese Curry Rice with Pork Tonkatsu,rice-dishes,assets/catalog/hachi-kyu/menus/tonkatsu-curry-rice.png,missing,tonkatsu-curry-rice,none
+hachi-kyu,fish-katsu-curry-rice,ข้าวแกงกะหรี่ญี่ปุ่นปลาทอด,Japanese Curry Rice with Fried Fish,rice-dishes,assets/catalog/hachi-kyu/menus/fish-katsu-curry-rice.png,missing,fish-katsu-curry-rice,none
+hachi-kyu,lava-egg-pork-curry-rice,ข้าวแกงกะหรี่ญี่ปุ่นไข่ลาวาหมู,Japanese Pork Curry Rice with Lava Egg,rice-dishes,assets/catalog/hachi-kyu/menus/lava-egg-pork-curry-rice.png,missing,lava-egg-curry-rice,none
+hachi-kyu,lava-egg-chicken-curry-rice,ข้าวแกงกะหรี่ญี่ปุ่นไข่ลาวาไก่,Japanese Chicken Curry Rice with Lava Egg,rice-dishes,assets/catalog/hachi-kyu/menus/lava-egg-chicken-curry-rice.png,missing,lava-egg-curry-rice,none
+hachi-kyu,chicken-curry-rice,ข้าวแกงกะหรี่ญี่ปุ่นไก่,Japanese Chicken Curry Rice,rice-dishes,assets/catalog/hachi-kyu/menus/chicken-curry-rice.png,missing,chicken-curry-rice,none
+hachi-kyu,pork-curry-rice,ข้าวแกงกะหรี่ญี่ปุ่นหมู,Japanese Pork Curry Rice,rice-dishes,assets/catalog/hachi-kyu/menus/pork-curry-rice.png,missing,pork-curry-rice,none
+hachi-kyu,boiled-egg-curry-rice,ข้าวแกงกะหรี่ญี่ปุ่นไข่ต้ม,Japanese Curry Rice with Boiled Egg,rice-dishes,assets/catalog/hachi-kyu/menus/boiled-egg-curry-rice.png,missing,boiled-egg-curry-rice,none
+hachi-kyu,curry-ramen-fried-chicken,ราเมงแกงกะหรี่ไก่ทอด,Curry Ramen with Fried Chicken,noodles,assets/catalog/hachi-kyu/menus/curry-ramen-fried-chicken.png,missing,curry-ramen-katsu,none
+hachi-kyu,curry-ramen-fried-pork,ราเมงแกงกะหรี่หมูทอด,Curry Ramen with Fried Pork,noodles,assets/catalog/hachi-kyu/menus/curry-ramen-fried-pork.png,missing,curry-ramen-katsu,none
+hachi-kyu,curry-ramen-fried-fish,ราเมงแกงกะหรี่ปลาทอด,Curry Ramen with Fried Fish,noodles,assets/catalog/hachi-kyu/menus/curry-ramen-fried-fish.png,missing,curry-ramen-katsu,none
+hachi-kyu,curry-ramen-chicken,ราเมงแกงกะหรี่ไก่,Chicken Curry Ramen,noodles,assets/catalog/hachi-kyu/menus/curry-ramen-chicken.png,missing,curry-ramen,none
+hachi-kyu,curry-ramen-pork,ราเมงแกงกะหรี่หมู,Pork Curry Ramen,noodles,assets/catalog/hachi-kyu/menus/curry-ramen-pork.png,missing,curry-ramen,none
+hachi-kyu,curry-udon-fried-chicken,อุด้งแกงกะหรี่ไก่ทอด,Curry Udon with Fried Chicken,noodles,assets/catalog/hachi-kyu/menus/curry-udon-fried-chicken.png,missing,curry-udon-katsu,none
+hachi-kyu,curry-udon-fried-pork,อุด้งแกงกะหรี่หมูทอด,Curry Udon with Fried Pork,noodles,assets/catalog/hachi-kyu/menus/curry-udon-fried-pork.png,missing,curry-udon-katsu,none
+hachi-kyu,curry-udon-fried-fish,อุด้งแกงกะหรี่ปลาชุบแป้งทอด,Curry Udon with Fried Fish,noodles,assets/catalog/hachi-kyu/menus/curry-udon-fried-fish.png,missing,curry-udon-katsu,none
+hachi-kyu,curry-udon-chicken,อุด้งแกงกะหรี่ไก่ชิ้น,Chicken Curry Udon,noodles,assets/catalog/hachi-kyu/menus/curry-udon-chicken.png,missing,curry-udon,none
+hachi-kyu,curry-udon-pork,อุด้งแกงกะหรี่หมูชิ้น,Pork Curry Udon,noodles,assets/catalog/hachi-kyu/menus/curry-udon-pork.png,missing,curry-udon,none
+hachi-kyu,katsudon,ข้าวหน้าคัตสึด้ง,Katsudon (Pork Cutlet and Egg Rice Bowl),rice-dishes,assets/catalog/hachi-kyu/menus/katsudon.png,missing,katsudon,none
+hachi-kyu,chicken-katsudon,คัตสึด้งไก่ทอด,Chicken Katsudon,rice-dishes,assets/catalog/hachi-kyu/menus/chicken-katsudon.png,missing,chicken-katsudon,none
+hachi-kyu,fish-katsudon,คัตสึด้งปลาทอด,Fish Katsudon,rice-dishes,assets/catalog/hachi-kyu/menus/fish-katsudon.png,missing,fish-katsudon,none
+hachi-kyu,bibimbap,ข้าวยำซอสเกาหลี,Korean Mixed Rice (Bibimbap),rice-dishes,assets/catalog/hachi-kyu/menus/bibimbap.png,missing,bibimbap,none
+hachi-kyu,teriyaki-chicken-stir-fry-rice,ข้าวไก่ผัดซอสเทอริยากิ,Teriyaki Chicken Stir-fry with Rice,rice-dishes,assets/catalog/hachi-kyu/menus/teriyaki-chicken-stir-fry-rice.png,missing,teriyaki-chicken-rice,stock
+hachi-kyu,teriyaki-pork-stir-fry-rice,ข้าวหมูผัดซอสเทอริยากิ,Teriyaki Pork Stir-fry on Rice,rice-dishes,assets/catalog/hachi-kyu/menus/teriyaki-pork-stir-fry-rice.png,missing,teriyaki-pork-rice,none
+hachi-kyu,oyakodon,ข้าวหน้าไก่,Oyakodon (Chicken and Egg Rice Bowl),rice-dishes,assets/catalog/hachi-kyu/menus/oyakodon.png,missing,oyakodon,none
+hachi-kyu,pork-egg-rice-bowl,ข้าวหน้าหมู,Pork and Egg Rice Bowl,rice-dishes,assets/catalog/hachi-kyu/menus/pork-egg-rice-bowl.png,missing,pork-egg-rice-bowl,none
+hachi-kyu,pork-gyudon,ข้าวหน้ากิ๊วด้ง (หมู),Gyudon-style Pork Rice Bowl,rice-dishes,assets/catalog/hachi-kyu/menus/pork-gyudon.png,missing,pork-gyudon,none
+hachi-kyu,kimchi-chicken-rice,ข้าวไก่ผัดกิมจิ,Kimchi Chicken Stir-fry with Rice,rice-dishes,assets/catalog/hachi-kyu/menus/kimchi-chicken-rice.png,missing,kimchi-chicken-rice,none
 heng-heng-suki,suki-sauce-rice-bowl,ข้าวหน้าน้ำจิ้มสุกี้,Suki Sauce Rice Bowl,rice-dishes,assets/catalog/heng-heng-suki/menus/suki-sauce-rice-bowl.png,missing,suki-sauce-rice-bowl,none
 heng-heng-suki,dry-suki-vegetable,สุกี้แห้งผัก,Dry Sukiyaki with Vegetables,noodles,assets/catalog/heng-heng-suki/menus/dry-suki-vegetable.png,missing,dry-suki-vegetable,none
 heng-heng-suki,dry-suki-chicken,สุกี้แห้งไก่,Dry Sukiyaki with Chicken,noodles,assets/catalog/heng-heng-suki/menus/dry-suki-chicken.png,missing,dry-suki-chicken,none
