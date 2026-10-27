@@ -259,7 +259,7 @@ export function adjustmentMessage({ changes, resultCount }: Adjustment) {
     ({ field, from, to }) =>
       `${adjustmentFieldLabels[field]}จาก “${from.label.th}” เป็น “${to.label.th}”`,
   )
-  return `ยังไม่มีเมนูตรงที่เลือกเลย เลยลองปรับ${parts.join(' และ')} ให้แล้ว เจอ ${resultCount} เมนูที่เข้ากัน ลองดูการ์ดข้างล่างได้เลย`
+  return `ยังไม่เจอเมนูที่ตรงครบทุกข้อ เลยปรับ${parts.join(' และ')} ให้แล้ว เจอ ${resultCount} เมนูแล้ว ลองดูการ์ดด้านล่างได้เลย`
 }
 
 // Compare actual menu data to the original answers, never the alternate request's rationale.

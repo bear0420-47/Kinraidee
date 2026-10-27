@@ -1,0 +1,3 @@
+# Short result conditions — 2026-10-27
+
+User narrowed the refinement to the four result conditions. Remove repeated visible category labels, retain only selected values and pencils, and use single-line ellipsis with complete aria-label/title. Keep direct edit, four conditions, busy state, 44px targets, full edit-screen labels and all values unchanged. Reuse compact ConditionSummary only; three top actions remain unchanged because removal was not confirmed. Plan/design synchronized and prior versions archived. Existing regression 57/57, web typecheck/build/lint/format and local responsive inspection passed; details in docs/verification.md.

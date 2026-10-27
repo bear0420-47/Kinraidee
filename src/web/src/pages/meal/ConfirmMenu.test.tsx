@@ -3,11 +3,12 @@ import { describe, expect, it } from 'vitest'
 
 import { RECOMMENDATION_STORAGE_KEY } from '@/schemas/meal/recommendationSchemas'
 import {
+  cards,
   curry,
   fakeShuffleApi,
   krapao,
   noodles,
-  revealCard,
+  shownCard,
   shuffleCards,
   somtam,
   type User,
@@ -55,7 +56,6 @@ describe('Confirming a menu', () => {
     const api = fakeShuffleApi({ results: [{ items: [withPhoto, noodles] }] })
     const { user } = renderApp('/meal')
     await shuffleCards(user)
-    await user.click(screen.getByRole('button', { name: 'เปิดทั้งหมด' }))
 
     const confirm = within(await chooseMenu(user, 'ผัดกะเพรา'))
     expect(confirm.getByText('ผัดกะเพรา')).toBeTruthy()
@@ -88,7 +88,6 @@ describe('Confirming a menu', () => {
     fakeShuffleApi({ results: [{ items: [krapao, brokenPhoto] }] })
     const { user } = renderApp('/meal')
     await shuffleCards(user)
-    await user.click(screen.getByRole('button', { name: 'เปิดทั้งหมด' }))
 
     expect(
       within(await chooseMenu(user, 'ผัดกะเพรา')).getByText('ไม่มีรูปเมนู'),
@@ -104,7 +103,7 @@ describe('Confirming a menu', () => {
     fakeShuffleApi({ results: [{ items: [krapao] }] })
     const { user } = renderApp('/meal')
     await shuffleCards(user)
-    await revealCard(user, 1)
+    await shownCard(1)
     const dialog = await chooseMenu(user, 'ผัดกะเพรา')
 
     // Opening lands on the safe action, although the favorite button comes first.
@@ -144,13 +143,13 @@ describe('Thinking again', () => {
       })
       const { user } = renderApp('/meal')
       await shuffleCards(user)
-      // A rejected card with a face-down replacement, one revealed card, and an undo record.
-      await revealCard(user, 1)
+      // A rejected card with a visible replacement and an undo record.
+      await shownCard(1)
       await user.click(
         screen.getByRole('button', { name: 'ขอดูเมนูอื่นแทน ผัดกะเพรา' }),
       )
-      await screen.findByRole('button', { name: 'เปิดการ์ดใบที่ 1' })
-      await revealCard(user, 2)
+      await shownCard(1)
+      await shownCard(2)
       const before = sessionStorage.getItem(RECOMMENDATION_STORAGE_KEY)
 
       await chooseMenu(user, 'ก๋วยเตี๋ยว')
@@ -158,12 +157,8 @@ describe('Thinking again', () => {
 
       expect(screen.queryByRole('dialog')).toBeNull()
       expect(sessionStorage.getItem(RECOMMENDATION_STORAGE_KEY)).toBe(before)
-      expect(
-        screen.getByRole('button', { name: 'เปิดการ์ดใบที่ 1' }),
-      ).toBeTruthy()
-      expect(
-        screen.getByRole('button', { name: 'เปิดการ์ดใบที่ 3' }),
-      ).toBeTruthy()
+      expect(within(cards()[1 - 1]!).getByRole('article')).toBeTruthy()
+      expect(within(cards()[3 - 1]!).getByRole('article')).toBeTruthy()
       expect(
         screen.getByRole('button', { name: 'เอาเมนูเดิมกลับมา' }),
       ).toBeTruthy()
@@ -180,7 +175,7 @@ describe('Reopening', () => {
     fakeShuffleApi({ results: [{ items: [krapao, noodles] }] })
     const first = renderApp('/meal')
     await shuffleCards(first.user)
-    await revealCard(first.user, 1)
+    await shownCard(1)
     await chooseMenu(first.user, 'ผัดกะเพรา')
     const stored = sessionStorage.getItem(RECOMMENDATION_STORAGE_KEY)!
     expect(JSON.parse(stored).shortlist.chosenMenuItemId).toBe('menu_1')
@@ -207,7 +202,7 @@ describe('Reopening', () => {
 describe('Success', () => {
   async function confirmMenu(user: User) {
     await shuffleCards(user)
-    await revealCard(user, 1)
+    await shownCard(1)
     await chooseMenu(user, 'ผัดกะเพรา')
     await user.click(screen.getByRole('button', { name: 'เอาเมนูนี้แหละ' }))
     return screen.findByRole('dialog', { name: 'มื้อนี้ได้แล้ว!' })

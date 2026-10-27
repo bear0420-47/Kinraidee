@@ -1,5 +1,8 @@
 # Kinraidee Feature List
 
+Immediate-results amendment approved 2026-10-27: initial, replacement, restored and undone menu results are visible immediately; no face-down state, reveal action or Reveal all step. This supersedes historical reveal descriptions below. Existing edit/reset, direct condition edits, mobile paging, confirm-only history and all filtering remain. Existing non-blocking Places hooks run when a returned restaurant is displayed. The same five journey steps apply; steps 3-4 now show and compare menus directly.
+
+
 ## Status
 
 Approved — synchronized with the approved backlog; AI/Places additions were approved by the human project owner on 2026-10-24 and automatic no-match adjustment was approved on 2026-10-26. Exactly one core feature is marked with `★`.

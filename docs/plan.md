@@ -1,5 +1,149 @@
 # Implementation Plan
 
+## Balanced compact result buttons — 2026-10-27
+
+Human requested similarly sized buttons without the first button stretching across the remaining phone width. Reuse the same outlined buttons in a content-sized two-column grid; equal column widths, gap-2, full labels, existing mobile typography/padding and touch height. Preserve the single row. Previous plan/report/design artifacts archived under evidence/archive/20261027-balanced-result-buttons/.
+
+```txt
+Module: existing ShuffleCardGrid action layout
+Requirement/backlog ID: F7; B7; NFR2, NFR12
+Legal requirement ID: LR2, LR3; unchanged data boundaries
+Design artifact: equal-width content-sized result action pair
+API routes: unchanged
+Web pages: /meal results
+Personal data: unchanged session state and retention/deletion
+Authorization: existing anonymous/account flow
+Tests: existing result-action regression, web build/typecheck/lint/format and mobile geometry
+```
+
+Scope checklist complete; styling-only change explicitly approved by user.
+
+## Single-row outlined actions on mobile — 2026-10-27
+
+Human requested keeping Change conditions and Start over in one row on mobile. Reuse existing outlined ghost Buttons: a non-wrapping row, first button fills remaining phone width, second keeps its natural width, phone text-small and px-3 padding; sm restores text-body/px-5 and natural button sizing. Preserve complete labels, original borders, 48px phone height, icons, focus and busy state. Prior documents archived under evidence/archive/20261027-single-row-result-buttons/.
+
+```txt
+Module: existing ShuffleCardGrid result actions
+Requirement/backlog ID: F7; B7; NFR2, NFR12
+Legal requirement ID: LR2, LR3; unchanged boundaries
+Design artifact: responsive outlined Button row
+API routes: unchanged
+Web pages: /meal results, mobile and desktop
+Personal data: unchanged session state and retention/deletion
+Authorization: existing anonymous/account behavior
+Tests: existing result edit/reset/busy regression; web build/typecheck/lint/format; 320px/390px/desktop browser geometry
+```
+
+Scope checklist complete. User approves this responsive-only change with existing tokens and controls.
+
+## Restore outlined result actions — 2026-10-27
+
+Human requested the original button treatment for Change conditions and Start over. Reuse Button's existing default size and ghost variant, remove local borderless/compact overrides and restore gap-2 wrapping. Keep immediately visible menus and the four compact conditions unchanged. Previous plan/report/design artifacts archived under evidence/archive/20261027-restore-result-buttons/.
+
+```txt
+Module: existing ShuffleCardGrid action presentation
+Requirement/backlog ID: F7; B7; NFR12
+Legal requirement ID: LR2, LR3; no data changes
+Design artifact: existing outlined Button treatment
+API routes: unchanged
+Web pages: /meal results
+Personal data: unchanged session state and retention/deletion
+Authorization: existing anonymous/account behavior
+Tests: existing result edit/reset/busy regression; web typecheck/build/lint and changed-file format
+```
+
+Scope checklist complete. User approves this styling-only restoration; no new component, token or dependency.
+
+## Immediately visible menu results — 2026-10-27
+
+Human approved removing manual card reveal. Reuse the existing revealed-card presentation and shortlist transitions: initial and replacement cards start revealed, stored legacy hidden cards normalize to revealed on read, and undo keeps an immediately visible previous result. Remove face-down UI and Reveal all from results, retain edit/reset, direct condition edits, selection/confirmation, exclusions, adjustment notice, mobile paging and reduced motion. Existing Places hooks now run when returned menus appear; at most three cards, existing restaurant query deduplication/caching and non-blocking failures remain. No additional recommendation request or history write on display. Prior plan/report/design/spec archived under evidence/archive/20261027-immediate-results/.
+
+```txt
+Module: existing shortlist transitions, stored-flow restore, MenuCard and ShuffleCardGrid
+Requirement/backlog ID: F2-F7, F15, F21; B2-B7, B26; NFR2, NFR8, NFR9, NFR12
+Legal requirement ID: LR2, LR3, LR7; existing request/data boundaries
+Design artifact: same five-step journey, results shown within steps 3-4; all five design artifacts synchronized
+API routes: unchanged recommendations and existing place-details GET
+Web pages: /meal initial/replacement/restored results
+Personal data: existing browser session, no added persistence/logging/history
+Authorization: anonymous results, existing account-only confirmation/history
+Tests: direct initial/replacement/legacy reload/undo display, exclusions, keyboard paging, provider failure and confirmation boundaries; full web tests, typecheck/lint/build/format and browser inspection
+```
+
+Scope checklist complete. Human request approves this presentation amendment to requirements and plan; no dependency, schema, backend or deployment change.
+
+## Shorter result-condition controls — 2026-10-27
+
+Human requested making only the four result conditions shorter and less distracting. Reuse compact ConditionSummary: show just each selected value and a small pencil, without the repeated field-label line. Use two equal columns on phones/four from sm, single-line ellipsis for long values, a subtle dashed underline and 44px targets. Preserve complete field/value accessible names and native title, full labels on the edit question, original conditions, busy disabling and edit-return. Conservatively leave the three top actions unchanged; their removal was not confirmed. Prior documents archived under evidence/archive/20261027-short-result-conditions/.
+
+```txt
+Module: existing compact ConditionSummary
+Requirement/backlog ID: F1, F3, F6, F7; B1, B3, B6, B7; NFR2, NFR12
+Legal requirement ID: LR2, LR3; unchanged boundaries
+Design artifact: compact result-condition presentation
+API routes: unchanged
+Web pages: /meal results
+Personal data: existing session values, retention/deletion unchanged
+Authorization: existing anonymous/account behavior
+Tests: existing direct edit and pending-state regression; web typecheck/lint/build/format and mobile inspection
+```
+
+Scope checklist complete. This user-authorized presentation change reuses existing controls and tokens; no data-label or API changes.
+
+## Lighter mobile result controls — 2026-10-27
+
+Human requested reducing bulky outlined result actions and condition blocks. Reuse ShuffleCardGrid, ConditionSummary and Button: compact actions with only Reveal all outlined; edit/reset become text actions. Four borderless directly editable condition controls use two columns on phones/four from sm, small muted labels, wrapping values and a small pencil. Preserve all actions, accessible names, 44px targets, focus, busy disabling and edit-return. No disclosure, truncation or new component. Prior affected documents archived under evidence/archive/20261027-results-toolbar/.
+
+```txt
+Module: existing ShuffleCardGrid and compact ConditionSummary
+Requirement/backlog ID: F1, F2, F3, F6, F7; B1, B2, B3, B6, B7; NFR2, NFR12
+Legal requirement ID: LR2, LR3; existing boundaries
+Design artifact: result toolbar and editable-condition presentation
+API routes: unchanged
+Web pages: /meal results, mobile and desktop
+Personal data: unchanged session answers, retention and deletion
+Authorization: existing anonymous/account behavior
+Tests: existing reveal/edit/reset/busy and labels regressions; web tests, typecheck, lint, build, format and responsive browser inspection where available
+```
+
+Scope checklist complete. User request approves this presentation-only refinement; no API, dependency, token or storage changes.
+
+## Clearer automatic-adjustment wording — 2026-10-27
+
+Human requested another wording refinement to the automatic-adjustment notice. Reuse adjustmentMessage, clarify that no menu matched every condition, state all from/to changes, then give the matching count and invite card browsing with shorter wording. Preserve backend order, count semantics and live/reloaded disclosure. Prior plan/report and affected design artifacts archived under evidence/archive/20261027-adjustment-copy-refinement/.
+
+```txt
+Module: existing adjustmentMessage formatter
+Requirement/backlog ID: F2, F3, F22; B2, B3, B27; NFR8, NFR12
+Legal requirement ID: LR2, LR3, LR7; existing data boundaries
+Design artifact: automatic-adjustment voice and prototype guidance
+API routes: unchanged
+Web pages: /meal results and reloaded notice
+Personal data: unchanged session-only metadata, retention and deletion
+Authorization: existing public/account behavior
+Tests: existing formatter single/multiple/count/order and rendered/reload tests; build, test, lint and format
+```
+
+Scope checklist complete. Copy-only refinement approved by the user's request; reuse existing formatter and assertions.
+
+## Reliable pointer choice progression — 2026-10-27
+
+Human approved fixing tap/click progression across devices. Restore the existing approved pointer-auto-advance contract without relying only on click detail. Track pointer activation on the existing label (including its visible chip), consume it on the radio click, and clear it on keyboard input or pointer cancellation. Keep native keyboard selection and explicit Next, saved-default activation, edit-return, and all conditions unchanged. No new module or dependency. Previous plan archived under evidence/archive/20261027-choice-pointer-fix/.
+
+```txt
+Module: existing ChoiceStep
+Requirement/backlog ID: F1, F6, F7; B1, B6, B7; NFR12
+Legal requirement ID: LR2, LR3; no new processing
+Design artifact: existing choice pointer progression and keyboard Next contract
+API routes: unchanged
+Web pages: /meal condition questions
+Personal data: existing session answers only; retention/deletion unchanged
+Authorization: existing anonymous/account flow unchanged
+Tests: zero-detail label-forwarded clicks, mouse/touch/pen, selected defaults, cancellation and keyboard regression; verify, format and wireframe checks
+```
+
+Module scope checklist complete; this is a correction to approved behavior authorized by the user's fix request.
+
 ## Friendly automatic-adjustment notice — 2026-10-27
 
 The human requested friendlier student-to-student wording for the stiff automatic-adjustment sentence while the choice-list work was in progress. Reuse adjustmentMessage only: explain that nothing matched, name every original-to-effective field change in server order, use `งบ` in this notice, retain the proven matching-result count and invite the user to inspect the cards. Keep the existing live status, stored adjustment/reload behavior, API labels, recommendation rules and provider behavior.

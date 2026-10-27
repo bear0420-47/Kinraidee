@@ -204,7 +204,7 @@ describe('adjustmentMessage', () => {
         resultCount: 4,
       }),
     ).toBe(
-      'ยังไม่มีเมนูตรงที่เลือกเลย เลยลองปรับพื้นที่จาก “คชพล” เป็น “ตลาดฟ้าไทย” ให้แล้ว เจอ 4 เมนูที่เข้ากัน ลองดูการ์ดข้างล่างได้เลย',
+      'ยังไม่เจอเมนูที่ตรงครบทุกข้อ เลยปรับพื้นที่จาก “คชพล” เป็น “ตลาดฟ้าไทย” ให้แล้ว เจอ 4 เมนูแล้ว ลองดูการ์ดด้านล่างได้เลย',
     )
   })
 
@@ -219,7 +219,7 @@ describe('adjustmentMessage', () => {
         resultCount: 1,
       }),
     ).toBe(
-      'ยังไม่มีเมนูตรงที่เลือกเลย เลยลองปรับงบจาก “฿50–100” เป็น “฿101–200” และประเภทอาหารจาก “ข้าว” เป็น “เส้น” ให้แล้ว เจอ 1 เมนูที่เข้ากัน ลองดูการ์ดข้างล่างได้เลย',
+      'ยังไม่เจอเมนูที่ตรงครบทุกข้อ เลยปรับงบจาก “฿50–100” เป็น “฿101–200” และประเภทอาหารจาก “ข้าว” เป็น “เส้น” ให้แล้ว เจอ 1 เมนูแล้ว ลองดูการ์ดด้านล่างได้เลย',
     )
   })
 })
@@ -236,15 +236,19 @@ describe('rationaleLines', () => {
 })
 
 describe('shortlist transitions', () => {
-  it('starts face-down and reveals one card or all of them', () => {
+  it('starts with all results visible and can normalize a legacy hidden card', () => {
     const shortlist = startShortlist([a, b])
-    expect(hasFaceDownCard(shortlist)).toBe(true)
+    expect(hasFaceDownCard(shortlist)).toBe(false)
+    const legacy = {
+      ...shortlist,
+      slots: shortlist.slots.map((slot) => ({ ...slot, revealed: false })),
+    }
 
-    const one = revealCard(shortlist, 1)
+    const one = revealCard(legacy, 1)
     expect(
       one.slots.map((slot) => slot.kind === 'card' && slot.revealed),
     ).toEqual([false, true])
-    expect(hasFaceDownCard(revealAll(shortlist))).toBe(false)
+    expect(hasFaceDownCard(revealAll(legacy))).toBe(false)
   })
 
   it('replaces a rejected card in place and undoes exactly that step', () => {
@@ -254,7 +258,7 @@ describe('shortlist transitions', () => {
     expect(replaced.slots[0]).toEqual({
       kind: 'card',
       item: d,
-      revealed: false,
+      revealed: true,
     })
     expect(replaced.rejectedMenuItemIds).toEqual(['a'])
     expect(replaced.undo).toEqual({
@@ -287,8 +291,8 @@ describe('shortlist transitions', () => {
 
     expect(chosen.chosenMenuItemId).toBe('a')
     expect(chosenItem(chosen)).toEqual(a)
-    // A face-down or missing card cannot reopen a dialog.
-    expect(chosenItem(chooseCard(revealed, 'b'))).toBeNull()
+    // Every displayed menu can reopen its dialog; a missing item cannot.
+    expect(chosenItem(chooseCard(revealed, 'b'))).toEqual(b)
     expect(chosenItem(chooseCard(revealed, 'x'))).toBeNull()
     // Clearing removes the key, so the stored value matches the one before choosing.
     expect(JSON.stringify(clearChoice(chosen))).toBe(JSON.stringify(revealed))

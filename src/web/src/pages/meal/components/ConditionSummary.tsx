@@ -68,22 +68,30 @@ export function ConditionSummary(props: ConditionSummaryProps) {
 
   if (props.compact) {
     return (
-      <nav aria-label="ตัวเลือกมื้อนี้" className="flex flex-wrap gap-2">
+      <nav
+        aria-label="ตัวเลือกมื้อนี้"
+        className="grid min-w-0 grid-cols-2 gap-x-3 sm:grid-cols-4"
+      >
         {rows.map(({ step, label, value }) => (
           <Button
             key={step}
             variant="ghost"
             size="compact"
-            className="min-h-11 max-w-full text-left text-small"
+            className="min-h-11 min-w-0 max-w-full !justify-start !rounded-sm !border-0 !px-2 py-2 text-left text-small"
             aria-label={`แก้ไข${label}: ${value}`}
+            title={`${label}: ${value}`}
             disabled={shuffling}
             onClick={() => onEdit(step)}
           >
-            <span className="min-w-0 break-words">
-              <span className="text-muted">{label}: </span>
+            <span className="min-w-0 flex-1 truncate underline decoration-line-soft decoration-dashed underline-offset-4">
               {value}
             </span>
-            <PencilSimple aria-hidden weight="bold" className="shrink-0" />
+            <PencilSimple
+              aria-hidden
+              weight="bold"
+              size={16}
+              className="shrink-0"
+            />
           </Button>
         ))}
       </nav>

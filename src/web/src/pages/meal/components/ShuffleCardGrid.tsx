@@ -1,7 +1,6 @@
 import {
   ArrowCounterClockwise,
   ArrowsClockwise,
-  Eye,
   PencilSimple,
 } from '@phosphor-icons/react'
 import { useEffect, useState, type Ref } from 'react'
@@ -18,13 +17,7 @@ import {
   type ConditionStep,
   type Shortlist,
 } from '@/schemas/meal/recommendationSchemas'
-import {
-  hasFaceDownCard,
-  replaceCard,
-  revealAll,
-  revealCard,
-  undoReject,
-} from '@/schemas/meal/shortlist'
+import { replaceCard, undoReject } from '@/schemas/meal/shortlist'
 import { MenuCard } from './MenuCard'
 import { ConditionSummary } from './ConditionSummary'
 
@@ -55,8 +48,8 @@ const gridColumns = [
   'sm:grid-cols-2 lg:grid-cols-3',
 ]
 
-// Up to three cards from one recommendation response. Revealing is presentation only; only
-// rejecting a card asks the API again, for one replacement in the same slot.
+// Show up to three menus immediately. Only rejecting a card asks the recommendation API
+// again, for one replacement in the same slot.
 export function ShuffleCardGrid({
   conditions,
   conditionOptions,
@@ -91,16 +84,6 @@ export function ShuffleCardGrid({
     })
     setFocusSlot(null)
   }, [focusSlot, shortlist])
-
-  function reveal(slotIndex: number) {
-    onUpdate((current) => revealCard(current, slotIndex))
-    setFocusSlot(slotIndex)
-  }
-
-  function showAll() {
-    onUpdate(revealAll)
-    setFocusSlot(0)
-  }
 
   async function reject(slotIndex: number) {
     setError(null)
@@ -151,21 +134,25 @@ export function ShuffleCardGrid({
             มีเมนูน่าลองมาให้แล้ว
           </h1>
           <p className="text-small text-muted">
-            ลองเปิดดูทีละใบ หรือเปิดทั้งหมดก็ได้
+            เลือกเมนูที่อยากลอง หรือขอดูเมนูอื่นแทน
           </p>
         </div>
-        <div className="flex flex-wrap gap-2">
-          {hasFaceDownCard(shortlist) ? (
-            <Button variant="secondary" disabled={busy} onClick={showAll}>
-              <Eye aria-hidden weight="bold" />
-              เปิดทั้งหมด
-            </Button>
-          ) : null}
-          <Button variant="ghost" disabled={busy} onClick={onEditConditions}>
+        <div className="grid w-fit max-w-full grid-cols-2 gap-2 sm:shrink-0">
+          <Button
+            variant="ghost"
+            className="min-w-0 whitespace-nowrap !px-3 text-small sm:!px-5 sm:text-body"
+            disabled={busy}
+            onClick={onEditConditions}
+          >
             <PencilSimple aria-hidden weight="bold" />
             เปลี่ยนตัวเลือก
           </Button>
-          <Button variant="ghost" disabled={busy} onClick={onStartOver}>
+          <Button
+            variant="ghost"
+            className="min-w-0 whitespace-nowrap !px-3 text-small sm:!px-5 sm:text-body"
+            disabled={busy}
+            onClick={onStartOver}
+          >
             <ArrowsClockwise aria-hidden weight="bold" />
             เริ่มใหม่
           </Button>
@@ -240,7 +227,6 @@ export function ShuffleCardGrid({
               replacing={replacingSlot === index}
               busy={busy}
               focusTargetId={focusTargetId(index)}
-              onReveal={() => reveal(index)}
               onReject={() => void reject(index)}
               onChoose={onChoose}
             />

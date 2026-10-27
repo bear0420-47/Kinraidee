@@ -11,7 +11,7 @@ import {
   type Shortlist,
   type StoredFlow,
 } from '@/schemas/meal/recommendationSchemas'
-import { startShortlist } from '@/schemas/meal/shortlist'
+import { revealAll, startShortlist } from '@/schemas/meal/shortlist'
 
 // Storage can be unavailable (private mode, blocked site data); the flow then lives in memory.
 function readStoredFlow(): StoredFlow {
@@ -19,7 +19,11 @@ function readStoredFlow(): StoredFlow {
     const raw = sessionStorage.getItem(RECOMMENDATION_STORAGE_KEY)
     if (!raw) return emptyFlow
     const parsed = storedFlowSchema.safeParse(JSON.parse(raw))
-    return parsed.success ? parsed.data : emptyFlow
+    if (!parsed.success) return emptyFlow
+    // Old sessions may still contain face-down cards; results now appear immediately.
+    return parsed.data.shortlist
+      ? { ...parsed.data, shortlist: revealAll(parsed.data.shortlist) }
+      : parsed.data
   } catch {
     return emptyFlow
   }

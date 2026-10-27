@@ -1,10 +1,4 @@
-import {
-  Check,
-  MapPin,
-  Question,
-  Storefront,
-  ThumbsDown,
-} from '@phosphor-icons/react'
+import { Check, MapPin, Storefront, ThumbsDown } from '@phosphor-icons/react'
 
 import { Button } from '@/components/Button'
 import { FavoriteButton } from '@/components/FavoriteButton'
@@ -35,7 +29,6 @@ type MenuCardProps = {
   busy: boolean
   // Receives focus after an action changes this card.
   focusTargetId: string
-  onReveal: () => void
   onReject: () => void
   // Opens the confirmation dialog for this card's menu.
   onChoose: (item: RecommendationItem) => void
@@ -51,7 +44,7 @@ const cardClassName =
 
 // One shortlist card. Every state is named in text, so it never relies on colour or motion.
 export function MenuCard(props: MenuCardProps) {
-  const { slot, replacing, position, focusTargetId } = props
+  const { slot, replacing, focusTargetId } = props
 
   if (replacing) {
     return (
@@ -76,27 +69,6 @@ export function MenuCard(props: MenuCardProps) {
         <p className="text-small text-muted">
           รอบนี้ยังไม่มีเมนูอื่นมาแทน ลองเปลี่ยนตัวเลือกหรือเริ่มใหม่ได้นะ
         </p>
-      </div>
-    )
-  }
-
-  if (!slot.revealed) {
-    return (
-      <div
-        className={`${cardClassName} items-center justify-center bg-peach-deep text-center`}
-      >
-        <Question aria-hidden size={48} weight="bold" />
-        <p className="font-display text-card-title">การ์ดใบที่ {position}</p>
-        <p className="text-small">ยังไม่เปิด</p>
-        <Button
-          id={focusTargetId}
-          variant="secondary"
-          disabled={props.busy}
-          aria-label={`เปิดการ์ดใบที่ ${position}`}
-          onClick={props.onReveal}
-        >
-          เปิดการ์ด
-        </Button>
       </div>
     )
   }
@@ -133,9 +105,7 @@ function RevealedCard({
         />
       </div>
       <div className="flex flex-col gap-1">
-        <p className="text-small text-muted">
-          การ์ดใบที่ {position} · เปิดแล้ว
-        </p>
+        <p className="text-small text-muted">เมนูที่ {position}</p>
         <div className="flex items-start justify-between gap-3">
           <h3
             id={focusTargetId}
