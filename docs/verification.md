@@ -1,5 +1,9 @@
 # Verification Report
 
+## Account Back navigation CI type fix — 2026-10-28
+
+The production CD web build failed at `AccountPage.tsx` because a conditional expression passed `string | number` to React Router's overloaded `navigate`. The Back handler now calls `navigate(-1)` or `navigate('/')` in separate branches, preserving its previous behavior. `node src/web/node_modules/typescript/bin/tsc -b src/web/tsconfig.json` and `git diff --check` passed locally. The full web build and Vitest could not load `vite.config.ts` under this filesystem sandbox (`Access is denied`); scoped ESLint could not start because the local installation lacks `ajv`. The hosted workflow has not been rerun, so production deployment is not verified.
+
 ## Account child-page Back placement — 2026-10-27
 
 Favorites, selected-menu History and default Preferences now show one shared Back link above their cards, returning to `/account`. The existing three page suites passed 30/30, including checks that Back is outside the card and still navigates through the account flow. Web TypeScript, scoped ESLint, scoped Prettier, `git diff --check` and Vite build passed. The build reported existing third-party comment and large chunk warnings. No authenticated browser screenshot or deployment check was performed for these child pages.

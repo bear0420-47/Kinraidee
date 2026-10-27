@@ -26,7 +26,11 @@ export function AccountPage() {
 
   function goBack() {
     const historyIndex = window.history.state?.idx
-    navigate(typeof historyIndex === 'number' && historyIndex > 0 ? -1 : '/')
+    if (typeof historyIndex === 'number' && historyIndex > 0) {
+      navigate(-1)
+    } else {
+      navigate('/')
+    }
   }
 
   return (
