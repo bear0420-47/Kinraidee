@@ -1,4 +1,28 @@
 ﻿restaurant,menuItem,nameTh,nameEn,foodType,expectedPath,status,photoKey,photoSource
+337b-tha-sut,cheese-pan-eggs,ไข่กระทะชีส,Pan-cooked Eggs with Cheese,appetizers-snacks,assets/catalog/337b-tha-sut/menus/cheese-pan-eggs.png,missing,cheese-pan-eggs,none
+337b-tha-sut,pan-eggs,ไข่กระทะ,Pan-cooked Eggs,appetizers-snacks,assets/catalog/337b-tha-sut/menus/pan-eggs.png,missing,pan-eggs,none
+337b-tha-sut,rose-sauce-sausage-spaghetti,สปาเก็ตตี้ซอสโรเซ่ไส้กรอกไข่กุ้ง,Rosé Sauce Spaghetti with Sausage and Shrimp Roe,pasta,assets/catalog/337b-tha-sut/menus/rose-sauce-sausage-spaghetti.png,missing,rose-sauce-spaghetti,none
+337b-tha-sut,shrimp-roe-cream-spaghetti,สปาเก็ตตี้ซอสครีมไข่กุ้ง,Shrimp Roe Cream Spaghetti,pasta,assets/catalog/337b-tha-sut/menus/shrimp-roe-cream-spaghetti.png,missing,shrimp-roe-cream-spaghetti,none
+337b-tha-sut,bacon-dried-chili-spaghetti,สปาเก็ตตี้เบคอนผัดพริกแห้ง,Bacon and Dried Chili Spaghetti,pasta,assets/catalog/337b-tha-sut/menus/bacon-dried-chili-spaghetti.png,missing,bacon-dried-chili-spaghetti,none
+337b-tha-sut,torched-cheese-macaroni,มักกะโรนีชีสพ่นไฟ,Torched Cheese Macaroni,pasta,assets/catalog/337b-tha-sut/menus/torched-cheese-macaroni.png,missing,torched-cheese-macaroni,none
+337b-tha-sut,torched-cheese-spaghetti,สปาเก็ตตี้ชีสพ่นไฟ,Torched Cheese Spaghetti,pasta,assets/catalog/337b-tha-sut/menus/torched-cheese-spaghetti.png,missing,torched-cheese-spaghetti,none
+337b-tha-sut,pan-fried-macaroni,มักกะโรนีผัด,Pan-fried Macaroni,pasta,assets/catalog/337b-tha-sut/menus/pan-fried-macaroni.png,missing,pan-fried-macaroni,none
+337b-tha-sut,carbonara,สปาเก็ตตี้คาโบนาร่า,Spaghetti Carbonara,pasta,assets/catalog/337b-tha-sut/menus/carbonara.png,missing,carbonara,stock
+337b-tha-sut,minced-pork-spaghetti,สปาเก็ตตี้หมูสับ,Minced Pork Spaghetti,pasta,assets/catalog/337b-tha-sut/menus/minced-pork-spaghetti.png,missing,minced-pork-spaghetti,none
+337b-tha-sut,baked-macaroni-cheese,มักกะโรนีอบชีส,Baked Macaroni and Cheese,pasta,assets/catalog/337b-tha-sut/menus/baked-macaroni-cheese.png,missing,baked-macaroni-cheese,none
+337b-tha-sut,chicken-floss-chili-sandwich,แซนด์วิชไก่หยองน้ำพริกเผาไข่ดาวชีส,"Chicken Floss, Chilli Jam, Fried Egg and Cheese Sandwich",burgers-sandwiches-wraps,assets/catalog/337b-tha-sut/menus/chicken-floss-chili-sandwich.png,missing,chicken-floss-sandwich,none
+337b-tha-sut,ham-cheese-sandwich,แซนด์วิชแฮมชีส,Ham and Cheese Sandwich,burgers-sandwiches-wraps,assets/catalog/337b-tha-sut/menus/ham-cheese-sandwich.png,missing,ham-cheese-sandwich,none
+337b-tha-sut,sausage-cheese-sandwich,แซนด์วิชไส้กรอกชีส,Sausage and Cheese Sandwich,burgers-sandwiches-wraps,assets/catalog/337b-tha-sut/menus/sausage-cheese-sandwich.png,missing,sausage-cheese-sandwich,none
+337b-tha-sut,crab-stick-shrimp-roe-sandwich,แซนด์วิชปูอัดไข่กุ้ง,Crab Stick and Shrimp Roe Sandwich,burgers-sandwiches-wraps,assets/catalog/337b-tha-sut/menus/crab-stick-shrimp-roe-sandwich.png,missing,crab-stick-sandwich,none
+337b-tha-sut,french-toast-sandwich,แซนด์วิชเฟรนช์โทสต์,French Toast Sandwich,burgers-sandwiches-wraps,assets/catalog/337b-tha-sut/menus/french-toast-sandwich.png,missing,french-toast-sandwich,none
+337b-tha-sut,soft-egg-ham-rice,ข้าวไข่ข้นแฮม,Soft Egg Rice with Ham,rice-dishes,assets/catalog/337b-tha-sut/menus/soft-egg-ham-rice.png,missing,soft-egg-ham-rice,none
+337b-tha-sut,soft-egg-sausage-rice,ข้าวไข่ข้นไส้กรอกไก่,Soft Egg Rice with Chicken Sausage,rice-dishes,assets/catalog/337b-tha-sut/menus/soft-egg-sausage-rice.png,missing,soft-egg-sausage-rice,none
+337b-tha-sut,soft-egg-crab-stick-rice,ข้าวไข่ข้นปูอัด,Soft Egg Rice with Crab Sticks,rice-dishes,assets/catalog/337b-tha-sut/menus/soft-egg-crab-stick-rice.png,missing,soft-egg-crab-stick-rice,none
+337b-tha-sut,soft-egg-minced-pork-rice,ข้าวไข่ข้นหมูสับ,Soft Egg Rice with Minced Pork,rice-dishes,assets/catalog/337b-tha-sut/menus/soft-egg-minced-pork-rice.png,missing,soft-egg-minced-pork-rice,none
+337b-tha-sut,ham-omelette-rice,ข้าวไข่เจียวแฮม,Ham Omelette on Rice,rice-dishes,assets/catalog/337b-tha-sut/menus/ham-omelette-rice.png,missing,ham-omelette-rice,none
+337b-tha-sut,sausage-omelette-rice,ข้าวไข่เจียวไส้กรอกไก่,Chicken Sausage Omelette on Rice,rice-dishes,assets/catalog/337b-tha-sut/menus/sausage-omelette-rice.png,missing,sausage-omelette-rice,none
+337b-tha-sut,crab-stick-omelette-rice,ข้าวไข่เจียวปูอัด,Crab Stick Omelette on Rice,rice-dishes,assets/catalog/337b-tha-sut/menus/crab-stick-omelette-rice.png,missing,crab-stick-omelette-rice,none
+337b-tha-sut,minced-pork-omelette-rice,ข้าวไข่เจียวหมูสับ,Minced Pork Omelette on Rice,rice-dishes,assets/catalog/337b-tha-sut/menus/minced-pork-omelette-rice.png,missing,minced-pork-omelette-on-rice,stock
 cap-coffee-food,shabu-set,ชาบูต้มให้,Cooked Shabu Set,hotpot-bbq,assets/catalog/cap-coffee-food/menus/shabu-set.png,missing,shabu-set,none
 cap-coffee-food,shrimp-fried-rice,ข้าวผัดกุ้ง,Shrimp Fried Rice,rice-dishes,assets/catalog/cap-coffee-food/menus/shrimp-fried-rice.png,missing,shrimp-fried-rice,stock
 cap-coffee-food,fried-chicken-wings-rice,ข้าวไก่ทอด,Fried Chicken Wings with Rice,rice-dishes,assets/catalog/cap-coffee-food/menus/fried-chicken-wings-rice.png,missing,fried-chicken-wings-rice,none
