@@ -1,5 +1,39 @@
 # Verification Report
 
+## Account child-page Back placement — 2026-10-27
+
+Favorites, selected-menu History and default Preferences now show one shared Back link above their cards, returning to `/account`. The existing three page suites passed 30/30, including checks that Back is outside the card and still navigates through the account flow. Web TypeScript, scoped ESLint, scoped Prettier, `git diff --check` and Vite build passed. The build reported existing third-party comment and large chunk warnings. No authenticated browser screenshot or deployment check was performed for these child pages.
+
+Local 390px Opera component previews using an example user and empty account data: `artifacts/account-favorites-back-390.png`, `artifacts/account-history-back-390.png`, and `artifacts/account-preferences-back-390.png`. All show Back above the card; the temporary preview entry was removed after capture. These previews do not establish authenticated API behavior.
+
+## Account Back above the card — 2026-10-27
+
+The Back action now sits above the `/account` paper card and keeps its previous-entry/Home fallback. The duplicate Home link inside the card was removed; the shared header still provides Home. A 390px Opera component preview using an example local user is saved as `artifacts/account-back-above-card-390.png`; its temporary preview entry was removed after capture. This is visual component evidence, not an authenticated session. Web TypeScript, focused `SiteHeader.test.tsx` (5/5), scoped ESLint, scoped Prettier, `git diff --check`, and Vite build passed. The build reported existing third-party comment and large chunk warnings.
+
+## Smaller mobile result actions — 2026-10-27
+
+At a 390px Opera viewport against the local Vite web, API and PostgreSQL data, the two result actions appear side by side as icon buttons. Browser measurement found each button 44×44px and document width 376px within the 390px viewport. Their accessible names remain `เปลี่ยนตัวเลือก` and `เริ่มใหม่`; the new screenshot is `artifacts/mobile-results-390-icons.png`. At 1024px, both full text labels were visible. Web TypeScript passed; focused `ShuffleCards.test.tsx` passed 36/36; scoped ESLint, Prettier and `git diff --check` passed. Web Vite production build passed with existing third-party comment and large chunk warnings. This is local browser evidence, not deployment or physical-device verification.
+
+## Compact mobile result header actions — 2026-10-27
+
+The result heading now shares a mobile row with two stacked compact action buttons at the right; desktop action layout remains a two-column row. Web TypeScript and scoped Prettier passed. Focused Vitest and Vite build could not start because esbuild reported `Cannot read directory "../../../../..": Access is denied` while loading `vite.config.ts`. ESLint could not start because local `ajv` is missing. Subsequently, the local Vite web, API, and existing PostgreSQL container served a real recommendation flow in Opera at a 390px viewport. The resulting screen visibly showed both compact buttons to the right of the heading with no visible header overflow; screenshot: `artifacts/mobile-results-390.png`. This checks the local UI only, not deployment or a physical phone.
+
+## Account back navigation — 2026-10-27
+
+Added the `/account` Back button and a direct-entry fallback test. Web TypeScript `tsc --noEmit -p src/web/tsconfig.json` passed. The focused Vitest suite and Vite build could not start: esbuild reported `Cannot read directory "../../../../..": Access is denied` while loading `vite.config.ts`. ESLint could not start because the installed dependency tree lacks `ajv`. These checks remain unverified in this environment.
+
+Later visual preview: `artifacts/account-back-mobile-preview.png` renders the real `AccountPage` component at 390px with a local example user and the `ย้อนกลับ` button directly below the heading. The temporary preview entry was removed after capture. This is a component preview, not an authenticated browser acceptance check.
+
+After restoring the local tool environment, the focused `SiteHeader.test.tsx` suite passed 5/5 and scoped ESLint passed. The earlier startup failures above describe the initial attempt, not the final focused-check result.
+
+## Mobile numbered card buttons — 2026-10-27
+
+The 1–3 result buttons are visually hidden on phones and appear when reached by keyboard focus. Native swipe, position text, and screen-reader access remain in the existing component.
+
+- Web TypeScript `tsc --noEmit -p src/web/tsconfig.json`: passed. `git diff --check`: passed.
+- `pnpm build`, `pnpm test`, and `pnpm lint`: started but the local pnpm launcher stalled without output; interrupted. Its temporary lockfile change was restored.
+- Direct web Vitest and Vite build: blocked while loading `vite.config.ts` because esbuild reported `Cannot read directory "../../../../..": Access is denied`. Direct ESLint: blocked by missing local `ajv` dependency. Build, test, and lint are therefore unverified in this environment.
+
 ## Single-message adjustment notice — 2026-10-27
 
 The visible adjusted-field/count line and `ดูการปรับตัวเลือก` disclosure were removed. The cream notice now contains only the friendly prompt with smaller phone text and shorter vertical padding. Existing result-condition controls still show effective choices; the complete screen-reader status still names every original and replacement value. Previous requirement, plan, design and verification archived under evidence/archive/20261027-single-line-adjustment-notice/.

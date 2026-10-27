@@ -1,5 +1,7 @@
 # Kinraidee Core User Journey
 
+Mobile result presentation amendment (2026-10-27): hide the visible numbered card buttons on phones while retaining swipe, position text, and keyboard/screen-reader access to the controls. Step order and menu actions are unchanged.
+
 Immediate-results amendment approved 2026-10-27: initial, replacement, restored and undone menu results are visible immediately; no face-down state, reveal action or Reveal all step. This supersedes historical reveal descriptions below. Existing edit/reset, direct condition edits, mobile paging, confirm-only history and all filtering remain. Existing non-blocking Places hooks run when a returned restaurant is displayed. The same five journey steps apply; steps 3-4 now show and compare menus directly.
 
 

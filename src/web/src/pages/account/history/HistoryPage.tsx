@@ -1,6 +1,5 @@
 import { Trash } from '@phosphor-icons/react'
 import { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router'
 
 import { Button } from '@/components/Button'
 import { ConfirmDialog } from '@/components/ConfirmDialog'
@@ -12,6 +11,7 @@ import {
   useClearHistory,
   useHistory,
 } from '@/hooks/recommendation-history/useRecommendationHistory'
+import { AccountBackLink } from '../AccountBackLink'
 
 function formatSelectedAt(selectedAt: string) {
   return new Date(selectedAt).toLocaleString('th-TH')
@@ -57,86 +57,86 @@ export function HistoryPage() {
   }
 
   return (
-    <PageShell title="ประวัติเมนูที่เลือก" width="medium">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <Link to="/account" className="rounded-xs font-bold underline">
-          กลับไปบัญชีของฉัน
-        </Link>
-        {/* Always shown so it can be found; disabled when there is nothing to clear. */}
-        <Button
-          ref={clearButtonRef}
-          variant="secondary"
-          size="compact"
-          disabled={!hasHistory}
-          onClick={() => {
-            setStatus('')
-            setConfirmingClear(true)
-          }}
+    <div className="mx-auto flex w-full max-w-2xl flex-col gap-3">
+      <AccountBackLink />
+      <PageShell title="ประวัติเมนูที่เลือก" width="medium">
+        <div className="flex justify-end">
+          {/* Always shown so it can be found; disabled when there is nothing to clear. */}
+          <Button
+            ref={clearButtonRef}
+            variant="secondary"
+            size="compact"
+            disabled={!hasHistory}
+            onClick={() => {
+              setStatus('')
+              setConfirmingClear(true)
+            }}
+          >
+            <Trash aria-hidden weight="bold" />
+            ล้างประวัติทั้งหมด
+          </Button>
+        </div>
+        <p role="status" className="sr-only">
+          {status}
+        </p>
+        <section
+          ref={areaRef}
+          tabIndex={-1}
+          aria-label="ประวัติที่บันทึกไว้"
+          className="flex flex-col gap-4 rounded-sm"
         >
-          <Trash aria-hidden weight="bold" />
-          ล้างประวัติทั้งหมด
-        </Button>
-      </div>
-      <p role="status" className="sr-only">
-        {status}
-      </p>
-      <section
-        ref={areaRef}
-        tabIndex={-1}
-        aria-label="ประวัติที่บันทึกไว้"
-        className="flex flex-col gap-4 rounded-sm"
-      >
-        <QueryListState
-          query={history}
-          items={history.data?.items}
-          loadingMessage="กำลังโหลดประวัติ…"
-          errorMessage="โหลดประวัติไม่สำเร็จ กรุณาลองใหม่อีกครั้ง"
-          emptyMessage="ยังไม่มีประวัติเมนูที่เลือก"
-        >
-          {(items) => (
-            <ul
-              aria-label="รายการประวัติเมนูที่เลือก"
-              className="flex flex-col gap-3"
-            >
-              {items.map((entry) => (
-                <MenuSummaryRow
-                  key={entry.id}
-                  menuItem={entry.menuItem}
-                  available={entry.available}
-                  detail={
-                    <p className="text-small text-muted">
-                      เลือกเมื่อ {formatSelectedAt(entry.selectedAt)}
-                    </p>
-                  }
-                />
-              ))}
-            </ul>
-          )}
-        </QueryListState>
-        {meta && meta.total > meta.pageSize ? (
-          <Pagination
-            label="หน้าประวัติเมนูที่เลือก"
-            page={meta.page}
-            pageSize={meta.pageSize}
-            total={meta.total}
-            onPageChange={setPage}
-          />
+          <QueryListState
+            query={history}
+            items={history.data?.items}
+            loadingMessage="กำลังโหลดประวัติ…"
+            errorMessage="โหลดประวัติไม่สำเร็จ กรุณาลองใหม่อีกครั้ง"
+            emptyMessage="ยังไม่มีประวัติเมนูที่เลือก"
+          >
+            {(items) => (
+              <ul
+                aria-label="รายการประวัติเมนูที่เลือก"
+                className="flex flex-col gap-3"
+              >
+                {items.map((entry) => (
+                  <MenuSummaryRow
+                    key={entry.id}
+                    menuItem={entry.menuItem}
+                    available={entry.available}
+                    detail={
+                      <p className="text-small text-muted">
+                        เลือกเมื่อ {formatSelectedAt(entry.selectedAt)}
+                      </p>
+                    }
+                  />
+                ))}
+              </ul>
+            )}
+          </QueryListState>
+          {meta && meta.total > meta.pageSize ? (
+            <Pagination
+              label="หน้าประวัติเมนูที่เลือก"
+              page={meta.page}
+              pageSize={meta.pageSize}
+              total={meta.total}
+              onPageChange={setPage}
+            />
+          ) : null}
+        </section>
+        {confirmingClear ? (
+          <ConfirmDialog
+            title="ล้างประวัติทั้งหมด?"
+            confirmLabel="ล้างประวัติทั้งหมด"
+            pendingLabel="กำลังล้าง…"
+            icon={<Trash aria-hidden weight="bold" />}
+            getErrorMessage={() => 'ล้างประวัติไม่สำเร็จ กรุณาลองใหม่อีกครั้ง'}
+            onConfirm={clearAll}
+            onClose={() => setConfirmingClear(false)}
+            fallbackFocusRef={clearButtonRef}
+          >
+            <p>การล้างประวัติจะลบรายการที่คุณเคยเลือกทั้งหมด</p>
+          </ConfirmDialog>
         ) : null}
-      </section>
-      {confirmingClear ? (
-        <ConfirmDialog
-          title="ล้างประวัติทั้งหมด?"
-          confirmLabel="ล้างประวัติทั้งหมด"
-          pendingLabel="กำลังล้าง…"
-          icon={<Trash aria-hidden weight="bold" />}
-          getErrorMessage={() => 'ล้างประวัติไม่สำเร็จ กรุณาลองใหม่อีกครั้ง'}
-          onConfirm={clearAll}
-          onClose={() => setConfirmingClear(false)}
-          fallbackFocusRef={clearButtonRef}
-        >
-          <p>การล้างประวัติจะลบรายการที่คุณเคยเลือกทั้งหมด</p>
-        </ConfirmDialog>
-      ) : null}
-    </PageShell>
+      </PageShell>
+    </div>
   )
 }
