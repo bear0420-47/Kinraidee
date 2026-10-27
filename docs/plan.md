@@ -1,5 +1,101 @@
 # Implementation Plan
 
+## Account child-page Back placement — 2026-10-27
+
+Extend the approved account-card layout to Favorites, selected-menu History, and default Preferences. Reuse one page-local Back link to `/account` with the existing arrow and 44px target, positioned above each medium-width paper card. Preserve the same destination, protected routes, data, and page actions; History's Clear action remains inside the card.
+
+```txt
+Module: existing account child pages; shared account-local Back link
+Requirement/backlog ID: F14, F15, F17; existing account navigation
+Legal requirement ID: LR1, LR6; no data handling change
+Design artifact: docs/02-design/design-system.md
+API routes: N/A
+Web pages: /account/favorites, /account/history, /account/preferences
+Personal data: no new data
+Authorization: existing account guard unchanged
+Tests: three account page navigation suites; web build, test, lint; mobile previews
+```
+
+## Account back control outside the card — 2026-10-27
+
+The user approved trying the proposed account layout: move the existing Back control above the AccountPage paper card and style it as a small text action. Keep its previous-entry/Home fallback behavior. Remove the redundant Home link inside the card because the shared header already has Home. Reuse the existing icon, route, and shell; account data and authorization remain unchanged.
+
+```txt
+Module: existing AccountPage
+Requirement/backlog ID: F14, F15, F17; existing account navigation
+Legal requirement ID: LR1, LR6; no data handling change
+Design artifact: docs/02-design/design-system.md
+API routes: N/A
+Web pages: /account
+Personal data: no new data
+Authorization: existing account guard unchanged
+Tests: account navigation and layout; web build, test, lint; mobile preview
+```
+
+## Smaller mobile result actions — 2026-10-27
+
+The user found the mobile buttons in the 390px screenshot too large. Reuse the two existing actions as adjacent 44×44px icon buttons on phones, with their full Thai labels retained as accessible names and visible on larger screens. This reduces the width taken from the heading without changing result actions or desktop layout.
+
+```txt
+Module: existing ShuffleCardGrid result header
+Requirement/backlog ID: F2, F7; B2, B7
+Legal requirement ID: N/A (presentation only)
+Design artifact: docs/02-design/design-system.md
+API routes: N/A
+Web pages: /meal
+Personal data: N/A
+Authorization: existing behavior unchanged
+Tests: web typecheck, build, test, lint; mobile screenshot
+```
+
+## Compact mobile result header actions — 2026-10-27
+
+The user requested smaller Change conditions and Start over buttons to the right of the result heading on phones. Reuse the existing ShuffleCardGrid buttons and responsive Tailwind layout. Stack the two full-label buttons at the right on phone widths, retain 44px targets, and leave the desktop row unchanged.
+
+```txt
+Module: existing ShuffleCardGrid result header
+Requirement/backlog ID: F2, F7; B2, B7
+Legal requirement ID: N/A (presentation only)
+Design artifact: docs/02-design/design-system.md
+API routes: N/A
+Web pages: /meal
+Personal data: N/A
+Authorization: existing behavior unchanged
+Tests: web typecheck, build, test, lint; responsive visual check
+```
+
+## Account back navigation — 2026-10-27
+
+The user requested a back navigation control on `/account`. Reuse the existing Button, ArrowLeft icon, and router navigation. Return to the previous in-app entry when browser router history has one; otherwise go Home. Keep the existing explicit Home link and account menu.
+
+```txt
+Module: existing AccountPage
+Requirement/backlog ID: F14, F15, F17; existing account navigation
+Legal requirement ID: LR1, LR6; no data handling change
+Design artifact: docs/02-design/design-system.md
+API routes: N/A
+Web pages: /account
+Personal data: no new data
+Authorization: existing account guard unchanged
+Tests: account route navigation; build, test, lint
+```
+
+## Hide mobile numbered card buttons — 2026-10-27
+
+The user requested removal of the visible 1–3 card buttons on phones. Keep native horizontal swipe, the `ใบที่ N จาก M` position, and the existing numbered controls available to screen readers and keyboard users; reveal the controls while keyboard focus is inside them. Reuse the existing ShuffleCardGrid and Tailwind utilities. No API, data, permission, or workflow change.
+
+```txt
+Module: existing ShuffleCardGrid mobile result navigation
+Requirement/backlog ID: F2; B2
+Legal requirement ID: N/A (presentation only)
+Design artifact: docs/02-design/design-system.md; docs/02-design/user-journey.md
+API routes: N/A
+Web pages: /meal
+Personal data: N/A
+Authorization: N/A
+Tests: existing ShuffleCards tests; build, test, lint
+```
+
 ## Single-message adjustment notice — 2026-10-27
 
 Human removed the visible adjusted-field/count line and its disclosure from the results notice. Retain only the friendly prompt, reduce vertical padding, and scale its type for phone/desktop widths. The effective choices remain visible in the existing result-condition controls, and the complete adjustment explanation remains in the screen-reader status. Recommendation data and behavior stay unchanged. Previous requirement, plan, design and verification artifacts archived under evidence/archive/20261027-single-line-adjustment-notice/.

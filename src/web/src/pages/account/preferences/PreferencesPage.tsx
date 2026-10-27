@@ -1,7 +1,6 @@
 import { Eraser, FloppyDisk } from '@phosphor-icons/react'
 import { useEffect, useId, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router'
 
 import { ApiError } from '@/api/apiError'
 import { Button } from '@/components/Button'
@@ -35,6 +34,7 @@ import {
   type Preference,
   type PreferenceFormInput,
 } from '@/schemas/preferences/preferenceSchemas'
+import { AccountBackLink } from '../AccountBackLink'
 
 const masterFields = ['tasteId', 'foodTypeId', 'zoneId'] as const
 
@@ -55,41 +55,41 @@ export function PreferencesPage() {
   const queries = [preference, tastes, foodTypes, zones]
 
   return (
-    <PageShell title="ค่าเริ่มต้นการสุ่มเมนู" width="medium">
-      <Link to="/account" className="self-start rounded-xs font-bold underline">
-        กลับไปบัญชีของฉัน
-      </Link>
-      {queries.some((query) => query.isError) ? (
-        <div role="alert" className="flex flex-col items-start gap-3">
-          <p className="font-bold text-rust">
-            โหลดค่าเริ่มต้นไม่สำเร็จ กรุณาลองใหม่อีกครั้ง
-          </p>
-          <Button
-            variant="secondary"
-            onClick={() => queries.forEach((query) => void query.refetch())}
-          >
-            ลองใหม่
-          </Button>
-        </div>
-      ) : preference.isSuccess &&
-        tastes.isSuccess &&
-        foodTypes.isSuccess &&
-        zones.isSuccess ? (
-        <PreferenceForm
-          saved={preference.data}
-          tastes={tastes.data}
-          foodTypes={foodTypes.data}
-          zones={zones.data}
-          onStaleOptions={() => {
-            void tastes.refetch()
-            void foodTypes.refetch()
-            void zones.refetch()
-          }}
-        />
-      ) : (
-        <p role="status">กำลังโหลดค่าเริ่มต้น…</p>
-      )}
-    </PageShell>
+    <div className="mx-auto flex w-full max-w-2xl flex-col gap-3">
+      <AccountBackLink />
+      <PageShell title="ค่าเริ่มต้นการสุ่มเมนู" width="medium">
+        {queries.some((query) => query.isError) ? (
+          <div role="alert" className="flex flex-col items-start gap-3">
+            <p className="font-bold text-rust">
+              โหลดค่าเริ่มต้นไม่สำเร็จ กรุณาลองใหม่อีกครั้ง
+            </p>
+            <Button
+              variant="secondary"
+              onClick={() => queries.forEach((query) => void query.refetch())}
+            >
+              ลองใหม่
+            </Button>
+          </div>
+        ) : preference.isSuccess &&
+          tastes.isSuccess &&
+          foodTypes.isSuccess &&
+          zones.isSuccess ? (
+          <PreferenceForm
+            saved={preference.data}
+            tastes={tastes.data}
+            foodTypes={foodTypes.data}
+            zones={zones.data}
+            onStaleOptions={() => {
+              void tastes.refetch()
+              void foodTypes.refetch()
+              void zones.refetch()
+            }}
+          />
+        ) : (
+          <p role="status">กำลังโหลดค่าเริ่มต้น…</p>
+        )}
+      </PageShell>
+    </div>
   )
 }
 

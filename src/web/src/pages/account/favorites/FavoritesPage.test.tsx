@@ -170,7 +170,9 @@ describe('FavoritesPage', () => {
       queryClient.getQueriesData({ queryKey: favoritesQueryKey }),
     ).not.toEqual([])
 
-    await user.click(screen.getByRole('link', { name: 'กลับไปบัญชีของฉัน' }))
+    const back = screen.getByRole('link', { name: 'กลับไปบัญชีของฉัน' })
+    expect(back.closest('section')).toBeNull()
+    await user.click(back)
     await user.click(await screen.findByRole('button', { name: 'ออกจากระบบ' }))
     await screen.findByRole('heading', { name: 'วันนี้กินอะไรดี?' })
     expect(queryClient.getQueriesData({ queryKey: favoritesQueryKey })).toEqual(

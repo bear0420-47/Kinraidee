@@ -1,5 +1,17 @@
 # Kinraidee Design System
 
+Account child-page navigation (2026-10-27): Favorites, selected-menu History and default Preferences place the same underlined arrow Back link above their paper cards, aligned with each card's left edge and retaining a 44px target. The link goes to `/account`; titles, content and page actions remain inside the cards. History keeps Clear history as a card action.
+
+Account card refinement (2026-10-27): place the existing Back action as a small underlined control above the paper card, aligned with the card's left edge and retaining a 44px target. The card begins with its heading, then the three account links and Logout. The shared header's Home action replaces the redundant Home link inside the card. This supersedes the in-card Back placement below.
+
+Smaller mobile result-action amendment (2026-10-27): show Change conditions and Start over as adjacent 44×44px outlined icon buttons at the heading's right on phones. Keep the full Thai names accessible and reveal the text labels at the `sm` breakpoint. This supersedes the stacked full-label mobile button treatment below.
+
+Mobile result-header amendment (2026-10-27): place the heading and helper text on the left and the two full-label actions on the right below 640px. Stack the actions with the existing small text token and tighter horizontal padding while retaining 44px minimum height. At 640px and above keep the existing two-column action row and typography.
+
+Account navigation amendment (2026-10-27): `/account` shows a ghost `ย้อนกลับ` Button with the existing ArrowLeft icon. It returns to the previous router entry when available and falls back to Home on direct entry. The explicit Home link remains.
+
+Mobile card control amendment (2026-10-27): the numbered 1–3 buttons are visually hidden below 640px. Keep them available to screen readers and reveal them on keyboard focus. The swipe hint, current `ใบที่ N จาก M` text, native rail, and card actions remain.
+
 Single-message adjustment notice approved 2026-10-27: retain only `เอ๊ะ ยังไม่มีเมนูที่ตรงกับที่เลือก ลองเมนูที่เราเจอก่อนไหม?` in the cream/ink notice. Use 16px body text on phones, 21px card-title text from sm, compact vertical padding and the existing doodle shadow. Remove the visible adjusted-field/count line and `ดูการปรับตัวเลือก` disclosure. Existing result-condition controls show effective choices and the full screen-reader status names every change. This supersedes the previous notice treatments below.
 
 Friendly adjustment notice approved 2026-10-27: lead with `เอ๊ะ ยังไม่มีเมนูที่ตรงกับที่เลือก ลองเมนูที่เราเจอก่อนไหม?` in bold card-title type. Use cream fill, ink border and the existing doodle shadow to distinguish it from the results controls. The second line says `เราปรับพื้นที่ให้แล้ว เจอ 1 เมนู` for one field or `เราปรับ N ตัวเลือกให้แล้ว เจอ M เมนู` for several. Preserve `ดูการปรับตัวเลือก` and the complete screen-reader announcement. This supersedes the terse visible count below.

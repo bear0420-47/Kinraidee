@@ -45,11 +45,31 @@ describe('SiteHeader home link', () => {
 })
 
 describe('AccountPage', () => {
-  it('links back to Home', async () => {
+  it('offers Back and falls back to Home on direct entry', async () => {
     fakeAuthApi({ currentUser: testUser })
     const { router, user } = renderApp('/account')
 
-    await user.click(await screen.findByRole('link', { name: 'กลับหน้าแรก' }))
+    const back = await screen.findByRole('button', { name: 'ย้อนกลับ' })
+    const card = screen
+      .getByRole('heading', { name: 'บัญชีของฉัน' })
+      .closest('section')
+    expect(card?.contains(back)).toBe(false)
+    expect(
+      within(card!).queryByRole('link', { name: 'กลับหน้าแรก' }),
+    ).toBeNull()
+
+    await user.click(back)
+
+    await waitFor(() => expect(currentPath(router)).toBe('/'))
+  })
+
+  it('keeps the shared header link to Home', async () => {
+    fakeAuthApi({ currentUser: testUser })
+    const { router, user } = renderApp('/account')
+
+    await user.click(
+      within(await mainNav()).getByRole('link', { name: 'หน้าแรก' }),
+    )
 
     await waitFor(() => expect(currentPath(router)).toBe('/'))
   })

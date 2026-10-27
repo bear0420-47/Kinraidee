@@ -126,8 +126,8 @@ export function ShuffleCardGrid({
           </p>
         </div>
       ) : null}
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div className="flex flex-col gap-1">
+      <div className="flex items-start justify-between gap-2 sm:items-end sm:gap-3">
+        <div className="flex min-w-0 flex-col gap-1">
           <h1
             ref={headingRef}
             tabIndex={-1}
@@ -139,24 +139,28 @@ export function ShuffleCardGrid({
             เลือกเมนูที่อยากลอง หรือขอดูเมนูอื่นแทน
           </p>
         </div>
-        <div className="grid w-fit max-w-full grid-cols-2 gap-2 sm:shrink-0">
+        <div className="grid shrink-0 grid-cols-2 gap-1.5 sm:gap-2">
           <Button
             variant="ghost"
-            className="min-w-0 whitespace-nowrap !px-3 text-small sm:!px-5 sm:text-body"
+            className="max-sm:!size-11 max-sm:!min-h-11 max-sm:!p-0"
+            aria-label="เปลี่ยนตัวเลือก"
+            title="เปลี่ยนตัวเลือก"
             disabled={busy}
             onClick={onEditConditions}
           >
             <PencilSimple aria-hidden weight="bold" />
-            เปลี่ยนตัวเลือก
+            <span className="sr-only sm:not-sr-only">เปลี่ยนตัวเลือก</span>
           </Button>
           <Button
             variant="ghost"
-            className="min-w-0 whitespace-nowrap !px-3 text-small sm:!px-5 sm:text-body"
+            className="max-sm:!size-11 max-sm:!min-h-11 max-sm:!p-0"
+            aria-label="เริ่มใหม่"
+            title="เริ่มใหม่"
             disabled={busy}
             onClick={onStartOver}
           >
             <ArrowsClockwise aria-hidden weight="bold" />
-            เริ่มใหม่
+            <span className="sr-only sm:not-sr-only">เริ่มใหม่</span>
           </Button>
         </div>
       </div>
@@ -179,7 +183,7 @@ export function ShuffleCardGrid({
               ใบที่ {activeCard + 1} จาก {shortlist.slots.length}
             </p>
           </div>
-          <div className="flex gap-2">
+          <div className="sr-only focus-within:not-sr-only focus-within:flex focus-within:gap-2">
             {shortlist.slots.map((_, index) => (
               <Button
                 key={index}
