@@ -1,0 +1,292 @@
+{
+  "slug": "yanyan-curry-burger",
+  "zone": "kotchapol",
+  "name": {
+    "th": "ยันยัน เคอร์รี่แอนด์เบอร์เกอร์",
+    "en": "YanYan Curry & Burger"
+  },
+  "description": {
+    "th": "ร้านข้าวแกงกะหรี่ญี่ปุ่นและเบอร์เกอร์ในโครงการคชพลแลนด์ มีข้าวด้ง ข้าวไก่ทอดราดซอส สปาเกตตี้ และชุดสเต็ก",
+    "en": "Japanese curry rice and burger shop in Kotchapol Land, also serving rice bowls, sauced fried chicken rice, spaghetti and steak sets."
+  },
+  "phone": null,
+  "source": {
+    "type": "grab-screenshot",
+    "capturedOn": "2026-10-27",
+    "pricesInclude": "grab-delivery-markup"
+  },
+  "menuItems": [
+    {
+      "slug": "omelette-curry-rice",
+      "name": {
+        "th": "ข้าวแกงกะหรี่ไข่ข้น",
+        "en": "Japanese Curry Rice with Soft Omelette"
+      },
+      "description": {
+        "th": "ข้าวสวยราดแกงกะหรี่ญี่ปุ่น ท็อปไข่ข้นนุ่ม ๆ",
+        "en": "Rice with Japanese curry, topped with a soft, creamy omelette."
+      },
+      "price": 69,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "creamy-rich", "spiced-smoky"],
+      "review": null,
+      "photo": "omelette-curry-rice"
+    },
+    {
+      "slug": "chicken-katsu-curry-rice",
+      "name": {
+        "th": "ข้าวแกงกะหรี่ไก่ทอด",
+        "en": "Japanese Curry Rice with Fried Chicken"
+      },
+      "description": {
+        "th": "ข้าวแกงกะหรี่ญี่ปุ่นกับไก่ชุบเกล็ดขนมปังทอดกรอบหั่นชิ้น",
+        "en": "Japanese curry rice with a sliced breaded fried chicken cutlet."
+      },
+      "price": 89,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "crispy", "spiced-smoky"],
+      "review": null,
+      "photo": "chicken-katsu-curry-rice"
+    },
+    {
+      "slug": "pork-hamburg-cheese-curry-rice",
+      "name": {
+        "th": "ข้าวแกงกะหรี่แฮมเบิร์กหมูชีส",
+        "en": "Japanese Curry Rice with Cheesy Pork Hamburg"
+      },
+      "description": {
+        "th": "ข้าวแกงกะหรี่ญี่ปุ่นกับแฮมเบิร์กหมูนุ่ม ๆ ท็อปชีสละลาย",
+        "en": "Japanese curry rice with a tender pork hamburg steak under melted cheese."
+      },
+      "price": 89,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "creamy-rich"],
+      "review": null,
+      "photo": "hamburg-cheese-curry-rice"
+    },
+    {
+      "slug": "beef-hamburg-cheese-curry-rice",
+      "name": {
+        "th": "ข้าวแกงกะหรี่แฮมเบิร์กเนื้อชีส ออสเตรเลีย",
+        "en": "Japanese Curry Rice with Cheesy Australian Beef Hamburg"
+      },
+      "description": {
+        "th": "ข้าวแกงกะหรี่ญี่ปุ่นกับแฮมเบิร์กเนื้อออสเตรเลีย ท็อปชีสละลาย",
+        "en": "Japanese curry rice with an Australian beef hamburg steak under melted cheese."
+      },
+      "price": 119,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "creamy-rich"],
+      "review": null,
+      "photo": "hamburg-cheese-curry-rice"
+    },
+    {
+      "slug": "fried-pork-hamburg-curry-rice",
+      "name": {
+        "th": "ข้าวแกงกะหรี่แฮมเบิร์กหมูทอด",
+        "en": "Japanese Curry Rice with Fried Pork Hamburg"
+      },
+      "description": {
+        "th": "ข้าวแกงกะหรี่ญี่ปุ่นกับแฮมเบิร์กหมูชุบเกล็ดขนมปังทอดกรอบ",
+        "en": "Japanese curry rice with a breaded, deep-fried pork hamburg patty."
+      },
+      "price": 89,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "crispy"],
+      "review": null,
+      "photo": "menchi-katsu-curry-rice"
+    },
+    {
+      "slug": "fried-beef-hamburg-curry-rice",
+      "name": {
+        "th": "ข้าวแกงกะหรี่แฮมเบิร์กเนื้อทอด",
+        "en": "Japanese Curry Rice with Fried Beef Hamburg"
+      },
+      "description": {
+        "th": "ข้าวแกงกะหรี่ญี่ปุ่นกับแฮมเบิร์กเนื้อชุบเกล็ดขนมปังทอดกรอบ",
+        "en": "Japanese curry rice with a breaded, deep-fried beef hamburg patty."
+      },
+      "price": 119,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "crispy"],
+      "review": null,
+      "photo": "menchi-katsu-curry-rice"
+    },
+    {
+      "slug": "butadon",
+      "name": {
+        "th": "ข้าวหน้าหมู บูตะด้ง",
+        "en": "Butadon (Japanese Pork Rice Bowl)"
+      },
+      "description": {
+        "th": "ข้าวหน้าหมูสไลซ์ผัดซอสหวานเค็มสไตล์ญี่ปุ่น",
+        "en": "A Japanese rice bowl of sliced pork simmered in a sweet-savoury sauce."
+      },
+      "price": 89,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "sweet"],
+      "review": null,
+      "photo": "pork-belly-rice-bowl"
+    },
+    {
+      "slug": "crispy-chicken-rice-teriyaki",
+      "name": {
+        "th": "ข้าวไก่ทอดราดซอสเทริยากิ",
+        "en": "Fried Chicken Rice with Teriyaki Sauce"
+      },
+      "description": {
+        "th": "ไก่ชุบเกล็ดขนมปังทอดกรอบราดซอสเทริยากิ เสิร์ฟกับข้าวสวย",
+        "en": "Breaded fried chicken glazed with teriyaki sauce, served on rice."
+      },
+      "price": 89,
+      "foodType": "rice-dishes",
+      "tastes": ["savory", "sweet", "crispy"],
+      "review": null,
+      "photo": "crispy-chicken-rice-teriyaki"
+    },
+    {
+      "slug": "crispy-chicken-rice-spicy-mayo",
+      "name": {
+        "th": "ข้าวไก่ทอดราดซอสสไปซี่มาโย",
+        "en": "Fried Chicken Rice with Spicy Mayo"
+      },
+      "description": {
+        "th": "ไก่ทอดกรอบบนข้าวหอมมะลิ ราดซอสมาโยเผ็ดและโรยต้นหอม",
+        "en": "Crispy fried chicken on jasmine rice, drizzled with spicy mayo and spring onion."
+      },
+      "price": 89,
+      "foodType": "rice-dishes",
+      "tastes": ["spicy", "creamy-rich", "crispy"],
+      "review": null,
+      "photo": "crispy-chicken-rice-spicy-mayo"
+    },
+    {
+      "slug": "bacon-dried-chili-spaghetti",
+      "name": {
+        "th": "สปาเกตตี้เบคอนผัดพริกแห้ง",
+        "en": "Bacon and Dried Chili Spaghetti"
+      },
+      "description": {
+        "th": "สปาเกตตี้ผัดเบคอนกรอบกับพริกแห้ง รสเผ็ดหอม",
+        "en": "Spaghetti stir-fried with crispy bacon and dried chillies."
+      },
+      "price": 89,
+      "foodType": "pasta",
+      "tastes": ["spicy", "savory"],
+      "review": null,
+      "photo": "bacon-dried-chili-spaghetti"
+    },
+    {
+      "slug": "yanyan-tomato-spaghetti",
+      "name": {
+        "th": "สปาเกตตี้มะเขือเทศ สูตรยันยัน",
+        "en": "YanYan's Tomato Spaghetti"
+      },
+      "description": {
+        "th": "สปาเกตตี้คลุกซอสมะเขือเทศสูตรของร้าน",
+        "en": "Spaghetti tossed in the shop's own tomato sauce."
+      },
+      "price": 89,
+      "foodType": "pasta",
+      "tastes": ["savory", "sour"],
+      "review": null,
+      "photo": "tomato-spaghetti"
+    },
+    {
+      "slug": "carbonara",
+      "name": {
+        "th": "สปาเกตตี้คาโบนาร่า",
+        "en": "Spaghetti Carbonara"
+      },
+      "description": {
+        "th": "สปาเกตตี้ซอสครีมเข้มข้น โรยเบคอนกรอบ",
+        "en": "Spaghetti in a rich cream sauce topped with crispy bacon."
+      },
+      "price": 89,
+      "foodType": "pasta",
+      "tastes": ["creamy-rich", "savory"],
+      "review": null,
+      "photo": "carbonara"
+    },
+    {
+      "slug": "beef-cheeseburger-fries",
+      "name": {
+        "th": "เบอร์เกอร์เนื้อ พร้อมชีสและเฟรนช์ฟราย",
+        "en": "Beef Cheeseburger with Fries"
+      },
+      "description": {
+        "th": "เบอร์เกอร์เนื้อฉ่ำ ชีสละลาย เสิร์ฟพร้อมมันฝรั่งทอด",
+        "en": "A juicy beef burger with melted cheese, served with fries."
+      },
+      "price": 119,
+      "foodType": "burgers-sandwiches-wraps",
+      "tastes": ["savory", "creamy-rich"],
+      "review": null,
+      "photo": "original-burger"
+    },
+    {
+      "slug": "pork-cheeseburger-fries",
+      "name": {
+        "th": "เบอร์เกอร์หมู พร้อมชีสและโฮมเมดฟราย",
+        "en": "Pork Cheeseburger with Homemade Fries"
+      },
+      "description": {
+        "th": "เบอร์เกอร์หมูฉ่ำ ชีสละลาย เสิร์ฟพร้อมมันฝรั่งทอดโฮมเมด",
+        "en": "A juicy pork burger with melted cheese, served with homemade fries."
+      },
+      "price": 89,
+      "foodType": "burgers-sandwiches-wraps",
+      "tastes": ["savory", "creamy-rich"],
+      "review": null,
+      "photo": "pork-burger"
+    },
+    {
+      "slug": "fried-chicken-burger-fries",
+      "name": {
+        "th": "เบอร์เกอร์ไก่ทอด พร้อมชีสและโฮมเมดฟราย",
+        "en": "Fried Chicken Burger with Homemade Fries"
+      },
+      "description": {
+        "th": "เบอร์เกอร์ไก่ทอดกรอบ ชีส ผักสด และซอสของร้าน เสิร์ฟพร้อมมันฝรั่งทอดโฮมเมด",
+        "en": "A crispy fried chicken burger with cheese, fresh vegetables and house sauce, served with homemade fries."
+      },
+      "price": 89,
+      "foodType": "burgers-sandwiches-wraps",
+      "tastes": ["crispy", "savory"],
+      "review": null,
+      "photo": "fried-chicken-burger"
+    },
+    {
+      "slug": "fried-chicken-set",
+      "name": {
+        "th": "ชุดไก่ทอด",
+        "en": "Fried Chicken Plate Set"
+      },
+      "description": {
+        "th": "ไก่ทอดกรอบราดซอส เสิร์ฟพร้อมไข่ดาว สลัด ขนมปัง และมันฝรั่ง",
+        "en": "Crispy fried chicken with sauce, served with a fried egg, salad, bread and potatoes."
+      },
+      "price": 139,
+      "foodType": "grills-steaks",
+      "tastes": ["crispy", "savory"],
+      "review": null,
+      "photo": "fried-chicken-steak"
+    },
+    {
+      "slug": "beef-steak-set",
+      "name": {
+        "th": "ชุดสเต็กเนื้อวัว",
+        "en": "Beef Steak Plate Set"
+      },
+      "description": {
+        "th": "สเต็กเนื้อวัวนุ่มราดซอส เสิร์ฟพร้อมไข่ดาว สลัด ขนมปัง และมันฝรั่ง",
+        "en": "Tender beef steak with sauce, served with a fried egg, salad, bread and potatoes."
+      },
+      "price": 159,
+      "foodType": "grills-steaks",
+      "tastes": ["savory", "spiced-smoky"],
+      "review": null,
+      "photo": "beef-steak"
+    }
+  ]
+}

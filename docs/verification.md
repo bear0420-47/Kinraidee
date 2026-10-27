@@ -1885,3 +1885,15 @@ New seed tests:
 - `pnpm --filter api catalog:build`: 14 restaurants, 256 menu items; `--check` reports the seed is up to date; 28 photo keys still have no pool.
 - The seed only upserts, so it reported 880 unchanged and left the 14 removed dishes active. They were soft-deleted by name on the **local** database only (`UPDATE "MenuItem" SET "deletedAt"`), which brings the local Shogun Steak row count to 34 active dishes, 6 of them with a stock photo.
 - `pnpm verify`: pass (exit 0). API 76 files/614 tests; web 38 files/447 tests; typecheck, lint and both builds pass.
+
+### Dish photos (same day)
+
+- 117 photo keys of visible dishes had no pool. 20 Unsplash searches were made (38 of the 50 hourly requests including download reports; nothing left queued) and 3 keys reused candidates cached by an earlier session. No Openverse results were added: the Openverse API did not answer from this host during the session, so every recorded photo is Unsplash.
+- Twelve keys were filled and put on one contact sheet for review. A human review rejected five of them: `long-bean-salad` (green sprouts, not pounded long beans), `grilled-chicken-salad` (a chicken stir-fry in a pan, no salad), `shrimp-rice-bowl` (a shrimp Caesar salad, and a chicken-and-quinoa bowl), `crispy-pork-curry-paste-rice` (rice noodles with avocado, two near-duplicates of one shoot) and `wai-wai-pad-cha-seafood` (pad thai with cashews, not pad cha with instant noodles). Their pools were set back to `photos: []` and their `query` kept.
+- Seven keys keep a photo: `australian-ribeye-steak`, `bbq-pork-steak`, `pork-chop`, `pork-ribs` (2), `thai-papaya-salad` (3), `fried-chicken-wings`, `tomato-spaghetti`. All 10 image URLs answer HTTP 200.
+- `pnpm --filter api catalog:build`: 14 restaurants, 256 menu items (7 hidden), stock photos for 143 dishes. `--check`: `catalog.seed.json is up to date.`
+- `pnpm --filter api prisma db seed`: `Seeded 880 catalog records and links (0 created, 5 updated, 875 unchanged, 0 stale taste links removed).` The five updated records are the reverted dishes, whose `imageUrl` is now empty.
+- Database read-back (local): 256 active menu items, 143 with an `imageUrl`; the seven dishes above resolve one, the five reverted dishes resolve none.
+- `pnpm verify`: pass (exit 0). API 76 files/614 tests; web 38 files/447 tests; typecheck, lint and both builds pass.
+- Lesson recorded for future passes: describe what a candidate photo actually shows first, then compare that description with the dish name; reject when the main ingredient, the starch (rice, noodles, salad) or the cooking style differs.
+- Git: not committed, not staged, nothing pushed.
