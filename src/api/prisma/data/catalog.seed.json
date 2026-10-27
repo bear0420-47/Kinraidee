@@ -340,6 +340,21 @@
       "imageUrl": null
     },
     {
+      "id": "cmi3zccazic5iq03fodnsiwf0",
+      "zoneId": "c8gds70havtzwmks5lhd2caul",
+      "googlePlaceId": null,
+      "name": {
+        "th": "คึ บะร์ - เดอะ วัลเลย์ สเปซ",
+        "en": "Khue Bar - The Valley Space"
+      },
+      "description": {
+        "th": "ร้านอาหารตามสั่งใน The Valley Space มีข้าวราดผัดหลายแบบ สุกี้แห้ง ข้าวผัด มาม่าผัด และสปาเกตตี้สไตล์ไทย",
+        "en": "Made-to-order Thai kitchen at The Valley Space serving stir-fries on rice, dry suki, fried rice, stir-fried instant noodles and Thai-style spaghetti."
+      },
+      "phone": null,
+      "imageUrl": null
+    },
+    {
       "id": "ciho03k7ugcws3xpocn5t3072",
       "zoneId": "c8gds70havtzwmks5lhd2caul",
       "googlePlaceId": null,
@@ -4221,6 +4236,291 @@
       },
       "price": 89,
       "imageUrl": "https://images.unsplash.com/photo-1624801111298-28ae6b0c2242?ixid=M3wxMTExMTcwfDB8MXxzZWFyY2h8MXx8dHVuYSUyMHNhbGFkJTIwZWdnJTIwYXZvY2Fkb3xlbnwxfDB8fHwxNzkyNzc5NTYxfDA&ixlib=rb-4.1.0&w=800&q=75&fit=crop&auto=format"
+    },
+    {
+      "id": "c2dthd59xxx4wzt53p5qhfauv",
+      "restaurantId": "cmi3zccazic5iq03fodnsiwf0",
+      "foodTypeId": "cbdllxmb0sv247maiq26k5r9k",
+      "tasteIds": [
+        "c1spiyrw91ifmryner9y1bvb4"
+      ],
+      "name": {
+        "th": "ผัดกระเทียมราดข้าว",
+        "en": "Garlic Stir-fry on Rice"
+      },
+      "description": {
+        "th": "เนื้อสัตว์ผัดกระเทียมเจียวหอม ๆ ราดข้าว ท็อปไข่ดาว",
+        "en": "Meat stir-fried with plenty of crispy garlic over rice, topped with a fried egg."
+      },
+      "price": 65,
+      "imageUrl": null
+    },
+    {
+      "id": "cv0d9pomhc52x3eezhmm5yodr",
+      "restaurantId": "cmi3zccazic5iq03fodnsiwf0",
+      "foodTypeId": "cyoa3a1cvssy70jjtctbb2brx",
+      "tasteIds": [
+        "c12yme2yu2wne82ugvfce7wfw",
+        "c1spiyrw91ifmryner9y1bvb4"
+      ],
+      "name": {
+        "th": "มาม่าผัดกะเพรา",
+        "en": "Thai Basil Stir-fried Instant Noodles"
+      },
+      "description": {
+        "th": "บะหมี่กึ่งสำเร็จรูปผัดกะเพรารสจัด ท็อปหมูกรอบ",
+        "en": "Instant noodles stir-fried with holy basil and chilli, topped with crispy pork."
+      },
+      "price": 65,
+      "imageUrl": null
+    },
+    {
+      "id": "cmgtmsqokmeoq2qpvwcqogxe5",
+      "restaurantId": "cmi3zccazic5iq03fodnsiwf0",
+      "foodTypeId": "cbdllxmb0sv247maiq26k5r9k",
+      "tasteIds": [
+        "c1spiyrw91ifmryner9y1bvb4",
+        "cyymbgka0mellnr53f78fh44j"
+      ],
+      "name": {
+        "th": "ข้าวไก่เทอริยากิ",
+        "en": "Teriyaki Chicken Rice"
+      },
+      "description": {
+        "th": "ไก่ย่างซอสเทอริยากิบนข้าว ท็อปไข่ดาว",
+        "en": "Grilled chicken in teriyaki sauce on rice, topped with a fried egg."
+      },
+      "price": 80,
+      "imageUrl": "https://images.unsplash.com/photo-1771384552858-feb0574f958d?ixid=M3wxMTExMTcwfDB8MXxzZWFyY2h8Mnx8dGVyaXlha2klMjBjaGlja2VuJTIwcmljZSUyMGJyb2Njb2xpfGVufDF8MHx8fDE3OTI3NzU4OTF8MA&ixlib=rb-4.1.0&w=800&q=75&fit=crop&auto=format"
+    },
+    {
+      "id": "c2txkj7j6d2lxsd5wcpja9yhj",
+      "restaurantId": "cmi3zccazic5iq03fodnsiwf0",
+      "foodTypeId": "c2x3kwmcic11b8yrrmwpl7mex",
+      "tasteIds": [
+        "c12yme2yu2wne82ugvfce7wfw",
+        "cahxbgiqa0hxlfer1dw6itmz1",
+        "cayiejo3s8ogwe5uqz1pxg29o"
+      ],
+      "name": {
+        "th": "สปาเก็ตตี้ซอสข้าวซอย",
+        "en": "Spaghetti in Khao Soi Sauce"
+      },
+      "description": {
+        "th": "สปาเก็ตตี้คลุกซอสแกงข้าวซอย ท็อปหมูกรอบและเส้นกรอบ",
+        "en": "Spaghetti tossed in khao soi curry sauce, topped with crispy pork and crispy noodles."
+      },
+      "price": 70,
+      "imageUrl": null
+    },
+    {
+      "id": "cpucg4tupp7bq2v7loufz612n",
+      "restaurantId": "cmi3zccazic5iq03fodnsiwf0",
+      "foodTypeId": "c2x3kwmcic11b8yrrmwpl7mex",
+      "tasteIds": [
+        "c12yme2yu2wne82ugvfce7wfw",
+        "c1spiyrw91ifmryner9y1bvb4"
+      ],
+      "name": {
+        "th": "สปาเก็ตตี้พริกแกง",
+        "en": "Red Curry Paste Spaghetti"
+      },
+      "description": {
+        "th": "สปาเก็ตตี้ผัดพริกแกงเผ็ดหอม ท็อปหมูกรอบ",
+        "en": "Spaghetti stir-fried with red curry paste, topped with crispy pork."
+      },
+      "price": 70,
+      "imageUrl": null
+    },
+    {
+      "id": "c9bn8blyok3d6zq7brtx1zvil",
+      "restaurantId": "cmi3zccazic5iq03fodnsiwf0",
+      "foodTypeId": "c2x3kwmcic11b8yrrmwpl7mex",
+      "tasteIds": [
+        "c12yme2yu2wne82ugvfce7wfw",
+        "c1spiyrw91ifmryner9y1bvb4"
+      ],
+      "name": {
+        "th": "สปาเก็ตตี้ขี้เมา",
+        "en": "Drunken Spaghetti"
+      },
+      "description": {
+        "th": "สปาเก็ตตี้ผัดขี้เมารสจัด ใส่กะเพรา พริก และผัก",
+        "en": "Spaghetti stir-fried drunken-noodle style with holy basil, chilli and vegetables."
+      },
+      "price": 70,
+      "imageUrl": null
+    },
+    {
+      "id": "cu58t12acjgox28mquorkfdpu",
+      "restaurantId": "cmi3zccazic5iq03fodnsiwf0",
+      "foodTypeId": "cyoa3a1cvssy70jjtctbb2brx",
+      "tasteIds": [
+        "c1spiyrw91ifmryner9y1bvb4",
+        "c12yme2yu2wne82ugvfce7wfw"
+      ],
+      "name": {
+        "th": "สุกี้แห้ง",
+        "en": "Dry Sukiyaki"
+      },
+      "description": {
+        "th": "วุ้นเส้นผัดสุกี้แห้งกับผักและเนื้อสัตว์ เสิร์ฟพร้อมน้ำจิ้มสุกี้",
+        "en": "Glass noodles stir-fried sukiyaki-style with vegetables and meat, served with suki sauce."
+      },
+      "price": 65,
+      "imageUrl": "https://live.staticflickr.com/65535/51363804320_4892a41fc1_c.jpg"
+    },
+    {
+      "id": "cbmqsa6fzmcy0yzcfp6yvzn1k",
+      "restaurantId": "cmi3zccazic5iq03fodnsiwf0",
+      "foodTypeId": "cbdllxmb0sv247maiq26k5r9k",
+      "tasteIds": [
+        "c1spiyrw91ifmryner9y1bvb4"
+      ],
+      "name": {
+        "th": "ข้าวผัด",
+        "en": "Thai Fried Rice"
+      },
+      "description": {
+        "th": "ข้าวผัดหอมกระทะ ท็อปไข่ดาว เสิร์ฟพร้อมแตงกวาและมะนาว",
+        "en": "Wok-fried Thai fried rice topped with a fried egg, served with cucumber and lime."
+      },
+      "price": 65,
+      "imageUrl": null
+    },
+    {
+      "id": "c6d57wp0eo7rakyf1c6x11zkq",
+      "restaurantId": "cmi3zccazic5iq03fodnsiwf0",
+      "foodTypeId": "cbdllxmb0sv247maiq26k5r9k",
+      "tasteIds": [
+        "c1spiyrw91ifmryner9y1bvb4",
+        "cayiejo3s8ogwe5uqz1pxg29o",
+        "cahxbgiqa0hxlfer1dw6itmz1"
+      ],
+      "name": {
+        "th": "ผัดผงกะหรี่ราดข้าว",
+        "en": "Curry Powder Stir-fry on Rice"
+      },
+      "description": {
+        "th": "เนื้อสัตว์ผัดผงกะหรี่กับไข่ ราดข้าว",
+        "en": "Meat stir-fried with curry powder and egg, served over rice."
+      },
+      "price": 65,
+      "imageUrl": null
+    },
+    {
+      "id": "ct0cwb0mzm8pn2cmtx4r1o81d",
+      "restaurantId": "cmi3zccazic5iq03fodnsiwf0",
+      "foodTypeId": "cbdllxmb0sv247maiq26k5r9k",
+      "tasteIds": [
+        "c12yme2yu2wne82ugvfce7wfw",
+        "cyymbgka0mellnr53f78fh44j",
+        "c1spiyrw91ifmryner9y1bvb4"
+      ],
+      "name": {
+        "th": "ผัดพริกเผาราดข้าว",
+        "en": "Chilli Jam Stir-fry on Rice"
+      },
+      "description": {
+        "th": "เนื้อสัตว์ผัดน้ำพริกเผา ราดข้าว ท็อปไข่เจียว",
+        "en": "Meat stir-fried with Thai chilli jam over rice, topped with an omelette."
+      },
+      "price": 65,
+      "imageUrl": null
+    },
+    {
+      "id": "c23hzc47by28emugstjre40qe",
+      "restaurantId": "cmi3zccazic5iq03fodnsiwf0",
+      "foodTypeId": "cbdllxmb0sv247maiq26k5r9k",
+      "tasteIds": [
+        "c1spiyrw91ifmryner9y1bvb4"
+      ],
+      "name": {
+        "th": "ผัดน้ำมันหอยราดข้าว",
+        "en": "Oyster Sauce Stir-fry on Rice"
+      },
+      "description": {
+        "th": "เนื้อสัตว์ผัดน้ำมันหอย ราดข้าว ท็อปไข่ดาว",
+        "en": "Meat stir-fried in oyster sauce over rice, topped with a fried egg."
+      },
+      "price": 65,
+      "imageUrl": null
+    },
+    {
+      "id": "cud1fvt6dx803zq7zlgd2hyt0",
+      "restaurantId": "cmi3zccazic5iq03fodnsiwf0",
+      "foodTypeId": "cbdllxmb0sv247maiq26k5r9k",
+      "tasteIds": [
+        "c12yme2yu2wne82ugvfce7wfw",
+        "c1spiyrw91ifmryner9y1bvb4"
+      ],
+      "name": {
+        "th": "ผัดเผ็ดราดข้าว",
+        "en": "Spicy Red Curry Stir-fry on Rice"
+      },
+      "description": {
+        "th": "เนื้อสัตว์ผัดเผ็ดพริกแกงกับผัก ราดข้าว ท็อปไข่ดาว",
+        "en": "Meat stir-fried with red curry paste and vegetables over rice, topped with a fried egg."
+      },
+      "price": 65,
+      "imageUrl": null
+    },
+    {
+      "id": "c4p6e3dhgf8i3b69mc9u2h48w",
+      "restaurantId": "cmi3zccazic5iq03fodnsiwf0",
+      "foodTypeId": "cbdllxmb0sv247maiq26k5r9k",
+      "tasteIds": [
+        "c12yme2yu2wne82ugvfce7wfw",
+        "c1spiyrw91ifmryner9y1bvb4"
+      ],
+      "name": {
+        "th": "ผัดพริกเกลือราดข้าว",
+        "en": "Salt and Chilli Stir-fry on Rice"
+      },
+      "description": {
+        "th": "เนื้อสัตว์คั่วพริกเกลือ ราดข้าว ท็อปไข่ดาว",
+        "en": "Meat tossed with salt and chilli over rice, topped with a fried egg."
+      },
+      "price": 65,
+      "imageUrl": null
+    },
+    {
+      "id": "cll1v5764g7kwlkc2yvmi9jiz",
+      "restaurantId": "cmi3zccazic5iq03fodnsiwf0",
+      "foodTypeId": "cbdllxmb0sv247maiq26k5r9k",
+      "tasteIds": [
+        "c12yme2yu2wne82ugvfce7wfw",
+        "c1spiyrw91ifmryner9y1bvb4"
+      ],
+      "name": {
+        "th": "ผัดพริกแกงราดข้าว",
+        "en": "Curry Paste Stir-fry on Rice"
+      },
+      "description": {
+        "th": "หมูกรอบผัดพริกแกงเผ็ดจัดจ้าน ราดข้าว ท็อปไข่ดาว",
+        "en": "Crispy pork stir-fried in fiery curry paste over rice, topped with a fried egg."
+      },
+      "price": 65,
+      "imageUrl": null
+    },
+    {
+      "id": "ct05fo145zhujtfsd15nhaxzk",
+      "restaurantId": "cmi3zccazic5iq03fodnsiwf0",
+      "foodTypeId": "cbdllxmb0sv247maiq26k5r9k",
+      "tasteIds": [
+        "c12yme2yu2wne82ugvfce7wfw",
+        "c1spiyrw91ifmryner9y1bvb4"
+      ],
+      "name": {
+        "th": "ผัดกะเพราราดข้าว",
+        "en": "Thai Basil Stir-fry on Rice"
+      },
+      "description": {
+        "th": "เนื้อสัตว์ผัดกะเพรารสจัด ราดข้าว ท็อปไข่ดาว",
+        "en": "Meat stir-fried with holy basil and chilli over rice, topped with a fried egg."
+      },
+      "price": 65,
+      "imageUrl": "https://live.staticflickr.com/3579/3369547949_fbee9baaea_c.jpg"
     },
     {
       "id": "c3lc7m4fd6h88s5f6a0f5w0wz",

@@ -203,6 +203,21 @@ khang-mor-fah,korean-spicy-chicken-wrap,แร็ปไก่สไปซี่�
 khang-mor-fah,boiled-chicken-breast-salad,สลัดอกไก่ต้ม,Boiled Chicken Breast Salad,salads-yum-somtam,assets/catalog/khang-mor-fah/menus/boiled-chicken-breast-salad.png,missing,boiled-chicken-breast-salad,stock
 khang-mor-fah,tuna-salad,สลัดทูน่า,Tuna Salad,salads-yum-somtam,assets/catalog/khang-mor-fah/menus/tuna-salad.png,missing,tuna-salad,stock
 khang-mor-fah,homemade-greek-yogurt,กรีกโยเกิร์ตโฮมเมด,Homemade Greek Yogurt,desserts,assets/catalog/khang-mor-fah/menus/homemade-greek-yogurt.png,hidden,homemade-greek-yogurt,stock
+khue-bar-valley-space,garlic-stir-fry-rice,ผัดกระเทียมราดข้าว,Garlic Stir-fry on Rice,rice-dishes,assets/catalog/khue-bar-valley-space/menus/garlic-stir-fry-rice.png,missing,garlic-stir-fry-rice,none
+khue-bar-valley-space,mama-pad-kra-pao,มาม่าผัดกะเพรา,Thai Basil Stir-fried Instant Noodles,noodles,assets/catalog/khue-bar-valley-space/menus/mama-pad-kra-pao.png,missing,mama-pad-kra-pao,none
+khue-bar-valley-space,teriyaki-chicken-rice,ข้าวไก่เทอริยากิ,Teriyaki Chicken Rice,rice-dishes,assets/catalog/khue-bar-valley-space/menus/teriyaki-chicken-rice.png,missing,teriyaki-chicken-rice,stock
+khue-bar-valley-space,khao-soi-spaghetti,สปาเก็ตตี้ซอสข้าวซอย,Spaghetti in Khao Soi Sauce,pasta,assets/catalog/khue-bar-valley-space/menus/khao-soi-spaghetti.png,missing,khao-soi-spaghetti,none
+khue-bar-valley-space,curry-paste-spaghetti,สปาเก็ตตี้พริกแกง,Red Curry Paste Spaghetti,pasta,assets/catalog/khue-bar-valley-space/menus/curry-paste-spaghetti.png,missing,curry-paste-spaghetti,none
+khue-bar-valley-space,drunken-spaghetti,สปาเก็ตตี้ขี้เมา,Drunken Spaghetti,pasta,assets/catalog/khue-bar-valley-space/menus/drunken-spaghetti.png,missing,drunken-spaghetti,none
+khue-bar-valley-space,dry-suki,สุกี้แห้ง,Dry Sukiyaki,noodles,assets/catalog/khue-bar-valley-space/menus/dry-suki.png,missing,dry-suki-mixed,stock
+khue-bar-valley-space,thai-fried-rice,ข้าวผัด,Thai Fried Rice,rice-dishes,assets/catalog/khue-bar-valley-space/menus/thai-fried-rice.png,missing,thai-fried-rice,none
+khue-bar-valley-space,curry-powder-stir-fry-rice,ผัดผงกะหรี่ราดข้าว,Curry Powder Stir-fry on Rice,rice-dishes,assets/catalog/khue-bar-valley-space/menus/curry-powder-stir-fry-rice.png,missing,curry-powder-stir-fry-rice,none
+khue-bar-valley-space,chili-paste-stir-fry-rice,ผัดพริกเผาราดข้าว,Chilli Jam Stir-fry on Rice,rice-dishes,assets/catalog/khue-bar-valley-space/menus/chili-paste-stir-fry-rice.png,missing,chili-paste-stir-fry-rice,none
+khue-bar-valley-space,oyster-sauce-stir-fry-rice,ผัดน้ำมันหอยราดข้าว,Oyster Sauce Stir-fry on Rice,rice-dishes,assets/catalog/khue-bar-valley-space/menus/oyster-sauce-stir-fry-rice.png,missing,oyster-sauce-stir-fry-rice,none
+khue-bar-valley-space,spicy-stir-fry-rice,ผัดเผ็ดราดข้าว,Spicy Red Curry Stir-fry on Rice,rice-dishes,assets/catalog/khue-bar-valley-space/menus/spicy-stir-fry-rice.png,missing,spicy-stir-fry-rice,none
+khue-bar-valley-space,salt-chili-stir-fry-rice,ผัดพริกเกลือราดข้าว,Salt and Chilli Stir-fry on Rice,rice-dishes,assets/catalog/khue-bar-valley-space/menus/salt-chili-stir-fry-rice.png,missing,salt-chili-stir-fry-rice,none
+khue-bar-valley-space,curry-paste-stir-fry-rice,ผัดพริกแกงราดข้าว,Curry Paste Stir-fry on Rice,rice-dishes,assets/catalog/khue-bar-valley-space/menus/curry-paste-stir-fry-rice.png,missing,curry-paste-stir-fry-rice,none
+khue-bar-valley-space,thai-basil-stir-fry-rice,ผัดกะเพราราดข้าว,Thai Basil Stir-fry on Rice,rice-dishes,assets/catalog/khue-bar-valley-space/menus/thai-basil-stir-fry-rice.png,missing,thai-basil-fried-egg-rice,stock
 lao-ta-mala,mala-pick-your-own-set,เลาต๋าหม่าล่า เซ็ตตามใจ,Pick-Your-Own Mala Soup Set,curries-soups,assets/catalog/lao-ta-mala/menus/mala-pick-your-own-set.png,missing,mala-pick-your-own-set,stock
 little-grin,teriyaki-chicken-rice,ข้าวไก่เทริยากิ,Teriyaki Chicken Rice,rice-dishes,assets/catalog/little-grin/menus/teriyaki-chicken-rice.png,missing,teriyaki-chicken-rice,stock
 little-grin,teriyaki-grilled-chicken-noodles,บะหมี่ไก่ย่างเทริยากิ,Teriyaki Grilled Chicken Noodles,noodles,assets/catalog/little-grin/menus/teriyaki-grilled-chicken-noodles.png,missing,teriyaki-grilled-chicken-noodles,stock
