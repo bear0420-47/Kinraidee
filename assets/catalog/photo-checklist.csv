@@ -392,6 +392,26 @@ shogun-steak,papaya-salad-instant-noodles,ตำมาม่า,Papaya Salad wit
 shogun-steak,long-bean-salad,ตำถั่วฝักยาว,Long Bean Salad,salads-yum-somtam,assets/catalog/shogun-steak/menus/long-bean-salad.png,missing,long-bean-salad,none
 shogun-steak,cucumber-salad,ตำแตง,Cucumber Salad,salads-yum-somtam,assets/catalog/shogun-steak/menus/cucumber-salad.png,missing,cucumber-salad,none
 shogun-steak,papaya-salad-pork-sausage,ตำไทยหมูยอ,Thai Papaya Salad with Pork Sausage,salads-yum-somtam,assets/catalog/shogun-steak/menus/papaya-salad-pork-sausage.png,missing,papaya-salad-pork-sausage,none
+wan-duean-pi-breakfast,pan-eggs-bacon-sausage,ไข่กระทะ,Pan-cooked Eggs with Bacon and Sausage,appetizers-snacks,assets/catalog/wan-duean-pi-breakfast/menus/pan-eggs-bacon-sausage.png,missing,pan-eggs,none
+wan-duean-pi-breakfast,crispy-fried-egg-rice,ข้าวไข่ดาวกรอบ,Crispy Fried Egg on Rice,rice-dishes,assets/catalog/wan-duean-pi-breakfast/menus/crispy-fried-egg-rice.png,missing,fried-eggs-rice,stock
+wan-duean-pi-breakfast,omurice,ข้าวห่อไข่ ออมุไรซ์,Omurice,rice-dishes,assets/catalog/wan-duean-pi-breakfast/menus/omurice.png,missing,omurice,none
+wan-duean-pi-breakfast,toast-soft-boiled-eggs,ปังปิ้งไข่ลวก,Toast with Soft-boiled Eggs,appetizers-snacks,assets/catalog/wan-duean-pi-breakfast/menus/toast-soft-boiled-eggs.png,missing,toast-soft-boiled-eggs,none
+wan-duean-pi-breakfast,cheese-omelette,ไข่ห่อชีส,Cheese Omelette,appetizers-snacks,assets/catalog/wan-duean-pi-breakfast/menus/cheese-omelette.png,missing,cheese-omelette,none
+wan-duean-pi-breakfast,diy-breakfast-box,กล่องอาหารเช้าเลือกเอง,DIY Breakfast Box,appetizers-snacks,assets/catalog/wan-duean-pi-breakfast/menus/diy-breakfast-box.png,missing,breakfast-box,none
+wan-duean-pi-breakfast,bacon-pancake,แพนเค้กเบคอน,Bacon Pancake with Maple Syrup,appetizers-snacks,assets/catalog/wan-duean-pi-breakfast/menus/bacon-pancake.png,missing,bacon-pancake,none
+wan-duean-pi-breakfast,sausage-scrambled-egg-toast,ไส้กรอกไข่สครัมเบิลโทสต์,Sausage and Scrambled Egg Toast,appetizers-snacks,assets/catalog/wan-duean-pi-breakfast/menus/sausage-scrambled-egg-toast.png,missing,sausage-scrambled-egg-toast,none
+wan-duean-pi-breakfast,bacon-cheese-scrambled-egg-toast,โทสต์เบคอนชีสไข่สครัมเบิล,"Bacon, Cheese and Scrambled Egg Toast",appetizers-snacks,assets/catalog/wan-duean-pi-breakfast/menus/bacon-cheese-scrambled-egg-toast.png,missing,bacon-scrambled-egg-toast,none
+wan-duean-pi-breakfast,mama-soft-egg,มาม่าไข่ข้น,Instant Noodles with Creamy Egg,noodles,assets/catalog/wan-duean-pi-breakfast/menus/mama-soft-egg.png,missing,mama-soft-egg,none
+wan-duean-pi-breakfast,mama-signature,มาม่าซิกเนเจอร์,Signature Instant Noodles,noodles,assets/catalog/wan-duean-pi-breakfast/menus/mama-signature.png,missing,mama-signature,none
+wan-duean-pi-breakfast,mama-omelette,มาม่าไข่ห่อ,Omelette-wrapped Instant Noodles,noodles,assets/catalog/wan-duean-pi-breakfast/menus/mama-omelette.png,missing,mama-omelette,none
+wan-duean-pi-breakfast,fresh-fruit-cup,ผลไม้รวมหั่นสด,Fresh Mixed Fruit Cup,desserts,assets/catalog/wan-duean-pi-breakfast/menus/fresh-fruit-cup.png,hidden,fresh-fruit-cup,none
+wan-duean-pi-breakfast,fruit-yogurt,โยเกิร์ตผลไม้,Fruit Yogurt,desserts,assets/catalog/wan-duean-pi-breakfast/menus/fruit-yogurt.png,hidden,fruit-yogurt,none
+wan-duean-pi-breakfast,yogurt-fresh-cream,โยเกิร์ตเฟรชครีม,Yogurt with Fresh Cream,desserts,assets/catalog/wan-duean-pi-breakfast/menus/yogurt-fresh-cream.png,hidden,yogurt-fresh-cream,none
+wan-duean-pi-breakfast,butter-pancake,แพนเค้กเนยสด,Butter Pancake,desserts,assets/catalog/wan-duean-pi-breakfast/menus/butter-pancake.png,hidden,butter-pancake,none
+wan-duean-pi-breakfast,dark-chocolate-pancake,แพนเค้กดาร์กช็อกโกแลต,Dark Chocolate Pancake,desserts,assets/catalog/wan-duean-pi-breakfast/menus/dark-chocolate-pancake.png,hidden,chocolate-pancake,none
+wan-duean-pi-breakfast,cream-pancake,แพนเค้กครีม,Cream Pancake,desserts,assets/catalog/wan-duean-pi-breakfast/menus/cream-pancake.png,hidden,cream-pancake,none
+wan-duean-pi-breakfast,pure-matcha,เพียวมัทฉะ,Pure Iced Matcha,drinks,assets/catalog/wan-duean-pi-breakfast/menus/pure-matcha.png,hidden,iced-matcha,none
+wan-duean-pi-breakfast,matcha-latte,มัทฉะลาเต้,Iced Matcha Latte,drinks,assets/catalog/wan-duean-pi-breakfast/menus/matcha-latte.png,hidden,matcha-latte,none
 yang-hai-mfu,moo-kratha-korean,ย่างให้หมูกระทะชากาเกาหลี,Korean Sauce Moo Kratha Bowl,hotpot-bbq,assets/catalog/yang-hai-mfu/menus/moo-kratha-korean.png,missing,moo-kratha-korean,none
 yang-hai-mfu,moo-kratha-korean-m,ย่างให้หมูกระทะชากาเกาหลี ไซส์ M,Korean Sauce Moo Kratha Bowl (M),hotpot-bbq,assets/catalog/yang-hai-mfu/menus/moo-kratha-korean-m.png,missing,moo-kratha-korean,none
 yang-hai-mfu,moo-kratha-sichuan-mala,ย่างให้หมูกระทะหม่าล่าเสฉวน,Sichuan Mala Moo Kratha Bowl,hotpot-bbq,assets/catalog/yang-hai-mfu/menus/moo-kratha-sichuan-mala.png,missing,moo-kratha-sichuan-mala,none
