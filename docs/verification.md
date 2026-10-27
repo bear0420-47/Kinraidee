@@ -1,5 +1,48 @@
 # Verification Report
 
+## Single-message adjustment notice — 2026-10-27
+
+The visible adjusted-field/count line and `ดูการปรับตัวเลือก` disclosure were removed. The cream notice now contains only the friendly prompt with smaller phone text and shorter vertical padding. Existing result-condition controls still show effective choices; the complete screen-reader status still names every original and replacement value. Previous requirement, plan, design and verification archived under evidence/archive/20261027-single-line-adjustment-notice/.
+
+- Focused ShuffleCards regression: 36/36 passed. Web TypeScript and production build passed; existing Vite large-chunk/dependency-comment warnings remain.
+- Changed-file Prettier, `git diff --check`, and wireframe tests (24/24) passed. Direct ESLint could not start because the installed dependency tree lacks `ajv`.
+- Local Opera `/meal` at desktop and 390px showed one compact notice without the removed text or disclosure, and no visible horizontal overflow. No production or physical-device check.
+
+## Friendly adjustment notice — 2026-10-27
+
+The adjustment notice now leads with an inviting question on the existing cream/ink/shadow surface, followed by the adjusted field or field count and result count. The old → new values remain in native disclosure; the complete accessible status announcement remains. Previous plan, design and verification archived under evidence/archive/20261027-friendly-adjustment-notice/.
+
+- Focused ShuffleCards tests: 36/36 passed. Web TypeScript and production build passed; Vite retained its existing dependency-annotation and large-chunk warnings.
+- Changed-file Prettier, `git diff --check`, and wireframe checks (24/24) passed. Direct ESLint could not start because the installed dependency tree lacks `ajv`.
+- Local Opera `/meal` showed the new notice with a stored one-field adjustment at desktop and 390px mobile widths; no visible overflow at the tested widths. Full deployment and physical-device behavior were not verified.
+
+## Compact automatic-adjustment notice — 2026-10-27
+
+Results now show a short adjustment notice with the changed field or field count and the number of matching menus. Native disclosure shows every original → effective value; the complete explanation remains in an assistive status announcement. Previous requirement, plan, design, and verification artifacts archived under evidence/archive/20261027-compact-adjustment-notice/.
+
+- Web TypeScript and Vite production build passed. Vite reported its existing large-chunk and dependency annotation warnings.
+- Changed-file Prettier and `git diff --check` passed. Direct ESLint could not start because installed `ajv` is missing.
+- Local Opera `/meal` with a stored one-field adjustment showed `ปรับพื้นที่แล้ว เจอ 1 เมนู`; opening `ดูการปรับตัวเลือก` showed `พื้นที่: ตลาดฟ้าไทย → ตรงข้ามมหาวิทยาลัย`. No production verification performed.
+- Focused ShuffleCards regression: 36/36 passed, including one-field and multi-field adjustments, disclosure, and restored-session presentation. Wireframe checks: 24/24 passed (prototype checks only).
+
+## Visible menu details button - 2026-10-27
+
+The menu-details action now uses the existing full-width outlined ghost Button and Info icon. Local Opera interaction confirmed that the Dialog opens and closes, focus returns to the button, and card height remains 575.275 px before and after on the tested viewport. Web TypeScript and changed-file Prettier passed. Prior evidence archived under evidence/archive/20261027-visible-menu-details-button/.
+
+
+## Stable menu-card details - 2026-10-27
+
+Reused Dialog for menu/restaurant details so opening them cannot change the card layout; mobile rail now stretches cards to equal height. Existing usePlaceDetails keeps eager query/cache behavior. Prior plan/design/report archived under evidence/archive/20261027-stable-menu-card-details/.
+
+- Web local tsc -b --pretty false: passed. Vite build --configLoader runner: passed (existing large-chunk and dependency annotation warnings).
+- Web vitest run src/pages/meal/ShuffleCards.test.tsx --configLoader runner --maxWorkers 1 --no-file-parallelism: 36/36 passed, including modal outside card, Escape/Close focus return and eager provider requests.
+- Web vitest run src/pages/meal/ConfirmMenu.test.tsx --configLoader runner --maxWorkers 1 --no-file-parallelism: 11/11 passed.
+- Changed-file Prettier and git diff --check: passed. Impeccable scoped layout detector: []. Wireframe node tests: 24/24 passed (prototype checks only).
+- pnpm verify and pnpm format could not start because pnpm package-manager fetch failed. Direct ESLint failed before linting: missing ajv dependency. Repository formatting has existing failures outside changed files; no broad reformat applied.
+- Direct API tsc reports existing AbortSignal errors in provider adapters; API tests could not complete successfully in this environment. Initial full web run was interrupted after failures; scoped final results above do not establish a full-suite pass.
+- No browser/device geometry or deployed-site validation performed. No commit, push or deployment. Temporary package-manager lockfile changes were removed.
+
+
 ## Balanced compact result buttons — 2026-10-27
 
 Human requested similarly sized buttons without stretching the first button. Changed only the existing result action layout to a content-sized, two equal-column grid; retained outlined buttons, single-line labels, gap-2 and existing responsive typography/touch height. Previous artifacts archived under evidence/archive/20261027-balanced-result-buttons/.
