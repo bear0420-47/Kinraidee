@@ -1850,3 +1850,38 @@ New seed tests:
 
 - The web build keeps the existing warning that the main JavaScript chunk exceeds 500 kB.
 - Rollup keeps the existing non-blocking warnings about comment annotations inside Zod dependencies.
+
+## Full catalog (14 restaurants) - 2026-10-27
+
+### Scope
+
+- Added Shogun Steak (`shogun-steak`, zone `kotchapol`) from one batch of Grab menu screenshots captured 2026-10-27: 48 menu items, all Thai and English, with descriptions written for this catalog rather than copied from Grab.
+- Stored Grab's regular prices (no promotion price was shown on any row) and kept `pricesInclude: grab-delivery-markup`.
+- Kept the four menu sections สเต็ก, ของทานเล่น, สลัดผัก and ส้มตำ. The screenshots cover the whole menu: the in-app category picker lists exactly those four sections.
+
+### Results
+
+| Check | Result |
+|---|---|
+| `pnpm --filter api catalog:build` | Pass: 14 restaurants, 270 menu items (7 hidden); 0 local photos found, 270 missing and listed in `photo-checklist.csv`; stock photos for 137 dishes. |
+| `pnpm --filter api catalog:build --check` | Pass: `catalog.seed.json is up to date.` |
+| `pnpm --filter api exec prisma migrate deploy` | Applied the pending `20261024180000_add_google_place_id` migration. The local database was one migration behind; the seed failed with `Unknown argument 'googlePlaceId'` until this was applied and the Prisma client regenerated with `prisma generate --schema=prisma/schema.prisma`. |
+| `pnpm --filter api prisma db seed` | Pass: `Seeded 926 catalog records and links (160 created, 33 updated, 733 unchanged, 0 stale taste links removed).` |
+| Database read-back | `Shogun Steak - Kotchapol Land Road` exists in zone Kotchapol with 48 menu items; 7 of them resolve a stock photo and 41 have none yet. Catalog-wide: 14 active restaurants, 270 menu items. |
+| `pnpm verify` | Pass (exit 0). Typecheck and lint done for API and web; API 76 files/614 tests; web 38 files/447 tests; both builds pass. The web build keeps the existing >500 kB chunk and Zod comment warnings. |
+| Git | Not committed, not staged, nothing pushed. |
+
+### Judgment calls
+
+- ส้มตำ (11 plates, 49–60 baht) was kept as single-portion dishes in `salads-yum-somtam`. Nothing in this menu was a shared rice-side; the shop has no กับข้าว section.
+- `ผักโขมอบชีส` (79) was left out because the row is greyed out, and `ตำลาวหมูยอ` because the price is outside the last screenshot.
+- Seven photo keys reuse existing pools instead of new ones: `fried-chicken-steak`, `beef-steak`, `carbonara`, `vegetable-salad`, `boiled-chicken-breast-salad`, `tuna-salad`, `grilled-chicken-wings`.
+- The remaining 41 photo keys have no pool yet and are the input for the photo handoff.
+
+### Revision later the same day
+
+- `black-pepper-beef-steak` uses its own photo key instead of the shared `beef-steak`; the T-bone English name is `Thai Grain-Fed Beef T-Bone Steak`; `tomato-spaghetti` tastes are `["savory"]`.
+- Removed the pure side snacks (14): ทอดรวม, the seven fries (plain, cheese sauce, cheese/nori/paprika/BBQ/spicy powder), ขนมปังกระเทียม, เกี๊ยวซ่า, ไก่ป็อบ, นักเก็ต, มันบดซอสเกรวี่ and มันบดอบชีส. The two wing dishes stay. Shogun Steak now has 34 dishes.
+- `pnpm --filter api catalog:build`: 14 restaurants, 256 menu items; `--check` reports the seed is up to date; 28 photo keys still have no pool.
+- The seed only upserts, so it reported 880 unchanged and left the 14 removed dishes active. They were soft-deleted by name on the **local** database only (`UPDATE "MenuItem" SET "deletedAt"`), which brings the local Shogun Steak row count to 34 active dishes, 6 of them with a stock photo.
+- `pnpm verify`: pass (exit 0). API 76 files/614 tests; web 38 files/447 tests; typecheck, lint and both builds pass.
