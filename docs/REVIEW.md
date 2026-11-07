@@ -1,5 +1,37 @@
 # Review Report
 
+## OWASP Top 10 hardening
+
+### Status
+
+Automated security, standards and specification review complete on 2026-11-08. No unresolved high-severity findings. Human pull-request approval pending.
+
+### Findings
+
+| ID | Severity | Category | Finding | Status |
+|---|---|---|---|---|
+| SEC-001 | High | A01 Access control | `requireAuth` trusted the role inside the seven-day token, so a deleted account or demoted administrator kept access until expiry. The account and current role now come from the database on every request. | Resolved |
+| SEC-002 | High | A04/A07 Brute force | Login, registration, and the paid-provider routes had no rate limit. Added per-IP and per-account limits. | Resolved |
+| SEC-003 | Medium | A03 XSS | Google Places links were rendered as `href` without a scheme check. Only `http(s)` links are kept, in the API and the web. | Resolved |
+| SEC-004 | Medium | A06 Components | 21 known advisories (express/body-parser, multer, zod, qs, vite, vitest, undici and others). Updated within semver ranges; 2 development-only advisories remain and are accepted. | Resolved / Accepted |
+| SEC-005 | Medium | A02 Cryptography | The `.env.example` `JWT_SECRET` placeholder passed the 32-character check. Production refuses known placeholders. | Resolved |
+| SEC-006 | Low | A01 CSRF | Writes relied on `SameSite=Lax` alone. Writes from origins outside the CORS allowlist are refused. | Resolved |
+| SEC-007 | Low | A05 Misconfiguration | Malformed JSON returned 500 and unknown routes returned the framework HTML page. They return 400/413 and the JSON 404 envelope. | Resolved |
+| SEC-008 | Medium | Performance | The new rate limiter rescanned its whole store on every request above 10,000 live keys. Pruning runs at most once per window; a flood test covers it. | Resolved |
+| SEC-009 | Low | Session | Logout clears the cookie but cannot revoke a copied token before it expires. Needs a separately approved data-model change (per-user token version). | Deferred |
+
+### Review scope
+
+- Diff of `security/owasp-hardening` against `main`: API middleware, auth, env, Places adapter, web Places panel, dependencies, OpenAPI, deploy workflow, plan and setup docs.
+- Production impact checked: `CORS_ALLOWED_ORIGINS` already names the only Hosting origin; the deploy smoke checks are GET requests; CI runs with `NODE_ENV=test`; `TRUST_PROXY=true` is set in the deploy workflow.
+- No new personal data, fields, permissions or secrets. Rate-limit counters hold IP addresses and login emails in process memory for at most 15 minutes and are never logged.
+
+### Approval
+
+Human reviewer:
+Decision: Pending
+Date:
+
 ## Automatic initial no-match adjustment
 
 ### Status

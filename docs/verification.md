@@ -1978,3 +1978,21 @@ New seed tests:
 - `pnpm verify`: pass (exit 0). API 76 files/614 tests; web 38 files/447 tests; typecheck, lint and both builds pass.
 - Lesson recorded for future passes: describe what a candidate photo actually shows first, then compare that description with the dish name; reject when the main ingredient, the starch (rice, noodles, salad) or the cooking style differs.
 - Git: not committed, not staged, nothing pushed.
+
+## OWASP Top 10 hardening - 2026-11-08
+
+### Scope
+
+API security middleware (rate limits, trusted-origin check, database-backed session check, JSON 404, body-parser errors), production `JWT_SECRET` placeholder guard, `TRUST_PROXY`, 128-character password cap, safe Google Places links in the API and web, dependency updates, OpenAPI 429 responses. See the plan note "OWASP Top 10 Hardening Implementation Note".
+
+### Results
+
+- `pnpm install --frozen-lockfile`: pass.
+- `pnpm verify`: pass (exit 0). API 80 files/653 tests; web 39 files/459 tests; typecheck, lint and both builds pass. Prettier check of every changed TypeScript file: pass.
+- `pnpm audit`: 21 advisories before, 2 after. Remaining: `deepmerge-ts` (Prisma CLI config loader, no Prisma 6 fix) and `minimatch` (typescript-eslint); both are development/build-time only and accepted.
+- New tests: rate limiter (limit, window reset, per-key counting, separate limiters, 60,000-key flood), trusted origin (each write method, `null` origin, `Sec-Fetch-Site: cross-site`, allowed and absent Origin, safe reads), `requireAuth` (database role wins over token role, deleted account rejected, forged token rejected without a query), app integration (404, malformed JSON 400, 100 kB+ body 413, cross-origin write 403, per-account login 429, 129-character password 400), env (placeholder secrets refused in production, `TRUST_PROXY` values), Places adapter and web `safeLinkUrl` (`javascript:`/`data:` links dropped, encoded Place ID).
+- The flood test found that pruning rescanned the whole store on every request above 10,000 live keys; pruning now runs at most once per window.
+- Live local API (`pnpm --filter api dev`): helmet headers present; unknown route 404 JSON; malformed JSON 400; foreign-origin write 403; CORS preflight from a foreign origin gets no allow header; the 11th login attempt for one account within 15 minutes returns 429; 129-character password 400.
+- Live local API with PostgreSQL: register 201 (password stored as Argon2id), `/me` 200, favorites and preferences 200, USER on an admin route 403, foreign-origin write with a valid cookie 403, recommendation 200, logout 204 then `/me` 401, login 200, wrong password 401.
+- Browser (`localhost:5173`): registration form signs in; the four-step meal flow returns three recommendations with photos; saving a favourite sends `PUT /api/favorites/:id` 200. After the test account row was deleted from the local database, the still-open session's next favourite request returned 401 and the web returned to the login page. API server log: no errors.
+- The two throwaway local test accounts were deleted afterwards; the local database holds only the seeded administrator.
