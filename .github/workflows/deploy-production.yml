@@ -92,7 +92,7 @@ jobs:
             --memory=512Mi \
             --concurrency=20 \
             --timeout=30s \
-            --set-env-vars="NODE_ENV=production,LOCAL_UPLOADS_ENABLED=false,CORS_ALLOWED_ORIGINS=$FIREBASE_ORIGIN,EXTERNAL_PROVIDER_TIMEOUT_MS=5000,GEMINI_MODEL=gemini-3.5-flash-lite" \
+            --set-env-vars="NODE_ENV=production,TRUST_PROXY=true,LOCAL_UPLOADS_ENABLED=false,CORS_ALLOWED_ORIGINS=$FIREBASE_ORIGIN,EXTERNAL_PROVIDER_TIMEOUT_MS=5000,GEMINI_MODEL=gemini-3.5-flash-lite" \
             --set-secrets="DATABASE_URL=DATABASE_URL:latest,JWT_SECRET=JWT_SECRET:latest,GEMINI_API_KEY=GEMINI_API_KEY:latest,GOOGLE_PLACES_API_KEY=GOOGLE_PLACES_API_KEY:latest" \
             --quiet
 

@@ -67,6 +67,12 @@ beforeAll(async () => {
   ;({ errorHandler } = await import('@/middleware/errorHandler'))
   ;({ logger } = await import('@/lib/logger'))
   ;({ requestIdMiddleware } = await import('@/middleware/requestId'))
+  const { setSessionUserLookupForTests } =
+    await import('@/middleware/requireAuth')
+  setSessionUserLookupForTests(async (claims) => ({
+    id: claims.sub,
+    role: claims.role,
+  }))
 })
 
 afterAll(async () => {

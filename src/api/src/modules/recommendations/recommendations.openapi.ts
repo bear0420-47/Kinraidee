@@ -33,6 +33,10 @@ export function registerRecommendationsOpenApi(registry: OpenAPIRegistry) {
         description: 'Invalid conditions, exclusions, or count',
         content: { 'application/json': { schema: errorEnvelope } },
       },
+      429: {
+        description: 'Too many requests; retry after the Retry-After seconds',
+        content: { 'application/json': { schema: errorEnvelope } },
+      },
     },
   })
 }

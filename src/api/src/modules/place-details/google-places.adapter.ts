@@ -3,6 +3,20 @@ import { z } from 'zod'
 import { env } from '@/config/env'
 import type { PlaceDetailsProvider } from './place-details.provider'
 
+// Provider links become `href`s in the web app; anything but http(s), such as a
+// `javascript:` URL, is dropped so third-party data can never run script there.
+export function toSafeLinkUrl(value: string | undefined): string | null {
+  if (!value) return null
+  try {
+    const url = new URL(value)
+    return url.protocol === 'https:' || url.protocol === 'http:'
+      ? url.href
+      : null
+  } catch {
+    return null
+  }
+}
+
 const localizedTextSchema = z.object({ text: z.string() }).optional()
 const openingHoursSchema = z
   .object({
@@ -59,10 +73,10 @@ export const googlePlacesAdapter: PlaceDetailsProvider = {
         userRatingCount: place.userRatingCount ?? null,
         openNow: hours?.openNow ?? null,
         weekdayDescriptions: hours?.weekdayDescriptions ?? [],
-        googleMapsUri: place.googleMapsUri ?? null,
+        googleMapsUri: toSafeLinkUrl(place.googleMapsUri),
         reviews: (place.reviews ?? []).map((review) => ({
           authorName: review.authorAttribution.displayName,
-          authorUri: review.authorAttribution.uri ?? null,
+          authorUri: toSafeLinkUrl(review.authorAttribution.uri),
           rating: review.rating ?? null,
           relativePublishTimeDescription:
             review.relativePublishTimeDescription ?? null,

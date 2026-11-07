@@ -21,6 +21,10 @@ export function registerPlaceDetailsOpenApi(registry: OpenAPIRegistry) {
         description: 'Restaurant not found',
         content: { 'application/json': { schema: errorEnvelopeSchema } },
       },
+      429: {
+        description: 'Too many requests; retry after the Retry-After seconds',
+        content: { 'application/json': { schema: errorEnvelopeSchema } },
+      },
     },
   })
 }

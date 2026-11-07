@@ -23,6 +23,12 @@ export async function createRouteTestApp(
   const { errorHandler } = await import('@/middleware/errorHandler')
   const { logger } = await import('@/lib/logger')
   const { requestIdMiddleware } = await import('@/middleware/requestId')
+  const { setSessionUserLookupForTests } =
+    await import('@/middleware/requireAuth')
+  setSessionUserLookupForTests(async (claims) => ({
+    id: claims.sub,
+    role: claims.role,
+  }))
 
   const app = express()
   app.use(requestIdMiddleware)

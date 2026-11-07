@@ -1,6 +1,7 @@
 import { ArrowSquareOut, Clock, Star } from '@phosphor-icons/react'
 
 import { usePlaceDetails } from '@/hooks/meal/usePlaceDetails'
+import { safeLinkUrl } from '@/lib/safeLinkUrl'
 
 export function PlaceDetailsPanel({ restaurantId }: { restaurantId: string }) {
   const place = usePlaceDetails(restaurantId)
@@ -25,6 +26,7 @@ export function PlaceDetailsPanel({ restaurantId }: { restaurantId: string }) {
   }
 
   const details = place.data
+  const mapsUrl = safeLinkUrl(details.googleMapsUri)
   return (
     <section
       aria-label="ข้อมูลร้านจาก Google"
@@ -59,33 +61,36 @@ export function PlaceDetailsPanel({ restaurantId }: { restaurantId: string }) {
       {details.reviews.length > 0 ? (
         <div className="flex flex-col gap-2 border-t border-line-soft pt-2">
           <p className="font-bold">รีวิวจาก Google</p>
-          {details.reviews.slice(0, 2).map((review, index) => (
-            <blockquote key={`${review.authorName}-${index}`} className="m-0">
-              {review.text ? <p>“{review.text}”</p> : null}
-              <footer className="text-muted">
-                {review.authorUri ? (
-                  <a
-                    href={review.authorUri}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="font-bold underline"
-                  >
-                    {review.authorName}
-                  </a>
-                ) : (
-                  review.authorName
-                )}
-                {review.relativePublishTimeDescription
-                  ? ` · ${review.relativePublishTimeDescription}`
-                  : ''}
-              </footer>
-            </blockquote>
-          ))}
+          {details.reviews.slice(0, 2).map((review, index) => {
+            const authorUrl = safeLinkUrl(review.authorUri)
+            return (
+              <blockquote key={`${review.authorName}-${index}`} className="m-0">
+                {review.text ? <p>“{review.text}”</p> : null}
+                <footer className="text-muted">
+                  {authorUrl ? (
+                    <a
+                      href={authorUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="font-bold underline"
+                    >
+                      {review.authorName}
+                    </a>
+                  ) : (
+                    review.authorName
+                  )}
+                  {review.relativePublishTimeDescription
+                    ? ` · ${review.relativePublishTimeDescription}`
+                    : ''}
+                </footer>
+              </blockquote>
+            )
+          })}
         </div>
       ) : null}
-      {details.googleMapsUri ? (
+      {mapsUrl ? (
         <a
-          href={details.googleMapsUri}
+          href={mapsUrl}
           target="_blank"
           rel="noreferrer"
           className="inline-flex items-center gap-1 font-bold underline"

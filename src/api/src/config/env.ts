@@ -48,6 +48,15 @@ const booleanEnvSchema = z.preprocess((value) => {
   return value
 }, z.boolean())
 
+// Example and test values that pass the length check but are public, so anyone could
+// forge session tokens if production used them.
+const knownPlaceholderSecrets = [
+  'replace-with',
+  'change-me',
+  'changeme',
+  'test-secret',
+]
+
 const envSchema = z
   .object({
     NODE_ENV: z
@@ -56,6 +65,15 @@ const envSchema = z
     PORT: z.coerce.number().int().positive().default(3000),
     DATABASE_URL: z.string().min(1),
     JWT_SECRET: z.string().min(32),
+    // Which X-Forwarded-For hops to trust for the client IP used by rate limits:
+    // 0 = no proxy (local), a hop count, or `true` to use the left-most address when
+    // the proxy chain is managed and changes (Firebase Hosting -> Cloud Run).
+    TRUST_PROXY: z
+      .preprocess(
+        (value) => (value === 'true' ? true : value),
+        z.union([z.literal(true), z.coerce.number().int().min(0).max(10)]),
+      )
+      .default(0),
     ...argon2EnvSchema.shape,
     CORS_ALLOWED_ORIGINS: corsAllowedOriginsSchema,
     LOCAL_UPLOADS_ENABLED: booleanEnvSchema.default(false),
@@ -76,6 +94,20 @@ const envSchema = z
       .default(5_000),
   })
   .superRefine((value, context) => {
+    if (
+      value.NODE_ENV === 'production' &&
+      knownPlaceholderSecrets.some((placeholder) =>
+        value.JWT_SECRET.toLowerCase().includes(placeholder),
+      )
+    ) {
+      context.addIssue({
+        code: 'custom',
+        path: ['JWT_SECRET'],
+        message:
+          'JWT_SECRET must be a unique random secret in production, not a placeholder.',
+      })
+    }
+
     if (value.NODE_ENV === 'production' && value.LOCAL_UPLOADS_ENABLED) {
       context.addIssue({
         code: 'custom',
