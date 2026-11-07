@@ -836,6 +836,29 @@ Tests: unchanged strict match, one-field adjustment, multi-field adjustment, fie
 - `prisma.config.ts` loads the same optional local file before Prisma evaluates `env("DATABASE_URL")`; this restores the direct setup commands documented in `first-setup.md` without adding a runtime dependency.
 - Development logging uses `pino-pretty` with colors and readable local timestamps. Test logging remains silent, and production keeps structured JSON for log aggregation.
 
+## OWASP Top 10 Hardening Implementation Note
+
+```txt
+Module: API security middleware, auth, provider adapters, dependencies
+Requirement/backlog ID: security NFRs; human request of 2026-11-08 to secure the project against the OWASP Top 10
+Legal requirement ID: LR7
+Design artifact: N/A — no screen or data-model change
+API routes: all; new 403 ORIGIN_NOT_ALLOWED, 404 NOT_FOUND, 400 INVALID_REQUEST_BODY, 413 PAYLOAD_TOO_LARGE, 429 RATE_LIMITED responses
+Web pages: Google Places links on the meal page
+Personal data: no new data; rate-limit counters hold IP addresses and normalized login emails in process memory only, for at most 15 minutes
+Authorization: unchanged roles; the database role now decides access on every request
+Tests: middleware unit tests, app integration tests, env and adapter tests, full repository verification
+```
+
+- A01 Broken access control: `requireAuth` loads the account on every request and uses its current role, so a deleted account or a demoted administrator loses access at once instead of when the seven-day token expires. Writes (`POST`, `PUT`, `PATCH`, `DELETE`) from an `Origin` outside `CORS_ALLOWED_ORIGINS`, or marked `Sec-Fetch-Site: cross-site`, are refused as cross-site request forgery defence in depth on top of `SameSite=Lax`.
+- A02 Cryptographic failures: production startup refuses a `JWT_SECRET` containing a known public placeholder.
+- A03 Injection / XSS: Google Places `googleMapsUri` and review author links are kept only when they are `http(s)` URLs, in the API adapter and again in the web panel, so third-party data cannot place a `javascript:` link on the page. Prisma queries stay parameterized; the one raw query uses `Prisma.sql`.
+- A04 Insecure design / A07 authentication failures: in-memory fixed-window rate limits: login and register 100 per IP per 15 minutes (generous for shared campus Wi-Fi), login 10 per account email per 15 minutes, recommendations and place details 120 per IP per minute (they can call paid providers). Passwords are capped at 128 characters to bound Argon2 work. Limits are per Cloud Run instance; a shared store is needed only if instances grow.
+- A05 Security misconfiguration: unknown routes return the JSON error envelope instead of the framework page; malformed or oversized JSON returns 400/413 instead of 500. `TRUST_PROXY` controls the client IP; production uses `true` because the Firebase Hosting and Cloud Run proxy chain is managed and changes.
+- A06 Vulnerable components: dependencies updated within their semver ranges (express/body-parser, multer, zod, qs, vite, vitest, undici and others). Remaining advisories are accepted as development/build-time only: `deepmerge-ts` inside the Prisma CLI config loader (no Prisma 6 release fixes it) and `minimatch` inside typescript-eslint; neither processes user input.
+- A08–A10: upload signature checks, audit logging, log redaction, provider timeouts and encoded Place IDs were already in place and are unchanged.
+- Residual risk needing a separate approved data-model change: logout clears the cookie but cannot revoke an already-copied token before it expires; a per-user token version column would allow server-side revocation.
+
 ## Deployment Decisions
 
 - Google Cloud project: use the human-owned project with available credits. Enable billing alerts and quotas before public traffic.

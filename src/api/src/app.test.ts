@@ -173,3 +173,95 @@ describe('HTTP response and error envelopes', () => {
     expect(response.text).not.toContain('stack')
   })
 })
+
+describe('OWASP hardening', () => {
+  it('answers unknown routes with the JSON error envelope', async () => {
+    const response = await request(createApp()).get('/api/does-not-exist')
+
+    expect(response.status).toBe(404)
+    expect(response.body.error).toMatchObject({
+      code: 'NOT_FOUND',
+      message: 'Resource not found.',
+    })
+  })
+
+  it('answers malformed JSON with 400 instead of 500', async () => {
+    const response = await request(createApp())
+      .post('/api/auth/login')
+      .set('content-type', 'application/json')
+      .send('{"email": ')
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({
+      error: {
+        code: 'INVALID_REQUEST_BODY',
+        message: 'Request body could not be read.',
+        requestId: response.headers['x-request-id'],
+      },
+    })
+    expect(response.text).not.toContain('Unexpected')
+  })
+
+  it('answers a body over the 100 kB limit with 413', async () => {
+    const response = await request(createApp())
+      .post('/api/auth/login')
+      .set('content-type', 'application/json')
+      .send(
+        JSON.stringify({
+          email: 'a@example.com',
+          password: 'x'.repeat(110_000),
+        }),
+      )
+
+    expect(response.status).toBe(413)
+    expect(response.body.error.code).toBe('PAYLOAD_TOO_LARGE')
+  })
+
+  it('refuses writes from origins outside the CORS allowlist', async () => {
+    const response = await request(createApp())
+      .post('/api/auth/logout')
+      .set('origin', 'https://denied.example')
+
+    expect(response.status).toBe(403)
+    expect(response.body.error.code).toBe('ORIGIN_NOT_ALLOWED')
+  })
+
+  it('allows writes from an allowed origin', async () => {
+    const response = await request(createApp())
+      .post('/api/auth/logout')
+      .set('origin', 'https://allowed.example')
+
+    expect(response.status).toBe(204)
+  })
+
+  it('limits login attempts per account', async () => {
+    const app = createApp()
+    // A too-short password fails validation before any database work, so each
+    // attempt is cheap here but still counted by the limiter.
+    const attempt = (email: string) =>
+      request(app).post('/api/auth/login').send({ email, password: 'short' })
+
+    for (let index = 0; index < 10; index += 1) {
+      expect((await attempt('victim@example.com')).status).toBe(400)
+    }
+
+    const blocked = await attempt('VICTIM@example.com')
+    expect(blocked.status).toBe(429)
+    expect(blocked.body.error.code).toBe('RATE_LIMITED')
+    expect(blocked.headers['retry-after']).toBeDefined()
+
+    // Another account from the same address is still allowed.
+    expect((await attempt('someone@example.com')).status).toBe(400)
+  })
+
+  it('rejects passwords longer than 128 characters before hashing', async () => {
+    const response = await request(createApp())
+      .post('/api/auth/register')
+      .send({ email: 'long@example.com', password: 'x'.repeat(129) })
+
+    expect(response.status).toBe(400)
+    expect(response.body.error.fields.password).toBe(
+      'Password must contain at most 128 characters.',
+    )
+  })
+})

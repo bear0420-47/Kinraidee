@@ -143,3 +143,40 @@ describe('parseEnv', () => {
     }
   })
 })
+
+describe('parseEnv security rules', () => {
+  const production = {
+    ...validEnv,
+    NODE_ENV: 'production',
+    LOCAL_UPLOADS_ENABLED: 'false',
+  }
+
+  it.each([
+    'replace-with-at-least-32-characters',
+    'test-secret-that-is-at-least-32-characters',
+    'please-CHANGE-ME-before-deploying-this-app',
+  ])('refuses the placeholder JWT_SECRET %s in production', (secret) => {
+    expect(() => parseEnv({ ...production, JWT_SECRET: secret })).toThrow(
+      /JWT_SECRET must be a unique random secret/,
+    )
+  })
+
+  it('accepts a random JWT_SECRET in production', () => {
+    expect(
+      parseEnv({
+        ...production,
+        JWT_SECRET: 'q8Vt3mZ1xW9pL2rK7sN4bF6hJ0cD5gYa',
+      }).JWT_SECRET,
+    ).toHaveLength(32)
+  })
+
+  it('defaults TRUST_PROXY to 0 and accepts a hop count', () => {
+    expect(parseEnv(validEnv).TRUST_PROXY).toBe(0)
+    expect(parseEnv({ ...validEnv, TRUST_PROXY: '1' }).TRUST_PROXY).toBe(1)
+    expect(parseEnv({ ...validEnv, TRUST_PROXY: 'true' }).TRUST_PROXY).toBe(
+      true,
+    )
+    expect(() => parseEnv({ ...validEnv, TRUST_PROXY: 'yes' })).toThrow()
+    expect(() => parseEnv({ ...validEnv, TRUST_PROXY: '-1' })).toThrow()
+  })
+})

@@ -123,6 +123,8 @@ Set these values for the local machine:
 - `SEED_ADMIN_EMAIL`: email for the one initial administrator. The seed trims and lowercases this value before storage.
 - `SEED_ADMIN_PASSWORD`: password for the initial administrator. The seed trims leading and trailing whitespace, then requires at least 8 characters. No character-composition rule applies.
 - `CORS_ALLOWED_ORIGINS`: comma-separated web origins allowed to call the API with credentials. The scaffold default web port is `5173`, so the default local value is `http://localhost:5173`.
+- `TRUST_PROXY`: which `X-Forwarded-For` hops the API trusts for the client IP used by rate limits. Use `0` locally (no proxy). Production sets `true`, because Firebase Hosting and Cloud Run add a changing chain of proxies; the per-account login limit does not depend on the IP.
+- In production, `JWT_SECRET` must not contain a public placeholder such as `replace-with`, `change-me` or `test-secret`; startup refuses it.
 - `LOCAL_UPLOADS_ENABLED`: use `true` only for development/test local image uploads. Production startup rejects `true`.
 - `LOCAL_UPLOADS_DIRECTORY`: directory relative to the API process working directory. The default `.local/uploads` is ignored by git.
 - `LOCAL_UPLOAD_MAX_BYTES`: maximum upload size in bytes. The default is 2 MiB (`2097152`).

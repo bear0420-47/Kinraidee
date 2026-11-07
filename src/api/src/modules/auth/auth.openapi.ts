@@ -40,6 +40,10 @@ export function registerAuthOpenApi(registry: OpenAPIRegistry) {
         description: 'Email already registered',
         content: { 'application/json': { schema: errorEnvelope } },
       },
+      429: {
+        description: 'Too many requests; retry after the Retry-After seconds',
+        content: { 'application/json': { schema: errorEnvelope } },
+      },
     },
   })
 
@@ -60,6 +64,10 @@ export function registerAuthOpenApi(registry: OpenAPIRegistry) {
       },
       401: {
         description: 'Invalid credentials',
+        content: { 'application/json': { schema: errorEnvelope } },
+      },
+      429: {
+        description: 'Too many requests; retry after the Retry-After seconds',
         content: { 'application/json': { schema: errorEnvelope } },
       },
     },

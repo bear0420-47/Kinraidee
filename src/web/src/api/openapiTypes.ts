@@ -53,6 +53,15 @@ export interface paths {
                         "application/json": components["schemas"]["ErrorEnvelope"];
                     };
                 };
+                /** @description Too many requests; retry after the Retry-After seconds */
+                429: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorEnvelope"];
+                    };
+                };
             };
         };
         delete?: never;
@@ -103,6 +112,15 @@ export interface paths {
                 };
                 /** @description Invalid credentials */
                 401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorEnvelope"];
+                    };
+                };
+                /** @description Too many requests; retry after the Retry-After seconds */
+                429: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -1185,6 +1203,24 @@ export interface paths {
                         };
                     };
                 };
+                /** @description Too many requests; retry after the Retry-After seconds */
+                429: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                requestId: string;
+                                fields?: {
+                                    [key: string]: string;
+                                };
+                            };
+                        };
+                    };
+                };
             };
         };
         put?: never;
@@ -2122,6 +2158,15 @@ export interface paths {
                 };
                 /** @description Invalid conditions, exclusions, or count */
                 400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorEnvelope"];
+                    };
+                };
+                /** @description Too many requests; retry after the Retry-After seconds */
+                429: {
                     headers: {
                         [name: string]: unknown;
                     };
