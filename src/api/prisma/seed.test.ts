@@ -2,7 +2,13 @@ import { UserRole, type Prisma } from '@prisma/client'
 import argon2 from 'argon2'
 import { describe, expect, it, vi } from 'vitest'
 
-import { formatSeedError, parseSeedEnv, seedInitialAdmin } from './seed'
+import {
+  formatSeedError,
+  isCatalogOnlySeed,
+  parseCatalogOnlySeedEnv,
+  parseSeedEnv,
+  seedInitialAdmin,
+} from './seed'
 
 const validEnv = {
   DATABASE_URL: 'postgresql://postgres:postgres@localhost:5432/kinraidee',
@@ -81,5 +87,31 @@ describe('initial administrator seed', () => {
     expect(records).toHaveLength(1)
     expect(records.get('admin@example.com')?.role).toBe(UserRole.ADMIN)
     expect(upsertAdmin).toHaveBeenCalledTimes(2)
+  })
+})
+
+describe('catalog-only seed', () => {
+  const { SEED_ADMIN_EMAIL, SEED_ADMIN_PASSWORD, ...withoutAdmin } = validEnv
+  void SEED_ADMIN_EMAIL
+  void SEED_ADMIN_PASSWORD
+
+  it('is on only for the exact value true', () => {
+    expect(isCatalogOnlySeed({ SEED_CATALOG_ONLY: 'true' })).toBe(true)
+    expect(isCatalogOnlySeed({ SEED_CATALOG_ONLY: 'TRUE' })).toBe(false)
+    expect(isCatalogOnlySeed({ SEED_CATALOG_ONLY: '1' })).toBe(false)
+    expect(isCatalogOnlySeed({})).toBe(false)
+  })
+
+  it('needs no administrator credentials but still needs the database URL', () => {
+    expect(parseCatalogOnlySeedEnv(withoutAdmin).DATABASE_URL).toBe(
+      validEnv.DATABASE_URL,
+    )
+    expect(() =>
+      parseCatalogOnlySeedEnv({ ...withoutAdmin, DATABASE_URL: '' }),
+    ).toThrow()
+  })
+
+  it('keeps requiring administrator credentials for a normal seed', () => {
+    expect(() => parseSeedEnv(withoutAdmin)).toThrow()
   })
 })

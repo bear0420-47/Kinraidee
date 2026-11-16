@@ -1,8 +1,9 @@
 name: Seed production catalog
 
 # Manual only. Never runs on push. The seed upserts the catalog in one transaction
-# (it rolls back on any failure), soft-deletes records listed only in the archived
-# catalog, and upserts the initial administrator from Secret Manager.
+# (it rolls back on any failure) and soft-deletes records listed only in the archived
+# catalog. It runs catalog-only, so it reads no administrator secret and never changes
+# the administrator account.
 on:
   workflow_dispatch:
     inputs:
@@ -64,13 +65,8 @@ jobs:
         run: |
           set -euo pipefail
           direct_url="$(gcloud secrets versions access latest --secret=DIRECT_DATABASE_URL)"
-          admin_email="$(gcloud secrets versions access latest --secret=SEED_ADMIN_EMAIL)"
-          admin_password="$(gcloud secrets versions access latest --secret=SEED_ADMIN_PASSWORD)"
           echo "::add-mask::$direct_url"
-          echo "::add-mask::$admin_email"
-          echo "::add-mask::$admin_password"
           export DATABASE_URL="$direct_url" DIRECT_DATABASE_URL="$direct_url"
-          export SEED_ADMIN_EMAIL="$admin_email" SEED_ADMIN_PASSWORD="$admin_password"
-          export NODE_ENV=production LOCAL_UPLOADS_ENABLED=false
+          export SEED_CATALOG_ONLY=true NODE_ENV=production LOCAL_UPLOADS_ENABLED=false
           pnpm prisma migrate deploy
           pnpm prisma db seed
