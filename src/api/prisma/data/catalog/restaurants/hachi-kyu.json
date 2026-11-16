@@ -350,7 +350,7 @@
         "spiced-smoky"
       ],
       "review": null,
-      "photo": "curry-ramen"
+      "photo": "chicken-curry-ramen"
     },
     {
       "slug": "curry-ramen-pork",
@@ -429,7 +429,7 @@
         "spiced-smoky"
       ],
       "review": null,
-      "photo": "curry-udon-katsu"
+      "photo": "curry-udon-fish-katsu"
     },
     {
       "slug": "curry-udon-chicken",
@@ -467,7 +467,7 @@
         "spiced-smoky"
       ],
       "review": null,
-      "photo": "curry-udon"
+      "photo": "pork-curry-udon"
     },
     {
       "slug": "katsudon",
