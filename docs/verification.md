@@ -2008,3 +2008,10 @@ API security middleware (rate limits, trusted-origin check, database-backed sess
 - `pnpm --filter api catalog:build --check`: `catalog.seed.json is up to date.`
 - `pnpm verify`: typecheck, lint and both builds pass; web 39 files/459 tests pass; API 80 files, 651 of 653 tests passed in the full run. The two failures were 5-second timeouts in `src/config/env.test.ts` (tests that start a separate process); rerun alone, that file passes 20 of 20.
 - Not seeded: the local database container was stopped, and production needs separate approval.
+
+### Catalog-only production seed (same day)
+
+- The first `seed-production.yml` run failed before any database work: the deployer identity may not read the administrator seed secrets (`PERMISSION_DENIED`). Production was not changed.
+- Added `SEED_CATALOG_ONLY=true`: the seed then needs only `DATABASE_URL`, skips the administrator upsert, and says so in its summary. A normal seed still requires the administrator credentials.
+- `prisma/seed.test.ts` and `prisma/catalog-seed.test.ts`: 2 files/29 tests pass (3 new).
+- Local run against PostgreSQL with `SEED_CATALOG_ONLY=true` and empty administrator variables: `Seeded 1405 catalog records and links (0 created, 58 updated, 1347 unchanged, 0 stale taste links removed).` Active dishes with a photo went from 166 to 224; restaurants (22), dishes (418), user count (1) and the administrator's password hash were unchanged.
