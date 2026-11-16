@@ -1996,3 +1996,15 @@ API security middleware (rate limits, trusted-origin check, database-backed sess
 - Live local API with PostgreSQL: register 201 (password stored as Argon2id), `/me` 200, favorites and preferences 200, USER on an admin route 403, foreign-origin write with a valid cookie 403, recommendation 200, logout 204 then `/me` 401, login 200, wrong password 401.
 - Browser (`localhost:5173`): registration form signs in; the four-step meal flow returns three recommendations with photos; saving a favourite sends `PUT /api/favorites/:id` 200. After the test account row was deleted from the local database, the still-open session's next favourite request returned 401 and the web returned to the login page. API server log: no errors.
 - The two throwaway local test accounts were deleted afterwards; the local database holds only the seeded administrator.
+
+## Dish photos, second pass - 2026-11-16
+
+- Before: 166 of 418 dishes had a photo, and a dish without one is never recommended (1 dish under ฿50, 104 at ฿50–100, 54 at ฿101–200, 7 over ฿200).
+- Searched Openverse (Wikimedia Commons and Flickr; CC0, PDM, CC BY, CC BY-SA) for 87 photo keys. 75 returned candidates. Every candidate was viewed on a contact sheet, and each chosen photo was checked again beside its dish name. No Unsplash requests were made.
+- After: 224 of 418 dishes have a photo (7 under ฿50, 143 at ฿50–100, 64 at ฿101–200, 10 over ฿200). 58 dishes gained one, from 93 photos across 46 keys.
+- Rejected at the final check: `drunken-spaghetti` (photo shows seafood; the dish has none) and `pork-gyudon` (dish too small in frame). Keys with no matching candidate stay empty.
+- Keys split so the visible main ingredient matches: `chicken-curry-ramen` (was `curry-ramen`), `pork-curry-udon` (was `curry-udon`), `curry-udon-fish-katsu` (was `curry-udon-katsu`, no photo yet), `curry-soba-poached-egg` and `tuna-bibimbap` (no photo yet).
+- Links: all 52 Flickr photo URLs answer HTTP 200; the 11 Wikimedia URLs load in a browser (`new Image()`), because Wikimedia refuses scripted requests.
+- `pnpm --filter api catalog:build --check`: `catalog.seed.json is up to date.`
+- `pnpm verify`: typecheck, lint and both builds pass; web 39 files/459 tests pass; API 80 files, 651 of 653 tests passed in the full run. The two failures were 5-second timeouts in `src/config/env.test.ts` (tests that start a separate process); rerun alone, that file passes 20 of 20.
+- Not seeded: the local database container was stopped, and production needs separate approval.
