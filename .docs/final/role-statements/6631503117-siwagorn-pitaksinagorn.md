@@ -1,8 +1,8 @@
 # Role statement — 6631503117 Siwagorn Pitaksinagorn
 
-**Status:** Draft for Siwagorn to review before submission. The work described below is supported by repository history and project records; personal reflections and AI use require his confirmation.
+**Status:** Final role statement for the presentation. The post-presentation reflection remains for Siwagorn to review before submission.
 
-**Role:** UX/UI Designer. I designed and refined Kinraidee's web meal-selection experience, responsive layouts, and navigation. The draft [team charter](../../../docs/00-charter/team-charter.md) describes this contribution as "Web UX and quality contributor."
+**Role:** UX/UI Designer. I designed and refined Kinraidee's web meal-selection experience, responsive layouts, and navigation, as confirmed in the [team charter](../../../docs/00-charter/team-charter.md).
 
 ## What I did
 
@@ -24,7 +24,7 @@ I contributed web tests and code refactoring, and repaired the [CI verification 
 
 ## AI disclosure
 
-Kinraidee's development process allows Codex and Claude Code to help draft UI code, tests, and design documentation under [`AGENTS.md`](../../../AGENTS.md) and [`CLAUDE.md`](../../../CLAUDE.md). In my UX/UI role, I remain responsible for judging whether a proposed interface follows the user journey, works at mobile and desktop sizes, and preserves accessible interaction. **Before submission, I need to confirm which of these tools I personally used, what they helped me produce, and how I checked their output.**
+I used Codex mainly to help fix defects and make code-related changes, while Claude Code helped with design and prototype work under [`AGENTS.md`](../../../AGENTS.md) and [`CLAUDE.md`](../../../CLAUDE.md). I reviewed the results on both desktop and mobile, then assessed whether each design felt friendly, remained easy to use and addressed the food-choice pain points found in the project's pre-development survey. AI proposed code and design drafts; I decided how to refine the UX and whether the result was suitable for the final interface.
 
 ## Reflection
 

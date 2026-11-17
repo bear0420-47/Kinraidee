@@ -17,7 +17,7 @@
 | "Too many options to choose" (lower is better) | 2.70 | 3.20 | −0.50 (worse) | Paired rating B6 → PP3 | R §5 |
 | Tasks finished without help | — (no app) | 88 of 90 (97.78%) | — | 9 task runs × 10 testers | R §3.1 |
 | Acceptance (UTAUT2-based, 1–5) | — | PE 4.43, EE 4.55, HM 4.37, FC 4.60, BI 4.13 | — | 17-item questionnaire | R §4; questions in [`UTAUT2.md`](../QA/UTAUT2.md) |
-| **AI: food-type variety in a 3-dish shortlist** | Non-AI: 2.31 types; 3 types in 44% of shortlists | AI: 2.59 types; 3 types in 61% | +0.29 types, p = 0.004 | 90 vs 90 requests, permutation test | [`evidence/ai-vs-non-ai-2026-11-16.md`](../../evidence/ai-vs-non-ai-2026-11-16.md) |
+| **AI: food-type variety in a 3-dish shortlist** | Non-AI: 2.31 types; 3 types in 44% of shortlists | AI: 2.59 types; 3 types in 61% | +0.29 types, p = 0.004 | 71 AI vs 85 non-AI complete, unadjusted shortlists from 90 requests per side; permutation test | [`evidence/ai-vs-non-ai-2026-11-16.md`](../../evidence/ai-vs-non-ai-2026-11-16.md) |
 | **AI: answer time (cost of AI)** | Non-AI ≈ 0.3 s | AI median 1.55 s, p95 2.09 s | +1.2–1.3 s | Production timings | same file |
 | **AI: correct facts in reasons** | Non-AI shows no written reason | 197/199 prices and 49/49 restaurants correct | — | Each reason checked against the database | same file |
 | Dishes that can be recommended (have a photo) | 166 of 418 | 224 of 418 | +58 | Catalog build and database read-back | [`docs/verification.md`](../../docs/verification.md) lines 2002–2004 |

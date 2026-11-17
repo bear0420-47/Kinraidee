@@ -1,47 +1,28 @@
 # Role statement — 6631503044 Suwaphit Vatidmatee
 
+**Status:** Final role statement for the presentation. The post-presentation reflection remains for Suwaphit to review before submission.
+
 **Role:** QA, usability-testing and personal-data contact ([`team-charter.md`](../../../docs/00-charter/team-charter.md)). I prepared the user-testing materials, coordinated the evaluation of the main meal-selection workflow, and analysed the results.
 
 ## What I did
 
-- **Test planning and test cases.** I prepared the test plan for selecting conditions, receiving meal suggestions, viewing details, replacing a meal, using Undo, editing conditions, confirming a meal, starting again and handling no matching meals. I defined the tasks, completion conditions, timing instructions and result fields. The final user test covered 8 tasks, with two cases in task 8, giving 9 task sets per participant. I also created an early test-case generation agent and skill. Evidence is in the [`main meal test plan`](../../QA/main-meal-test-plan.md) and commit [`591b357`](https://github.com/bear0420-47/Kinraidee/commit/591b357).
-- **Participant preparation and consent.** I maintained the participant schedule and prepared the consent information for the educational evaluation, including Thai and English wording for the Google Form. I served as the personal-data contact and prepared coded evaluation records for reporting. Evidence is in the [`consent form`](../../QA/participant-consent-form.md) and the test-plan commits listed below.
-- **Questionnaire and Google Form.** I prepared and revised the Thai questions before and after use. I used questions adapted from UTAUT2 for usefulness, ease of use, enjoyment, readiness and intention to reuse, together with a separate satisfaction question and pain-point questions. I simplified the wording and adjusted the linear-scale labels so participants could understand and answer them. Evidence is in [`UTAUT2.md`](../../QA/UTAUT2.md).
-- **User-test records.** I organised the evaluation data from 10 participants into coded records U01–U10. I documented completion status, duration and reported difficulties for all 90 task attempts. I recorded the assistance associated with Undo and with finding an off-screen button, including the facilitator's hint to scroll. The records are in [`user-test-sheet-evidence.md`](../../QA/user-test-sheet-evidence.md).
-- **Results and calculations.** I calculated independent completion as 88/90 attempts, or 97.78%, and assisted completion as 2/90 attempts, or 2.22%. Eight participants completed every task independently. I calculated the mean questionnaire scores, satisfaction of 4.20/5, paired before/after pain-point ratings and task durations. I documented the estimated time comparison using the lower endpoints of recalled time ranges and the recorded trial duration. The calculations and source columns are in the [`user-test results report`](../../QA/user-test-results-2026-11-02.md).
-- **Findings and presentation.** I prepared the test-results content and tables for the presentation. I reported improvements in ease of deciding and finding food by taste and zone, alongside unchanged average mental effort and increased choice overload. I summarised participant feedback on missing meal details, the visibility of Undo and the clarity of suggested condition changes. These findings are recorded in the results report and linked from the [`issue log`](../../QA/issue-log.md).
-- **Catalog, photo evidence and automated tests.** On the `AddPicture` branch, I contributed restaurant/menu data, photo-source records and photo-credit handling. My commits include Vitest tests for stock-photo attribution and catalog validation, including invalid URLs, mismatched photo IDs and missing photographer information. The branch-specific contributions are linked in the commit table below.
+I prepared the [main meal test plan](../../QA/main-meal-test-plan.md), covering condition entry, recommendations, details, replacement, Undo, editing, confirmation, restart and no-match handling. The evaluation used eight tasks with two no-match cases, giving nine task sets per participant. I defined completion criteria, timing instructions and result fields, created an early test-case generation agent and skill, maintained the participant schedule, and prepared Thai and English [consent information](../../QA/participant-consent-form.md) as the personal-data contact.
+
+I prepared and revised the Thai UTAUT2-based questionnaire and Google Form, covering usefulness, ease of use, enjoyment, readiness, intention to reuse, satisfaction and food-choice pain points. I organised results from 10 participants as anonymous records U01–U10 and documented all 90 task attempts, including assistance with Undo and an off-screen details button. Evidence is in [`UTAUT2.md`](../../QA/UTAUT2.md) and [`user-test-sheet-evidence.md`](../../QA/user-test-sheet-evidence.md).
+
+I calculated 88/90 independently completed attempts (97.78%), 2/90 assisted attempts, eight participants completing every task independently, satisfaction of 4.20/5, task durations and paired before/after ratings. I documented the estimated time comparison and reported results that did not improve, including mental effort, choice overload and preferred food type. I prepared the presentation tables and linked usability findings to the [`issue log`](../../QA/issue-log.md). The calculations and source columns are in the [`results report`](../../QA/user-test-results-2026-11-02.md).
 
 ### Git evidence
 
-At the time of writing, local Git history contains **9 non-merge commits on `main`** authored as `Suwaphit Vatidmatee`, and **12 distinct non-merge commits across the available local and remote-tracking branches**. The other three are on `AddPicture`. Counts use `git log main --no-merges --author="Suwaphit Vatidmatee"` and the corresponding `--all` query. Merge commits are excluded from the contribution count.
-
-| Commit | Branch containing the work | Contribution |
-|---|---|---|
-| [`591b357`](https://github.com/bear0420-47/Kinraidee/commit/591b357) | `main` | Added the test-case generation agent/skill and the initial test-case document. |
-| [`76efd97`](https://github.com/bear0420-47/Kinraidee/commit/76efd97) | `main` | Added the main meal test plan, UTAUT2-based questionnaire and participant consent form, and replaced the earlier test-case document. |
-| [`2dafcb2`](https://github.com/bear0420-47/Kinraidee/commit/2dafcb2) | `main` | Updated the testing schedule and consent materials. |
-| [`fd69edf`](https://github.com/bear0420-47/Kinraidee/commit/fd69edf) | `main` | Added questionnaire items and simplified the Thai wording. |
-| [`5c7bff6`](https://github.com/bear0420-47/Kinraidee/commit/5c7bff6) | `main` | Revised the main meal test plan. The changed file is the test plan, despite the commit's broader performance-related title. |
-| [`4661b57`](https://github.com/bear0420-47/Kinraidee/commit/4661b57) | `main` | Revised the test plan, questionnaire and consent form for user testing. |
-| [`ebb6275`](https://github.com/bear0420-47/Kinraidee/commit/ebb6275) | `main` | Updated the participant schedule and session preparation details. |
-| [`8a94db1`](https://github.com/bear0420-47/Kinraidee/commit/8a94db1) | `main` | Updated the scheduled testing times. |
-| [`242f0ef`](https://github.com/bear0420-47/Kinraidee/commit/242f0ef) | `main` | Added the results report and coded sheet evidence, including individual task records and questionnaire responses. |
-| [`20c1cf0`](https://github.com/bear0420-47/Kinraidee/commit/20c1cf0) | `AddPicture` | Added dish-photo data, credits and photo-review evidence. |
-| [`6485081`](https://github.com/bear0420-47/Kinraidee/commit/6485081) | `AddPicture` | Added Vitest photo-credit tests and catalog validation tests for reviewed Pexels metadata, with supporting photo evidence. |
-| [`03c3ee7`](https://github.com/bear0420-47/Kinraidee/commit/03c3ee7) | `AddPicture` | Added restaurant/menu data, updated photo credits and expanded catalog validation tests and verification evidence. |
+I authored nine non-merge commits on `main` covering the test-case agent, test plan, consent materials, participant schedule, questionnaire revisions, anonymized records and final results. Key checkpoints are [`591b357`](https://github.com/bear0420-47/Kinraidee/commit/591b357), [`76efd97`](https://github.com/bear0420-47/Kinraidee/commit/76efd97), [`4661b57`](https://github.com/bear0420-47/Kinraidee/commit/4661b57) and [`242f0ef`](https://github.com/bear0420-47/Kinraidee/commit/242f0ef).
 
 ## Hardest part
 
-The hardest part was turning the food-choice pain points into questions that participants could understand, then interpreting the answers accurately. I revised the Thai wording and the scale labels several times. I also had to distinguish task completion, participants' opinions and the timing measurements when preparing the report.
-
-The time comparison required particular care. Participants recalled their usual selection time as a range, while the app trial had a recorded duration. I documented how the lower endpoints produced the 5.70-minute reference and labelled the resulting 76.34% difference as an estimate. I also reported results that did not improve, including mental effort, choice overload and finding the preferred food type.
+The hardest part was turning food-choice pain points into understandable questions and interpreting the results without mixing task completion, opinions and timing evidence. The baseline time was recalled as a range while the app trial was measured, so I documented the lower-endpoint method and labelled the 76.34% difference as an estimate rather than a controlled timing result.
 
 ## AI disclosure
 
-I used Codex/ChatGPT to help draft test cases, consent wording, questionnaire items, calculation scripts, the results report and presentation text. AI also helped organise the spreadsheet data and edit the Google Form and Canva test-results slides. The workflow followed the project instructions in [`AGENTS.md`](../../../AGENTS.md) and [`CLAUDE.md`](../../../CLAUDE.md).
-
-I directed the testing scope, reviewed and revised the questions, clarified how the tests were conducted and checked the reported calculations against the recorded responses. The final report identifies the data source, formulas and participant codes. I used AI assistance to prepare this role statement from the project records and Git history as well.
+I used Codex/ChatGPT to help draft test cases, consent wording, questionnaire items, calculation scripts, the results report, Google Form, Canva content and this statement under [`AGENTS.md`](../../../AGENTS.md) and [`CLAUDE.md`](../../../CLAUDE.md). I directed the testing scope, revised the questions, clarified the procedure and checked calculations against the coded responses. The final report identifies its sources, formulas and participant codes.
 
 ## Reflection
 

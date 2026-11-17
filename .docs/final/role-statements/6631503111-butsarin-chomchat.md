@@ -1,6 +1,6 @@
 # Role statement — 6631503111 Butsarin Chomchat
 
-**Status:** Draft for Butsarin to review and edit before submission.
+**Status:** Final role statement for the presentation. The post-presentation reflection remains for Butsarin to review before submission.
 
 **Role:** Product Owner. I owned the product direction and requirements decisions for Kinraidee, subject to team and human approval gates.
 

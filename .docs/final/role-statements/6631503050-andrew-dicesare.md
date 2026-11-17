@@ -1,49 +1,24 @@
 # Role statement — 6631503050 Andrew Dicesare
 
+**Status:** Final role statement for the presentation. The post-presentation reflection remains for Andrew to review before submission.
+
 **Role:** AI Lead ([`team-charter.md`](../../../docs/00-charter/team-charter.md))
 
 ## What I did
 
-I wrote 78 of the non-merge commits on `main` (GitHub `AnbrewTea`; source: `git log --author=AnbrewTea`).
+I wrote 78 non-merge commits on `main` under the GitHub identity `AnbrewTea`. As AI Lead, I led the team's AI coding-agent workflow and evaluated whether Gemini changed the shortlist compared with the non-AI path. I ran the [AI vs non-AI evaluation](../../../evidence/ai-vs-non-ai-2026-11-16.md), wrote [`ai-logic.md`](../ai-logic.md), and prepared presentation slides 6–8 covering product AI, AI in the SDLC and proof.
 
-- **AI in the product and the AI evaluation.**
-  - I led how the team used AI: the AI coding-agent workflow for building the project, and checking whether the Gemini shortlist (built with Natthanan's provider integration) is actually better than the non-AI pick.
-  - I ran the AI vs non-AI test ([`evidence/ai-vs-non-ai-2026-11-16.md`](../../../evidence/ai-vs-non-ai-2026-11-16.md)) and wrote [`ai-logic.md`](../ai-logic.md).
-  - I presented slides 6–8 (AI Logic, AI in our SDLC, AI Proof).
-- **Admin and user features.**
-  - I built the admin API and screens for zones, food types, tastes, restaurants and menu items.
-  - I built the sign-in pages and route guards, favourites, saved preferences and selected-dish history.
-- **Core meal flow.** I built:
-  - the condition steps,
-  - the recommendation cards,
-  - the confirm and success screens,
-  - a guaranteed suggestion when nothing matches.
-- **Catalog.**
-  - I created the per-restaurant catalog format and entered more than 20 restaurants by hand.
-  - I found and checked by eye free-licence photos that match each dish name: 224 of 418 dishes now have one.
-- **Legal and privacy rules.** I co-authored the project legal and compliance rules in [`rule.md`](../../../rule.md) with Butsarin Chomchat and Natthanan Kaewsaengin.
-- **Security and deployment.**
-  - I did the OWASP Top 10 hardening (issue log SR-01 to SR-03).
-  - I set up the manual production seed workflow (SR-04, SR-05).
+I built major API and web functionality: administration for zones, food types, tastes, restaurants and menu items; authentication and route protection; favourites, saved preferences and selected-dish history; and the core meal flow from condition entry through recommendation cards, no-match recovery, confirmation and success.
+
+I created the per-restaurant catalog format, manually entered more than 20 restaurants, and visually checked free-licence photos against dish names. This increased recommendable photo coverage to 224 of 418 dishes. I also co-authored [`rule.md`](../../../rule.md) with Butsarin Chomchat and Natthanan Kaewsaengin, completed the OWASP Top 10 hardening recorded as SR-01–SR-03, and built the manual production seed workflow that resolved SR-04 and SR-05.
 
 ## Hardest part
 
-The legal side was the hardest part.
-
-The project started as a simple idea: suggest food from restaurants near the university. Grab and Google Maps own the rights to their menus, photos and data, so we could not copy or scrape them.
-
-That meant almost everything had to be done by hand:
-
-- I entered the restaurants and menus myself.
-- I searched free photo sources for pictures that match each menu name, instead of using Grab's menu photos.
-- Google Places details are shown live through the official API, and never stored ([`rule.md`](../../../rule.md)).
+The legal side was the hardest part. We could not copy or scrape proprietary menu and photo data, so I entered catalog records manually and searched reusable photo sources instead of using delivery-platform images. Google Places evidence is retrieved live through the official API and is not stored, as documented in [`rule.md`](../../../rule.md).
 
 ## AI disclosure
 
-- **Tools.** I mainly used Claude (Claude Code) to develop the project, plus Codex. Both worked under the rules in [`AGENTS.md`](../../../AGENTS.md) and [`CLAUDE.md`](../../../CLAUDE.md).
-- **What the AI did.** It drafted code, tests, documentation and the evaluation script.
-- **What I did.** I read and tested every change, ran `pnpm verify`, checked dish photos by eye, and decided what to merge.
-- **Approval.** The AI did not approve its own work, and every production change went through a pull request.
+I mainly used Claude Code and Codex under [`AGENTS.md`](../../../AGENTS.md) and [`CLAUDE.md`](../../../CLAUDE.md). They drafted code, tests, documentation and the evaluation script. I reviewed and tested changes, ran `pnpm verify`, checked dish photos visually and decided what to merge. AI did not approve its own work or authorize production changes.
 
 ## Reflection
 
