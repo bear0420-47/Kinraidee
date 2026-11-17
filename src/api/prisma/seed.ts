@@ -33,6 +33,21 @@ const seedEnvSchema = z.object({
   LOCAL_UPLOADS_DIRECTORY: z.string().trim().min(1).default('.local/uploads'),
 })
 
+// A catalog-only run (`SEED_CATALOG_ONLY=true`) refreshes the catalog without touching
+// the administrator, so the job needs no administrator secrets.
+const catalogOnlyEnvSchema = seedEnvSchema.omit({
+  SEED_ADMIN_EMAIL: true,
+  SEED_ADMIN_PASSWORD: true,
+})
+
+export function isCatalogOnlySeed(input: NodeJS.ProcessEnv) {
+  return input.SEED_CATALOG_ONLY === 'true'
+}
+
+export function parseCatalogOnlySeedEnv(input: NodeJS.ProcessEnv) {
+  return catalogOnlyEnvSchema.parse(input)
+}
+
 export type SeedEnv = z.infer<typeof seedEnvSchema>
 type UpsertAdmin = (args: Prisma.UserUpsertArgs) => Promise<unknown>
 
@@ -87,8 +102,13 @@ export async function runSeed(
   input: NodeJS.ProcessEnv = process.env,
   writeSummary: (message: string) => void = console.log,
 ) {
-  const config = parseSeedEnv(input)
-  const adminUpsertArgs = await createInitialAdminUpsertArgs(input)
+  const catalogOnly = isCatalogOnlySeed(input)
+  const config = catalogOnly
+    ? parseCatalogOnlySeedEnv(input)
+    : parseSeedEnv(input)
+  const adminUpsertArgs = catalogOnly
+    ? null
+    : await createInitialAdminUpsertArgs(input)
   const catalog = await loadCatalogSeed()
   const archivedCatalog = await loadCatalogSeed(archivedCatalogUrl)
   // Production never serves local uploads, so its records keep no local photo.
@@ -105,7 +125,7 @@ export async function runSeed(
   try {
     const { counts, retired } = await prisma.$transaction(
       async (transaction) => {
-        await transaction.user.upsert(adminUpsertArgs)
+        if (adminUpsertArgs) await transaction.user.upsert(adminUpsertArgs)
         const counts = await seedCatalog(transaction, catalog, { localImages })
         const retired = await retireArchivedCatalog(
           transaction,
@@ -118,7 +138,11 @@ export async function runSeed(
       { timeout: 120_000 },
     )
 
-    writeSummary('Seeded 1 administrator account.')
+    writeSummary(
+      adminUpsertArgs
+        ? 'Seeded 1 administrator account.'
+        : 'Catalog-only seed: the administrator account was not changed.',
+    )
     writeSummary(formatCatalogSeedSummary(counts))
     if (retired.restaurants + retired.menuItems > 0) {
       writeSummary(

@@ -877,6 +877,8 @@ Tests: middleware unit tests, app integration tests, env and adapter tests, full
 - Production CD: pushes to `main` authenticate from GitHub Actions to Google Cloud through repository-and-branch-restricted Workload Identity Federation. The GitHub runner builds an immutable API image and pushes it directly to Artifact Registry, applies approved Prisma migrations, deploys Cloud Run, builds and deploys Firebase Hosting, then performs non-mutating smoke checks. It never runs the seed automatically. CI remains pull-request-only and is not duplicated inside CD.
 - Future durable object-storage integration must preserve the `imageKey`/`imageUrl` contract. Soft deletion keeps the referenced image; replacement removes a superseded internally owned object only after the database safely points to the new object.
 
+- Production seed mechanism (human request, 2026-11-16): `.github/workflows/seed-production.yml` runs `prisma migrate deploy` then `prisma db seed` against production. It is manual only (`workflow_dispatch` on `main`, with a typed confirmation), uses the same Workload Identity Federation deployer identity as CD, reads only the database URL from Secret Manager, and is never triggered by a push. It runs with `SEED_CATALOG_ONLY=true`, which seeds the catalog without the administrator secrets and leaves the administrator account unchanged; a normal seed still requires them. Each run still needs explicit human approval.
+
 ## Deployment Sequence
 
 The human approved production deployment on 2026-10-26. Steps 1-9 completed that day; verification and operational follow-up remain recorded below.

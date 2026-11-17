@@ -1996,3 +1996,23 @@ API security middleware (rate limits, trusted-origin check, database-backed sess
 - Live local API with PostgreSQL: register 201 (password stored as Argon2id), `/me` 200, favorites and preferences 200, USER on an admin route 403, foreign-origin write with a valid cookie 403, recommendation 200, logout 204 then `/me` 401, login 200, wrong password 401.
 - Browser (`localhost:5173`): registration form signs in; the four-step meal flow returns three recommendations with photos; saving a favourite sends `PUT /api/favorites/:id` 200. After the test account row was deleted from the local database, the still-open session's next favourite request returned 401 and the web returned to the login page. API server log: no errors.
 - The two throwaway local test accounts were deleted afterwards; the local database holds only the seeded administrator.
+
+## Dish photos, second pass - 2026-11-16
+
+- Before: 166 of 418 dishes had a photo, and a dish without one is never recommended (1 dish under ฿50, 104 at ฿50–100, 54 at ฿101–200, 7 over ฿200).
+- Searched Openverse (Wikimedia Commons and Flickr; CC0, PDM, CC BY, CC BY-SA) for 87 photo keys. 75 returned candidates. Every candidate was viewed on a contact sheet, and each chosen photo was checked again beside its dish name. No Unsplash requests were made.
+- After: 224 of 418 dishes have a photo (7 under ฿50, 143 at ฿50–100, 64 at ฿101–200, 10 over ฿200). 58 dishes gained one, from 93 photos across 46 keys.
+- Rejected at the final check: `drunken-spaghetti` (photo shows seafood; the dish has none) and `pork-gyudon` (dish too small in frame). Keys with no matching candidate stay empty.
+- Keys split so the visible main ingredient matches: `chicken-curry-ramen` (was `curry-ramen`), `pork-curry-udon` (was `curry-udon`), `curry-udon-fish-katsu` (was `curry-udon-katsu`, no photo yet), `curry-soba-poached-egg` and `tuna-bibimbap` (no photo yet).
+- Links: all 52 Flickr photo URLs answer HTTP 200; the 11 Wikimedia URLs load in a browser (`new Image()`), because Wikimedia refuses scripted requests.
+- `pnpm --filter api catalog:build --check`: `catalog.seed.json is up to date.`
+- `pnpm verify`: typecheck, lint and both builds pass; web 39 files/459 tests pass; API 80 files, 651 of 653 tests passed in the full run. The two failures were 5-second timeouts in `src/config/env.test.ts` (tests that start a separate process); rerun alone, that file passes 20 of 20.
+- Not seeded: the local database container was stopped, and production needs separate approval.
+
+### Catalog-only production seed (same day)
+
+- The first `seed-production.yml` run failed before any database work: the deployer identity may not read the administrator seed secrets (`PERMISSION_DENIED`). Production was not changed.
+- Added `SEED_CATALOG_ONLY=true`: the seed then needs only `DATABASE_URL`, skips the administrator upsert, and says so in its summary. A normal seed still requires the administrator credentials.
+- `prisma/seed.test.ts` and `prisma/catalog-seed.test.ts`: 2 files/29 tests pass (3 new).
+- Local run against PostgreSQL with `SEED_CATALOG_ONLY=true` and empty administrator variables: `Seeded 1405 catalog records and links (0 created, 58 updated, 1347 unchanged, 0 stale taste links removed).` Active dishes with a photo went from 166 to 224; restaurants (22), dishes (418), user count (1) and the administrator's password hash were unchanged.
+- The second production run reached the database (`No pending migrations to apply.`) but the seed script stopped at import, because the workflow had not generated the Prisma client. No data changed. Added a `prisma generate` step, as `verify.yml` already has.
