@@ -22,7 +22,9 @@ Kinraidee is a document-first food decision assistant project. The first release
 
 ## Current Status
 
-Requirements, data model, and `docs/plan.md` are approved for implementation. API/data work and non-visual web foundations may start; final visual web screens wait for explicit approval of the draft design pack. Public production deployment requires separate human approval.
+The approved core workflow, account and administrator features, AI-assisted shortlist selection, automated checks, and production deployment are implemented. The web application runs on Firebase Hosting, `/api/**` is served by Cloud Run in `asia-southeast1`, and PostgreSQL runs on Neon. Production secrets are supplied through Google Secret Manager.
+
+Merges to `main` trigger the production deployment workflow in `.github/workflows/deploy-production.yml`; production catalog seeding remains a separate manual workflow. See `docs/03-implementation/google-cloud-deployment.md` and `docs/verification.md` for the deployment architecture, approval record, smoke tests, and known operational limits.
 
 ## Live Site
 
