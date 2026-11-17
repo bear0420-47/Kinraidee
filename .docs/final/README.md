@@ -2,24 +2,24 @@
 
 Kinraidee, a food decision assistant. Live site: https://kinraidee-512615.web.app
 
-One link per item. **SECONDARY** marks evidence that is not from our own users. **TODO** marks items a team member still has to complete.
+One link per item. **SECONDARY** marks evidence that is not from our own users. Remaining gaps are labelled explicitly.
 
 ## Deliver
 
 - Case study (Problem, Process, Outcome, live URL): [case-study.md](case-study.md)
 - AI logic (Where, How, Prove, Measure): [ai-logic.md](ai-logic.md)
 - Comparison table (before, after, AI row, every MUST): [comparison-table.md](comparison-table.md)
-- Role statements (one per member):
+- Role statements and reflections (drafts for each member):
   - 6631503050 Andrew Dicesare: [role-statements/6631503050-andrew-dicesare.md](role-statements/6631503050-andrew-dicesare.md)
-  - 6631503111 Butsarin Chomchat: [role-statements/6631503111-butsarin-chomchat.md](role-statements/6631503111-butsarin-chomchat.md) (draft)
-  - 6631503017 Natthanan Kaewsaengin: TODO `role-statements/6631503017-natthanan-kaewsaengin.md`
-  - 6631503117 Siwagorn Pitaksinagorn: TODO `role-statements/6631503117-siwagorn-pitaksinagorn.md`
-  - 6631503044 Suwaphit Vatidmatee: TODO `role-statements/6631503044-suwaphit-vatidmatee.md`
-- Reflection (about 300 words per member, due Sun 22 Nov 23:59): TODO
+  - 6631503111 Butsarin Chomchat: [role-statements/6631503111-butsarin-chomchat.md](role-statements/6631503111-butsarin-chomchat.md)
+  - 6631503017 Natthanan Kaewsaengin: [role-statements/6631503017-natthanan-kaewsaengin.md](role-statements/6631503017-natthanan-kaewsaengin.md)
+  - 6631503117 Siwagorn Pitaksinagorn: [role-statements/6631503117-siwagorn-pitaksinagorn.md](role-statements/6631503117-siwagorn-pitaksinagorn.md)
+  - 6631503044 Suwaphit Vatidmatee: [role-statements/6631503044-suwaphit-vatidmatee.md](role-statements/6631503044-suwaphit-vatidmatee.md)
+  - Each statement includes a `## Reflection` draft; each member must review and personalize it before submission.
 
 ## Discover
 
-- Team charter (members, roles, rules): [../../docs/00-charter/team-charter.md](../../docs/00-charter/team-charter.md) (roles TODO)
+- Team charter (members, roles, rules): [../../docs/00-charter/team-charter.md](../../docs/00-charter/team-charter.md) (team confirmation still required)
 - Charter scope and constraints: [../../docs/00-charter/charter-constraints.md](../../docs/00-charter/charter-constraints.md)
 - Project proposal: [../project-proposal.md](../project-proposal.md)
 - Interviews: **not conducted**. Survey plus SECONDARY sources instead: [../../evidence/discovery-evidence.md](../../evidence/discovery-evidence.md)
@@ -49,6 +49,7 @@ One link per item. **SECONDARY** marks evidence that is not from our own users. 
 - Session logs U01–U10 (no names): [../QA/user-test-sheet-evidence.md](../QA/user-test-sheet-evidence.md)
 - Results, before/after per MUST and UTAUT2 scores: [../QA/user-test-results-2026-11-02.md](../QA/user-test-results-2026-11-02.md)
 - UTAUT2 questionnaire and scoring: [../QA/UTAUT2.md](../QA/UTAUT2.md)
+- SUS and TAM questionnaire, response status and scoring plan: [../QA/SUS-TAM.md](../QA/SUS-TAM.md)
 - Issue log (severity, fix commit, retest): [../QA/issue-log.md](../QA/issue-log.md)
 - AI vs non-AI evaluation (script and raw log): [../../evidence/ai-vs-non-ai-2026-11-16.md](../../evidence/ai-vs-non-ai-2026-11-16.md)
 

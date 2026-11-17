@@ -7,7 +7,7 @@
 I wrote 78 of the non-merge commits on `main` (GitHub `AnbrewTea`; source: `git log --author=AnbrewTea`).
 
 - **AI in the product and the AI evaluation.**
-  - I led the AI part of Kinraidee: Gemini picks 3 dishes from a pool the rules have already approved, and the server checks its answer.
+  - I led how the team used AI: the AI coding-agent workflow for building the project, and checking whether the Gemini shortlist (built with Natthanan's provider integration) is actually better than the non-AI pick.
   - I ran the AI vs non-AI test ([`evidence/ai-vs-non-ai-2026-11-16.md`](../../../evidence/ai-vs-non-ai-2026-11-16.md)) and wrote [`ai-logic.md`](../ai-logic.md).
   - I presented slides 6–8 (AI Logic, AI in our SDLC, AI Proof).
 - **Admin and user features.**
