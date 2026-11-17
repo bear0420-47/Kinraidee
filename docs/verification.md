@@ -2016,3 +2016,12 @@ API security middleware (rate limits, trusted-origin check, database-backed sess
 - `prisma/seed.test.ts` and `prisma/catalog-seed.test.ts`: 2 files/29 tests pass (3 new).
 - Local run against PostgreSQL with `SEED_CATALOG_ONLY=true` and empty administrator variables: `Seeded 1405 catalog records and links (0 created, 58 updated, 1347 unchanged, 0 stale taste links removed).` Active dishes with a photo went from 166 to 224; restaurants (22), dishes (418), user count (1) and the administrator's password hash were unchanged.
 - The second production run reached the database (`No pending migrations to apply.`) but the seed script stopped at import, because the workflow had not generated the Prisma client. No data changed. Added a `prisma generate` step, as `verify.yml` already has.
+
+## Final deliverables and evidence pack - 2026-11-17
+
+- Scope: documentation only; no application code changed. Added `.docs/final/` (index, case study, AI logic, comparison table, one role statement draft), `.docs/QA/issue-log.md`, D5 sequence and D6 ER diagrams (`docs/02-design/diagrams-sequence-er.md`, draft), `docs/00-charter/team-charter.md` (roles TODO), `evidence/discovery-evidence.md`, the GitHub snapshot and issue CSV, and the 2026-11-16 AI vs non-AI evaluation files. README gained run steps and test accounts; CLAUDE.md gained "How the team uses AI".
+- Privacy: real tester names removed from `.docs/QA/main-meal-test-plan.md` (codes U01–U10 kept). The names remain in earlier git history.
+- Survey recount: all `evidence/survey-summary.md` counts recounted from the form export (31 responses); they match. Raw export not committed.
+- `node --test tests/*.test.cjs`: 24/24 pass.
+- Relative links in every new or changed document: 0 broken.
+- `pnpm verify`: pass (exit 0). API 80 files/656 tests; web 39 files/459 tests; typecheck, lint and both builds pass.
