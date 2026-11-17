@@ -21,6 +21,7 @@ I wrote 78 of the non-merge commits on `main` (GitHub `AnbrewTea`; source: `git 
 - **Catalog.**
   - I created the per-restaurant catalog format and entered more than 20 restaurants by hand.
   - I found and checked by eye free-licence photos that match each dish name: 224 of 418 dishes now have one.
+- **Legal and privacy rules.** I co-authored the project legal and compliance rules in [`rule.md`](../../../rule.md) with Butsarin Chomchat and Natthanan Kaewsaengin.
 - **Security and deployment.**
   - I did the OWASP Top 10 hardening (issue log SR-01 to SR-03).
   - I set up the manual production seed workflow (SR-04, SR-05).
@@ -45,8 +46,6 @@ That meant almost everything had to be done by hand:
 - **Approval.** The AI did not approve its own work, and every production change went through a pull request.
 
 ## Reflection
-
-**Status:** Draft for Andrew to personalise before Sun 22 Nov, 23:59.
 
 As AI Lead, I learned that building with AI is less about writing code and more about checking it. I mainly used Claude to develop Kinraidee. It could produce an admin screen, a test suite or an evaluation script in minutes, and it was easy to accept something that only looked right. My real work became setting the rules it worked under, reading every change, running `pnpm verify`, and deciding what was allowed to reach `main`. The AI never approved its own pull requests, and I think that rule mattered more than any single feature.
 
