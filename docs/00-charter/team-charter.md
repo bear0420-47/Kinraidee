@@ -10,7 +10,7 @@ Project scope, objectives and constraints: [`charter-constraints.md`](charter-co
 |---|---|---|---|
 | 6631503111 | Butsarin Chomchat | Product Owner | Owns product direction, requirements, backlog prioritization, traceability and product governance |
 | 6631503017 | Natthanan Kaewsaengin | TODO (member to confirm) | TODO |
-| 6631503050 | Andrew Dicesare | TODO (member to confirm) | TODO |
+| 6631503050 | Andrew Dicesare | AI Lead | AI in the product (Gemini shortlist, fallback, evaluation), AI coding-agent workflow, core meal flow, admin features, catalog and photos, security hardening |
 | 6631503117 | Siwagorn Pitaksinagorn | TODO (member to confirm) | TODO |
 | 6631503044 | Suwaphit Vatidmatee | TODO (member to confirm) | Personal-data contact for usability testing (`.docs/QA/participant-consent-form.md`) |
 

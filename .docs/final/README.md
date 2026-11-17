@@ -10,7 +10,7 @@ One link per item. **SECONDARY** marks evidence that is not from our own users. 
 - AI logic (Where, How, Prove, Measure): [ai-logic.md](ai-logic.md)
 - Comparison table (before, after, AI row, every MUST): [comparison-table.md](comparison-table.md)
 - Role statements (one per member):
-  - 6631503050 Andrew Dicesare: [role-statements/6631503050-andrew-dicesare.md](role-statements/6631503050-andrew-dicesare.md) (draft)
+  - 6631503050 Andrew Dicesare: [role-statements/6631503050-andrew-dicesare.md](role-statements/6631503050-andrew-dicesare.md)
   - 6631503111 Butsarin Chomchat: [role-statements/6631503111-butsarin-chomchat.md](role-statements/6631503111-butsarin-chomchat.md) (draft)
   - 6631503017 Natthanan Kaewsaengin: TODO `role-statements/6631503017-natthanan-kaewsaengin.md`
   - 6631503117 Siwagorn Pitaksinagorn: TODO `role-statements/6631503117-siwagorn-pitaksinagorn.md`
