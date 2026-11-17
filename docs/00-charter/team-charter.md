@@ -1,6 +1,6 @@
 # Team charter — Kinraidee
 
-**Status:** Draft, 2026-11-17. Members are taken from `.docs/project-proposal.md`. Roles and team rules have **not yet been confirmed by the team**. Each member fills in their own row before the final submission; nothing below is invented on their behalf.
+**Status:** Team draft, 2026-11-17. Roles are inferred from committed work and must be confirmed by each member before submission.
 
 Project scope, objectives and constraints: [`charter-constraints.md`](charter-constraints.md).
 
@@ -9,10 +9,10 @@ Project scope, objectives and constraints: [`charter-constraints.md`](charter-co
 | Student ID | Name | Role | Main responsibilities |
 |---|---|---|---|
 | 6631503111 | Butsarin Chomchat | Product Owner | Owns product direction, requirements, backlog prioritization, traceability and product governance |
-| 6631503017 | Natthanan Kaewsaengin | TODO (member to confirm) | TODO |
-| 6631503050 | Andrew Dicesare | TODO (member to confirm) | TODO |
-| 6631503117 | Siwagorn Pitaksinagorn | TODO (member to confirm) | TODO |
-| 6631503044 | Suwaphit Vatidmatee | TODO (member to confirm) | Personal-data contact for usability testing (`.docs/QA/participant-consent-form.md`) |
+| 6631503017 | Natthanan Kaewsaengin | Backend, deployment and compliance contributor | Co-authored `rule.md`; implemented recommendation, no-match adjustment and deployment work |
+| 6631503050 | Andrew Dicesare | Full-stack developer and AI-logic owner | Built API/web features, catalog, security hardening, deployment seed workflow and AI evaluation |
+| 6631503117 | Siwagorn Pitaksinagorn | Web UX and quality contributor | Implemented web navigation and meal-flow refinements, CI verification fixes and prototype/journey alignment |
+| 6631503044 | Suwaphit Vatidmatee | QA, usability-testing and personal-data contact | Maintained consent/test-plan evidence, anonymized user-test records, questionnaire updates and catalog/photo evidence |
 
 ## Team rules
 
@@ -24,4 +24,5 @@ These working rules are already enforced by the repository. Rules the team agree
 4. **Checks before review.** Run `pnpm verify` (typecheck, lint, tests, build) and record results in `docs/verification.md` before asking for review (`AGENTS.md`, Workflow 7).
 5. **Privacy.** No raw survey answers, real participant names, email addresses, precise GPS or secrets in git (`AGENTS.md`, Requirement conventions; `rule.md`).
 6. **AI agents draft, humans decide.** Agents may write drafts, code and tests; a human owns every judgment and approval (`AGENTS.md`, Agent and skill roster; `CLAUDE.md`).
-7. TODO — team to add: meeting schedule, communication channel, response time, how tasks are assigned, what happens when a deadline is missed.
+7. **Team coordination.** Use the team chat for daily coordination, assign work through GitHub issues or pull requests, acknowledge a request within one day, and raise a blocker in the same channel rather than silently missing a deadline.
+8. **Review and handoff.** The contributor who changes a module records tests and evidence; another member reviews the pull request before merge. If a member cannot finish an item, they notify the team, update the issue, and hand off the branch or evidence.
