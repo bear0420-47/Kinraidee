@@ -9,7 +9,7 @@ Project scope, objectives and constraints: [`charter-constraints.md`](charter-co
 | Student ID | Name | Role | Main responsibilities |
 |---|---|---|---|
 | 6631503111 | Butsarin Chomchat | Product Owner | Owns product direction, requirements, backlog prioritization, traceability and product governance |
-| 6631503017 | Natthanan Kaewsaengin | Backend, deployment and compliance contributor | Co-authored `rule.md`; implemented recommendation, no-match adjustment and deployment work |
+| 6631503017 | Natthanan Kaewsaengin | Backend, AI Integration and Deployment/DevOps Owner | Owns the API foundation, recommendation and provider integration, production infrastructure, continuous deployment and deployment verification |
 | 6631503050 | Andrew Dicesare | Full-stack developer and AI-logic owner | Built API/web features, catalog, security hardening, deployment seed workflow and AI evaluation |
 | 6631503117 | Siwagorn Pitaksinagorn | Web UX and quality contributor | Implemented web navigation and meal-flow refinements, CI verification fixes and prototype/journey alignment |
 | 6631503044 | Suwaphit Vatidmatee | QA, usability-testing and personal-data contact | Maintained consent/test-plan evidence, anonymized user-test records, questionnaire updates and catalog/photo evidence |
