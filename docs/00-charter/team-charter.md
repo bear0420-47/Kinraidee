@@ -8,7 +8,7 @@ Project scope, objectives and constraints: [`charter-constraints.md`](charter-co
 
 | Student ID | Name | Role | Main responsibilities |
 |---|---|---|---|
-| 6631503111 | Butsarin Chomchat | TODO (member to confirm) | TODO |
+| 6631503111 | Butsarin Chomchat | Product Owner | Owns product direction, requirements, backlog prioritization, traceability and product governance |
 | 6631503017 | Natthanan Kaewsaengin | TODO (member to confirm) | TODO |
 | 6631503050 | Andrew Dicesare | TODO (member to confirm) | TODO |
 | 6631503117 | Siwagorn Pitaksinagorn | TODO (member to confirm) | TODO |
