@@ -1,0 +1,51 @@
+issue,state,created,closed,labels,title,closed_by_pr
+6,CLOSED,2026-09-17,2026-09-24,Must have,B1: Capture short meal conditions,
+7,CLOSED,2026-09-17,2026-09-24,Must have,B2: Return a shortlist of up to three qualifying choices,
+8,CLOSED,2026-09-17,2026-09-24,Must have,B3: Display useful decision details and rationale,
+9,CLOSED,2026-09-17,2026-09-24,Must have,B4: Reject a choice and receive a replacement,
+10,CLOSED,2026-09-17,2026-09-24,Must have,B5: Prevent rejected-choice repetition within a session,
+11,CLOSED,2026-09-17,2026-09-24,Must have,B6: Provide the core workflow without account or personalization consent,
+12,CLOSED,2026-09-17,2026-09-24,Must have,B7: Edit conditions and start a new session,
+13,CLOSED,2026-09-17,2026-09-24,Must have,B8: Authorize restaurant/menu administration,
+14,CLOSED,2026-09-17,2026-09-24,Must have,"B9: Apply purpose notice, minimization, and purpose limitation",
+15,CLOSED,2026-09-17,2026-09-24,Must have,B10: Define and verify quality thresholds,
+16,CLOSED,2026-09-17,2026-09-24,Must have;conditional,B15: Record separate consent and electronic-agreement evidence,
+17,CLOSED,2026-09-17,2026-09-24,Must have;conditional,"B16: Provide personal-data access, correction, and deletion handling",
+18,CLOSED,2026-09-17,2026-09-24,Must have;conditional,B17: Retain and protect required traffic data,
+19,CLOSED,2026-09-18,2026-09-24,,I1: Define MVP anonymous session and mock data boundary,
+20,CLOSED,2026-09-18,2026-09-24,,I2: Implement anonymous session API module,
+21,CLOSED,2026-09-18,2026-09-24,,I3: Implement mock catalog read model,
+22,CLOSED,2026-09-18,2026-09-24,,I4: Implement recommendation API module from mock data,
+23,CLOSED,2026-09-18,2026-09-24,,I5: Implement mobile-first meal flow web pages,
+24,CLOSED,2026-09-18,2026-09-24,,I6: Apply design tokens to MVP screens,
+25,CLOSED,2026-09-18,2026-09-24,,I7: Add MVP verification tests,
+27,CLOSED,2026-09-27,2026-09-28,,feat(api): harden and verify the shared API foundation,56
+28,CLOSED,2026-09-28,2026-09-28,,feat(api): define Prisma schema and first migration,57
+29,CLOSED,2026-09-28,2026-09-28,,feat(api): add idempotent seed infrastructure and initial admin,58
+30,CLOSED,2026-09-28,2026-10-05,,feat(api): seed the approved master and catalog dataset,77
+31,CLOSED,2026-09-28,2026-09-29,,feat(api): implement email-password authentication endpoints,59
+32,CLOSED,2026-09-28,2026-09-29,,feat(web): implement authentication pages and protected route guards,62
+33,CLOSED,2026-09-28,2026-09-29,,feat(api): implement Zone CRUD endpoints,63
+34,CLOSED,2026-09-28,2026-09-30,,feat(web): implement Zone management screen,67
+35,CLOSED,2026-09-28,2026-09-29,,feat(api): implement FoodType CRUD endpoints,64
+36,CLOSED,2026-09-28,2026-09-30,,feat(web): implement FoodType management screen,68
+37,CLOSED,2026-09-28,2026-09-29,,feat(api): implement Taste CRUD endpoints,65
+38,CLOSED,2026-09-28,2026-09-30,,feat(web): implement Taste management screen,69
+39,CLOSED,2026-09-28,2026-09-29,,feat(api): implement Restaurant admin CRUD with soft delete and restore,66
+40,CLOSED,2026-09-28,2026-09-29,,feat(api): add development-only internal image uploads,61
+41,CLOSED,2026-09-28,2026-10-05,,feat(web): implement Restaurant management with URL and local images,74
+42,CLOSED,2026-09-28,2026-09-30,,feat(api): implement MenuItem admin CRUD with taste assignment and bulk actions,71
+43,CLOSED,2026-09-28,2026-10-05,,feat(web): implement MenuItem management with bulk actions and images,78
+44,CLOSED,2026-09-28,2026-10-05,,feat(api): implement stateless meal recommendation endpoint,79
+45,CLOSED,2026-09-28,2026-10-06,,meta(web): public shuffle-card recommendation flow,
+46,CLOSED,2026-09-28,2026-10-06,,feat(app): implement MenuItem favorites,84
+47,CLOSED,2026-09-28,2026-10-06,,feat(app): implement saved default recommendation preferences,85
+48,CLOSED,2026-09-28,2026-10-06,,feat(app): implement selected MenuItem history,86
+49,CLOSED,2026-09-28,2026-09-30,,feat(app): implement audit log review and retention pruning,73
+50,OPEN,2026-09-28,,,chore(dev): run integration verification and prepare QA handoff,
+51,CLOSED,2026-09-28,2026-11-17,,test(qa): create acceptance test plan and requirement traceability,
+52,CLOSED,2026-09-28,2026-11-17,,test(qa): execute acceptance testing and publish release recommendation,
+53,CLOSED,2026-09-28,2026-10-06,,feat(web): build recommendation condition flow shell,80
+54,CLOSED,2026-09-28,2026-10-06,,feat(web): implement shuffle cards and recommendation interaction,81
+55,CLOSED,2026-09-28,2026-10-06,,feat(web): complete recommendation confirmation and success flow,82
+60,OPEN,2026-09-29,,,feat(web): add privacy notice page and link it from registration,
