@@ -9,17 +9,17 @@ One link per item. **SECONDARY** marks evidence that is not from our own users. 
 - Case study (Problem, Process, Outcome, live URL): [case-study.md](case-study.md)
 - AI logic (Where, How, Prove, Measure): [ai-logic.md](ai-logic.md)
 - Comparison table (before, after, AI row, every MUST): [comparison-table.md](comparison-table.md)
-- Role statements and reflections (drafts for each member):
-  - 6631503050 Andrew Dicesare: [role-statements/6631503050-andrew-dicesare.md](role-statements/6631503050-andrew-dicesare.md) (final, with reflection)
+- Role statements (final for the presentation; post-presentation reflections are not yet complete for final submission):
+  - 6631503050 Andrew Dicesare: [role-statements/6631503050-andrew-dicesare.md](role-statements/6631503050-andrew-dicesare.md)
   - 6631503111 Butsarin Chomchat: [role-statements/6631503111-butsarin-chomchat.md](role-statements/6631503111-butsarin-chomchat.md)
   - 6631503017 Natthanan Kaewsaengin: [role-statements/6631503017-natthanan-kaewsaengin.md](role-statements/6631503017-natthanan-kaewsaengin.md)
   - 6631503117 Siwagorn Pitaksinagorn: [role-statements/6631503117-siwagorn-pitaksinagorn.md](role-statements/6631503117-siwagorn-pitaksinagorn.md)
   - 6631503044 Suwaphit Vatidmatee: [role-statements/6631503044-suwaphit-vatidmatee.md](role-statements/6631503044-suwaphit-vatidmatee.md)
-  - Each statement includes a `## Reflection` draft; each member must review and personalize it before submission.
+  - Reflection status: all five members have drafts to review and personalize. Each member must complete their own section before the Sunday 22 November deadline.
 
 ## Discover
 
-- Team charter (members, roles, rules): [../../docs/00-charter/team-charter.md](../../docs/00-charter/team-charter.md) (team confirmation still required)
+- Team charter (confirmed members, roles and rules): [../../docs/00-charter/team-charter.md](../../docs/00-charter/team-charter.md)
 - Charter scope and constraints: [../../docs/00-charter/charter-constraints.md](../../docs/00-charter/charter-constraints.md)
 - Project proposal: [../project-proposal.md](../project-proposal.md)
 - Interviews: **not conducted**. Survey plus SECONDARY sources instead: [../../evidence/discovery-evidence.md](../../evidence/discovery-evidence.md)
