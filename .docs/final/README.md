@@ -15,7 +15,7 @@ One link per item. **SECONDARY** marks evidence that is not from our own users. 
   - 6631503017 Natthanan Kaewsaengin: [role-statements/6631503017-natthanan-kaewsaengin.md](role-statements/6631503017-natthanan-kaewsaengin.md)
   - 6631503117 Siwagorn Pitaksinagorn: [role-statements/6631503117-siwagorn-pitaksinagorn.md](role-statements/6631503117-siwagorn-pitaksinagorn.md)
   - 6631503044 Suwaphit Vatidmatee: [role-statements/6631503044-suwaphit-vatidmatee.md](role-statements/6631503044-suwaphit-vatidmatee.md)
-  - Reflection status: Andrew, Butsarin, Siwagorn and Suwaphit have drafts to review; Natthanan has not added a reflection. Each member must complete their own section before the Sunday 22 November deadline.
+  - Reflection status: all five members have drafts to review and personalize. Each member must complete their own section before the Sunday 22 November deadline.
 
 ## Discover
 
