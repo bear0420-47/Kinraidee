@@ -26,10 +26,20 @@ I contributed web tests and code refactoring, and repaired the [CI verification 
 
 Kinraidee's development process allows Codex and Claude Code to help draft UI code, tests, and design documentation under [`AGENTS.md`](../../../AGENTS.md) and [`CLAUDE.md`](../../../CLAUDE.md). In my UX/UI role, I remain responsible for judging whether a proposed interface follows the user journey, works at mobile and desktop sizes, and preserves accessible interaction. **Before submission, I need to confirm which of these tools I personally used, what they helped me produce, and how I checked their output.**
 
+### Benefits and drawbacks of AI
+
+AI can help me explore alternative layouts and wording, draft repetitive UI code, and identify cases to check across screen sizes and input methods. This can shorten the time between an idea and a prototype that the team can review. Its output can also look convincing while missing a journey step, suggesting an interaction that is awkward on mobile or inaccessible by keyboard, or describing untested behavior as if it were verified. I therefore need to compare suggestions with the approved journey and design rules, inspect the interface myself, and seek user feedback before treating a design as successful. **I need to confirm which of these benefits and drawbacks I observed personally before submission.**
+
 ## Reflection
 
 Working on Kinraidee's interface helped me see how much the steps around a recommendation affect whether someone can use it. I reviewed the actions needed to reach a meal choice, then refined condition selection, result controls, and the no-match path. My aim was to make the next step clearer and show when an alternative menu differs from the original conditions.
 
 The hardest design trade-off was reducing extra taps while preserving deliberate choices. Pointer users can move forward after selecting an option, while keyboard users retain an explicit Next action. I also learned to check the flow at mobile and desktop sizes and keep the design system, journey, and prototype aligned with the implementation. Tests helped check behavior, but feedback from users is still needed to judge whether the interface is clear.
 
-In future UX/UI work, I want to test early designs with users sooner and use their observations to decide which changes matter. 
+### Next year
+
+Next year, I plan to test early designs with users sooner, especially the condition-selection and no-match paths. I want to practise observing where people hesitate, checking the same tasks on mobile and with a keyboard, and using those findings to prioritize changes. When I use AI to explore options or draft UI work, I plan to document what it contributed and verify the result against the design system and real user behavior.
+
+### Five-year goal
+
+In five years, I want to be a UX/UI designer who can lead a product from user research through prototypes, implementation, and usability evaluation. I want to make accessible interfaces a routine part of that work and use AI to speed up exploration while keeping design decisions grounded in evidence and accountable to users.
