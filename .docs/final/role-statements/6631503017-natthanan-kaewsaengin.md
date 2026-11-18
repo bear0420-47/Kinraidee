@@ -1,6 +1,6 @@
 # Role statement — 6631503017 Natthanan Kaewsaengin
 
-**Status:** Draft for Natthanan to review before submission. Facts are based on repository history under `ABOUTBLANK`.
+**Status:** Final role statement for the presentation. The post-presentation reflection has not yet been added.
 
 **Role:** Backend, AI Integration and Deployment/DevOps Owner. I owned the API foundation, recommendation integration and production delivery of Kinraidee.
 
