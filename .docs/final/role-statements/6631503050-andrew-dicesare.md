@@ -1,6 +1,6 @@
 # Role statement — 6631503050 Andrew Dicesare
 
-**Status:** Final role statement for the presentation. The post-presentation reflection remains for Andrew to review before submission.
+**Status:** Final role statement and reflection.
 
 **Role:** AI Lead ([`team-charter.md`](../../../docs/00-charter/team-charter.md))
 
@@ -24,8 +24,6 @@ I mainly used Claude Code and Codex under [`AGENTS.md`](../../../AGENTS.md) and 
 
 As AI Lead, I learned that building with AI is less about writing code and more about checking it. I mainly used Claude to develop Kinraidee. It could produce an admin screen, a test suite or an evaluation script in minutes, and it was easy to accept something that only looked right. My real work became setting the rules it worked under, reading every change, running `pnpm verify`, and deciding what was allowed to reach `main`. The AI never approved its own pull requests, and I think that rule mattered more than any single feature.
 
-The hardest lesson was not technical, it was legal. The idea started simply: suggest food from restaurants near the university. I expected to pull menus and photos from Grab or Google Maps, but their data and images belong to them, so we could not copy or scrape them. A simple app turned into entering restaurants and menus by hand and searching free photo sources for pictures that matched each dish name. AI could not solve this for me. It could help search and organise, but I had to judge whether every photo really showed the right dish and whether every source allowed us to use it. That taught me to think about data rights and privacy before writing code, not after.
+The hardest lesson was not technical, it was legal. The idea started simply: suggest food from restaurants near the university. I expected to pull menus and photos from Grab or Google Maps, but their data and images belong to them, so we could not copy or scrape them. A simple app turned into entering restaurants and menus by hand and searching free photo sources for pictures that matched each dish name. AI could not solve this for me. It could help search and organise, but I had to judge whether every photo really showed the right dish and whether every source allowed us to use it. That taught me to think about data rights and privacy before writing code, not after. Measuring the AI taught me the same honesty: Gemini gave more food-type variety but cost about one extra second, and we missed our own speed target.
 
-The AI vs non-AI test changed how I see AI in a product. It was easy to claim that Gemini made better suggestions; measuring it showed something smaller and more honest: more variety in food types, correct prices in almost every reason, and about one extra second of waiting. Our user test also showed that we did not meet our own speed target.
-
-In the AI era, I see my role as someone who directs and verifies AI, not someone who is replaced by it. I still need to get better at testing with real users earlier and at saying no to features the evidence does not support.
+In the AI era, I see myself as a developing AI engineer who directs and verifies AI, not someone replaced by it. I need to improve at testing with real users earlier, at security, and at saying no to features the evidence does not support. Next year I plan to build one more AI-assisted project from start to finish, this time with a real user A/B test of the AI feature from the beginning, and to study cloud and security fundamentals so I can deploy and protect what I build on my own. In five years I want to work as an AI or software engineer who leads AI features in real products, designing systems where AI is measured, safe and legally sound, and where people stay accountable for every decision.
